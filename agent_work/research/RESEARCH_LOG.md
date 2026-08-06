@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-06 — Researcher tick: Part XCII Explanation length vs germane load (SAFE-EXPLAIN)
+
+**Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch92 never written → prefer Researcher per rotation; researcher count since synthesizer v1.12 = 0 → Researcher)  
+**Chapter written:** `chapters/92_explanation_length_germane_load.md` (Part XCII)  
+**Claim examined:** When coach/Solver explanation length creates germane processing vs a token tax that crowds WM and displaces self-explanation.
+
+**Doctrine proposed (provisional until next synthesizer):** **SAFE-EXPLAIN** — short principle-first before monologue; germane ≠ more text (modern CLT redistribute); SE before wrap; length fades with expertise/fade×hint; coherence > charm; no Explanation Score™ / token NS; assistance-dilemma honesty; proof = solo transfer not essay dwell; EXPLAIN-* before unlimited-thorough-AI campaigns.
+
+**Evidence spine:** Sweller et al. (2019); Sweller (2010); Wittwer & Renkl (2010 meta *d*=0.16 overall; conceptual > procedural; SE controls erase advantage); Richey & Nokes-Malach (2013 withholding > providing for conceptual); Wittwer & Renkl (2008); Mayer coherence / Moreno & Mayer (2000); Chandler & Sweller redundancy; Kalyuga et al. (2003) / Kalyuga (2007) expertise reversal; Koedinger & Aleven (2007) assistance dilemma; SAFE-SE / SAFE-FADE / SAFE-HINT / SAFE-STORYLOAD.
+
+**Claim killed (this tick):** Longer explanation ≡ better teaching / token-count quality / Explanation Score™ / AI monologue≡SE / unlimited thorough AI essays as brand / fixed long wrap across expertise / seductive coach fluff — demoted under CLT + instructional-explanation meta + withholding conceptual gains; short principle-first length-contingent coach survives behind EXPLAIN-*.
+
+**Experiments mounted:** EXPLAIN-1…5 + EXPLAIN-QUAL.
+
+**Next researcher id:** **93** (retrieval failure modes in practice UX). Researcher count since v1.12 synthesizer: **1**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-06 — Synthesizer tick v1.12: merge Parts LXXXIV–XCI
 
 **Tick type:** Synthesizer (UTC hour 15; hour%6≠0; ≥8 researcher entries since synthesizer v1.11 → Synthesizer)  

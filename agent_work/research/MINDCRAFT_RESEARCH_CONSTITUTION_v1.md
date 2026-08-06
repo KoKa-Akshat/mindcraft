@@ -81,8 +81,9 @@
 | LXXXIX | `chapters/89_help_seeking_vs_help_abuse.md` | Help-seeking vs help abuse; SAFE-HELP; instrumental > executive |
 | XC | `chapters/90_product_analytics_fei_north_stars.md` | Product analytics for FEI North Stars; SAFE-INSTRUMENT; ship the four |
 | XCI | `chapters/91_hint_economy_contingent_scaffolding.md` | Hint economy & contingent scaffolding; SAFE-HINT; soft→hard priced peeks |
+| XCII | `chapters/92_explanation_length_germane_load.md` | Explanation length vs germane load; SAFE-EXPLAIN (provisional); short coach vs monologue |
 
-Queued next: see `NEXT_LAB.md` (Part XCII explanation length, then 93).
+Queued next: see `NEXT_LAB.md` (Part XCIII retrieval failure modes, then 94).
 
 **Synthesizer note (v1.12):** Eight researcher chapters (LXXXIV–XCI) landed after v1.11 as provisional I.4 appends — talk-ratio construction fidelity, story-load CLT budgets, competence social proof, bank coverage honesty, worked-example fading, help-seeking vs abuse, FEI North Star instrumentation, and hint economy. This edition promotes each stack to company law (removes provisional tags), formalizes Red Team kills #38–#45, confirms TALK/STORYLOAD/PROOF/COVER/FADE/HELP/INSTR/HINT experiment families in Part IX, and refreshes metrics/glossary/competitive implication. Deep-dive files remain authoritative for citations; the OS keeps only *surviving* product rules.
 
@@ -166,8 +167,9 @@ Explanations alone rarely produce (1)–(3). Fluent AI explanations can *acceler
 | Unlimited-hints / help-NPS / avoidance-as-grit ≡ learning | **KILLED** | SAFE-HELP (LXXXIX); instrumental contingent help + solo |
 | DAU/streak/XP / FEI Score™ / thumbs-up ≡ learning NS | **KILLED** | SAFE-INSTRUMENT (XC); FEI four + XXI.4 co-gates |
 | Unlimited free hard peeks / Hint Score™ / XP-for-hints ≡ learning | **KILLED** | SAFE-HINT (XCI); soft-first contingent + construction cost |
+| Longer≡better / Explanation Score™ / monologue≡SE ≡ learning | **KILLED (provisional)** | SAFE-EXPLAIN (XCII); short principle-first + SE-before-wrap |
 
-**Implication:** Do not bet on “better explanations,” graph-file cosplay, warm-tutor theater, emotion cameras, page-count science, Ivy hire theater, unverified AI banks, FERPA-badge GTM, expanding-SRS mystique, headcount vanity, mastery fireworks, FSRS brand, cram packages, instant-feedback theater, bridge-count ads, day-one greens, format-count cosplay, parent surveillance portals, Talk Ratio theater, immersive lore-as-pedagogy, star-wall / user-count learning proof, item-count / complete-ACT coverage theater, always-full-worked / unlimited-solutions Solver theater, unlimited-hints / never-stuck answer-dump theater, DAU/streak/XP / FEI Score™ dashboard theater, or unlimited free hard peeks / Hint Score™ theater. Bet on **FEI + pedagogy wrap + SAFE-* stack**: fear→evidence→identity, with inspectable diagnosis, Map-briefed humans, privacy-bound affect, verified keys, blueprint-honest coverage matrices, district trust packets, honest spaced returns, fidelity-over-tenure ops, time-honest MoC, dual-rail durable GTM, load-honest story wrap, witnessable dated solo competence artifacts, guidance that fades as the student proves the join, instrumental help that still demands construction, instrumented `retry_120s` / motive-coded `challenge_accept` / `transfer_pass` / `solo_transfer_pass` under XXI.4 co-gates, and contingent soft→hard peeks priced in construction effort.
+**Implication:** Do not bet on “better explanations,” graph-file cosplay, warm-tutor theater, emotion cameras, page-count science, Ivy hire theater, unverified AI banks, FERPA-badge GTM, expanding-SRS mystique, headcount vanity, mastery fireworks, FSRS brand, cram packages, instant-feedback theater, bridge-count ads, day-one greens, format-count cosplay, parent surveillance portals, Talk Ratio theater, immersive lore-as-pedagogy, star-wall / user-count learning proof, item-count / complete-ACT coverage theater, always-full-worked / unlimited-solutions Solver theater, unlimited-hints / never-stuck answer-dump theater, DAU/streak/XP / FEI Score™ dashboard theater, unlimited free hard peeks / Hint Score™ theater, or longer≡better / unlimited thorough AI essay theater. Bet on **FEI + pedagogy wrap + SAFE-* stack**: fear→evidence→identity, with inspectable diagnosis, Map-briefed humans, privacy-bound affect, verified keys, blueprint-honest coverage matrices, district trust packets, honest spaced returns, fidelity-over-tenure ops, time-honest MoC, dual-rail durable GTM, load-honest story wrap, witnessable dated solo competence artifacts, guidance that fades as the student proves the join, instrumental help that still demands construction, instrumented `retry_120s` / motive-coded `challenge_accept` / `transfer_pass` / `solo_transfer_pass` under XXI.4 co-gates, contingent soft→hard peeks priced in construction effort, and length-contingent principle coaches that leave room to think.
 
 ## I.3 What to optimize (North Star debate)
 
@@ -247,14 +249,15 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 | **SAFE-HELP** | Instrumental > executive; abuse∪avoidance fail; contingent stage; SE before bottom-out; metacognition≠score; dignity telemetry | LXXXIX | Ban unlimited-hints / help-NPS NS / avoidance-as-grit / Help Score™ / parent hint-stalk / never-stuck dump |
 | **SAFE-INSTRUMENT** | Ship the four FEI events; NSM stack + stage OMTM; XXI.4 co-gates; anti-Goodhart; anti-gaming companions; Kane IUA for uses | XC | Ban DAU/streak/XP NS / FEI Score™ / single-KPI tutor pay / thumbs-up≡learning / identity ads without IUA |
 | **SAFE-HINT** | Soft before hard; contingency up/down; peek cost=construction; fade×hint one machine; no XP/Hint Score™; inspectable stage | XCI | Ban unlimited free hard peeks / Hint Score™ / XP-for-hints / shame-timer cost / black-box perfect-hint AI / fade+free dump |
+| **SAFE-EXPLAIN (provisional)** | Short principle-first before monologue; germane≠more text; SE before wrap; length fades with expertise; coherence>charm; no token NS | XCII | Ban longer≡better / Explanation Score™ / AI monologue≡SE / unlimited thorough AI essays / fixed long wrap / seductive coach fluff |
 | **Block → near-miss interleave → spaced mix** | Blocking = acquisition scaffold; delayed mixed accuracy = readiness signal | XXIX, XXXIX, LXXIV | Ban “shuffle = science”; ban blocked-accuracy vanity |
 | **Student-generated why** | Faded examples + structured principle/misconception prompts *before* AI wrap | XXVI, XL | Ban AI-monologue≡SE; ban explain-own-wrong-first default |
 | **Competitive wedge** | Do not out-content Khan, out-streak Duo, out-delight Brilliant, or out-fluency ChatGPT | XXXV, XX | Sell recoverable struggle + competence evidence + solo transfer |
 | **Equity of worlds** | Story wrap is identity technology; tokenism and stereotype-cueing copy are kills | XXXVI, XXVIII | HIST-EQ; belonging without “even you can” |
 
-**Merged / demoted (do not treat as separate products):** “AI tutor,” “mastery path,” “growth mindset,” “engagement,” “grit,” “habit streak,” “celebrate mistakes,” “community of practice,” “deliberate practice brand,” “film study,” “recital,” “grandmaster review,” “exposure therapy,” “girl STEM brand,” “WTP survey,” “Identity Score™,” “8-week math person,” “character equity,” “knowledge-graph moat,” “emotion AI empathy,” “science-backed page count,” “Ivy tutor SKU,” “AI wrote N questions,” “FERPA-compliant badge,” “perfect-interval SRS,” “tutor headcount / retention-%,” “mastery fireworks / personal Ebbinghaus,” “FSRS/Anki brain optimizer,” “cram/bootcamp/+points packages,” “instant feedback AI / always-delay science,” “bridge-count / we connect everything,” “day-one personalized mastery / placement belt,” “every format / visual learning / Format Personality™,” “parent fireworks portal / Family Leaderboard / live wrong-answer stalk,” “immersive story world / lore engagement / Story Engagement Score™,” “user-count / star-wall / vague confidence testimonials as learning proof,” “item-count / complete ACT bank / AI fills all holes coverage theater,” “always-full-worked / unlimited solutions / never-fade Solver,” “unlimited hints / never stuck / Help Score™,” “DAU/streak/XP North Star / FEI Score™ / thumbs-up≡learning,” and “unlimited free hard peeks / Hint Score™ / XP-for-hints / perfect-hint AI” are *not* independent North Stars — they are subordinate UX under FEI + the rows above (borrow *method*, never *costume*).
+**Merged / demoted (do not treat as separate products):** “AI tutor,” “mastery path,” “growth mindset,” “engagement,” “grit,” “habit streak,” “celebrate mistakes,” “community of practice,” “deliberate practice brand,” “film study,” “recital,” “grandmaster review,” “exposure therapy,” “girl STEM brand,” “WTP survey,” “Identity Score™,” “8-week math person,” “character equity,” “knowledge-graph moat,” “emotion AI empathy,” “science-backed page count,” “Ivy tutor SKU,” “AI wrote N questions,” “FERPA-compliant badge,” “perfect-interval SRS,” “tutor headcount / retention-%,” “mastery fireworks / personal Ebbinghaus,” “FSRS/Anki brain optimizer,” “cram/bootcamp/+points packages,” “instant feedback AI / always-delay science,” “bridge-count / we connect everything,” “day-one personalized mastery / placement belt,” “every format / visual learning / Format Personality™,” “parent fireworks portal / Family Leaderboard / live wrong-answer stalk,” “immersive story world / lore engagement / Story Engagement Score™,” “user-count / star-wall / vague confidence testimonials as learning proof,” “item-count / complete ACT bank / AI fills all holes coverage theater,” “always-full-worked / unlimited solutions / never-fade Solver,” “unlimited hints / never stuck / Help Score™,” “DAU/streak/XP North Star / FEI Score™ / thumbs-up≡learning,” “unlimited free hard peeks / Hint Score™ / XP-for-hints / perfect-hint AI,” and “longer≡better / Explanation Score™ / unlimited thorough AI essays / monologue≡SE” are *not* independent North Stars — they are subordinate UX under FEI + the rows above (borrow *method*, never *costume*).
 
-**Next research bottleneck:** Part XCII **Explanation length vs germane load**. Experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O/WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT/ONTO/HITL/PRIV/LABMETA/GRAIN/GENQ/PROCURE/SCHED/WORK/FORGET/ADAPT/CRAM/FB/BRIDGE/COLD/FORMAT/PDASH/TALK/STORYLOAD/PROOF/COVER/FADE/HELP/INSTR/HINT gate claims above L1. Researcher count since v1.12 synthesizer = **0**.
+**Next research bottleneck:** Part XCIII **Retrieval failure modes in practice UX**. Experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O/WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT/ONTO/HITL/PRIV/LABMETA/GRAIN/GENQ/PROCURE/SCHED/WORK/FORGET/ADAPT/CRAM/FB/BRIDGE/COLD/FORMAT/PDASH/TALK/STORYLOAD/PROOF/COVER/FADE/HELP/INSTR/HINT/EXPLAIN gate claims above L1. Researcher count since v1.12 synthesizer = **1**.
 
 ---
 
@@ -592,6 +595,7 @@ Core A–D remain. Chapter ticks densified them into families — prefer the den
 | HELP-* | Contingent instrumental vs unlimited bottom-out / SE-before-hint / help-invite vs freeze / meta-msg vs gate / parent CBC next-step help | LXXXIX |
 | INSTR-* | Lagged FEI vs streak/DAU prediction / tutor KPI co-gates / event fire audit / motive-coded challenge CTA / parent CBC FEI report | XC |
 | HINT-* | Soft-first contingent vs free hard / SE-cost vs dwell / fade×hint couple / peek budget / parent CBC next-step hints | XCI |
+| EXPLAIN-* | Principle-short vs monologue / SE-before-wrap / length×fade / soft-wrong short mark / parent CBC clear-short | XCII |
 
 ---
 
@@ -816,6 +820,10 @@ Core A–D remain. Chapter ticks densified them into families — prefer the den
 ### Kill #45 (v1.12): “Unlimited free hard peeks / Hint Score™ / XP-for-hints ≡ learning”
 **Destroyed:** Unlimited free hard / bottom-out peeks as learning North Star or kindness brand; Hint Score™ or raw hint-click engagement; XP/streak rewards for peeking; shame timers or parent live peek-stalk as “cost”; black-box “AI perfect hint” mystique; fade costume with a free hard submenu underneath.  
 **Surviving:** SAFE-HINT — soft before hard; contingency up/down; peek cost = construction; fade×hint one machine; separate ITS soft/hard from Saye & Brush hard/soft scaffolds; inspectable stage; instrument HINT-* before unlimited-free-hints campaigns (XCI).
+
+### Kill #46 (provisional, XCII): “Longer≡better / Explanation Score™ / monologue≡SE ≡ learning”
+**Destroyed:** Longer coach/Solver essays as quality or care; token count / thoroughness NPS / Explanation Score™ as learning KPIs; AI monologue labeled as self-explanation; unlimited thorough AI explanation brand; fixed multi-paragraph wrap across expertise stages; seductive coach fluff as pedagogy.  
+**Surviving (provisional):** SAFE-EXPLAIN — short principle-first before monologue; germane ≠ more text; SE before wrap; length fades with expertise/fade×hint; coherence > charm; no token North Star; instrument EXPLAIN-* before unlimited-thorough-AI campaigns (XCII).
 
 ---
 
@@ -1300,6 +1308,7 @@ Ship changes that raise `retry_120s` and mastery-motive `challenge_accept` witho
 | SAFE-HELP | Instrumental > executive; abuse∪avoidance fail; contingent stage; SE before bottom-out; no unlimited-hints / Help Score™ (Part LXXXIX) |
 | SAFE-INSTRUMENT | Ship the four; NSM+OMTM; XXI.4 co-gates; anti-Goodhart; Kane IUA; no DAU/streak/FEI Score™ NS (Part XC) |
 | SAFE-HINT | Soft before hard; contingency; construction-priced peeks; fade×hint; no Hint Score™ / free hard dump (Part XCI) |
+| SAFE-EXPLAIN (provisional) | Short principle-first; germane≠more text; SE before wrap; length fades; no Explanation Score™ / monologue≡SE (Part XCII) |
 
 ## Appendix B — Maya interview protocol (qual)
 
@@ -1395,8 +1404,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 3ae. Help-seeking vs help abuse — **DONE** Part LXXXIX / SAFE-HELP  
 3af. Product analytics for FEI North Stars — **DONE** Part XC / SAFE-INSTRUMENT  
 3ag. Hint economy & contingent scaffolding — **DONE** Part XCI / SAFE-HINT  
-3ah. Explanation length vs germane load — queued id 92 **NEXT**  
-3ai. Retrieval failure modes in practice UX — queued id 93  
+3ah. Explanation length vs germane load — **DONE** Part XCII / SAFE-EXPLAIN (provisional)  
+3ai. Retrieval failure modes in practice UX — queued id 93 **NEXT**  
 3aj. Productive failure vs guided success sequencing — queued id 94  
 3ak. Cognitive apprenticeship in tutor playbooks — queued id 95  
 3al. Attention residue & device distraction in practice — queued id 96  
@@ -1460,7 +1469,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 61. **DONE (2026-08-06):** Product analytics for FEI North Stars (Part XC / id 90) — SAFE-INSTRUMENT stack  
 62. **DONE (2026-08-06):** Hint economy & contingent scaffolding (Part XCI / id 91) — SAFE-HINT stack  
 63. **Synthesizer v1.12 (2026-08-06):** Merged LXXXIV–XCI into I.4 / XIV / IX / XXI — no new chapter  
-64. **NEXT:** Explanation length vs germane load (Part XCII / id 92)
+64. **DONE (2026-08-06):** Explanation length vs germane load (Part XCII / id 92) — SAFE-EXPLAIN stack (provisional)  
+65. **NEXT:** Retrieval failure modes in practice UX (Part XCIII / id 93)
 
 ---
 
@@ -1494,4 +1504,4 @@ MindCraft’s deepest risk is not technical failure. It is **winning the wrong g
 
 This Constitution exists so the company notices that risk early, and runs experiments that can kill beloved ideas.
 
-**v1.12 synthesizer pass folded Parts LXXXIV–XCI into surviving commercial doctrine (I.4 rows SAFE-TALK through SAFE-HINT; Red Team kills #38–#45 promoted from provisional). Experiment families TALK/STORYLOAD/PROOF/COVER/FADE/HELP/INSTR/HINT confirmed mounted. Next researcher id: XCII explanation length. Researcher count since v1.12 = 0. Page count is not the finish line — falsifiable truth is.**
+**v1.12 synthesizer pass folded Parts LXXXIV–XCI into surviving commercial doctrine (I.4 rows SAFE-TALK through SAFE-HINT; Red Team kills #38–#45 promoted from provisional). Experiment families TALK/STORYLOAD/PROOF/COVER/FADE/HELP/INSTR/HINT confirmed mounted. Researcher tick 2026-08-06 added Part XCII / SAFE-EXPLAIN (provisional) + kill #46 provisional + EXPLAIN-* family. Next researcher id: XCIII retrieval failure modes. Researcher count since v1.12 = 1. Page count is not the finish line — falsifiable truth is.**
