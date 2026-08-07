@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>MindCraft · The student desk before the ACT</title>
 <meta name="description" content="MindCraft is the student desk before the ACT. Drop your worksheets, plug in your calendar, practice inside story worlds, and work with real college tutors.">
 <meta property="og:type" content="website">
@@ -70,11 +70,24 @@
 
   /* ---------- Nav ---------- */
   .nav{
-    position:fixed; top:18px; left:22px; right:22px; z-index:50;
+    position:fixed; z-index:50;
+    top:max(12px, env(safe-area-inset-top, 0px));
+    left:max(12px, env(safe-area-inset-left, 0px));
+    right:max(12px, env(safe-area-inset-right, 0px));
     display:flex; align-items:center; justify-content:space-between; gap:16px;
     padding:12px 14px 12px 20px; border:1px solid var(--line); border-radius:999px;
-    background:rgba(255,253,247,.86); backdrop-filter:blur(16px);
+    background:rgba(255,253,247,.86);
+    -webkit-backdrop-filter:blur(16px); backdrop-filter:blur(16px);
     box-shadow:0 16px 54px rgba(28,55,45,.10);
+    transition:transform .38s var(--ease), opacity .28s var(--ease), background .2s var(--ease), border-color .2s var(--ease), box-shadow .2s var(--ease);
+    will-change:transform;
+  }
+  .nav.is-hidden{
+    transform:translate3d(0, calc(-100% - 28px), 0);
+    opacity:0; pointer-events:none;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .nav{transition:none;}
   }
   .brand{font-family:"Fredoka",sans-serif; font-size:20px; font-weight:700; letter-spacing:-.04em;}
   .brand span{color:var(--gold-deep);}
@@ -404,8 +417,13 @@
 
   /* Tutors — one split stage, equal panes, no awkward overlap */
   .tutors{background:linear-gradient(180deg, var(--blue), var(--cream));}
-  .tutor-head{max-width:720px; margin-bottom:36px;}
-  .tutor-head .h2{max-width:28ch;}
+  .tutor-head{
+    display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
+    gap:clamp(22px,3.5vw,40px); align-items:center; margin-bottom:36px;
+  }
+  .tutor-head-copy{min-width:0;}
+  .tutor-head .h2{max-width:16ch;}
+  .tutor-head .scan-points{margin-top:18px; max-width:460px;}
   .tutor-duo{
     display:grid; grid-template-columns:1.15fr 1fr; gap:18px; margin:10px auto 0;
     width:100%; max-width:1120px; padding:16px; border-radius:30px;
@@ -494,21 +512,22 @@
   .leaflet-container{font:inherit; background:#e8efe8;}
   .leaflet-control-attribution{font-size:9px !important; background:rgba(255,253,247,.75) !important;}
   .tutor-quote{
-    position:relative; margin:48px auto 0; max-width:720px; text-align:center;
-    padding:28px 36px 30px; border-radius:22px;
+    position:relative; margin:0; max-width:none; text-align:left;
+    padding:26px 28px 28px; border-radius:22px;
     background:linear-gradient(180deg, #fffef8, #f7f0d8);
     border:1.5px solid rgba(211,169,0,.45);
     box-shadow:0 18px 50px rgba(20,58,46,.1);
+    align-self:stretch; display:flex; align-items:center;
   }
   .tutor-quote::before{
-    content:"“"; position:absolute; top:6px; left:22px;
-    font-family:"DM Serif Display",Georgia,serif; font-size:72px; line-height:1;
-    color:var(--gold-deep); opacity:.55;
+    content:"“"; position:absolute; top:4px; left:18px;
+    font-family:"DM Serif Display",Georgia,serif; font-size:64px; line-height:1;
+    color:var(--gold-deep); opacity:.5;
   }
   .tutor-quote p{
     font-family:"DM Serif Display",Georgia,serif; font-style:italic;
-    font-size:clamp(22px,2.8vw,30px); line-height:1.4; color:var(--ink);
-    max-width:28ch; margin:0 auto; position:relative; z-index:1;
+    font-size:clamp(20px,2.2vw,26px); line-height:1.38; color:var(--ink);
+    max-width:22ch; margin:0; position:relative; z-index:1; padding-top:10px;
   }
   .tutor-quote p em{
     font-style:italic; color:var(--leaf);
@@ -789,11 +808,27 @@
     .cap.featured{grid-column:span 2;}
     .story-grid,.scan-grid,.act-grid{grid-template-columns:1fr;}
     .scan-grid .scan-frame{order:2;}
+    .tutor-head{grid-template-columns:1fr 1fr; align-items:stretch;}
+    .tutor-head .h2{max-width:14ch;}
+    .tutor-quote p{font-size:clamp(18px,2.4vw,22px); max-width:none;}
     .tutor-duo{grid-template-columns:1fr 1fr;}
     .tutor-pane{height:420px;}
   }
+  @media(max-width:780px){
+    .tutor-head{grid-template-columns:1fr; gap:18px;}
+    .tutor-head .h2{max-width:16ch;}
+    .tutor-quote{padding:22px 22px 24px;}
+    .tutor-quote p{max-width:28ch; font-size:clamp(20px,5vw,24px);}
+  }
   @media(max-width:640px){
+    .nav{
+      top:max(8px, env(safe-area-inset-top, 0px));
+      left:max(8px, env(safe-area-inset-left, 0px));
+      right:max(8px, env(safe-area-inset-right, 0px));
+      padding:10px 10px 10px 16px;
+    }
     .nav-links a:not(.join){display:none;}
+    .brand{font-size:18px;}
     .chaos-grid,.steps,.caps-grid{grid-template-columns:1fr;}
     .cap.featured{grid-column:span 1; grid-template-columns:1fr;}
     .cap.featured .cover{max-height:220px; max-width:180px;}
@@ -802,10 +837,15 @@
     .makers-grid{grid-template-columns:1fr;}
     .form-grid{grid-template-columns:1fr;}
     .tutor-duo{grid-template-columns:1fr; padding:12px; gap:12px;}
-    .tutor-pane{height:340px;}
+    .tutor-pane{height:min(360px, 70svh);}
+    .tm-search{flex-wrap:wrap;}
+    .tm-search button{width:100%; min-height:44px;}
+    .tm-book{min-height:44px; display:flex; align-items:center; justify-content:center;}
     .hero-chip{left:0; transform:scale(.92) rotate(1.6deg);}
     .story-polaroid{left:-8px; width:140px;}
     .h2{font-size:34px;}
+    .scan-point{padding:12px 14px;}
+    .scan-point p{font-size:14px;}
     .intro-schools ul{gap:16px 22px;}
     .intro-schools ul img{height:34px;}
     .intro-schools .mac img{height:24px;}
@@ -1145,22 +1185,27 @@
 <section class="tutors" id="tutors">
   <div class="wrap">
     <div class="tutor-head">
-      <div class="kicker reveal">Chapter 06 · The allies</div>
-      <h2 class="h2 reveal">A college tutor in your corner.</h2>
-      <div class="scan-points" style="margin-top:18px;">
-        <div class="scan-point reveal">
-          <span class="pip">1</span>
-          <p>They open your map before hello.</p>
-        </div>
-        <div class="scan-point reveal">
-          <span class="pip">2</span>
-          <p>The hour goes to teaching, not catching up.</p>
-        </div>
-        <div class="scan-point reveal">
-          <span class="pip">3</span>
-          <p>First session free. Real college tutors.</p>
+      <div class="tutor-head-copy">
+        <div class="kicker reveal">Chapter 06 · The allies</div>
+        <h2 class="h2 reveal">A college tutor in your corner.</h2>
+        <div class="scan-points">
+          <div class="scan-point reveal">
+            <span class="pip">1</span>
+            <p>They open your map before hello.</p>
+          </div>
+          <div class="scan-point reveal">
+            <span class="pip">2</span>
+            <p>The hour goes to teaching, not catching up.</p>
+          </div>
+          <div class="scan-point reveal">
+            <span class="pip">3</span>
+            <p>First session free. Real college tutors.</p>
+          </div>
         </div>
       </div>
+      <blockquote class="tutor-quote reveal">
+        <p>MindCraft is not software instead of people. It is software that <em>makes the people better.</em></p>
+      </blockquote>
     </div>
     <div class="tutor-duo reveal" id="tutorLive">
       <div class="tutor-pane map">
@@ -1175,9 +1220,6 @@
         <div class="tm-list" id="tmList"></div>
       </div>
     </div>
-    <blockquote class="tutor-quote reveal">
-      <p>MindCraft is not software instead of people. It is software that <em>makes the people better.</em></p>
-    </blockquote>
     <div class="tutor-actions reveal">
       <a class="btn primary ext" href="https://mindcraft-93858.web.app/find-a-tutor" target="_blank" rel="noopener">Find a tutor</a>
       <a class="btn soft" href="#start" data-apply="tutor">Apply to tutor</a>
@@ -1592,21 +1634,42 @@
   }, { threshold:.12 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-  // Scroll progress + section-aware nav
+  // Scroll progress + section-aware nav + hide-on-scroll-down
   const bar = document.getElementById('progress');
   const nav = document.querySelector('.nav');
   const darkSections = [document.querySelector('.hero'), document.querySelector('.vision'), document.querySelector('.act')];
-  function onScroll(){
+  let lastScrollY = window.scrollY || 0;
+  let navTicking = false;
+  function updateNav(){
+    const y = Math.max(0, window.scrollY || document.documentElement.scrollTop || 0);
     const h = document.documentElement;
-    bar.style.transform = 'scaleX(' + (h.scrollTop / (h.scrollHeight - h.clientHeight)) + ')';
+    const max = Math.max(1, h.scrollHeight - h.clientHeight);
+    bar.style.transform = 'scaleX(' + (y / max) + ')';
     const overDark = darkSections.some(el => {
+      if (!el) return false;
       const r = el.getBoundingClientRect();
-      return r.top < 52 && r.bottom > 52;
+      return r.top < 64 && r.bottom > 48;
     });
     nav.classList.toggle('nav-dark', overDark);
+    // Show at top; hide while scrolling down; reveal on scroll up
+    if (y < 48) {
+      nav.classList.remove('is-hidden');
+    } else if (y > lastScrollY + 6) {
+      nav.classList.add('is-hidden');
+    } else if (y < lastScrollY - 4) {
+      nav.classList.remove('is-hidden');
+    }
+    lastScrollY = y;
+    navTicking = false;
+  }
+  function onScroll(){
+    if (navTicking) return;
+    navTicking = true;
+    requestAnimationFrame(updateNav);
   }
   addEventListener('scroll', onScroll, { passive:true });
-  onScroll();
+  nav.addEventListener('focusin', () => nav.classList.remove('is-hidden'));
+  updateNav();
 
   // ---------- Drop demo: toss a PDF → note summary ----------
   const DD_NOTES = {
