@@ -41,6 +41,7 @@ from mindcraft_graph.representation.embeddings import (  # noqa: E402
 )
 
 ONTOLOGY_PATH = ML_ROOT / "data/5_level_ontology/01_mindcraft_concept_ontology_v2_6_with_combinations.json"
+L2_PATH = ML_ROOT / "data/5_level_ontology/02_question_archetype_ontology_v1_6_standardized.json"
 L3_PATH = ML_ROOT / "data/5_level_ontology/03_question_instance_bank_schema_and_seed_v1_6.json"
 EEDI_PATH = REPO_ROOT / "app/src/data/eediQuestions.json"
 MAP_PATH = ML_ROOT / "data/misconception_ingredient_map.json"
@@ -385,6 +386,87 @@ def l3_truth(layer3: dict[str, Any]) -> list[tuple[str, set[str]]]:
     return out
 
 
+def load_archetype_holdouts(
+    layer3: dict[str, Any],
+    layer2: dict[str, Any],
+    by_id: dict[str, IngredientCandidate],
+) -> tuple[list[Misconception], dict[str, set[str]]]:
+    """Represent the L3 rows joinable to a single Layer-2 archetype as held-out
+    per-concept checks: question -> question_archetype_ids -> archetype's
+    required_ingredient_ids. A question can require ingredients from several
+    concepts at once, so it is split into one record per concept touched
+    (each scoped only to that concept's own candidates, per C-1)."""
+    archetypes_by_id = {str(a["archetype_id"]): a for a in layer2.get("archetypes", [])}
+    records: list[Misconception] = []
+    expected: dict[str, set[str]] = {}
+    for instance in layer3.get("question_instances", []):
+        links = instance.get("links", {})
+        archetype_ids = links.get("question_archetype_ids") or []
+        if len(archetype_ids) != 1:
+            continue
+        archetype = archetypes_by_id.get(str(archetype_ids[0]))
+        if not archetype:
+            continue
+        required = [iid for iid in (archetype.get("required_ingredient_ids") or []) if iid in by_id]
+        if not required:
+            continue
+        by_concept_ids: dict[str, set[str]] = defaultdict(set)
+        for iid in required:
+            by_concept_ids[by_id[iid].concept_id].add(iid)
+        family = str(archetype.get("question_family") or "")
+        path = " -> ".join(archetype.get("concept_path_template") or [])
+        label = ". ".join(x for x in (family, path) if x) or str(archetype_ids[0])
+        for concept_id, ids in sorted(by_concept_ids.items()):
+            holdout_id = f"archetype::{instance['question_instance_id']}::{concept_id}"
+            records.append(Misconception(holdout_id, label, concept_id))
+            expected[holdout_id] = ids
+    return sorted(records, key=lambda x: x.misconception_id), expected
+
+
+def gold_spot_check_report(
+    cohorts: dict[str, tuple[dict[str, dict[str, Any]], dict[str, set[str]]]],
+) -> dict[str, Any]:
+    """C-6 gold spot-check: accuracy on the reserved 15 L3 + 30 archetype-join
+    labels, reported per cohort and split by provenance (auto-accepted
+    embedding vs LLM-confirmed). Never used as tuning input elsewhere."""
+    out: dict[str, Any] = {}
+    combined_by_provenance: dict[str, list[bool]] = defaultdict(list)
+    combined_total = 0
+    combined_hit = 0
+    for name, (confirmed, expected) in cohorts.items():
+        by_provenance: dict[str, list[bool]] = defaultdict(list)
+        hit = 0
+        for mid, ids in expected.items():
+            mapping = confirmed.get(mid)
+            correct = bool(mapping) and mapping["ingredient_id"] in ids
+            hit += int(correct)
+            if mapping:
+                by_provenance[mapping["provenance"]].append(correct)
+                combined_by_provenance[mapping["provenance"]].append(correct)
+        combined_total += len(expected)
+        combined_hit += hit
+        out[name] = {
+            "hit": hit,
+            "total": len(expected),
+            "rate": round(hit / len(expected), 6) if expected else None,
+            "confirmed": sum(mid in confirmed for mid in expected),
+            "by_provenance": {
+                key: {"correct": sum(values), "total": len(values), "accuracy": round(sum(values) / len(values), 6)}
+                for key, values in sorted(by_provenance.items())
+            },
+        }
+    out["combined"] = {
+        "hit": combined_hit,
+        "total": combined_total,
+        "rate": round(combined_hit / combined_total, 6) if combined_total else None,
+        "by_provenance": {
+            key: {"correct": sum(values), "total": len(values), "accuracy": round(sum(values) / len(values), 6)}
+            for key, values in sorted(combined_by_provenance.items())
+        },
+    }
+    return out
+
+
 def load_l3_holdouts(
     layer3: dict[str, Any],
     by_id: dict[str, IngredientCandidate],
@@ -438,6 +520,7 @@ def validation_report(
     spot_checks: dict[str, str | None] | None = None,
     l3_holdout_confirmed: dict[str, dict[str, Any]] | None = None,
     l3_holdout_expected: dict[str, set[str]] | None = None,
+    misconception_concepts: dict[str, str] | None = None,
 ) -> dict[str, Any]:
     anchors = anchor_truth(by_id)
     eligible_anchors = {mid: ids for mid, ids in anchors.items() if mid in proposals}
@@ -446,8 +529,28 @@ def validation_report(
         proposals[mid]["candidates"][0]["ingredient_id"] in ids
         for mid, ids in eligible_anchors.items()
     )
+    # Some ontology `canonical_misconception_family` anchors point at an ingredient
+    # in a DIFFERENT concept than the one Eedi's own conceptId tagging assigns to
+    # that same misconception text. C-1 forbids the pipeline from ever crossing
+    # concepts, so those anchors are structurally unreachable regardless of
+    # pipeline quality -- report the C-1-respecting subset separately so the bar
+    # is measured against what the pipeline could possibly satisfy.
+    same_concept_eligible: dict[str, set[str]] = {}
+    cross_concept_anchor_families: list[str] = []
+    if misconception_concepts is not None:
+        for mid, ids in eligible_anchors.items():
+            mis_concept = misconception_concepts.get(mid)
+            ing_concepts = {by_id[i].concept_id for i in ids if i in by_id}
+            if mis_concept is not None and mis_concept in ing_concepts:
+                same_concept_eligible[mid] = ids
+            else:
+                cross_concept_anchor_families.append(mid)
+    same_concept_hits = sum(
+        confirmed.get(mid, {}).get("ingredient_id") in ids for mid, ids in same_concept_eligible.items()
+    )
     l3 = l3_truth(layer3)
     l3_hits = sum(confirmed.get(mid, {}).get("ingredient_id") in ids for mid, ids in l3)
+    l3_joinable = sum(1 for mid, _ in l3 if mid in proposals)
     counts = Counter(iid for ids in question_labels.values() for iid in ids)
     per_concept: dict[str, dict[str, int]] = defaultdict(lambda: {"ingredients_with_1": 0, "ingredients_with_3": 0, "labels": 0})
     for iid, item in by_id.items():
@@ -468,12 +571,35 @@ def validation_report(
             "rate": round(anchor_hits / len(eligible_anchors), 6) if eligible_anchors else None,
             "proposal_top1_hit": proposal_anchor_hits,
             "proposal_top1_rate": round(proposal_anchor_hits / len(eligible_anchors), 6) if eligible_anchors else None,
+            "same_concept_eligible_families": len(same_concept_eligible) if misconception_concepts is not None else None,
+            "same_concept_hit": same_concept_hits if misconception_concepts is not None else None,
+            "same_concept_rate": (
+                round(same_concept_hits / len(same_concept_eligible), 6) if same_concept_eligible else None
+            ),
+            "cross_concept_anchor_families": sorted(cross_concept_anchor_families) if misconception_concepts is not None else None,
+            "note": (
+                "`rate` includes ontology canonical_misconception_family anchors whose linked "
+                "ingredient sits in a DIFFERENT concept than Eedi's own conceptId tagging of that "
+                "misconception. C-1 forbids the pipeline from ever crossing concepts, so those are "
+                "structurally unreachable; `same_concept_rate` is the bar the pipeline can actually "
+                "be held to."
+            ),
         },
         "l3_reproduction": {
             "hit": l3_hits,
             "total": len(l3),
             "rate": round(l3_hits / len(l3), 6) if l3 else None,
-            "note": "Only L3 rows carrying both misconception_ids and ingredient_ids are directly joinable.",
+            "joinable": l3_joinable,
+            "note": (
+                "Only L3 rows carrying both misconception_ids and ingredient_ids are directly "
+                "joinable, AND only if the L3 misconception_id string also exists in Eedi's "
+                "canonical mis_{concept}__{slug} namespace. L3's `links.misconception_ids` are "
+                "free-text slugs authored independently of that namespace (0/10 ever overlap in "
+                "this dataset), so `joinable` is expected to be 0 and `rate` is not a meaningful "
+                "measure of pipeline quality here -- see `l3_labeled_instance_holdout` and "
+                "`gold_spot_check` for the real reproduction tests, which score the pipeline's own "
+                "candidates rather than requiring an id string match."
+            ),
         },
         "coverage": {
             "ingredients_with_1": sum(value >= 1 for value in counts.values()),
@@ -561,6 +687,7 @@ def main(argv: Iterable[str] | None = None) -> int:
     ontology = load_json(ONTOLOGY_PATH)
     questions = load_json(EEDI_PATH)
     layer3 = load_json(L3_PATH)
+    layer2 = load_json(L2_PATH)
     by_concept, by_id = load_ingredients(ontology)
     concept_registry = build_concept_id_registry(
         [Concept.model_validate(item) for item in ontology["concepts"]]
@@ -587,6 +714,11 @@ def main(argv: Iterable[str] | None = None) -> int:
         checkpoint=load_checkpoint(checkpoint_path),
         checkpoint_path=checkpoint_path if llm_complete else None,
     )
+    # Reserved gold test set (C-6): the 15 L3 human `links.ingredient_ids` rows and
+    # the 30 Layer-2 archetype-join rows. These must NEVER receive a human-decision
+    # override -- that would let a prior "human" pass leak the answer into the very
+    # check meant to test the pipeline's own (embedding/LLM) judgment. Pass an
+    # empty human_decisions dict unconditionally, regardless of --human-decisions.
     l3_records, l3_expected = load_l3_holdouts(layer3, by_id, concept_registry)
     l3_proposals, _ = rank_proposals(
         l3_records, by_concept, lambda texts: embed_texts(model, texts, batch_size=128)
@@ -597,17 +729,38 @@ def main(argv: Iterable[str] | None = None) -> int:
         l3_proposals,
         similarity_threshold=args.similarity_threshold,
         margin_threshold=args.margin_threshold,
-        human_decisions=human,
+        human_decisions={},
+        llm_complete=llm_complete,
+        checkpoint=load_checkpoint(checkpoint_path),
+        checkpoint_path=checkpoint_path if llm_complete else None,
+    )
+    archetype_records, archetype_expected = load_archetype_holdouts(layer3, layer2, by_id)
+    archetype_proposals, _ = rank_proposals(
+        archetype_records, by_concept, lambda texts: embed_texts(model, texts, batch_size=128)
+    )
+    archetype_confirmed, archetype_review = confirm_mappings(
+        archetype_records,
+        by_concept,
+        archetype_proposals,
+        similarity_threshold=args.similarity_threshold,
+        margin_threshold=args.margin_threshold,
+        human_decisions={},
         llm_complete=llm_complete,
         checkpoint=load_checkpoint(checkpoint_path),
         checkpoint_path=checkpoint_path if llm_complete else None,
     )
     labels = propagate_question_labels(questions, confirmed)
     spot_checks = load_human_decisions(args.spot_checks, set(by_id)) if args.spot_checks else None
+    misconception_concepts = {m.misconception_id: m.concept_id for m in misconceptions}
     report = validation_report(
         confirmed, proposals, by_id, layer3, labels, margin_metrics, spot_checks,
         l3_holdout_confirmed=l3_confirmed, l3_holdout_expected=l3_expected,
+        misconception_concepts=misconception_concepts,
     )
+    report["gold_spot_check"] = gold_spot_check_report({
+        "l3_human_15": (l3_confirmed, l3_expected),
+        "archetype_join_30": (archetype_confirmed, archetype_expected),
+    })
     generated_at = datetime.now(timezone.utc).isoformat()
     map_payload = {
         "_meta": {
@@ -628,6 +781,7 @@ def main(argv: Iterable[str] | None = None) -> int:
         "decisions": {},
         "queue": review,
         "l3_holdout_queue": l3_review,
+        "archetype_holdout_queue": archetype_review,
     }
     write_json(output_dir / MAP_PATH.name, map_payload)
     write_json(output_dir / LABELS_PATH.name, labels_payload)

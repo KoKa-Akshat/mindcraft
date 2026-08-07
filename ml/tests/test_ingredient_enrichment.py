@@ -35,7 +35,7 @@ def test_eedi_scope_resolves_aliases_and_fails_fast_on_unknown_concepts():
             "misconception_id": "mis_ratios_proportions__additive",
             "misconception_label": "Uses an additive relationship",
         }],
-        {"ratios_proportions"},
+        {"ratios_proportions": "ratios_proportions", "percent_ratio": "ratios_proportions"},
     )
     assert records[0].concept_id == "ratios_proportions"
     assert question_ids == {"mis_ratios_proportions__additive": ["q1"]}
@@ -43,7 +43,7 @@ def test_eedi_scope_resolves_aliases_and_fails_fast_on_unknown_concepts():
     with pytest.raises(ValueError, match="Unresolved Eedi conceptId"):
         enrichment.load_eedi_misconceptions(
             [{"id": "bad", "conceptId": "not_real", "misconception_id": "mis_x__y"}],
-            {"ratios_proportions"},
+            {"ratios_proportions": "ratios_proportions"},
         )
 
 
@@ -54,7 +54,7 @@ def test_same_misconception_cannot_cross_concepts():
                 {"id": "q1", "conceptId": "one", "misconception_id": "mis_shared__error"},
                 {"id": "q2", "conceptId": "two", "misconception_id": "mis_shared__error"},
             ],
-            {"one", "two"},
+            {"one": "one", "two": "two"},
         )
 
 
@@ -175,10 +175,13 @@ def test_propagation_keeps_frontend_shape_out_of_output():
 
 
 def test_real_l3_holdout_surface_contains_all_15_labeled_instances():
+    from mindcraft_graph.models.concept import Concept, build_concept_id_registry
+
     ontology = enrichment.load_json(enrichment.ONTOLOGY_PATH)
     layer3 = enrichment.load_json(enrichment.L3_PATH)
     by_concept, by_id = enrichment.load_ingredients(ontology)
-    records, expected = enrichment.load_l3_holdouts(layer3, by_id, set(by_concept))
+    concept_registry = build_concept_id_registry([Concept.model_validate(item) for item in ontology["concepts"]])
+    records, expected = enrichment.load_l3_holdouts(layer3, by_id, concept_registry)
     assert len(records) == 15
     assert len(expected) == 15
     assert all(expected[record.misconception_id] for record in records)

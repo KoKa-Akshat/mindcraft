@@ -1,0 +1,207 @@
+[
+  {
+    "id": "seed_area_volume_001",
+    "conceptId": "area_volume",
+    "level": 1,
+    "ingredient_id": "area_volume__standard_formulas",
+    "examTag": "ACT",
+    "format": "diagram",
+    "question": "A sailmaker cuts a triangular jib panel. The foot (base) runs 8 m along the boom; the panel's true height, straight up from the boom to the head, is 5 m. The leading edge, the slanted side, is 6.4 m. What's the area of the panel?",
+    "choices": [
+      "40 m²",
+      "20 m²",
+      "25.6 m²",
+      "13 m²"
+    ],
+    "correctIndex": 1,
+    "explanation": "Triangle area uses the perpendicular height, not the slant side: ½ × base × height = ½ × 8 × 5 = 20 m². The 6.4 m leading edge is real but irrelevant to area here.",
+    "hints": [
+      "Which of the two given lengths is perpendicular to the base?",
+      "Area of a triangle is ½ × base × (perpendicular) height."
+    ],
+    "distractor_taxonomy": [
+      {
+        "choice_index": 0,
+        "error_type": "forgot-half",
+        "student_thinking": "You multiplied base × height but never divided by 2.",
+        "misconception_id": "mis_area_volume__does_not_divide_2_calculating"
+      },
+      {
+        "choice_index": 2,
+        "error_type": "used-slant-height",
+        "student_thinking": "You used the slanted leading edge (6.4 m) instead of the perpendicular height (5 m).",
+        "misconception_id": "mis_area_volume__has_used_slant_height_and"
+      },
+      {
+        "choice_index": 3,
+        "error_type": "added-not-multiplied",
+        "student_thinking": "You added the base and height (8 + 5) instead of multiplying them.",
+        "misconception_id": "mis_area_volume__adds_calculating_area_instead_multiplying"
+      }
+    ]
+  },
+  {
+    "id": "seed_area_volume_002",
+    "conceptId": "area_volume",
+    "level": 2,
+    "ingredient_id": "area_volume__composite_figures",
+    "examTag": "ACT",
+    "format": "diagram",
+    "question": "A workshop floor is a 10 m × 8 m rectangle with a 4 m × 3 m storage corner walled off in one corner, no flooring goes down there. How many square metres of floor need laying?",
+    "choices": [
+      "80 m²",
+      "92 m²",
+      "68 m²",
+      "42 m²"
+    ],
+    "correctIndex": 2,
+    "explanation": "Full rectangle minus the walled-off corner: (10 × 8) − (4 × 3) = 80 − 12 = 68 m².",
+    "hints": [
+      "Find the area of the whole rectangle first, then remove the part that isn't floored.",
+      "Subtract, don't add, the walled-off corner."
+    ],
+    "distractor_taxonomy": [
+      {
+        "choice_index": 0,
+        "error_type": "ignored-cutout",
+        "student_thinking": "You measured the surrounding rectangle and never subtracted the walled-off corner.",
+        "misconception_id": "mis_area_volume__calculating_area_rectilinear_compound_shape"
+      },
+      {
+        "choice_index": 1,
+        "error_type": "added-not-subtracted",
+        "student_thinking": "You added the corner's area to the rectangle instead of removing it.",
+        "misconception_id": "mis_area_volume__adds_instead_subtracts_asked_find"
+      },
+      {
+        "choice_index": 3,
+        "error_type": "wrong-split-lengths",
+        "student_thinking": "You split the L-shape into pieces using side lengths that don't actually match the figure.",
+        "misconception_id": "mis_area_volume__uses_incorrect_side_length_splitting"
+      }
+    ]
+  },
+  {
+    "id": "seed_area_volume_003",
+    "conceptId": "area_volume",
+    "level": 2,
+    "ingredient_id": "area_volume__volume_as_base_times_height",
+    "examTag": "ACT",
+    "format": "diagram",
+    "question": "A camping-tent frame is a triangular prism: the triangular cross-section has a 6 m base and 4 m height, and the tent runs 10 m long. What volume of air does it enclose?",
+    "choices": [
+      "12 m³",
+      "40 m³",
+      "120 m²",
+      "120 m³"
+    ],
+    "correctIndex": 3,
+    "explanation": "Volume of a prism is cross-section area × length: (½ × 6 × 4) × 10 = 12 × 10 = 120 m³.",
+    "hints": [
+      "Find the area of the triangular cross-section first.",
+      "A prism's volume is that cross-section area times how far it runs."
+    ],
+    "distractor_taxonomy": [
+      {
+        "choice_index": 0,
+        "error_type": "stopped-at-cross-section",
+        "student_thinking": "You found the cross-section's area and stopped, never extending it along the tent's length.",
+        "misconception_id": "mis_area_volume__finds_area_one_face_asked"
+      },
+      {
+        "choice_index": 1,
+        "error_type": "used-pyramid-formula",
+        "student_thinking": "You used the pyramid volume formula (⅓ × base × height) on a shape that's a prism, not a pyramid.",
+        "misconception_id": "mis_area_volume__confuses_triangular_prism_with_pyramid"
+      },
+      {
+        "choice_index": 2,
+        "error_type": "wrong-units",
+        "student_thinking": "Your number is right, but volume is measured in cubic units, not square units.",
+        "misconception_id": "mis_area_volume__does_not_know_units_volume"
+      }
+    ]
+  },
+  {
+    "id": "seed_area_volume_004",
+    "conceptId": "area_volume",
+    "level": 3,
+    "ingredient_id": "area_volume__rectangular_prism_face_areas",
+    "examTag": "ACT",
+    "format": "diagram",
+    "question": "A packing crate measures 5 m long, 3 m wide, 4 m tall. The whole outside gets painted, top and bottom included. How many square metres of paint coverage is that?",
+    "choices": [
+      "47 m²",
+      "60 m³",
+      "94 m²",
+      "30 m²"
+    ],
+    "correctIndex": 2,
+    "explanation": "Surface area of a rectangular prism is 2(lw + lh + wh) = 2(5×3 + 5×4 + 3×4) = 2(15 + 20 + 12) = 2 × 47 = 94 m². Every face is counted once, including the pair you can't see.",
+    "hints": [
+      "A rectangular prism has six faces, in three matching pairs.",
+      "Find the area of each of the three distinct face shapes, then double the total."
+    ],
+    "distractor_taxonomy": [
+      {
+        "choice_index": 0,
+        "error_type": "visible-faces-only",
+        "student_thinking": "You added up the three faces you can see in the drawing and stopped there, forgetting the three hidden faces are the same sizes.",
+        "misconception_id": "mis_area_volume__calculating_surface_area_only_includes"
+      },
+      {
+        "choice_index": 1,
+        "error_type": "computed-volume",
+        "student_thinking": "You multiplied length × width × height, that's volume, not surface area.",
+        "misconception_id": "mis_area_volume__finds_volume_asked_for_surface"
+      },
+      {
+        "choice_index": 3,
+        "error_type": "one-face-pair-only",
+        "student_thinking": "You doubled just one pair of faces (length × width) and never accounted for the other two pairs.",
+        "misconception_id": "mis_area_volume__cannot_identify_correct_side_lengths"
+      }
+    ]
+  },
+  {
+    "id": "seed_area_volume_005",
+    "conceptId": "area_volume",
+    "level": 1,
+    "ingredient_id": "area_volume__square_side_from_area",
+    "examTag": "ACT",
+    "format": "diagram",
+    "question": "A square rug covers 64 m² of floor. How long is one side of the rug?",
+    "choices": [
+      "16 m",
+      "8 m",
+      "64 m",
+      "32 m"
+    ],
+    "correctIndex": 1,
+    "explanation": "Side length is the square root of the area, the inverse of squaring: √64 = 8 m.",
+    "hints": [
+      "Area of a square is side × side, so side length undoes that with a square root.",
+      "What number times itself gives 64?"
+    ],
+    "distractor_taxonomy": [
+      {
+        "choice_index": 0,
+        "error_type": "divided-by-4",
+        "student_thinking": "You divided the area by 4 instead of taking its square root.",
+        "misconception_id": "mis_area_volume__thinks_square_root_found_dividing"
+      },
+      {
+        "choice_index": 2,
+        "error_type": "no-inverse-applied",
+        "student_thinking": "You restated the area itself as the side length, without applying any inverse operation.",
+        "misconception_id": null
+      },
+      {
+        "choice_index": 3,
+        "error_type": "halved-instead-of-rooted",
+        "student_thinking": "You halved the area instead of taking its square root.",
+        "misconception_id": "mis_area_volume__confuses_square_rooting_and_halving"
+      }
+    ]
+  }
+]
