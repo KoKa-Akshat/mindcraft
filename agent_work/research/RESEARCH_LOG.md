@@ -4,6 +4,34 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-07 — Synthesizer tick v1.13: merge Parts XCII–XCIX
+
+**Tick type:** Synthesizer (UTC hour 21; hour%6≠0; ≥8 researcher entries since synthesizer v1.12 → Synthesizer)  
+**Chapter written:** none (merge pass only)  
+**Files revised:** `MINDCRAFT_RESEARCH_CONSTITUTION_v1.md` (edition/header / I.2 / I.4 / III / IX / XIV / XX / XXI / XXII glossary / Appendix F / closing); `NEXT_LAB.md`; this log; PDF regen.
+
+**Doctrine promoted to I.4 company law (provisional tags removed):**
+- SAFE-EXPLAIN (XCII) — short principle-first; SE before wrap; length fades; no Explanation Score™
+- SAFE-RETRIEVE (XCIII) — mode-contingent stalls; TOT→cue; freeze→soft bound; no Struggle Score™
+- SAFE-PF (XCIV) — fidelity-gated generate→consolidate on student RSMs; guided default when thin/exam/freeze
+- SAFE-APPRENTICE (XCV) — model→coach→scaffold→fade + articulate; shared ca_phase; no guild cosplay
+- SAFE-ATTN (XCVI) — protect attempt windows; residue park/resume; opt-in focus; no Focus Score™
+- SAFE-DUAL (XCVII) — structural dual coding; contiguous labels; static annotated default; no styles meshing
+- SAFE-MONITOR (XCVIII) — named judgments → miss-class control; densifies CALIB/COLD; no Monitoring Score™
+- SAFE-ROI (XCIX) — Map minute budgets; constrained AI for reps; humans for joins; FEI per tutor-minute
+
+**Red Team kills promoted:** #46–#53 (from provisional chapter kills → v1.13 company dossier).
+
+**Experiment families confirmed in Part IX:** EXPLAIN / RETRIEVE / PF / APPRENTICE / ATTN / DUAL / MONITOR / ROI.
+
+**Claim killed (synthesis):** Treating XCII–XCIX as orphan provisional deep-dives or independent North Stars (Explanation Score™ / monologue≡SE, Struggle Score™ / blank-time theater, fail-first / PF Score™, guild apprenticeship costume, Focus Score™ / mid-attempt DAU pushes, Dual Coding Score™ / always-add-picture, Monitoring Score™ / one-scan calibration, AI-replaces-tutors / Session ROI Score™ / hours NS) — demoted under FEI + SAFE-* method-not-costume rule.
+
+**Next researcher id:** **100** (worked-example vs problem-solving timing across expertise). Researcher count since v1.13 synthesizer: **0**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-07 — Researcher tick: Part XCIX Opportunity cost of tutor minutes vs AI scaffold (SAFE-ROI)
 
 **Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch99 never written → prefer Researcher per rotation; researcher count since synthesizer v1.12 = 7 → Researcher)  

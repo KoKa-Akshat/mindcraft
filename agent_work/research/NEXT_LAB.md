@@ -88,6 +88,7 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 97 | Dual coding & diagram FormatId load | Multimedia principles × format axis; when figures help | **DONE** (2026-08-07) — Part XCVII / SAFE-DUAL |
 | 98 | Metacognitive monitoring in gap-scan | Confidence vs accuracy; calibration loop with SAFE-CALIB | **DONE** (2026-08-07) — Part XCVIII / SAFE-MONITOR |
 | 99 | Opportunity cost of tutor minutes vs AI scaffold | When HITL time beats coach; session ROI honesty | **DONE** (2026-08-07) — Part XCIX / SAFE-ROI |
+| — | **Synthesizer v1.13** | Merge XCII–XCIX SAFE-* into core OS I.4 / XIV / IX / XXI | **DONE** (2026-08-07 UTC 21) |
 | 100 | Worked-example vs problem-solving timing across expertise | When E0→E3 schedule collides with prior knowledge | **NEXT** |
 | 101 | Self-regulated learning cycles (Zimmerman) in Practice UX | Forethought/performance/reflection loops; no SRL Score™ | queued |
 | 102 | Generative learning activities (Fiorella/Mayer) in Practice | Summarize/teach-back/draw; germane load without fluff | queued |
@@ -145,11 +146,11 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any unlimited-hints / help-NPS NS / avoidance-as-grit / Help Score™ / parent hint-stalk / metacognition≡ACT points / “never stuck” answer-dump hero (Part LXXXIX)
 - Any DAU/streak/XP/blocked-accuracy as learning NS / FEI Score™ / single-KPI tutor pay on one FEI event / thumbs-up≡learning / science-backed identity ads without IUA / celebrate retry without binge gates (Part XC)
 - Any unlimited free hard peeks / Hint Score™ / XP-for-hints / shame-timer peek cost / black-box perfect-hint AI / fade costume with free bottom-out menu (Part XCI)
-- Any longer≡better / token-count quality / Explanation Score™ / AI monologue≡SE / unlimited thorough AI essays / fixed long wrap across expertise / seductive coach fluff as pedagogy (Part XCII)
-- Any all-struggle≡productive / Struggle Score™ / blank-time NS / always-wait silence theater / instant hard dump on first stall / never-stuck answer hero / errors-always-scar fear / dwell-XP grit (Part XCIII)
-- Any every-miss≡PF / fail-first-always / generation-without-consolidation / PF Score™ / discovery-as-identity / anxiety-forced stew≡PF / guaranteed ACT points from invent-first (Part XCIV)
-- Any guild/master cosplay / modeling≡lecture / never-fade permanent coach / talk-%≡CA / Apprenticeship Score™ / Discord≡apprenticeship / reciprocal costume without turns / CA ads without phase logs (Part XCV)
-- Any Focus Score™ / phone-shame pedagogy / multitasking-as-talent / mid-attempt DAU pushes / presence≡modern learning / guaranteed ACT from focus kits / covert attention surveillance (Part XCVI)
-- Any Dual Coding Score™ / always-add-picture / decoration≡dual-coding / visual-learner meshing / animation-default≡science / redundancy stack as thoroughness / split-legend density / unverified figure diagnostics / guaranteed ACT from multimedia (Part XCVII)
-- Any Monitoring Score™ / metacognition ads without control wiring / easy-only≡calibration / immediate-surety≡delayed-JOL / equal wrong updates / one-scan calibration / raise-metacognition identity / guaranteed ACT from monitoring packaging (Part XCVIII)
-- Any AI-replaces-tutors / tutoring-is-free / unlimited-human entitlement / hours-booked NS / Session ROI Score™ / VanLehn-as-ChatGPT license / Bastani practice scores≡learning / school 0.37σ as ACT guarantee from thin sessions (Part XCIX)
+- Any longer≡better / token-count quality / Explanation Score™ / AI monologue≡SE / unlimited thorough AI essays / fixed long wrap across expertise / seductive coach fluff as pedagogy (Part XCII / v1.13 company law)
+- Any all-struggle≡productive / Struggle Score™ / blank-time NS / always-wait silence theater / instant hard dump on first stall / never-stuck answer hero / errors-always-scar fear / dwell-XP grit (Part XCIII / v1.13 company law)
+- Any every-miss≡PF / fail-first-always / generation-without-consolidation / PF Score™ / discovery-as-identity / anxiety-forced stew≡PF / guaranteed ACT points from invent-first (Part XCIV / v1.13 company law)
+- Any guild/master cosplay / modeling≡lecture / never-fade permanent coach / talk-%≡CA / Apprenticeship Score™ / Discord≡apprenticeship / reciprocal costume without turns / CA ads without phase logs (Part XCV / v1.13 company law)
+- Any Focus Score™ / phone-shame pedagogy / multitasking-as-talent / mid-attempt DAU pushes / presence≡modern learning / guaranteed ACT from focus kits / covert attention surveillance (Part XCVI / v1.13 company law)
+- Any Dual Coding Score™ / always-add-picture / decoration≡dual-coding / visual-learner meshing / animation-default≡science / redundancy stack as thoroughness / split-legend density / unverified figure diagnostics / guaranteed ACT from multimedia (Part XCVII / v1.13 company law)
+- Any Monitoring Score™ / metacognition ads without control wiring / easy-only≡calibration / immediate-surety≡delayed-JOL / equal wrong updates / one-scan calibration / raise-metacognition identity / guaranteed ACT from monitoring packaging (Part XCVIII / v1.13 company law)
+- Any AI-replaces-tutors / tutoring-is-free / unlimited-human entitlement / hours-booked NS / Session ROI Score™ / VanLehn-as-ChatGPT license / Bastani practice scores≡learning / school 0.37σ as ACT guarantee from thin sessions (Part XCIX / v1.13 company law)
