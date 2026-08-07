@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-07 — Researcher tick: Part XCV Cognitive apprenticeship in tutor playbooks (SAFE-APPRENTICE)
+
+**Tick type:** Researcher (UTC hour 3; hour%6≠0; researcher count since synthesizer v1.12 = 3 → Researcher)  
+**Chapter written:** `chapters/95_cognitive_apprenticeship_tutor_playbooks.md` (Part XCV)  
+**Claim examined:** How MindCraft should encode Collins-style cognitive apprenticeship (model→coach→scaffold→fade + articulate/reflect/explore) into tutor playbooks and coach UX — without guild cosplay or monologue-as-modeling.
+
+**Doctrine proposed (provisional until next synthesizer):** **SAFE-APPRENTICE** — make expert thinking (esp. control/heuristics) visible; student performance under coaching; scaffold then fade; articulation required; shared `ca_phase` language for HITL+AI; no Apprenticeship Score™ / modeling≡lecture / never-fade; proof = solo transfer + articulation; APPRENTICE-* before costume campaigns.
+
+**Evidence spine:** Collins, Brown & Newman (1989); Collins, Brown & Holum (1991); Brown, Collins & Duguid (1989); Schoenfeld (1985); Wood, Bruner & Ross (1976); Palincsar & Brown (1984); Dennen (2004); SAFE-FADE / SAFE-TALK / SAFE-HITL / SAFE-PF boundaries.
+
+**Claim killed (this tick):** Guild/master cosplay / modeling≡lecture or AI monologue / never-fade permanent coaching / talk-%≡CA / Apprenticeship Score™ / Discord≡apprenticeship / reciprocal costume without turn-taking / CA marketing without phase logs — demoted under Collins method stack + Wood scaffolding + reciprocal-teaching fidelity; inspectable phase playbooks survive behind APPRENTICE-*.
+
+**Experiments mounted:** APPRENTICE-1…5 + APPRENTICE-QUAL.
+
+**Next researcher id:** **96** (attention residue & device distraction). Researcher count since v1.12 synthesizer: **4**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-07 — Researcher tick: Part XCIV Productive failure vs guided success sequencing (SAFE-PF)
 
 **Tick type:** Researcher (UTC hour 0 ≡ Red Team slot, but ch94 never written → prefer Researcher per rotation; researcher count since synthesizer v1.12 = 2 → Researcher)  

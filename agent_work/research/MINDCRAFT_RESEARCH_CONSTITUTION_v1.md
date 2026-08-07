@@ -4,7 +4,7 @@
 **Edition:** v1.12 (Synthesizer consolidation of Parts LXXXIV–XCI into surviving doctrine)  
 **Research question:** How do humans become *confident mathematical thinkers*?  
 **Product thesis under audit:** The product is identity transformation, not mathematics delivery.  
-**Last updated:** 2026-08-07 (Researcher — Part XCIV / SAFE-PF provisional)
+**Last updated:** 2026-08-07 (Researcher — Part XCV / SAFE-APPRENTICE provisional)
 **Growth model:** Core OS (this file) + `chapters/*.md` via `CHAPTER_MANIFEST.txt` → PDF  
 **Scale intent:** Multi-month densification toward 150–300 pages of *evidenced* material — never fluff  
 **Epistemic rule:** Every claim is labeled FACT / HYPOTHESIS / FOUNDER BELIEF / SPECULATION.
@@ -84,8 +84,9 @@
 | XCII | `chapters/92_explanation_length_germane_load.md` | Explanation length vs germane load; SAFE-EXPLAIN (provisional); short coach vs monologue |
 | XCIII | `chapters/93_retrieval_failure_modes_practice_ux.md` | Retrieval failure modes; SAFE-RETRIEVE (provisional); TOT vs blank vs struggle bounds |
 | XCIV | `chapters/94_productive_failure_vs_guided_success.md` | Productive failure vs guided success; SAFE-PF (provisional); generate→consolidate fidelity |
+| XCV | `chapters/95_cognitive_apprenticeship_tutor_playbooks.md` | Cognitive apprenticeship in tutor playbooks; SAFE-APPRENTICE (provisional); model→coach→fade |
 
-Queued next: see `NEXT_LAB.md` (Part XCV cognitive apprenticeship, then 96).
+Queued next: see `NEXT_LAB.md` (Part XCVI attention residue, then 97).
 
 **Synthesizer note (v1.12):** Eight researcher chapters (LXXXIV–XCI) landed after v1.11 as provisional I.4 appends — talk-ratio construction fidelity, story-load CLT budgets, competence social proof, bank coverage honesty, worked-example fading, help-seeking vs abuse, FEI North Star instrumentation, and hint economy. This edition promotes each stack to company law (removes provisional tags), formalizes Red Team kills #38–#45, confirms TALK/STORYLOAD/PROOF/COVER/FADE/HELP/INSTR/HINT experiment families in Part IX, and refreshes metrics/glossary/competitive implication. Deep-dive files remain authoritative for citations; the OS keeps only *surviving* product rules.
 
@@ -172,8 +173,9 @@ Explanations alone rarely produce (1)–(3). Fluent AI explanations can *acceler
 | Longer≡better / Explanation Score™ / monologue≡SE ≡ learning | **KILLED (provisional)** | SAFE-EXPLAIN (XCII); short principle-first + SE-before-wrap |
 | All-struggle≡productive / Struggle Score™ / blank-time / never-stuck ≡ learning | **KILLED (provisional)** | SAFE-RETRIEVE (XCIII); mode-contingent stall UX |
 | Every-miss≡PF / fail-first-always / PF Score™ / discovery-without-consolidation ≡ learning | **KILLED (provisional)** | SAFE-PF (XCIV); fidelity-gated generate→consolidate |
+| Guild cosplay / modeling≡lecture / never-fade / Apprenticeship Score™ ≡ learning | **KILLED (provisional)** | SAFE-APPRENTICE (XCV); phase-fidelity model→coach→fade |
 
-**Implication:** Do not bet on “better explanations,” graph-file cosplay, warm-tutor theater, emotion cameras, page-count science, Ivy hire theater, unverified AI banks, FERPA-badge GTM, expanding-SRS mystique, headcount vanity, mastery fireworks, FSRS brand, cram packages, instant-feedback theater, bridge-count ads, day-one greens, format-count cosplay, parent surveillance portals, Talk Ratio theater, immersive lore-as-pedagogy, star-wall / user-count learning proof, item-count / complete-ACT coverage theater, always-full-worked / unlimited-solutions Solver theater, unlimited-hints / never-stuck answer-dump theater, DAU/streak/XP / FEI Score™ dashboard theater, unlimited free hard peeks / Hint Score™ theater, longer≡better / unlimited thorough AI essay theater, struggle-theater / blank-time / always-wait / instant-dump stall UX, or fail-first / every-miss-as-PF / discovery-without-consolidation cosplay. Bet on **FEI + pedagogy wrap + SAFE-* stack**: fear→evidence→identity, with inspectable diagnosis, Map-briefed humans, privacy-bound affect, verified keys, blueprint-honest coverage matrices, district trust packets, honest spaced returns, fidelity-over-tenure ops, time-honest MoC, dual-rail durable GTM, load-honest story wrap, witnessable dated solo competence artifacts, guidance that fades as the student proves the join, instrumental help that still demands construction, instrumented `retry_120s` / motive-coded `challenge_accept` / `transfer_pass` / `solo_transfer_pass` under XXI.4 co-gates, contingent soft→hard peeks priced in construction effort, length-contingent principle coaches that leave room to think, mode-contingent retrieval support (TOT cue vs freeze scaffold) without Struggle Score™, and fidelity-gated productive-failure missions (generate then consolidate on student RSMs) only when priors and affect allow.
+**Implication:** Do not bet on “better explanations,” graph-file cosplay, warm-tutor theater, emotion cameras, page-count science, Ivy hire theater, unverified AI banks, FERPA-badge GTM, expanding-SRS mystique, headcount vanity, mastery fireworks, FSRS brand, cram packages, instant-feedback theater, bridge-count ads, day-one greens, format-count cosplay, parent surveillance portals, Talk Ratio theater, immersive lore-as-pedagogy, star-wall / user-count learning proof, item-count / complete-ACT coverage theater, always-full-worked / unlimited-solutions Solver theater, unlimited-hints / never-stuck answer-dump theater, DAU/streak/XP / FEI Score™ dashboard theater, unlimited free hard peeks / Hint Score™ theater, longer≡better / unlimited thorough AI essay theater, struggle-theater / blank-time / always-wait / instant-dump stall UX, fail-first / every-miss-as-PF / discovery-without-consolidation cosplay, or guild / master-tutor / modeling-as-lecture / never-fade apprenticeship costume. Bet on **FEI + pedagogy wrap + SAFE-* stack**: fear→evidence→identity, with inspectable diagnosis, Map-briefed humans, privacy-bound affect, verified keys, blueprint-honest coverage matrices, district trust packets, honest spaced returns, fidelity-over-tenure ops, time-honest MoC, dual-rail durable GTM, load-honest story wrap, witnessable dated solo competence artifacts, guidance that fades as the student proves the join, instrumental help that still demands construction, instrumented `retry_120s` / motive-coded `challenge_accept` / `transfer_pass` / `solo_transfer_pass` under XXI.4 co-gates, contingent soft→hard peeks priced in construction effort, length-contingent principle coaches that leave room to think, mode-contingent retrieval support (TOT cue vs freeze scaffold) without Struggle Score™, fidelity-gated productive-failure missions (generate then consolidate on student RSMs) only when priors and affect allow, and tutor/coach cognitive-apprenticeship phases (model→coach→fade + articulation) logged for fidelity rather than guild branding.
 
 ## I.3 What to optimize (North Star debate)
 
@@ -256,14 +258,15 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 | **SAFE-EXPLAIN (provisional)** | Short principle-first before monologue; germane≠more text; SE before wrap; length fades with expertise; coherence>charm; no token NS | XCII | Ban longer≡better / Explanation Score™ / AI monologue≡SE / unlimited thorough AI essays / fixed long wrap / seductive coach fluff |
 | **SAFE-RETRIEVE (provisional)** | Name stall mode; attempt before heavy help; TOT→cue; freeze→bounded soft; progress≠blank-time; no Struggle Score™ | XCIII | Ban all-struggle≡productive / blank-time NS / always-wait / instant dump / never-stuck hero / errors-always-scar |
 | **SAFE-PF (provisional)** | PF = generate→consolidate on student RSMs; fidelity+prior gates; guided default when thin/exam/freeze; no PF Score™ | XCIV | Ban every-miss≡PF / fail-first-always / generation-without-consolidation / discovery-as-identity / ACT-from-invent |
+| **SAFE-APPRENTICE (provisional)** | Model control/heuristics → coach → scaffold→fade; articulate; shared ca_phase; proof = solo+articulation | XCV | Ban guild cosplay / modeling≡lecture / never-fade / talk-%≡CA / Apprenticeship Score™ / CA ads without phases |
 | **Block → near-miss interleave → spaced mix** | Blocking = acquisition scaffold; delayed mixed accuracy = readiness signal | XXIX, XXXIX, LXXIV | Ban “shuffle = science”; ban blocked-accuracy vanity |
 | **Student-generated why** | Faded examples + structured principle/misconception prompts *before* AI wrap | XXVI, XL | Ban AI-monologue≡SE; ban explain-own-wrong-first default |
 | **Competitive wedge** | Do not out-content Khan, out-streak Duo, out-delight Brilliant, or out-fluency ChatGPT | XXXV, XX | Sell recoverable struggle + competence evidence + solo transfer |
 | **Equity of worlds** | Story wrap is identity technology; tokenism and stereotype-cueing copy are kills | XXXVI, XXVIII | HIST-EQ; belonging without “even you can” |
 
-**Merged / demoted (do not treat as separate products):** “AI tutor,” “mastery path,” “growth mindset,” “engagement,” “grit,” “habit streak,” “celebrate mistakes,” “community of practice,” “deliberate practice brand,” “film study,” “recital,” “grandmaster review,” “exposure therapy,” “girl STEM brand,” “WTP survey,” “Identity Score™,” “8-week math person,” “character equity,” “knowledge-graph moat,” “emotion AI empathy,” “science-backed page count,” “Ivy tutor SKU,” “AI wrote N questions,” “FERPA-compliant badge,” “perfect-interval SRS,” “tutor headcount / retention-%,” “mastery fireworks / personal Ebbinghaus,” “FSRS/Anki brain optimizer,” “cram/bootcamp/+points packages,” “instant feedback AI / always-delay science,” “bridge-count / we connect everything,” “day-one personalized mastery / placement belt,” “every format / visual learning / Format Personality™,” “parent fireworks portal / Family Leaderboard / live wrong-answer stalk,” “immersive story world / lore engagement / Story Engagement Score™,” “user-count / star-wall / vague confidence testimonials as learning proof,” “item-count / complete ACT bank / AI fills all holes coverage theater,” “always-full-worked / unlimited solutions / never-fade Solver,” “unlimited hints / never stuck / Help Score™,” “DAU/streak/XP North Star / FEI Score™ / thumbs-up≡learning,” “unlimited free hard peeks / Hint Score™ / XP-for-hints / perfect-hint AI,” “longer≡better / Explanation Score™ / unlimited thorough AI essays / monologue≡SE,” “maximize productive struggle minutes / Struggle Score™ / blank-time grit / always-wait / never-stuck dump,” and “fail-first always / every miss is productive failure / PF Score™ / discovery-without-consolidation” are *not* independent North Stars — they are subordinate UX under FEI + the rows above (borrow *method*, never *costume*).
+**Merged / demoted (do not treat as separate products):** “AI tutor,” “mastery path,” “growth mindset,” “engagement,” “grit,” “habit streak,” “celebrate mistakes,” “community of practice,” “deliberate practice brand,” “film study,” “recital,” “grandmaster review,” “exposure therapy,” “girl STEM brand,” “WTP survey,” “Identity Score™,” “8-week math person,” “character equity,” “knowledge-graph moat,” “emotion AI empathy,” “science-backed page count,” “Ivy tutor SKU,” “AI wrote N questions,” “FERPA-compliant badge,” “perfect-interval SRS,” “tutor headcount / retention-%,” “mastery fireworks / personal Ebbinghaus,” “FSRS/Anki brain optimizer,” “cram/bootcamp/+points packages,” “instant feedback AI / always-delay science,” “bridge-count / we connect everything,” “day-one personalized mastery / placement belt,” “every format / visual learning / Format Personality™,” “parent fireworks portal / Family Leaderboard / live wrong-answer stalk,” “immersive story world / lore engagement / Story Engagement Score™,” “user-count / star-wall / vague confidence testimonials as learning proof,” “item-count / complete ACT bank / AI fills all holes coverage theater,” “always-full-worked / unlimited solutions / never-fade Solver,” “unlimited hints / never stuck / Help Score™,” “DAU/streak/XP North Star / FEI Score™ / thumbs-up≡learning,” “unlimited free hard peeks / Hint Score™ / XP-for-hints / perfect-hint AI,” “longer≡better / Explanation Score™ / unlimited thorough AI essays / monologue≡SE,” “maximize productive struggle minutes / Struggle Score™ / blank-time grit / always-wait / never-stuck dump,” “fail-first always / every miss is productive failure / PF Score™ / discovery-without-consolidation,” and “guild / master tutor / cognitive apprenticeship™ costume / Apprenticeship Score™ / modeling-minutes / never-fade coach” are *not* independent North Stars — they are subordinate UX under FEI + the rows above (borrow *method*, never *costume*).
 
-**Next research bottleneck:** Part XCV **Cognitive apprenticeship in tutor playbooks**. Experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O/WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT/ONTO/HITL/PRIV/LABMETA/GRAIN/GENQ/PROCURE/SCHED/WORK/FORGET/ADAPT/CRAM/FB/BRIDGE/COLD/FORMAT/PDASH/TALK/STORYLOAD/PROOF/COVER/FADE/HELP/INSTR/HINT/EXPLAIN/RETRIEVE/PF gate claims above L1. Researcher count since v1.12 synthesizer = **3**.
+**Next research bottleneck:** Part XCVI **Attention residue & device distraction in practice**. Experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O/WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT/ONTO/HITL/PRIV/LABMETA/GRAIN/GENQ/PROCURE/SCHED/WORK/FORGET/ADAPT/CRAM/FB/BRIDGE/COLD/FORMAT/PDASH/TALK/STORYLOAD/PROOF/COVER/FADE/HELP/INSTR/HINT/EXPLAIN/RETRIEVE/PF/APPRENTICE gate claims above L1. Researcher count since v1.12 synthesizer = **4**.
 
 ---
 
@@ -343,6 +346,7 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 
 | Date | Finding | Type | Action |
 |------|---------|------|--------|
+| 2026-08-07 | SAFE-APPRENTICE: model→coach→fade + articulate; kill guild cosplay / modeling≡lecture | Evidence | APPRENTICE-1…5; next = XCVI attention residue |
 | 2026-08-07 | SAFE-PF: fidelity-gated generate→consolidate; kill every-miss≡PF / fail-first-always | Evidence | PF-1…5; next = XCV apprenticeship |
 | 2026-08-06 | Synthesizer v1.12: merge LXXXIV–XCI SAFE-* into I.4; kills #38–#45 | Synthesis | Surviving commercial law; next = XCII explanation length |
 | 2026-08-05 | Synthesizer v1.11: merge LXXV–LXXXIII SAFE-* into I.4; kills #29–#37 | Synthesis | Surviving commercial law; next = LXXXIV tutor talk-ratio |
@@ -605,6 +609,7 @@ Core A–D remain. Chapter ticks densified them into families — prefer the den
 | EXPLAIN-* | Principle-short vs monologue / SE-before-wrap / length×fade / soft-wrong short mark / parent CBC clear-short | XCII |
 | RETRIEVE-* | TOT micro-cue vs instant hint / freeze bound soft vs long wait / attempt-before-help / progress-aware dwell / parent CBC attempt-then-coach | XCIII |
 | PF-* | High-fidelity PF vs DI / student-RSM C&C vs generic lecture / thin-prior gate / freeze-exit PF / parent CBC invent-then-compare | XCIV |
+| APPRENTICE-* | Playbook model→coach→fade+articulate vs explain-pour / control-talk model vs steps-only / within-session fade / reciprocal beat / parent CBC take-the-wheel | XCV |
 
 ---
 
@@ -841,6 +846,10 @@ Core A–D remain. Chapter ticks densified them into families — prefer the den
 ### Kill #48 (provisional, XCIV): “Every-miss≡PF / fail-first-always / PF Score™ / discovery-without-consolidation ≡ learning”
 **Destroyed:** Labeling every unsuccessful attempt as productive failure; fail-first / invent-always as brand or North Star; generation without Phase-2 consolidation that builds on student RSMs; PF Score™ / generation-minutes KPIs; pure discovery-as-identity; anxiety-forced endless generation cosplay; guaranteed ACT points from invent-first.  
 **Surviving (provisional):** SAFE-PF — designed generate→consolidate-on-student-RSMs; fidelity + prior-knowledge gates; guided/I-PS default when priors thin, procedural/exam chrome, or freeze (SAFE-RETRIEVE exit); proof = conceptual + transfer; instrument PF-* before invent-first campaigns (XCIV).
+
+### Kill #49 (provisional, XCV): “Guild cosplay / modeling≡lecture / never-fade / Apprenticeship Score™ ≡ learning”
+**Destroyed:** Guild / master / journeyman costume as pedagogy proof; modeling as lecture or AI monologue without student attempt; never-fade permanent coaching as kindness; talk-% alone as cognitive apprenticeship; Apprenticeship Score™ / modeling-minutes NS; Discord≡apprenticeship; reciprocal-teaching costume without turn-taking; CA marketing without inspectable phase logs.  
+**Surviving (provisional):** SAFE-APPRENTICE — model control/heuristics → coach → scaffold→fade; articulation required; shared `ca_phase` for HITL+AI; proof = solo transfer + articulation quality; instrument APPRENTICE-* before guild / apprenticeship-costume campaigns (XCV).
 
 ---
 
@@ -1328,6 +1337,7 @@ Ship changes that raise `retry_120s` and mastery-motive `challenge_accept` witho
 | SAFE-EXPLAIN (provisional) | Short principle-first; germane≠more text; SE before wrap; length fades; no Explanation Score™ / monologue≡SE (Part XCII) |
 | SAFE-RETRIEVE (provisional) | Mode-contingent stalls; TOT→cue; freeze→soft bound; attempt before help; no Struggle Score™ / never-stuck (Part XCIII) |
 | SAFE-PF (provisional) | Fidelity-gated generate→consolidate on student RSMs; guided default when thin/exam/freeze; no PF Score™ / every-miss≡PF (Part XCIV) |
+| SAFE-APPRENTICE (provisional) | Model→coach→scaffold→fade + articulate; shared ca_phase; no guild cosplay / modeling≡lecture / Apprenticeship Score™ (Part XCV) |
 
 ## Appendix B — Maya interview protocol (qual)
 
@@ -1426,6 +1436,7 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 3ah. Explanation length vs germane load — **DONE** Part XCII / SAFE-EXPLAIN (provisional)  
 3ai. Retrieval failure modes in practice UX — **DONE** Part XCIII / SAFE-RETRIEVE (provisional)  
 3aj. Productive failure vs guided success sequencing — **DONE** Part XCIV / SAFE-PF (provisional)  
+3ak. Cognitive apprenticeship in tutor playbooks — **DONE** Part XCV / SAFE-APPRENTICE (provisional)  
 3ak. Cognitive apprenticeship in tutor playbooks — queued id 95 **NEXT**  
 3al. Attention residue & device distraction in practice — queued id 96  
 3am. Dual coding & diagram FormatId load — queued id 97  
@@ -1494,7 +1505,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 64. **DONE (2026-08-06):** Explanation length vs germane load (Part XCII / id 92) — SAFE-EXPLAIN stack (provisional)  
 65. **DONE (2026-08-06):** Retrieval failure modes in practice UX (Part XCIII / id 93) — SAFE-RETRIEVE stack (provisional)  
 66. **DONE (2026-08-07):** Productive failure vs guided success sequencing (Part XCIV / id 94) — SAFE-PF stack (provisional)  
-67. **NEXT:** Cognitive apprenticeship in tutor playbooks (Part XCV / id 95)
+67. **DONE (2026-08-07):** Cognitive apprenticeship in tutor playbooks (Part XCV / id 95) — SAFE-APPRENTICE stack (provisional)  
+68. **NEXT:** Attention residue & device distraction in practice (Part XCVI / id 96)
 
 ---
 
@@ -1528,4 +1540,4 @@ MindCraft’s deepest risk is not technical failure. It is **winning the wrong g
 
 This Constitution exists so the company notices that risk early, and runs experiments that can kill beloved ideas.
 
-**v1.12 synthesizer pass folded Parts LXXXIV–XCI into surviving commercial doctrine (I.4 rows SAFE-TALK through SAFE-HINT; Red Team kills #38–#45 promoted from provisional). Experiment families TALK/STORYLOAD/PROOF/COVER/FADE/HELP/INSTR/HINT confirmed mounted. Researcher ticks 2026-08-06 added Part XCII / SAFE-EXPLAIN (provisional) + kill #46 and Part XCIII / SAFE-RETRIEVE (provisional) + kill #47 + RETRIEVE-* family. Researcher tick 2026-08-07 added Part XCIV / SAFE-PF (provisional) + kill #48 + PF-* family. Next researcher id: XCV cognitive apprenticeship. Researcher count since v1.12 = 3. Page count is not the finish line — falsifiable truth is.**
+**v1.12 synthesizer pass folded Parts LXXXIV–XCI into surviving commercial doctrine (I.4 rows SAFE-TALK through SAFE-HINT; Red Team kills #38–#45 promoted from provisional). Experiment families TALK/STORYLOAD/PROOF/COVER/FADE/HELP/INSTR/HINT confirmed mounted. Researcher ticks 2026-08-06 added Part XCII / SAFE-EXPLAIN (provisional) + kill #46 and Part XCIII / SAFE-RETRIEVE (provisional) + kill #47 + RETRIEVE-* family. Researcher ticks 2026-08-07 added Part XCIV / SAFE-PF (provisional) + kill #48 + PF-* family and Part XCV / SAFE-APPRENTICE (provisional) + kill #49 + APPRENTICE-* family. Next researcher id: XCVI attention residue. Researcher count since v1.12 = 4. Page count is not the finish line — falsifiable truth is.**
