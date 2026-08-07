@@ -26,6 +26,7 @@ import { db, auth } from '../firebase'
 import { useUser } from '../App'
 import { useToast } from '../hooks/useToast'
 import { fmtDateTime } from '../utils/format'
+import { clearDiagnosticDoneLocal } from '../lib/practiceState'
 import { ML_BASE, WEBHOOK_BASE } from '../lib/mlApi'
 import {
   listAllowlist, addToAllowlist, removeFromAllowlist,
@@ -633,14 +634,19 @@ export default function Admin() {
 
   async function retakeGapScan(uid: string) {
     // Clear all diagnostic state: Firestore flags + practice drafts.
-    // Local storage (practiceState.ts keys) is cleared by the student's
-    // own browser on their next page load once diagnosticCompleted is gone.
     await updateDoc(doc(db, 'users', uid), {
       diagnosticCompleted: deleteField(),
       diagnosticCompletedAt: deleteField(),
       practiceDrafts: deleteField(),
       practiceDraftAt: deleteField(),
     })
+    // Firestore alone isn't enough: Dashboard's mount check self-heals a
+    // missing diagnosticCompleted flag back to true if it finds the local
+    // "done" signal (localStorage/cookie, practiceState.ts) plus prior
+    // activity — meant for a student who lost the flag to a bug, not this
+    // deliberate reset. Only clears THIS browser's signal, so resetting a
+    // different student's account here doesn't (and can't) reach their device.
+    if (uid === user.uid) clearDiagnosticDoneLocal()
     showToast('Diagnostic fully reset — student will re-run gap scan on next visit.')
   }
 

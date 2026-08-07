@@ -5,7 +5,9 @@ export type AppTabId = 'dashboard' | 'practice' | 'solver' | 'map' | 'admin'
 
 const BASE_TABS: { id: AppTabId; label: string }[] = [
   { id: 'dashboard', label: 'Dashboard' },
-  { id: 'solver',    label: 'Solver' },
+  { id: 'practice',  label: 'Practice' },
+  { id: 'solver',    label: 'Problem Solver' },
+  { id: 'map',       label: 'Knowledge Map' },
 ]
 
 type Props = {
@@ -22,7 +24,9 @@ export default function AppTabBar({ active, className, isAdmin }: Props) {
     if (tab === active) return
     switch (tab) {
       case 'dashboard': navigate('/dashboard'); break
+      case 'practice':  navigate('/practice'); break
       case 'solver':    navigate('/practice?homeworkHelp=1'); break
+      case 'map':       navigate('/knowledge-graph'); break
       case 'admin':     navigate('/admin'); break
     }
   }

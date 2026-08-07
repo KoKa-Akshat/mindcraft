@@ -18,6 +18,24 @@ export function persistDiagnosticDoneLocal(): void {
   document.cookie = `mc_diag_done=1${domain}; path=/; max-age=31536000; SameSite=Lax`
 }
 
+/**
+ * Counterpart to persistDiagnosticDoneLocal — clears the local "done" signal
+ * on THIS browser. Required alongside a Firestore diagnosticCompleted reset:
+ * Dashboard's mount check self-heals a missing diagnosticCompleted flag back
+ * to true whenever it finds this local signal plus prior practice activity
+ * (meant for students who lost the flag to a bug, not for a deliberate admin
+ * reset) — without this, an admin's own "reset my diagnostic" silently
+ * un-does itself on the very next load. Only clears the CURRENT browser's
+ * signal; resetting another student's account from Admin doesn't reach their
+ * device and was never going to.
+ */
+export function clearDiagnosticDoneLocal(): void {
+  if (typeof window === 'undefined') return
+  try { localStorage.removeItem('mc-diag-done') } catch { /* ignore */ }
+  const domain = window.location.hostname.endsWith('.web.app') ? '; domain=.web.app' : ''
+  document.cookie = `mc_diag_done=; path=/; max-age=0${domain}; SameSite=Lax`
+}
+
 export async function markDiagnosticComplete(
   uid: string,
   data: {
