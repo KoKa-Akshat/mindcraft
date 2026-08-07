@@ -1,7 +1,7 @@
 {
   "_meta": {
-    "generated_at": "2026-07-28T12:13:55.358307+00:00",
-    "question_count": 811
+    "generated_at": "2026-08-07T06:42:44.423928+00:00",
+    "question_count": 1077
   },
   "labels": {
     "eedi_0": [
@@ -12,6 +12,9 @@
     ],
     "eedi_1000": [
       "algebraic_manipulation__clearing_fractions"
+    ],
+    "eedi_1001": [
+      "number_properties__perfect_square_odd_factors"
     ],
     "eedi_1002": [
       "fractions_decimals__fraction_decimal_conversion"
@@ -25,6 +28,9 @@
     "eedi_1007": [
       "ratios_proportions__ratio_as_comparison"
     ],
+    "eedi_1009": [
+      "linear_equations__slope_intercept_form"
+    ],
     "eedi_1011": [
       "transformations__reflection_rules"
     ],
@@ -34,6 +40,12 @@
     "eedi_1014": [
       "functions_basics__function_as_machine"
     ],
+    "eedi_1015": [
+      "number_properties__factor_count_exactly_three"
+    ],
+    "eedi_1017": [
+      "linear_inequalities__flip_rule"
+    ],
     "eedi_1018": [
       "fractions_decimals__equivalent_fractions"
     ],
@@ -42,6 +54,9 @@
     ],
     "eedi_1020": [
       "ratios_proportions__proportion_setup"
+    ],
+    "eedi_1021": [
+      "quadratics__factoring_method"
     ],
     "eedi_1022": [
       "basic_probability__and_or_distinction"
@@ -55,11 +70,20 @@
     "eedi_1025": [
       "systems__solution_as_intersection"
     ],
+    "eedi_1028": [
+      "linear_equations__two_points_determine_line"
+    ],
+    "eedi_1029": [
+      "sequences__nth_term_formula"
+    ],
     "eedi_103": [
       "area_volume__standard_formulas"
     ],
     "eedi_1030": [
       "fractions_decimals__fraction_decimal_conversion"
+    ],
+    "eedi_1031": [
+      "number_properties__factor_pairs"
     ],
     "eedi_1032": [
       "order_of_operations__left_to_right_rule"
@@ -72,6 +96,9 @@
     ],
     "eedi_1036": [
       "area_volume__standard_formulas"
+    ],
+    "eedi_1039": [
+      "linear_equations__two_points_determine_line"
     ],
     "eedi_104": [
       "quadratics__factoring_method"
@@ -109,6 +136,18 @@
     "eedi_1058": [
       "transformations__reflection_rules"
     ],
+    "eedi_1059": [
+      "number_properties__perfect_square_odd_factors"
+    ],
+    "eedi_1061": [
+      "sequences__arithmetic_identification"
+    ],
+    "eedi_1062": [
+      "number_properties__factor_count_exactly_three"
+    ],
+    "eedi_1063": [
+      "functions_basics__function_notation_meaning"
+    ],
     "eedi_1064": [
       "area_volume__volume_as_base_times_height"
     ],
@@ -124,6 +163,9 @@
     "eedi_1068": [
       "algebraic_manipulation__equivalent_forms"
     ],
+    "eedi_1069": [
+      "functions_basics__function_notation_meaning"
+    ],
     "eedi_107": [
       "fractions_decimals__fraction_arithmetic"
     ],
@@ -133,8 +175,14 @@
     "eedi_1074": [
       "factoring_polynomials__factor_pairs"
     ],
+    "eedi_1075": [
+      "linear_inequalities__flip_rule"
+    ],
     "eedi_1076": [
       "basic_probability__probability_as_ratio"
+    ],
+    "eedi_1077": [
+      "linear_inequalities__open_closed_circles"
     ],
     "eedi_1079": [
       "exponent_rules__zero_and_rational"
@@ -153,6 +201,9 @@
     ],
     "eedi_1086": [
       "measurement_units__unit_label_consistency"
+    ],
+    "eedi_1087": [
+      "lines_angles__vertical_angles"
     ],
     "eedi_109": [
       "quadratics__solutions_as_x_intercepts"
@@ -186,6 +237,9 @@
     ],
     "eedi_1111": [
       "ratios_proportions__proportion_setup"
+    ],
+    "eedi_1113": [
+      "number_properties__parity_even_odd_product_sum"
     ],
     "eedi_1114": [
       "linear_equations__slope_meaning"
@@ -232,6 +286,9 @@
     "eedi_1145": [
       "radicals__adding_radicals"
     ],
+    "eedi_1147": [
+      "trig_basics__unit_circle_coordinates"
+    ],
     "eedi_1149": [
       "algebraic_manipulation__literal_equation_rearrangement"
     ],
@@ -259,6 +316,9 @@
     "eedi_1165": [
       "algebraic_manipulation__like_terms"
     ],
+    "eedi_1166": [
+      "number_properties__perfect_square_odd_factors"
+    ],
     "eedi_1167": [
       "measurement_units__unit_label_consistency"
     ],
@@ -268,17 +328,26 @@
     "eedi_117": [
       "ratios_proportions__ratio_as_comparison"
     ],
+    "eedi_1170": [
+      "right_triangle__pythagorean_theorem"
+    ],
     "eedi_1171": [
       "fractions_decimals__fraction_decimal_conversion"
     ],
     "eedi_1172": [
       "fractions_decimals__fraction_decimal_conversion"
     ],
+    "eedi_1173": [
+      "linear_inequalities__flip_rule"
+    ],
     "eedi_1174": [
       "fractions_decimals__fraction_decimal_conversion"
     ],
     "eedi_1175": [
       "measurement_units__unit_label_consistency"
+    ],
+    "eedi_1176": [
+      "linear_equations__two_points_determine_line"
     ],
     "eedi_1178": [
       "factoring_polynomials__factor_pairs"
@@ -289,6 +358,9 @@
     "eedi_1180": [
       "linear_equations__slope_meaning"
     ],
+    "eedi_1183": [
+      "number_properties__parity_even_odd_product_sum"
+    ],
     "eedi_1185": [
       "factoring_polynomials__special_patterns"
     ],
@@ -297,6 +369,24 @@
     ],
     "eedi_1187": [
       "fractions_decimals__decimal_place_value"
+    ],
+    "eedi_1189": [
+      "number_properties__factor_count_exactly_three"
+    ],
+    "eedi_119": [
+      "number_properties__parity_even_odd_product_sum"
+    ],
+    "eedi_1190": [
+      "linear_equations__slope_intercept_form"
+    ],
+    "eedi_1193": [
+      "lines_angles__supplementary_complementary"
+    ],
+    "eedi_1194": [
+      "linear_equations__two_points_determine_line"
+    ],
+    "eedi_1195": [
+      "order_of_operations__exponent_before_multiply"
     ],
     "eedi_1196": [
       "quadratics__factoring_method"
@@ -313,6 +403,9 @@
     "eedi_1200": [
       "basic_probability__and_or_distinction"
     ],
+    "eedi_1201": [
+      "lines_angles__supplementary_complementary"
+    ],
     "eedi_1205": [
       "basic_probability__and_or_distinction"
     ],
@@ -321,6 +414,9 @@
     ],
     "eedi_121": [
       "linear_equations__slope_meaning"
+    ],
+    "eedi_1210": [
+      "transformations__reflection_rules"
     ],
     "eedi_1211": [
       "area_volume__volume_as_base_times_height"
@@ -358,6 +454,9 @@
     "eedi_123": [
       "linear_equations__parallel_perpendicular"
     ],
+    "eedi_1233": [
+      "number_properties__factor_pairs"
+    ],
     "eedi_1234": [
       "transformations__rotation_rules"
     ],
@@ -376,11 +475,17 @@
     "eedi_1239": [
       "area_volume__standard_formulas"
     ],
+    "eedi_1241": [
+      "quadratics__factoring_method"
+    ],
     "eedi_1242": [
       "measurement_units__unit_label_consistency"
     ],
     "eedi_1243": [
       "transformations__reflection_rules"
+    ],
+    "eedi_1246": [
+      "linear_equations__slope_intercept_form"
     ],
     "eedi_1247": [
       "circles__semicircle_area_from_diameter"
@@ -397,6 +502,9 @@
     "eedi_1254": [
       "area_volume__standard_formulas"
     ],
+    "eedi_1257": [
+      "number_properties__factor_definition"
+    ],
     "eedi_1259": [
       "functions_basics__function_composition"
     ],
@@ -412,6 +520,9 @@
     "eedi_1263": [
       "algebraic_manipulation__literal_equation_rearrangement"
     ],
+    "eedi_1264": [
+      "number_properties__factor_pairs"
+    ],
     "eedi_1266": [
       "number_properties__factor_count_exactly_three"
     ],
@@ -420,6 +531,9 @@
     ],
     "eedi_127": [
       "linear_equations__slope_meaning"
+    ],
+    "eedi_1271": [
+      "linear_inequalities__flip_rule"
     ],
     "eedi_1273": [
       "area_volume__standard_formulas"
@@ -430,11 +544,17 @@
     "eedi_1275": [
       "lines_angles__supplementary_complementary"
     ],
+    "eedi_1277": [
+      "functions_basics__domain_range"
+    ],
     "eedi_1278": [
       "fractions_decimals__decimal_place_value"
     ],
     "eedi_128": [
       "algebraic_manipulation__clearing_fractions"
+    ],
+    "eedi_1281": [
+      "number_properties__factor_pair_sum_search"
     ],
     "eedi_1282": [
       "factoring_polynomials__factor_pairs"
@@ -448,6 +568,9 @@
     "eedi_1289": [
       "fractions_decimals__fraction_arithmetic"
     ],
+    "eedi_1290": [
+      "quadratics__discriminant_meaning"
+    ],
     "eedi_1291": [
       "factoring_polynomials__ac_method"
     ],
@@ -457,17 +580,29 @@
     "eedi_1296": [
       "exponent_rules__product_rule"
     ],
+    "eedi_1298": [
+      "sequences__nth_term_formula"
+    ],
     "eedi_1299": [
       "fractions_decimals__fraction_decimal_conversion"
     ],
     "eedi_13": [
       "measurement_units__unit_label_consistency"
     ],
+    "eedi_130": [
+      "sequences__arithmetic_identification"
+    ],
     "eedi_1300": [
       "measurement_units__compound_unit_conversion"
     ],
     "eedi_1304": [
       "transformations__reflection_rules"
+    ],
+    "eedi_1306": [
+      "linear_equations__two_points_determine_line"
+    ],
+    "eedi_1308": [
+      "number_properties__factor_definition"
     ],
     "eedi_1310": [
       "order_of_operations__left_to_right_rule"
@@ -493,6 +628,9 @@
     "eedi_1321": [
       "fractions_decimals__equivalent_fractions"
     ],
+    "eedi_1323": [
+      "sequences__arithmetic_identification"
+    ],
     "eedi_1324": [
       "ratios_proportions__cross_multiply_meaning"
     ],
@@ -507,6 +645,12 @@
     ],
     "eedi_1329": [
       "fractions_decimals__fraction_arithmetic"
+    ],
+    "eedi_133": [
+      "triangles__angle_sum"
+    ],
+    "eedi_1333": [
+      "sequences__arithmetic_identification"
     ],
     "eedi_1335": [
       "fractions_decimals__equivalent_fractions"
@@ -535,8 +679,14 @@
     "eedi_1345": [
       "fractions_decimals__fraction_arithmetic"
     ],
+    "eedi_1346": [
+      "number_properties__factor_pairs"
+    ],
     "eedi_135": [
       "fractions_decimals__part_whole_meaning"
+    ],
+    "eedi_1351": [
+      "linear_equations__slope_intercept_form"
     ],
     "eedi_1353": [
       "exponent_rules__quotient_rule"
@@ -544,11 +694,17 @@
     "eedi_1354": [
       "functions_basics__function_as_machine"
     ],
+    "eedi_1355": [
+      "number_properties__perfect_square_odd_factors"
+    ],
     "eedi_1358": [
       "ratios_proportions__ratio_as_comparison"
     ],
     "eedi_1359": [
       "circles__semicircle_area_from_diameter"
+    ],
+    "eedi_136": [
+      "number_properties__parity_even_odd_product_sum"
     ],
     "eedi_1360": [
       "fractions_decimals__equivalent_fractions"
@@ -556,11 +712,23 @@
     "eedi_1362": [
       "linear_inequalities__open_closed_circles"
     ],
+    "eedi_1363": [
+      "triangles__similarity_ratios"
+    ],
+    "eedi_1367": [
+      "number_properties__factor_pairs"
+    ],
     "eedi_1369": [
       "basic_probability__probability_as_ratio"
     ],
+    "eedi_1372": [
+      "ratios_proportions__ratio_as_comparison"
+    ],
     "eedi_1376": [
       "fractions_decimals__part_whole_meaning"
+    ],
+    "eedi_1377": [
+      "ratios_proportions__ratio_as_comparison"
     ],
     "eedi_1378": [
       "linear_inequalities__inequality_as_region"
@@ -604,11 +772,17 @@
     "eedi_1400": [
       "fractions_decimals__part_whole_meaning"
     ],
+    "eedi_1401": [
+      "order_of_operations__left_to_right_rule"
+    ],
     "eedi_1402": [
       "algebraic_manipulation__like_terms"
     ],
     "eedi_1403": [
       "area_volume__standard_formulas"
+    ],
+    "eedi_1405": [
+      "linear_equations__slope_meaning"
     ],
     "eedi_1407": [
       "fractions_decimals__fraction_decimal_conversion"
@@ -628,6 +802,9 @@
     "eedi_1418": [
       "fractions_decimals__fraction_decimal_conversion"
     ],
+    "eedi_1419": [
+      "sequences__nth_term_formula"
+    ],
     "eedi_1421": [
       "triangles__similarity_ratios"
     ],
@@ -643,6 +820,9 @@
     "eedi_1426": [
       "measurement_units__linear_vs_square_units"
     ],
+    "eedi_1427": [
+      "linear_equations__slope_intercept_form"
+    ],
     "eedi_1428": [
       "quadratics__factoring_method"
     ],
@@ -654,6 +834,9 @@
     ],
     "eedi_1434": [
       "sequences__arithmetic_identification"
+    ],
+    "eedi_1436": [
+      "linear_equations__y_intercept_meaning"
     ],
     "eedi_1437": [
       "descriptive_statistics__spread_measures"
@@ -676,6 +859,12 @@
     "eedi_1451": [
       "sequences__arithmetic_identification"
     ],
+    "eedi_1455": [
+      "linear_equations__slope_intercept_form"
+    ],
+    "eedi_1456": [
+      "functions_basics__function_notation_meaning"
+    ],
     "eedi_1458": [
       "algebraic_manipulation__literal_equation_rearrangement"
     ],
@@ -687,6 +876,9 @@
     ],
     "eedi_1462": [
       "exponent_rules__zero_and_rational"
+    ],
+    "eedi_1463": [
+      "quadratics__quadratic_formula"
     ],
     "eedi_1465": [
       "order_of_operations__left_to_right_rule"
@@ -700,6 +892,9 @@
     "eedi_1471": [
       "ratios_proportions__unit_rate"
     ],
+    "eedi_1472": [
+      "number_properties__factor_definition"
+    ],
     "eedi_1474": [
       "order_of_operations__left_to_right_rule"
     ],
@@ -708,6 +903,9 @@
     ],
     "eedi_1476": [
       "sequences__arithmetic_identification"
+    ],
+    "eedi_1478": [
+      "transformations__reflection_rules"
     ],
     "eedi_1479": [
       "measurement_units__unit_label_consistency"
@@ -739,11 +937,20 @@
     "eedi_149": [
       "descriptive_statistics__spread_measures"
     ],
+    "eedi_1491": [
+      "number_properties__parity_even_odd_product_sum"
+    ],
     "eedi_1492": [
       "basic_probability__complement_rule"
     ],
     "eedi_1493": [
       "order_of_operations__exponent_before_multiply"
+    ],
+    "eedi_1497": [
+      "linear_inequalities__flip_rule"
+    ],
+    "eedi_1498": [
+      "lines_angles__transversal_angles"
     ],
     "eedi_1499": [
       "fractions_decimals__fraction_arithmetic"
@@ -753,6 +960,9 @@
     ],
     "eedi_150": [
       "area_volume__volume_as_base_times_height"
+    ],
+    "eedi_1500": [
+      "number_properties__perfect_square_odd_factors"
     ],
     "eedi_1501": [
       "algebraic_manipulation__equivalent_forms"
@@ -766,8 +976,14 @@
     "eedi_1508": [
       "order_of_operations__precedence_hierarchy"
     ],
+    "eedi_151": [
+      "sequences__arithmetic_identification"
+    ],
     "eedi_1510": [
       "fractions_decimals__decimal_place_value"
+    ],
+    "eedi_1512": [
+      "order_of_operations__precedence_hierarchy"
     ],
     "eedi_1513": [
       "fractions_decimals__fraction_arithmetic"
@@ -778,11 +994,20 @@
     "eedi_1517": [
       "algebraic_manipulation__like_terms"
     ],
+    "eedi_1519": [
+      "sequences__arithmetic_identification"
+    ],
     "eedi_1520": [
       "functions_basics__function_notation_meaning"
     ],
+    "eedi_1526": [
+      "fractions_decimals__fraction_arithmetic"
+    ],
     "eedi_1528": [
       "algebraic_manipulation__symbolic_substitution"
+    ],
+    "eedi_153": [
+      "linear_equations__slope_intercept_form"
     ],
     "eedi_1530": [
       "algebraic_manipulation__clearing_fractions"
@@ -793,6 +1018,9 @@
     "eedi_1533": [
       "linear_equations__two_points_determine_line"
     ],
+    "eedi_1534": [
+      "number_properties__factor_definition"
+    ],
     "eedi_1536": [
       "descriptive_statistics__mean_as_balance"
     ],
@@ -801,6 +1029,9 @@
     ],
     "eedi_1538": [
       "area_volume__standard_formulas"
+    ],
+    "eedi_1541": [
+      "quadratics__quadratic_formula"
     ],
     "eedi_1542": [
       "exponent_rules__quotient_rule"
@@ -814,6 +1045,9 @@
     "eedi_1548": [
       "fractions_decimals__part_whole_meaning"
     ],
+    "eedi_1549": [
+      "number_properties__factor_pairs"
+    ],
     "eedi_155": [
       "area_volume__standard_formulas"
     ],
@@ -822,6 +1056,9 @@
     ],
     "eedi_1551": [
       "algebraic_manipulation__literal_equation_rearrangement"
+    ],
+    "eedi_1557": [
+      "transformations__reflection_rules"
     ],
     "eedi_1559": [
       "triangles__congruence_criteria"
@@ -835,6 +1072,9 @@
     "eedi_1564": [
       "lines_angles__parallel_line_angle_chasing"
     ],
+    "eedi_1565": [
+      "lines_angles__supplementary_complementary"
+    ],
     "eedi_1567": [
       "algebraic_manipulation__equivalent_forms"
     ],
@@ -847,8 +1087,14 @@
     "eedi_157": [
       "algebraic_manipulation__like_terms"
     ],
+    "eedi_1570": [
+      "functions_basics__one_to_one_invertibility"
+    ],
     "eedi_1572": [
       "transformations__reflection_rules"
+    ],
+    "eedi_1574": [
+      "order_of_operations__precedence_hierarchy"
     ],
     "eedi_1575": [
       "exponent_rules__zero_and_rational"
@@ -859,11 +1105,17 @@
     "eedi_158": [
       "descriptive_statistics__spread_measures"
     ],
+    "eedi_1580": [
+      "functions_basics__domain_range"
+    ],
     "eedi_1581": [
       "area_volume__square_side_from_area"
     ],
     "eedi_1582": [
       "fractions_decimals__fraction_arithmetic"
+    ],
+    "eedi_1583": [
+      "functions_basics__function_notation_meaning"
     ],
     "eedi_1584": [
       "fractions_decimals__fraction_arithmetic"
@@ -876,6 +1128,9 @@
     ],
     "eedi_1587": [
       "fractions_decimals__equivalent_fractions"
+    ],
+    "eedi_1589": [
+      "number_properties__perfect_square_odd_factors"
     ],
     "eedi_159": [
       "quadratics__factoring_method"
@@ -891,6 +1146,9 @@
     ],
     "eedi_1596": [
       "measurement_units__unit_label_consistency"
+    ],
+    "eedi_1598": [
+      "number_properties__factor_definition"
     ],
     "eedi_1599": [
       "algebraic_manipulation__clearing_fractions"
@@ -913,10 +1171,22 @@
     "eedi_1605": [
       "fractions_decimals__fraction_arithmetic"
     ],
+    "eedi_1607": [
+      "linear_equations__slope_intercept_form"
+    ],
+    "eedi_161": [
+      "sequences__nth_term_formula"
+    ],
+    "eedi_1611": [
+      "number_properties__perfect_square_odd_factors"
+    ],
     "eedi_1612": [
       "fractions_decimals__fraction_arithmetic"
     ],
     "eedi_1614": [
+      "linear_equations__slope_intercept_form"
+    ],
+    "eedi_1615": [
       "linear_equations__slope_intercept_form"
     ],
     "eedi_1617": [
@@ -925,11 +1195,17 @@
     "eedi_162": [
       "descriptive_statistics__median_as_middle"
     ],
+    "eedi_1621": [
+      "lines_angles__transversal_angles"
+    ],
     "eedi_1624": [
       "number_properties__prime_composite"
     ],
     "eedi_1626": [
       "area_volume__standard_formulas"
+    ],
+    "eedi_1628": [
+      "quadratics__solutions_as_x_intercepts"
     ],
     "eedi_1629": [
       "number_properties__factor_definition"
@@ -937,8 +1213,17 @@
     "eedi_163": [
       "factoring_polynomials__ac_method"
     ],
+    "eedi_1630": [
+      "number_properties__perfect_square_odd_factors"
+    ],
     "eedi_1632": [
       "algebraic_manipulation__like_terms"
+    ],
+    "eedi_1633": [
+      "linear_equations__slope_intercept_form"
+    ],
+    "eedi_1634": [
+      "number_properties__perfect_square_odd_factors"
     ],
     "eedi_1637": [
       "linear_inequalities__absolute_value_split_greater_than"
@@ -958,6 +1243,12 @@
     "eedi_1644": [
       "ratios_proportions__ratio_as_comparison"
     ],
+    "eedi_1645": [
+      "quadratics__quadratic_formula"
+    ],
+    "eedi_1646": [
+      "lines_angles__supplementary_complementary"
+    ],
     "eedi_1647": [
       "algebraic_manipulation__literal_equation_rearrangement"
     ],
@@ -966,6 +1257,9 @@
     ],
     "eedi_1649": [
       "exponent_rules__power_rule"
+    ],
+    "eedi_165": [
+      "number_properties__factor_definition"
     ],
     "eedi_1652": [
       "factoring_polynomials__special_patterns"
@@ -991,6 +1285,12 @@
     "eedi_1664": [
       "radicals__root_as_inverse"
     ],
+    "eedi_1665": [
+      "linear_equations__slope_intercept_form"
+    ],
+    "eedi_1666": [
+      "sequences__arithmetic_identification"
+    ],
     "eedi_1667": [
       "lines_angles__supplementary_complementary"
     ],
@@ -999,6 +1299,9 @@
     ],
     "eedi_1671": [
       "number_properties__factor_count_exactly_three"
+    ],
+    "eedi_1672": [
+      "number_properties__perfect_square_odd_factors"
     ],
     "eedi_1673": [
       "basic_probability__probability_as_ratio"
@@ -1024,11 +1327,17 @@
     "eedi_1686": [
       "fractions_decimals__decimal_place_value"
     ],
+    "eedi_1688": [
+      "sequences__arithmetic_identification"
+    ],
     "eedi_1689": [
       "fractions_decimals__part_whole_meaning"
     ],
     "eedi_169": [
       "algebraic_manipulation__symbolic_substitution"
+    ],
+    "eedi_1690": [
+      "fractions_decimals__part_whole_meaning"
     ],
     "eedi_1691": [
       "fractions_decimals__fraction_arithmetic"
@@ -1051,8 +1360,23 @@
     "eedi_1697": [
       "sequences__arithmetic_identification"
     ],
+    "eedi_1698": [
+      "sequences__nth_term_formula"
+    ],
+    "eedi_170": [
+      "sequences__nth_term_formula"
+    ],
     "eedi_1700": [
       "fractions_decimals__decimal_place_value"
+    ],
+    "eedi_1703": [
+      "number_properties__factor_count_exactly_three"
+    ],
+    "eedi_1708": [
+      "number_properties__perfect_square_odd_factors"
+    ],
+    "eedi_1711": [
+      "quadratics__quadratic_formula"
     ],
     "eedi_1712": [
       "transformations__rotation_rules"
@@ -1062,6 +1386,9 @@
     ],
     "eedi_1716": [
       "algebraic_manipulation__like_terms"
+    ],
+    "eedi_1717": [
+      "linear_equations__slope_intercept_form"
     ],
     "eedi_1719": [
       "number_properties__prime_composite"
@@ -1075,6 +1402,9 @@
     "eedi_1723": [
       "algebraic_manipulation__like_terms"
     ],
+    "eedi_1724": [
+      "number_properties__perfect_square_odd_factors"
+    ],
     "eedi_1726": [
       "right_triangle__sohcahtoa_setup"
     ],
@@ -1084,11 +1414,17 @@
     "eedi_173": [
       "ratios_proportions__ratio_as_comparison"
     ],
+    "eedi_1731": [
+      "linear_equations__slope_intercept_form"
+    ],
     "eedi_1733": [
       "basic_probability__probability_as_ratio"
     ],
     "eedi_1735": [
       "linear_inequalities__inequality_as_region"
+    ],
+    "eedi_1736": [
+      "sequences__nth_term_formula"
     ],
     "eedi_1739": [
       "lines_angles__transversal_angles"
@@ -1117,6 +1453,9 @@
     "eedi_1752": [
       "linear_equations__parallel_perpendicular"
     ],
+    "eedi_1753": [
+      "fractions_decimals__fraction_decimal_conversion"
+    ],
     "eedi_1755": [
       "algebraic_manipulation__equivalent_forms"
     ],
@@ -1132,17 +1471,32 @@
     "eedi_1762": [
       "transformations__translation_rules"
     ],
+    "eedi_1764": [
+      "functions_basics__function_notation_meaning"
+    ],
     "eedi_1766": [
       "linear_inequalities__inequality_as_region"
     ],
     "eedi_177": [
       "linear_inequalities__inequality_as_region"
     ],
+    "eedi_1770": [
+      "number_properties__factor_definition"
+    ],
     "eedi_1771": [
       "fractions_decimals__part_whole_meaning"
     ],
+    "eedi_1772": [
+      "triangles__angle_sum"
+    ],
     "eedi_1773": [
       "fractions_decimals__decimal_place_value"
+    ],
+    "eedi_1774": [
+      "measurement_units__linear_vs_square_units"
+    ],
+    "eedi_1775": [
+      "linear_equations__parallel_perpendicular"
     ],
     "eedi_1776": [
       "basic_probability__probability_as_ratio"
@@ -1156,8 +1510,20 @@
     "eedi_1784": [
       "area_volume__standard_formulas"
     ],
+    "eedi_1785": [
+      "number_properties__perfect_square_odd_factors"
+    ],
+    "eedi_1788": [
+      "number_properties__factor_definition"
+    ],
+    "eedi_179": [
+      "number_properties__factor_pairs"
+    ],
     "eedi_1790": [
       "area_volume__square_side_from_area"
+    ],
+    "eedi_1793": [
+      "sequences__arithmetic_identification"
     ],
     "eedi_1794": [
       "fractions_decimals__fraction_decimal_conversion"
@@ -1171,11 +1537,17 @@
     "eedi_1798": [
       "transformations__reflection_rules"
     ],
+    "eedi_1799": [
+      "number_properties__perfect_square_odd_factors"
+    ],
     "eedi_180": [
       "transformations__reflection_rules"
     ],
     "eedi_1800": [
       "fractions_decimals__decimal_place_value"
+    ],
+    "eedi_1801": [
+      "linear_inequalities__flip_rule"
     ],
     "eedi_1802": [
       "fractions_decimals__fraction_arithmetic"
@@ -1185,6 +1557,9 @@
     ],
     "eedi_1807": [
       "exponent_rules__product_rule"
+    ],
+    "eedi_1812": [
+      "linear_equations__two_points_determine_line"
     ],
     "eedi_1813": [
       "area_volume__composite_figures"
@@ -1210,8 +1585,17 @@
     "eedi_1823": [
       "linear_equations__parallel_perpendicular"
     ],
+    "eedi_1825": [
+      "linear_equations__parallel_perpendicular"
+    ],
     "eedi_183": [
       "area_volume__standard_formulas"
+    ],
+    "eedi_1830": [
+      "lines_angles__parallel_line_angle_chasing"
+    ],
+    "eedi_1833": [
+      "functions_basics__function_notation_meaning"
     ],
     "eedi_1835": [
       "ratios_proportions__proportion_setup"
@@ -1249,8 +1633,17 @@
     "eedi_1857": [
       "descriptive_statistics__mean_vs_median"
     ],
+    "eedi_186": [
+      "number_properties__factor_definition"
+    ],
+    "eedi_1860": [
+      "linear_equations__slope_intercept_form"
+    ],
     "eedi_1862": [
       "area_volume__rectangular_prism_face_areas"
+    ],
+    "eedi_1863": [
+      "number_properties__parity_even_odd_product_sum"
     ],
     "eedi_1864": [
       "descriptive_statistics__spread_measures"
@@ -1267,6 +1660,9 @@
     "eedi_1868": [
       "transformations__rotation_rules"
     ],
+    "eedi_187": [
+      "number_properties__factor_definition"
+    ],
     "eedi_188": [
       "transformations__reflection_rules"
     ],
@@ -1281,6 +1677,9 @@
     ],
     "eedi_194": [
       "descriptive_statistics__mean_vs_median"
+    ],
+    "eedi_195": [
+      "linear_equations__slope_intercept_form"
     ],
     "eedi_196": [
       "algebraic_manipulation__literal_equation_rearrangement"
@@ -1309,6 +1708,9 @@
     "eedi_203": [
       "linear_equations__two_points_determine_line"
     ],
+    "eedi_205": [
+      "number_properties__factor_pair_sum_search"
+    ],
     "eedi_206": [
       "number_properties__factor_definition"
     ],
@@ -1336,11 +1738,23 @@
     "eedi_216": [
       "linear_equations__parallel_perpendicular"
     ],
+    "eedi_217": [
+      "linear_equations__slope_intercept_form"
+    ],
     "eedi_221": [
       "descriptive_statistics__spread_measures"
     ],
+    "eedi_223": [
+      "order_of_operations__precedence_hierarchy"
+    ],
     "eedi_225": [
       "ratios_proportions__ratio_as_comparison"
+    ],
+    "eedi_226": [
+      "linear_equations__slope_intercept_form"
+    ],
+    "eedi_228": [
+      "linear_equations__two_points_determine_line"
     ],
     "eedi_229": [
       "sequences__arithmetic_identification"
@@ -1366,17 +1780,35 @@
     "eedi_237": [
       "algebraic_manipulation__like_terms"
     ],
+    "eedi_239": [
+      "quadratics__solutions_as_x_intercepts"
+    ],
     "eedi_240": [
       "area_volume__standard_formulas"
     ],
     "eedi_241": [
       "exponent_rules__zero_and_rational"
     ],
+    "eedi_242": [
+      "number_properties__factor_definition"
+    ],
+    "eedi_243": [
+      "linear_inequalities__flip_rule"
+    ],
     "eedi_244": [
       "algebraic_manipulation__like_terms"
     ],
+    "eedi_245": [
+      "ratios_proportions__ratio_as_comparison"
+    ],
+    "eedi_247": [
+      "number_properties__factor_definition"
+    ],
     "eedi_248": [
       "quadratics__vertex_from_roots"
+    ],
+    "eedi_250": [
+      "number_properties__perfect_square_odd_factors"
     ],
     "eedi_253": [
       "lines_angles__vertical_angles"
@@ -1386,6 +1818,9 @@
     ],
     "eedi_256": [
       "algebraic_manipulation__clearing_fractions"
+    ],
+    "eedi_257": [
+      "measurement_units__linear_vs_square_units"
     ],
     "eedi_259": [
       "measurement_units__unit_label_consistency"
@@ -1411,8 +1846,14 @@
     "eedi_267": [
       "exponent_rules__power_rule"
     ],
+    "eedi_268": [
+      "transformations__rotation_rules"
+    ],
     "eedi_269": [
       "fractions_decimals__decimal_place_value"
+    ],
+    "eedi_270": [
+      "linear_inequalities__flip_rule"
     ],
     "eedi_271": [
       "area_volume__standard_formulas"
@@ -1420,11 +1861,17 @@
     "eedi_272": [
       "functions_basics__function_notation_meaning"
     ],
+    "eedi_273": [
+      "lines_angles__supplementary_complementary"
+    ],
     "eedi_274": [
       "sequences__arithmetic_identification"
     ],
     "eedi_276": [
       "basic_probability__complement_rule"
+    ],
+    "eedi_278": [
+      "linear_inequalities__flip_rule"
     ],
     "eedi_280": [
       "linear_equations__parallel_perpendicular"
@@ -1438,8 +1885,17 @@
     "eedi_287": [
       "measurement_units__unit_label_consistency"
     ],
+    "eedi_29": [
+      "linear_inequalities__flip_rule"
+    ],
     "eedi_298": [
       "exponent_rules__product_rule"
+    ],
+    "eedi_30": [
+      "functions_basics__function_notation_meaning"
+    ],
+    "eedi_301": [
+      "lines_angles__vertical_angles"
     ],
     "eedi_302": [
       "algebraic_manipulation__clearing_fractions"
@@ -1449,6 +1905,9 @@
     ],
     "eedi_304": [
       "order_of_operations__left_to_right_rule"
+    ],
+    "eedi_305": [
+      "linear_equations__slope_intercept_form"
     ],
     "eedi_306": [
       "order_of_operations__left_to_right_rule"
@@ -1468,14 +1927,29 @@
     "eedi_312": [
       "algebraic_manipulation__like_terms"
     ],
+    "eedi_313": [
+      "number_properties__parity_even_odd_product_sum"
+    ],
+    "eedi_314": [
+      "number_properties__factor_definition"
+    ],
     "eedi_315": [
       "algebraic_manipulation__clearing_fractions"
+    ],
+    "eedi_316": [
+      "number_properties__perfect_square_odd_factors"
     ],
     "eedi_317": [
       "fractions_decimals__decimal_place_value"
     ],
     "eedi_318": [
       "quadratics__quadratic_formula"
+    ],
+    "eedi_319": [
+      "fractions_decimals__fraction_decimal_conversion"
+    ],
+    "eedi_32": [
+      "linear_equations__slope_intercept_form"
     ],
     "eedi_320": [
       "area_volume__rectangular_prism_face_areas"
@@ -1486,6 +1960,9 @@
     "eedi_323": [
       "factoring_polynomials__factor_pairs"
     ],
+    "eedi_327": [
+      "number_properties__perfect_square_odd_factors"
+    ],
     "eedi_328": [
       "fractions_decimals__part_whole_meaning"
     ],
@@ -1494,6 +1971,9 @@
     ],
     "eedi_330": [
       "fractions_decimals__fraction_arithmetic"
+    ],
+    "eedi_332": [
+      "linear_equations__slope_intercept_form"
     ],
     "eedi_333": [
       "fractions_decimals__fraction_arithmetic"
@@ -1519,6 +1999,9 @@
     "eedi_346": [
       "ratios_proportions__ratio_as_comparison"
     ],
+    "eedi_349": [
+      "number_properties__parity_even_odd_product_sum"
+    ],
     "eedi_35": [
       "fractions_decimals__fraction_decimal_conversion"
     ],
@@ -1540,6 +2023,9 @@
     "eedi_357": [
       "algebraic_manipulation__like_terms"
     ],
+    "eedi_358": [
+      "lines_angles__transversal_angles"
+    ],
     "eedi_359": [
       "algebraic_manipulation__equivalent_forms"
     ],
@@ -1552,6 +2038,9 @@
     "eedi_361": [
       "order_of_operations__left_to_right_rule"
     ],
+    "eedi_362": [
+      "linear_equations__slope_intercept_form"
+    ],
     "eedi_366": [
       "area_volume__standard_formulas"
     ],
@@ -1560,6 +2049,9 @@
     ],
     "eedi_368": [
       "exponent_rules__zero_and_rational"
+    ],
+    "eedi_369": [
+      "linear_equations__slope_intercept_form"
     ],
     "eedi_37": [
       "fractions_decimals__equivalent_fractions"
@@ -1585,6 +2077,9 @@
     "eedi_387": [
       "ratios_proportions__ratio_as_comparison"
     ],
+    "eedi_391": [
+      "transformations__rotation_rules"
+    ],
     "eedi_392": [
       "lines_angles__supplementary_complementary"
     ],
@@ -1594,6 +2089,15 @@
     "eedi_394": [
       "area_volume__volume_as_base_times_height"
     ],
+    "eedi_395": [
+      "number_properties__parity_even_odd_product_sum"
+    ],
+    "eedi_40": [
+      "functions_basics__function_composition"
+    ],
+    "eedi_400": [
+      "number_properties__perfect_square_odd_factors"
+    ],
     "eedi_402": [
       "fractions_decimals__part_whole_meaning"
     ],
@@ -1602,6 +2106,12 @@
     ],
     "eedi_408": [
       "fractions_decimals__decimal_place_value"
+    ],
+    "eedi_409": [
+      "lines_angles__transversal_angles"
+    ],
+    "eedi_41": [
+      "sequences__arithmetic_identification"
     ],
     "eedi_412": [
       "basic_probability__complement_rule"
@@ -1636,6 +2146,15 @@
     "eedi_430": [
       "linear_equations__slope_meaning"
     ],
+    "eedi_436": [
+      "number_properties__parity_even_odd_product_sum"
+    ],
+    "eedi_437": [
+      "sequences__nth_term_formula"
+    ],
+    "eedi_438": [
+      "functions_basics__domain_range"
+    ],
     "eedi_439": [
       "transformations__rotation_rules"
     ],
@@ -1651,11 +2170,23 @@
     "eedi_445": [
       "algebraic_manipulation__like_terms"
     ],
+    "eedi_446": [
+      "transformations__reflection_rules"
+    ],
+    "eedi_449": [
+      "measurement_units__linear_vs_square_units"
+    ],
+    "eedi_45": [
+      "functions_basics__function_notation_meaning"
+    ],
     "eedi_450": [
       "fractions_decimals__part_whole_meaning"
     ],
     "eedi_451": [
       "algebraic_manipulation__equivalent_forms"
+    ],
+    "eedi_452": [
+      "quadratics__solutions_as_x_intercepts"
     ],
     "eedi_454": [
       "functions_basics__function_composition"
@@ -1669,8 +2200,14 @@
     "eedi_458": [
       "ratios_proportions__ratio_as_comparison"
     ],
+    "eedi_460": [
+      "quadratics__quadratic_formula"
+    ],
     "eedi_461": [
       "basic_probability__probability_as_ratio"
+    ],
+    "eedi_462": [
+      "linear_equations__slope_intercept_form"
     ],
     "eedi_463": [
       "linear_equations__parallel_perpendicular"
@@ -1681,6 +2218,9 @@
     "eedi_467": [
       "ratios_proportions__ratio_as_comparison"
     ],
+    "eedi_468": [
+      "number_properties__factor_pair_sum_search"
+    ],
     "eedi_469": [
       "fractions_decimals__fraction_arithmetic"
     ],
@@ -1689,6 +2229,9 @@
     ],
     "eedi_474": [
       "factoring_polynomials__ac_method"
+    ],
+    "eedi_475": [
+      "linear_equations__slope_intercept_form"
     ],
     "eedi_476": [
       "fractions_decimals__fraction_decimal_conversion"
@@ -1699,11 +2242,17 @@
     "eedi_48": [
       "functions_basics__one_to_one_invertibility"
     ],
+    "eedi_481": [
+      "number_properties__factor_pairs"
+    ],
     "eedi_483": [
       "area_volume__standard_formulas"
     ],
     "eedi_486": [
       "fractions_decimals__decimal_place_value"
+    ],
+    "eedi_487": [
+      "measurement_units__linear_vs_square_units"
     ],
     "eedi_489": [
       "area_volume__square_side_from_area"
@@ -1732,6 +2281,9 @@
     "eedi_5": [
       "area_volume__square_side_from_area"
     ],
+    "eedi_500": [
+      "sequences__arithmetic_identification"
+    ],
     "eedi_501": [
       "fractions_decimals__part_whole_meaning"
     ],
@@ -1743,6 +2295,9 @@
     ],
     "eedi_505": [
       "ratios_proportions__ratio_as_comparison"
+    ],
+    "eedi_506": [
+      "linear_equations__slope_intercept_form"
     ],
     "eedi_507": [
       "order_of_operations__parentheses_override"
@@ -1759,11 +2314,17 @@
     "eedi_512": [
       "functions_basics__function_as_machine"
     ],
+    "eedi_513": [
+      "linear_equations__slope_intercept_form"
+    ],
     "eedi_514": [
       "area_volume__standard_formulas"
     ],
     "eedi_516": [
       "linear_equations__slope_intercept_form"
+    ],
+    "eedi_518": [
+      "triangles__angle_sum"
     ],
     "eedi_519": [
       "factoring_polynomials__factor_pairs"
@@ -1777,6 +2338,9 @@
     "eedi_522": [
       "measurement_units__unit_label_consistency"
     ],
+    "eedi_523": [
+      "functions_basics__function_notation_meaning"
+    ],
     "eedi_525": [
       "fractions_decimals__part_whole_meaning"
     ],
@@ -1785,6 +2349,9 @@
     ],
     "eedi_530": [
       "descriptive_statistics__mean_vs_median"
+    ],
+    "eedi_531": [
+      "number_properties__factor_definition"
     ],
     "eedi_533": [
       "algebraic_manipulation__clearing_fractions"
@@ -1804,14 +2371,23 @@
     "eedi_543": [
       "transformations__reflection_rules"
     ],
+    "eedi_544": [
+      "transformations__reflection_rules"
+    ],
     "eedi_545": [
       "measurement_units__unit_label_consistency"
     ],
     "eedi_547": [
       "factoring_polynomials__factor_pairs"
     ],
+    "eedi_548": [
+      "ratios_proportions__proportion_setup"
+    ],
     "eedi_549": [
       "ratios_proportions__ratio_as_comparison"
+    ],
+    "eedi_550": [
+      "order_of_operations__precedence_hierarchy"
     ],
     "eedi_552": [
       "quadratics__factoring_method"
@@ -1821,6 +2397,9 @@
     ],
     "eedi_555": [
       "exponent_rules__zero_and_rational"
+    ],
+    "eedi_556": [
+      "linear_equations__slope_intercept_form"
     ],
     "eedi_558": [
       "algebraic_manipulation__equivalent_forms"
@@ -1849,8 +2428,20 @@
     "eedi_575": [
       "fractions_decimals__equivalent_fractions"
     ],
+    "eedi_576": [
+      "number_properties__perfect_square_odd_factors"
+    ],
     "eedi_578": [
       "factoring_polynomials__factor_pairs"
+    ],
+    "eedi_579": [
+      "systems__solution_as_intersection"
+    ],
+    "eedi_58": [
+      "linear_inequalities__flip_rule"
+    ],
+    "eedi_580": [
+      "number_properties__factor_pairs"
     ],
     "eedi_582": [
       "factoring_polynomials__factor_pairs"
@@ -1903,6 +2494,12 @@
     "eedi_61": [
       "fractions_decimals__equivalent_fractions"
     ],
+    "eedi_610": [
+      "quadratics__quadratic_formula"
+    ],
+    "eedi_612": [
+      "fractions_decimals__equivalent_fractions"
+    ],
     "eedi_613": [
       "ratios_proportions__ratio_as_comparison"
     ],
@@ -1920,6 +2517,9 @@
     ],
     "eedi_619": [
       "number_properties__factor_definition"
+    ],
+    "eedi_620": [
+      "transformations__reflection_rules"
     ],
     "eedi_621": [
       "measurement_units__unit_label_consistency"
@@ -1939,6 +2539,12 @@
     "eedi_630": [
       "area_volume__standard_formulas"
     ],
+    "eedi_632": [
+      "functions_basics__function_composition"
+    ],
+    "eedi_633": [
+      "quadratics__quadratic_formula"
+    ],
     "eedi_634": [
       "quadratics__quadratic_formula"
     ],
@@ -1948,11 +2554,20 @@
     "eedi_637": [
       "fractions_decimals__decimal_place_value"
     ],
+    "eedi_64": [
+      "linear_equations__parallel_perpendicular"
+    ],
+    "eedi_640": [
+      "triangles__angle_sum"
+    ],
     "eedi_641": [
       "number_properties__factor_definition"
     ],
     "eedi_642": [
       "algebraic_manipulation__equivalent_forms"
+    ],
+    "eedi_646": [
+      "number_properties__perfect_square_odd_factors"
     ],
     "eedi_647": [
       "radicals__adding_radicals"
@@ -1960,11 +2575,26 @@
     "eedi_648": [
       "algebraic_manipulation__equivalent_forms"
     ],
+    "eedi_65": [
+      "quadratics__quadratic_formula"
+    ],
     "eedi_651": [
       "algebraic_manipulation__equivalent_forms"
     ],
+    "eedi_652": [
+      "sequences__arithmetic_identification"
+    ],
     "eedi_654": [
       "algebraic_manipulation__equivalent_forms"
+    ],
+    "eedi_657": [
+      "number_properties__perfect_square_odd_factors"
+    ],
+    "eedi_658": [
+      "linear_equations__parallel_perpendicular"
+    ],
+    "eedi_659": [
+      "triangles__angle_sum"
     ],
     "eedi_66": [
       "fractions_decimals__decimal_place_value"
@@ -1975,6 +2605,12 @@
     "eedi_661": [
       "area_volume__standard_formulas"
     ],
+    "eedi_662": [
+      "measurement_units__linear_vs_square_units"
+    ],
+    "eedi_663": [
+      "number_properties__factor_count_exactly_three"
+    ],
     "eedi_665": [
       "triangles__congruence_criteria"
     ],
@@ -1983,6 +2619,9 @@
     ],
     "eedi_67": [
       "exponent_rules__zero_and_rational"
+    ],
+    "eedi_671": [
+      "triangles__angle_sum"
     ],
     "eedi_673": [
       "transformations__reflection_rules"
@@ -1993,11 +2632,23 @@
     "eedi_676": [
       "algebraic_manipulation__like_terms"
     ],
+    "eedi_679": [
+      "number_properties__factor_definition"
+    ],
     "eedi_680": [
       "factoring_polynomials__factor_pairs"
     ],
+    "eedi_681": [
+      "linear_inequalities__flip_rule"
+    ],
+    "eedi_685": [
+      "number_properties__factor_count_exactly_three"
+    ],
     "eedi_688": [
       "lines_angles__parallel_line_angle_chasing"
+    ],
+    "eedi_689": [
+      "linear_equations__slope_intercept_form"
     ],
     "eedi_690": [
       "sequences__arithmetic_identification"
@@ -2032,17 +2683,44 @@
     "eedi_700": [
       "algebraic_manipulation__clearing_fractions"
     ],
+    "eedi_701": [
+      "sequences__arithmetic_identification"
+    ],
     "eedi_706": [
       "lines_angles__transversal_angles"
     ],
+    "eedi_707": [
+      "functions_basics__domain_range"
+    ],
     "eedi_708": [
       "fractions_decimals__fraction_decimal_conversion"
+    ],
+    "eedi_711": [
+      "sequences__nth_term_formula"
+    ],
+    "eedi_712": [
+      "functions_basics__one_to_one_invertibility"
+    ],
+    "eedi_715": [
+      "linear_equations__slope_intercept_form"
     ],
     "eedi_717": [
       "algebraic_manipulation__equivalent_forms"
     ],
     "eedi_718": [
       "number_properties__factor_definition"
+    ],
+    "eedi_72": [
+      "linear_equations__y_intercept_meaning"
+    ],
+    "eedi_721": [
+      "number_properties__perfect_square_odd_factors"
+    ],
+    "eedi_722": [
+      "linear_equations__slope_intercept_form"
+    ],
+    "eedi_723": [
+      "quadratics__solutions_as_x_intercepts"
     ],
     "eedi_724": [
       "transformations__reflection_rules"
@@ -2053,8 +2731,14 @@
     "eedi_728": [
       "order_of_operations__left_to_right_rule"
     ],
+    "eedi_730": [
+      "ratios_proportions__ratio_as_comparison"
+    ],
     "eedi_732": [
       "linear_inequalities__inequality_as_region"
+    ],
+    "eedi_733": [
+      "number_properties__factor_definition"
     ],
     "eedi_737": [
       "radicals__root_as_inverse"
@@ -2064,6 +2748,9 @@
     ],
     "eedi_739": [
       "algebraic_manipulation__equivalent_forms"
+    ],
+    "eedi_74": [
+      "quadratics__solutions_as_x_intercepts"
     ],
     "eedi_741": [
       "algebraic_manipulation__literal_equation_rearrangement"
@@ -2088,6 +2775,9 @@
     ],
     "eedi_756": [
       "measurement_units__unit_label_consistency"
+    ],
+    "eedi_757": [
+      "functions_basics__one_to_one_invertibility"
     ],
     "eedi_761": [
       "basic_probability__and_or_distinction"
@@ -2125,6 +2815,9 @@
     "eedi_776": [
       "fractions_decimals__decimal_place_value"
     ],
+    "eedi_778": [
+      "linear_equations__slope_intercept_form"
+    ],
     "eedi_779": [
       "number_properties__factor_definition"
     ],
@@ -2140,8 +2833,14 @@
     "eedi_784": [
       "algebraic_manipulation__equivalent_forms"
     ],
+    "eedi_785": [
+      "triangles__angle_sum"
+    ],
     "eedi_786": [
       "fractions_decimals__part_whole_meaning"
+    ],
+    "eedi_787": [
+      "linear_equations__slope_intercept_form"
     ],
     "eedi_789": [
       "fractions_decimals__part_whole_meaning"
@@ -2151,6 +2850,9 @@
     ],
     "eedi_790": [
       "transformations__reflection_rules"
+    ],
+    "eedi_791": [
+      "number_properties__factor_pairs"
     ],
     "eedi_793": [
       "linear_equations__two_points_determine_line"
@@ -2167,8 +2869,14 @@
     "eedi_803": [
       "transformations__reflection_rules"
     ],
+    "eedi_805": [
+      "number_properties__factor_pairs"
+    ],
     "eedi_806": [
       "linear_inequalities__flip_rule"
+    ],
+    "eedi_807": [
+      "quadratics__quadratic_formula"
     ],
     "eedi_809": [
       "algebraic_manipulation__literal_equation_rearrangement"
@@ -2190,6 +2898,9 @@
     ],
     "eedi_818": [
       "fractions_decimals__fraction_decimal_conversion"
+    ],
+    "eedi_82": [
+      "linear_inequalities__flip_rule"
     ],
     "eedi_821": [
       "algebraic_manipulation__equivalent_forms"
@@ -2218,7 +2929,13 @@
     "eedi_833": [
       "transformations__reflection_rules"
     ],
+    "eedi_835": [
+      "measurement_units__linear_vs_square_units"
+    ],
     "eedi_84": [
+      "linear_equations__slope_intercept_form"
+    ],
+    "eedi_840": [
       "linear_equations__slope_intercept_form"
     ],
     "eedi_842": [
@@ -2227,11 +2944,20 @@
     "eedi_843": [
       "triangles__congruence_criteria"
     ],
+    "eedi_845": [
+      "triangles__congruence_criteria"
+    ],
     "eedi_847": [
       "factoring_polynomials__factor_pairs"
     ],
+    "eedi_85": [
+      "sequences__nth_term_formula"
+    ],
     "eedi_851": [
       "fractions_decimals__decimal_place_value"
+    ],
+    "eedi_852": [
+      "linear_equations__slope_intercept_form"
     ],
     "eedi_853": [
       "fractions_decimals__part_whole_meaning"
@@ -2248,8 +2974,17 @@
     "eedi_863": [
       "fractions_decimals__equivalent_fractions"
     ],
+    "eedi_864": [
+      "linear_equations__slope_intercept_form"
+    ],
+    "eedi_865": [
+      "quadratics__quadratic_formula"
+    ],
     "eedi_867": [
       "algebraic_manipulation__equivalent_forms"
+    ],
+    "eedi_87": [
+      "quadratics__solutions_as_x_intercepts"
     ],
     "eedi_870": [
       "sequences__arithmetic_identification"
@@ -2260,20 +2995,38 @@
     "eedi_873": [
       "algebraic_manipulation__equivalent_forms"
     ],
+    "eedi_875": [
+      "number_properties__perfect_square_odd_factors"
+    ],
+    "eedi_876": [
+      "number_properties__factor_definition"
+    ],
     "eedi_877": [
       "measurement_units__unit_label_consistency"
     ],
     "eedi_879": [
       "linear_equations__slope_meaning"
     ],
+    "eedi_883": [
+      "linear_equations__slope_intercept_form"
+    ],
     "eedi_884": [
       "fractions_decimals__fraction_arithmetic"
+    ],
+    "eedi_886": [
+      "number_properties__perfect_square_odd_factors"
     ],
     "eedi_887": [
       "exponent_rules__product_rule"
     ],
     "eedi_888": [
       "algebraic_manipulation__like_terms"
+    ],
+    "eedi_889": [
+      "linear_inequalities__flip_rule"
+    ],
+    "eedi_89": [
+      "sequences__nth_term_formula"
     ],
     "eedi_890": [
       "algebraic_manipulation__like_terms"
@@ -2302,8 +3055,14 @@
     "eedi_902": [
       "algebraic_manipulation__like_terms"
     ],
+    "eedi_903": [
+      "transformations__reflection_rules"
+    ],
     "eedi_906": [
       "transformations__reflection_rules"
+    ],
+    "eedi_909": [
+      "linear_inequalities__flip_rule"
     ],
     "eedi_91": [
       "quadratics__factoring_method"
@@ -2311,8 +3070,14 @@
     "eedi_910": [
       "algebraic_manipulation__clearing_fractions"
     ],
+    "eedi_911": [
+      "functions_basics__function_notation_meaning"
+    ],
     "eedi_914": [
       "circles__arc_length_sector"
+    ],
+    "eedi_918": [
+      "fractions_decimals__fraction_decimal_conversion"
     ],
     "eedi_92": [
       "ratios_proportions__ratio_as_comparison"
@@ -2344,14 +3109,26 @@
     "eedi_931": [
       "algebraic_manipulation__literal_equation_rearrangement"
     ],
+    "eedi_937": [
+      "number_properties__perfect_square_odd_factors"
+    ],
+    "eedi_939": [
+      "sequences__arithmetic_identification"
+    ],
     "eedi_940": [
       "ratios_proportions__ratio_as_comparison"
+    ],
+    "eedi_942": [
+      "quadratics__quadratic_formula"
     ],
     "eedi_943": [
       "linear_equations__parallel_perpendicular"
     ],
     "eedi_944": [
       "algebraic_manipulation__literal_equation_rearrangement"
+    ],
+    "eedi_947": [
+      "number_properties__factor_count_exactly_three"
     ],
     "eedi_949": [
       "ratios_proportions__ratio_as_comparison"
@@ -2361,6 +3138,9 @@
     ],
     "eedi_950": [
       "radicals__simplification"
+    ],
+    "eedi_951": [
+      "order_of_operations__precedence_hierarchy"
     ],
     "eedi_952": [
       "transformations__rotation_rules"
@@ -2380,17 +3160,26 @@
     "eedi_961": [
       "measurement_units__unit_label_consistency"
     ],
+    "eedi_963": [
+      "number_properties__parity_even_odd_product_sum"
+    ],
     "eedi_966": [
       "quadratics__quadratic_formula"
     ],
     "eedi_97": [
       "lines_angles__transversal_angles"
     ],
+    "eedi_972": [
+      "functions_basics__one_to_one_invertibility"
+    ],
     "eedi_973": [
       "fractions_decimals__fraction_decimal_conversion"
     ],
     "eedi_974": [
       "transformations__reflection_rules"
+    ],
+    "eedi_977": [
+      "number_properties__perfect_square_odd_factors"
     ],
     "eedi_98": [
       "systems__substitution_method"
@@ -2406,6 +3195,12 @@
     ],
     "eedi_984": [
       "algebraic_manipulation__equivalent_forms"
+    ],
+    "eedi_985": [
+      "fractions_decimals__fraction_arithmetic"
+    ],
+    "eedi_986": [
+      "linear_equations__slope_intercept_form"
     ],
     "eedi_987": [
       "fractions_decimals__equivalent_fractions"
@@ -2427,6 +3222,9 @@
     ],
     "eedi_993": [
       "fractions_decimals__decimal_place_value"
+    ],
+    "eedi_995": [
+      "triangles__angle_sum"
     ],
     "eedi_997": [
       "algebraic_manipulation__clearing_fractions"

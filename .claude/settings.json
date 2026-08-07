@@ -3,7 +3,9 @@
     "allow": [
       "Bash(npx firebase-tools@13 --version)",
       "Bash(git commit -m ' *)",
-      "Bash(npx firebase-tools@13 deploy --only hosting)"
+      "Bash(npx firebase-tools@13 deploy --only hosting)",
+      "Bash(python3 -c ' *)",
+      "Bash(timeout 300 npm test)"
     ]
   }
 }
