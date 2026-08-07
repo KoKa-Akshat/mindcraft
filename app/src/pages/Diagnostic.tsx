@@ -32,7 +32,6 @@ import spec from '../data/actDiagnostic.json'
 import actBankData from '../data/actMasterQuestionBank.generated.json'
 import MathText from '../components/MathText'
 import jesseKitchenArt from '../assets/diagnostic/jesse-kitchen-intro.jpg'
-import WizardMascot from '../components/canvas/WizardMascot'
 import ConfettiBurst from '../components/doodle/ConfettiBurst'
 import SoundToggle from '../components/SoundToggle'
 import { playChime, playTap } from '../lib/uiSound'
@@ -62,7 +61,7 @@ interface ConfGroup { id: string; title: string; concepts: ConfConcept[] }
 
 const EXAM = 'ACT'
 
-type Step = 'intro' | 'horizon' | 'probe' | 'confidence' | 'loading'
+type Step = 'intro' | 'probe' | 'confidence'
 
 type HorizonOption = { value: number; label: string; sublabel: string }
 
@@ -126,14 +125,14 @@ export default function Diagnostic({ preview = false }: { preview?: boolean }) {
 
   const [step, setStep] = useState<Step>('intro')
   const [zooming, setZooming] = useState(false)
-  const [deadlineDays, setDeadlineDays] = useState<number | null>(null)
+  const [deadlineDays, setDeadlineDays] = useState<number>(30)
   const [confidence, setConfidence] = useState<Record<string, Confidence>>({})
   const [probeAnswers, setProbeAnswers] = useState<Record<string, number>>({})
   const [savingProbes, setSavingProbes] = useState(false)
   const [confettiOn, setConfettiOn] = useState(false)
 
   const progress = useMemo(() => {
-    const order: Step[] = ['intro', 'horizon', 'probe', 'confidence', 'loading']
+    const order: Step[] = ['intro', 'probe', 'confidence']
     return (order.indexOf(step) / (order.length - 1)) * 100
   }, [step])
 
@@ -201,44 +200,34 @@ export default function Diagnostic({ preview = false }: { preview?: boolean }) {
     setSavingProbes(false)
   }
 
-  /** Intro's illustration IS the interaction: tap the notebook, it zooms in,
+  /** Intro's illustration is the interaction: tap the desk, it zooms in,
    * then the first real question replaces it once the transition settles.
    * Respects prefers-reduced-motion by skipping straight to the next step. */
   function beginZoom() {
     if (zooming) return
     playTap()
     setZooming(true)
-    window.setTimeout(() => setStep('horizon'), prefersReducedMotion() ? 60 : 650)
+    window.setTimeout(() => setStep('probe'), prefersReducedMotion() ? 60 : 650)
   }
 
   async function finishConfidence() {
-    // No confetti here — the loading screen's cheering wizard is already
-    // the completion celebration for the very last step, and the step
-    // switches to 'loading' in this same tick so a confetti burst would
-    // have no card left under it to visually land on.
     playChime()
-    setStep('loading')
     try {
-      const minDwell = new Promise(resolve => window.setTimeout(resolve, 900))
       if (preview || !user) {
         saveDemoDiagnostic({ exam: EXAM, deadlineDays, confidence })
-        await minDwell
         navigate('/try/dashboard', { replace: true })
         return
       }
-      await Promise.all([
-        applyDiagnosticConfidence(
-          user.uid,
-          EXAM,
-          confidence,
-          { tags: [], text: '' },
-          {
-            diagnosticVersion: (spec as { version?: string }).version,
-            deadlineDays,
-          },
-        ),
-        minDwell,
-      ])
+      await applyDiagnosticConfidence(
+        user.uid,
+        EXAM,
+        confidence,
+        { tags: [], text: '' },
+        {
+          diagnosticVersion: (spec as { version?: string }).version,
+          deadlineDays,
+        },
+      )
       navigate('/dashboard', { replace: true })
     } catch {
       if (preview || !user) navigate('/try/dashboard', { replace: true })
@@ -255,10 +244,25 @@ export default function Diagnostic({ preview = false }: { preview?: boolean }) {
 
         {step === 'intro' && (
           <section className={s.card}>
-            <div className={`${s.cardInner} ${s.introCentered}`}>
-              <p className={s.kicker}>Jesse's kitchen</p>
-              <h1 className={s.title}>{(spec as { intro: { title: string } }).intro.title}</h1>
-              <p className={s.body}>{(spec as { intro: { body: string } }).intro.body}</p>
+            <div className={`${s.cardInner} ${s.introSpread}`}>
+              <div className={s.introCopy}>
+                <p className={s.kicker}>Field journal · entry one</p>
+                <h1 className={s.title}>{(spec as { intro: { title: string } }).intro.title}</h1>
+                <p className={s.body}>Start with an honest read. We will turn it into a route that belongs to you.</p>
+                <div className={s.windowPicker} aria-label="When is your ACT?">
+                  <span className={s.windowLabel}>Your ACT window</span>
+                  <div className={s.windowOptions}>
+                    {HORIZON_OPTIONS.map(opt => (
+                      <button
+                        key={opt.value}
+                        type="button"
+                        className={`${s.windowOption} ${deadlineDays === opt.value ? s.windowOptionOn : ''}`}
+                        onClick={() => { playTap(); setDeadlineDays(opt.value) }}
+                      >{opt.label}</button>
+                    ))}
+                  </div>
+                </div>
+              </div>
               <button
                 type="button"
                 className={`${s.introHotspot} ${zooming ? s.introZooming : ''}`}
@@ -273,35 +277,7 @@ export default function Diagnostic({ preview = false }: { preview?: boolean }) {
                   height={900}
                 />
               </button>
-              <span className={s.introCue}>Tap the desk to begin →</span>
-            </div>
-          </section>
-        )}
-
-        {step === 'horizon' && (
-          <section className={s.card}>
-            <div className={`${s.cardInner} ${s.horizonInner}`}>
-              <p className={s.kicker}>Your pace</p>
-              <h2 className={s.h2}>When is your exam?</h2>
-              <p className={s.note}>One tap. This sets how fast your route moves.</p>
-              <div className={s.horizonGrid}>
-                {HORIZON_OPTIONS.map(opt => (
-                  <button
-                    key={opt.value}
-                    type="button"
-                    className={`${s.horizonBtn} ${deadlineDays === opt.value ? s.horizonBtnOn : ''}`}
-                    onClick={() => { playTap(); setDeadlineDays(opt.value) }}
-                  >
-                    <span className={s.horizonLabel}>{opt.label}</span>
-                    <span className={s.horizonSublabel}>{opt.sublabel}</span>
-                  </button>
-                ))}
-              </div>
-              <button
-                className={s.primary}
-                disabled={deadlineDays === null}
-                onClick={() => { celebrateStep(); setStep(probeQuestions.length > 0 ? 'probe' : 'confidence') }}
-              >Continue</button>
+              <span className={s.introCue}>Open the first page →</span>
             </div>
           </section>
         )}
@@ -378,15 +354,6 @@ export default function Diagnostic({ preview = false }: { preview?: boolean }) {
           </section>
         )}
 
-        {step === 'loading' && (
-          <section className={s.card}>
-            <div className={s.loadingStage}>
-              <h1 className={s.loadingTitle}>Loading…</h1>
-              <WizardMascot line="Personalizing your world ★" cheering />
-              <div className={s.loadingBar}><div className={s.loadingBarFill} /></div>
-            </div>
-          </section>
-        )}
       </div>
     </div>
   )

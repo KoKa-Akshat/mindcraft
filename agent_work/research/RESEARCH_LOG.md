@@ -4,6 +4,126 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-07 — Researcher tick: Part XCVII Dual coding & diagram FormatId load (SAFE-DUAL)
+
+**Tick type:** Researcher (UTC hour 9; hour%6≠0; researcher count since synthesizer v1.12 = 5 → Researcher)  
+**Chapter written:** `chapters/97_dual_coding_diagram_formatid_load.md` (Part XCVII)  
+**Claim examined:** When MindCraft should treat words+pictures as dual-channel / multimedia design under CLT on FormatId surfaces — vs decoration, learning-styles meshing, or animation-first theater.
+
+**Doctrine proposed (provisional until next synthesizer):** **SAFE-DUAL** — structural dual coding; contiguous labels; coherence weeding; static annotated default; no Dual Coding Score™ / styles meshing / always-add-picture; proof = format-hop transfer; DUAL-* before dual-coding brand campaigns.
+
+**Evidence spine:** Paivio (1986); Clark & Paivio (1991); Mayer & Moreno (2003); Moreno & Mayer (1999); Mayer/Heiser/Lonn (2001); Chandler & Sweller (1991); Hegarty (1992); Hegarty/Kriz/Cate (2003); Mayer et al. (2005) static media; Pashler et al. (2008) learning styles.
+
+**Claim killed (this tick):** Dual Coding Score™ / always-add-picture ≡ science / decoration≡dual-coding / visual-learner meshing / animation-default / redundancy stack as thoroughness / split-legend density / unverified figure diagnostics / guaranteed ACT from multimedia — demoted under Paivio+CTML+split-attention+static-media+Pashler; contiguous structural figures + conversion survive behind DUAL-*.
+
+**Experiments mounted:** DUAL-1…5 + DUAL-QUAL.
+
+**Next researcher id:** **98** (metacognitive monitoring in gap-scan). Researcher count since v1.12 synthesizer: **6**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-07 — Researcher tick: Part XCVI Attention residue & device distraction (SAFE-ATTN)
+
+**Tick type:** Researcher (UTC hour 6 ≡ Red Team slot, but ch96 never written → prefer Researcher per rotation; researcher count since synthesizer v1.12 = 4 → Researcher)  
+**Chapter written:** `chapters/96_attention_residue_device_distraction.md` (Part XCVI)  
+**Claim examined:** How MindCraft should treat attention residue and device/media distraction during practice so FEI attempts keep working memory available — without Focus Score™ theater or phone-shame branding.
+
+**Doctrine proposed (provisional until next synthesizer):** **SAFE-ATTN** — protect mid-attempt windows (no engagement pushes); residue-aware interrupt park/resume; opt-in focus + tech breaks; phone-presence hygiene tips without shame; proof = solo transfer + interrupt quality; ATTN-* before focus-costume campaigns.
+
+**Evidence spine:** Leroy (2009) attention residue; Ward/Duke/Gneezy/Bos (2017) phone presence brain drain; Rosen/Carrier/Cheever (2013) studying task-switches; May & Elder (2018) media-multitasking review; Kates/Wu/Coryn (2018) phone–achievement meta r≈−0.16; Ophir/Nass/Wagner (2009) heavy MMI filter/switch costs.
+
+**Claim killed (this tick):** Focus Score™ NS / phone-shame pedagogy / multitasking-as-talent / mid-attempt DAU pushes / presence≡modern / guaranteed ACT from focus kits / covert attention surveillance — demoted under Leroy residue + Ward presence + May/Elder & Kates metas; attempt-window protection + tech breaks survive behind ATTN-*.
+
+**Experiments mounted:** ATTN-1…5 + ATTN-QUAL. Promoted stub 100 into NEXT_LAB (keep unfinished ≥3).
+
+**Next researcher id:** **97** (dual coding & diagram FormatId load). Researcher count since v1.12 synthesizer: **5**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-07 — Researcher tick: Part XCV Cognitive apprenticeship in tutor playbooks (SAFE-APPRENTICE)
+
+**Tick type:** Researcher (UTC hour 3; hour%6≠0; researcher count since synthesizer v1.12 = 3 → Researcher)  
+**Chapter written:** `chapters/95_cognitive_apprenticeship_tutor_playbooks.md` (Part XCV)  
+**Claim examined:** How MindCraft should encode Collins-style cognitive apprenticeship (model→coach→scaffold→fade + articulate/reflect/explore) into tutor playbooks and coach UX — without guild cosplay or monologue-as-modeling.
+
+**Doctrine proposed (provisional until next synthesizer):** **SAFE-APPRENTICE** — make expert thinking (esp. control/heuristics) visible; student performance under coaching; scaffold then fade; articulation required; shared `ca_phase` language for HITL+AI; no Apprenticeship Score™ / modeling≡lecture / never-fade; proof = solo transfer + articulation; APPRENTICE-* before costume campaigns.
+
+**Evidence spine:** Collins, Brown & Newman (1989); Collins, Brown & Holum (1991); Brown, Collins & Duguid (1989); Schoenfeld (1985); Wood, Bruner & Ross (1976); Palincsar & Brown (1984); Dennen (2004); SAFE-FADE / SAFE-TALK / SAFE-HITL / SAFE-PF boundaries.
+
+**Claim killed (this tick):** Guild/master cosplay / modeling≡lecture or AI monologue / never-fade permanent coaching / talk-%≡CA / Apprenticeship Score™ / Discord≡apprenticeship / reciprocal costume without turn-taking / CA marketing without phase logs — demoted under Collins method stack + Wood scaffolding + reciprocal-teaching fidelity; inspectable phase playbooks survive behind APPRENTICE-*.
+
+**Experiments mounted:** APPRENTICE-1…5 + APPRENTICE-QUAL.
+
+**Next researcher id:** **96** (attention residue & device distraction). Researcher count since v1.12 synthesizer: **4**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-07 — Researcher tick: Part XCIV Productive failure vs guided success sequencing (SAFE-PF)
+
+**Tick type:** Researcher (UTC hour 0 ≡ Red Team slot, but ch94 never written → prefer Researcher per rotation; researcher count since synthesizer v1.12 = 2 → Researcher)  
+**Chapter written:** `chapters/94_productive_failure_vs_guided_success.md` (Part XCIV)  
+**Claim examined:** When MindCraft should run generation→consolidation (productive failure / PS-I) vs guided success / instruction-first — without mislabeling every miss as PF or selling fail-first as brand.
+
+**Doctrine proposed (provisional until next synthesizer):** **SAFE-PF** — PF = designed two-phase generate→consolidate-on-student-RSMs; fidelity + prior-knowledge gates; I-PS/guided default when priors thin, procedural/exam chrome, or freeze; no PF Score™ / fail-first-always / discovery-without-consolidation; proof = conceptual + transfer; PF-* before invent-first campaigns.
+
+**Evidence spine:** Kapur & Bielaczyc (2012); Kapur (2014); Sinha & Kapur (2021 meta g≈0.36 PS-I; fidelity moderators; younger/domain-general favor I-PS); Loibl, Roll & Rummel (2017); Loibl & Rummel (2014); Schwartz & Martin (2004); Kirschner, Sweller & Clark (2006); SAFE-RETRIEVE / SAFE-FADE / XLI anxiety boundary.
+
+**Claim killed (this tick):** Every-miss≡PF / fail-first-always / generation-without-consolidation / PF Score™ / discovery-as-identity / anxiety-forced stew as PF / ACT-points-from-invent-first — demoted under Kapur design fidelity + Sinha/Kapur moderators + Kirschner guidance critique; high-fidelity gated PS-I survives behind PF-*.
+
+**Experiments mounted:** PF-1…5 + PF-QUAL. Promoted stubs 97–99 into NEXT_LAB (unfinished would drop below 3).
+
+**Next researcher id:** **95** (cognitive apprenticeship in tutor playbooks). Researcher count since v1.12 synthesizer: **3**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-06 — Researcher tick: Part XCIII Retrieval failure modes in practice UX (SAFE-RETRIEVE)
+
+**Tick type:** Researcher (UTC hour 21; hour%6≠0; researcher count since synthesizer v1.12 = 1 → Researcher)  
+**Chapter written:** `chapters/93_retrieval_failure_modes_practice_ux.md` (Part XCIII)  
+**Claim examined:** When mid-practice retrieval stalls should be treated as tip-of-tongue / partial access vs freeze/blanking vs productive struggle vs avoidance — and which UX preserves construction without struggle theater or answer dumps.
+
+**Doctrine proposed (provisional until next synthesizer):** **SAFE-RETRIEVE** — name the stall mode; attempt before heavy help; TOT → wait + micro-cue; freeze → bounded soft scaffold; progress≠blank-seconds; unsuccessful retrieval + feedback can potentiate; no Struggle Score™ / never-stuck dump; proof = retry/transfer; RETRIEVE-* before struggle-theater or never-stuck campaigns.
+
+**Evidence spine:** Brown & McNeill (1966); Schwartz & Metcalfe (2011); Kornell, Hays & Bjork (2009); Richland, Kornell & Kao (2009); Kornell & Vaughn (2016); Hiebert & Grouws (2007); Warshauer (2015); Kapur (2014) PF boundary; Ashcraft (2002) / Ashcraft & Kirk (2001); SAFE-HINT / SAFE-HELP / SAFE-EXPLAIN / XLI.
+
+**Claim killed (this tick):** All-struggle≡productive / Struggle Score™ / blank-time NS / always-wait silence theater / instant hard dump on first stall / never-stuck answer hero / errors-always-scar fear / dwell-XP — demoted under TOT metacognition + failed-retrieval potentiation + productive-struggle taxonomy + anxiety–WM; mode-contingent retrieve UX survives behind RETRIEVE-*.
+
+**Experiments mounted:** RETRIEVE-1…5 + RETRIEVE-QUAL.
+
+**Next researcher id:** **94** (productive failure vs guided success sequencing). Researcher count since v1.12 synthesizer: **2**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-06 — Researcher tick: Part XCII Explanation length vs germane load (SAFE-EXPLAIN)
+
+**Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch92 never written → prefer Researcher per rotation; researcher count since synthesizer v1.12 = 0 → Researcher)  
+**Chapter written:** `chapters/92_explanation_length_germane_load.md` (Part XCII)  
+**Claim examined:** When coach/Solver explanation length creates germane processing vs a token tax that crowds WM and displaces self-explanation.
+
+**Doctrine proposed (provisional until next synthesizer):** **SAFE-EXPLAIN** — short principle-first before monologue; germane ≠ more text (modern CLT redistribute); SE before wrap; length fades with expertise/fade×hint; coherence > charm; no Explanation Score™ / token NS; assistance-dilemma honesty; proof = solo transfer not essay dwell; EXPLAIN-* before unlimited-thorough-AI campaigns.
+
+**Evidence spine:** Sweller et al. (2019); Sweller (2010); Wittwer & Renkl (2010 meta *d*=0.16 overall; conceptual > procedural; SE controls erase advantage); Richey & Nokes-Malach (2013 withholding > providing for conceptual); Wittwer & Renkl (2008); Mayer coherence / Moreno & Mayer (2000); Chandler & Sweller redundancy; Kalyuga et al. (2003) / Kalyuga (2007) expertise reversal; Koedinger & Aleven (2007) assistance dilemma; SAFE-SE / SAFE-FADE / SAFE-HINT / SAFE-STORYLOAD.
+
+**Claim killed (this tick):** Longer explanation ≡ better teaching / token-count quality / Explanation Score™ / AI monologue≡SE / unlimited thorough AI essays as brand / fixed long wrap across expertise / seductive coach fluff — demoted under CLT + instructional-explanation meta + withholding conceptual gains; short principle-first length-contingent coach survives behind EXPLAIN-*.
+
+**Experiments mounted:** EXPLAIN-1…5 + EXPLAIN-QUAL.
+
+**Next researcher id:** **93** (retrieval failure modes in practice UX). Researcher count since v1.12 synthesizer: **1**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-06 — Synthesizer tick v1.12: merge Parts LXXXIV–XCI
 
 **Tick type:** Synthesizer (UTC hour 15; hour%6≠0; ≥8 researcher entries since synthesizer v1.11 → Synthesizer)  

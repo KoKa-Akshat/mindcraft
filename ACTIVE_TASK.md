@@ -4,6 +4,156 @@
 
 ---
 
+## Marketing landing v3 — SHIPPED to main (2026-08-07)
+
+Promoted `agent_work/product/marketing_mockups/` → root `index.html` + `img/` assets.
+Firebase marketing target. App/login CTAs retargeted to `#start` (join beta) while app work continues.
+Live: https://mindcraft-marketing-site.web.app — confirm CI green after push.
+
+---
+## Desk OS · hive land-in + note slate (local, 2026-08-07)
+
+`agent_work/product/desk_os/` · Owl stays glossy; tool orbs matte. Hivemind land-in (owl center, logos linked, FLIP settle). Notes chip opens one-line floating slate (☐ • ✓ ✕). Spotify/Google gated. `:5180`. Local only — no deploy.
+
+---
+
+## iOS native Phase 5 — visual & content parity pass — IN PROGRESS (Fable 5, 2026-08-06, round 5)
+
+Full detail in `ios-prototype/NATIVE_APP_BUILD_PLAN.md`'s Phase 5 section
+("Phase 5 progress, round 5", end of file). Not committed —
+`ios-prototype/` is gitignored.
+
+**Rounds 1-4 (prior sessions, all real-device verified):** all 7 planned
+screens recolored against live CSS modules. `ContentsRoadmapView` rewritten
+from a circular-dot layout to the real computed near-square grid of square
+story-art tiles with mastery-driven border/glow (`StoryArtLoader`, 47 bundled
+images). `QuestionView` per-cluster theming (`CLUSTER_MAP`/`CLUSTER_THEME`
+from `ConceptChapterPage.tsx`) + narrative-context header removed (web
+deliberately dropped it) + real teal `Practice.module.css` recolor.
+
+**Round 5 (this session), real-device verified — 8/9 XCUITests, zero
+regressions (same pre-existing `testPracticeSessionChecksAnswerAndAttemptsToSaveOutcome`
+baseline failure), screenshots pulled from `.xcresult` and inspected:**
+- **`CoverView.swift` fully rebuilt** to match the real `CoverLanding.tsx`
+  "world map" structure (was previously just a single centered card, colors
+  only) — 8 scattered subject pills (ACT Math live/pulsing, 7 dismissible),
+  center glass card (STUDY·CREATE·EXPLORE eyebrow, "Mind"+gold"Craft"
+  wordmark — confirmed gold `#f5d348` genuinely distinct from lime `#c4f547`
+  used elsewhere), name field + lime arrow submit, top-right Stickers/Find a
+  Tutor pills. Found and fixed a real bug during verification: web's
+  860px/620px hide-below-width breakpoints are BROWSER pixels, porting them
+  verbatim silently hid 2 of 8 pills on every real iPad (portrait iPad is
+  ~820-834pt) — lowered thresholds so iPad never triggers them.
+- **Real sticker feature built** (was completely absent —
+  `grep -rl sticker **/*.swift` returned zero). Investigated the web source
+  directly and found `dashboardPersonalization.ts`'s `DashboardSticker`/
+  `StickerLayer`/`JournalStyleDrawer` (Firestore, free drag-placement) has
+  ZERO real call sites anywhere in `app/src` — dead code. The actual live
+  system is `coverStickers.ts` + `StickersShelf.tsx` + `RotatableSticker.tsx`:
+  a 12-item catalog (real "Codex 3D" PNGs, now bundled), equip up to 4 into
+  fixed cover corner slots (X to remove), or pick one as the Dashboard wizard
+  mascot skin — both drag-to-tilt. Ported as `StickerCatalog.swift` +
+  `StickersShelfView.swift`, wired into both surfaces, `UserDefaults`-backed
+  (matches web's `localStorage`, not Firestore).
+  `Resources/stickers/` + pbxproj updated (manual PBXFileReference/
+  PBXBuildFile edits, `plutil -lint` clean).
+  build plan §"stickers" section corrected — do not port the orphaned
+  Firestore system if this is revisited.
+- **QuestionView pattern investigation, resolved — no change needed.**
+  Traced web's TOC-node click to `/concept/:id` → `ConceptChapterPage.tsx`
+  (story+quiz on one continuously-scrolling sheet, no separate "session"
+  page) — a DIFFERENT real screen from `/practice` (`Practice.tsx`,
+  `Practice.module.css`, the teal theme round 4 already ported).
+  `QuestionView`'s only real production entry points (today's-spark +
+  weekly-review hero-bar badges) both map to `/practice` — round 4's teal
+  recolor was already correct. Known gap, not fixed this pass (large,
+  risky rewrite): native's `ConceptChapterView` hands off to a separate
+  practice screen instead of embedding questions inline the way web's
+  chapter page does.
+- **Hero-bar badge text-clipping bug fixed**: found via screenshot
+  ("TODA...SP...ARK" truncation on "today's spark"/"weekly review" pills).
+  Root cause: eyebrow+label were an `HStack` competing for one row's width;
+  changed to `VStack` so each line gets the full pill width — confirmed
+  fixed on a follow-up screenshot.
+- **iPad-native layout audit**: `NotesListView` (bookmarks + session notes
+  were a single stretched-full-width column) and `FindTutorView` (map was
+  always a thin 260pt strip above a stacked list) converted to
+  `LazyVGrid(.adaptive(minimum: 320))` / width-aware side-by-side map+list
+  respectively — same reference pattern as the already-shipped
+  `DiagnosticGateView` grid.
+
+**Not done this round:** `KnowledgeMapView`/`WorkPracticeView` iPad-layout
+audit (time-boxed out — lower urgency, both are canvas-style screens that
+already use the full width reasonably), a real second device-orientation
+sanity check for the rotated-screenshot capture artifact hit mid-session
+(traced to physical touch/rotation interference during a full-suite run per
+Akshat's live note, NOT a real app bug — re-ran the affected test in
+isolation and got a correctly-oriented, passing screenshot confirming the
+fix).
+
+---
+
+## iOS native Phase 2 — real-device verification pass — COMPLETE (Fable 5, 2026-08-06)
+
+Full detail in `ios-prototype/NATIVE_APP_BUILD_PLAN.md` ("Phase 2 status —
+real-device build/install/launch/test/screenshot pass" section, end of
+file). Not committed — `ios-prototype/` is gitignored.
+
+Finished the real-device build/install/launch/9-XCUITest/screenshot pass
+that had been blocked earlier in the session. Two real infra defects found
+and fixed (neither was disk space, despite the earlier framing):
+1. Host's Developer Disk Image cache was empty (`~/Library/Developer/Xcode/iOS
+   DeviceSupport/` missing) → device stuck `connected (no DDI)`. Fixed via
+   `xcrun devicectl manage ddis update`.
+2. `MindCraftNotesUITests` target's Debug/Release configs had
+   `CODE_SIGN_STYLE = Automatic` but no `DEVELOPMENT_TEAM` (only the app
+   target had one from an earlier signing fix this session) → UI-test Runner
+   app failed to install with an invalid-signing-identity error. Fixed by
+   adding `DEVELOPMENT_TEAM = 4YV3SZN6P7;` to both UITests configs in
+   `project.pbxproj`.
+
+**Result: 8/9 XCUITests passed on the physical iPad** (iPad Air 5th gen,
+destination `id=00008103-0012296E01D0C01E`). One failure —
+`testPracticeSessionChecksAnswerAndAttemptsToSaveOutcome` — is a timing
+issue (5s wait for the `outcomeFailedLabel` state that's the documented
+expected outcome in this unauthenticated test harness; likely real-device
+network latency, not investigated further, flagged in the plan doc for a
+future pass). Real screenshots (not simulator) captured from the `.xcresult`
+bundle, saved to `ios-prototype/MindCraftNotes/screenshots_realdevice_2026-08-06/`.
+
+**Next**: `NATIVE_APP_BUILD_PLAN.md` Phase 5 ("Visual & content parity
+pass") is scoped and in progress separately — Login/Diagnostic/Dashboard
+colors already fixed and device-verified per that section; still needed:
+KnowledgeMapView, WorkPracticeView, NotesListView, ConceptChapterView,
+QuestionView, FindTutorView, CoverView, plus real story-art images and an
+iPad-native layout audit. That is a substantial separate scope (7 files +
+asset work + a new stickers feature per the plan doc's addenda) — flagging
+here rather than folding it silently into this entry so it's trackable as
+its own unit of work.
+
+---
+
+## Native iOS build plan refreshed against current web app — COMPLETE (Fable 5, 2026-08-06)
+
+`ios-prototype/NATIVE_APP_BUILD_PLAN.md` was last updated 2026-07-25; the
+web app had since shipped a full dark "chalkboard" palette overhaul of the
+Contents roadmap (fonts, colors, and the roadmap's whole node/layout
+mechanic — square icon tiles with mastery-driven borders on a computed
+grid, not the old pie-fill dots + connector lines on a light palette) plus
+three new features (live "Call" co-working sessions, worksheet "write on
+it" mode, Weekly Review guided play-through — see entry below). Re-verified
+every cited file directly against 2026-08-06 source and rewrote §2 (nav),
+§4 (fonts/colors/Contents roadmap mechanics), and added a new "New product
+surfaces since 2026-07-25" section documenting the 3 features' real
+Firestore schemas + native-porting notes. Phase 0/Agent A/B/C status logs
+and the rest of the doc's structure were left untouched (refresh, not
+rewrite). `ios-prototype/` is gitignored (confirmed via `git check-ignore`)
+so this file was not committed — it's updated on disk only.
+**Next**: Phase 2 (Practice/Solver/Work + chapter drill-down) can now
+resume against a current plan.
+
+---
+
 ## Worksheet "write on it" mode + live Call — COMPLETE (Fable 5, 2026-08-06)
 
 Second way to work an uploaded PDF/photo, alongside the existing
