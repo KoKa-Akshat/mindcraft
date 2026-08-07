@@ -418,13 +418,14 @@
 
   /* Tutors — one split stage, equal panes, no awkward overlap */
   .tutors{background:linear-gradient(180deg, var(--blue), var(--cream));}
-  .tutor-head{
-    display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,auto);
-    gap:clamp(22px,3.5vw,40px); align-items:center; margin-bottom:36px;
+  .tutor-head{margin-bottom:36px;}
+  .tutor-head .h2{max-width:18ch;}
+  .tutor-head-row{
+    margin-top:22px; display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:clamp(18px,3vw,36px); align-items:start;
   }
-  .tutor-head-copy{min-width:0;}
-  .tutor-head .h2{max-width:16ch;}
-  .tutor-head .scan-points{margin-top:18px; max-width:460px;}
+  .tutor-head .scan-points{margin-top:0; max-width:none;}
   .tutor-duo{
     display:grid; grid-template-columns:1.15fr 1fr; gap:18px; margin:10px auto 0;
     width:100%; max-width:1120px; padding:16px; border-radius:30px;
@@ -513,22 +514,22 @@
   .leaflet-container{font:inherit; background:#e8efe8;}
   .leaflet-control-attribution{font-size:9px !important; background:rgba(255,253,247,.75) !important;}
   .tutor-quote{
-    position:relative; margin:0; width:fit-content; max-width:min(34ch,100%);
-    text-align:left; padding:20px 22px 18px; border-radius:20px;
+    position:relative; margin:0; width:100%; max-width:420px;
+    text-align:left; padding:22px 24px 20px; border-radius:20px;
     background:linear-gradient(180deg, #fffef8, #f7f0d8);
     border:1.5px solid rgba(211,169,0,.45);
     box-shadow:0 14px 36px rgba(20,58,46,.1);
-    align-self:center; justify-self:start;
+    justify-self:end;
   }
   .tutor-quote::before{
-    content:"“"; position:absolute; top:2px; left:14px;
-    font-family:"DM Serif Display",Georgia,serif; font-size:42px; line-height:1;
-    color:var(--gold-deep); opacity:.45;
+    content:"“"; display:block; margin:0 0 2px;
+    font-family:"DM Serif Display",Georgia,serif; font-size:36px; line-height:.8;
+    color:var(--gold-deep); opacity:.5;
   }
   .tutor-quote p{
     font-family:"DM Serif Display",Georgia,serif; font-style:italic;
-    font-size:clamp(19px,2vw,24px); line-height:1.35; color:var(--ink);
-    margin:0; position:relative; z-index:1; padding-top:6px;
+    font-size:clamp(18px,1.9vw,23px); line-height:1.35; color:var(--ink);
+    margin:0; position:relative; z-index:1;
   }
   .tutor-quote p em{
     font-style:italic; color:var(--leaf);
@@ -815,10 +816,10 @@
     .stepcard{min-height:270px; padding:16px 14px 12px;}
     .stepcard h3{font-size:22px;}
     .step-art{min-height:170px;}
-    .tutor-head{gap:clamp(18px,2.5vw,28px); align-items:center;}
-    .tutor-head .h2{max-width:15ch;}
-    .tutor-quote{padding:18px 20px 16px; max-width:min(32ch,100%);}
-    .tutor-quote p{font-size:clamp(18px,2vw,22px);}
+    .tutor-head .h2{max-width:16ch;}
+    .tutor-head-row{gap:18px;}
+    .tutor-quote{padding:18px 20px 16px; max-width:100%; justify-self:stretch;}
+    .tutor-quote p{font-size:clamp(17px,1.9vw,21px);}
     .tutor-duo{padding:14px; gap:14px;}
     .tutor-pane{height:min(460px, 54svh);}
     .tm-search input,.tm-search button{min-height:44px;}
@@ -844,7 +845,6 @@
     .cap.featured{grid-column:span 2;}
     .story-grid,.scan-grid,.act-grid{grid-template-columns:1fr;}
     .scan-grid .scan-frame{order:2;}
-    .tutor-head{grid-template-columns:1fr 1fr;}
     .tutor-duo{grid-template-columns:1fr 1fr;}
   }
   /* iPad landscape: keep drop demo as two panes when there's room */
@@ -855,12 +855,12 @@
     .story-grid,.scan-grid{grid-template-columns:1fr 1fr;}
     .scan-grid .scan-frame{order:0;}
   }
-  /* Narrow tablet / Mini portrait: stack quote under bullets */
+  /* Phone: stack quote under bullets */
   @media(max-width:767px){
-    .tutor-head{grid-template-columns:1fr; gap:16px;}
     .tutor-head .h2{max-width:16ch;}
-    .tutor-quote{max-width:100%; width:100%; padding:18px 20px 16px;}
-    .tutor-quote p{font-size:clamp(19px,4.6vw,22px);}
+    .tutor-head-row{grid-template-columns:1fr; gap:14px;}
+    .tutor-quote{max-width:100%; justify-self:stretch; padding:18px 20px 16px;}
+    .tutor-quote p{font-size:clamp(18px,4.4vw,21px);}
   }
   @media(max-width:640px){
     .nav{
@@ -1238,9 +1238,9 @@
 <section class="tutors" id="tutors">
   <div class="wrap">
     <div class="tutor-head">
-      <div class="tutor-head-copy">
-        <div class="kicker reveal">Chapter 06 · The allies</div>
-        <h2 class="h2 reveal">A college tutor in your corner.</h2>
+      <div class="kicker reveal">Chapter 06 · The allies</div>
+      <h2 class="h2 reveal">A college tutor in your corner.</h2>
+      <div class="tutor-head-row">
         <div class="scan-points">
           <div class="scan-point reveal">
             <span class="pip">1</span>
@@ -1255,10 +1255,10 @@
             <p>First session free. Real college tutors.</p>
           </div>
         </div>
+        <blockquote class="tutor-quote reveal">
+          <p>MindCraft is not software instead of people. It is software that <em>makes the people better.</em></p>
+        </blockquote>
       </div>
-      <blockquote class="tutor-quote reveal">
-        <p>MindCraft is not software instead of people. It is software that <em>makes the people better.</em></p>
-      </blockquote>
     </div>
     <div class="tutor-duo reveal" id="tutorLive">
       <div class="tutor-pane map">
