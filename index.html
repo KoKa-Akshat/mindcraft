@@ -52,7 +52,7 @@
     display:flex; align-items:center; gap:12px; margin-bottom:18px;
     font-size:11px; font-weight:1000; letter-spacing:.18em; text-transform:uppercase; color:rgba(20,58,46,.55);
   }
-  .kicker::before{content:""; width:28px; height:1.5px; background:currentColor;}
+  .kicker::before{content:none;}
   .h2{font-size:clamp(38px,5.4vw,64px); max-width:720px;}
   .lede{margin-top:16px; font-size:18px; font-weight:700; line-height:1.5; color:var(--muted); max-width:600px;}
   .script{font-family:"Caveat",cursive; font-weight:700; color:var(--leaf);}
@@ -211,16 +211,21 @@
   .how{background:linear-gradient(180deg, var(--paper), var(--mint));}
   .steps{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:46px;}
   .stepcard{
-    border-radius:30px; border:1px solid var(--line); padding:22px;
+    border-radius:30px; border:1px solid var(--line); padding:18px 16px 14px;
     display:flex; flex-direction:column; gap:12px; min-height:300px;
     box-shadow:0 18px 46px rgba(20,58,46,.07);
   }
   .stepcard.peach{background:#fdeee2;} .stepcard.sand{background:#f7f0dc;}
   .stepcard.mint{background:#e7f6df;} .stepcard.blue{background:#e2eef8;}
-  .stepcard .num{font-size:11px; font-weight:1000; letter-spacing:.16em; color:var(--leaf);}
-  .stepcard h3{font-size:26px;}
-  .stepcard p{font-size:13.5px; font-weight:700; color:var(--muted); line-height:1.45;}
-  .step-art{margin-top:auto; height:104px; border-radius:18px; background:rgba(255,253,247,.72); border:1px solid rgba(20,58,46,.1); position:relative; overflow:hidden;}
+  .stepcard .num{display:none;}
+  .stepcard h3{font-size:24px; margin:0;}
+  .stepcard > p{display:none;}
+  .step-art{
+    margin-top:auto; flex:1 1 auto; min-height:190px; border-radius:18px;
+    background:rgba(255,253,247,.72); border:1px solid rgba(20,58,46,.1);
+    position:relative; overflow:hidden;
+  }
+  .stepcard.peach .step-art{min-height:160px;}
   /* step art 1: drop zone */
   .art-drop{position:absolute; inset:10px; border:2px dashed rgba(36,122,77,.4); border-radius:12px; display:grid; place-items:center;}
   .art-drop .minichip{
@@ -230,16 +235,16 @@
   }
   @keyframes dropFloat{0%,100%{transform:translateY(-3px);} 50%{transform:translateY(3px);}}
   /* step art 2: binder rows */
-  .art-rows{position:absolute; inset:12px; display:flex; flex-direction:column; gap:6px; justify-content:center;}
-  .art-row{display:flex; align-items:center; gap:7px; background:#fff; border:1px solid rgba(20,58,46,.08); border-radius:8px; padding:5px 8px; font-size:9.5px; font-weight:900; color:var(--ink);}
-  .art-row .dot{width:8px; height:8px; border-radius:3px; flex:none;}
+  .art-rows{position:absolute; inset:14px; display:flex; flex-direction:column; gap:8px; justify-content:center;}
+  .art-row{display:flex; align-items:center; gap:8px; background:#fff; border:1px solid rgba(20,58,46,.08); border-radius:12px; padding:12px 13px; font-size:13px; font-weight:900; color:var(--ink);}
+  .art-row .dot{width:10px; height:10px; border-radius:3px; flex:none;}
   /* step art 3: tonight list */
-  .art-list{position:absolute; inset:12px; display:flex; flex-direction:column; gap:6px; justify-content:center;}
-  .art-li{display:flex; align-items:center; gap:7px; font-size:9.5px; font-weight:900; color:var(--ink); background:#fff; border-radius:8px; border:1px solid rgba(20,58,46,.08); padding:5px 8px;}
-  .art-li .box{width:10px; height:10px; border-radius:4px; border:1.5px solid var(--leaf); flex:none;}
+  .art-list{position:absolute; inset:14px; display:flex; flex-direction:column; gap:8px; justify-content:center;}
+  .art-li{display:flex; align-items:center; gap:8px; font-size:13px; font-weight:900; color:var(--ink); background:#fff; border-radius:12px; border:1px solid rgba(20,58,46,.08); padding:12px 13px;}
+  .art-li .box{width:12px; height:12px; border-radius:4px; border:1.5px solid var(--leaf); flex:none;}
   .art-li.done .box{background:var(--leaf);}
   .art-li.done{opacity:.55; text-decoration:line-through;}
-  .art-li .when{margin-left:auto; font-size:8.5px; color:#b06a12; background:#fdf3d7; border-radius:5px; padding:1.5px 5px;}
+  .art-li .when{margin-left:auto; font-size:10px; color:#b06a12; background:#fdf3d7; border-radius:5px; padding:2px 7px;}
   /* step art 4: mini map */
   .art-map{position:absolute; inset:0;}
   .art-map line{stroke:rgba(36,122,77,.35); stroke-width:1.4;}
@@ -400,7 +405,7 @@
   /* Tutors — one split stage, equal panes, no awkward overlap */
   .tutors{background:linear-gradient(180deg, var(--blue), var(--cream));}
   .tutor-head{max-width:720px; margin-bottom:36px;}
-  .tutor-head .h2{max-width:560px;}
+  .tutor-head .h2{max-width:28ch;}
   .tutor-duo{
     display:grid; grid-template-columns:1.15fr 1fr; gap:18px; margin:10px auto 0;
     width:100%; max-width:1120px; padding:16px; border-radius:30px;
@@ -594,7 +599,17 @@
     color:var(--ink); margin:0 0 10px; letter-spacing:-.02em;
   }
   .dd-note .dd-meta{font-size:12px; font-weight:800; color:var(--muted); margin-bottom:14px;}
-  .dd-note p{font-size:15px; font-weight:700; color:rgba(20,58,46,.82); line-height:1.55; max-width:36ch; margin:0;}
+  .dd-note .dd-bullets{
+    list-style:none; margin:0; padding:0; display:grid; gap:8px; max-width:34ch;
+  }
+  .dd-note .dd-bullets li{
+    position:relative; padding-left:14px;
+    font-size:14.5px; font-weight:800; color:rgba(20,58,46,.86); line-height:1.35;
+  }
+  .dd-note .dd-bullets li::before{
+    content:""; position:absolute; left:0; top:.55em; width:6px; height:6px;
+    border-radius:2px; background:var(--leaf);
+  }
   .dd-note .dd-whisper{
     margin-top:18px; font-family:"Caveat",cursive; font-size:20px; color:var(--leaf);
   }
@@ -845,7 +860,6 @@
     <div>
       <a class="hero-announce" href="#act"><i>LIVE</i> Summer ACT package →</a>
       <h1>School is scattered. <em>You don't have to&nbsp;be.</em></h1>
-      <p class="lead"><b>Drop</b> your worksheets, <b>plug in</b> your calendar, <b>practice</b> inside story worlds. And when you need a human, a real college tutor shows up already knowing where you're stuck.</p>
       <div class="hero-actions">
         <a class="btn primary" href="#start">Set up my desk</a>
         <a class="btn soft" href="#problem">See how it works</a>
@@ -922,17 +936,13 @@
 
     <div class="steps">
       <div class="stepcard peach reveal">
-        <span class="num">STEP 1</span>
         <h3>Drop it</h3>
-        <p>Worksheets, photos, PDFs, screenshots. If it is school, throw it on the desk. Try it just below.</p>
         <div class="step-art">
           <div class="art-drop"><span class="minichip">IMG_4127.jpg</span></div>
         </div>
       </div>
       <div class="stepcard sand reveal">
-        <span class="num">STEP 2</span>
         <h3>Filed for you</h3>
-        <p>The desk reads it, names it, dates it, and files it in the right course binder.</p>
         <div class="step-art">
           <div class="art-rows">
             <div class="art-row"><span class="dot" style="background:var(--teal);"></span>Stoichiometry practice · AP Chem</div>
@@ -942,9 +952,7 @@
         </div>
       </div>
       <div class="stepcard mint reveal">
-        <span class="num">STEP 3</span>
         <h3>Planned for you</h3>
-        <p>Plug in your calendar once. Dues and tests line up into one honest tonight list.</p>
         <div class="step-art">
           <div class="art-list">
             <div class="art-li done"><span class="box"></span>Chem set 4.2</div>
@@ -954,9 +962,7 @@
         </div>
       </div>
       <div class="stepcard blue reveal">
-        <span class="num">STEP 4</span>
-        <h3>Learned for real</h3>
-        <p>What you drop tells the desk what you are learning. Practice for it lives inside story worlds, and the map moves that night.</p>
+        <h3>Learned for you</h3>
         <div class="step-art">
           <svg class="art-map" viewBox="0 0 220 104" preserveAspectRatio="xMidYMid slice">
             <line x1="30" y1="70" x2="80" y2="34"/><line x1="80" y1="34" x2="140" y2="56"/>
@@ -999,7 +1005,11 @@
         <div class="dd-note" id="ddNote">
           <h4 id="ddNoteTitle">Systems of Equations</h4>
           <div class="dd-meta" id="ddNoteMeta">Algebra II · Unit 5 · due Thursday</div>
-          <p id="ddNoteBody">Two equations, one meeting point. The desk pulled the graphing ask and the word problem into one clean page — ready for tonight.</p>
+          <ul class="dd-bullets" id="ddNoteBody">
+            <li>Named and dated for you</li>
+            <li>Graph + word problem on one page</li>
+            <li>Ready for tonight's study</li>
+          </ul>
           <div class="dd-whisper" id="ddNoteWhisper">named, dated, waiting in your binder</div>
         </div>
       </div>
@@ -1045,11 +1055,10 @@
   <div class="wrap">
     <div class="kicker reveal">Chapter 04 · The powers</div>
     <h2 class="h2 reveal">A quiet superpower for every part of school.</h2>
-    <p class="lede reveal">We build the desk brick by brick, in the open. The two bricks that matter most come first, done properly. The rest stays on the wall until it's ready.</p>
     <div class="caps-grid">
       <div class="cap featured reveal">
         <figure class="cover">
-          <img src="img/cover-binder.jpg" alt="Book cover: The Binder — Everything's organized in there.">
+          <img src="img/cover-binder.jpg" alt="Book cover: The Binder. Everything's organized in there.">
         </figure>
         <div class="cap-copy">
           <span class="now-chip">BRICK 1 · IN THE BUILD</span>
@@ -1059,7 +1068,7 @@
       </div>
       <div class="cap featured reveal">
         <figure class="cover">
-          <img src="img/cover-tonight.jpg" alt="Book cover: Tonight — One honest list.">
+          <img src="img/cover-tonight.jpg" alt="Book cover: Tonight. One honest list.">
         </figure>
         <div class="cap-copy">
           <span class="now-chip">BRICK 2 · IN THE BUILD</span>
@@ -1113,19 +1122,18 @@
       <div class="scan-copy">
         <div class="kicker reveal">Chapter 05 · The map</div>
         <h2 class="h2 reveal">Built for the weeks <span class="script">before a test.</span></h2>
-        <p class="lede reveal">The system is specially fast for exams — quiet about it. Gap scan and diagnosis are the cream: four honest minutes, then a map that shows where you stand.</p>
         <div class="scan-points">
           <div class="scan-point reveal">
             <span class="pip">1</span>
-            <p>Tap through every concept</p>
+            <p>Four minutes. Tap what you actually know.</p>
           </div>
           <div class="scan-point reveal">
             <span class="pip">2</span>
-            <p>The map lights up</p>
+            <p>See the gaps before the exam finds them.</p>
           </div>
           <div class="scan-point reveal">
             <span class="pip">3</span>
-            <p>Tonight has a plan</p>
+            <p>Walk into test week with a clear tonight list.</p>
           </div>
         </div>
       </div>
@@ -1138,8 +1146,21 @@
   <div class="wrap">
     <div class="tutor-head">
       <div class="kicker reveal">Chapter 06 · The allies</div>
-      <h2 class="h2 reveal">A college tutor <span class="script">in your corner.</span></h2>
-      <p class="lede reveal">It feels like they've always known you. Like you took the class together. Your map is open before the hello, so the hour goes to teaching, not detective work.</p>
+      <h2 class="h2 reveal">A college tutor in your corner.</h2>
+      <div class="scan-points" style="margin-top:18px;">
+        <div class="scan-point reveal">
+          <span class="pip">1</span>
+          <p>They open your map before hello.</p>
+        </div>
+        <div class="scan-point reveal">
+          <span class="pip">2</span>
+          <p>The hour goes to teaching, not catching up.</p>
+        </div>
+        <div class="scan-point reveal">
+          <span class="pip">3</span>
+          <p>First session free. Real college tutors.</p>
+        </div>
+      </div>
     </div>
     <div class="tutor-duo reveal" id="tutorLive">
       <div class="tutor-pane map">
@@ -1330,7 +1351,7 @@
             <p class="apply-note">Sends to joinmindcraft@gmail.com. We reply within 48 hours.</p>
           </form>
         </div>
-        <p style="margin:20px 0 0; font-size:13.5px; text-align:center; color:rgba(255,253,247,.72); font-weight:800;">Desk access opens with your beta seat — claim one above.</p>
+        <p style="margin:20px 0 0; font-size:13.5px; text-align:center; color:rgba(255,253,247,.72); font-weight:800;">Desk access opens with your beta seat. Claim one above.</p>
       </div>
     </div>
   </div>
@@ -1592,25 +1613,25 @@
     systems: {
       title: 'Systems of Equations',
       meta: 'Algebra II · Unit 5 · due Thursday',
-      body: 'Two equations, one meeting point. The desk pulled the graphing ask and the word problem into one clean page — ready for tonight.',
+      bullets: ['Named and dated for you', 'Graph + word problem on one page', "Ready for tonight's study"],
       whisper: 'named, dated, waiting in your binder'
     },
     gatsby: {
       title: 'Gatsby Annotations',
-      meta: 'English 11 · Ch. 4–6 · due Friday',
-      body: 'Daisy\'s voice, the green light, the guest list as class theater. Filed as a reading note you can reopen without hunting the PDF.',
+      meta: 'English 11 · Ch. 4-6 · due Friday',
+      bullets: ['Quotes you can reopen fast', 'No more hunting the PDF', 'Filed with the chapter'],
       whisper: 'the desk kept the quotes that matter'
     },
     chem: {
       title: 'Stoichiometry Set',
       meta: 'AP Chem · Unit 3 · quiz Monday',
-      body: 'Balancing, moles, limiting reactant, percent yield — four problems, one unit. Queued for the night before the quiz.',
+      bullets: ['Four problems, one unit', 'Queued before the quiz', 'Unit 3, not IMG_whatever'],
       whisper: 'unit 3, not "IMG_whatever"'
     },
     circles: {
       title: 'Circle Theorems',
       meta: 'Geometry · Unit 6 · practice',
-      body: 'Inscribed angles, the semicircle right angle, equal tangents. Practice problems, already titled for when you need them.',
+      bullets: ['Theorems titled for search', 'Practice when you need it', 'Geometry finally has a home'],
       whisper: 'geometry finally has a home'
     }
   };
@@ -1619,6 +1640,16 @@
   const ddMeta = document.getElementById('ddNoteMeta');
   const ddBody = document.getElementById('ddNoteBody');
   const ddWhisper = document.getElementById('ddNoteWhisper');
+  function fillDdNote(n){
+    ddTitle.textContent = n.title;
+    ddMeta.textContent = n.meta;
+    ddBody.replaceChildren(...n.bullets.map(t => {
+      const li = document.createElement('li');
+      li.textContent = t;
+      return li;
+    }));
+    ddWhisper.textContent = n.whisper;
+  }
   document.querySelectorAll('.dd-pdf').forEach(btn => {
     btn.addEventListener('click', () => {
       const id = btn.dataset.id;
@@ -1633,10 +1664,7 @@
       ddNote.style.animation = 'none';
       void ddNote.offsetWidth;
       ddNote.style.animation = '';
-      ddTitle.textContent = n.title;
-      ddMeta.textContent = n.meta;
-      ddBody.textContent = n.body;
-      ddWhisper.textContent = n.whisper;
+      fillDdNote(n);
     });
   });
 
