@@ -85,8 +85,8 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 94 | Productive failure vs guided success sequencing | Kapur PF; when struggle-first helps/hurts | **DONE** (2026-08-07) — Part XCIV / SAFE-PF |
 | 95 | Cognitive apprenticeship in tutor playbooks | Collins modeling→coaching→fading ops | **DONE** (2026-08-07) — Part XCV / SAFE-APPRENTICE |
 | 96 | Attention residue & device distraction in practice | Phone/task-switch tax on FEI attempts | **DONE** (2026-08-07) — Part XCVI / SAFE-ATTN |
-| 97 | Dual coding & diagram FormatId load | Multimedia principles × format axis; when figures help | **NEXT** |
-| 98 | Metacognitive monitoring in gap-scan | Confidence vs accuracy; calibration loop with SAFE-CALIB | queued |
+| 97 | Dual coding & diagram FormatId load | Multimedia principles × format axis; when figures help | **DONE** (2026-08-07) — Part XCVII / SAFE-DUAL |
+| 98 | Metacognitive monitoring in gap-scan | Confidence vs accuracy; calibration loop with SAFE-CALIB | **NEXT** |
 | 99 | Opportunity cost of tutor minutes vs AI scaffold | When HITL time beats coach; session ROI honesty | queued |
 | 100 | Worked-example vs problem-solving timing across expertise | When E0→E3 schedule collides with prior knowledge | queued |
 
@@ -146,3 +146,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any every-miss≡PF / fail-first-always / generation-without-consolidation / PF Score™ / discovery-as-identity / anxiety-forced stew≡PF / guaranteed ACT points from invent-first (Part XCIV)
 - Any guild/master cosplay / modeling≡lecture / never-fade permanent coach / talk-%≡CA / Apprenticeship Score™ / Discord≡apprenticeship / reciprocal costume without turns / CA ads without phase logs (Part XCV)
 - Any Focus Score™ / phone-shame pedagogy / multitasking-as-talent / mid-attempt DAU pushes / presence≡modern learning / guaranteed ACT from focus kits / covert attention surveillance (Part XCVI)
+- Any Dual Coding Score™ / always-add-picture / decoration≡dual-coding / visual-learner meshing / animation-default≡science / redundancy stack as thoroughness / split-legend density / unverified figure diagnostics / guaranteed ACT from multimedia (Part XCVII)

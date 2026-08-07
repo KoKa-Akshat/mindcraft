@@ -70,6 +70,6 @@ Promote 3 at a time into `NEXT_LAB.md`. Do not write all at once.
 | 94 | Productive failure vs guided success sequencing | Kapur PF; when struggle-first helps/hurts | promoted → NEXT_LAB **DONE** |
 | 95 | Cognitive apprenticeship in tutor playbooks | Collins modeling→coaching→fading ops | promoted → NEXT_LAB |
 | 96 | Attention residue & device distraction in practice | Phone/task-switch tax on FEI attempts | promoted → NEXT_LAB |
-| 97 | Dual coding & diagram FormatId load | Multimedia principles × format axis; when figures help | promoted → NEXT_LAB |
+| 97 | Dual coding & diagram FormatId load | Multimedia principles × format axis; when figures help | promoted → NEXT_LAB **DONE** Part XCVII |
 | 98 | Metacognitive monitoring in gap-scan | Confidence vs accuracy; calibration loop with SAFE-CALIB | promoted → NEXT_LAB |
 | 99 | Opportunity cost of tutor minutes vs AI scaffold | When HITL time beats coach; session ROI honesty | promoted → NEXT_LAB |

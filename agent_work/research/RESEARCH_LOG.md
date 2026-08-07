@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-07 — Researcher tick: Part XCVII Dual coding & diagram FormatId load (SAFE-DUAL)
+
+**Tick type:** Researcher (UTC hour 9; hour%6≠0; researcher count since synthesizer v1.12 = 5 → Researcher)  
+**Chapter written:** `chapters/97_dual_coding_diagram_formatid_load.md` (Part XCVII)  
+**Claim examined:** When MindCraft should treat words+pictures as dual-channel / multimedia design under CLT on FormatId surfaces — vs decoration, learning-styles meshing, or animation-first theater.
+
+**Doctrine proposed (provisional until next synthesizer):** **SAFE-DUAL** — structural dual coding; contiguous labels; coherence weeding; static annotated default; no Dual Coding Score™ / styles meshing / always-add-picture; proof = format-hop transfer; DUAL-* before dual-coding brand campaigns.
+
+**Evidence spine:** Paivio (1986); Clark & Paivio (1991); Mayer & Moreno (2003); Moreno & Mayer (1999); Mayer/Heiser/Lonn (2001); Chandler & Sweller (1991); Hegarty (1992); Hegarty/Kriz/Cate (2003); Mayer et al. (2005) static media; Pashler et al. (2008) learning styles.
+
+**Claim killed (this tick):** Dual Coding Score™ / always-add-picture ≡ science / decoration≡dual-coding / visual-learner meshing / animation-default / redundancy stack as thoroughness / split-legend density / unverified figure diagnostics / guaranteed ACT from multimedia — demoted under Paivio+CTML+split-attention+static-media+Pashler; contiguous structural figures + conversion survive behind DUAL-*.
+
+**Experiments mounted:** DUAL-1…5 + DUAL-QUAL.
+
+**Next researcher id:** **98** (metacognitive monitoring in gap-scan). Researcher count since v1.12 synthesizer: **6**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-07 — Researcher tick: Part XCVI Attention residue & device distraction (SAFE-ATTN)
 
 **Tick type:** Researcher (UTC hour 6 ≡ Red Team slot, but ch96 never written → prefer Researcher per rotation; researcher count since synthesizer v1.12 = 4 → Researcher)  
