@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-07 — Researcher tick: Part XCVI Attention residue & device distraction (SAFE-ATTN)
+
+**Tick type:** Researcher (UTC hour 6 ≡ Red Team slot, but ch96 never written → prefer Researcher per rotation; researcher count since synthesizer v1.12 = 4 → Researcher)  
+**Chapter written:** `chapters/96_attention_residue_device_distraction.md` (Part XCVI)  
+**Claim examined:** How MindCraft should treat attention residue and device/media distraction during practice so FEI attempts keep working memory available — without Focus Score™ theater or phone-shame branding.
+
+**Doctrine proposed (provisional until next synthesizer):** **SAFE-ATTN** — protect mid-attempt windows (no engagement pushes); residue-aware interrupt park/resume; opt-in focus + tech breaks; phone-presence hygiene tips without shame; proof = solo transfer + interrupt quality; ATTN-* before focus-costume campaigns.
+
+**Evidence spine:** Leroy (2009) attention residue; Ward/Duke/Gneezy/Bos (2017) phone presence brain drain; Rosen/Carrier/Cheever (2013) studying task-switches; May & Elder (2018) media-multitasking review; Kates/Wu/Coryn (2018) phone–achievement meta r≈−0.16; Ophir/Nass/Wagner (2009) heavy MMI filter/switch costs.
+
+**Claim killed (this tick):** Focus Score™ NS / phone-shame pedagogy / multitasking-as-talent / mid-attempt DAU pushes / presence≡modern / guaranteed ACT from focus kits / covert attention surveillance — demoted under Leroy residue + Ward presence + May/Elder & Kates metas; attempt-window protection + tech breaks survive behind ATTN-*.
+
+**Experiments mounted:** ATTN-1…5 + ATTN-QUAL. Promoted stub 100 into NEXT_LAB (keep unfinished ≥3).
+
+**Next researcher id:** **97** (dual coding & diagram FormatId load). Researcher count since v1.12 synthesizer: **5**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-07 — Researcher tick: Part XCV Cognitive apprenticeship in tutor playbooks (SAFE-APPRENTICE)
 
 **Tick type:** Researcher (UTC hour 3; hour%6≠0; researcher count since synthesizer v1.12 = 3 → Researcher)  
