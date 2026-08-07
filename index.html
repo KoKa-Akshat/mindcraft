@@ -690,9 +690,9 @@
   }
   .makers-schools img{display:block; height:44px; width:auto; max-width:160px; object-fit:contain;}
   .makers-schools .mac img{height:32px; max-width:180px;}
-  .makers-schools .unc img{height:52px; max-width:56px;}
-  .makers-schools .oxf img{height:54px; max-width:56px;}
-  .makers-schools .ken img{height:54px; max-width:52px;}
+  .makers-schools .unc img{height:48px; max-width:140px;}
+  .makers-schools .oxf img{height:40px; max-width:160px;}
+  .makers-schools .ken img{height:50px; max-width:52px;}
   .makers-schools .uwc img{height:48px; max-width:72px;}
   .maker-note .btn{margin-top:20px;}
   .note-schools{display:none;}
@@ -731,13 +731,14 @@
   }
   .intro-schools ul img{
     display:block; height:42px; width:auto; max-width:160px; object-fit:contain;
-    filter:brightness(0) invert(1) opacity(.96); opacity:1;
+    filter:none; opacity:.98;
   }
-  .intro-schools .mac img{height:30px; max-width:180px;}
-  .intro-schools .unc img{height:50px; max-width:54px;}
-  .intro-schools .oxf img{height:52px; max-width:54px;}
-  .intro-schools .ken img{height:52px; max-width:50px;}
-  .intro-schools .uwc img{height:46px; max-width:70px; filter:none; opacity:.98;}
+  /* Macalester wordmark is dark ink — flip to white on the hero */
+  .intro-schools .mac img{height:30px; max-width:180px; filter:brightness(0) invert(1) opacity(.96);}
+  .intro-schools .unc img{height:48px; max-width:140px;}
+  .intro-schools .oxf img{height:40px; max-width:160px;}
+  .intro-schools .ken img{height:48px; max-width:52px;}
+  .intro-schools .uwc img{height:46px; max-width:70px;}
 
   /* 3D social dock — big, glowing, shuffled */
   .intro-social{
@@ -891,13 +892,17 @@
     .intro-schools ul{gap:16px 22px;}
     .intro-schools ul img{height:34px;}
     .intro-schools .mac img{height:24px;}
-    .intro-schools .unc img,.intro-schools .oxf img,.intro-schools .ken img{height:40px;}
+    .intro-schools .unc img{height:40px; max-width:120px;}
+    .intro-schools .oxf img{height:34px; max-width:140px;}
+    .intro-schools .ken img{height:40px;}
     .intro-schools .uwc img{height:36px;}
     .intro-social a,.intro-social img{width:64px; height:64px;}
     .makers-schools{gap:16px 22px;}
     .makers-schools img{height:36px;}
     .makers-schools .mac img{height:26px;}
-    .makers-schools .unc img,.makers-schools .oxf img,.makers-schools .ken img{height:42px;}
+    .makers-schools .unc img{height:40px; max-width:120px;}
+    .makers-schools .oxf img{height:34px; max-width:140px;}
+    .makers-schools .ken img{height:42px;}
     .makers-schools .uwc img{height:38px;}
   }
   /* Touch devices (iPad + iPhone): kill sticky-hover lifts */
@@ -981,7 +986,7 @@
       <span>From rooms at</span>
       <ul>
         <li class="mac"><img src="img/logos/macalester.png" alt="Macalester College"></li>
-        <li class="unc"><img src="img/logos/unc.png" alt="UNC Chapel Hill"></li>
+        <li class="unc"><img src="img/logos/unc.svg" alt="UNC Chapel Hill"></li>
         <li class="oxf"><img src="img/logos/oxford.svg" alt="University of Oxford"></li>
         <li class="ken"><img src="img/logos/kenyon.svg" alt="Kenyon College"></li>
         <li class="uwc"><img src="img/logos/uwc.png" alt="UWC"></li>
@@ -1326,7 +1331,7 @@
       <span>From rooms at</span>
       <ul class="makers-schools" aria-label="From rooms at">
         <li class="mac" title="Macalester College"><img src="img/logos/macalester.png" alt="Macalester College"></li>
-        <li class="unc" title="UNC Chapel Hill"><img src="img/logos/unc.png" alt="UNC Chapel Hill"></li>
+        <li class="unc" title="UNC Chapel Hill"><img src="img/logos/unc.svg" alt="UNC Chapel Hill"></li>
         <li class="oxf" title="University of Oxford"><img src="img/logos/oxford.svg" alt="University of Oxford"></li>
         <li class="ken" title="Kenyon College"><img src="img/logos/kenyon.svg" alt="Kenyon College"></li>
         <li class="uwc" title="UWC · United World Colleges"><img src="img/logos/uwc.png" alt="UWC, United World Colleges"></li>
