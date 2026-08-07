@@ -72,6 +72,9 @@ Promote 3 at a time into `NEXT_LAB.md`. Do not write all at once.
 | 96 | Attention residue & device distraction in practice | Phone/task-switch tax on FEI attempts | promoted → NEXT_LAB |
 | 97 | Dual coding & diagram FormatId load | Multimedia principles × format axis; when figures help | promoted → NEXT_LAB **DONE** Part XCVII |
 | 98 | Metacognitive monitoring in gap-scan | Confidence vs accuracy; calibration loop with SAFE-CALIB | promoted → NEXT_LAB |
-| 99 | Opportunity cost of tutor minutes vs AI scaffold | When HITL time beats coach; session ROI honesty | promoted → NEXT_LAB |
-| 100 | Worked-example vs problem-solving timing across expertise | When E0→E3 schedule collides with prior knowledge | promoted → NEXT_LAB |
+| 99 | Opportunity cost of tutor minutes vs AI scaffold | When HITL time beats coach; session ROI honesty | **DONE** → Part XCIX / SAFE-ROI |
+| 100 | Worked-example vs problem-solving timing across expertise | When E0→E3 schedule collides with prior knowledge | promoted → NEXT_LAB **NEXT** |
 | 101 | Self-regulated learning cycles (Zimmerman) in Practice UX | Forethought/performance/reflection; no SRL Score™ | promoted → NEXT_LAB |
+| 102 | Generative learning activities (Fiorella/Mayer) in Practice | Summarize/teach-back/draw; germane load without fluff | promoted → NEXT_LAB |
+| 103 | Error climate & psychological safety in tutoring | Destake mistakes without lowering standards | promoted → NEXT_LAB |
+| 104 | Homework help vs practice identity conflict | Solver as crutch vs FEI gym; parent messaging | promoted → NEXT_LAB |

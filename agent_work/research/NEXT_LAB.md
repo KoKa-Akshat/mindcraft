@@ -87,9 +87,12 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 96 | Attention residue & device distraction in practice | Phone/task-switch tax on FEI attempts | **DONE** (2026-08-07) — Part XCVI / SAFE-ATTN |
 | 97 | Dual coding & diagram FormatId load | Multimedia principles × format axis; when figures help | **DONE** (2026-08-07) — Part XCVII / SAFE-DUAL |
 | 98 | Metacognitive monitoring in gap-scan | Confidence vs accuracy; calibration loop with SAFE-CALIB | **DONE** (2026-08-07) — Part XCVIII / SAFE-MONITOR |
-| 99 | Opportunity cost of tutor minutes vs AI scaffold | When HITL time beats coach; session ROI honesty | **NEXT** |
-| 100 | Worked-example vs problem-solving timing across expertise | When E0→E3 schedule collides with prior knowledge | queued |
+| 99 | Opportunity cost of tutor minutes vs AI scaffold | When HITL time beats coach; session ROI honesty | **DONE** (2026-08-07) — Part XCIX / SAFE-ROI |
+| 100 | Worked-example vs problem-solving timing across expertise | When E0→E3 schedule collides with prior knowledge | **NEXT** |
 | 101 | Self-regulated learning cycles (Zimmerman) in Practice UX | Forethought/performance/reflection loops; no SRL Score™ | queued |
+| 102 | Generative learning activities (Fiorella/Mayer) in Practice | Summarize/teach-back/draw; germane load without fluff | queued |
+| 103 | Error climate & psychological safety in tutoring | Destake mistakes without lowering standards | queued |
+| 104 | Homework help vs practice identity conflict | Solver as crutch vs FEI gym; parent messaging | queued |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 
@@ -149,3 +152,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any Focus Score™ / phone-shame pedagogy / multitasking-as-talent / mid-attempt DAU pushes / presence≡modern learning / guaranteed ACT from focus kits / covert attention surveillance (Part XCVI)
 - Any Dual Coding Score™ / always-add-picture / decoration≡dual-coding / visual-learner meshing / animation-default≡science / redundancy stack as thoroughness / split-legend density / unverified figure diagnostics / guaranteed ACT from multimedia (Part XCVII)
 - Any Monitoring Score™ / metacognition ads without control wiring / easy-only≡calibration / immediate-surety≡delayed-JOL / equal wrong updates / one-scan calibration / raise-metacognition identity / guaranteed ACT from monitoring packaging (Part XCVIII)
+- Any AI-replaces-tutors / tutoring-is-free / unlimited-human entitlement / hours-booked NS / Session ROI Score™ / VanLehn-as-ChatGPT license / Bastani practice scores≡learning / school 0.37σ as ACT guarantee from thin sessions (Part XCIX)

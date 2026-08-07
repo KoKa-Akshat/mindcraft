@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-07 — Researcher tick: Part XCIX Opportunity cost of tutor minutes vs AI scaffold (SAFE-ROI)
+
+**Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch99 never written → prefer Researcher per rotation; researcher count since synthesizer v1.12 = 7 → Researcher)  
+**Chapter written:** `chapters/99_opportunity_cost_tutor_minutes_vs_ai.md` (Part XCIX)  
+**Claim examined:** How MindCraft should allocate scarce human tutor minutes versus AI coach/Solver scaffolds — AI-replaces-tutors / unlimited-human entitlement vs Map-briefed complementarity with FEI-per-minute honesty.
+
+**Doctrine proposed (provisional until next synthesizer):** **SAFE-ROI** — tutor minutes as scarce inventory; constrained AI for reps; humans for joins/destake/repair/witness; no Session ROI Score™ / tutoring-is-free / hours NS; proof = FEI per tutor-minute + escalate precision; ROI-* before AI-replaces-tutors campaigns.
+
+**Evidence spine:** Nickow/Oreopoulos/Quan (2020); Guryan et al. (2023); Kraft & Falken (2021); Kraft/List/Livingston/Sadoff (2022); VanLehn (2011); Bastani et al. (2025 PNAS).
+
+**Claim killed (this tick):** AI-replaces-tutors / tutoring-is-free / unlimited-human entitlement / hours-booked NS / Session ROI Score™ / VanLehn-as-ChatGPT license / Bastani practice≡learning / school pooled ES as thin-session ACT guarantee — demoted under tutoring meta + Saga dosage + scale-cost + thin-volunteer wound + ITS≠LLM + Bastani crutch; Map minute budgets + complementarity survive behind ROI-*.
+
+**Experiments mounted:** ROI-1…5 + ROI-QUAL. Promoted stubs 102–104 into NEXT_LAB (keep unfinished ≥3).
+
+**Next researcher id:** **100** (worked-example vs problem-solving timing across expertise). Researcher count since v1.12 synthesizer: **8** → next non-RT hour with count≥8 is Synthesizer-eligible (v1.13).
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-07 — Researcher tick: Part XCVIII Metacognitive monitoring in gap-scan (SAFE-MONITOR)
 
 **Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch98 never written → prefer Researcher per rotation; researcher count since synthesizer v1.12 = 6 → Researcher)  
