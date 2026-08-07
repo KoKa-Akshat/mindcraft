@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-07 — Researcher tick: Part XCIV Productive failure vs guided success sequencing (SAFE-PF)
+
+**Tick type:** Researcher (UTC hour 0 ≡ Red Team slot, but ch94 never written → prefer Researcher per rotation; researcher count since synthesizer v1.12 = 2 → Researcher)  
+**Chapter written:** `chapters/94_productive_failure_vs_guided_success.md` (Part XCIV)  
+**Claim examined:** When MindCraft should run generation→consolidation (productive failure / PS-I) vs guided success / instruction-first — without mislabeling every miss as PF or selling fail-first as brand.
+
+**Doctrine proposed (provisional until next synthesizer):** **SAFE-PF** — PF = designed two-phase generate→consolidate-on-student-RSMs; fidelity + prior-knowledge gates; I-PS/guided default when priors thin, procedural/exam chrome, or freeze; no PF Score™ / fail-first-always / discovery-without-consolidation; proof = conceptual + transfer; PF-* before invent-first campaigns.
+
+**Evidence spine:** Kapur & Bielaczyc (2012); Kapur (2014); Sinha & Kapur (2021 meta g≈0.36 PS-I; fidelity moderators; younger/domain-general favor I-PS); Loibl, Roll & Rummel (2017); Loibl & Rummel (2014); Schwartz & Martin (2004); Kirschner, Sweller & Clark (2006); SAFE-RETRIEVE / SAFE-FADE / XLI anxiety boundary.
+
+**Claim killed (this tick):** Every-miss≡PF / fail-first-always / generation-without-consolidation / PF Score™ / discovery-as-identity / anxiety-forced stew as PF / ACT-points-from-invent-first — demoted under Kapur design fidelity + Sinha/Kapur moderators + Kirschner guidance critique; high-fidelity gated PS-I survives behind PF-*.
+
+**Experiments mounted:** PF-1…5 + PF-QUAL. Promoted stubs 97–99 into NEXT_LAB (unfinished would drop below 3).
+
+**Next researcher id:** **95** (cognitive apprenticeship in tutor playbooks). Researcher count since v1.12 synthesizer: **3**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-06 — Researcher tick: Part XCIII Retrieval failure modes in practice UX (SAFE-RETRIEVE)
 
 **Tick type:** Researcher (UTC hour 21; hour%6≠0; researcher count since synthesizer v1.12 = 1 → Researcher)  
