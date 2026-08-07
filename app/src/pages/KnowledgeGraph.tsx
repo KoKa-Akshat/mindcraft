@@ -19,6 +19,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useUser }      from '../App'
 import { logEvent }     from '../lib/logEvent'
 import Sidebar          from '../components/Sidebar'
+import AppTabBar        from '../components/AppTabBar'
 import { resolveConceptId, mlIdToLabel } from '../lib/conceptMap'
 import { getConceptContent } from '../lib/conceptContent'
 import { getRecommendations, type RecommendResult } from '../lib/mlApi'
@@ -394,6 +395,7 @@ export default function KnowledgeGraph({
       {!embedded && <Sidebar />}
 
       <main className={`${s.page} ${embedded ? s.embeddedPage : ''}`}>
+        {!embedded && <AppTabBar active="map" />}
         {/* ── Top bar ── */}
         <div className={s.topBar}>
           <button

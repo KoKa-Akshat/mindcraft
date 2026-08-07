@@ -298,7 +298,7 @@ No "you're done" screen, no score, no summary. On the stop condition:
 - **Whole-session fallback to pure v1** when ANY of: (a) the renderable
   candidate pool for the grade scope is smaller than 8; (b) the IG module
   throws (wrap in try/catch — a diagnostic must never crash on a scoring bug);
-  (c) the student is retaking via Admin Testing with `resetDiagnostic()` AND
+  (c) the student is retaking via Admin Settings with `resetDiagnostic()` AND
   the graph was wiped (no priors beyond gradeConfidence — v1 is already optimal
   breadth-first there for the first pass, but IG may still activate at q4 as
   session evidence accrues; only (a) and (b) force full v1).

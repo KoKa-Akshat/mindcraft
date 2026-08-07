@@ -73,3 +73,5 @@ Promote 3 at a time into `NEXT_LAB.md`. Do not write all at once.
 | 97 | Dual coding & diagram FormatId load | Multimedia principles × format axis; when figures help | promoted → NEXT_LAB **DONE** Part XCVII |
 | 98 | Metacognitive monitoring in gap-scan | Confidence vs accuracy; calibration loop with SAFE-CALIB | promoted → NEXT_LAB |
 | 99 | Opportunity cost of tutor minutes vs AI scaffold | When HITL time beats coach; session ROI honesty | promoted → NEXT_LAB |
+| 100 | Worked-example vs problem-solving timing across expertise | When E0→E3 schedule collides with prior knowledge | promoted → NEXT_LAB |
+| 101 | Self-regulated learning cycles (Zimmerman) in Practice UX | Forethought/performance/reflection; no SRL Score™ | promoted → NEXT_LAB |

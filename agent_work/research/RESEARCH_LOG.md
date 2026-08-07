@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-07 — Researcher tick: Part XCVIII Metacognitive monitoring in gap-scan (SAFE-MONITOR)
+
+**Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch98 never written → prefer Researcher per rotation; researcher count since synthesizer v1.12 = 6 → Researcher)  
+**Chapter written:** `chapters/98_metacognitive_monitoring_gap_scan.md` (Part XCVIII)  
+**Claim examined:** How MindCraft should treat metacognitive monitoring inside gap-scan — as Monitoring Score™ theater vs monitoring→control diagnostic fuel densifying SAFE-CALIB / SAFE-COLD.
+
+**Doctrine proposed (provisional until next synthesizer):** **SAFE-MONITOR** — named judgment types (EOL-ish ease ≠ RCJ ≠ delayed JOL); C4 destake; confidence×outcome miss classes; control wiring mandatory; no Monitoring Score™ / one-scan calibration; proof = weakness stability + `confidence_miss_tier` + FEI; MONITOR-* before metacognition brand campaigns.
+
+**Evidence spine:** Nelson & Narens (1990); Nelson & Dunlosky (1991); Rhodes & Tauber (2011); Erickson & Heit (2015); Lingel/Lenhart/Schneider (2019); Hasan/Bagayoko/Kelley (1999); Foster (2021/2022 CA null).
+
+**Claim killed (this tick):** Monitoring Score™ / metacognition-without-control / easy-only≡calibration science / immediate-surety≡delayed-JOL / equal wrong updates / one-scan calibration / raise-metacognition identity / guaranteed ACT from monitoring packaging — demoted under Nelson–Narens + delayed-JOL + math overconfidence + CRI + Foster null; named judgments + miss-class control survive behind MONITOR-*.
+
+**Experiments mounted:** MONITOR-1…5 + MONITOR-QUAL. Promoted stub 101 (SRL cycles) into NEXT_LAB (keep unfinished ≥3).
+
+**Next researcher id:** **99** (opportunity cost of tutor minutes vs AI scaffold). Researcher count since v1.12 synthesizer: **7**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-07 — Researcher tick: Part XCVII Dual coding & diagram FormatId load (SAFE-DUAL)
 
 **Tick type:** Researcher (UTC hour 9; hour%6≠0; researcher count since synthesizer v1.12 = 5 → Researcher)  

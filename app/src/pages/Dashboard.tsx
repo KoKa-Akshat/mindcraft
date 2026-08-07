@@ -5,7 +5,7 @@ import { doc, getDoc, updateDoc, deleteField } from 'firebase/firestore'
 import { auth, db } from '../firebase'
 import { useUser } from '../App'
 import { useStudentData } from '../hooks/useStudentData'
-import { isDiagnosticComplete, markDiagnosticComplete, persistDiagnosticDoneLocal, getUserRole } from '../lib/practiceState'
+import { isDiagnosticComplete, markDiagnosticComplete, persistDiagnosticDoneLocal, clearDiagnosticDoneLocal, getUserRole } from '../lib/practiceState'
 import { applyDiagnosticConfidence } from '../lib/diagnosticSeed'
 import { fetchPracticeHubRecommendations, type NextConcept } from '../lib/recommendNextConcept'
 import { playTap } from '../lib/uiSound'
@@ -337,6 +337,10 @@ export default function Dashboard({
       practiceDrafts: deleteField(),
       practiceDraftAt: deleteField(),
     })
+    // Without this, the mount-check's self-heal (isDiagnosticComplete false +
+    // stale local "done" signal + prior activity) silently restores
+    // diagnosticCompleted before the reset is ever seen.
+    clearDiagnosticDoneLocal()
     alert('Diagnostic reset. Reload to re-run the gap scan.')
   }
 

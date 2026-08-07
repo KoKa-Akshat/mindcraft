@@ -1,5 +1,12 @@
 # Navigation / orphaned-UI audit (2026-08-07)
 
+**Resolution:** The four `AppTabBar` destinations and their navigation cases
+were restored, and Knowledge Graph now renders the tab bar with Map active.
+Dashboard keeps its purpose-built notebook header; the shared-chrome docs now
+describe that intentional split. Admin references were updated from Testing to
+Settings. The unreachable admin-passcode UI was intentionally left alone because
+that entry point is no longer required.
+
 Triggered by: Admin "Testing" tab silently became "Settings" (found while looking
 for the diagnostic-reset button), plus the Login.tsx admin-passcode trigger
 being unreachable (found earlier this session). Both are the same failure

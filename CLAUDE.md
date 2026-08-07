@@ -261,12 +261,14 @@ future migration of the engine onto the richer per-student state.
 ### Student app UX (`app/`)
 
 **Shared chrome**
-- **`AppTabBar`** (`components/AppTabBar.tsx`) — pill tabs on Dashboard,
-  Practice, and Knowledge Graph: Dashboard | Practice | Problem Solver |
-  Knowledge Map. Problem Solver navigates to `/practice` with `homeworkHelp` state.
+- **`AppTabBar`** (`components/AppTabBar.tsx`) — pill tabs on Practice and
+  Knowledge Graph: Dashboard | Practice | Problem Solver |
+  Knowledge Map. It is rendered on Practice and Knowledge Graph; Dashboard uses
+  its notebook header instead. Problem Solver navigates to `/practice?homeworkHelp=1`.
 - **`Sidebar`** (`components/Sidebar.tsx`) — fixed top nav (logo, Session Notes,
-  Practice, Organize, Community, avatar/sign-out). Same on Dashboard, Practice,
-  Knowledge Graph.
+  Find a Tutor, Practice, Join Classroom, Organize, Community, avatar/sign-out).
+  Used by Practice, Knowledge Graph, and the supporting student pages; Dashboard
+  uses its notebook header instead.
 - **`HomeRedirect`** (`App.tsx`) — on localhost, `/` stays in the app; in
   production, `/` redirects to the marketing site.
 
@@ -452,7 +454,7 @@ Key notes:
 - **Frontend shipped**: PawHub dashboard, AppTabBar pill nav (Dashboard | Practice
   | Problem Solver | Knowledge Map), direct-to-session from PawHub, worstWeakness
   selection (C1), format-tagged bank, hide-correctness diagnostic (C4), Admin
-  Testing tab + ontology/bank coverage, ACT gap-scan fixes.
+  Settings tab + ontology/bank coverage, ACT gap-scan fixes.
 - **Diagnostic reconciled** — one diagnostic, one update mechanism:
   `Diagnostic.tsx` (kitchen-world onboarding, reached from "Click Me" in world)
   now POSTs to `/seed-assessment` (confidence) + `/record-outcomes` (probes, C4
@@ -518,7 +520,7 @@ Sources:
 - **Anthropic credits exhausted** → `mindcraft-homework` + dynamic question gen
   return 400. Homework uses the ingredient-pipeline fallback meanwhile.
 - **Existing students lack `diagnosticCompleted`** → one forced gap scan (by design;
-  backfill the flag or use Admin Testing → retake).
+  backfill the flag or use Admin Settings → Gap scan testing → retake).
 - **Practice questions**: `app/src/lib/questionBank.ts` merges 4 sources (static,
   actMaster, eedi, generated). Total ~1,500 questions, 24 concepts. `getQuestions`/
   `questionCount` resolve ontology→bank via `BANK_ALIASES`. `getQuestions` takes
