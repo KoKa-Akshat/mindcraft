@@ -419,7 +419,7 @@
   /* Tutors — one split stage, equal panes, no awkward overlap */
   .tutors{background:linear-gradient(180deg, var(--blue), var(--cream));}
   .tutor-head{
-    display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
+    display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,auto);
     gap:clamp(22px,3.5vw,40px); align-items:center; margin-bottom:36px;
   }
   .tutor-head-copy{min-width:0;}
@@ -513,22 +513,22 @@
   .leaflet-container{font:inherit; background:#e8efe8;}
   .leaflet-control-attribution{font-size:9px !important; background:rgba(255,253,247,.75) !important;}
   .tutor-quote{
-    position:relative; margin:0; max-width:none; text-align:left;
-    padding:26px 28px 28px; border-radius:22px;
+    position:relative; margin:0; width:fit-content; max-width:min(34ch,100%);
+    text-align:left; padding:20px 22px 18px; border-radius:20px;
     background:linear-gradient(180deg, #fffef8, #f7f0d8);
     border:1.5px solid rgba(211,169,0,.45);
-    box-shadow:0 18px 50px rgba(20,58,46,.1);
-    align-self:stretch; display:flex; align-items:center;
+    box-shadow:0 14px 36px rgba(20,58,46,.1);
+    align-self:center; justify-self:start;
   }
   .tutor-quote::before{
-    content:"“"; position:absolute; top:4px; left:18px;
-    font-family:"DM Serif Display",Georgia,serif; font-size:64px; line-height:1;
-    color:var(--gold-deep); opacity:.5;
+    content:"“"; position:absolute; top:2px; left:14px;
+    font-family:"DM Serif Display",Georgia,serif; font-size:42px; line-height:1;
+    color:var(--gold-deep); opacity:.45;
   }
   .tutor-quote p{
     font-family:"DM Serif Display",Georgia,serif; font-style:italic;
-    font-size:clamp(20px,2.2vw,26px); line-height:1.38; color:var(--ink);
-    max-width:22ch; margin:0; position:relative; z-index:1; padding-top:10px;
+    font-size:clamp(19px,2vw,24px); line-height:1.35; color:var(--ink);
+    margin:0; position:relative; z-index:1; padding-top:6px;
   }
   .tutor-quote p em{
     font-style:italic; color:var(--leaf);
@@ -815,10 +815,10 @@
     .stepcard{min-height:270px; padding:16px 14px 12px;}
     .stepcard h3{font-size:22px;}
     .step-art{min-height:170px;}
-    .tutor-head{gap:clamp(18px,2.5vw,28px); align-items:stretch;}
+    .tutor-head{gap:clamp(18px,2.5vw,28px); align-items:center;}
     .tutor-head .h2{max-width:15ch;}
-    .tutor-quote{padding:24px 24px 26px;}
-    .tutor-quote p{font-size:clamp(19px,2.1vw,24px); max-width:22ch;}
+    .tutor-quote{padding:18px 20px 16px; max-width:min(32ch,100%);}
+    .tutor-quote p{font-size:clamp(18px,2vw,22px);}
     .tutor-duo{padding:14px; gap:14px;}
     .tutor-pane{height:min(460px, 54svh);}
     .tm-search input,.tm-search button{min-height:44px;}
@@ -857,10 +857,10 @@
   }
   /* Narrow tablet / Mini portrait: stack quote under bullets */
   @media(max-width:767px){
-    .tutor-head{grid-template-columns:1fr; gap:18px;}
+    .tutor-head{grid-template-columns:1fr; gap:16px;}
     .tutor-head .h2{max-width:16ch;}
-    .tutor-quote{padding:22px 22px 24px;}
-    .tutor-quote p{max-width:28ch; font-size:clamp(20px,5vw,24px);}
+    .tutor-quote{max-width:100%; width:100%; padding:18px 20px 16px;}
+    .tutor-quote p{font-size:clamp(19px,4.6vw,22px);}
   }
   @media(max-width:640px){
     .nav{
