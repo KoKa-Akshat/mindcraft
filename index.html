@@ -31,6 +31,7 @@
   body{
     font-family:"Nunito Sans", system-ui, sans-serif; background:var(--cream);
     color:var(--ink); overflow-x:hidden; -webkit-font-smoothing:antialiased;
+    -webkit-tap-highlight-color:transparent; touch-action:manipulation;
   }
   a{color:inherit; text-decoration:none;}
   img{display:block; max-width:100%;}
@@ -795,26 +796,67 @@
   }
   .cta .cta-row .btn[aria-selected="false"]{opacity:.65;}
 
+  /* iPad / tablet (portrait + landscape, Mini through Pro) */
+  @media(max-width:1180px) and (min-width:641px){
+    .wrap{padding:0 clamp(28px,3.8vw,44px);}
+    .nav{
+      top:max(14px, env(safe-area-inset-top, 0px));
+      left:max(16px, env(safe-area-inset-left, 0px));
+      right:max(16px, env(safe-area-inset-right, 0px));
+      padding:11px 12px 11px 18px;
+    }
+    .nav-links{gap:2px;}
+    .nav-links a{
+      padding:10px 11px; font-size:10.5px; letter-spacing:.08em;
+      min-height:44px; display:inline-flex; align-items:center;
+    }
+    .btn{min-height:48px;}
+    .steps{gap:12px;}
+    .stepcard{min-height:270px; padding:16px 14px 12px;}
+    .stepcard h3{font-size:22px;}
+    .step-art{min-height:170px;}
+    .tutor-head{gap:clamp(18px,2.5vw,28px); align-items:stretch;}
+    .tutor-head .h2{max-width:15ch;}
+    .tutor-quote{padding:24px 24px 26px;}
+    .tutor-quote p{font-size:clamp(19px,2.1vw,24px); max-width:22ch;}
+    .tutor-duo{padding:14px; gap:14px;}
+    .tutor-pane{height:min(460px, 54svh);}
+    .tm-search input,.tm-search button{min-height:44px;}
+    .tm-book{min-height:44px; display:flex; align-items:center; justify-content:center;}
+    .dd-pdf{min-height:44px;}
+  }
+  /* Slimmer tablet nav: keep Desk + Tutors + Join */
+  @media(max-width:900px) and (min-width:641px){
+    .nav-links a[href="#act"],
+    .nav-links a[href="#faq"]{display:none;}
+    .nav-links a{padding:10px 12px; font-size:11px;}
+  }
   @media(max-width:1020px){
-    .hero-stage{grid-template-columns:1fr; padding-top:120px;}
+    .hero-stage{grid-template-columns:1fr; padding-top:120px; gap:36px;}
+    .hero-shot{max-width:720px; margin:0 auto;}
+    .hero h1{max-width:16ch;}
     .dropdemo{grid-template-columns:1fr;}
     .dd-left{border-right:none; border-bottom:1px solid var(--line);}
     .dd-pdfs{grid-template-columns:repeat(4,1fr);}
     .makers-grid{grid-template-columns:1fr 1fr;}
-    .hero h1{max-width:16ch;}
-    .hero-shot{max-width:640px;}
     .chaos-grid,.steps{grid-template-columns:repeat(2,1fr);}
     .caps-grid{grid-template-columns:repeat(2,1fr);}
     .cap.featured{grid-column:span 2;}
     .story-grid,.scan-grid,.act-grid{grid-template-columns:1fr;}
     .scan-grid .scan-frame{order:2;}
-    .tutor-head{grid-template-columns:1fr 1fr; align-items:stretch;}
-    .tutor-head .h2{max-width:14ch;}
-    .tutor-quote p{font-size:clamp(18px,2.4vw,22px); max-width:none;}
+    .tutor-head{grid-template-columns:1fr 1fr;}
     .tutor-duo{grid-template-columns:1fr 1fr;}
-    .tutor-pane{height:420px;}
   }
-  @media(max-width:780px){
+  /* iPad landscape: keep drop demo as two panes when there's room */
+  @media(min-width:900px) and (max-width:1020px) and (orientation:landscape){
+    .dropdemo{grid-template-columns:1.1fr .9fr;}
+    .dd-left{border-right:1px solid var(--line); border-bottom:none;}
+    .hero-stage{grid-template-columns:.95fr 1.05fr; padding-top:110px;}
+    .story-grid,.scan-grid{grid-template-columns:1fr 1fr;}
+    .scan-grid .scan-frame{order:0;}
+  }
+  /* Narrow tablet / Mini portrait: stack quote under bullets */
+  @media(max-width:767px){
     .tutor-head{grid-template-columns:1fr; gap:18px;}
     .tutor-head .h2{max-width:16ch;}
     .tutor-quote{padding:22px 22px 24px;}
@@ -857,6 +899,17 @@
     .makers-schools .mac img{height:26px;}
     .makers-schools .unc img,.makers-schools .oxf img,.makers-schools .ken img{height:42px;}
     .makers-schools .uwc img{height:38px;}
+  }
+  /* Touch devices (iPad + iPhone): kill sticky-hover lifts */
+  @media (hover:none), (pointer:coarse){
+    .btn:hover,.hero-announce:hover,.chaos:hover,.cap:hover,
+    .tm-search button:hover,.tm-card:hover,.tm-book:hover,
+    .dd-pdf:hover,.maker:hover{
+      transform:none;
+    }
+    .dd-pdf:hover img{box-shadow:0 10px 28px rgba(20,58,46,.12);}
+    .cap:hover{box-shadow:none;}
+    .tm-card:hover{border-color:rgba(20,58,46,.1);}
   }
 </style>
 </head>
