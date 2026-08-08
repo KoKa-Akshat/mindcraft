@@ -4,6 +4,25 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-08 — Researcher tick: Part CIV Homework help vs practice identity conflict (SAFE-HWHELP)
+
+**Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch104 never written → prefer Researcher per rotation; researcher count since synthesizer v1.13 = 4 → Researcher)  
+**Chapter written:** `chapters/104_homework_help_vs_practice_identity.md` (Part CIV)  
+**Claim examined:** Whether MindCraft should ship dual-rail Solver (instrumental homework help) + Practice FEI gym vs Homework Completion Score™ / Chegg-clone dump / purity ban on deadline help.
+
+**Doctrine proposed (provisional):** **SAFE-HWHELP** — two rails (help-to-unstuck vs practice-to-prove); executive completion ≠ learning; assisted ≠ unassisted; default instrumental / costly dump; help recruits solo proof; parent honesty without shame; densifies SAFE-HELP / SAFE-FADE / SAFE-ROI / SAFE-DURABLE / SAFE-PROOF; no Completion Score™ / Chegg-clone / Bastani Base hero / purity theater.
+
+**Evidence spine (verified citations):** Cooper, Robinson & Patall (2006) homework–achievement synthesis; DeGoede (2020) Chegg-era HW–exam decoupling; Pickering & Schuller (2024) Chegg audit / fast answers; Roshak (AEA 2023 working paper) Chegg temptation; Bastani et al. (2025 PNAS) generative crutch; Nelson-Le Gall (1981) executive vs instrumental; Roll/Aleven help-seeking line.
+
+**Claim killed (this tick):** Homework Completion Score™ / tonight-% NS / “we finish your worksheet” / assisted≡ready / Chegg-clone dump hero / Bastani Base Solver ads / purity ban on all homework help / parent homework stalk / grade guarantees from Solver (provisional kill #58 until synthesizer).
+
+**Experiments:** HWHELP-1…5 + HWHELP-QUAL.
+
+**Next researcher id:** **105** (gesture & embodiment in math practice). Researcher count since v1.13 synthesizer: **5**.
+
+**PDF:** Regenerate after this tick.
+
+---
 ## 2026-08-08 — Researcher tick: Part CIII Error climate & psychological safety in tutoring (SAFE-ERRCLIMATE)
 
 **Tick type:** Researcher (UTC hour 9; hour%6≠0; researcher count since synthesizer v1.13 = 3 → Researcher)  
