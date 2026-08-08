@@ -1,0 +1,143 @@
+{
+  "id": "act_seed",
+  "title": "ACT Math Field Book",
+  "subject": "act_math",
+  "subjectLabel": "ACT Math",
+  "instanceKind": "act",
+  "badge": "ACT",
+  "license": "Local ACT-style items for the prototype cook path. Optional handoff to /try/diagnostic (not a production deploy).",
+  "pipeline": [
+    "extract",
+    "tag",
+    "generate",
+    "bind"
+  ],
+  "sources": [
+    {
+      "name": "Linear warm-up",
+      "kind": "seed",
+      "prompt": "Solve linear equations under time pressure",
+      "concept": "linear_equations"
+    },
+    {
+      "name": "Functions drill",
+      "kind": "seed",
+      "prompt": "Evaluate simple linear functions",
+      "concept": "functions_basics"
+    },
+    {
+      "name": "Ratios",
+      "kind": "seed",
+      "prompt": "Recipe ratios and proportions",
+      "concept": "ratios"
+    }
+  ],
+  "chapters": [
+    {
+      "title": "Linear equations",
+      "sims": [
+        "MCQ \u00b7 linear_equations"
+      ],
+      "concept": "linear_equations"
+    },
+    {
+      "title": "Functions",
+      "sims": [
+        "MCQ \u00b7 functions_basics"
+      ],
+      "concept": "functions_basics"
+    },
+    {
+      "title": "Ratios",
+      "sims": [
+        "MCQ \u00b7 ratios"
+      ],
+      "concept": "ratios"
+    }
+  ],
+  "pages": [
+    {
+      "type": "cover",
+      "title": "ACT Math Field Book",
+      "subtitle": "Interactive Field Book \u00b7 same cook path as Piano",
+      "license": "Prototype MCQs \u00b7 optional live diagnosis via MindCraft try routes."
+    },
+    {
+      "type": "read",
+      "title": "How this book works",
+      "body": "Short reads, then check questions. Correctness is shown here for prototype learning only. When you want the full student path, open live diagnosis."
+    },
+    {
+      "type": "read",
+      "title": "Linear equations",
+      "body": "Isolate the variable with inverse operations. Keep both sides honest \u2014 whatever you do to one side, do to the other.",
+      "concept": "linear_equations"
+    },
+    {
+      "type": "mcq",
+      "title": "Check \u00b7 linear equations",
+      "stem": "If 3x - 7 = 11, what is x?",
+      "choices": [
+        "4",
+        "6",
+        "5",
+        "18/3"
+      ],
+      "answer": 1,
+      "explain": "3x = 18 \u2192 x = 6.",
+      "concept": "linear_equations"
+    },
+    {
+      "type": "read",
+      "title": "Functions basics",
+      "body": "f(x) is a machine. Drop in x, follow the rule, read the output. Start with linear rules before graphs.",
+      "concept": "functions_basics"
+    },
+    {
+      "type": "mcq",
+      "title": "Check \u00b7 functions",
+      "stem": "If f(x) = 2x + 1, what is f(3)?",
+      "choices": [
+        "5",
+        "6",
+        "7",
+        "8"
+      ],
+      "answer": 2,
+      "explain": "2(3)+1 = 7.",
+      "concept": "functions_basics"
+    },
+    {
+      "type": "read",
+      "title": "Ratios",
+      "body": "A ratio compares parts. Cross-multiply when one part is missing \u2014 or scale both sides by the same factor.",
+      "concept": "ratios"
+    },
+    {
+      "type": "mcq",
+      "title": "Check \u00b7 ratios",
+      "stem": "Sugar to flour is 2:5. With 10 cups of flour, how much sugar?",
+      "choices": [
+        "2",
+        "4",
+        "5",
+        "25"
+      ],
+      "answer": 1,
+      "explain": "2/5 = s/10 \u2192 s = 4.",
+      "concept": "ratios"
+    },
+    {
+      "type": "action",
+      "title": "Optional \u00b7 live diagnosis",
+      "body": "Same MindCraft student entry as production try-flow: /try/diagnostic on local Vite or live Firebase. Prototype shell does not deploy.",
+      "action": "open-diagnostic",
+      "label": "Open /try/diagnostic"
+    },
+    {
+      "type": "done",
+      "title": "Session parked",
+      "body": "Return to the hub for Call check-in. Repository on the desk rail is still the binder \u2014 not this ACT book."
+    }
+  ]
+}

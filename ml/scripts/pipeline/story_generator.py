@@ -2,7 +2,7 @@
 """
 Concept-story regenerator (question-aware).
 
-Improves `app/src/data/conceptStories.json` + `app/src/data/questionContextFrames.json`.
+Improves `app/src/data/conceptStories.json`, including each story's contextFrame.
 Differences from the original ml/scripts/generate_concept_stories.py:
 
 1. Reads the existing stories and ONLY regenerates concepts whose story is
@@ -33,7 +33,6 @@ from base import (  # noqa: E402
 )
 
 STORIES_PATH = REPO / "app/src/data/conceptStories.json"
-FRAMES_PATH = REPO / "app/src/data/questionContextFrames.json"
 BANK_PATHS = [
     REPO / "app/src/data/eediQuestions.json",
     REPO / "app/src/data/actMasterQuestionBank.generated.json",
@@ -154,7 +153,6 @@ def regenerate_stories(concept_filter: set[str] | None = None,
     mapper = ConceptMapper(client=client)
 
     stories: dict = json.loads(STORIES_PATH.read_text()) if STORIES_PATH.exists() else {}
-    frames: dict = json.loads(FRAMES_PATH.read_text()) if FRAMES_PATH.exists() else {}
     bank = load_bank_questions()
 
     stats = {"checked": 0, "regenerated": 0, "skipped_ok": 0,
@@ -169,7 +167,7 @@ def regenerate_stories(concept_filter: set[str] | None = None,
     for cid in concept_ids:
         stats["checked"] += 1
         record = stories.get(cid) or {}
-        frame = frames.get(cid) or {}
+        frame = record.get("contextFrame") or {}
         story = record.get("story", "")
         samples = sample_questions_for_concept(bank, cid)
 
@@ -216,24 +214,23 @@ def regenerate_stories(concept_filter: set[str] | None = None,
         if dry_run:
             continue
 
-        # conceptStories.json — preserve ingredientStories
+        # Preserve existing optional fields, including hand-authored scenes.
         stories[cid] = {
+            **record,
             "conceptId": cid,
             "conceptName": record.get("conceptName", concept_name),
             "story": str(data["story"]).strip(),
             "ingredientStories": record.get("ingredientStories", {}),
-        }
-        # questionContextFrames.json — preserve dice/spinner frames
-        frames[cid] = {
-            "protagonist": str(data["protagonist"]).strip(),
-            "settingLine": str(data["settingLine"]).strip(),
-            "questionBridge": str(data["questionBridge"]).strip(),
-            "diceFrame": frame.get("diceFrame"),
-            "spinnerFrame": frame.get("spinnerFrame"),
+            "contextFrame": {
+                "protagonist": str(data["protagonist"]).strip(),
+                "settingLine": str(data["settingLine"]).strip(),
+                "questionBridge": str(data["questionBridge"]).strip(),
+                "diceFrame": frame.get("diceFrame"),
+                "spinnerFrame": frame.get("spinnerFrame"),
+            },
         }
         # Save after each concept so partial runs aren't lost
         STORIES_PATH.write_text(json.dumps(stories, indent=2, ensure_ascii=False) + "\n")
-        FRAMES_PATH.write_text(json.dumps(frames, indent=2, ensure_ascii=False) + "\n")
 
     mapper.save_cache()
     print("\nStory regeneration summary:")

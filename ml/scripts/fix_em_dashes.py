@@ -70,7 +70,7 @@ DASH = "—"  # —
 HINT_TEMPLATE_OLD = "Re-read the question carefully — what is it specifically asking you to find?"
 HINT_TEMPLATE_NEW = "Read the question again. What is it specifically asking you to find?"
 
-# questionBridge fixes: app/src/data/questionContextFrames.json `questionBridge`
+# questionBridge fixes: app/src/data/conceptStories.json `contextFrame.questionBridge`
 # field per concept. These strings are embedded verbatim (settingLine + ". " +
 # protagonist beat + ". " + questionBridge) into storyContext across
 # eediQuestions.json, actMasterQuestionBank.generated.json,
@@ -424,7 +424,7 @@ DEFAULT_FILES = [
     "app/src/data/openstaxQuestions.json",
     "app/src/data/storyCells.json",
     "app/src/data/mathSkinTop.json",
-    "app/src/data/questionContextFrames.json",
+    "app/src/data/conceptStories.json",
     "app/src/data/actDiagnostic.json",
     "app/public/demo/v2/spark-bank.json",
     "ml/data/promotion_queue.json",

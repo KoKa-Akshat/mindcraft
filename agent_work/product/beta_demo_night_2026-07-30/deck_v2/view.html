@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>MindCraft Demo Night PDF · live review</title>
+<style>
+  html, body { margin: 0; background: #0f241c; color: #fffdf7; font-family: system-ui, sans-serif; }
+  header {
+    position: sticky; top: 0; z-index: 5;
+    display: flex; gap: 16px; align-items: center; justify-content: space-between;
+    padding: 14px 22px; background: rgba(15,36,28,.92); backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(196,245,71,.2);
+  }
+  header a { color: #c4f547; font-weight: 700; text-decoration: none; }
+  header span { opacity: .7; font-size: 13px; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 24px 16px 80px; display: grid; gap: 28px; }
+  figure {
+    margin: 0; background: #143a2e; border-radius: 18px; overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,.35);
+  }
+  figcaption {
+    padding: 10px 14px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase;
+    color: rgba(255,253,247,.7); border-bottom: 1px solid rgba(255,253,247,.08);
+  }
+  img { display: block; width: 100%; height: auto; background: #fffdf7; }
+</style>
+</head>
+<body>
+<header>
+  <strong>MindCraft · Demo Night PDF (11 slides)</strong>
+  <span>Scroll + leave live comments in chat</span>
+  <a href="MindCraft_Demo_Night_Deck.pdf" target="_blank">Download PDF</a>
+</header>
+<div class="wrap" id="deck"></div>
+<script>
+const n = 11;
+const root = document.getElementById('deck');
+for (let i = 1; i <= n; i++) {
+  const id = String(i).padStart(2, '0');
+  const fig = document.createElement('figure');
+  fig.id = 'slide-' + i;
+  fig.innerHTML = `<figcaption>Slide ${i} / 11</figcaption><img src="preview/slide_${id}.png" alt="Slide ${i}" />`;
+  root.appendChild(fig);
+}
+</script>
+</body>
+</html>

@@ -10,9 +10,8 @@ scene-setter above the stem: the protagonist's framing of the very problem
 the student is about to solve.
 
 Inputs (read-only):
-    app/src/data/questionContextFrames.json — 47 frames:
-        {conceptId: {protagonist, settingLine, questionBridge, ...}}
-    app/src/data/conceptStories.json — 41 story worlds (setting texture)
+    app/src/data/conceptStories.json — story worlds, each with an optional
+        contextFrame: {protagonist, settingLine, questionBridge, ...}
 
 One LLM call per (concept, stem) also yields the protagonist-VOICED
 explanation and hints, so the MCQ pipeline needs no separate annotation call.
@@ -35,7 +34,6 @@ from base import LLMClient, ML_DATA, REPO  # noqa: E402
 from mcq_generator import parse_llm_json as _parse_llm_json  # noqa: E402
 from mcq_generator import repair_ctrl_chars  # noqa: E402
 
-FRAMES_PATH = REPO / "app" / "src" / "data" / "questionContextFrames.json"
 STORIES_PATH = REPO / "app" / "src" / "data" / "conceptStories.json"
 STORY_CONTEXT_CACHE_PATH = ML_DATA / ".story_context_cache.json"
 
@@ -88,7 +86,6 @@ Reply with ONLY the JSON object."""
                  use_llm: bool = True) -> None:
         self.client = client or LLMClient()
         self.use_llm = use_llm
-        self.frames: dict = self._load(FRAMES_PATH)
         self.stories: dict = self._load(STORIES_PATH)
         self.cache: dict[str, dict] = {}
         if STORY_CONTEXT_CACHE_PATH.exists():
@@ -111,7 +108,9 @@ Reply with ONLY the JSON object."""
     # -- frames -----------------------------------------------------------------
 
     def frame_for(self, concept_id: str) -> dict | None:
-        return self.frames.get(concept_id)
+        story = self.stories.get(concept_id) or {}
+        frame = story.get("contextFrame")
+        return frame if isinstance(frame, dict) else None
 
     def fallback_context(self, concept_id: str) -> str:
         """questionBridge verbatim — the designed no-LLM scene-setter."""

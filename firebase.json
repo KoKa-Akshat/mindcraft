@@ -22,9 +22,19 @@
         { "source": "/article.html", "destination": "https://mindcraft-marketing-site.web.app/article.html", "type": 301 }
       ],
       "rewrites": [
+        { "source": "/desk-os", "destination": "/desk-os/index.html" },
         { "source": "**", "destination": "/index.html" }
       ],
       "headers": [
+        {
+          "source": "/desk-os/**",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, no-store, must-revalidate"
+            }
+          ]
+        },
         {
           "source": "/index.html",
           "headers": [
