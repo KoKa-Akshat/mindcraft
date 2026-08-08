@@ -22,30 +22,31 @@ import {
   mailToCardFields,
 } from './mail.js';
 import { layoutByCourse, runCleanupScan } from './cleanup.js';
-import { createSurfaces } from './surfaces.js?v=r7f';
+import { createSurfaces } from './surfaces.js?v=r8a';
 import { createStickies } from './stickies.js';
-import { createDeskPan } from './pan.js?v=r7f';
-import { createZoomPack } from './zoomPack.js?v=r7f';
+import { createDeskPan } from './pan.js?v=r8a';
+import { createZoomPack } from './zoomPack.js?v=r8a';
 import { createGate } from './gate.js';
-import { createPaperDesk } from './float.js?v=r7f';
+import { createPaperDesk } from './float.js?v=r8a';
 import {
   createTranscriptSurface,
   boopSummaryLines,
   boopExtractDue,
-} from './transcript.js?v=r7f';
-import { createOwlLinks } from './connect.js?v=r7f';
-import { createUploadSurface, spawnDashNotes } from './upload.js?v=r7f';
-import { createHomeHub, HOME_ART } from './home.js?v=r7f';
-import { createWidgetFactory } from './widgets.js?v=r7f';
-import { createJournalFocus } from './journal.js?v=r7f';
-import { createFieldBookCook } from './fieldbook.js?v=r7f';
-import { createSatellites } from './satellites.js?v=r7f';
-import { createActBookOverlay } from './actBook.js?v=r7f';
-import { openConnectGuide } from './connectGuide.js?v=r7f';
-import { createBootHub } from './bootHub.js?v=r7f';
-import { createBookStudio, getBook } from './createBook.js?v=r7f';
-import { createTutorMap } from './tutorMap.js?v=r7f';
-import { createWorkflowMarket } from './workflowMarket.js?v=r7f';
+} from './transcript.js?v=r8a';
+import { createOwlLinks } from './connect.js?v=r8a';
+import { createUploadSurface, spawnDashNotes } from './upload.js?v=r8a';
+import { createHomeHub, HOME_ART } from './home.js?v=r8a';
+import { createWidgetFactory } from './widgets.js?v=r8a';
+import { createJournalFocus } from './journal.js?v=r8a';
+import { createFieldBookCook } from './fieldbook.js?v=r8a';
+import { createSatellites } from './satellites.js?v=r8a';
+import { createActBookOverlay } from './actBook.js?v=r8a';
+import { openConnectGuide } from './connectGuide.js?v=r8a';
+import { createBootHub } from './bootHub.js?v=r8a';
+import { createBookStudio, getBook } from './createBook.js?v=r8a';
+import { createTutorMap } from './tutorMap.js?v=r8a';
+import { createWorkflowMarket } from './workflowMarket.js?v=r8a';
+import { createHubCall } from './hubCall.js?v=r8a';
 import { loadConnectState, isConnected } from './connectLinks.js';
 
 const ORB_SRC = {
@@ -204,6 +205,8 @@ let widgets = null;
 let tutorMap = null;
 /** @type {ReturnType<typeof createWorkflowMarket> | null} */
 let workflowMarket = null;
+/** @type {ReturnType<typeof createHubCall> | null} */
+let hubCall = null;
 /** @type {string | null} */
 let bookBlobUrl = null;
 let entered = false;
@@ -229,7 +232,7 @@ function refreshHomeHub() {
 }
 
 function openActPractice() {
-  // Same full-bleed ACT dash as the act-fieldbook instance
+  // ACT package · diagnosis first (same path as hub Open instance)
   ensureDeskSurfaces();
   prepareDeskShell();
   els.deskShell?.classList.remove('is-act-locked');
@@ -237,7 +240,7 @@ function openActPractice() {
   const cal = els.deskPlane?.querySelector('[data-sheet="calendar"], [data-surface-pane="calendar"]');
   if (cal) cal.hidden = true;
   actBook?.open();
-  showToast('ACT · full MindCraft dash');
+  showToast('ACT · starting from diagnosis');
 }
 
 function wireOwlToDesk() {
@@ -664,10 +667,10 @@ function openInstance(inst) {
 
   if (inst?.kind === 'act') {
     setDeskHomeVisible(false);
-    // No calendar pre-open · full-bleed MindCraft dash beside the shared rail
+    // Cooked books keep custom HTML · catalog ACT opens diagnosis
     const customSrc = bookSrcFor(inst);
     actBook?.open(customSrc || undefined);
-    showToast('ACT Field Book · full dash');
+    showToast(customSrc ? 'ACT Field Book · custom book' : 'ACT Field Book · diagnosis');
     return;
   }
 
@@ -1829,6 +1832,23 @@ function wire() {
     onEnter: (method) => { void enterFromAuth(method); },
   });
   ensureBootHub();
+  hubCall = createHubCall({
+    hub: els.hubStage,
+    getFocusInstance: () => {
+      const list = (() => {
+        try {
+          const raw = JSON.parse(localStorage.getItem('deskOs.instances') || '[]');
+          return Array.isArray(raw) ? raw : [];
+        } catch { return []; }
+      })();
+      const focus = localStorage.getItem('deskOs.goalFocus') || list[0]?.id;
+      return list.find((x) => x.id === focus) || list[0] || null;
+    },
+    onComplete: () => {
+      bootHub?.renderHub?.();
+    },
+    onToast: (msg) => showToast(msg),
+  });
   els.toolDesk?.addEventListener('click', showDesk);
   els.brandHome?.addEventListener('click', () => goHome());
   els.hubHome?.addEventListener('click', () => goHome());
@@ -1871,6 +1891,17 @@ function wire() {
   });
   document.getElementById('deskAskMode')?.addEventListener('click', () => {
     showToast('Focus · High');
+  });
+
+  // Owl Ask bar · same routing as bottom Ask
+  document.getElementById('owlPromptForm')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const input = /** @type {HTMLInputElement | null} */ (document.getElementById('owlPromptInput'));
+    const q = input?.value?.trim() || '';
+    if (!q) return;
+    routeHelp(q);
+    if (input) input.value = '';
+    owlLinks?.closePrompt?.();
   });
 
   els.liveMini?.addEventListener('click', () => {

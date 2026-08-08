@@ -104,14 +104,23 @@ export function createOwlLinks({ plane, owl, svg, hint, prompt, onLink }) {
 
   function placePrompt() {
     if (!prompt || prompt.hidden) return;
-    prompt.style.left = `${Math.max(8, owl.offsetLeft)}px`;
-    prompt.style.top = `${owl.offsetTop + owl.offsetHeight + 10}px`;
+    // Neat Ask bar · bottom-right of the desk canvas (not floating empty BR)
+    prompt.style.left = 'auto';
+    prompt.style.right = '18px';
+    prompt.style.top = 'auto';
+    prompt.style.bottom = '88px';
+    prompt.classList.add('is-docked');
   }
 
   function setPromptOpen(on) {
     if (!prompt) return;
     prompt.hidden = !on;
-    if (on) placePrompt();
+    if (on) {
+      placePrompt();
+      window.setTimeout(() => {
+        prompt.querySelector('#owlPromptInput')?.focus();
+      }, 40);
+    }
   }
 
   function setArmed(on) {

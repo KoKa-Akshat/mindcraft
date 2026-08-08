@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-  <link rel="stylesheet" href="styles.css?v=r7f" />
+  <link rel="stylesheet" href="styles.css?v=r8a" />
 </head>
 <body>
   <div class="app" id="appShell" data-mode="gate" data-surface="gate">
@@ -129,7 +129,7 @@
                 <p class="hub-goal-echo" data-hub-goal-echo>Pick an instance, then a target for today.</p>
               </div>
             </div>
-            <button type="button" class="hub-call" data-hub-call aria-label="Start mastery check-in" title="Mastery check-in · coming soon">
+            <button type="button" class="hub-call" data-hub-call aria-label="Start mastery check-in" title="Mastery check-in">
               <span class="hub-call-bubble">Start your mastery check-in</span>
               <span class="hub-call-phone" aria-hidden="true">
                 <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
@@ -301,24 +301,6 @@
             </button>
             <p class="owl-hint" id="owlHint" hidden>Click a page to connect</p>
 
-            <aside class="owl-prompt" id="owlPrompt" hidden aria-label="Ask this instance">
-              <div class="owl-prompt-head">
-                <p class="owl-prompt-kicker">Ask this instance</p>
-                <button type="button" class="owl-prompt-close" data-owl-prompt-close aria-label="Close">−</button>
-              </div>
-              <textarea
-                class="owl-prompt-input"
-                id="owlPromptInput"
-                rows="3"
-                disabled
-                placeholder="Tell MindCraft what to do on this desk…"
-              ></textarea>
-              <div class="owl-prompt-foot">
-                <button type="button" class="owl-prompt-run" disabled>Run</button>
-                <span class="owl-prompt-soon">Greyed for now</span>
-              </div>
-            </aside>
-
             <aside class="paper-sheet note-sheet desk-art-memo" id="notePad" data-sheet="notes" aria-label="Memo" style="left:16.667%; top:14%; width:7.667%; height:8%; z-index:15">
               <div class="page-grain" aria-hidden="true"></div>
               <div class="margin-rule slim" aria-hidden="true"></div>
@@ -340,6 +322,23 @@
             </main>
           </div>
         </div>
+
+        <aside class="owl-prompt" id="owlPrompt" hidden aria-label="Ask this instance">
+          <form class="owl-prompt-form" id="owlPromptForm" autocomplete="off">
+            <input
+              class="owl-prompt-input"
+              id="owlPromptInput"
+              type="search"
+              maxlength="160"
+              placeholder="Ask this instance…"
+              aria-label="Ask this instance"
+            />
+            <button type="submit" class="owl-prompt-run" title="Ask" aria-label="Ask">
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 12h12M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button type="button" class="owl-prompt-close" data-owl-prompt-close aria-label="Close">−</button>
+          </form>
+        </aside>
 
         <form class="desk-ask" id="deskAsk" autocomplete="off">
           <button type="button" class="desk-ask-plus" id="deskAskPlus" title="Add" aria-label="Add">
@@ -478,6 +477,6 @@
 
   <div class="toast" id="toast" role="status"></div>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script type="module" src="js/app.js?v=r7f"></script>
+  <script type="module" src="js/app.js?v=r8a"></script>
 </body>
 </html>

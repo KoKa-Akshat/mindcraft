@@ -1,7 +1,11 @@
 /** Boot → instance hub → open desk / ACT · n8n-shaped flow */
 
+import { BOOT_DIAGRAM_DELAY_MS, BOOT_HUB_DELAY_MS } from './actBook.js';
+
 const INST_KEY = 'deskOs.instances';
 const USER_KEY = 'deskOs.user';
+
+export { BOOT_DIAGRAM_DELAY_MS, BOOT_HUB_DELAY_MS };
 
 const DEFAULTS = [
   {
@@ -352,15 +356,15 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
     const diagram = boot.querySelector('[data-boot-diagram]');
     diagram?.classList.remove('is-in');
     return new Promise((resolve) => {
-      // Icons/arrows appear 0.5s after title
+      // Icons/arrows fade in after title
       window.setTimeout(() => {
         diagram?.classList.add('is-in');
-      }, 500);
-      // Prior wait + 0.5s more before dashboard
+      }, BOOT_DIAGRAM_DELAY_MS);
+      // Short pause after diagram, then hub
       window.setTimeout(() => {
         bootDots?.classList.remove('is-pulse');
         resolve();
-      }, 2900);
+      }, BOOT_HUB_DELAY_MS);
     });
   }
 
@@ -401,17 +405,6 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
     paintMastery(list);
   });
   goalType?.addEventListener('change', () => persistGoal());
-
-  hub?.querySelector('[data-hub-call]')?.addEventListener('click', (e) => {
-    e.preventDefault();
-    // Design kept · voice check-in wires later
-    const bubble = hub.querySelector('.hub-call-bubble');
-    if (bubble) {
-      const prev = bubble.textContent;
-      bubble.textContent = 'Coming soon';
-      window.setTimeout(() => { bubble.textContent = prev || 'Start your mastery check-in'; }, 1600);
-    }
-  });
 
   async function runAfterAuth(profile) {
     setUser(profile || {});
