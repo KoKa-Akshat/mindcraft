@@ -90,8 +90,9 @@
 | XCVIII | `chapters/98_metacognitive_monitoring_gap_scan.md` | Metacognitive monitoring in gap-scan; SAFE-MONITOR; named judgments → control |
 | XCIX | `chapters/99_opportunity_cost_tutor_minutes_vs_ai.md` | Tutor minutes vs AI scaffold; SAFE-ROI; FEI per tutor-minute / Map minute budgets |
 | C | `chapters/100_worked_example_vs_problem_solving_timing.md` | Worked-example vs PS timing across expertise; SAFE-EXPTIME (provisional); grain-local adaptive fade |
+| CI | `chapters/101_self_regulated_learning_cycles_practice_ux.md` | SRL cycles (Zimmerman) in Practice UX; SAFE-SRL (provisional); phase→control micro-prompts |
 
-Queued next: see `NEXT_LAB.md` (Part CI SRL cycles / Zimmerman, then 102–104).
+Queued next: see `NEXT_LAB.md` (Part CII generative learning / Fiorella–Mayer, then 103–104).
 
 **Synthesizer note (v1.13):** Eight researcher chapters (XCII–XCIX) landed after v1.12 as provisional I.4 appends — explanation length vs germane load, retrieval failure modes, productive failure sequencing, cognitive apprenticeship playbooks, attention residue / device distraction, dual coding × FormatId, metacognitive monitoring in gap-scan, and tutor-minute vs AI ROI. This edition promotes each stack to company law (removes provisional tags), formalizes Red Team kills #46–#53, confirms EXPLAIN/RETRIEVE/PF/APPRENTICE/ATTN/DUAL/MONITOR/ROI experiment families in Part IX, and refreshes metrics/glossary/competitive implication. Deep-dive files remain authoritative for citations; the OS keeps only *surviving* product rules.
 
@@ -184,6 +185,7 @@ Explanations alone rarely produce (1)–(3). Fluent AI explanations can *acceler
 | Monitoring Score™ / metacognition-without-control / easy-only≡calibration / one-scan calibration | **KILLED** | SAFE-MONITOR (XCVIII); named judgments → miss-class control |
 | AI-replaces-tutors / tutoring-is-free / unlimited-human / hours NS / Session ROI Score™ | **KILLED** | SAFE-ROI (XCIX); Map minute budgets + FEI per tutor-minute |
 | Universal E0→E3 destiny / fixed≡adaptive / confidence≡fade stage / Example Timing Score™ | **KILLED** *(provisional)* | SAFE-EXPTIME (C); grain-local adaptive example↔solve timing |
+| SRL Score™ / reflection-streak / survey≡event / streak≡SRL / forethought-without-control | **KILLED** *(provisional)* | SAFE-SRL (CI); phase→control cycles + FEI proof |
 
 **Implication:** Do not bet on “better explanations,” graph-file cosplay, warm-tutor theater, emotion cameras, page-count science, Ivy hire theater, unverified AI banks, FERPA-badge GTM, expanding-SRS mystique, headcount vanity, mastery fireworks, FSRS brand, cram packages, instant-feedback theater, bridge-count ads, day-one greens, format-count cosplay, parent surveillance portals, Talk Ratio theater, immersive lore-as-pedagogy, star-wall / user-count learning proof, item-count / complete-ACT coverage theater, always-full-worked / unlimited-solutions Solver theater, unlimited-hints / never-stuck answer-dump theater, DAU/streak/XP / FEI Score™ dashboard theater, unlimited free hard peeks / Hint Score™ theater, longer≡better / unlimited thorough AI essay theater, struggle-theater / blank-time / always-wait / instant-dump stall UX, fail-first / every-miss-as-PF / discovery-without-consolidation cosplay, guild / master-tutor / modeling-as-lecture / never-fade apprenticeship costume, Focus Score™ / phone-shame / mid-attempt notification-growth theater, or Monitoring Score™ / metacognition-without-control / one-scan calibration theater, or AI-replaces-tutors / tutoring-is-free / unlimited-human / hours-booked / Session ROI Score™ theater. Bet on **FEI + pedagogy wrap + SAFE-* stack**: fear→evidence→identity, with inspectable diagnosis, Map-briefed humans, privacy-bound affect, verified keys, blueprint-honest coverage matrices, district trust packets, honest spaced returns, fidelity-over-tenure ops, time-honest MoC, dual-rail durable GTM, load-honest story wrap, witnessable dated solo competence artifacts, guidance that fades as the student proves the join, instrumental help that still demands construction, instrumented `retry_120s` / motive-coded `challenge_accept` / `transfer_pass` / `solo_transfer_pass` under XXI.4 co-gates, contingent soft→hard peeks priced in construction effort, length-contingent principle coaches that leave room to think, mode-contingent retrieval support (TOT cue vs freeze scaffold) without Struggle Score™, fidelity-gated productive-failure missions (generate then consolidate on student RSMs) only when priors and affect allow, tutor/coach cognitive-apprenticeship phases (model→coach→fade + articulation) logged for fidelity rather than guild branding, and attempt windows protected from residue and device tax rather than Focus Score™ costume.
 
@@ -274,14 +276,15 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 | **SAFE-MONITOR** | Named judgments; C4 destake; confidence×outcome classes; control wiring mandatory; densifies SAFE-CALIB/COLD | XCVIII | Ban Monitoring Score™ / metacognition-without-control / easy-only≡calibration / one-scan calibration / raise-metacognition identity |
 | **SAFE-ROI** | Tutor minutes scarce; Map minute budgets; constrained AI for reps; humans for joins/destake/repair/witness; FEI per tutor-minute | XCIX | Ban AI-replaces-tutors / tutoring-is-free / unlimited-human / hours NS / Session ROI Score™ / VanLehn-as-ChatGPT |
 | **SAFE-EXPTIME** *(provisional)* | Grain-local example↔solve timing; completion bridge; adaptive>fixed; rapid rechecks; densifies SAFE-FADE | C | Ban universal E0→E3 destiny / fixed≡adaptive / confidence≡stage / Example Timing Score™ / always-struggle-first |
+| **SAFE-SRL** *(provisional)* | Phase→control cycles; process goals; attribution→plan writeback; microanalysis>inventories; densifies MONITOR/AAR | CI | Ban SRL Score™ / reflection-streak NS / survey≡event / streak≡SRL / forethought-without-control / ability-shame reflection |
 | **Block → near-miss interleave → spaced mix** | Blocking = acquisition scaffold; delayed mixed accuracy = readiness signal | XXIX, XXXIX, LXXIV | Ban “shuffle = science”; ban blocked-accuracy vanity |
 | **Student-generated why** | Faded examples + structured principle/misconception prompts *before* AI wrap | XXVI, XL | Ban AI-monologue≡SE; ban explain-own-wrong-first default |
 | **Competitive wedge** | Do not out-content Khan, out-streak Duo, out-delight Brilliant, or out-fluency ChatGPT | XXXV, XX | Sell recoverable struggle + competence evidence + solo transfer |
 | **Equity of worlds** | Story wrap is identity technology; tokenism and stereotype-cueing copy are kills | XXXVI, XXVIII | HIST-EQ; belonging without “even you can” |
 
-**Merged / demoted (do not treat as separate products):** “AI tutor,” “mastery path,” “growth mindset,” “engagement,” “grit,” “habit streak,” “celebrate mistakes,” “community of practice,” “deliberate practice brand,” “film study,” “recital,” “grandmaster review,” “exposure therapy,” “girl STEM brand,” “WTP survey,” “Identity Score™,” “8-week math person,” “character equity,” “knowledge-graph moat,” “emotion AI empathy,” “science-backed page count,” “Ivy tutor SKU,” “AI wrote N questions,” “FERPA-compliant badge,” “perfect-interval SRS,” “tutor headcount / retention-%,” “mastery fireworks / personal Ebbinghaus,” “FSRS/Anki brain optimizer,” “cram/bootcamp/+points packages,” “instant feedback AI / always-delay science,” “bridge-count / we connect everything,” “day-one personalized mastery / placement belt,” “every format / visual learning / Format Personality™,” “parent fireworks portal / Family Leaderboard / live wrong-answer stalk,” “immersive story world / lore engagement / Story Engagement Score™,” “user-count / star-wall / vague confidence testimonials as learning proof,” “item-count / complete ACT bank / AI fills all holes coverage theater,” “always-full-worked / unlimited solutions / never-fade Solver,” “unlimited hints / never stuck / Help Score™,” “DAU/streak/XP North Star / FEI Score™ / thumbs-up≡learning,” “unlimited free hard peeks / Hint Score™ / XP-for-hints / perfect-hint AI,” “longer≡better / Explanation Score™ / unlimited thorough AI essays / monologue≡SE,” “maximize productive struggle minutes / Struggle Score™ / blank-time grit / always-wait / never-stuck dump,” “fail-first always / every miss is productive failure / PF Score™ / discovery-without-consolidation,” “guild / master tutor / cognitive apprenticeship™ costume / Apprenticeship Score™ / modeling-minutes / never-fade coach,” “Focus Score™ / deep-work theater / phone-shame / mid-attempt streak pings / multitasking digital-native talent,” “Dual Coding Score™ / always-add-picture / decoration-as-dual-coding / visual-learner meshing / animation-first multimedia / split-legend density theater,” and “Monitoring Score™ / metacognition-without-control / easy-only calibration / one-scan calibration theater,” and “AI-replaces-tutors / tutoring-is-free / unlimited-human / hours-booked / Session ROI Score™ theater” are *not* independent North Stars — they are subordinate UX under FEI + the rows above (borrow *method*, never *costume*).
+**Merged / demoted (do not treat as separate products):** “AI tutor,” “mastery path,” “growth mindset,” “engagement,” “grit,” “habit streak,” “celebrate mistakes,” “community of practice,” “deliberate practice brand,” “film study,” “recital,” “grandmaster review,” “exposure therapy,” “girl STEM brand,” “WTP survey,” “Identity Score™,” “8-week math person,” “character equity,” “knowledge-graph moat,” “emotion AI empathy,” “science-backed page count,” “Ivy tutor SKU,” “AI wrote N questions,” “FERPA-compliant badge,” “perfect-interval SRS,” “tutor headcount / retention-%,” “mastery fireworks / personal Ebbinghaus,” “FSRS/Anki brain optimizer,” “cram/bootcamp/+points packages,” “instant feedback AI / always-delay science,” “bridge-count / we connect everything,” “day-one personalized mastery / placement belt,” “every format / visual learning / Format Personality™,” “parent fireworks portal / Family Leaderboard / live wrong-answer stalk,” “immersive story world / lore engagement / Story Engagement Score™,” “user-count / star-wall / vague confidence testimonials as learning proof,” “item-count / complete ACT bank / AI fills all holes coverage theater,” “always-full-worked / unlimited solutions / never-fade Solver,” “unlimited hints / never stuck / Help Score™,” “DAU/streak/XP North Star / FEI Score™ / thumbs-up≡learning,” “unlimited free hard peeks / Hint Score™ / XP-for-hints / perfect-hint AI,” “longer≡better / Explanation Score™ / unlimited thorough AI essays / monologue≡SE,” “maximize productive struggle minutes / Struggle Score™ / blank-time grit / always-wait / never-stuck dump,” “fail-first always / every miss is productive failure / PF Score™ / discovery-without-consolidation,” “guild / master tutor / cognitive apprenticeship™ costume / Apprenticeship Score™ / modeling-minutes / never-fade coach,” “Focus Score™ / deep-work theater / phone-shame / mid-attempt streak pings / multitasking digital-native talent,” “Dual Coding Score™ / always-add-picture / decoration-as-dual-coding / visual-learner meshing / animation-first multimedia / split-legend density theater,” and “Monitoring Score™ / metacognition-without-control / easy-only calibration / one-scan calibration theater,” and “AI-replaces-tutors / tutoring-is-free / unlimited-human / hours-booked / Session ROI Score™ theater,” and “SRL Score™ / reflection-streak / survey-SRL≡event / streak≡self-regulation theater” are *not* independent North Stars — they are subordinate UX under FEI + the rows above (borrow *method*, never *costume*).
 
-**Next research bottleneck:** Part CI **Self-regulated learning cycles (Zimmerman) in Practice UX**. Experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O/WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT/ONTO/HITL/PRIV/LABMETA/GRAIN/GENQ/PROCURE/SCHED/WORK/FORGET/ADAPT/CRAM/FB/BRIDGE/COLD/FORMAT/PDASH/TALK/STORYLOAD/PROOF/COVER/FADE/HELP/INSTR/HINT/EXPLAIN/RETRIEVE/PF/APPRENTICE/ATTN/DUAL/MONITOR/ROI/EXPTIME gate claims above L1. Researcher count since v1.13 synthesizer = **1**.
+**Next research bottleneck:** Part CII **Generative learning activities (Fiorella/Mayer) in Practice**. Experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O/WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT/ONTO/HITL/PRIV/LABMETA/GRAIN/GENQ/PROCURE/SCHED/WORK/FORGET/ADAPT/CRAM/FB/BRIDGE/COLD/FORMAT/PDASH/TALK/STORYLOAD/PROOF/COVER/FADE/HELP/INSTR/HINT/EXPLAIN/RETRIEVE/PF/APPRENTICE/ATTN/DUAL/MONITOR/ROI/EXPTIME/SRL gate claims above L1. Researcher count since v1.13 synthesizer = **2**.
 
 ---
 
@@ -361,6 +364,7 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 
 | Date | Finding | Type | Action |
 |------|---------|------|--------|
+| 2026-08-08 | SAFE-SRL: phase→control Zimmerman cycles in Practice; kill SRL Score™ / streak≡SRL / survey≡event | Evidence | SRL-1…5; next = CII generative learning |
 | 2026-08-08 | SAFE-EXPTIME: grain-local example↔solve timing; kill universal E0→E3 destiny / fixed≡adaptive / Timing Score™ | Evidence | EXPTIME-1…5; next = CI SRL cycles |
 | 2026-08-07 | Synthesizer v1.13: merge XCII–XCIX SAFE-* into I.4; kills #46–#53 | Synthesis | Surviving commercial law; next = C worked-example timing |
 | 2026-08-07 | SAFE-ROI: Map minute budgets; kill AI-replaces-tutors / tutoring-is-free / hours NS / Session ROI Score™ | Evidence | ROI-1…5; next = C worked-example timing |
@@ -895,6 +899,8 @@ Core A–D remain. Chapter ticks densified them into families — prefer the den
 
 **Surviving (provisional):** SAFE-EXPTIME — grain-local example↔solve timing; completion bridge; adaptive>fixed when evidence exists; rapid rechecks beat Likert destiny; densifies SAFE-FADE; instrument EXPTIME-* before universal E0→E3 / Timing Score™ campaigns (C).
 
+**Surviving (provisional):** SAFE-SRL — Zimmerman forethought→performance→reflection with phase→control writeback; microanalysis>trait surveys; process attributions; densifies SAFE-MONITOR/AAR/ATTN/HELP; instrument SRL-* before SRL Score™ / streak≡SRL / metacognition-module ads (CI).
+
 ---
 
 # Part XV — References (verified starting set)
@@ -1291,6 +1297,7 @@ Principles that repeatedly change human behavior outside classrooms — filtered
 | `coverage_claim_mismatch` | Marketed coverage vs playable audit disagree (ops incident) | SAFE-COVER substantiation (LXXXVII) |
 | `fade_stage` | Solver/help guidance stage E0–E3 at attempt start | SAFE-FADE ladder (LXXXVIII) |
 | `exptime_grain` | Concept×format×bridge grain used to set/recheck fade stage | SAFE-EXPTIME (C) |
+| `srl_phase_event` | Forethought / performance / reflection micro-event with control writeback | SAFE-SRL (CI) |
 | `fade_step_attempt` | Student-generated completion/SE before next worked unlock | SAFE-FADE attempt grain (LXXXVIII) |
 | `help_deliberate_ms` | Time on non-bottom hint level before next action | SAFE-HELP deliberate help (LXXXIX) |
 | `help_executive_race` | ≥2 hint-level advances under short dwell before bottom-out | SAFE-HELP abuse detect (LXXXIX) |
@@ -1412,6 +1419,7 @@ Ship changes that raise `retry_120s` and mastery-motive `challenge_accept` witho
 | SAFE-MONITOR | Named judgments → miss-class control; C4 destake; densifies SAFE-CALIB/COLD; no Monitoring Score™ / one-scan calibration (Part XCVIII) |
 | SAFE-ROI | Map minute budgets; constrained AI for reps; humans for joins; FEI per tutor-minute; no AI-replaces-tutors / hours NS (Part XCIX) |
 | SAFE-EXPTIME *(provisional)* | Grain-local example↔solve timing; adaptive>fixed; no universal E0→E3 / Timing Score™ (Part C) |
+| SAFE-SRL *(provisional)* | Phase→control SRL cycles; microanalysis>surveys; no SRL Score™ / streak≡SRL (Part CI) |
 
 ## Appendix B — Maya interview protocol (qual)
 
@@ -1516,8 +1524,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 3an. Metacognitive monitoring in gap-scan — **DONE** Part XCVIII / SAFE-MONITOR  
 3ao. Opportunity cost of tutor minutes vs AI scaffold — **DONE** Part XCIX / SAFE-ROI  
 3ap. Worked-example vs problem-solving timing across expertise — **DONE** Part C / SAFE-EXPTIME  
-3aq. Self-regulated learning cycles (Zimmerman) in Practice UX — queued id 101 **NEXT**  
-3ar. Generative learning activities (Fiorella/Mayer) in Practice — queued id 102  
+3aq. Self-regulated learning cycles (Zimmerman) in Practice UX — **DONE** Part CI / SAFE-SRL  
+3ar. Generative learning activities (Fiorella/Mayer) in Practice — queued id 102 **NEXT**  
 3as. Error climate & psychological safety in tutoring — queued id 103  
 3at. Homework help vs practice identity conflict — queued id 104  
 4. Equity audit of story worlds — **DONE** (Part XXXVI)  
@@ -1590,7 +1598,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 71. **DONE (2026-08-07):** Opportunity cost of tutor minutes vs AI scaffold (Part XCIX / id 99) — SAFE-ROI stack  
 72. **Synthesizer v1.13 (2026-08-07):** Merged XCII–XCIX into I.4 / XIV / IX / XXI — no new chapter  
 73. **DONE (2026-08-08):** Worked-example vs problem-solving timing across expertise (Part C / id 100) — SAFE-EXPTIME stack  
-74. **NEXT:** Self-regulated learning cycles (Zimmerman) in Practice UX (Part CI / id 101)
+74. **DONE (2026-08-08):** Self-regulated learning cycles in Practice UX (Part CI / id 101) — SAFE-SRL stack  
+75. **NEXT:** Generative learning activities (Fiorella/Mayer) in Practice (Part CII / id 102)
 
 ---
 
@@ -1624,4 +1633,4 @@ MindCraft’s deepest risk is not technical failure. It is **winning the wrong g
 
 This Constitution exists so the company notices that risk early, and runs experiments that can kill beloved ideas.
 
-**v1.13 synthesizer pass folded Parts XCII–XCIX into surviving commercial doctrine (I.4 rows SAFE-EXPLAIN through SAFE-ROI; Red Team kills #46–#53 promoted from provisional). Experiment families EXPLAIN/RETRIEVE/PF/APPRENTICE/ATTN/DUAL/MONITOR/ROI confirmed mounted. Part C (SAFE-EXPTIME) landed as provisional densifier of SAFE-FADE (grain-local adaptive example↔solve timing). Next researcher id: CI SRL cycles (Zimmerman). Researcher count since v1.13 = 1. Page count is not the finish line — falsifiable truth is.**
+**v1.13 synthesizer pass folded Parts XCII–XCIX into surviving commercial doctrine (I.4 rows SAFE-EXPLAIN through SAFE-ROI; Red Team kills #46–#53 promoted from provisional). Experiment families EXPLAIN/RETRIEVE/PF/APPRENTICE/ATTN/DUAL/MONITOR/ROI confirmed mounted. Part C (SAFE-EXPTIME) and Part CI (SAFE-SRL) landed as provisional densifiers (grain-local fade timing; Zimmerman phase→control Practice cycles). Next researcher id: CII generative learning (Fiorella/Mayer). Researcher count since v1.13 = 2. Page count is not the finish line — falsifiable truth is.**

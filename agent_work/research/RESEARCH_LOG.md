@@ -4,6 +4,25 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-08 — Researcher tick: Part CI Self-regulated learning cycles in Practice UX (SAFE-SRL)
+
+**Tick type:** Researcher (UTC hour 3; hour%6≠0; researcher count since synthesizer v1.13 = 1 → Researcher)  
+**Chapter written:** `chapters/101_self_regulated_learning_cycles_practice_ux.md` (Part CI)  
+**Claim examined:** Whether Practice should ship Zimmerman cyclical SRL as phase→control micro-prompts (forethought / performance / reflection writeback) vs SRL Score™ / journal theater / streak-as-self-regulation costume.
+
+**Doctrine proposed (provisional):** **SAFE-SRL** — cycle around real attempts; phase→control or costume; specific process goals; protect performance windows; controllable attributions → adaptive inference writeback; microanalysis > inventories; proof = FEI + strategy change; densifies SAFE-MONITOR / SAFE-AAR / SAFE-ATTN / SAFE-HELP; no SRL Score™ / streak≡SRL / metacognition-module ACT ads.
+
+**Evidence spine (verified citations):** Zimmerman (2000 handbook; 2002 TiP); Zimmerman & Moylan (2009); Panadero (2017) review; Cleary & Zimmerman (2001) microanalysis; Cleary, Zimmerman & Keating (2006) multi-phase training; Cleary, Callan & Zimmerman (2012) microanalytic protocols; Dignath & Büttner (2008) + Dignath, Büttner & Langfeldt (2008) meta-analyses.
+
+**Claim killed (this tick):** SRL Score™ / reflection-streak NS / survey≡event / streak≡SRL / forethought-without-control / ability-shame reflection / metacognition-module ACT guarantees (provisional kill #55 until synthesizer).
+
+**Experiments:** SRL-1…5 + SRL-QUAL.
+
+**Next researcher id:** **102** (generative learning / Fiorella–Mayer). Researcher count since v1.13 synthesizer: **2**.
+
+**PDF:** Regenerate after this tick.
+
+---
 ## 2026-08-08 — Researcher tick: Part C Worked-example vs problem-solving timing across expertise (SAFE-EXPTIME)
 
 **Tick type:** Researcher (UTC hour 0 ≡ Red Team slot, but ch100 never written → prefer Researcher per rotation; researcher count since synthesizer v1.13 = 0 → Researcher)  
