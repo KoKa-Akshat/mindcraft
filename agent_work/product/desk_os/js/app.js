@@ -22,33 +22,33 @@ import {
   mailToCardFields,
 } from './mail.js';
 import { layoutByCourse, runCleanupScan } from './cleanup.js';
-import { createSurfaces } from './surfaces.js?v=r9a';
+import { createSurfaces } from './surfaces.js?v=r9b';
 import { createStickies } from './stickies.js';
-import { createDeskPan } from './pan.js?v=r9a';
-import { createZoomPack } from './zoomPack.js?v=r9a';
+import { createDeskPan } from './pan.js?v=r9b';
+import { createZoomPack } from './zoomPack.js?v=r9b';
 import { createGate } from './gate.js';
-import { createPaperDesk } from './float.js?v=r9a';
+import { createPaperDesk } from './float.js?v=r9b';
 import {
   createTranscriptSurface,
   boopSummaryLines,
   boopExtractDue,
-} from './transcript.js?v=r9a';
-import { createOwlLinks } from './connect.js?v=r9a';
-import { createUploadSurface, spawnDashNotes } from './upload.js?v=r9a';
-import { createHomeHub, HOME_ART } from './home.js?v=r9a';
-import { createWidgetFactory } from './widgets.js?v=r9a';
-import { createJournalFocus } from './journal.js?v=r9a';
-import { createFieldBookCook } from './fieldbook.js?v=r9a';
-import { createSatellites } from './satellites.js?v=r9a';
-import { createActBookOverlay } from './actBook.js?v=r9a';
-import { openConnectGuide } from './connectGuide.js?v=r9a';
-import { createBootHub } from './bootHub.js?v=r9a';
-import { createBookStudio, getBook, ensureSeedBook } from './createBook.js?v=r9a';
-import { createTutorMap } from './tutorMap.js?v=r9a';
-import { createWorkflowMarket } from './workflowMarket.js?v=r9a';
-import { createHubCall } from './hubCall.js?v=r9a';
-import { createBookPlayer, loadSeedBook } from './bookPlayer.js?v=r9a';
-import { createOnboarding, getRole } from './onboarding.js?v=r9a';
+} from './transcript.js?v=r9b';
+import { createOwlLinks } from './connect.js?v=r9b';
+import { createUploadSurface, spawnDashNotes } from './upload.js?v=r9b';
+import { createHomeHub, HOME_ART } from './home.js?v=r9b';
+import { createWidgetFactory } from './widgets.js?v=r9b';
+import { createJournalFocus } from './journal.js?v=r9b';
+import { createFieldBookCook } from './fieldbook.js?v=r9b';
+import { createSatellites } from './satellites.js?v=r9b';
+import { createActBookOverlay } from './actBook.js?v=r9b';
+import { openConnectGuide } from './connectGuide.js?v=r9b';
+import { createBootHub } from './bootHub.js?v=r9b';
+import { createBookStudio, getBook, ensureSeedBook } from './createBook.js?v=r9b';
+import { createTutorMap } from './tutorMap.js?v=r9b';
+import { createWorkflowMarket } from './workflowMarket.js?v=r9b';
+import { createHubCall } from './hubCall.js?v=r9b';
+import { createBookPlayer, loadSeedBook } from './bookPlayer.js?v=r9b';
+import { createOnboarding, getRole } from './onboarding.js?v=r9b';
 import { loadConnectState, isConnected } from './connectLinks.js';
 
 const ORB_SRC = {

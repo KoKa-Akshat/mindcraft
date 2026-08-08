@@ -4,8 +4,9 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --host localhost --port 5173 --strictPort",
-    "build": "tsc && vite build",
+    "sync:desk-os": "node scripts/syncDeskOs.mjs",
+    "dev": "npm run sync:desk-os && vite --host localhost --port 5173 --strictPort",
+    "build": "npm run sync:desk-os && tsc && vite build",
     "preview": "vite preview --host 127.0.0.1 --port 4173",
     "audit:bridge": "node scripts/auditBridgePractice.mjs",
     "audit:practice": "node scripts/auditPracticeSystem.mjs",

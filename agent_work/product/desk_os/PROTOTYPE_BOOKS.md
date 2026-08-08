@@ -1,7 +1,8 @@
 # Prototype books · session notes (Piano + ACT)
 
-**Space:** `agent_work/product/desk_os/` only · **no** marketing / Firebase / app production deploy.  
-**Cache:** `http://localhost:5180/?v=r9a`
+**Space:** source in `agent_work/product/desk_os/` · shipped under app hosting at `/desk-os/`.  
+**Live:** https://mindcraft-93858.web.app/desk-os/?v=r9b  
+**Local:** `http://localhost:5180/?v=r9b` or `http://localhost:5173/desk-os/?v=r9b`
 
 ## Success path
 

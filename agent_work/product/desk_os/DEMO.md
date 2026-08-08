@@ -10,7 +10,9 @@ cd agent_work/product/desk_os && python3 -m http.server 5180
 cd app && npm run dev   # → http://localhost:5173
 ```
 
-Open **http://localhost:5180/?v=r9a** (hard refresh).
+**Live (Firebase app):** https://mindcraft-93858.web.app/desk-os/?v=r9b  
+
+**Local:** `http://localhost:5180/?v=r9b` or Vite `http://localhost:5173/desk-os/?v=r9b` after `npm run dev` in `app/`.
 
 ## Walkthrough
 

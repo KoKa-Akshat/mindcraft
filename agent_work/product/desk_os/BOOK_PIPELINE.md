@@ -30,7 +30,7 @@ cd agent_work/product/desk_os && python3 -m http.server 5180
 cd app && npm run dev
 ```
 
-Open `http://localhost:5180/?v=r9a`.
+Open `http://localhost:5180/?v=r9b`.
 
 ## Integrate later (not this phase)
 

@@ -18,9 +18,11 @@ Firebase marketing target. App/login CTAs retargeted to `#start` (join beta) whi
 Live: https://mindcraft-marketing-site.web.app — confirm CI green after push.
 
 ---
-## Desk OS · Piano + ACT interactive books (local prototype, 2026-08-08)
+## Desk OS · Piano + ACT interactive books (LIVE on app hosting, 2026-08-08)
 
-Modular extract→tag→generate in `agent_work/product/desk_os/js/pipeline/`. Hub instances **piano-book** + **act-fieldbook** play via `bookPlayer.js` (seeds in `data/`). Student/Tutor onboarding + Call. Notes: `PROTOTYPE_BOOKS.md`. `:5180/?v=r9a` · **no** production deploy.
+Modular extract→tag→generate in `agent_work/product/desk_os/`. Synced into `app/public/desk-os` at build.  
+**Live:** https://mindcraft-93858.web.app/desk-os/?v=r9b  
+Notes: `PROTOTYPE_BOOKS.md`. Source stays under `agent_work/`; edit there, push `main` for CI.
 
 ## Desk OS · intel + ACT Book (local, 2026-08-07)
 
