@@ -4,6 +4,25 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-08 — Researcher tick: Part C Worked-example vs problem-solving timing across expertise (SAFE-EXPTIME)
+
+**Tick type:** Researcher (UTC hour 0 ≡ Red Team slot, but ch100 never written → prefer Researcher per rotation; researcher count since synthesizer v1.13 = 0 → Researcher)  
+**Chapter written:** `chapters/100_worked_example_vs_problem_solving_timing.md` (Part C)  
+**Claim examined:** When MindCraft’s fixed E0→E3 fade ladder collides with partial / format-specific / misdiagnosed prior knowledge — universal schedule destiny vs grain-local adaptive example↔solve timing.
+
+**Doctrine proposed (provisional):** **SAFE-EXPTIME** — timing tracks concept×format×bridge grain; examples early / solving late on that grain; completion bridge; adaptive > fixed when evidence exists; rapid rechecks beat Likert destiny; densifies SAFE-FADE; proof = solo / delayed mixed; no Example Timing Score™ / always-struggle-first / black-box perfect-fade hero.
+
+**Evidence spine (verified citations):** Sweller & Cooper (1985) + Sweller (1988) worked-example/CLT; Kalyuga et al. (2001, 2003) + Kalyuga (2007) expertise reversal; Renkl & Atkinson (2003) + Renkl et al. (2002, 2004) fading/completion; Salden et al. (2010) adaptive > fixed fade in Cognitive Tutor; Kalyuga & Sweller (2004, 2005) rapid dynamic assessment.
+
+**Claim killed (this tick):** Universal fixed E0→E3 as science destiny / fixed fade ≡ adaptive / gap-scan confidence ≡ fade stage / Example Timing Score™ / always-example or always-struggle-first brand (provisional kill #54 until synthesizer).
+
+**Experiments:** EXPTIME-1…5 + EXPTIME-QUAL.
+
+**Next researcher id:** **101** (SRL cycles / Zimmerman in Practice UX). Researcher count since v1.13 synthesizer: **1**.
+
+**PDF:** Regenerate after this tick.
+
+---
 ## 2026-08-07 — Synthesizer tick v1.13: merge Parts XCII–XCIX
 
 **Tick type:** Synthesizer (UTC hour 21; hour%6≠0; ≥8 researcher entries since synthesizer v1.12 → Synthesizer)  
