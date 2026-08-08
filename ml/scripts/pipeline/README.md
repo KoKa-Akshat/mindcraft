@@ -14,7 +14,7 @@ path — the CLI delegates to it).
           ▼               ▼           ▼              ▼               ▼
    sources/openstax  sources/amc  sources/khan   ingest_eedi.py   story_generator
    (Exercises API)   (AoPS wiki)  (Perseus API)  (delegated,      (conceptStories +
-          │               │           │           unmodified)      contextFrames)
+          │               │           │           unmodified)      contextFrame)
           └───────────────┴─────┬─────┘
                                 ▼
                      base.run_pipeline()  — the shared loop
@@ -187,8 +187,8 @@ annotation, validation, reporting, output writing — is shared.
 
 ## Concept stories (`--stories`)
 
-`story_generator.py` upgrades `app/src/data/conceptStories.json` +
-`questionContextFrames.json` to be **question-aware**: it samples 3 real bank
+`story_generator.py` upgrades `app/src/data/conceptStories.json` (including
+each story's `contextFrame`) to be **question-aware**: it samples 3 real bank
 questions per concept, puts them in the generation prompt, and requires the
 story world (protagonist / settingLine / questionBridge) to be compatible
 with them — no more 1585 bookkeepers wrapping calculator questions.

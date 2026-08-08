@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MindCraft · BETA Demo Night</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink: #143a2e;
+    --ink-soft: #2a5244;
+    --leaf: #247a4d;
+    --lime: #c4f547;
+    --cream: #fffdf7;
+    --mist: #e8f2eb;
+    --sage: #d4e8db;
+    --card: #f4faf5;
+    --line: rgba(20, 58, 46, 0.12);
+    --muted: rgba(20, 58, 46, 0.55);
+    --ph: rgba(20, 58, 46, 0.18);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: #0f241c;
+    color: var(--ink);
+    font-family: "Nunito Sans", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .deck { width: 100%; }
+  .slide {
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    position: relative;
+    overflow: hidden;
+    background: var(--cream);
+    page-break-after: always;
+    break-after: page;
+    display: flex;
+    flex-direction: column;
+  }
+  .slide::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 90% -10%, rgba(196, 245, 71, 0.14), transparent 55%),
+      radial-gradient(ellipse 60% 40% at -10% 110%, rgba(36, 122, 77, 0.08), transparent 50%);
+    pointer-events: none;
+  }
+  .ocean {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(255, 253, 247, 0.55) 0%, rgba(255, 253, 247, 0.78) 42%, rgba(255, 253, 247, 0.92) 100%),
+      url("img/background.jpg") center / cover no-repeat;
+    opacity: 1;
+  }
+  .ocean-soft {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(105deg, rgba(255, 253, 247, 0.88) 0%, rgba(255, 253, 247, 0.55) 45%, rgba(232, 242, 235, 0.7) 100%),
+      url("img/background.jpg") right center / cover no-repeat;
+  }
+  .pad {
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    padding: clamp(28px, 4.2vh, 48px) clamp(36px, 5vw, 72px) clamp(36px, 4.5vh, 52px);
+    display: flex;
+    flex-direction: column;
+  }
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: clamp(12px, 2vh, 24px);
+  }
+  .brand {
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    font-size: 15px;
+    color: var(--ink);
+  }
+  .brand span { color: var(--leaf); }
+  .num {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .kicker {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--leaf);
+    margin-bottom: 10px;
+  }
+  h1 {
+    font-family: "DM Serif Display", Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(34px, 4.6vw, 58px);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    max-width: 18ch;
+  }
+  h1.wide { max-width: 24ch; }
+  .sub {
+    margin-top: 12px;
+    font-size: clamp(15px, 1.5vw, 18px);
+    line-height: 1.45;
+    color: var(--ink-soft);
+    max-width: 42ch;
+  }
+  .foot {
+    margin-top: auto;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    font-size: 10px;
+    line-height: 1.45;
+    color: var(--muted);
+    max-width: 95%;
+  }
+  .ph {
+    border: 2px dashed var(--ph);
+    border-radius: 22px;
+    background: rgba(255, 253, 247, 0.55);
+    display: grid;
+    place-items: center;
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    min-height: 120px;
+  }
+  .ph small {
+    display: block;
+    margin-top: 6px;
+    font-weight: 600;
+    letter-spacing: 0;
+    text-transform: none;
+    font-size: 11px;
+    opacity: 0.85;
+  }
+  .shot {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 18px;
+    display: block;
+  }
+  .shot-contain {
+    object-fit: contain;
+    background: #fff;
+  }
+  .frame {
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 18px 48px rgba(20, 58, 46, 0.12);
+    border: 1px solid var(--line);
+    background: #fff;
+  }
+
+  /* Slide 1 founders */
+  .founders {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(18px, 2.5vw, 32px);
+    align-items: stretch;
+    min-height: 0;
+  }
+  .fcard {
+    background: linear-gradient(165deg, #fffdf7, #eef7f1);
+    border: 1px solid var(--line);
+    border-radius: 28px;
+    padding: clamp(18px, 2vw, 28px);
+    display: grid;
+    grid-template-columns: min(38%, 200px) 1fr;
+    gap: 20px;
+    align-items: center;
+    box-shadow: 0 16px 40px rgba(20, 58, 46, 0.08);
+  }
+  .fphoto {
+    aspect-ratio: 4/5;
+    border-radius: 22px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #143a2e, #247a4d);
+  }
+  .fphoto img { width: 100%; height: 100%; object-fit: cover; }
+  .fcard:nth-child(2) .fphoto img { object-position: center 15%; }
+  .fmeta small {
+    display: block;
+    color: var(--leaf);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .fmeta h2 {
+    font-family: "DM Serif Display", Georgia, serif;
+    font-size: clamp(26px, 2.8vw, 36px);
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+  .fmeta p {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+
+  /* Slide 2 then/now */
+  .then-now {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 28px;
+    align-items: center;
+    min-height: 0;
+  }
+  .year-label {
+    text-align: center;
+    font-family: "DM Serif Display", Georgia, serif;
+    font-size: 28px;
+    margin-bottom: 12px;
+    color: var(--ink);
+  }
+  .arrow {
+    font-size: 42px;
+    color: var(--leaf);
+    opacity: 0.55;
+  }
+
+  /* Slide 3 timeline */
+  .timeline-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 0;
+    padding: 8px 0 12px;
+  }
+  .path {
+    position: relative;
+    height: 8px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #143a2e, #247a4d 45%, #c4f547);
+    margin: 72px 4% 28px;
+  }
+  .dots {
+    position: absolute;
+    inset: 0;
+  }
+  .dot {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--cream);
+    border: 3px solid var(--ink);
+    box-shadow: 0 0 0 6px rgba(196, 245, 71, 0.35);
+  }
+  .node {
+    position: absolute;
+    width: min(160px, 14vw);
+    transform: translateX(-50%);
+  }
+  .node.up { bottom: calc(100% + 18px); }
+  .node.down { top: calc(100% + 18px); }
+  .node .y {
+    font-weight: 800;
+    font-size: 13px;
+    color: var(--leaf);
+    letter-spacing: 0.04em;
+  }
+  .node .c {
+    margin-top: 4px;
+    font-size: 12px;
+    line-height: 1.35;
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .ig-box {
+    margin-top: 8px;
+    height: 72px;
+    border-radius: 12px;
+    border: 2px dashed var(--ph);
+    background: rgba(255, 253, 247, 0.7);
+    display: grid;
+    place-items: center;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* Slide 4 train + stats */
+  .split4 {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 28px;
+    min-height: 0;
+    align-items: stretch;
+  }
+  .train-panel {
+    border-radius: 28px;
+    background: linear-gradient(160deg, #0f241c, #143a2e 55%, #1f4a38);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 28px;
+    color: var(--cream);
+  }
+  .train-panel h1 { color: var(--cream); max-width: 16ch; font-size: clamp(28px, 3.2vw, 40px); }
+  .stats {
+    display: grid;
+    gap: 14px;
+    align-content: center;
+  }
+  .stat {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    padding: 18px 20px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 16px;
+    align-items: center;
+  }
+  .stat .big {
+    font-family: "DM Serif Display", Georgia, serif;
+    font-size: clamp(36px, 4vw, 48px);
+    color: var(--leaf);
+    line-height: 1;
+  }
+  .stat .label { font-size: 14px; line-height: 1.35; color: var(--ink-soft); font-weight: 600; }
+  .stat .label em { display: block; font-style: normal; color: var(--muted); font-size: 11px; font-weight: 600; margin-top: 4px; }
+  .future-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 4px;
+  }
+  .kid {
+    flex: 1;
+    height: 74px;
+    border-radius: 16px;
+    background: linear-gradient(180deg, #eaf6ee, #d8ecdff);
+    border: 1px dashed var(--ph);
+    display: grid;
+    place-items: center;
+    font-size: 20px;
+  }
+
+  /* Slide 5 reddit placeholders */
+  .feel-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    min-height: 0;
+  }
+  .feel-grid .ph { min-height: 0; height: 100%; }
+
+  /* Slide 6 industrial */
+  .industrial {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 28px;
+    align-items: center;
+    min-height: 0;
+  }
+  .icon-panel {
+    border-radius: 28px;
+    background: linear-gradient(145deg, #143a2e, #0f241c);
+    min-height: 320px;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+  }
+
+  /* Slide 7 product */
+  .prod {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 22px;
+    min-height: 0;
+  }
+  .bullets {
+    display: grid;
+    gap: 12px;
+    align-content: start;
+  }
+  .bullet {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 14px 16px;
+  }
+  .bullet strong { display: block; font-size: 14px; margin-bottom: 4px; color: var(--ink); }
+  .bullet span { font-size: 12px; color: var(--muted); line-height: 1.4; }
+  .panels {
+    display: grid;
+    grid-template-rows: 1.1fr 1fr 0.85fr;
+    gap: 12px;
+    min-height: 0;
+  }
+  .panels .frame, .panels .ph { min-height: 0; height: 100%; }
+  .cap {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 6px;
+    font-weight: 600;
+  }
+
+  /* Slide 8 works */
+  .works {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 24px;
+    min-height: 0;
+  }
+  .seb {
+    border-radius: 28px;
+    border: 1px solid var(--line);
+    background: linear-gradient(165deg, #fffdf7, #eef7f1);
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .seb h3 {
+    font-family: "DM Serif Display", Georgia, serif;
+    font-size: 28px;
+  }
+  .lit {
+    background: var(--card);
+    border-radius: 18px;
+    border: 1px solid var(--line);
+    padding: 16px 18px;
+    font-size: 14px;
+    line-height: 1.45;
+    color: var(--ink-soft);
+  }
+
+  /* Slide 9 blank canvas */
+  .blank9 {
+    flex: 1;
+    border-radius: 32px;
+    border: 1px dashed rgba(20, 58, 46, 0.2);
+    background:
+      linear-gradient(160deg, rgba(255, 253, 247, 0.35), rgba(232, 242, 235, 0.5)),
+      url("img/background.jpg") center / cover;
+    position: relative;
+  }
+  .blank9 .hint {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    color: rgba(20, 58, 46, 0.35);
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-size: 13px;
+  }
+
+  /* Slide 10 ask */
+  .ask {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 22px;
+    min-height: 0;
+  }
+  .ask-copy h1 { max-width: 16ch; font-size: clamp(30px, 3.6vw, 44px); }
+  .ask-list {
+    margin-top: 18px;
+    display: grid;
+    gap: 10px;
+  }
+  .ask-list li {
+    list-style: none;
+    padding: 12px 14px;
+    border-radius: 16px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    font-size: 13px;
+    line-height: 1.4;
+    font-weight: 600;
+    color: var(--ink-soft);
+  }
+  .ask-list li::before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--lime);
+    margin-right: 10px;
+    vertical-align: middle;
+  }
+  .tutor-side {
+    display: grid;
+    grid-template-rows: 1.2fr 1fr;
+    gap: 12px;
+    min-height: 0;
+  }
+  .skills {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+  }
+  .skill {
+    border-radius: 16px;
+    background: #143a2e;
+    color: var(--cream);
+    padding: 14px;
+    font-size: 12px;
+    line-height: 1.35;
+  }
+  .skill b { display: block; color: var(--lime); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+
+  /* Slide 11 close */
+  .close11 {
+    flex: 1;
+    display: grid;
+    place-items: center;
+    text-align: center;
+  }
+  .close11 h1 {
+    max-width: 16ch;
+    font-size: clamp(40px, 5.5vw, 64px);
+    margin: 0 auto;
+  }
+  .close11 .sub {
+    margin: 18px auto 0;
+    max-width: 36ch;
+  }
+  .email {
+    margin-top: 28px;
+    display: inline-block;
+    padding: 14px 22px;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--cream);
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+  }
+
+  @media print {
+    @page { size: 13.333in 7.5in landscape; margin: 0; }
+    html, body { background: white; }
+    .slide {
+      width: 13.333in;
+      height: 7.5in;
+      page-break-after: always;
+      break-after: page;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="deck">
+
+  <!-- 1 -->
+  <section class="slide" id="s1">
+    <div class="ocean-soft" aria-hidden="true"></div>
+    <div class="pad">
+      <div class="topbar"><div class="brand">Mind<span>Craft</span></div><div class="num">01 / 11</div></div>
+      <p class="kicker">BETA Demo Night · Twin Ignition</p>
+      <div class="founders">
+        <article class="fcard">
+          <div class="fphoto"><img src="img/akshat-koirala.jpg" alt="Akshat Koirala" /></div>
+          <div class="fmeta">
+            <small>Founder · Math learning</small>
+            <h2>Akshat Koirala</h2>
+            <p>Math and economics at Macalester. Eight years helping students find the first step that finally makes sense. Starts on the gap, not page one.</p>
+          </div>
+        </article>
+        <article class="fcard">
+          <div class="fphoto"><img src="img/blake-kell.jpg" alt="Blake Kell" /></div>
+          <div class="fmeta">
+            <small>Founder · Product · Data</small>
+            <h2>Blake Kell</h2>
+            <p>Data science and math. Builds the calm interface, learning signals, and product feel behind MindCraft.</p>
+          </div>
+        </article>
+      </div>
+      <p class="foot">Bios from mindcraft-marketing-site.web.app team copy.</p>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide" id="s2">
+    <div class="pad">
+      <div class="topbar"><div class="brand">Mind<span>Craft</span></div><div class="num">02 / 11</div></div>
+      <div class="then-now">
+        <div>
+          <div class="year-label">2016</div>
+          <div class="ph" style="aspect-ratio:4/5;min-height:280px">Photo placeholder<small>Teaching · 2016</small></div>
+        </div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div>
+          <div class="year-label">2026</div>
+          <div class="ph" style="aspect-ratio:4/5;min-height:280px">Photo placeholder<small>Still teaching · here today</small></div>
+        </div>
+      </div>
+      <p class="foot">Drop two photos here. Spoken: teaching then, teaching now, education shaped the path to this stage.</p>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide" id="s3">
+    <div class="ocean" aria-hidden="true"></div>
+    <div class="pad">
+      <div class="topbar"><div class="brand">Mind<span>Craft</span></div><div class="num">03 / 11</div></div>
+      <p class="kicker">A path across a decade</p>
+      <div class="timeline-wrap">
+        <div class="path">
+          <div class="dots">
+            <span class="dot" style="left:4%"></span>
+            <span class="dot" style="left:20%"></span>
+            <span class="dot" style="left:36%"></span>
+            <span class="dot" style="left:52%"></span>
+            <span class="dot" style="left:70%"></span>
+            <span class="dot" style="left:90%"></span>
+          </div>
+          <div class="node up" style="left:4%"><div class="y">2016</div><div class="c">Where it starts</div></div>
+          <div class="node down" style="left:20%"><div class="y">2018</div><div class="c">Nepal at UWC</div></div>
+          <div class="node up" style="left:36%"><div class="y">2020</div><div class="c">Library in Eastern Nepal</div></div>
+          <div class="node down" style="left:52%">
+            <div class="y">2022</div>
+            <div class="c">TutorsInc</div>
+            <div class="ig-box">IG profile SS</div>
+          </div>
+          <div class="node up" style="left:70%"><div class="y">2024</div><div class="c">First student. MindCraft begins.</div></div>
+          <div class="node down" style="left:90%"><div class="y">2026</div><div class="c">STS Preceptor · SciQ Peer Tutor · MindCraft launches</div></div>
+        </div>
+      </div>
+      <p class="foot">Background: marketing site landscape (birds / layered hills). Paste TutorsInc Instagram screenshot into the dashed box.</p>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide" id="s4">
+    <div class="pad">
+      <div class="topbar"><div class="brand">Mind<span>Craft</span></div><div class="num">04 / 11</div></div>
+      <div class="split4">
+        <div class="train-panel">
+          <!-- simple built-in illustration -->
+          <svg viewBox="0 0 640 360" width="100%" height="200" aria-hidden="true" style="margin-bottom:12px">
+            <defs>
+              <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#1a4030"/>
+                <stop offset="100%" stop-color="#0f241c"/>
+              </linearGradient>
+            </defs>
+            <rect width="640" height="360" fill="url(#sky)"/>
+            <!-- broken trail behind -->
+            <path d="M20 280 C80 260, 120 300, 160 270 C200 240, 220 290, 260 275" stroke="#5a7468" stroke-width="8" fill="none" stroke-dasharray="10 12" opacity="0.55"/>
+            <!-- student stuck on broken trail -->
+            <circle cx="95" cy="248" r="16" fill="#c4f547"/>
+            <circle cx="95" cy="228" r="11" fill="#fffdf7"/>
+            <rect x="86" y="258" width="18" height="22" rx="4" fill="#fffdf7" opacity="0.85"/>
+            <!-- tracks ahead -->
+            <path d="M280 290 L620 250" stroke="#c4f547" stroke-width="6" opacity="0.7"/>
+            <path d="M280 305 L620 265" stroke="#c4f547" stroke-width="6" opacity="0.35"/>
+            <!-- train -->
+            <g transform="translate(340,170)">
+              <rect x="0" y="40" width="180" height="70" rx="10" fill="#c4f547"/>
+              <rect x="150" y="10" width="70" height="100" rx="10" fill="#e8f7a8"/>
+              <rect x="165" y="-10" width="28" height="30" rx="4" fill="#fffdf7"/>
+              <circle cx="40" cy="118" r="18" fill="#0c1a14"/>
+              <circle cx="100" cy="118" r="18" fill="#0c1a14"/>
+              <circle cx="175" cy="118" r="18" fill="#0c1a14"/>
+              <rect x="200" y="55" width="70" height="50" rx="8" fill="#247a4d"/>
+              <circle cx="220" cy="118" r="14" fill="#0c1a14"/>
+              <circle cx="255" cy="118" r="14" fill="#0c1a14"/>
+            </g>
+            <!-- successful futures ahead of the train -->
+            <g fill="#fffdf7" opacity="0.92">
+              <circle cx="535" cy="118" r="16"/>
+              <rect x="524" y="132" width="22" height="26" rx="4"/>
+              <rect x="518" y="148" width="14" height="8" rx="2" fill="#c4f547"/>
+              <circle cx="585" cy="138" r="14"/>
+              <rect x="575" y="150" width="20" height="24" rx="4"/>
+              <rect x="572" y="160" width="10" height="6" rx="1" fill="#c4f547"/>
+            </g>
+          </svg>
+          <h1>It is our education system that is failing our students</h1>
+        </div>
+        <div class="stats">
+          <div class="stat">
+            <div class="big">73%</div>
+            <div class="label">of U.S. 8th graders scored below NAEP Proficient in math (2024).<em>Entering high school already behind the national bar.</em></div>
+          </div>
+          <div class="stat">
+            <div class="big">2.1×</div>
+            <div class="label">STEM median wage vs non-STEM ($103,580 vs $49,500, 2024).<em>The track they need is the one they fear.</em></div>
+          </div>
+          <div class="stat">
+            <div class="big">+8.1%</div>
+            <div class="label">Projected STEM job growth 2024–2034 vs 2.7% non-STEM.<em>Future of work. Math is not optional.</em></div>
+          </div>
+          <div class="future-row" aria-hidden="true">
+            <div class="kid" style="font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#247a4d">Future · careers</div>
+            <div class="kid" style="font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#247a4d">Future · STEM</div>
+            <div class="kid" style="font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#247a4d">Future · agency</div>
+          </div>
+          <div class="ph" style="min-height:70px">Customer discovery graph placeholder<small>Paste your Twin Cities interview chart here</small></div>
+        </div>
+      </div>
+      <p class="foot">¹ NCES, NAEP Mathematics 2024, Grade 8: ~27% at/above Proficient ⇒ ~73% below (nationsreportcard.gov). NAEP Proficient ≠ state “grade level,” but is the national benchmark. ² U.S. BLS Employment Projections, STEM vs non-STEM median wages &amp; growth, 2024–2034 (bls.gov/emp).</p>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide" id="s5">
+    <div class="pad">
+      <div class="topbar"><div class="brand">Mind<span>Craft</span></div><div class="num">05 / 11</div></div>
+      <h1 class="wide">What are their feelings towards math</h1>
+      <p class="sub">Parents: this is what the road to their future looks like from the inside.</p>
+      <div class="feel-grid" style="margin-top:18px">
+        <div class="ph">Reddit SS 1<small>r/ACT · r/ApplyingToCollege · “I hate math”</small></div>
+        <div class="ph">Reddit SS 2<small>Anxiety / freeze / “not a math person”</small></div>
+        <div class="ph">Reddit SS 3<small>Parents: Sunday-night fight energy</small></div>
+      </div>
+      <p class="foot">Place real screenshots (faces/names blurred). Tone: disgust and dread of the path, not mockery of kids.</p>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide" id="s6">
+    <div class="pad">
+      <div class="topbar"><div class="brand">Mind<span>Craft</span></div><div class="num">06 / 11 · Blake</div></div>
+      <div class="industrial">
+        <div>
+          <p class="kicker">Blake</p>
+          <h1 class="wide">What if what’s failing them is a rigid, outdated one-size fits all model</h1>
+          <p class="sub">School built for the industrial era. Students living in an AI economy.</p>
+        </div>
+        <div class="icon-panel" aria-hidden="true">
+          <svg viewBox="0 0 420 280" width="100%" height="240">
+            <rect width="420" height="280" rx="18" fill="#0c1a14"/>
+            <!-- factory silhouette -->
+            <rect x="40" y="120" width="120" height="100" fill="#247a4d"/>
+            <rect x="70" y="70" width="28" height="50" fill="#2a5244"/>
+            <rect x="110" y="90" width="22" height="30" fill="#2a5244"/>
+            <rect x="180" y="140" width="90" height="80" fill="#143a2e"/>
+            <rect x="290" y="110" width="100" height="110" fill="#1f4a38"/>
+            <!-- smoke -->
+            <circle cx="84" cy="55" r="14" fill="#5a7468" opacity="0.5"/>
+            <circle cx="100" cy="40" r="18" fill="#5a7468" opacity="0.35"/>
+            <!-- conveyor / one size -->
+            <rect x="50" y="200" width="320" height="12" rx="6" fill="#c4f547" opacity="0.85"/>
+            <rect x="70" y="175" width="36" height="24" rx="4" fill="#fffdf7"/>
+            <rect x="130" y="175" width="36" height="24" rx="4" fill="#fffdf7"/>
+            <rect x="190" y="175" width="36" height="24" rx="4" fill="#fffdf7"/>
+            <rect x="250" y="175" width="36" height="24" rx="4" fill="#fffdf7"/>
+            <text x="60" y="250" fill="#a8c4b4" font-size="14" font-family="Nunito Sans, sans-serif">Same mold. Different minds.</text>
+          </svg>
+        </div>
+      </div>
+      <p class="foot">Spoken (Blake): industrial-era pacing vs contemporary AI economy. Visual: American factory / assembly metaphor, forest-green.</p>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide" id="s7">
+    <div class="pad">
+      <div class="topbar"><div class="brand">Mind<span>Craft</span></div><div class="num">07 / 11</div></div>
+      <h1>That’s where MindCraft comes in</h1>
+      <div class="prod" style="margin-top:14px">
+        <div class="bullets">
+          <div class="bullet">
+            <strong>vs Khan</strong>
+            <span>They library content. We map the gap, then a human starts there.</span>
+          </div>
+          <div class="bullet">
+            <strong>vs Wyzant / marketplace hours</strong>
+            <span>They sell detective time. We brief the tutor before minute one.</span>
+          </div>
+          <div class="bullet">
+            <strong>vs ChatGPT / AI tutors</strong>
+            <span>Answers are cheap. Diagnosis + accountability stay scarce.</span>
+          </div>
+          <div class="bullet">
+            <strong>Customizing math education</strong>
+            <span>ACT Math front door. Living record between student and tutor.</span>
+          </div>
+        </div>
+        <div class="panels">
+          <div class="frame"><img class="shot shot-contain" src="img/dashboard_home_desktop.png" alt="MindCraft dashboard map" /></div>
+          <div class="frame"><img class="shot shot-contain" src="img/gap_scan.png" alt="Gap scan" onerror="this.parentElement.className='ph'; this.parentElement.textContent='Gap / strengths panel'"/></div>
+          <div>
+            <div class="ph" style="height:100%;min-height:90px">Stanford conversation placeholder<small>Human learning + technology · paste photo / still</small></div>
+            <p class="cap">Creative ways we work blindspots: conversation with a Stanford PhD (human learning &amp; technology).</p>
+          </div>
+        </div>
+      </div>
+      <p class="foot">Product panels: live MindCraft dashboard + gap scan. Competitive stance grounded in Research Lab ch. 27 &amp; 35 (markets / session audits).</p>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide" id="s8">
+    <div class="pad">
+      <div class="topbar"><div class="brand">Mind<span>Craft</span></div><div class="num">08 / 11 · Akshat</div></div>
+      <h1>Well, does it actually work?</h1>
+      <div class="works" style="margin-top:16px">
+        <div>
+          <div class="lit">
+            Literature on tutoring shows consistent, substantial gains from high-quality 1:1 and small-group instruction (pooled ~0.37 SD across PreK–12 RCTs).<sup>1</sup> Peer models at college, like Macalester SciQ, put students in both seats: learner and teacher.
+          </div>
+          <p class="sub" style="margin-top:16px">The idea grew from SciQ: students help students. Roles reverse. Continuity sticks.</p>
+        </div>
+        <div class="seb">
+          <p class="kicker">Seb section</p>
+          <h3>Putting Seb on the spot</h3>
+          <div class="ph" style="flex:1;min-height:160px">Seb review / video still<small>Paste screenshot or play clip · France vacation line spoken</small></div>
+          <p class="cap">Well deserved vacation in France. He’s coming back as a tutor.</p>
+        </div>
+      </div>
+      <p class="foot">¹ Nickow, Oreopoulos &amp; Quan (2020), NBER WP 27476 / J-PAL evidence review: tutoring pooled effect ~0.37 SD (teacher/paraprofessional stronger than volunteer). Not Bloom “2 sigma.” SciQ: Macalester peer tutoring culture (spoken proof).</p>
+    </div>
+  </section>
+
+  <!-- 9 blank financials -->
+  <section class="slide" id="s9">
+    <div class="pad">
+      <div class="topbar"><div class="brand">Mind<span>Craft</span></div><div class="num">09 / 11 · Blake</div></div>
+      <p class="kicker">For the investors</p>
+      <h1 style="margin-bottom:16px">Our financials</h1>
+      <div class="blank9"><div class="hint">Overlay your diagrams here</div></div>
+      <p class="foot">Spoken only (Blake): banking experience · assumptions tested · questions welcome · tiered freemium → human-intensive · rapid acquisition. Keep slide clean for your charts.</p>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide" id="s10">
+    <div class="pad">
+      <div class="topbar"><div class="brand">Mind<span>Craft</span></div><div class="num">10 / 11 · The Ask</div></div>
+      <div class="ask">
+        <div class="ask-copy">
+          <h1>The Ask</h1>
+          <ul class="ask-list">
+            <li>High school teachers whose students worry about ACT. We will help set up school ↔ college dialogues on AI in Minnesota. Macalester is actively looking to do this.</li>
+            <li>Parents whose kids see math as a challenge. We reframe that into strengths.</li>
+            <li>Tutors who want hours that are not detective work. Minnesota community is hired. Now we need your intros.</li>
+          </ul>
+          <div class="ph" style="margin-top:12px;min-height:88px">Macalester AI / school dialogue event<small>img_theevent@MAC — drop photo here</small></div>
+        </div>
+        <div class="tutor-side">
+          <div class="frame"><img class="shot shot-contain" src="img/find_a_tutor_desktop.png" alt="Tutor map and profiles" /></div>
+          <div class="skills">
+            <div class="skill"><b>Every tutor</b>ACT Math first. Gap-ready brief before session one.</div>
+            <div class="skill"><b>+ Piano / music</b>College libraries. Same trusted human. Parents love the bonus craft.</div>
+            <div class="skill"><b>+ Coding / robotics</b>Complementary skill parents get excited for. Still starts with math clarity.</div>
+          </div>
+        </div>
+      </div>
+      <p class="foot">Ask text is on-slide (say it out loud). Tutor sourcing: Minnesota college network (Macalester, St. Olaf, St. Thomas +). Map panel from live Find a Tutor.</p>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section class="slide" id="s11">
+    <div class="ocean-soft" aria-hidden="true"></div>
+    <div class="pad">
+      <div class="topbar"><div class="brand">Mind<span>Craft</span></div><div class="num">11 / 11</div></div>
+      <div class="close11">
+        <div>
+          <p class="kicker">Ideal customer</p>
+          <h1>If you want your kid competent for today, bring them to us.</h1>
+          <p class="sub">Not a verdict. A map. A college tutor who starts where it broke.</p>
+          <div class="email">joinmindcraft@gmail.com</div>
+        </div>
+      </div>
+      <p class="foot">Akshat closer (spoken): “Yo, this is not Dagestan… tough crowd.” Keep it light. Then stop.</p>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

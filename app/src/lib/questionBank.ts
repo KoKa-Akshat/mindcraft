@@ -2126,6 +2126,17 @@ const Q: Question[] = tagQuestionFormats([
 ])
 const Q_BY_ID = new Map<string, Question>(Q.map(q => [q.id, q]))
 
+/** Read-only escape hatch onto the real, fully-merged/deduped bank (every
+ * source, every concept, every level) — used ONLY by
+ * `scripts/exportQuestionBankForNative.mjs` so the native iOS app's bundled
+ * `questionBank.json` is a real dump of this exact array, not a
+ * hand-reimplemented parallel merge that could silently drift from this
+ * file's own source/dedup/alias logic. Zero behavior change for every other
+ * caller — nothing in this file or its consumers reads this. */
+export function allQuestionsForNativeExport(): Question[] {
+  return Q
+}
+
 // ── Concept metadata ──────────────────────────────────────────────────────────
 
 export const PRACTICE_CONCEPTS: { id: string; label: string; category: string; emoji: string }[] = [

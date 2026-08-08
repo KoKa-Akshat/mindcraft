@@ -65,7 +65,7 @@ MIS_FREQ_PATH = ML_DATA / "eedi_misconception_frequency.json"
 TRAIN_CSV_PATH = EEDI_DATA / "train.csv"
 MIS_MAP_PATH = ML_DATA / "misconception_mapping.csv"
 ONT_PATH = ML_DATA / "5_level_ontology/01_mindcraft_concept_ontology_v2_6_with_combinations.json"
-CONTEXT_FRAMES_PATH = APP_DATA / "questionContextFrames.json"
+STORIES_PATH = APP_DATA / "conceptStories.json"
 QUEUE_PATH = ML_DATA / "promotion_queue.json"
 FIRESTORE_PROJECT = os.environ.get("FIRESTORE_PROJECT", "mindcraft-93858")
 
@@ -446,7 +446,12 @@ def main() -> None:
     eedi_questions = {q["id"]: q for q in eedi_list}
     print(f"  {len(eedi_questions)} Eedi questions loaded")
 
-    context_frames: dict = json.loads(CONTEXT_FRAMES_PATH.read_text()) if CONTEXT_FRAMES_PATH.exists() else {}
+    stories: dict = json.loads(STORIES_PATH.read_text()) if STORIES_PATH.exists() else {}
+    context_frames = {
+        concept_id: story.get("contextFrame", {})
+        for concept_id, story in stories.items()
+        if isinstance(story, dict)
+    }
 
     # ── Per-choice train index ────────────────────────────────────────────────
     train_index = build_train_index(numeric_to_slug)

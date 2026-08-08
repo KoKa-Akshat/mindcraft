@@ -3,7 +3,7 @@ Enrich existing question banks with story-cell DNA.
 
 Pass 1 (deterministic, no LLM):
   - Eedi: add distractor_taxonomy from existing misconception_label
-  - All questions: add storyContext from questionContextFrames.json
+  - All questions: add storyContext from conceptStories.json contextFrame data
 
 Run:
   python ml/scripts/enrich_questions.py --dry-run   # count only
@@ -23,7 +23,6 @@ ROOT = Path(__file__).parent.parent.parent
 
 EEDI_PATH  = ROOT / "app/src/data/eediQuestions.json"
 ACT_PATH   = ROOT / "app/src/data/actMasterQuestionBank.generated.json"
-FRAMES_PATH = ROOT / "app/src/data/questionContextFrames.json"
 STORIES_PATH = ROOT / "app/src/data/conceptStories.json"
 REPORT_PATH = ROOT / "ml/data/enrich_report.json"
 
@@ -67,28 +66,18 @@ def classify_misconception(label: str) -> str:
     return FALLBACK_ORDER[0]
 
 
-# ── storyContext builder from contextFrames ──────────────────────────────────
-
-def load_frames() -> dict:
-    """Returns {conceptId: frame_dict}."""
-    with open(FRAMES_PATH) as f:
-        raw = json.load(f)
-    if isinstance(raw, dict):
-        return raw
-    # list form — key by conceptId
-    return {fr.get("conceptId", fr.get("id", str(i))): fr for i, fr in enumerate(raw)}
-
+# ── storyContext builder from concept-story contextFrame data ────────────────
 
 def load_stories() -> dict:
     with open(STORIES_PATH) as f:
         return json.load(f)
 
 
-def build_story_context(question: dict, frames: dict, stories: dict) -> str | None:
-    """Build a 1-2 sentence storyContext from existing frames/stories."""
+def build_story_context(question: dict, stories: dict) -> str | None:
+    """Build a 1-2 sentence storyContext from a concept story and its frame."""
     concept_id = question.get("conceptId", "")
-    frame = frames.get(concept_id)
     story = stories.get(concept_id)
+    frame = story.get("contextFrame", {}) if isinstance(story, dict) else {}
 
     if not frame and not story:
         return None
@@ -97,7 +86,7 @@ def build_story_context(question: dict, frames: dict, stories: dict) -> str | No
     setting = None
     bridge = None
 
-    if frame:
+    if isinstance(frame, dict):
         protagonist = frame.get("protagonist")
         setting = frame.get("settingLine")
         bridge = frame.get("questionBridge")
@@ -185,7 +174,7 @@ def enrich_questions(questions: list, frames: dict, stories: dict,
         if q.get("storyContext"):
             stats["already_had_storyContext"] += 1
         else:
-            ctx = build_story_context(q, frames, stories)
+            ctx = build_story_context(q, stories)
             if ctx:
                 q["storyContext"] = ctx
                 stats["added_storyContext"] += 1
@@ -213,7 +202,6 @@ def main():
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
 
-    frames  = load_frames()
     stories = load_stories()
 
     all_stats = {}

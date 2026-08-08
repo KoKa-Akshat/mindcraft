@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MindCraft Field Desk - Binder Canvas Prototype</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shelf-prototype.css" />
+</head>
+<body>
+  <main class="desk" id="desk">
+    <aside class="rail" aria-label="Field desk navigation">
+      <p class="wordmark">Mind<span>Craft</span></p>
+      <p class="rail-label">field-desk</p>
+      <button class="add-button" type="button" aria-label="Add a new field book"><b>+</b><span>Add</span></button>
+      <nav class="rail-nav" aria-label="Workspace tools">
+        <button type="button"><span class="nav-symbol">o</span>Record</button>
+        <button type="button"><span class="nav-symbol">[]</span>Mail</button>
+        <button type="button"><span class="nav-symbol">[]</span>Calendar</button>
+        <button type="button"><span class="nav-symbol">/</span>Search</button>
+      </nav>
+      <button class="binder-button" type="button">Binder</button>
+    </aside>
+
+    <section class="room" aria-label="Your field desk">
+      <div class="room-light" aria-hidden="true"></div>
+      <header class="room-head">
+        <p class="eyebrow">Field desk / August 07</p>
+        <p class="room-status">4 volumes on this shelf</p>
+      </header>
+
+      <div class="owl-map" aria-hidden="true">
+        <img src="img/orbs/mascot-ivory.png" alt="" />
+        <i class="owl-port"></i>
+        <svg viewBox="0 0 520 240" preserveAspectRatio="none">
+          <path d="M76 64 C170 62, 168 180, 280 202" />
+          <path d="M76 64 C230 70, 290 102, 454 128" />
+          <path d="M76 64 C100 110, 98 146, 108 204" />
+        </svg>
+        <p>the threads are waiting</p>
+      </div>
+
+      <section class="open-book" id="openBook" aria-live="polite" aria-label="Open workspace preview">
+        <button class="close-book" id="closeBook" type="button" aria-label="Close workspace">Close</button>
+        <div class="book-spread">
+          <article class="spread-page spread-left">
+            <p class="spread-kicker" id="spreadKicker">ACT fieldbook</p>
+            <p class="spread-number">01</p>
+            <h1 id="spreadTitle">Quadratics before April</h1>
+            <p class="spread-body" id="spreadBody">Start with the pattern. The route is already open on your desk.</p>
+            <p class="spread-note">Filed here, not floating somewhere else.</p>
+          </article>
+          <article class="spread-page spread-right">
+            <p class="spread-kicker">today's page</p>
+            <div class="rule-copy" id="spreadPrompt">Find the move that makes the equation smaller.</div>
+            <div class="answer-line"></div>
+            <button class="open-action" type="button">Open this desk</button>
+          </article>
+        </div>
+      </section>
+
+      <p class="shelf-instruction" id="shelfInstruction">Your desk, sorted into working pages.</p>
+      <section class="shelf" aria-label="Your field desk pages">
+        <div class="shelf-shadow" aria-hidden="true"></div>
+        <button class="book book-connect" type="button" data-book="connect" data-kicker="connections" data-title="School tools, held together" data-body="Moodle, Gmail, and Calendar arrive as one calm desk instead of three scattered tabs." data-prompt="Choose the first connection to bring inside.">
+          <span class="book-pages"></span><span class="book-spine"><b>CONNECT</b><small>3 links</small></span><span class="book-cover"><em>connect</em><strong>Moodle<br />Gmail<br />Calendar</strong></span>
+        </button>
+        <button class="book book-act is-featured" type="button" data-book="act" data-kicker="ACT fieldbook" data-title="Quadratics before April" data-body="A working route, not a pile of practice. The margin holds the next honest thing to solve." data-prompt="Find the move that makes the equation smaller.">
+          <span class="book-ribbon"></span><span class="book-pages"></span><span class="book-spine"><b>ACT</b><small>fieldbook</small><i>APR</i></span><span class="book-cover"><em>ACT / 2026</em><strong>Quadratics<br />before April</strong><small>Akshat K.</small></span>
+        </button>
+        <button class="book book-repository" type="button" data-book="repository" data-kicker="repository" data-title="The repository" data-body="A reference volume for the things you have already decided are worth keeping." data-prompt="Open the chapter that will carry today's work.">
+          <span class="book-pages"></span><span class="book-spine"><b>REPOSITORY</b><small>notes / files</small></span><span class="book-cover"><em>field archive</em><strong>Repository</strong><small>reference edition</small></span>
+        </button>
+        <button class="book book-memo" type="button" data-book="memo" data-kicker="memo" data-title="A note for later" data-body="A small thought earns a real place when it belongs to the work you are building." data-prompt="Write one clear sentence before it disappears.">
+          <span class="book-pages"></span><span class="book-spine"><b>MEMO</b><small>loose leaf</small></span><span class="book-cover"><em>memo</em><strong>One note<br />worth keeping</strong></span>
+        </button>
+        <div class="shelf-wood" aria-hidden="true"><i></i><i></i><i></i></div>
+      </section>
+    </section>
+  </main>
+  <script src="shelf-prototype.js"></script>
+</body>
+</html>

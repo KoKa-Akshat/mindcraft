@@ -1,0 +1,31 @@
+---
+description: Session handoff — confirm live checkout, lanes, Manjushree WIP, deploy rules
+alwaysApply: true
+---
+
+# MindCraft session handoff
+
+Before any edit in this repo:
+
+1. Run `pwd` and `git log --oneline -3`. You must be in `/Users/akoirala/Developer/mindcraft`. If `pwd` shows `Desktop/Business Ideas/mindcraft-site` (or any other checkout), **stop** and switch — that checkout is stale and work there does not ship.
+
+2. Read `CURSOR_HANDOFF.md` (repo root) for repo/remote, `main`-only workflow, Firebase CI deploy rules, lane ownership, Manjushree WIP protection, and verification pattern.
+
+3. Skim the top of `ACTIVE_TASK.md` for what is shipped vs open before starting new work.
+
+4. Full architecture brief: `CLAUDE.md`. Manjushree landing panel: `agent_work/manjushree-zone/LANDING_PANEL_HANDOFF.md`.
+
+Hard rules from the handoff:
+
+- Push `origin main` for deploys; **never** `firebase deploy` locally.
+
+- Confirm CI green after push (`gh run list` / `gh run view`) before calling anything shipped.
+
+- Product lane: `app/**`, marketing root files. Engine lane: `ml/**`, `webhook/**`, `data/**`, `worlds/**`. Coordinate before crossing.
+
+- Manjushree routes and `app/src/manjushree/**` + `StorySlideshow.tsx` are **live WIP**. Never delete or "clean up" them from `App.tsx`.
+
+- Scope commits precisely — never `git add -A` when unrelated WIP is present.
+
+- Hard refresh (Cmd+Shift+R) or a fresh tab to see SPA deploys.
+
