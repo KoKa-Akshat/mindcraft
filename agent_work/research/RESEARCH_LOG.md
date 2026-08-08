@@ -4,6 +4,25 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-08 — Researcher tick: Part CVI Peer explanation quality (SAFE-PEERX)
+
+**Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch106 never written → prefer Researcher per rotation; researcher count since synthesizer v1.13 = 6 → Researcher)  
+**Chapter written:** `chapters/106_peer_explanation_quality_knowledge_building.md` (Part CVI)  
+**Claim examined:** Whether MindCraft should ship knowledge-building–gated teach-back / HITL explanation QA (inferential prompts → apply → solo proof) vs Peer Explanation Score™ / teach-for-XP / Discord≡building / AI monologue≡peer teaching.
+
+**Doctrine proposed (provisional):** **SAFE-PEERX** — building over telling; inferential prompts; apply after explain; capture student explanation act; grain+QA for near-peer; load-honest length; solo proof closes loop; densifies SAFE-GENERATE / SAFE-EXPLAIN / SAFE-HELP / SAFE-TUTORGRAIN / SAFE-APPRENTICE; no Peer Explanation Score™ / teach-for-XP / Discord≡pedagogy / AI-dump teach-back.
+
+**Evidence spine (verified citations):** Roscoe & Chi (2007) knowledge-building vs telling bias; Roscoe & Chi (2008) inferential questions elicit building; Webb et al. (1995) constructive activity; Webb (1991) elaboration of help; Fuchs et al. (1996) tutor ability × explanation quality; Fiorella & Mayer (2013) teaching > expectancy for delayed retention.
+
+**Claim killed (this tick):** Peer Explanation Score™ / Teach Minutes NS / teach-for-XP / knowledge-telling≡quality / Discord≡knowledge-building / AI monologue≡peer teaching / unlock-without-solo after explain / peer-tutoring ACT guarantees (provisional kill #60 until synthesizer).
+
+**Experiments:** PEERX-1…5 + PEERX-QUAL.
+
+**Next researcher id:** **107** (curiosity & prediction before reveal). Researcher count since v1.13 synthesizer: **7**.
+
+**PDF:** Regenerate after this tick.
+
+---
 ## 2026-08-08 — Researcher tick: Part CV Gesture & embodiment in math practice (SAFE-GESTURE)
 
 **Tick type:** Researcher (UTC hour 15; hour%6≠0; researcher count since synthesizer v1.13 = 5 → Researcher)  
