@@ -4457,3 +4457,268 @@ body.is-hub-chrome .sky { opacity: 0; }
   z-index: 60;
 }
 .act-book-overlay { display: none !important; }
+
+/* Piano / book hub badges */
+.hub-card-badge.is-piano {
+  color: #5a3d1a;
+  background: #f3e6d2;
+}
+.hub-card-badge.is-book {
+  color: #3a3530;
+  background: #ebe4d8;
+}
+.hub-card.is-piano .hub-open { background: #5a7a4a; }
+.hub-card.is-piano .hub-open:hover { background: #4a6a3c; }
+
+/* Onboarding · student / tutor */
+.onboard-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(120% 80% at 50% 0%, rgba(255, 248, 235, 0.92), rgba(232, 222, 205, 0.96)),
+    #e8decd;
+}
+.onboard-stage[hidden],
+.onboard-stage.hidden { display: none !important; }
+.onboard-chrome {
+  position: absolute;
+  top: 18px;
+  left: 22px;
+}
+.onboard-card {
+  width: min(520px, 100%);
+  padding: 28px 28px 32px;
+  border-radius: 18px;
+  background: rgba(255, 252, 246, 0.94);
+  border: 1px solid rgba(40, 32, 24, 0.08);
+  box-shadow: 0 18px 50px rgba(40, 32, 24, 0.12);
+}
+.onboard-kicker {
+  margin: 0 0 8px;
+  font: 600 11px/1 var(--sans);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #6f7888;
+}
+.onboard-title {
+  margin: 0 0 10px;
+  font: italic 400 34px/1.1 "Instrument Serif", Georgia, serif;
+  color: #1c1a17;
+}
+.onboard-soft {
+  margin: 0 0 22px;
+  font: 400 15px/1.45 var(--sans);
+  color: #5c564c;
+}
+.onboard-roles {
+  display: grid;
+  gap: 12px;
+}
+.onboard-role {
+  text-align: left;
+  border: 1px solid rgba(40, 32, 24, 0.12);
+  background: #fffdf8;
+  border-radius: 14px;
+  padding: 16px 18px;
+  cursor: pointer;
+  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+}
+.onboard-role:hover {
+  transform: translateY(-1px);
+  border-color: rgba(61, 107, 79, 0.45);
+  background: #f7faf6;
+}
+.onboard-role strong {
+  display: block;
+  font: 600 17px/1.2 var(--sans);
+  color: #1c1a17;
+  margin-bottom: 4px;
+}
+.onboard-role span {
+  font: 400 13px/1.4 var(--sans);
+  color: #6f7888;
+}
+
+/* Interactive book player */
+.book-player {
+  position: fixed;
+  inset: 0;
+  z-index: 55;
+  background:
+    linear-gradient(160deg, #1a222c 0%, #2a3340 42%, #1c2620 100%);
+  color: #f5f1ea;
+  display: grid;
+  place-items: stretch;
+}
+.book-player[hidden] { display: none !important; }
+.book-player-frame {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100%;
+  width: min(920px, 100%);
+  margin: 0 auto;
+  padding: max(12px, env(safe-area-inset-top)) 18px max(16px, env(safe-area-inset-bottom));
+  box-sizing: border-box;
+}
+.book-player-chrome {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 12px;
+  align-items: center;
+  padding: 4px 44px 12px 4px;
+  position: relative;
+}
+.book-player-kicker {
+  margin: 0;
+  font: 600 12px/1.3 var(--sans);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.72;
+}
+.book-player-progress {
+  margin: 0;
+  font: 500 13px/1 var(--sans);
+  opacity: 0.7;
+}
+.book-player .act-bleed-min {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.book-player-page {
+  overflow: auto;
+  border-radius: 18px;
+  background: #f7f2e8;
+  color: #1c1a17;
+  padding: clamp(22px, 4vw, 40px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  animation: bp-page-in 420ms ease both;
+}
+@keyframes bp-page-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+.book-player-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 14px;
+}
+.book-player-btn {
+  border: 0;
+  border-radius: 10px;
+  padding: 12px 20px;
+  font: 600 14px/1 var(--sans);
+  background: #c4f547;
+  color: #121820;
+  cursor: pointer;
+}
+.book-player-btn.ghost {
+  background: rgba(255, 255, 255, 0.12);
+  color: #f5f1ea;
+}
+.book-player-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.bp-cover h1,
+.bp-read h2,
+.bp-piano h2,
+.bp-mcq h2,
+.bp-quiz h2,
+.bp-action h2,
+.bp-done h2 {
+  margin: 0 0 12px;
+  font: italic 400 clamp(28px, 5vw, 42px)/1.12 "Instrument Serif", Georgia, serif;
+}
+.bp-eyebrow {
+  margin: 0 0 10px;
+  font: 600 11px/1 var(--sans);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #6f7888;
+}
+.bp-sub,
+.bp-license,
+.bp-stem,
+.bp-prompt,
+.bp-phrase,
+.bp-score {
+  font: 400 16px/1.5 var(--sans);
+  color: #3a3530;
+  margin: 0 0 12px;
+}
+.bp-license { font-size: 13px; color: #6f7888; }
+.bp-keys {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: 18px 0;
+}
+.bp-key {
+  min-width: 48px;
+  height: 120px;
+  border: 1px solid #d5cdc0;
+  border-radius: 0 0 8px 8px;
+  background: linear-gradient(#fffdf8, #f0ebe1);
+  font: 600 13px/1 var(--sans);
+  cursor: pointer;
+  box-shadow: 0 4px 0 #cfc5b5;
+}
+.bp-key.is-lit,
+.bp-key:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #cfc5b5;
+  background: #e8f6c8;
+}
+.bp-piano-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.bp-choices { display: grid; gap: 10px; margin: 16px 0; }
+.bp-choice {
+  text-align: left;
+  border: 1px solid #ddd3c4;
+  background: #fffdf8;
+  border-radius: 12px;
+  padding: 14px 16px;
+  font: 500 15px/1.3 var(--sans);
+  cursor: pointer;
+}
+.bp-choice.is-correct { border-color: #3d6b4f; background: #e7f6ea; }
+.bp-choice.is-wrong { border-color: #b44; background: #fdecec; }
+.bp-feedback {
+  margin: 12px 0 0;
+  font: 500 14px/1.4 var(--sans);
+  color: #5c564c;
+}
+.bp-feedback[data-ok="1"] { color: #2a7a3a; }
+.bp-feedback[data-ok="0"] { color: #a33; }
+.bp-quiz-input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #ddd3c4;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font: 400 15px/1.4 Georgia, serif;
+  background: #fffdf8;
+  margin: 8px 0 14px;
+  resize: vertical;
+}
+
+@media (max-width: 720px) {
+  .bp-key { min-width: 36px; height: 96px; font-size: 11px; }
+  .book-player-frame { padding-inline: 12px; }
+  .onboard-title { font-size: 28px; }
+}
+
+/* iPad polish hooks · safe areas + touch targets */
+@supports (padding: max(0px)) {
+  .book-player-btn,
+  .onboard-role,
+  .bp-choice,
+  .hub-open {
+    min-height: 44px;
+  }
+}

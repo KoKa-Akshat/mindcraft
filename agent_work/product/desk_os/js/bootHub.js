@@ -24,6 +24,18 @@ const DEFAULTS = [
     name: 'act-fieldbook',
     label: 'ACT Field Book',
     badge: 'ACT',
+    seed: 'act',
+    status: 'running',
+    execUsed: 0,
+    execCap: 1000,
+  },
+  {
+    id: 'piano_main',
+    kind: 'piano',
+    name: 'piano-book',
+    label: 'Piano Field Book',
+    badge: 'Piano',
+    seed: 'piano',
     status: 'running',
     execUsed: 0,
     execCap: 1000,
@@ -77,11 +89,16 @@ function ensureCatalog() {
         Object.assign(cur, { kind: d.kind, badge: d.badge, label: d.label });
         changed = true;
       }
-      // Catalog rename · act-prep → act-fieldbook
-      if (cur.name !== d.name || cur.label !== d.label) {
+      // Catalog rename · act-prep → act-fieldbook · keep seed pointers fresh
+      if (cur.name !== d.name || cur.label !== d.label || cur.badge !== d.badge || cur.kind !== d.kind) {
         cur.name = d.name;
         cur.label = d.label;
         cur.badge = d.badge;
+        cur.kind = d.kind;
+        changed = true;
+      }
+      if (d.seed && cur.seed !== d.seed) {
+        cur.seed = d.seed;
         changed = true;
       }
       if (cur.execCap == null) {
@@ -123,6 +140,17 @@ const GOALS_BY_KIND = {
     { id: 'practice_set', label: 'Finish a practice set' },
     { id: 'score_target', label: 'Hit a score target' },
     { id: 'review_mistakes', label: 'Review mistakes' },
+  ],
+  piano: [
+    { id: 'hand_position', label: 'Steady hand position' },
+    { id: 'five_finger', label: 'Clean five-finger run' },
+    { id: 'learn_motif', label: 'Learn a short motif' },
+    { id: 'daily_reps', label: 'Daily practice reps' },
+  ],
+  book: [
+    { id: 'finish_chapter', label: 'Finish a chapter' },
+    { id: 'mastery_topic', label: 'Mastery on a topic' },
+    { id: 'review_notes', label: 'Review notes' },
   ],
 };
 
@@ -175,7 +203,7 @@ function masteryForInstance(inst) {
 }
 
 function goalOptionsFor(inst) {
-  const kind = inst?.kind === 'act' ? 'act' : 'desk';
+  const kind = inst?.kind || 'desk';
   return GOALS_BY_KIND[kind] || GOALS_BY_KIND.desk;
 }
 
@@ -286,18 +314,19 @@ export function createBootHub({ boot, hub, onOpenInstance, onCreateInstance, onS
     if (!hubList) return;
 
     hubList.innerHTML = list.map((inst) => {
-      const isAct = inst.kind === 'act';
+      const kind = inst.kind || 'desk';
+      const kindClass = kind === 'act' ? 'is-act' : kind === 'piano' ? 'is-piano' : kind === 'book' ? 'is-book' : 'is-desk';
       const used = Number(inst.execUsed ?? 0);
       const cap = Math.max(1, Number(inst.execCap ?? 1000));
       const pct = Math.min(100, Math.round((used / cap) * 100));
       const running = (inst.status || 'running') !== 'off';
       return `
-      <article class="hub-card ${isAct ? 'is-act' : 'is-desk'}" data-inst="${inst.id}">
+      <article class="hub-card ${kindClass}" data-inst="${inst.id}" data-kind="${kind}">
         <div class="hub-card-top">
           <span class="hub-card-gear" aria-hidden="true" title="Settings">
             <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58a.5.5 0 0 0 .12-.64l-1.92-3.32a.5.5 0 0 0-.6-.22l-2.39.96a7.03 7.03 0 0 0-1.63-.94l-.36-2.54A.5.5 0 0 0 13.9 2h-3.8a.5.5 0 0 0-.5.42l-.36 2.54c-.6.24-1.15.55-1.63.94l-2.39-.96a.5.5 0 0 0-.6.22L2.7 8.48a.5.5 0 0 0 .12.64l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94L2.82 14.58a.5.5 0 0 0-.12.64l1.92 3.32c.14.24.43.34.68.22l2.39-.96c.48.39 1.03.7 1.63.94l.36 2.54c.05.24.26.42.5.42h3.8c.24 0 .45-.18.5-.42l.36-2.54c.6-.24 1.15-.55 1.63-.94l2.39.96c.25.12.54.02.68-.22l1.92-3.32a.5.5 0 0 0-.12-.64l-2.03-1.58ZM12 15.5A3.5 3.5 0 1 1 12 8.5a3.5 3.5 0 0 1 0 7Z"/></svg>
           </span>
-          <span class="hub-card-badge ${isAct ? 'is-act' : ''}">${inst.badge || (isAct ? 'ACT' : 'Desk')}</span>
+          <span class="hub-card-badge ${kindClass}">${inst.badge || (kind === 'act' ? 'ACT' : kind === 'piano' ? 'Piano' : 'Desk')}</span>
         </div>
         <div class="hub-card-main">
           <h2 class="hub-card-name">${inst.name}</h2>

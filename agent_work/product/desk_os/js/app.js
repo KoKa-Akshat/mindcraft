@@ -22,31 +22,33 @@ import {
   mailToCardFields,
 } from './mail.js';
 import { layoutByCourse, runCleanupScan } from './cleanup.js';
-import { createSurfaces } from './surfaces.js?v=r8a';
+import { createSurfaces } from './surfaces.js?v=r9a';
 import { createStickies } from './stickies.js';
-import { createDeskPan } from './pan.js?v=r8a';
-import { createZoomPack } from './zoomPack.js?v=r8a';
+import { createDeskPan } from './pan.js?v=r9a';
+import { createZoomPack } from './zoomPack.js?v=r9a';
 import { createGate } from './gate.js';
-import { createPaperDesk } from './float.js?v=r8a';
+import { createPaperDesk } from './float.js?v=r9a';
 import {
   createTranscriptSurface,
   boopSummaryLines,
   boopExtractDue,
-} from './transcript.js?v=r8a';
-import { createOwlLinks } from './connect.js?v=r8a';
-import { createUploadSurface, spawnDashNotes } from './upload.js?v=r8a';
-import { createHomeHub, HOME_ART } from './home.js?v=r8a';
-import { createWidgetFactory } from './widgets.js?v=r8a';
-import { createJournalFocus } from './journal.js?v=r8a';
-import { createFieldBookCook } from './fieldbook.js?v=r8a';
-import { createSatellites } from './satellites.js?v=r8a';
-import { createActBookOverlay } from './actBook.js?v=r8a';
-import { openConnectGuide } from './connectGuide.js?v=r8a';
-import { createBootHub } from './bootHub.js?v=r8a';
-import { createBookStudio, getBook } from './createBook.js?v=r8a';
-import { createTutorMap } from './tutorMap.js?v=r8a';
-import { createWorkflowMarket } from './workflowMarket.js?v=r8a';
-import { createHubCall } from './hubCall.js?v=r8a';
+} from './transcript.js?v=r9a';
+import { createOwlLinks } from './connect.js?v=r9a';
+import { createUploadSurface, spawnDashNotes } from './upload.js?v=r9a';
+import { createHomeHub, HOME_ART } from './home.js?v=r9a';
+import { createWidgetFactory } from './widgets.js?v=r9a';
+import { createJournalFocus } from './journal.js?v=r9a';
+import { createFieldBookCook } from './fieldbook.js?v=r9a';
+import { createSatellites } from './satellites.js?v=r9a';
+import { createActBookOverlay } from './actBook.js?v=r9a';
+import { openConnectGuide } from './connectGuide.js?v=r9a';
+import { createBootHub } from './bootHub.js?v=r9a';
+import { createBookStudio, getBook, ensureSeedBook } from './createBook.js?v=r9a';
+import { createTutorMap } from './tutorMap.js?v=r9a';
+import { createWorkflowMarket } from './workflowMarket.js?v=r9a';
+import { createHubCall } from './hubCall.js?v=r9a';
+import { createBookPlayer, loadSeedBook } from './bookPlayer.js?v=r9a';
+import { createOnboarding, getRole } from './onboarding.js?v=r9a';
 import { loadConnectState, isConnected } from './connectLinks.js';
 
 const ORB_SRC = {
@@ -195,6 +197,10 @@ let fieldBook = null;
 let satellites = null;
 /** @type {ReturnType<typeof createActBookOverlay> | null} */
 let actBook = null;
+/** @type {ReturnType<typeof createBookPlayer> | null} */
+let bookPlayer = null;
+/** @type {ReturnType<typeof createOnboarding> | null} */
+let onboarding = null;
 /** @type {ReturnType<typeof createBootHub> | null} */
 let bootHub = null;
 /** @type {ReturnType<typeof createBookStudio> | null} */
@@ -232,15 +238,48 @@ function refreshHomeHub() {
 }
 
 function openActPractice() {
-  // ACT package · diagnosis first (same path as hub Open instance)
+  // Desk cover · same interactive ACT book as hub instance
+  const inst = { id: 'act_main', kind: 'act', name: 'act-fieldbook', seed: 'act', label: 'ACT Field Book' };
+  openInstance(inst);
+}
+
+/** Resolve playable book for act / piano / cooked instances */
+async function resolvePlayableBook(inst) {
+  if (inst?.bookId) {
+    const cooked = getBook(inst.bookId);
+    if (cooked?.pages?.length) return cooked;
+    if (cooked?.html) return cooked;
+  }
+  const seedKind = inst?.seed || (inst?.kind === 'piano' ? 'piano' : inst?.kind === 'act' ? 'act' : null);
+  if (!seedKind) return null;
+  const seed = await loadSeedBook(seedKind);
+  return ensureSeedBook(seed);
+}
+
+async function openInteractiveBook(inst) {
   ensureDeskSurfaces();
   prepareDeskShell();
   els.deskShell?.classList.remove('is-act-locked');
-  // Hide home calendar/pages under the bleed · do not pre-open calendar
-  const cal = els.deskPlane?.querySelector('[data-sheet="calendar"], [data-surface-pane="calendar"]');
-  if (cal) cal.hidden = true;
-  actBook?.open();
-  showToast('ACT · starting from diagnosis');
+  setDeskHomeVisible(false);
+  const book = await resolvePlayableBook(inst);
+  if (book?.pages?.length) {
+    bookPlayer?.open(book);
+    showToast(`${book.badge || book.subjectLabel || 'Book'} · interactive pages`);
+    return;
+  }
+  const src = bookSrcFor(inst);
+  if (src) {
+    actBook?.open(src);
+    showToast('Field Book · HTML fallback');
+    return;
+  }
+  if (inst?.kind === 'act') {
+    actBook?.open();
+    showToast('ACT · live diagnosis fallback');
+    return;
+  }
+  showToast('No playable book for this instance');
+  goHome();
 }
 
 function wireOwlToDesk() {
@@ -441,12 +480,32 @@ function ensureDeskSurfaces() {
     actBook = createActBookOverlay({
       shell: els.deskShell,
       onClose: () => {
-        if (activeInstance?.kind === 'act') {
+        if (activeInstance?.kind === 'act' || activeInstance?.kind === 'piano') {
           goHome();
           return;
         }
         showToast('Back to desk');
       },
+    });
+  }
+  if (!bookPlayer && els.deskShell) {
+    bookPlayer = createBookPlayer({
+      shell: els.deskShell,
+      onClose: () => {
+        if (activeInstance?.kind === 'act' || activeInstance?.kind === 'piano' || activeInstance?.kind === 'book') {
+          goHome();
+          return;
+        }
+        showToast('Back to desk');
+      },
+      onAction: (action) => {
+        if (action === 'open-diagnostic') {
+          bookPlayer?.close();
+          actBook?.open();
+          showToast('ACT · live diagnosis path');
+        }
+      },
+      onToast: (msg) => showToast(msg),
     });
   }
   if (!homeHub) {
@@ -581,7 +640,25 @@ function bookSrcFor(inst) {
   return bookBlobUrl;
 }
 
-/** Gate → boot → instance hub */
+/** Finish auth → optional role onboarding → boot → hub */
+async function finishEnter(role) {
+  ensureBootHub();
+  hubCall?.paintRoleChrome?.();
+  els.appShell.dataset.mode = 'boot';
+  els.appShell.dataset.surface = 'boot';
+  document.title = 'MindCraft · Starting';
+  await bootHub?.runAfterAuth({
+    name: 'Akshat Koirala',
+    email: 'akoirala@macalester.edu',
+    role: role || getRole() || 'student',
+  });
+  els.appShell.dataset.mode = 'hub';
+  els.appShell.dataset.surface = 'hub';
+  document.title = 'MindCraft · Dashboard';
+  hubCall?.paintRoleChrome?.();
+}
+
+/** Gate → onboarding (student/tutor) → boot → instance hub */
 async function enterFromAuth(_method) {
   if (entered && instanceOpen) return;
   entered = true;
@@ -593,19 +670,25 @@ async function enterFromAuth(_method) {
   els.cookStage?.classList.add('hidden');
   if (els.cookStage) els.cookStage.hidden = true;
   els.deskShell?.classList.add('hidden');
-  els.appShell.dataset.mode = 'boot';
-  els.appShell.dataset.surface = 'boot';
-  document.title = 'MindCraft · Starting';
   document.body.classList.add('is-hub-chrome');
 
-  ensureBootHub();
-  await bootHub?.runAfterAuth({
-    name: 'Akshat Koirala',
-    email: 'akoirala@macalester.edu',
-  });
-  els.appShell.dataset.mode = 'hub';
-  els.appShell.dataset.surface = 'hub';
-  document.title = 'MindCraft · Dashboard';
+  if (!onboarding && els.appShell) {
+    onboarding = createOnboarding({
+      host: els.appShell,
+      onDone: (role) => { void finishEnter(role); },
+    });
+  }
+
+  const existing = getRole();
+  if (existing) {
+    await finishEnter(existing);
+    return;
+  }
+
+  els.appShell.dataset.mode = 'onboard';
+  els.appShell.dataset.surface = 'onboard';
+  document.title = 'MindCraft · Onboarding';
+  onboarding?.show();
 }
 
 function prepareDeskShell() {
@@ -647,12 +730,13 @@ function setDeskHomeVisible(show) {
   });
 }
 
-/** Open instance · desk connectors OR ACT panel in pannable space */
+/** Open instance · desk connectors OR interactive book (ACT / Piano) */
 function openInstance(inst) {
   instanceOpen = true;
   activeInstance = inst || { id: 'desk_main', name: 'field-desk', kind: 'desk' };
   bootHub?.hideAll();
   bookStudio?.hide();
+  onboarding?.hide?.();
   document.body.classList.remove('is-hub-chrome');
   els.cookStage?.classList.add('hidden');
   if (els.cookStage) els.cookStage.hidden = true;
@@ -665,17 +749,15 @@ function openInstance(inst) {
   els.appShell.dataset.surface = 'desk';
   document.title = `MindCraft · ${inst?.name || 'Desk'}`;
 
-  if (inst?.kind === 'act') {
-    setDeskHomeVisible(false);
-    // Cooked books keep custom HTML · catalog ACT opens diagnosis
-    const customSrc = bookSrcFor(inst);
-    actBook?.open(customSrc || undefined);
-    showToast(customSrc ? 'ACT Field Book · custom book' : 'ACT Field Book · diagnosis');
+  if (inst?.kind === 'act' || inst?.kind === 'piano' || inst?.kind === 'book') {
+    actBook?.closePlane?.();
+    void openInteractiveBook(inst);
     return;
   }
 
   // Field Desk · connectors + intel dash · 3× pannable / zoomable space
   actBook?.closePlane?.();
+  bookPlayer?.close?.();
   setDeskHomeVisible(true);
   deskPan?.fitHome?.();
   showToast('Field Desk · pan & pinch-zoom the space');
@@ -696,8 +778,11 @@ function signOutToGate() {
   } catch { /* ignore */ }
   bootHub?.hideAll();
   bookStudio?.hide();
+  onboarding?.hide?.();
+  bookPlayer?.close?.();
+  actBook?.closePlane?.();
   els.deskShell?.classList.add('hidden');
-  els.deskShell?.classList.remove('has-wallpaper', 'is-act-locked');
+  els.deskShell?.classList.remove('has-wallpaper', 'is-act-locked', 'is-act-bleed', 'is-book-player');
   els.cookStage?.classList.add('hidden');
   if (els.cookStage) els.cookStage.hidden = true;
   els.gate?.classList.remove('hidden');
@@ -713,9 +798,10 @@ function goHome() {
   activeInstance = null;
   paintRailInstance(null);
   actBook?.closePlane?.();
+  bookPlayer?.close?.();
   bookStudio?.hide();
   els.deskShell?.classList.add('hidden');
-  els.deskShell?.classList.remove('has-wallpaper', 'is-act-locked', 'is-act-bleed');
+  els.deskShell?.classList.remove('has-wallpaper', 'is-act-locked', 'is-act-bleed', 'is-book-player');
   els.cookStage?.classList.add('hidden');
   if (els.cookStage) els.cookStage.hidden = true;
   document.body.classList.add('is-hub-chrome');
@@ -1484,6 +1570,14 @@ function routeHelp(q) {
   else if (/google|search|scan/.test(s)) openTool('google');
   else if (/repo|repository|file|filed|archive/.test(s)) {
     els.toolFieldBook?.click();
+  } else if (/piano|keyboard|twinkle|scale/.test(s)) {
+    openInstance({
+      id: 'piano_main',
+      kind: 'piano',
+      name: 'piano-book',
+      seed: 'piano',
+      label: 'Piano Field Book',
+    });
   } else if (/act|fieldbook|field book|practice/.test(s)) {
     openActPractice();
   } else if (/note|sticky|jot|memo/.test(s)) {

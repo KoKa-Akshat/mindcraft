@@ -3,26 +3,27 @@
 ## Serve
 
 ```bash
-# Desk OS
+# Desk OS (prototype shell)
 cd agent_work/product/desk_os && python3 -m http.server 5180
 
-# MindCraft app (required for ACT iframe on localhost)
+# Optional · ACT live diagnosis page from the book action
 cd app && npm run dev   # → http://localhost:5173
 ```
 
-Open **http://localhost:5180/?v=r8a** (hard refresh).
+Open **http://localhost:5180/?v=r9a** (hard refresh).
 
 ## Walkthrough
 
-1. **Gate** · Continue with Google (or Apple) → boot screen.
-2. **Boot** · “Keep horizontal for the best experience”; tool icons fade in after ~0.5s, then hub.
-3. **Hub** · Set goal, mastery cube, Call phone → mastery check-in saves an honest %.
-4. **Open field-desk** · pan/zoom desk; owl click opens Ask bar bottom-right.
-5. **Open act-fieldbook** (hub) or **ACT Fieldbook cover** (desk) → iframe starts at **`/try/diagnostic`** (not Contents).
-6. Finish preview diagnostic → app moves to **`/try/dashboard`** cover inside the iframe.
-7. If Vite is down, iframe falls back to live `mindcraft-93858.web.app/try/diagnostic` with a status chip.
-8. Left rail **Repository** = binder (not ACT). **Search** = device scan.
-9. Tutors map under instances; Workflow market one row of three under tutors (search kept).
+1. **Gate** · Continue with Google (or Apple).  
+2. **Onboarding** · pick **Student** or **Tutor** (first time; stored in `deskOs.role`).  
+3. **Boot** · “Keep horizontal for the best experience”; diagram → hub.  
+4. **Hub** · instances include **piano-book** and **act-fieldbook** (+ field-desk).  
+5. **Call** · phone button → student mastery check-in **or** tutor session note.  
+6. **Open piano-book** · cover → reads → keyboard drills → reflection.  
+7. **Open act-fieldbook** · cover → MCQs → optional **Open /try/diagnostic**.  
+8. Finish preview diagnostic (if opened) → app `/try/dashboard` inside iframe.  
+9. Left rail **Repository** = binder (not ACT).  
+10. **Create an instance** · cook with subject Piano or ACT Math · same pipeline.
 
 ## Tests
 
@@ -32,6 +33,6 @@ cd agent_work/product/desk_os && node tests/run.mjs
 
 ## Notes
 
-- Auth is still a local demo profile (no Firebase in Desk OS).
-- Real student OAuth should open top-level `/login?next=/diagnostic` (iframes often block Google).
-- Moodle/Gmail OAuth and Live tutor Meet sessions are out of this pass.
+- Auth + role are local demo only (no Firebase in Desk OS).  
+- See `PROTOTYPE_BOOKS.md` for assets, algo gaps, iPad prep.  
+- Do **not** firebase deploy this shell.
