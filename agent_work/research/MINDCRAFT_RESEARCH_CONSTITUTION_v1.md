@@ -94,8 +94,9 @@
 | CII | `chapters/102_generative_learning_activities_practice.md` | Generative learning (Fiorella/Mayer) in Practice; SAFE-GENERATE (provisional); SOI-forcing micro-GLAs |
 | CIII | `chapters/103_error_climate_psychological_safety_tutoring.md` | Error climate & psychological safety in tutoring; SAFE-ERRCLIMATE (provisional); stay-diagnose under FEI |
 | CIV | `chapters/104_homework_help_vs_practice_identity.md` | Homework help vs practice identity; SAFE-HWHELP (provisional); dual-rail Solver/Practice |
+| CV | `chapters/105_gesture_embodiment_math_practice.md` | Gesture & embodiment in math practice; SAFE-GESTURE (provisional); strategy-tied optional motion |
 
-Queued next: see `NEXT_LAB.md` (Part CV gesture & embodiment, then 106).
+Queued next: see `NEXT_LAB.md` (Part CVI peer explanation quality, then 107+).
 
 **Synthesizer note (v1.13):** Eight researcher chapters (XCII–XCIX) landed after v1.12 as provisional I.4 appends — explanation length vs germane load, retrieval failure modes, productive failure sequencing, cognitive apprenticeship playbooks, attention residue / device distraction, dual coding × FormatId, metacognitive monitoring in gap-scan, and tutor-minute vs AI ROI. This edition promotes each stack to company law (removes provisional tags), formalizes Red Team kills #46–#53, confirms EXPLAIN/RETRIEVE/PF/APPRENTICE/ATTN/DUAL/MONITOR/ROI experiment families in Part IX, and refreshes metrics/glossary/competitive implication. Deep-dive files remain authoritative for citations; the OS keeps only *surviving* product rules.
 
@@ -192,6 +193,7 @@ Explanations alone rarely produce (1)–(3). Fluent AI explanations can *acceler
 | Generative Learning Score™ / AI≡generation / teach-for-XP / eight-menu GLA bomb | **KILLED** *(provisional)* | SAFE-GENERATE (CII); SOI-forcing sparse GLAs + transfer proof |
 | Psychological Safety Score™ / poster safe-space / Bermuda-triangle / praise-fog≡climate | **KILLED** *(provisional)* | SAFE-ERRCLIMATE (CIII); stay-diagnose + adaptive action under FEI |
 | Homework Completion Score™ / tonight-% / Chegg-dump / assisted≡ready / purity-ban help | **KILLED** *(provisional)* | SAFE-HWHELP (CIV); dual-rail instrumental help + solo proof |
+| Embodiment Score™ / styles meshing / always-gesture / action≡gesture / pose-camera AI | **KILLED** *(provisional)* | SAFE-GESTURE (CV); strategy-tied optional motion + transfer proof |
 
 **Implication:** Do not bet on “better explanations,” graph-file cosplay, warm-tutor theater, emotion cameras, page-count science, Ivy hire theater, unverified AI banks, FERPA-badge GTM, expanding-SRS mystique, headcount vanity, mastery fireworks, FSRS brand, cram packages, instant-feedback theater, bridge-count ads, day-one greens, format-count cosplay, parent surveillance portals, Talk Ratio theater, immersive lore-as-pedagogy, star-wall / user-count learning proof, item-count / complete-ACT coverage theater, always-full-worked / unlimited-solutions Solver theater, unlimited-hints / never-stuck answer-dump theater, DAU/streak/XP / FEI Score™ dashboard theater, unlimited free hard peeks / Hint Score™ theater, longer≡better / unlimited thorough AI essay theater, struggle-theater / blank-time / always-wait / instant-dump stall UX, fail-first / every-miss-as-PF / discovery-without-consolidation cosplay, guild / master-tutor / modeling-as-lecture / never-fade apprenticeship costume, Focus Score™ / phone-shame / mid-attempt notification-growth theater, or Monitoring Score™ / metacognition-without-control / one-scan calibration theater, or AI-replaces-tutors / tutoring-is-free / unlimited-human / hours-booked / Session ROI Score™ theater. Bet on **FEI + pedagogy wrap + SAFE-* stack**: fear→evidence→identity, with inspectable diagnosis, Map-briefed humans, privacy-bound affect, verified keys, blueprint-honest coverage matrices, district trust packets, honest spaced returns, fidelity-over-tenure ops, time-honest MoC, dual-rail durable GTM, load-honest story wrap, witnessable dated solo competence artifacts, guidance that fades as the student proves the join, instrumental help that still demands construction, instrumented `retry_120s` / motive-coded `challenge_accept` / `transfer_pass` / `solo_transfer_pass` under XXI.4 co-gates, contingent soft→hard peeks priced in construction effort, length-contingent principle coaches that leave room to think, mode-contingent retrieval support (TOT cue vs freeze scaffold) without Struggle Score™, fidelity-gated productive-failure missions (generate then consolidate on student RSMs) only when priors and affect allow, tutor/coach cognitive-apprenticeship phases (model→coach→fade + articulation) logged for fidelity rather than guild branding, and attempt windows protected from residue and device tax rather than Focus Score™ costume.
 
@@ -286,6 +288,7 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 | **SAFE-GENERATE** *(provisional)* | SOI-forcing sparse GLAs; student produces; teach-back act; guided FormatId draw; densifies EXPLAIN/DUAL/SRL/SE | CII | Ban Generative Learning Score™ / AI≡generation / teach-for-XP / eight-menu bomb / verbatim summary theater |
 | **SAFE-ERRCLIMATE** *(provisional)* | Error climate > slogan; stay-diagnose-reattempt; destake learn / keep FEI; densifies MISCON/HELP/TALK/AAR | CIII | Ban Safety Score™ / poster safe-space / Bermuda-triangle / shame reel / praise-fog≡climate |
 | **SAFE-HWHELP** *(provisional)* | Dual-rail Help vs Practice; instrumental unstuck; assisted≠solo; help recruits proof; densifies HELP/FADE/ROI | CIV | Ban Completion Score™ / Chegg-dump / assisted≡ready / Bastani Base hero / purity-ban help |
+| **SAFE-GESTURE** *(provisional)* | Strategy-tied optional gesture/draw; gesture≠action for transfer; respect non-gesturers; densifies DUAL/GENERATE/FORMAT | CV | Ban Embodiment Score™ / styles meshing / always-gesture / pose-camera / AR body≡FEI |
 | **Block → near-miss interleave → spaced mix** | Blocking = acquisition scaffold; delayed mixed accuracy = readiness signal | XXIX, XXXIX, LXXIV | Ban “shuffle = science”; ban blocked-accuracy vanity |
 | **Student-generated why** | Faded examples + structured principle/misconception prompts *before* AI wrap | XXVI, XL | Ban AI-monologue≡SE; ban explain-own-wrong-first default |
 | **Competitive wedge** | Do not out-content Khan, out-streak Duo, out-delight Brilliant, or out-fluency ChatGPT | XXXV, XX | Sell recoverable struggle + competence evidence + solo transfer |
@@ -373,6 +376,7 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 
 | Date | Finding | Type | Action |
 |------|---------|------|--------|
+| 2026-08-08 | SAFE-GESTURE: strategy-tied optional gesture/draw; kill Embodiment Score™ / styles meshing / always-gesture / pose-camera | Evidence | GESTURE-1…5; next = CVI peer explanation quality |
 | 2026-08-08 | SAFE-ERRCLIMATE: stay-diagnose error climate in tutoring; kill Safety Score™ / Bermuda-triangle / praise-fog | Evidence | ERRCLIM-1…5; next = CIV homework vs practice identity |
 | 2026-08-08 | SAFE-HWHELP: dual-rail Solver/Practice; kill Completion Score™ / Chegg-dump / assisted≡ready | Evidence | HWHELP-1…5; next = CV gesture & embodiment |
 | 2026-08-08 | SAFE-GENERATE: SOI-forcing sparse GLAs in Practice; kill Generative Learning Score™ / AI≡generation / teach-for-XP | Evidence | GENACT-1…5; next = CIII error climate |
@@ -922,6 +926,8 @@ Core A–D remain. Chapter ticks densified them into families — prefer the den
 
 **Surviving (provisional):** SAFE-HWHELP — dual-rail Help vs Practice; instrumental unstuck under deadline; assisted ≠ unassisted; costly dump; help recruits solo proof; densifies SAFE-HELP/FADE/ROI/DURABLE/PROOF; instrument HWHELP-* before Homework Completion Score™ / Chegg-clone / Bastani Base / purity-ban ACT ads (CIV).
 
+**Surviving (provisional):** SAFE-GESTURE — strategy-tied optional gesture/finger-trace/draw; gesture ≠ object-action for transfer; respect non-gesturers; gesture+language; FormatId-triggered; tutor model→fade; densifies SAFE-DUAL/GENERATE/FORMAT/APPRENTICE; instrument GESTURE-* before Embodiment Score™ / styles meshing / pose-camera / AR-body ACT ads (CV).
+
 ---
 
 # Part XV — References (verified starting set)
@@ -1446,6 +1452,7 @@ Ship changes that raise `retry_120s` and mastery-motive `challenge_accept` witho
 | SAFE-GENERATE *(provisional)* | SOI-forcing sparse GLAs; no Generative Learning Score™ / AI≡generation / teach-for-XP (Part CII) |
 | SAFE-ERRCLIMATE *(provisional)* | Stay-diagnose error climate; no Safety Score™ / Bermuda-triangle / praise-fog (Part CIII) |
 | SAFE-HWHELP *(provisional)* | Dual-rail Help vs Practice; no Completion Score™ / Chegg-dump / assisted≡ready (Part CIV) |
+| SAFE-GESTURE *(provisional)* | Strategy-tied optional gesture/draw; no Embodiment Score™ / styles meshing / pose-camera (Part CV) |
 
 ## Appendix B — Maya interview protocol (qual)
 
@@ -1554,9 +1561,12 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 3ar. Generative learning activities (Fiorella/Mayer) in Practice — **DONE** Part CII / SAFE-GENERATE  
 3as. Error climate & psychological safety in tutoring — **DONE** Part CIII / SAFE-ERRCLIMATE  
 3at. Homework help vs practice identity conflict — **DONE** Part CIV / SAFE-HWHELP  
-3au. Gesture & embodiment in math practice — queued id 105 **NEXT**  
-3av. Peer explanation quality (knowledge-building vs telling) — queued id 106  
+3au. Gesture & embodiment in math practice — **DONE** Part CV / SAFE-GESTURE  
+3av. Peer explanation quality (knowledge-building vs telling) — queued id 106 **NEXT**  
 3aw. Curiosity & prediction before reveal — queued id 107  
+3ax. Analogical reasoning & bridge teaching — queued id 108  
+3ay. Writing-to-learn in math practice — queued id 109  
+3az. Spatial skills & math identity — queued id 110  
 4. Equity audit of story worlds — **DONE** (Part XXXVI)  
 5. Competitive teardown — **DONE** session audits (Part XXXV); usage telemetry still open  
 6. Formal Bayesian update process for Constitution claims — **DONE** Part LXX / SAFE-LABMETA  
@@ -1631,7 +1641,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 75. **DONE (2026-08-08):** Generative learning activities in Practice (Part CII / id 102) — SAFE-GENERATE stack  
 76. **DONE (2026-08-08):** Error climate & psychological safety in tutoring (Part CIII / id 103) — SAFE-ERRCLIMATE stack  
 77. **DONE (2026-08-08):** Homework help vs practice identity conflict (Part CIV / id 104) — SAFE-HWHELP stack  
-77. **NEXT:** Homework help vs practice identity conflict (Part CIV / id 104)
+78. **DONE (2026-08-08):** Gesture & embodiment in math practice (Part CV / id 105) — SAFE-GESTURE stack  
+78. **NEXT:** Peer explanation quality (Part CVI / id 106)
 
 ---
 
@@ -1665,4 +1676,4 @@ MindCraft’s deepest risk is not technical failure. It is **winning the wrong g
 
 This Constitution exists so the company notices that risk early, and runs experiments that can kill beloved ideas.
 
-**v1.13 synthesizer pass folded Parts XCII–XCIX into surviving commercial doctrine (I.4 rows SAFE-EXPLAIN through SAFE-ROI; Red Team kills #46–#53 promoted from provisional). Experiment families EXPLAIN/RETRIEVE/PF/APPRENTICE/ATTN/DUAL/MONITOR/ROI confirmed mounted. Parts C–CIV landed as provisional densifiers (SAFE-EXPTIME / SAFE-SRL / SAFE-GENERATE / SAFE-ERRCLIMATE / SAFE-HWHELP). Next researcher id: CV gesture & embodiment. Researcher count since v1.13 = 5. Page count is not the finish line — falsifiable truth is.**
+**v1.13 synthesizer pass folded Parts XCII–XCIX into surviving commercial doctrine (I.4 rows SAFE-EXPLAIN through SAFE-ROI; Red Team kills #46–#53 promoted from provisional). Experiment families EXPLAIN/RETRIEVE/PF/APPRENTICE/ATTN/DUAL/MONITOR/ROI confirmed mounted. Parts C–CV landed as provisional densifiers (SAFE-EXPTIME / SAFE-SRL / SAFE-GENERATE / SAFE-ERRCLIMATE / SAFE-HWHELP / SAFE-GESTURE). Next researcher id: CVI peer explanation quality. Researcher count since v1.13 = 6. Page count is not the finish line — falsifiable truth is.**

@@ -94,9 +94,12 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 102 | Generative learning activities (Fiorella/Mayer) in Practice | Summarize/teach-back/draw; germane load without fluff | **DONE** (2026-08-08) — Part CII / SAFE-GENERATE |
 | 103 | Error climate & psychological safety in tutoring | Destake mistakes without lowering standards | **DONE** (2026-08-08) — Part CIII / SAFE-ERRCLIMATE |
 | 104 | Homework help vs practice identity conflict | Solver as crutch vs FEI gym; parent messaging | **DONE** (2026-08-08) — Part CIV / SAFE-HWHELP |
-| 105 | Gesture & embodiment in math practice | Goldin-Meadow; enact GLA; when motion helps FormatId | **NEXT** |
-| 106 | Peer explanation quality (knowledge-building vs telling) | Roscoe/Chi; teach-back rubric; HITL QA | queued |
+| 105 | Gesture & embodiment in math practice | Goldin-Meadow; enact GLA; when motion helps FormatId | **DONE** (2026-08-08) — Part CV / SAFE-GESTURE |
+| 106 | Peer explanation quality (knowledge-building vs telling) | Roscoe/Chi; teach-back rubric; HITL QA | **NEXT** |
 | 107 | Curiosity & prediction before reveal | Epistemic emotions; soft-wrong predict→feedback | queued |
+| 108 | Analogical reasoning & bridge teaching | Gentner structure-mapping; Map bridge UX | queued |
+| 109 | Writing-to-learn in math practice | Explanation writing; journal vs FEI; Notes rail | queued |
+| 110 | Spatial skills & math identity | Spatial anxiety; FormatId hops; no Spatial Score™ | queued |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 
@@ -162,3 +165,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any Generative Learning Score™ / AI monologue≡generation / verbatim summary theater / unguided doodle≡dual-coding / teach-for-XP / eight-strategy menu bomb / ACT guarantees from GLA branding (Part CII / SAFE-GENERATE provisional)
 - Any Psychological Safety Score™ / Comfort % / poster-only safe space / Bermuda-triangle redirect / shame reel / praise-fog AI≡climate / destake≡no-standards / ACT guarantees from climate branding (Part CIII / SAFE-ERRCLIMATE provisional)
 - Any Homework Completion Score™ / tonight-% NS / “we finish your worksheet” / assisted≡ready / Chegg-clone dump hero / Bastani Base Solver ads / purity ban on all homework help / parent homework stalk / grade guarantees from Solver (Part CIV / SAFE-HWHELP provisional)
+- Any Embodiment Score™ / Gesture Score™ / Motion Minutes NS / kinesthetic-style meshing / always-add-gesture / manipulative≡gesture≡abstraction / forced produce-only / pose-camera embodiment AI / AR body immersion≡FEI / ACT guarantees from gesture kits (Part CV / SAFE-GESTURE provisional)

@@ -81,3 +81,6 @@ Promote 3 at a time into `NEXT_LAB.md`. Do not write all at once.
 | 105 | Gesture & embodiment in math practice | Goldin-Meadow; enact GLA; when motion helps FormatId | promoted → NEXT_LAB |
 | 106 | Peer explanation quality (knowledge-building vs telling) | Roscoe/Chi; teach-back rubric; HITL QA | promoted → NEXT_LAB |
 | 107 | Curiosity & prediction before reveal | Epistemic emotions; soft-wrong predict→feedback | promoted → NEXT_LAB |
+| 108 | Analogical reasoning & bridge teaching | Gentner structure-mapping; Map bridge UX | promoted → NEXT_LAB |
+| 109 | Writing-to-learn in math practice | Explanation writing; journal vs FEI; Notes rail | promoted → NEXT_LAB |
+| 110 | Spatial skills & math identity | Spatial anxiety; FormatId hops; no Spatial Score™ | promoted → NEXT_LAB |

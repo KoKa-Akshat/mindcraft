@@ -4,6 +4,25 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-08 — Researcher tick: Part CV Gesture & embodiment in math practice (SAFE-GESTURE)
+
+**Tick type:** Researcher (UTC hour 15; hour%6≠0; researcher count since synthesizer v1.13 = 5 → Researcher)  
+**Chapter written:** `chapters/105_gesture_embodiment_math_practice.md` (Part CV)  
+**Claim examined:** Whether MindCraft should ship strategy-specific optional gesture/finger-trace/draw scaffolds (FormatId + HITL model→fade) vs Embodiment Score™ / kinesthetic-style meshing / always-gesture / pose-camera “embodied AI.”
+
+**Doctrine proposed (provisional):** **SAFE-GESTURE** — strategy-tied motion only; gesture ≠ object-action for transfer; retention via sparse encode-time gesture; respect non-gesturers (observe/produce/draw choice); gesture+language close the loop; FormatId-triggered load-honest; apprentice model→fade; densifies SAFE-DUAL / SAFE-GENERATE / SAFE-FORMAT / SAFE-APPRENTICE; no Embodiment Score™ / styles meshing / camera pose / AR body hero.
+
+**Evidence spine (verified citations):** Goldin-Meadow, Cook & Mitchell (2009) gesture→new ideas; Cook, Mitchell & Goldin-Meadow (2008) retention; Novack et al. (2014) gesture>action for transfer; Congdon et al. (2024) spontaneous gesture predicts see vs do efficacy / harm to non-gesturers; Alibali & Nathan (2012) embodiment in math teaching; Nathan & Walkington (2017) GEMC; Nathan et al. (2021) dynamic gestures × geometry proof.
+
+**Claim killed (this tick):** Embodiment Score™ / Gesture Score™ / Motion Minutes NS / kinesthetic-style meshing / always-add-gesture / manipulative≡gesture≡abstraction / forced produce-only / pose-camera embodiment AI / AR body immersion≡FEI / ACT guarantees from gesture kits (provisional kill #59 until synthesizer).
+
+**Experiments:** GESTURE-1…5 + GESTURE-QUAL.
+
+**Next researcher id:** **106** (peer explanation quality). Researcher count since v1.13 synthesizer: **6**. Promoted queue stubs 108–110 (analogical bridges / writing-to-learn / spatial skills) because unfinished <3.
+
+**PDF:** Regenerate after this tick.
+
+---
 ## 2026-08-08 — Researcher tick: Part CIV Homework help vs practice identity conflict (SAFE-HWHELP)
 
 **Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch104 never written → prefer Researcher per rotation; researcher count since synthesizer v1.13 = 4 → Researcher)  
