@@ -250,6 +250,14 @@ function MarketingRedirect() {
   return null
 }
 
+/** Full-page jump into the Desk OS static prototype (Piano + ACT books). */
+function DeskOsRedirect() {
+  useEffect(() => {
+    window.location.replace('/desk-os/?v=r9b')
+  }, [])
+  return null
+}
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -347,6 +355,11 @@ export default function App() {
             </Suspense>
           } />
         )}
+
+        {/* Desk OS prototype shell (static under /desk-os/, synced at build).
+            Short in-app aliases so the live preview is easy to open. */}
+        <Route path="/desk" element={<DeskOsRedirect />} />
+        <Route path="/try/desk" element={<DeskOsRedirect />} />
 
         {/* Root of app host → marketing site (landing lives on mindcraft-marketing-site.web.app) */}
         <Route path="/" element={<MarketingRedirect />} />
