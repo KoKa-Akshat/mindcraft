@@ -91,9 +91,12 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | — | **Synthesizer v1.13** | Merge XCII–XCIX SAFE-* into core OS I.4 / XIV / IX / XXI | **DONE** (2026-08-07 UTC 21) |
 | 100 | Worked-example vs problem-solving timing across expertise | When E0→E3 schedule collides with prior knowledge | **DONE** (2026-08-08) — Part C / SAFE-EXPTIME |
 | 101 | Self-regulated learning cycles (Zimmerman) in Practice UX | Forethought/performance/reflection loops; no SRL Score™ | **DONE** (2026-08-08) — Part CI / SAFE-SRL |
-| 102 | Generative learning activities (Fiorella/Mayer) in Practice | Summarize/teach-back/draw; germane load without fluff | **NEXT** |
-| 103 | Error climate & psychological safety in tutoring | Destake mistakes without lowering standards | queued |
+| 102 | Generative learning activities (Fiorella/Mayer) in Practice | Summarize/teach-back/draw; germane load without fluff | **DONE** (2026-08-08) — Part CII / SAFE-GENERATE |
+| 103 | Error climate & psychological safety in tutoring | Destake mistakes without lowering standards | **NEXT** |
 | 104 | Homework help vs practice identity conflict | Solver as crutch vs FEI gym; parent messaging | queued |
+| 105 | Gesture & embodiment in math practice | Goldin-Meadow; enact GLA; when motion helps FormatId | queued |
+| 106 | Peer explanation quality (knowledge-building vs telling) | Roscoe/Chi; teach-back rubric; HITL QA | queued |
+| 107 | Curiosity & prediction before reveal | Epistemic emotions; soft-wrong predict→feedback | queued |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 
@@ -156,3 +159,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any AI-replaces-tutors / tutoring-is-free / unlimited-human entitlement / hours-booked NS / Session ROI Score™ / VanLehn-as-ChatGPT license / Bastani practice scores≡learning / school 0.37σ as ACT guarantee from thin sessions (Part XCIX / v1.13 company law)
 - Any universal E0→E3 destiny / fixed≡adaptive fade / gap-scan confidence≡fade stage / Example Timing Score™ / always-example or always-struggle-first brand / black-box perfect-fade AI (Part C / SAFE-EXPTIME provisional)
 - Any SRL Score™ / reflection-streak NS / survey-SRL≡event / streak≡self-regulation / forethought-without-control / ability-shame reflection / “metacognition module” ACT guarantees (Part CI / SAFE-SRL provisional)
+- Any Generative Learning Score™ / AI monologue≡generation / verbatim summary theater / unguided doodle≡dual-coding / teach-for-XP / eight-strategy menu bomb / ACT guarantees from GLA branding (Part CII / SAFE-GENERATE provisional)

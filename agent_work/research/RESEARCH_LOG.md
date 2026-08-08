@@ -4,6 +4,25 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-08 — Researcher tick: Part CII Generative learning activities in Practice (SAFE-GENERATE)
+
+**Tick type:** Researcher (UTC hour 6 ≡ Red Team slot, but ch102 never written → prefer Researcher per rotation; researcher count since synthesizer v1.13 = 2 → Researcher)  
+**Chapter written:** `chapters/102_generative_learning_activities_practice.md` (Part CII)  
+**Claim examined:** Whether Practice should ship Fiorella/Mayer generative learning activities as sparse SOI-forcing micro-asks (teach-back, guided draw, one-sentence summarize) vs Generative Learning Score™ / eight-strategy checklist / AI monologue sold as generation.
+
+**Doctrine proposed (provisional):** **SAFE-GENERATE** — generation = select–organize–integrate; student produces (coach does not substitute); sparse grain-triggered GLAs; teach-back requires the explanation act; draw/map need FormatId guidance; protect attempt windows; proof = transfer/format-hop; densifies SAFE-EXPLAIN / SAFE-DUAL / SAFE-SRL / SAFE-SE; no Generative Learning Score™ / AI≡generation / eight-menu ACT ads.
+
+**Evidence spine (verified citations):** Wittrock (1974, 1989); Mayer (1996) SOI; Fiorella & Mayer (2013, 2014, 2015 book, 2016 EPR eight ways); Fiorella & Zhang (2018) drawing boundaries; Chi & Wylie (2014) ICAP; Brod (2021) age/support GLA review.
+
+**Claim killed (this tick):** Generative Learning Score™ / AI monologue≡generation / verbatim summary theater / unguided doodle≡dual-coding / teach-for-XP / eight-strategy menu bomb / GLA-branded ACT guarantees (provisional kill #56 until synthesizer).
+
+**Experiments:** GENACT-1…5 + GENACT-QUAL.
+
+**Next researcher id:** **103** (error climate / psychological safety in tutoring). Researcher count since v1.13 synthesizer: **3**.
+
+**PDF:** Regenerate after this tick.
+
+---
 ## 2026-08-08 — Researcher tick: Part CI Self-regulated learning cycles in Practice UX (SAFE-SRL)
 
 **Tick type:** Researcher (UTC hour 3; hour%6≠0; researcher count since synthesizer v1.13 = 1 → Researcher)  

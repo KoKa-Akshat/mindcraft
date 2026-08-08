@@ -76,5 +76,8 @@ Promote 3 at a time into `NEXT_LAB.md`. Do not write all at once.
 | 100 | Worked-example vs problem-solving timing across expertise | When E0→E3 schedule collides with prior knowledge | promoted → NEXT_LAB **NEXT** |
 | 101 | Self-regulated learning cycles (Zimmerman) in Practice UX | Forethought/performance/reflection; no SRL Score™ | promoted → NEXT_LAB |
 | 102 | Generative learning activities (Fiorella/Mayer) in Practice | Summarize/teach-back/draw; germane load without fluff | promoted → NEXT_LAB |
-| 103 | Error climate & psychological safety in tutoring | Destake mistakes without lowering standards | promoted → NEXT_LAB |
+| 103 | Error climate & psychological safety in tutoring | Destake mistakes without lowering standards | promoted → NEXT_LAB **NEXT** |
 | 104 | Homework help vs practice identity conflict | Solver as crutch vs FEI gym; parent messaging | promoted → NEXT_LAB |
+| 105 | Gesture & embodiment in math practice | Goldin-Meadow; enact GLA; when motion helps FormatId | promoted → NEXT_LAB |
+| 106 | Peer explanation quality (knowledge-building vs telling) | Roscoe/Chi; teach-back rubric; HITL QA | promoted → NEXT_LAB |
+| 107 | Curiosity & prediction before reveal | Epistemic emotions; soft-wrong predict→feedback | promoted → NEXT_LAB |
