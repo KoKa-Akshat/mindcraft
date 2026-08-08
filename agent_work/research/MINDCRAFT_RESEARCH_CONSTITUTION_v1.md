@@ -92,8 +92,9 @@
 | C | `chapters/100_worked_example_vs_problem_solving_timing.md` | Worked-example vs PS timing across expertise; SAFE-EXPTIME (provisional); grain-local adaptive fade |
 | CI | `chapters/101_self_regulated_learning_cycles_practice_ux.md` | SRL cycles (Zimmerman) in Practice UX; SAFE-SRL (provisional); phase→control micro-prompts |
 | CII | `chapters/102_generative_learning_activities_practice.md` | Generative learning (Fiorella/Mayer) in Practice; SAFE-GENERATE (provisional); SOI-forcing micro-GLAs |
+| CIII | `chapters/103_error_climate_psychological_safety_tutoring.md` | Error climate & psychological safety in tutoring; SAFE-ERRCLIMATE (provisional); stay-diagnose under FEI |
 
-Queued next: see `NEXT_LAB.md` (Part CIII error climate / psychological safety, then 104).
+Queued next: see `NEXT_LAB.md` (Part CIV homework help vs practice identity, then 105).
 
 **Synthesizer note (v1.13):** Eight researcher chapters (XCII–XCIX) landed after v1.12 as provisional I.4 appends — explanation length vs germane load, retrieval failure modes, productive failure sequencing, cognitive apprenticeship playbooks, attention residue / device distraction, dual coding × FormatId, metacognitive monitoring in gap-scan, and tutor-minute vs AI ROI. This edition promotes each stack to company law (removes provisional tags), formalizes Red Team kills #46–#53, confirms EXPLAIN/RETRIEVE/PF/APPRENTICE/ATTN/DUAL/MONITOR/ROI experiment families in Part IX, and refreshes metrics/glossary/competitive implication. Deep-dive files remain authoritative for citations; the OS keeps only *surviving* product rules.
 
@@ -188,6 +189,7 @@ Explanations alone rarely produce (1)–(3). Fluent AI explanations can *acceler
 | Universal E0→E3 destiny / fixed≡adaptive / confidence≡fade stage / Example Timing Score™ | **KILLED** *(provisional)* | SAFE-EXPTIME (C); grain-local adaptive example↔solve timing |
 | SRL Score™ / reflection-streak / survey≡event / streak≡SRL / forethought-without-control | **KILLED** *(provisional)* | SAFE-SRL (CI); phase→control cycles + FEI proof |
 | Generative Learning Score™ / AI≡generation / teach-for-XP / eight-menu GLA bomb | **KILLED** *(provisional)* | SAFE-GENERATE (CII); SOI-forcing sparse GLAs + transfer proof |
+| Psychological Safety Score™ / poster safe-space / Bermuda-triangle / praise-fog≡climate | **KILLED** *(provisional)* | SAFE-ERRCLIMATE (CIII); stay-diagnose + adaptive action under FEI |
 
 **Implication:** Do not bet on “better explanations,” graph-file cosplay, warm-tutor theater, emotion cameras, page-count science, Ivy hire theater, unverified AI banks, FERPA-badge GTM, expanding-SRS mystique, headcount vanity, mastery fireworks, FSRS brand, cram packages, instant-feedback theater, bridge-count ads, day-one greens, format-count cosplay, parent surveillance portals, Talk Ratio theater, immersive lore-as-pedagogy, star-wall / user-count learning proof, item-count / complete-ACT coverage theater, always-full-worked / unlimited-solutions Solver theater, unlimited-hints / never-stuck answer-dump theater, DAU/streak/XP / FEI Score™ dashboard theater, unlimited free hard peeks / Hint Score™ theater, longer≡better / unlimited thorough AI essay theater, struggle-theater / blank-time / always-wait / instant-dump stall UX, fail-first / every-miss-as-PF / discovery-without-consolidation cosplay, guild / master-tutor / modeling-as-lecture / never-fade apprenticeship costume, Focus Score™ / phone-shame / mid-attempt notification-growth theater, or Monitoring Score™ / metacognition-without-control / one-scan calibration theater, or AI-replaces-tutors / tutoring-is-free / unlimited-human / hours-booked / Session ROI Score™ theater. Bet on **FEI + pedagogy wrap + SAFE-* stack**: fear→evidence→identity, with inspectable diagnosis, Map-briefed humans, privacy-bound affect, verified keys, blueprint-honest coverage matrices, district trust packets, honest spaced returns, fidelity-over-tenure ops, time-honest MoC, dual-rail durable GTM, load-honest story wrap, witnessable dated solo competence artifacts, guidance that fades as the student proves the join, instrumental help that still demands construction, instrumented `retry_120s` / motive-coded `challenge_accept` / `transfer_pass` / `solo_transfer_pass` under XXI.4 co-gates, contingent soft→hard peeks priced in construction effort, length-contingent principle coaches that leave room to think, mode-contingent retrieval support (TOT cue vs freeze scaffold) without Struggle Score™, fidelity-gated productive-failure missions (generate then consolidate on student RSMs) only when priors and affect allow, tutor/coach cognitive-apprenticeship phases (model→coach→fade + articulation) logged for fidelity rather than guild branding, and attempt windows protected from residue and device tax rather than Focus Score™ costume.
 
@@ -280,6 +282,7 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 | **SAFE-EXPTIME** *(provisional)* | Grain-local example↔solve timing; completion bridge; adaptive>fixed; rapid rechecks; densifies SAFE-FADE | C | Ban universal E0→E3 destiny / fixed≡adaptive / confidence≡stage / Example Timing Score™ / always-struggle-first |
 | **SAFE-SRL** *(provisional)* | Phase→control cycles; process goals; attribution→plan writeback; microanalysis>inventories; densifies MONITOR/AAR | CI | Ban SRL Score™ / reflection-streak NS / survey≡event / streak≡SRL / forethought-without-control / ability-shame reflection |
 | **SAFE-GENERATE** *(provisional)* | SOI-forcing sparse GLAs; student produces; teach-back act; guided FormatId draw; densifies EXPLAIN/DUAL/SRL/SE | CII | Ban Generative Learning Score™ / AI≡generation / teach-for-XP / eight-menu bomb / verbatim summary theater |
+| **SAFE-ERRCLIMATE** *(provisional)* | Error climate > slogan; stay-diagnose-reattempt; destake learn / keep FEI; densifies MISCON/HELP/TALK/AAR | CIII | Ban Safety Score™ / poster safe-space / Bermuda-triangle / shame reel / praise-fog≡climate |
 | **Block → near-miss interleave → spaced mix** | Blocking = acquisition scaffold; delayed mixed accuracy = readiness signal | XXIX, XXXIX, LXXIV | Ban “shuffle = science”; ban blocked-accuracy vanity |
 | **Student-generated why** | Faded examples + structured principle/misconception prompts *before* AI wrap | XXVI, XL | Ban AI-monologue≡SE; ban explain-own-wrong-first default |
 | **Competitive wedge** | Do not out-content Khan, out-streak Duo, out-delight Brilliant, or out-fluency ChatGPT | XXXV, XX | Sell recoverable struggle + competence evidence + solo transfer |
@@ -287,7 +290,7 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 
 **Merged / demoted (do not treat as separate products):** “AI tutor,” “mastery path,” “growth mindset,” “engagement,” “grit,” “habit streak,” “celebrate mistakes,” “community of practice,” “deliberate practice brand,” “film study,” “recital,” “grandmaster review,” “exposure therapy,” “girl STEM brand,” “WTP survey,” “Identity Score™,” “8-week math person,” “character equity,” “knowledge-graph moat,” “emotion AI empathy,” “science-backed page count,” “Ivy tutor SKU,” “AI wrote N questions,” “FERPA-compliant badge,” “perfect-interval SRS,” “tutor headcount / retention-%,” “mastery fireworks / personal Ebbinghaus,” “FSRS/Anki brain optimizer,” “cram/bootcamp/+points packages,” “instant feedback AI / always-delay science,” “bridge-count / we connect everything,” “day-one personalized mastery / placement belt,” “every format / visual learning / Format Personality™,” “parent fireworks portal / Family Leaderboard / live wrong-answer stalk,” “immersive story world / lore engagement / Story Engagement Score™,” “user-count / star-wall / vague confidence testimonials as learning proof,” “item-count / complete ACT bank / AI fills all holes coverage theater,” “always-full-worked / unlimited solutions / never-fade Solver,” “unlimited hints / never stuck / Help Score™,” “DAU/streak/XP North Star / FEI Score™ / thumbs-up≡learning,” “unlimited free hard peeks / Hint Score™ / XP-for-hints / perfect-hint AI,” “longer≡better / Explanation Score™ / unlimited thorough AI essays / monologue≡SE,” “maximize productive struggle minutes / Struggle Score™ / blank-time grit / always-wait / never-stuck dump,” “fail-first always / every miss is productive failure / PF Score™ / discovery-without-consolidation,” “guild / master tutor / cognitive apprenticeship™ costume / Apprenticeship Score™ / modeling-minutes / never-fade coach,” “Focus Score™ / deep-work theater / phone-shame / mid-attempt streak pings / multitasking digital-native talent,” “Dual Coding Score™ / always-add-picture / decoration-as-dual-coding / visual-learner meshing / animation-first multimedia / split-legend density theater,” and “Monitoring Score™ / metacognition-without-control / easy-only calibration / one-scan calibration theater,” and “AI-replaces-tutors / tutoring-is-free / unlimited-human / hours-booked / Session ROI Score™ theater,” and “SRL Score™ / reflection-streak / survey-SRL≡event / streak≡self-regulation theater” are *not* independent North Stars — they are subordinate UX under FEI + the rows above (borrow *method*, never *costume*).
 
-**Next research bottleneck:** Part CIII **Error climate & psychological safety in tutoring**. Experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O/WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT/ONTO/HITL/PRIV/LABMETA/GRAIN/GENQ/PROCURE/SCHED/WORK/FORGET/ADAPT/CRAM/FB/BRIDGE/COLD/FORMAT/PDASH/TALK/STORYLOAD/PROOF/COVER/FADE/HELP/INSTR/HINT/EXPLAIN/RETRIEVE/PF/APPRENTICE/ATTN/DUAL/MONITOR/ROI/EXPTIME/SRL/GENACT gate claims above L1. Researcher count since v1.13 synthesizer = **3**.
+**Next research bottleneck:** Part CIV **Homework help vs practice identity conflict**. Experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O/WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT/ONTO/HITL/PRIV/LABMETA/GRAIN/GENQ/PROCURE/SCHED/WORK/FORGET/ADAPT/CRAM/FB/BRIDGE/COLD/FORMAT/PDASH/TALK/STORYLOAD/PROOF/COVER/FADE/HELP/INSTR/HINT/EXPLAIN/RETRIEVE/PF/APPRENTICE/ATTN/DUAL/MONITOR/ROI/EXPTIME/SRL/GENACT/ERRCLIM gate claims above L1. Researcher count since v1.13 synthesizer = **4**.
 
 ---
 
@@ -367,6 +370,7 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 
 | Date | Finding | Type | Action |
 |------|---------|------|--------|
+| 2026-08-08 | SAFE-ERRCLIMATE: stay-diagnose error climate in tutoring; kill Safety Score™ / Bermuda-triangle / praise-fog | Evidence | ERRCLIM-1…5; next = CIV homework vs practice identity |
 | 2026-08-08 | SAFE-GENERATE: SOI-forcing sparse GLAs in Practice; kill Generative Learning Score™ / AI≡generation / teach-for-XP | Evidence | GENACT-1…5; next = CIII error climate |
 | 2026-08-08 | SAFE-SRL: phase→control Zimmerman cycles in Practice; kill SRL Score™ / streak≡SRL / survey≡event | Evidence | SRL-1…5; next = CII generative learning |
 | 2026-08-08 | SAFE-EXPTIME: grain-local example↔solve timing; kill universal E0→E3 destiny / fixed≡adaptive / Timing Score™ | Evidence | EXPTIME-1…5; next = CI SRL cycles |
@@ -646,6 +650,7 @@ Core A–D remain. Chapter ticks densified them into families — prefer the den
 | EXPTIME-* | Fixed vs adaptive fade / concept vs concept×format initial stage / confidence→E vs probe→E / always-E0 vs always-E3 vs adaptive / parent CBC step-down help | C |
 | SRL-* | Forethought chips vs autopilot / attribution→plan writeback / microanalysis vs journal / process vs ability attribution UI / parent CBC plans-the-attempt | CI |
 | GENACT-* | Teach-fictive-peer vs solution-view / guided draw vs free vs provided / SOI summarize vs XP / sparse vs eight-menu / parent CBC generates-explanation | CII |
+| ERRCLIM-* | Stay-diagnose vs redirect / soft-wrong+Map vs praise-only / parent CBC diagnosed-mistakes / error-episode QA vs warmth NPS / public vs private error visibility | CIII |
 
 ---
 
@@ -908,6 +913,8 @@ Core A–D remain. Chapter ticks densified them into families — prefer the den
 **Surviving (provisional):** SAFE-SRL — Zimmerman forethought→performance→reflection with phase→control writeback; microanalysis>trait surveys; process attributions; densifies SAFE-MONITOR/AAR/ATTN/HELP; instrument SRL-* before SRL Score™ / streak≡SRL / metacognition-module ads (CI).
 
 **Surviving (provisional):** SAFE-GENERATE — SOI-forcing sparse generative asks; student produces (coach does not substitute); teach-back requires the explanation act; guided FormatId draw/map; densifies SAFE-EXPLAIN/DUAL/SRL/SE; instrument GENACT-* before Generative Learning Score™ / AI≡generation / eight-strategy ACT ads (CII).
+
+**Surviving (provisional):** SAFE-ERRCLIMATE — error climate > safety slogan; stay-diagnose-scaffold-reattempt; destake learning episodes without deleting FEI standards; adaptive action metrics over comfort surveys; densifies SAFE-MISCON/HELP/TALK/AAR/EXAM/PDASH; instrument ERRCLIM-* before Psychological Safety Score™ / poster safe-space / Bermuda-triangle / praise-fog ACT ads (CIII).
 
 ---
 
@@ -1307,6 +1314,7 @@ Principles that repeatedly change human behavior outside classrooms — filtered
 | `exptime_grain` | Concept×format×bridge grain used to set/recheck fade stage | SAFE-EXPTIME (C) |
 | `srl_phase_event` | Forethought / performance / reflection micro-event with control writeback | SAFE-SRL (CI) |
 | `gla_soi_event` | Sparse generative ask (summarize/teach/draw/map) with SOI quality gate | SAFE-GENERATE (CII) |
+| `error_episode_fidelity` | Tutor/coach stayed, diagnosed, scaffolded, required re-attempt after miss | SAFE-ERRCLIMATE (CIII) |
 | `fade_step_attempt` | Student-generated completion/SE before next worked unlock | SAFE-FADE attempt grain (LXXXVIII) |
 | `help_deliberate_ms` | Time on non-bottom hint level before next action | SAFE-HELP deliberate help (LXXXIX) |
 | `help_executive_race` | ≥2 hint-level advances under short dwell before bottom-out | SAFE-HELP abuse detect (LXXXIX) |
@@ -1430,6 +1438,7 @@ Ship changes that raise `retry_120s` and mastery-motive `challenge_accept` witho
 | SAFE-EXPTIME *(provisional)* | Grain-local example↔solve timing; adaptive>fixed; no universal E0→E3 / Timing Score™ (Part C) |
 | SAFE-SRL *(provisional)* | Phase→control SRL cycles; microanalysis>surveys; no SRL Score™ / streak≡SRL (Part CI) |
 | SAFE-GENERATE *(provisional)* | SOI-forcing sparse GLAs; no Generative Learning Score™ / AI≡generation / teach-for-XP (Part CII) |
+| SAFE-ERRCLIMATE *(provisional)* | Stay-diagnose error climate; no Safety Score™ / Bermuda-triangle / praise-fog (Part CIII) |
 
 ## Appendix B — Maya interview protocol (qual)
 
@@ -1536,8 +1545,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 3ap. Worked-example vs problem-solving timing across expertise — **DONE** Part C / SAFE-EXPTIME  
 3aq. Self-regulated learning cycles (Zimmerman) in Practice UX — **DONE** Part CI / SAFE-SRL  
 3ar. Generative learning activities (Fiorella/Mayer) in Practice — **DONE** Part CII / SAFE-GENERATE  
-3as. Error climate & psychological safety in tutoring — queued id 103 **NEXT**  
-3at. Homework help vs practice identity conflict — queued id 104  
+3as. Error climate & psychological safety in tutoring — **DONE** Part CIII / SAFE-ERRCLIMATE  
+3at. Homework help vs practice identity conflict — queued id 104 **NEXT**  
 3au. Gesture & embodiment in math practice — queued id 105  
 3av. Peer explanation quality (knowledge-building vs telling) — queued id 106  
 3aw. Curiosity & prediction before reveal — queued id 107  
@@ -1613,7 +1622,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 73. **DONE (2026-08-08):** Worked-example vs problem-solving timing across expertise (Part C / id 100) — SAFE-EXPTIME stack  
 74. **DONE (2026-08-08):** Self-regulated learning cycles in Practice UX (Part CI / id 101) — SAFE-SRL stack  
 75. **DONE (2026-08-08):** Generative learning activities in Practice (Part CII / id 102) — SAFE-GENERATE stack  
-76. **NEXT:** Error climate & psychological safety in tutoring (Part CIII / id 103)
+76. **DONE (2026-08-08):** Error climate & psychological safety in tutoring (Part CIII / id 103) — SAFE-ERRCLIMATE stack  
+77. **NEXT:** Homework help vs practice identity conflict (Part CIV / id 104)
 
 ---
 
@@ -1647,4 +1657,4 @@ MindCraft’s deepest risk is not technical failure. It is **winning the wrong g
 
 This Constitution exists so the company notices that risk early, and runs experiments that can kill beloved ideas.
 
-**v1.13 synthesizer pass folded Parts XCII–XCIX into surviving commercial doctrine (I.4 rows SAFE-EXPLAIN through SAFE-ROI; Red Team kills #46–#53 promoted from provisional). Experiment families EXPLAIN/RETRIEVE/PF/APPRENTICE/ATTN/DUAL/MONITOR/ROI confirmed mounted. Parts C–CII landed as provisional densifiers (SAFE-EXPTIME / SAFE-SRL / SAFE-GENERATE). Next researcher id: CIII error climate & psychological safety. Researcher count since v1.13 = 3. Page count is not the finish line — falsifiable truth is.**
+**v1.13 synthesizer pass folded Parts XCII–XCIX into surviving commercial doctrine (I.4 rows SAFE-EXPLAIN through SAFE-ROI; Red Team kills #46–#53 promoted from provisional). Experiment families EXPLAIN/RETRIEVE/PF/APPRENTICE/ATTN/DUAL/MONITOR/ROI confirmed mounted. Parts C–CIII landed as provisional densifiers (SAFE-EXPTIME / SAFE-SRL / SAFE-GENERATE / SAFE-ERRCLIMATE). Next researcher id: CIV homework help vs practice identity. Researcher count since v1.13 = 4. Page count is not the finish line — falsifiable truth is.**

@@ -4,6 +4,25 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-08 — Researcher tick: Part CIII Error climate & psychological safety in tutoring (SAFE-ERRCLIMATE)
+
+**Tick type:** Researcher (UTC hour 9; hour%6≠0; researcher count since synthesizer v1.13 = 3 → Researcher)  
+**Chapter written:** `chapters/103_error_climate_psychological_safety_tutoring.md` (Part CIII)  
+**Claim examined:** Whether MindCraft should ship observable error-climate behaviors (stay-diagnose-scaffold-reattempt; destake learning / keep FEI standards) vs Psychological Safety Score™ / poster “safe space” / Bermuda-triangle redirect / praise-fog AI.
+
+**Doctrine proposed (provisional):** **SAFE-ERRCLIMATE** — error climate > safety slogan; stay with the erring student; destake learning episodes without deleting standards; adaptive action metrics over comfort surveys; corrective diagnosis required; tutor QA on error episodes; private repair (no shame reel); densifies SAFE-MISCON / SAFE-HELP / SAFE-TALK / SAFE-AAR / SAFE-EXAM / SAFE-PDASH; no Safety Score™ / safe-space ACT ads.
+
+**Evidence spine (verified citations):** Edmondson (1999) team psychological safety; Steuer, Rosentritt-Brunn & Dresel (2013) math error climate facets; Dresel et al. (2024) 2-year buffering longitudinal; Tulis (2013) teacher error management; Soncini, Matteucci & Butera (2021) experimental handling→climate; Soncini et al. (2022) climate→grades via adaptive reactions; Metcalfe (2017) errorful+feedback review.
+
+**Claim killed (this tick):** Psychological Safety Score™ / Comfort % / poster-only safe space / Bermuda-triangle redirect / shame reel / praise-fog≡climate / destake≡no-standards / climate-branded ACT guarantees (provisional kill #57 until synthesizer).
+
+**Experiments:** ERRCLIM-1…5 + ERRCLIM-QUAL.
+
+**Next researcher id:** **104** (homework help vs practice identity conflict). Researcher count since v1.13 synthesizer: **4**.
+
+**PDF:** Regenerate after this tick.
+
+---
 ## 2026-08-08 — Researcher tick: Part CII Generative learning activities in Practice (SAFE-GENERATE)
 
 **Tick type:** Researcher (UTC hour 6 ≡ Red Team slot, but ch102 never written → prefer Researcher per rotation; researcher count since synthesizer v1.13 = 2 → Researcher)  
