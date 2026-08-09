@@ -4,6 +4,34 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-09 — Synthesizer tick v1.14: merge Parts C–CVII
+
+**Tick type:** Synthesizer (UTC hour 3; hour%6≠0; ≥8 researcher entries since synthesizer v1.13 → Synthesizer)  
+**Chapter written:** none (merge pass only)  
+**Files revised:** `MINDCRAFT_RESEARCH_CONSTITUTION_v1.md` (edition/header / I.2 / I.4 / III / IX / XIV / XX / XXI / XXII glossary / Appendix F / closing); `NEXT_LAB.md`; this log; PDF regen.
+
+**Doctrine promoted to I.4 company law (provisional tags removed):**
+- SAFE-EXPTIME (C) — grain-local example↔solve timing; adaptive>fixed; no Example Timing Score™
+- SAFE-SRL (CI) — phase→control Zimmerman cycles; microanalysis>surveys; no SRL Score™ / streak≡SRL
+- SAFE-GENERATE (CII) — SOI-forcing sparse GLAs; student produces; no Generative Learning Score™ / AI≡generation
+- SAFE-ERRCLIMATE (CIII) — stay-diagnose error climate under FEI; no Safety Score™ / Bermuda-triangle
+- SAFE-HWHELP (CIV) — dual-rail Help vs Practice; assisted≠solo; no Completion Score™ / Chegg-dump
+- SAFE-GESTURE (CV) — strategy-tied optional gesture/draw; no Embodiment Score™ / pose-camera
+- SAFE-PEERX (CVI) — building-gated teach-back + solo proof; no Peer Explanation Score™ / Discord≡building
+- SAFE-PREDICT (CVII) — commit→surprise→encode; no Curiosity Score™ / cliffhanger-without-commit
+
+**Red Team kills promoted:** #54–#61 (from provisional chapter kills → v1.14 company dossier).
+
+**Experiment families confirmed in Part IX:** EXPTIME / SRL / GENACT / ERRCLIM / HWHELP / GESTURE / PEERX / PREDICT.
+
+**Claim killed (synthesis):** Treating C–CVII as orphan provisional deep-dives or independent North Stars (Example Timing Score™ / universal E0→E3, SRL Score™ / reflection-streak, Generative Learning Score™ / AI≡generation, Psychological Safety Score™ / Bermuda-triangle, Homework Completion Score™ / Chegg-dump, Embodiment Score™ / pose-camera, Peer Explanation Score™ / Discord≡building, Curiosity Score™ / cliffhanger-without-commit) — demoted under FEI + SAFE-* method-not-costume rule.
+
+**Next researcher id:** **108** (analogical reasoning & bridge teaching). Researcher count since v1.14 synthesizer: **0**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-09 — Researcher tick: Part CVII Curiosity & prediction before reveal (SAFE-PREDICT)
 
 **Tick type:** Researcher (UTC hour 0 ≡ Red Team slot, but ch107 never written → prefer Researcher per rotation; researcher count since synthesizer v1.13 = 7 → Researcher)  
