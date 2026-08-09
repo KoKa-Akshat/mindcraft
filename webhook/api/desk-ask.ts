@@ -41,6 +41,53 @@ interface DeskContext {
   openSurface?: 'desk' | 'gmail' | 'applyToday'
 }
 
+/** Connector combinations unlock concrete desk workflows. */
+function workflowSuggestions(ctx: DeskContext): { id: string; title: string; why: string; actions: DeskActionType[] }[] {
+  const set = new Set((ctx.connected || []).map((c) => String(c).toLowerCase()))
+  const out: { id: string; title: string; why: string; actions: DeskActionType[] }[] = []
+  if (set.has('gcal') || set.has('gmail')) {
+    out.push({
+      id: 'organize_week',
+      title: 'Organize this week',
+      why: 'Use Calendar (+ Gmail dues) to rank tonight todos',
+      actions: ['refresh_calendar', 'prepend_intel'],
+    })
+  }
+  if (set.has('gmail')) {
+    out.push({
+      id: 'inbox_to_intel',
+      title: 'Skim inbox into intel',
+      why: 'Pull priority mail into intel, then reply from the Gmail box',
+      actions: ['open_gmail', 'prepend_intel'],
+    })
+  }
+  if (set.has('gmail') || set.has('gcal')) {
+    out.push({
+      id: 'apply_today',
+      title: 'Kickstart Apply today',
+      why: 'Attach mail/calendar context to the resume workflow and look for roles',
+      actions: ['open_apply', 'prepend_intel'],
+    })
+  }
+  if (set.has('moodle')) {
+    out.push({
+      id: 'moodle_to_binder',
+      title: 'File Moodle into Binder',
+      why: 'Drop course files into Binder so Ask can cite them later',
+      actions: ['open_connect', 'prepend_intel'],
+    })
+  }
+  if (!out.length) {
+    out.push({
+      id: 'link_first',
+      title: 'Link a connector first',
+      why: 'Connect Gmail, Calendar, or Moodle so Ask can start workflows',
+      actions: ['open_connect'],
+    })
+  }
+  return out
+}
+
 interface DeskAskBody {
   message?: string
   studentId?: string
@@ -54,20 +101,27 @@ function deskConversationId(studentId: string): string {
 function buildSystemPrompt(): string {
   return `You are the MindCraft Desk Operator. Students ask you from Ask MindCraft on Field Desk / Dash.
 
-Personality: calm, practical, short. Help them run their desk (calendar, mail, connect, apply, binder, intel).
+Personality: calm, practical, short. Help them run their desk (calendar, mail, connect, apply, binder, intel, Moodle).
 Never use em dashes. Never say you are an AI.
 Keep replies to 1-3 short sentences.
 When you use desk facts, say where they came from (from your calendar, from intel, from binder).
 
+How MindCraft works:
+- Connectors (Gmail, Calendar, Moodle) are enablers.
+- Once linked, you recommend and kickstart workflows across cards: intel, calendar, memo, binder, mail, Apply today.
+- Combining connectors creates richer workflows (example: Calendar + Gmail → organize dues; Gmail + Apply today → look for jobs).
+
 Tools:
-- read_desk_context: inspect the student's current desk snapshot before answering about week, binder, or intel.
-- propose_action: open Gmail, Apply today, Connect, or refresh calendar. Use when the student asks to open or check those surfaces.
+- read_desk_context: inspect the student desk snapshot (including connected tools).
+- recommend_workflow: pick the best next workflow from linked connectors, file a short intel tip, and optionally open the right surface.
+- propose_action: open Gmail, Apply today, Connect, or refresh calendar.
 - note_for_intel: file one short useful line into intel.
 
 Rules:
 - Do not invent emails, binder files, or calendar events that are not in desk context.
 - Never send mail or mark job applications done.
-- If the week is empty, say so clearly and suggest Connect Gmail + Calendar.
+- If few connectors are linked, recommend which one to connect next and why.
+- Prefer recommend_workflow when the student asks what to do, how to organize, or how to use linked tools.
 - Prefer actions over long instructions when the student wants to open something.`
 }
 
@@ -101,6 +155,25 @@ const TOOLS: Anthropic.Messages.Tool[] = [
     },
   },
   {
+    name: 'recommend_workflow',
+    description:
+      'Recommend a workflow based on linked connectors (Gmail, Calendar, Moodle). Files an intel tip and can open Apply/Gmail/Calendar/Connect.',
+    input_schema: {
+      type: 'object',
+      properties: {
+        workflowId: {
+          type: 'string',
+          enum: ['organize_week', 'inbox_to_intel', 'apply_today', 'moodle_to_binder', 'link_first'],
+        },
+        openSurface: {
+          type: 'boolean',
+          description: 'If true, also open the primary surface for that workflow',
+        },
+      },
+      required: ['workflowId'],
+    },
+  },
+  {
     name: 'note_for_intel',
     description: 'File one short line into the student intel card.',
     input_schema: {
@@ -125,11 +198,12 @@ function sliceContext(ctx: DeskContext, focus = 'all') {
   }))
   const connected = (ctx.connected || []).slice(0, 12).map(String)
 
+  const workflows = workflowSuggestions(ctx)
   if (focus === 'calendar') return { calendar }
   if (focus === 'intel') return { intel }
   if (focus === 'binder') return { binder }
-  if (focus === 'connected') return { connected, openSurface: ctx.openSurface || 'desk' }
-  return { intel, binder, calendar, connected, openSurface: ctx.openSurface || 'desk' }
+  if (focus === 'connected') return { connected, openSurface: ctx.openSurface || 'desk', workflows }
+  return { intel, binder, calendar, connected, openSurface: ctx.openSurface || 'desk', workflows }
 }
 
 function keywordFallback(message: string, ctx: DeskContext): { reply: string; actions: DeskAction[] } {
@@ -164,8 +238,16 @@ function keywordFallback(message: string, ctx: DeskContext): { reply: string; ac
   if (intel.length && /intel|note|memo|what did/.test(s)) {
     return { reply: `From intel: ${intel.join(' · ')}.`, actions }
   }
+  if (/workflow|organize|what should|recommend|next|job|todo/.test(s)) {
+    const pick = workflowSuggestions(ctx)[0]
+    actions.push({ type: 'prepend_intel', payload: `Agent · ${pick.title}: ${pick.why}`.slice(0, 120) })
+    for (const a of pick.actions) {
+      if (a !== 'prepend_intel') actions.push({ type: a })
+    }
+    return { reply: `${pick.title}. ${pick.why}.`, actions }
+  }
   return {
-    reply: 'I heard you. Try ask about your week, open mail, or Apply today.',
+    reply: 'I heard you. Ask what to do next, organize your week, or open mail.',
     actions,
   }
 }
@@ -208,6 +290,19 @@ async function runDeskLoop(
 
         if (block.name === 'read_desk_context') {
           result = JSON.stringify(sliceContext(ctx, String(input.focus || 'all')))
+        } else if (block.name === 'recommend_workflow') {
+          const suggestions = workflowSuggestions(ctx)
+          const wanted = String(input.workflowId || '')
+          const pick = suggestions.find((w) => w.id === wanted) || suggestions[0]
+          const openSurface = Boolean(input.openSurface)
+          const tip = `Agent · ${pick.title}: ${pick.why}`.slice(0, 120)
+          actions.push({ type: 'prepend_intel', payload: tip })
+          if (openSurface) {
+            for (const a of pick.actions) {
+              if (a !== 'prepend_intel') actions.push({ type: a })
+            }
+          }
+          result = JSON.stringify({ ok: true, workflow: pick, tip, suggestions })
         } else if (block.name === 'propose_action') {
           const type = String(input.type || '') as DeskActionType
           const allowed: DeskActionType[] = [
