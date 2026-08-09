@@ -4,6 +4,28 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-09 — Researcher tick: Part CXI Formative assessment cycles in tutor sessions (SAFE-FA)
+
+**Tick type:** Researcher (UTC hour 15; hour%6≠0; researcher count since synthesizer v1.14 = 3 → Researcher)  
+**Chapter written:** `chapters/111_formative_assessment_cycles_tutor_sessions.md` (Part CXI)  
+**Claim examined:** Whether MindCraft should operationalize formative assessment as evidence→adjust→close-gap cycles in tutor sessions / Practice wraps vs Formative Score™ / exit-ticket theater / Black–Wiliam 0.4–0.7 legend ads.
+
+**Doctrine proposed (provisional):** **SAFE-FA** — process not badge; no legend σ; Sadler completeness (standard+compare+act); domain-specific cycles; feedback that moves; exit tickets only if wired; FEI over Formative Score™; HITL fidelity; no Formative Score™ / Assessment Minutes / ticket≡learning / 0.4–0.7 ads / quiz-volume≡formative / gradebook cosplay / AfL ACT guarantees. Experiment family **FA-*** (distinct from MONITOR-* and FBTIME-*).
+
+**Evidence spine (verified citations):** Black & Wiliam (1998a Assessment in Education; 1998b PDK); Wiliam (2011 Embedded Formative Assessment); Sadler (1989); Kingston & Nash (2011); Briggs et al. (2012); Bennett (2011); Hattie & Timperley (2007); Wisniewski/Zierer/Hattie (2020).
+
+**Claim killed (this tick):** Formative Score™ / Assessment Minutes NS / exit-ticket≡learning / Black–Wiliam 0.4–0.7 product ads / more-quizzes≡formative / gradebook cosplay / “got it?”≡closed cycle / AfL ACT guarantees (provisional kill #65 until synthesizer).
+
+**Experiments:** FA-1…5 + FA-QUAL.
+
+**Queue hygiene:** Invented stubs 114–116 into NEXT_LAB (unfinished would otherwise drop below 3 after completing 111).
+
+**Next researcher id:** **112** (feedback literacy). Researcher count since v1.14 synthesizer: **4**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-09 — Researcher tick: Part CX Spatial skills & math identity (SAFE-SPATIAL)
 
 **Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch110 never written → prefer Researcher per rotation; researcher count since synthesizer v1.14 = 2 → Researcher)  

@@ -4,7 +4,7 @@
 **Edition:** v1.14 (Synthesizer consolidation of Parts C–CVII into surviving doctrine)  
 **Research question:** How do humans become *confident mathematical thinkers*?  
 **Product thesis under audit:** The product is identity transformation, not mathematics delivery.  
-**Last updated:** 2026-08-09 (Researcher — Part CX SAFE-SPATIAL provisional)  
+**Last updated:** 2026-08-09 (Researcher — Part CXI SAFE-FA provisional)  
 **Growth model:** Core OS (this file) + `chapters/*.md` via `CHAPTER_MANIFEST.txt` → PDF  
 **Scale intent:** Multi-month densification toward 150–300 pages of *evidenced* material — never fluff  
 **Epistemic rule:** Every claim is labeled FACT / HYPOTHESIS / FOUNDER BELIEF / SPECULATION.
@@ -100,8 +100,9 @@
 | CVIII | `chapters/108_analogical_reasoning_bridge_teaching.md` | Analogical reasoning & bridge teaching; SAFE-ANALOG (provisional); structure-map joins |
 | CIX | `chapters/109_writing_to_learn_math_practice.md` | Writing-to-learn in math practice; SAFE-WRITE (provisional); Notes/protocol chips |
 | CX | `chapters/110_spatial_skills_math_identity.md` | Spatial skills & math identity; SAFE-SPATIAL (provisional); FormatId hops |
+| CXI | `chapters/111_formative_assessment_cycles_tutor_sessions.md` | Formative assessment cycles; SAFE-FA (provisional); exit tickets vs FEI |
 
-Queued next: see `NEXT_LAB.md` (Part CXI formative assessment, then 112+).
+Queued next: see `NEXT_LAB.md` (Part CXII feedback literacy, then 113+).
 
 **Synthesizer note (v1.14):** Eight researcher chapters (C–CVII) landed after v1.13 as provisional I.4 appends — worked-example timing across expertise, Zimmerman SRL cycles, generative learning activities, error climate / psychological safety, homework-help vs practice identity, gesture/embodiment, peer explanation quality, and curiosity/prediction-before-reveal. This edition promotes each stack to company law (removes provisional tags), formalizes Red Team kills #54–#61, confirms EXPTIME/SRL/GENACT/ERRCLIM/HWHELP/GESTURE/PEERX/PREDICT experiment families in Part IX, and refreshes metrics/glossary/competitive implication. Deep-dive files remain authoritative for citations; the OS keeps only *surviving* product rules.
 
@@ -204,6 +205,7 @@ Explanations alone rarely produce (1)–(3). Fluent AI explanations can *acceler
 | Analogy Score™ / Mapping Minutes / mention≡pedagogy / surface-story≡structure / AI likeness dump | **KILLED** *(provisional)* | SAFE-ANALOG (CVIII); co-present structure-map + student alignment |
 | Writing Score™ / Journal Minutes / freewrite≡learning / longer≡deeper / AI rewrite≡WTL | **KILLED** *(provisional)* | SAFE-WRITE (CIX); short prompted cognitive+metacognitive protocols + FEI |
 | Spatial Score™ / Mental Rotation Minutes / brain-training≡identity / boys-better spatial / Spatial Personality™ | **KILLED** *(provisional)* | SAFE-SPATIAL (CX); FormatId-embedded hops + conditional transfer |
+| Formative Score™ / Assessment Minutes / exit-ticket≡learning / 0.4–0.7 AfL ads | **KILLED** *(provisional)* | SAFE-FA (CXI); evidence→adjust cycles + FEI |
 
 **Implication:** Do not bet on “better explanations,” graph-file cosplay, warm-tutor theater, emotion cameras, page-count science, Ivy hire theater, unverified AI banks, FERPA-badge GTM, expanding-SRS mystique, headcount vanity, mastery fireworks, FSRS brand, cram packages, instant-feedback theater, bridge-count ads, day-one greens, format-count cosplay, parent surveillance portals, Talk Ratio theater, immersive lore-as-pedagogy, star-wall / user-count learning proof, item-count / complete-ACT coverage theater, always-full-worked / unlimited-solutions Solver theater, unlimited-hints / never-stuck answer-dump theater, DAU/streak/XP / FEI Score™ dashboard theater, unlimited free hard peeks / Hint Score™ theater, longer≡better / unlimited thorough AI essay theater, struggle-theater / blank-time / always-wait / instant-dump stall UX, fail-first / every-miss-as-PF / discovery-without-consolidation cosplay, guild / master-tutor / modeling-as-lecture / never-fade apprenticeship costume, Focus Score™ / phone-shame / mid-attempt notification-growth theater, or Monitoring Score™ / metacognition-without-control / one-scan calibration theater, or AI-replaces-tutors / tutoring-is-free / unlimited-human / hours-booked / Session ROI Score™ theater, or Example Timing Score™ / universal E0→E3 / fixed≡adaptive fade costume, or SRL Score™ / reflection-streak / survey≡event theater, or Generative Learning Score™ / AI≡generation / teach-for-XP theater, or Psychological Safety Score™ / Bermuda-triangle / praise-fog climate theater, or Homework Completion Score™ / Chegg-dump / assisted≡ready theater, or Embodiment Score™ / styles meshing / pose-camera theater, or Peer Explanation Score™ / Discord≡building / AI≡peer teaching theater, or Curiosity Score™ / cliffhanger-without-commit / postdiction / guess-for-XP theater. Bet on **FEI + pedagogy wrap + SAFE-* stack**: fear→evidence→identity, with inspectable diagnosis, Map-briefed humans, privacy-bound affect, verified keys, blueprint-honest coverage matrices, district trust packets, honest spaced returns, fidelity-over-tenure ops, time-honest MoC, dual-rail durable GTM, load-honest story wrap, witnessable dated solo competence artifacts, guidance that fades as the student proves the join, instrumental help that still demands construction, instrumented `retry_120s` / motive-coded `challenge_accept` / `transfer_pass` / `solo_transfer_pass` under XXI.4 co-gates, contingent soft→hard peeks priced in construction effort, length-contingent principle coaches that leave room to think, mode-contingent retrieval support (TOT cue vs freeze scaffold) without Struggle Score™, fidelity-gated productive-failure missions (generate then consolidate on student RSMs) only when priors and affect allow, tutor/coach cognitive-apprenticeship phases (model→coach→fade + articulation) logged for fidelity rather than guild branding, and attempt windows protected from residue and device tax rather than Focus Score™ costume.
 
@@ -304,6 +306,7 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 | **SAFE-ANALOG** *(provisional)* | Structure-map joins; co-present compare; student alignment; supports required; densifies BRIDGE/TRANSFER/DUAL | CVIII | Ban Analogy Score™ / mention≡pedagogy / surface-story≡structure / AI likeness dump / always-analogy |
 | **SAFE-WRITE** *(provisional)* | Short prompted WTL; cognitive+metacognitive protocols; Notes dual-rail; AI cues not authors; densifies GENERATE/SE/SRL | CIX | Ban Writing Score™ / Journal Minutes / freewrite≡learning / longer≡deeper / AI≡WTL / always-journal |
 | **SAFE-SPATIAL** *(provisional)* | Spatial via FormatId hops; conditional transfer; destake spatial anxiety; densifies FORMAT/DUAL/GESTURE/GENDER | CX | Ban Spatial Score™ / Mental Rotation Minutes / brain-training≡identity / boys-better / Spatial Personality™ |
+| **SAFE-FA** *(provisional)* | Formative cycles: evidence→adjust→close gap; exit tickets only if wired; densifies HITL/AAR/FBTIME/SRL | CXI | Ban Formative Score™ / Assessment Minutes / ticket≡learning / 0.4–0.7 ads |
 | **Block → near-miss interleave → spaced mix** | Blocking = acquisition scaffold; delayed mixed accuracy = readiness signal | XXIX, XXXIX, LXXIV | Ban “shuffle = science”; ban blocked-accuracy vanity |
 | **Student-generated why** | Faded examples + structured principle/misconception prompts *before* AI wrap | XXVI, XL | Ban AI-monologue≡SE; ban explain-own-wrong-first default |
 | **Competitive wedge** | Do not out-content Khan, out-streak Duo, out-delight Brilliant, or out-fluency ChatGPT | XXXV, XX | Sell recoverable struggle + competence evidence + solo transfer |
@@ -393,6 +396,7 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 |------|---------|------|--------|
 | 2026-08-09 | SAFE-WRITE: short prompted WTL protocols; kill Writing Score™ / Journal Minutes / freewrite≡learning / AI≡WTL | Evidence | WRITE-1…5; next = CX spatial skills |
 | 2026-08-09 | SAFE-SPATIAL: FormatId-embedded spatial hops; kill Spatial Score™ / Mental Rotation Minutes / brain-training≡identity | Evidence | SPATIAL-1…5; next = CXI formative assessment |
+| 2026-08-09 | SAFE-FA: formative cycles not AfL badge; kill Formative Score™ / 0.4–0.7 legend ads | Evidence | FA-1…5; next = CXII feedback literacy |
 | 2026-08-09 | SAFE-ANALOG: structure-map joins; kill Analogy Score™ / mention≡pedagogy / surface-story≡structure / AI likeness dump | Evidence | ANALOG-1…5; next = CIX writing-to-learn |
 | 2026-08-09 | Synthesizer v1.14: merge C–CVII SAFE-* into I.4; kills #54–#61 | Synthesis | Surviving commercial law; next = CVIII analogical bridges |
 | 2026-08-09 | SAFE-PREDICT: commit before reveal; kill Curiosity Score™ / cliffhanger-without-commit / postdiction / guess-for-XP | Evidence | PREDICT-1…5; next = CVIII analogical bridges (Synthesizer eligible) |
@@ -981,6 +985,8 @@ Core A–D remain. Chapter ticks densified them into families — prefer the den
 
 **Surviving (provisional):** SAFE-SPATIAL — FormatId-embedded spatial competence; conditional transfer (meta g≈.28 + nulls); destake spatial anxiety; densifies SAFE-FORMAT/DUAL/GESTURE/TRANSFER/GENDER; instrument SPATIAL-* before Spatial Score™ / Mental Rotation Minutes / brain-training≡identity / boys-better / Spatial Personality™ / spatial ACT ads (CX).
 
+**Surviving (provisional):** SAFE-FA — formative-as-process (Black & Wiliam / Wiliam 2011); Sadler gap-closing; no 0.4–0.7 product legend (Kingston & Nash; Bennett; Briggs et al.); exit tickets only if wired to next move; FEI over Formative Score™; densifies SAFE-HITL/AAR/FBTIME/MONITOR/SRL/INSTRUMENT; instrument FA-* before AfL marketing (CXI).
+
 ---
 
 # Part XV — References (verified starting set)
@@ -1423,6 +1429,8 @@ Principles that repeatedly change human behavior outside classrooms — filtered
 | `write_student_authored` | Explanation draft authored by student (not AI-substituted) | SAFE-WRITE authorship (CIX) |
 | `spatial_format_hop_ok` | Delayed diagram/graph/number_line hop after remediation | SAFE-SPATIAL format hop (CX) |
 | `spatial_embed_not_arcade` | Spatial practice tied to concept/FormatId (not isolated rotation gym) | SAFE-SPATIAL embed (CX) |
+| `fa_cycle_closed` | In-session evidence led to a named next attempt (Sadler act) | SAFE-FA cycle (CXI) |
+| `exit_ticket_wired` | Wrap item changed Map/mission (not XP-only) | SAFE-FA exit wire (CXI) |
 
 ## XXI.3 Lagging indicators
 
@@ -1531,6 +1539,7 @@ Ship changes that raise `retry_120s` and mastery-motive `challenge_accept` witho
 | SAFE-ANALOG *(provisional)* | Structure-map joins; co-present compare; no Analogy Score™ / mention≡pedagogy / surface-story≡structure (Part CVIII) |
 | SAFE-WRITE *(provisional)* | Short prompted WTL protocols; no Writing Score™ / Journal Minutes / freewrite≡learning / AI≡WTL (Part CIX) |
 | SAFE-SPATIAL *(provisional)* | FormatId-embedded spatial hops; no Spatial Score™ / Mental Rotation Minutes / brain-training≡identity (Part CX) |
+| SAFE-FA *(provisional)* | Evidence→adjust cycles; no Formative Score™ / Assessment Minutes / 0.4–0.7 AfL ads (Part CXI) |
 
 ## Appendix B — Maya interview protocol (qual)
 
@@ -1645,6 +1654,7 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 3ax. Analogical reasoning & bridge teaching — **DONE** Part CVIII / SAFE-ANALOG  
 3ay. Writing-to-learn in math practice — **DONE** Part CIX / SAFE-WRITE  
 3az. Spatial skills & math identity — **DONE** Part CX / SAFE-SPATIAL  
+3ba. Formative assessment cycles in tutor sessions — **DONE** Part CXI / SAFE-FA  
 3ba. Formative assessment cycles in tutor sessions — queued id 111 **NEXT**  
 3bb. Feedback literacy (coach feedback uptake) — queued id 112  
 3bc. Collaborative problem-solving vs solo FEI — queued id 113  
@@ -1729,6 +1739,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 82. **DONE (2026-08-09):** Analogical reasoning & bridge teaching (Part CVIII / id 108) — SAFE-ANALOG stack  
 83. **DONE (2026-08-09):** Writing-to-learn in math practice (Part CIX / id 109) — SAFE-WRITE stack  
 84. **DONE (2026-08-09):** Spatial skills & math identity (Part CX / id 110) — SAFE-SPATIAL stack  
+85. **DONE (2026-08-09):** Formative assessment cycles in tutor sessions (Part CXI / id 111) — SAFE-FA stack  
+86. **NEXT:** Feedback literacy — how students use coach feedback (id 112)  
 85. **NEXT:** Formative assessment cycles in tutor sessions (Part CXI / id 111)
 
 ---
@@ -1763,4 +1775,4 @@ MindCraft’s deepest risk is not technical failure. It is **winning the wrong g
 
 This Constitution exists so the company notices that risk early, and runs experiments that can kill beloved ideas.
 
-**v1.14 synthesizer pass folded Parts C–CVII into surviving commercial doctrine (I.4 rows SAFE-EXPTIME through SAFE-PREDICT; Red Team kills #54–#61 promoted from provisional). Experiment families EXPTIME/SRL/GENACT/ERRCLIM/HWHELP/GESTURE/PEERX/PREDICT confirmed mounted. Parts CVIII–CX landed as provisional densifiers (SAFE-ANALOG, SAFE-WRITE, SAFE-SPATIAL). Next researcher id: CXI formative assessment. Researcher count since v1.14 = 3. Page count is not the finish line — falsifiable truth is.**
+**v1.14 synthesizer pass folded Parts C–CVII into surviving commercial doctrine (I.4 rows SAFE-EXPTIME through SAFE-PREDICT; Red Team kills #54–#61 promoted from provisional). Experiment families EXPTIME/SRL/GENACT/ERRCLIM/HWHELP/GESTURE/PEERX/PREDICT confirmed mounted. Parts CVIII–CXI landed as provisional densifiers (SAFE-ANALOG, SAFE-WRITE, SAFE-SPATIAL, SAFE-FA). Next researcher id: CXII feedback literacy. Researcher count since v1.14 = 4. Page count is not the finish line — falsifiable truth is.**
