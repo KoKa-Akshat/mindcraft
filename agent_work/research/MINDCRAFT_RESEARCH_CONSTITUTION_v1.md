@@ -96,8 +96,9 @@
 | CIV | `chapters/104_homework_help_vs_practice_identity.md` | Homework help vs practice identity; SAFE-HWHELP (provisional); dual-rail Solver/Practice |
 | CV | `chapters/105_gesture_embodiment_math_practice.md` | Gesture & embodiment in math practice; SAFE-GESTURE (provisional); strategy-tied optional motion |
 | CVI | `chapters/106_peer_explanation_quality_knowledge_building.md` | Peer explanation quality; SAFE-PEERX (provisional); knowledge-building vs telling |
+| CVII | `chapters/107_curiosity_prediction_before_reveal.md` | Curiosity & prediction before reveal; SAFE-PREDICT (provisional); commit→surprise→encode |
 
-Queued next: see `NEXT_LAB.md` (Part CVII curiosity & prediction, then 108+).
+Queued next: see `NEXT_LAB.md` (Part CVIII analogical bridges, then 109+).
 
 **Synthesizer note (v1.13):** Eight researcher chapters (XCII–XCIX) landed after v1.12 as provisional I.4 appends — explanation length vs germane load, retrieval failure modes, productive failure sequencing, cognitive apprenticeship playbooks, attention residue / device distraction, dual coding × FormatId, metacognitive monitoring in gap-scan, and tutor-minute vs AI ROI. This edition promotes each stack to company law (removes provisional tags), formalizes Red Team kills #46–#53, confirms EXPLAIN/RETRIEVE/PF/APPRENTICE/ATTN/DUAL/MONITOR/ROI experiment families in Part IX, and refreshes metrics/glossary/competitive implication. Deep-dive files remain authoritative for citations; the OS keeps only *surviving* product rules.
 
@@ -196,6 +197,7 @@ Explanations alone rarely produce (1)–(3). Fluent AI explanations can *acceler
 | Homework Completion Score™ / tonight-% / Chegg-dump / assisted≡ready / purity-ban help | **KILLED** *(provisional)* | SAFE-HWHELP (CIV); dual-rail instrumental help + solo proof |
 | Embodiment Score™ / styles meshing / always-gesture / action≡gesture / pose-camera AI | **KILLED** *(provisional)* | SAFE-GESTURE (CV); strategy-tied optional motion + transfer proof |
 | Peer Explanation Score™ / teach-for-XP / telling≡quality / Discord≡building / AI≡peer teaching | **KILLED** *(provisional)* | SAFE-PEERX (CVI); building-gated teach-back + solo proof |
+| Curiosity Score™ / cliffhanger-without-commit / postdiction / instant-reveal entertainment | **KILLED** *(provisional)* | SAFE-PREDICT (CVII); commit→surprise→encode repair |
 
 **Implication:** Do not bet on “better explanations,” graph-file cosplay, warm-tutor theater, emotion cameras, page-count science, Ivy hire theater, unverified AI banks, FERPA-badge GTM, expanding-SRS mystique, headcount vanity, mastery fireworks, FSRS brand, cram packages, instant-feedback theater, bridge-count ads, day-one greens, format-count cosplay, parent surveillance portals, Talk Ratio theater, immersive lore-as-pedagogy, star-wall / user-count learning proof, item-count / complete-ACT coverage theater, always-full-worked / unlimited-solutions Solver theater, unlimited-hints / never-stuck answer-dump theater, DAU/streak/XP / FEI Score™ dashboard theater, unlimited free hard peeks / Hint Score™ theater, longer≡better / unlimited thorough AI essay theater, struggle-theater / blank-time / always-wait / instant-dump stall UX, fail-first / every-miss-as-PF / discovery-without-consolidation cosplay, guild / master-tutor / modeling-as-lecture / never-fade apprenticeship costume, Focus Score™ / phone-shame / mid-attempt notification-growth theater, or Monitoring Score™ / metacognition-without-control / one-scan calibration theater, or AI-replaces-tutors / tutoring-is-free / unlimited-human / hours-booked / Session ROI Score™ theater. Bet on **FEI + pedagogy wrap + SAFE-* stack**: fear→evidence→identity, with inspectable diagnosis, Map-briefed humans, privacy-bound affect, verified keys, blueprint-honest coverage matrices, district trust packets, honest spaced returns, fidelity-over-tenure ops, time-honest MoC, dual-rail durable GTM, load-honest story wrap, witnessable dated solo competence artifacts, guidance that fades as the student proves the join, instrumental help that still demands construction, instrumented `retry_120s` / motive-coded `challenge_accept` / `transfer_pass` / `solo_transfer_pass` under XXI.4 co-gates, contingent soft→hard peeks priced in construction effort, length-contingent principle coaches that leave room to think, mode-contingent retrieval support (TOT cue vs freeze scaffold) without Struggle Score™, fidelity-gated productive-failure missions (generate then consolidate on student RSMs) only when priors and affect allow, tutor/coach cognitive-apprenticeship phases (model→coach→fade + articulation) logged for fidelity rather than guild branding, and attempt windows protected from residue and device tax rather than Focus Score™ costume.
 
@@ -292,6 +294,7 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 | **SAFE-HWHELP** *(provisional)* | Dual-rail Help vs Practice; instrumental unstuck; assisted≠solo; help recruits proof; densifies HELP/FADE/ROI | CIV | Ban Completion Score™ / Chegg-dump / assisted≡ready / Bastani Base hero / purity-ban help |
 | **SAFE-GESTURE** *(provisional)* | Strategy-tied optional gesture/draw; gesture≠action for transfer; respect non-gesturers; densifies DUAL/GENERATE/FORMAT | CV | Ban Embodiment Score™ / styles meshing / always-gesture / pose-camera / AR body≡FEI |
 | **SAFE-PEERX** *(provisional)* | Building over telling; inferential prompts; apply after explain; capture act; grain+QA; densifies GENERATE/EXPLAIN/HELP | CVI | Ban Peer Explanation Score™ / teach-for-XP / Discord≡building / AI≡peer teaching |
+| **SAFE-PREDICT** *(provisional)* | Commit before reveal; curiosity+surprise for expectancy violations; encode repair; mode gates; densifies FBTIME/MONITOR/MISCON | CVII | Ban Curiosity Score™ / cliffhanger-without-commit / postdiction / guess-for-XP / curiosity ACT ads |
 | **Block → near-miss interleave → spaced mix** | Blocking = acquisition scaffold; delayed mixed accuracy = readiness signal | XXIX, XXXIX, LXXIV | Ban “shuffle = science”; ban blocked-accuracy vanity |
 | **Student-generated why** | Faded examples + structured principle/misconception prompts *before* AI wrap | XXVI, XL | Ban AI-monologue≡SE; ban explain-own-wrong-first default |
 | **Competitive wedge** | Do not out-content Khan, out-streak Duo, out-delight Brilliant, or out-fluency ChatGPT | XXXV, XX | Sell recoverable struggle + competence evidence + solo transfer |
@@ -299,7 +302,7 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 
 **Merged / demoted (do not treat as separate products):** “AI tutor,” “mastery path,” “growth mindset,” “engagement,” “grit,” “habit streak,” “celebrate mistakes,” “community of practice,” “deliberate practice brand,” “film study,” “recital,” “grandmaster review,” “exposure therapy,” “girl STEM brand,” “WTP survey,” “Identity Score™,” “8-week math person,” “character equity,” “knowledge-graph moat,” “emotion AI empathy,” “science-backed page count,” “Ivy tutor SKU,” “AI wrote N questions,” “FERPA-compliant badge,” “perfect-interval SRS,” “tutor headcount / retention-%,” “mastery fireworks / personal Ebbinghaus,” “FSRS/Anki brain optimizer,” “cram/bootcamp/+points packages,” “instant feedback AI / always-delay science,” “bridge-count / we connect everything,” “day-one personalized mastery / placement belt,” “every format / visual learning / Format Personality™,” “parent fireworks portal / Family Leaderboard / live wrong-answer stalk,” “immersive story world / lore engagement / Story Engagement Score™,” “user-count / star-wall / vague confidence testimonials as learning proof,” “item-count / complete ACT bank / AI fills all holes coverage theater,” “always-full-worked / unlimited solutions / never-fade Solver,” “unlimited hints / never stuck / Help Score™,” “DAU/streak/XP North Star / FEI Score™ / thumbs-up≡learning,” “unlimited free hard peeks / Hint Score™ / XP-for-hints / perfect-hint AI,” “longer≡better / Explanation Score™ / unlimited thorough AI essays / monologue≡SE,” “maximize productive struggle minutes / Struggle Score™ / blank-time grit / always-wait / never-stuck dump,” “fail-first always / every miss is productive failure / PF Score™ / discovery-without-consolidation,” “guild / master tutor / cognitive apprenticeship™ costume / Apprenticeship Score™ / modeling-minutes / never-fade coach,” “Focus Score™ / deep-work theater / phone-shame / mid-attempt streak pings / multitasking digital-native talent,” “Dual Coding Score™ / always-add-picture / decoration-as-dual-coding / visual-learner meshing / animation-first multimedia / split-legend density theater,” and “Monitoring Score™ / metacognition-without-control / easy-only calibration / one-scan calibration theater,” and “AI-replaces-tutors / tutoring-is-free / unlimited-human / hours-booked / Session ROI Score™ theater,” and “SRL Score™ / reflection-streak / survey-SRL≡event / streak≡self-regulation theater” are *not* independent North Stars — they are subordinate UX under FEI + the rows above (borrow *method*, never *costume*).
 
-**Next research bottleneck:** Part CVII **Curiosity & prediction before reveal**. Experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O/WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT/ONTO/HITL/PRIV/LABMETA/GRAIN/GENQ/PROCURE/SCHED/WORK/FORGET/ADAPT/CRAM/FB/BRIDGE/COLD/FORMAT/PDASH/TALK/STORYLOAD/PROOF/COVER/FADE/HELP/INSTR/HINT/EXPLAIN/RETRIEVE/PF/APPRENTICE/ATTN/DUAL/MONITOR/ROI/EXPTIME/SRL/GENACT/ERRCLIM/HWHELP/GESTURE/PEERX gate claims above L1. Researcher count since v1.13 synthesizer = **7**.
+**Next research bottleneck:** Part CVIII **Analogical reasoning & bridge teaching**. Experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O/WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT/ONTO/HITL/PRIV/LABMETA/GRAIN/GENQ/PROCURE/SCHED/WORK/FORGET/ADAPT/CRAM/FB/BRIDGE/COLD/FORMAT/PDASH/TALK/STORYLOAD/PROOF/COVER/FADE/HELP/INSTR/HINT/EXPLAIN/RETRIEVE/PF/APPRENTICE/ATTN/DUAL/MONITOR/ROI/EXPTIME/SRL/GENACT/ERRCLIM/HWHELP/GESTURE/PEERX/PREDICT gate claims above L1. Researcher count since v1.13 synthesizer = **8** (Synthesizer eligible next).
 
 ---
 
@@ -379,6 +382,7 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 
 | Date | Finding | Type | Action |
 |------|---------|------|--------|
+| 2026-08-09 | SAFE-PREDICT: commit before reveal; kill Curiosity Score™ / cliffhanger-without-commit / postdiction / guess-for-XP | Evidence | PREDICT-1…5; next = CVIII analogical bridges (Synthesizer eligible) |
 | 2026-08-08 | SAFE-PEERX: building-gated teach-back; kill Peer Explanation Score™ / teach-for-XP / Discord≡building / AI≡peer teaching | Evidence | PEERX-1…5; next = CVII curiosity & prediction |
 | 2026-08-08 | SAFE-GESTURE: strategy-tied optional gesture/draw; kill Embodiment Score™ / styles meshing / always-gesture / pose-camera | Evidence | GESTURE-1…5; next = CVI peer explanation quality |
 | 2026-08-08 | SAFE-ERRCLIMATE: stay-diagnose error climate in tutoring; kill Safety Score™ / Bermuda-triangle / praise-fog | Evidence | ERRCLIM-1…5; next = CIV homework vs practice identity |
@@ -663,6 +667,10 @@ Core A–D remain. Chapter ticks densified them into families — prefer the den
 | SRL-* | Forethought chips vs autopilot / attribution→plan writeback / microanalysis vs journal / process vs ability attribution UI / parent CBC plans-the-attempt | CI |
 | GENACT-* | Teach-fictive-peer vs solution-view / guided draw vs free vs provided / SOI summarize vs XP / sparse vs eight-menu / parent CBC generates-explanation | CII |
 | ERRCLIM-* | Stay-diagnose vs redirect / soft-wrong+Map vs praise-only / parent CBC diagnosed-mistakes / error-episode QA vs warmth NPS / public vs private error visibility | CIII |
+| HWHELP-* | Dual-rail Help vs Practice / assisted vs solo gate / costly dump vs purity ban / parent CBC tonight-help honesty | CIV |
+| GESTURE-* | Strategy-tied gesture vs none / observe vs produce vs draw / FormatId-triggered / tutor model→fade / parent CBC optional motion | CV |
+| PEERX-* | Building teach-back vs telling / inferential Q vs summary / explain→apply / HITL building code / near-peer matched vs open room | CVI |
+| PREDICT-* | Soft-wrong predict→delay→repair vs instant dump / predict vs postdiction / predict vs example / demo predict vs watch / always vs soft-wrong-only gate | CVII |
 
 ---
 
@@ -933,6 +941,8 @@ Core A–D remain. Chapter ticks densified them into families — prefer the den
 **Surviving (provisional):** SAFE-GESTURE — strategy-tied optional gesture/finger-trace/draw; gesture ≠ object-action for transfer; respect non-gesturers; gesture+language; FormatId-triggered; tutor model→fade; densifies SAFE-DUAL/GENERATE/FORMAT/APPRENTICE; instrument GESTURE-* before Embodiment Score™ / styles meshing / pose-camera / AR-body ACT ads (CV).
 
 **Surviving (provisional):** SAFE-PEERX — knowledge-building over telling; inferential prompts; apply after explain; capture student explanation act; near-peer grain+QA; densifies SAFE-GENERATE/EXPLAIN/HELP/TUTORGRAIN/APPRENTICE; instrument PEERX-* before Peer Explanation Score™ / teach-for-XP / Discord≡building / AI-monologue≡peer teaching ACT ads (CVI).
+
+**Surviving (provisional):** SAFE-PREDICT — commit before reveal; prediction-induced curiosity and surprise for expectancy-violating joins; encode the repair; demo/figure predict; mode gates; densifies SAFE-FBTIME/MONITOR/RETRIEVE/MISCON/PF; instrument PREDICT-* before Curiosity Score™ / cliffhanger-without-commit / postdiction / guess-for-XP / curiosity ACT ads (CVII).
 
 ---
 
@@ -1460,6 +1470,7 @@ Ship changes that raise `retry_120s` and mastery-motive `challenge_accept` witho
 | SAFE-HWHELP *(provisional)* | Dual-rail Help vs Practice; no Completion Score™ / Chegg-dump / assisted≡ready (Part CIV) |
 | SAFE-GESTURE *(provisional)* | Strategy-tied optional gesture/draw; no Embodiment Score™ / styles meshing / pose-camera (Part CV) |
 | SAFE-PEERX *(provisional)* | Building-gated teach-back; no Peer Explanation Score™ / teach-for-XP / Discord≡building (Part CVI) |
+| SAFE-PREDICT *(provisional)* | Commit before reveal; encode repair; no Curiosity Score™ / cliffhanger-without-commit / postdiction (Part CVII) |
 
 ## Appendix B — Maya interview protocol (qual)
 
@@ -1570,8 +1581,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 3at. Homework help vs practice identity conflict — **DONE** Part CIV / SAFE-HWHELP  
 3au. Gesture & embodiment in math practice — **DONE** Part CV / SAFE-GESTURE  
 3av. Peer explanation quality (knowledge-building vs telling) — **DONE** Part CVI / SAFE-PEERX  
-3aw. Curiosity & prediction before reveal — queued id 107 **NEXT**  
-3ax. Analogical reasoning & bridge teaching — queued id 108  
+3aw. Curiosity & prediction before reveal — **DONE** Part CVII / SAFE-PREDICT  
+3ax. Analogical reasoning & bridge teaching — queued id 108 **NEXT**  
 3ay. Writing-to-learn in math practice — queued id 109  
 3az. Spatial skills & math identity — queued id 110  
 4. Equity audit of story worlds — **DONE** (Part XXXVI)  
@@ -1650,7 +1661,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 77. **DONE (2026-08-08):** Homework help vs practice identity conflict (Part CIV / id 104) — SAFE-HWHELP stack  
 78. **DONE (2026-08-08):** Gesture & embodiment in math practice (Part CV / id 105) — SAFE-GESTURE stack  
 79. **DONE (2026-08-08):** Peer explanation quality (Part CVI / id 106) — SAFE-PEERX stack  
-80. **NEXT:** Curiosity & prediction before reveal (Part CVII / id 107)
+80. **DONE (2026-08-09):** Curiosity & prediction before reveal (Part CVII / id 107) — SAFE-PREDICT stack  
+81. **NEXT:** Analogical reasoning & bridge teaching (Part CVIII / id 108)
 
 ---
 
@@ -1684,4 +1696,4 @@ MindCraft’s deepest risk is not technical failure. It is **winning the wrong g
 
 This Constitution exists so the company notices that risk early, and runs experiments that can kill beloved ideas.
 
-**v1.13 synthesizer pass folded Parts XCII–XCIX into surviving commercial doctrine (I.4 rows SAFE-EXPLAIN through SAFE-ROI; Red Team kills #46–#53 promoted from provisional). Experiment families EXPLAIN/RETRIEVE/PF/APPRENTICE/ATTN/DUAL/MONITOR/ROI confirmed mounted. Parts C–CVI landed as provisional densifiers (SAFE-EXPTIME / SAFE-SRL / SAFE-GENERATE / SAFE-ERRCLIMATE / SAFE-HWHELP / SAFE-GESTURE / SAFE-PEERX). Next researcher id: CVII curiosity & prediction. Researcher count since v1.13 = 7. Page count is not the finish line — falsifiable truth is.**
+**v1.13 synthesizer pass folded Parts XCII–XCIX into surviving commercial doctrine (I.4 rows SAFE-EXPLAIN through SAFE-ROI; Red Team kills #46–#53 promoted from provisional). Experiment families EXPLAIN/RETRIEVE/PF/APPRENTICE/ATTN/DUAL/MONITOR/ROI confirmed mounted. Parts C–CVII landed as provisional densifiers (SAFE-EXPTIME / SAFE-SRL / SAFE-GENERATE / SAFE-ERRCLIMATE / SAFE-HWHELP / SAFE-GESTURE / SAFE-PEERX / SAFE-PREDICT). Next researcher id: CVIII analogical bridges. Researcher count since v1.13 = 8 (Synthesizer eligible). Page count is not the finish line — falsifiable truth is.**

@@ -96,8 +96,8 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 104 | Homework help vs practice identity conflict | Solver as crutch vs FEI gym; parent messaging | **DONE** (2026-08-08) — Part CIV / SAFE-HWHELP |
 | 105 | Gesture & embodiment in math practice | Goldin-Meadow; enact GLA; when motion helps FormatId | **DONE** (2026-08-08) — Part CV / SAFE-GESTURE |
 | 106 | Peer explanation quality (knowledge-building vs telling) | Roscoe/Chi; teach-back rubric; HITL QA | **DONE** (2026-08-08) — Part CVI / SAFE-PEERX |
-| 107 | Curiosity & prediction before reveal | Epistemic emotions; soft-wrong predict→feedback | **NEXT** |
-| 108 | Analogical reasoning & bridge teaching | Gentner structure-mapping; Map bridge UX | queued |
+| 107 | Curiosity & prediction before reveal | Epistemic emotions; soft-wrong predict→feedback | **DONE** (2026-08-09) — Part CVII / SAFE-PREDICT |
+| 108 | Analogical reasoning & bridge teaching | Gentner structure-mapping; Map bridge UX | **NEXT** |
 | 109 | Writing-to-learn in math practice | Explanation writing; journal vs FEI; Notes rail | queued |
 | 110 | Spatial skills & math identity | Spatial anxiety; FormatId hops; no Spatial Score™ | queued |
 
@@ -167,3 +167,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any Homework Completion Score™ / tonight-% NS / “we finish your worksheet” / assisted≡ready / Chegg-clone dump hero / Bastani Base Solver ads / purity ban on all homework help / parent homework stalk / grade guarantees from Solver (Part CIV / SAFE-HWHELP provisional)
 - Any Embodiment Score™ / Gesture Score™ / Motion Minutes NS / kinesthetic-style meshing / always-add-gesture / manipulative≡gesture≡abstraction / forced produce-only / pose-camera embodiment AI / AR body immersion≡FEI / ACT guarantees from gesture kits (Part CV / SAFE-GESTURE provisional)
 - Any Peer Explanation Score™ / Teach Minutes NS / teach-for-XP / knowledge-telling≡quality / Discord≡knowledge-building / AI monologue≡peer teaching / unlock-without-solo after explain / peer-tutoring ACT guarantees (Part CVI / SAFE-PEERX provisional)
+- Any Curiosity Score™ / Engagement-from-curiosity NS / cliffhanger-without-commit / postdiction theater / instant-reveal entertainment / guess-for-XP / always-predict dogma / curiosity ACT guarantees (Part CVII / SAFE-PREDICT provisional)

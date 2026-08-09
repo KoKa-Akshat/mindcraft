@@ -4,6 +4,25 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-09 — Researcher tick: Part CVII Curiosity & prediction before reveal (SAFE-PREDICT)
+
+**Tick type:** Researcher (UTC hour 0 ≡ Red Team slot, but ch107 never written → prefer Researcher per rotation; researcher count since synthesizer v1.13 = 7 → Researcher)  
+**Chapter written:** `chapters/107_curiosity_prediction_before_reveal.md` (Part CVII)  
+**Claim examined:** Whether MindCraft should ship prediction-commit → soft-wrong/feedback encode (curiosity + surprise for expectancy-violating joins) vs Curiosity Score™ / cliffhanger-without-commit / instant-reveal entertainment / postdiction theater.
+
+**Doctrine proposed (provisional):** **SAFE-PREDICT** — gap before reveal; commit is the wick; encode the repair; demo/figure predict; mode gates; destake the miss; densifies SAFE-FBTIME / SAFE-MONITOR / SAFE-RETRIEVE / SAFE-MISCON / SAFE-PF; no Curiosity Score™ / cliffhanger-without-commit / postdiction / guess-for-XP / curiosity ACT ads.
+
+**Evidence spine (verified citations):** Loewenstein (1994) information-gap curiosity; Kang et al. (2009) curiosity→memory for surprising answers; Brod & Breitwieser (2019) prediction stimulates curiosity; Brod et al. (2018) surprise requires prior prediction; Theobald & Brod (2022) explicit prediction aids expectancy-violating learning; Brod (2021) review nuance; Crouch et al. (2004) predict-before-demo > passive watch.
+
+**Claim killed (this tick):** Curiosity Score™ / Engagement-from-curiosity NS / cliffhanger-without-commit / postdiction theater / instant-reveal entertainment / guess-for-XP / always-predict dogma / curiosity ACT guarantees (provisional kill #61 until synthesizer).
+
+**Experiments:** PREDICT-1…5 + PREDICT-QUAL.
+
+**Next researcher id:** **108** (analogical reasoning & bridge teaching). Researcher count since v1.13 synthesizer: **8** → next eligible tick should prefer **Synthesizer** (unless unfinished-never-written override forces Researcher).
+
+**PDF:** Regenerate after this tick.
+
+---
 ## 2026-08-08 — Researcher tick: Part CVI Peer explanation quality (SAFE-PEERX)
 
 **Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch106 never written → prefer Researcher per rotation; researcher count since synthesizer v1.13 = 6 → Researcher)  
