@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-09 — Researcher tick: Part CX Spatial skills & math identity (SAFE-SPATIAL)
+
+**Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch110 never written → prefer Researcher per rotation; researcher count since synthesizer v1.14 = 2 → Researcher)  
+**Chapter written:** `chapters/110_spatial_skills_math_identity.md` (Part CX)  
+**Claim examined:** Whether MindCraft should treat spatial skill/anxiety via FormatId hops (diagram/graph/number_line) + conditional transfer evidence vs Spatial Score™ / Mental Rotation Minutes / isolated brain-training / innate boys-better spatial costume.
+
+**Doctrine proposed (provisional):** **SAFE-SPATIAL** — correlate≠costume; malleable not magical; transfer conditional (meta g≈.28 + nulls); embed over isolate; spatial anxiety destake; FormatId is the surface; figures must encode; equity without softening; no Spatial Score™ / Mental Rotation Minutes / brain-training≡identity / boys-better / always-3D / Spatial Personality™ / spatial ACT ads. Experiment family **SPATIAL-*** (distinct from company-law FORMAT-* and DUAL-*).
+
+**Evidence spine (verified citations):** Atit et al. (2022); Wai/Lubinski/Benbow (2009); Uttal et al. (2013); Hawes/Gilligan-Lee/Mix (2022 meta + npj); Gilligan/Thomas/Farran (2020); Mix et al. (2021); Hawes/Moss/Caswell/Poliszczuk (2015 null); Lyons et al. (2018); Sokolowski/Hawes/Lyons (2019).
+
+**Claim killed (this tick):** Spatial Score™ / Mental Rotation Minutes NS / isolated brain-training≡math identity / innate or boys-better spatial costume / always-add-3D / Spatial Personality™ / unscaffolded diagram flood / spatial ACT guarantees (provisional kill #64 until synthesizer).
+
+**Experiments:** SPATIAL-1…5 + SPATIAL-QUAL.
+
+**Next researcher id:** **111** (formative assessment cycles in tutor sessions). Researcher count since v1.14 synthesizer: **3**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-09 — Researcher tick: Part CIX Writing-to-learn in math practice (SAFE-WRITE)
 
 **Tick type:** Researcher (UTC hour 9; hour%6≠0; researcher count since synthesizer v1.14 = 1 → Researcher)  
