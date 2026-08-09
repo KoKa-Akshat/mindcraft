@@ -99,8 +99,11 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 107 | Curiosity & prediction before reveal | Epistemic emotions; soft-wrong predict→feedback | **DONE** (2026-08-09) — Part CVII / SAFE-PREDICT |
 | — | **Synthesizer v1.14** | Merge C–CVII SAFE-* into core OS I.4 / XIV / IX / XXI | **DONE** (2026-08-09 UTC 03) |
 | 108 | Analogical reasoning & bridge teaching | Gentner structure-mapping; Map bridge UX | **DONE** (2026-08-09) — Part CVIII / SAFE-ANALOG |
-| 109 | Writing-to-learn in math practice | Explanation writing; journal vs FEI; Notes rail | **NEXT** |
-| 110 | Spatial skills & math identity | Spatial anxiety; FormatId hops; no Spatial Score™ | queued |
+| 109 | Writing-to-learn in math practice | Explanation writing; journal vs FEI; Notes rail | **DONE** (2026-08-09) — Part CIX / SAFE-WRITE |
+| 110 | Spatial skills & math identity | Spatial anxiety; FormatId hops; no Spatial Score™ | **NEXT** |
+| 111 | Formative assessment cycles in tutor sessions | Black/Wiliam grain; exit tickets vs FEI; no Formative Score™ | queued |
+| 112 | Feedback literacy — how students use coach feedback | Hattie/Timperley; uptake vs dismiss; soft-wrong action | queued |
+| 113 | Collaborative problem-solving vs solo FEI | CSCL tradeoffs; group work without solo-transfer washout | queued |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 
@@ -170,3 +173,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any Peer Explanation Score™ / Teach Minutes NS / teach-for-XP / knowledge-telling≡quality / Discord≡knowledge-building / AI monologue≡peer teaching / unlock-without-solo after explain / peer-tutoring ACT guarantees (Part CVI / SAFE-PEERX / v1.14 company law)
 - Any Curiosity Score™ / Engagement-from-curiosity NS / cliffhanger-without-commit / postdiction theater / instant-reveal entertainment / guess-for-XP / always-predict dogma / curiosity ACT guarantees (Part CVII / SAFE-PREDICT / v1.14 company law)
 - Any Analogy Score™ / Mapping Minutes NS / analogy-mention≡pedagogy / surface-story≡structure / AI likeness dump without student mapping / always-analogy dogma / HOT Score™ / Discord≡supported compare / analogy ACT guarantees (Part CVIII / SAFE-ANALOG)
+- Any Writing Score™ / Journal Minutes NS / freewrite diary≡learning / longer-essay≡deeper / AI rewrite≡WTL / Notes scrapbook without FEI / always-journal dogma / writing ACT guarantees (Part CIX / SAFE-WRITE)

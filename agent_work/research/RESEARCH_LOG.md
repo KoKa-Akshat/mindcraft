@@ -4,6 +4,28 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-09 — Researcher tick: Part CIX Writing-to-learn in math practice (SAFE-WRITE)
+
+**Tick type:** Researcher (UTC hour 9; hour%6≠0; researcher count since synthesizer v1.14 = 1 → Researcher)  
+**Chapter written:** `chapters/109_writing_to_learn_math_practice.md` (Part CIX)  
+**Claim examined:** Whether MindCraft should ship Notes/Field Journal as prompted short cognitive+metacognitive writing-to-learn tied to FEI vs Writing Score™ / Journal Minutes / freewrite diary / long-essay depth theater / AI-polished Notes as learning.
+
+**Doctrine proposed (provisional):** **SAFE-WRITE** — conditional WTL (not magical); short + metacognitive + sustained; process over presence; cognitive+metacognitive pairing; math-authored language; Notes dual-rail with Practice; AI may cue not author; densifies GENERATE/SE/EXPLAIN/SRL/PEERX/PROOF; no Writing Score™ / Journal Minutes / freewrite≡learning / longer≡deeper / AI≡WTL / always-journal / writing ACT ads. Experiment family **WRITE-*** (distinct from GENACT-* and SE-*).
+
+**Evidence spine (verified citations):** Emig (1977); Ackerman (1993); Bangert-Drowns/Hurley/Wilkinson (2004); Klein (1999); Berthold/Nückles/Renkl (2007); Nückles/Hübner/Renkl (2009); Glogger et al. (2012) math journals; Pugalee (2001, 2004).
+
+**Claim killed (this tick):** Writing Score™ / Journal Minutes NS / freewrite diary≡learning / longer-essay≡deeper / AI rewrite≡WTL / Notes scrapbook without FEI / always-journal dogma / writing ACT guarantees (provisional kill #63 until synthesizer).
+
+**Experiments:** WRITE-1…5 + WRITE-QUAL.
+
+**Queue hygiene:** Promoted invented stubs 111–113 into NEXT_LAB (unfinished would otherwise drop below 3; QUEUE_EXTENDED dry past 110).
+
+**Next researcher id:** **110** (spatial skills & math identity). Researcher count since v1.14 synthesizer: **2**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-09 — Researcher tick: Part CVIII Analogical reasoning & bridge teaching (SAFE-ANALOG)
 
 **Tick type:** Researcher (UTC hour 6 ≡ Red Team slot, but ch108 never written → prefer Researcher per rotation; researcher count since synthesizer v1.14 = 0 → Researcher)  

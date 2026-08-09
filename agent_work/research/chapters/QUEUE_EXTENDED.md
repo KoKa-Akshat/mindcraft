@@ -84,3 +84,6 @@ Promote 3 at a time into `NEXT_LAB.md`. Do not write all at once.
 | 108 | Analogical reasoning & bridge teaching | Gentner structure-mapping; Map bridge UX | promoted → NEXT_LAB |
 | 109 | Writing-to-learn in math practice | Explanation writing; journal vs FEI; Notes rail | promoted → NEXT_LAB |
 | 110 | Spatial skills & math identity | Spatial anxiety; FormatId hops; no Spatial Score™ | promoted → NEXT_LAB |
+| 111 | Formative assessment cycles in tutor sessions | Black/Wiliam grain; exit tickets vs FEI; no Formative Score™ | promoted → NEXT_LAB |
+| 112 | Feedback literacy — how students use coach feedback | Hattie/Timperley; uptake vs dismiss; soft-wrong action | promoted → NEXT_LAB |
+| 113 | Collaborative problem-solving vs solo FEI | CSCL tradeoffs; group work without solo-transfer washout | promoted → NEXT_LAB |
