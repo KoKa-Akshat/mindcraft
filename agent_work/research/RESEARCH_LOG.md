@@ -4,6 +4,28 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-09 — Researcher tick: Part CXIII Collaborative PS vs solo FEI (SAFE-COLLAB)
+
+**Tick type:** Researcher (UTC hour 21; hour%6≠0; researcher count since synthesizer v1.14 = 5 → Researcher)  
+**Chapter written:** `chapters/113_collaborative_problem_solving_vs_solo_fei.md` (Part CXIII)  
+**Claim examined:** Whether MindCraft should operationalize collaborative/CSCL problem-solving as structured scaffold with individual accountability and mandatory solo FEI gates vs Collaboration Score™ / Group Minutes / Discord≡learning / group-correct≡ready theater.
+
+**Doctrine proposed (provisional):** **SAFE-COLLAB** — conditional collab (Jeong/Chen/Capar metas); Slavin hinge (group goals + individual accountability); Yager structured discussion → group-to-individual transfer; Webb group≠individual competence + constructive use; Kerr & Bruun free-ride as design failure; solo FEI gate; densify PEERX/CoP/PROOF/HELP/INSTRUMENT/ERRCLIMATE; no Collaboration Score™ / Group Minutes / Discord≡CSCL / group-correct≡ready / free-rider-blind unlocks / always-collab / collab ACT guarantees. Experiment family **COLLAB-*** (distinct from PEERX-* and CoP-*).
+
+**Evidence spine (verified citations):** Jeong/Hmelo-Silver/Jo (2019); Chen/Wang/Kirschner/Tsai (2018); Capar & Tarim (2015); Slavin & Lake (2007 ERIC ED527642); Yager/Johnson/Johnson (1985); Webb (1993); Webb/Troper/Fall (1995); Kerr & Bruun (1983).
+
+**Claim killed (this tick):** Collaboration Score™ / Group Minutes NS / Discord≡CSCL learning / group-correct≡ready / free-rider-blind unlocks / always-collab dogma / collab ACT guarantees (provisional kill #67 until synthesizer).
+
+**Experiments:** COLLAB-1…5 + COLLAB-QUAL.
+
+**Queue hygiene:** Invented stubs 117–119 into NEXT_LAB (unfinished would otherwise drop below 3 after completing 113).
+
+**Next researcher id:** **114** (desirable difficulty scheduling under exam deadlines). Researcher count since v1.14 synthesizer: **6**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-09 — Researcher tick: Part CXII Feedback literacy / coach uptake (SAFE-FBLIT)
 
 **Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch112 never written → prefer Researcher per rotation; researcher count since synthesizer v1.14 = 4 → Researcher)  
