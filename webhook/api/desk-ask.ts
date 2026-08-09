@@ -23,6 +23,7 @@ const MAX_ITERATIONS = 4
 
 type DeskActionType =
   | 'open_gmail'
+  | 'open_gmail_top_reply'
   | 'open_apply'
   | 'open_connect'
   | 'refresh_calendar'
@@ -122,7 +123,8 @@ Rules:
 - Never send mail or mark job applications done.
 - If few connectors are linked, recommend which one to connect next and why.
 - Prefer recommend_workflow when the student asks what to do, how to organize, or how to use linked tools.
-- Prefer actions over long instructions when the student wants to open something.`
+- Prefer actions over long instructions when the student wants to open something.
+- If they ask to open top mail / draft a reply / ready response to send: use propose_action open_gmail_top_reply.`
 }
 
 const TOOLS: Anthropic.Messages.Tool[] = [
@@ -148,7 +150,13 @@ const TOOLS: Anthropic.Messages.Tool[] = [
       properties: {
         type: {
           type: 'string',
-          enum: ['open_gmail', 'open_apply', 'open_connect', 'refresh_calendar'],
+          enum: [
+            'open_gmail',
+            'open_gmail_top_reply',
+            'open_apply',
+            'open_connect',
+            'refresh_calendar',
+          ],
         },
       },
       required: ['type'],
@@ -213,6 +221,13 @@ function keywordFallback(message: string, ctx: DeskContext): { reply: string; ac
   const intel = (ctx.intelLines || []).slice(0, 3)
 
   if (/mail|gmail|inbox|email/.test(s)) {
+    if (/reply|response|send|top|ready/.test(s)) {
+      actions.push({ type: 'open_gmail_top_reply' })
+      return {
+        reply: 'Opening your top mail with a ready reply. Edit it, then hit Send.',
+        actions,
+      }
+    }
     actions.push({ type: 'open_gmail' })
     return { reply: 'Opening your Gmail box.', actions }
   }
@@ -307,6 +322,7 @@ async function runDeskLoop(
           const type = String(input.type || '') as DeskActionType
           const allowed: DeskActionType[] = [
             'open_gmail',
+            'open_gmail_top_reply',
             'open_apply',
             'open_connect',
             'refresh_calendar',
