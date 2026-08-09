@@ -10,7 +10,7 @@ service cloud.firestore {
         && !request.resource.data.keys().hasAny([
              'childId', 'childIds', 'tutorId', 'tutorIds', 'classroomId',
              'assignedTutorId', 'assignedTutorIds', 'assignedTutorName',
-             'program',
+             'program', 'stickerPlan',
            ])
         && (!('role' in request.resource.data) || request.resource.data.role == 'student');
 
@@ -21,7 +21,7 @@ service cloud.firestore {
              .hasAny([
                'childId', 'childIds', 'tutorId', 'tutorIds', 'classroomId',
                'assignedTutorId', 'assignedTutorIds', 'assignedTutorName',
-               'program',
+               'program', 'stickerPlan',
              ])
         && (
           !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role'])
@@ -186,6 +186,14 @@ service cloud.firestore {
     match /interactions/{interactionId} {
       allow read: if request.auth != null && (
         resource.data.studentId == request.auth.uid ||
+        // Footnote fix (LIVE_CALL_SESSIONS build, same PR as liveSessions
+        // below): interaction docs carry no tutorId field of their own, so
+        // the tutor check cross-references the student's OWN user doc
+        // (Admin-SDK-authoritative), same source of truth flagged_questions
+        // uses at create-time. Previously this had no tutor clause at all —
+        // TutorDashboard.tsx's live-activity onSnapshot on interactions was
+        // denied for real tutors.
+        get(/databases/$(database)/documents/users/$(resource.data.studentId)).data.tutorId == request.auth.uid ||
         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childId == resource.data.studentId ||
         (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds is list
          && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds.hasAny([resource.data.studentId]))
@@ -223,6 +231,76 @@ service cloud.firestore {
       allow delete: if request.auth != null && resource.data.tutorId == request.auth.uid;
     }
 
+    // Live "Call" co-working sessions (snuggly-wandering-candle plan, step 1).
+    // A student-initiated synced session (question/paper context + a shared
+    // scratchpad, written as append-only strokes below) that their OWN
+    // linked tutor (users/{uid}.tutorId, Admin-SDK-set — same spoofing
+    // defense as flagged_questions' create-time cross-check) and/or a linked
+    // parent (childId/childIds, same pattern as student_work/interactions)
+    // can join, read, and draw into. No new trust boundary — same three
+    // relationships already governed elsewhere in this file.
+    match /liveSessions/{sessionId} {
+      allow create: if request.auth != null
+        && request.resource.data.studentId == request.auth.uid
+        && (
+          request.resource.data.tutorId == null ||
+          request.resource.data.tutorId ==
+            get(/databases/$(database)/documents/users/$(request.auth.uid)).data.tutorId
+        );
+      allow read: if request.auth != null && (
+        resource.data.studentId == request.auth.uid ||
+        resource.data.tutorId == request.auth.uid ||
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childId == resource.data.studentId ||
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds is list
+         && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds.hasAny([resource.data.studentId]))
+      );
+      // Any of the three authorized participants may update lifecycle fields
+      // (status/lastActivityAt/endedAt — e.g. the student's unmount effect
+      // ending the session, or a joiner's activity ping); studentId/tutorId
+      // stay immutable post-create so a joiner can never reassign the
+      // session to a different tutor.
+      allow update: if request.auth != null && (
+        resource.data.studentId == request.auth.uid ||
+        resource.data.tutorId == request.auth.uid ||
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childId == resource.data.studentId ||
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds is list
+         && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds.hasAny([resource.data.studentId]))
+      ) && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['studentId', 'tutorId']);
+      allow delete: if false;
+
+      // Append-only, one doc per completed stroke (two people drawing at
+      // once don't clobber each other). MUST resolve access via get() on the
+      // PARENT liveSessions doc only, never resource.data on the stroke
+      // itself — LiveSessionPage's onSnapshot on this subcollection has no
+      // where() filter, and Firestore rejects an entire unfiltered list()
+      // if the rule can't be proven safe without per-document resource.data
+      // evaluation (same constraint documented on sessions/{id}/studentWork
+      // above).
+      match /strokes/{strokeId} {
+        allow read: if request.auth != null && (
+          get(/databases/$(database)/documents/liveSessions/$(sessionId)).data.studentId == request.auth.uid ||
+          get(/databases/$(database)/documents/liveSessions/$(sessionId)).data.tutorId == request.auth.uid ||
+          get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childId ==
+            get(/databases/$(database)/documents/liveSessions/$(sessionId)).data.studentId ||
+          (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds is list
+           && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds.hasAny(
+                [get(/databases/$(database)/documents/liveSessions/$(sessionId)).data.studentId]))
+        );
+        allow create: if request.auth != null
+          && request.resource.data.authorId == request.auth.uid
+          && (
+            get(/databases/$(database)/documents/liveSessions/$(sessionId)).data.studentId == request.auth.uid ||
+            get(/databases/$(database)/documents/liveSessions/$(sessionId)).data.tutorId == request.auth.uid ||
+            get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childId ==
+              get(/databases/$(database)/documents/liveSessions/$(sessionId)).data.studentId ||
+            (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds is list
+             && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds.hasAny(
+                  [get(/databases/$(database)/documents/liveSessions/$(sessionId)).data.studentId]))
+          );
+        allow update, delete: if false;
+      }
+    }
+
     match /knowledge_graphs/{studentId} {
       allow read: if request.auth != null && (
         request.auth.uid == studentId ||
@@ -232,6 +310,22 @@ service cloud.firestore {
       );
       allow delete: if request.auth != null && request.auth.uid == studentId;
       allow create, update: if false;
+    }
+
+    // Marketing site leads + follow-up email draft (Admin SDK writes leads;
+    // signed-in admins manage the draft and read the inbox in Admin).
+    function isAdmin() {
+      return request.auth != null
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    match /marketing_leads/{leadId} {
+      allow read, update, delete: if isAdmin();
+      allow create: if false;
+    }
+
+    match /marketing_settings/{docId} {
+      allow read, write: if isAdmin();
     }
   }
 }

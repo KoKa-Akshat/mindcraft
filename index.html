@@ -3,13 +3,44 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>MindCraft · The student desk before the ACT</title>
-<meta name="description" content="MindCraft is the student desk before the ACT. Drop your worksheets, plug in your calendar, practice inside story worlds, and work with real college tutors.">
+<title>MindCraft · The operating system for student knowledge</title>
+<meta name="description" content="MindCraft is the operating system for student knowledge. Like a gym membership for math: drop worksheets, map exact gaps, practice inside stories, and work with college tutors who open your map first.">
+<meta name="keywords" content="MindCraft, ACT math, student desk, knowledge graph, tutoring, math gaps, high school math, college tutors, learning OS, Field Desk">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://mindcraft-marketing-site.web.app/">
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="MindCraft">
 <meta property="og:url" content="https://mindcraft-marketing-site.web.app/">
-<meta property="og:title" content="MindCraft · School is scattered. You don't have to be.">
-<meta property="og:description" content="Drop your worksheets, plug in your calendar, practice inside story worlds. Real college tutors, briefed by your map.">
-<meta property="og:image" content="https://mindcraft-marketing-site.web.app/img/new-dash-home.jpg">
+<meta property="og:title" content="MindCraft · The operating system for student knowledge">
+<meta property="og:description" content="School is scattered. MindCraft is the desk that connects it: binder, gap map, story practice, real tutors. Gym membership energy for math.">
+<meta property="og:image" content="https://mindcraft-marketing-site.web.app/img/app/field-desk.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="MindCraft · The operating system for student knowledge">
+<meta name="twitter:description" content="Drop it. Map the gap. Train until it transfers. Real college tutors, briefed by your map.">
+<meta name="twitter:image" content="https://mindcraft-marketing-site.web.app/img/app/field-desk.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "MindCraft",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Web, iPadOS",
+  "url": "https://mindcraft-marketing-site.web.app/",
+  "description": "The operating system for student knowledge: Field Desk binder, ACT gap map, story practice, and college tutors.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD",
+    "description": "Free while in beta"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "MindCraft",
+    "email": "joinmindcraft@gmail.com",
+    "url": "https://mindcraft-marketing-site.web.app/"
+  }
+}
+</script>
 <link rel="icon" type="image/png" href="img/mindcraft-logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -798,6 +829,32 @@
   }
   .cta .cta-row .btn[aria-selected="false"]{opacity:.65;}
 
+  /* Soft email capture (visitors) */
+  .email-dock{
+    position:fixed; z-index:60; left:50%; bottom:max(16px, env(safe-area-inset-bottom));
+    transform:translateX(-50%) translateY(120%);
+    width:min(560px, calc(100% - 24px));
+    background:rgba(10,22,18,.94); color:var(--paper);
+    border:1px solid rgba(196,245,71,.35); border-radius:22px;
+    padding:14px 16px; box-shadow:0 24px 70px rgba(0,0,0,.45);
+    transition:transform .35s var(--ease), opacity .25s var(--ease);
+    opacity:0; pointer-events:none;
+  }
+  .email-dock.is-open{transform:translateX(-50%) translateY(0); opacity:1; pointer-events:auto;}
+  .email-dock h3{font-family:"Fredoka",sans-serif; font-size:18px; letter-spacing:-.03em; margin-bottom:4px;}
+  .email-dock p{font-size:13px; font-weight:700; color:rgba(255,253,247,.72); margin-bottom:10px; line-height:1.35;}
+  .email-dock form{display:flex; gap:8px; flex-wrap:wrap;}
+  .email-dock input[type="email"]{
+    flex:1 1 180px; min-height:46px; border-radius:14px; border:1.5px solid rgba(255,253,247,.2);
+    background:#fff; color:var(--ink); padding:0 12px; font:inherit; font-weight:700;
+  }
+  .email-dock .btn{min-height:46px; padding:0 16px; font-size:11px;}
+  .email-dock .x{
+    position:absolute; top:8px; right:12px; border:0; background:transparent; color:rgba(255,253,247,.7);
+    font-size:22px; cursor:pointer; line-height:1;
+  }
+  .email-dock .ok{color:var(--lime); font-weight:900; font-size:13px; margin-top:8px;}
+
   /* iPad / tablet (portrait + landscape, Mini through Pro) */
   @media(max-width:1180px) and (min-width:641px){
     .wrap{padding:0 clamp(28px,3.8vw,44px);}
@@ -925,11 +982,11 @@
 <nav class="nav">
   <a class="brand" href="#">Mind<span>Craft</span></a>
   <div class="nav-links">
+    <a href="#os">The OS</a>
     <a href="#how">The desk</a>
     <a href="#tutors">Tutors</a>
-    <a href="#act">ACT summer</a>
     <a href="#faq">FAQ</a>
-    <a class="join" href="#start">Join the beta</a>
+    <a class="join" href="#start">Join free beta</a>
   </div>
 </nav>
 
@@ -956,17 +1013,18 @@
 
   <div class="hero-stage">
     <div>
-      <a class="hero-announce" href="#act"><i>LIVE</i> Summer ACT package →</a>
-      <h1>School is scattered. <em>You don't have to&nbsp;be.</em></h1>
+      <a class="hero-announce" href="#os"><i>NEW</i> The OS for student knowledge →</a>
+      <h1>Knowledge has no operating system. <em>Until now.</em></h1>
+      <p class="lead">MindCraft is the desk that connects school: binder, gap map, story practice, real tutors. Like a <b>gym membership for math</b>. You show up. The system trains the exact gap.</p>
       <div class="hero-actions">
-        <a class="btn primary" href="#start">Set up my desk</a>
-        <a class="btn soft" href="#problem">See how it works</a>
+        <a class="btn primary" href="#start">Claim my desk</a>
+        <a class="btn soft" href="#problem">See the mess we fix</a>
       </div>
     </div>
 
     <div class="hero-shot">
-      <div class="hero-note">your actual desk ↓</div>
-      <div class="hero-frame"><img class="crop-demo" src="img/new-dash-home.jpg" alt="The MindCraft desk: the Contents view with watercolor concept tiles for warm-ups and algebra"></div>
+      <div class="hero-note">your Field Desk ↓</div>
+      <div class="hero-frame"><img src="img/app/field-desk.png" alt="MindCraft Field Desk on iPad: binder, intel, memo, and calendar on one infinite desk"></div>
       <div class="hero-chip" id="herochip">
         <span class="raw" id="hc-raw">IMG_4127.jpg</span>
         <span class="arrow">→</span>
@@ -977,10 +1035,10 @@
 
   <div class="hero-below">
     <div class="hero-trust">
-      <div class="trust"><b>42 concepts</b><span>one living map of ACT math</span></div>
-      <div class="trust"><b>~1,500</b><span>real questions behind the practice</span></div>
-      <div class="trust"><b>Real tutors</b><span>college tutors, briefed by your map</span></div>
-      <div class="trust"><b>Free</b><span>while we are in beta</span></div>
+      <div class="trust"><b>Exact gaps</b><span>not another green streak</span></div>
+      <div class="trust"><b>42 concepts</b><span>one living ACT math map</span></div>
+      <div class="trust"><b>~1,500</b><span>real questions behind practice</span></div>
+      <div class="trust"><b>Human tutors</b><span>map open before hello</span></div>
     </div>
     <div class="intro-schools" aria-label="Schools behind the desk">
       <span>From rooms at</span>
@@ -1020,8 +1078,39 @@
         <h3>Flashcards for the wrong chapter</h3>
       </div>
     </div>
-    <p class="punchline reveal">Right now the only thing connecting it all is you. The night before a test, that is a terrible job to have.</p>
+    <p class="punchline reveal">The root problem is not the student. It is that their knowledge has no operating system. Right now the only thing connecting it all is you.</p>
     <p class="turn reveal">Good news: the desk wants that job<i>!</i></p>
+  </div>
+</section>
+
+<!-- ================= OS / GYM ================= -->
+<section class="how" id="os" style="padding-top:0;">
+  <div class="wrap">
+    <div class="kicker reveal">Chapter 01.5 · The membership</div>
+    <h2 class="h2 reveal">A gym for knowledge. <span class="script">Not another chat box.</span></h2>
+    <p class="lede reveal">Gyms do not do the reps for you. They give you a floor, a plan, and a mirror. MindCraft is that for school: you drop the mess, we route the training, you feel the click.</p>
+    <div class="caps-grid" style="margin-top:28px;">
+      <article class="cap sand reveal">
+        <h3>Field Desk</h3>
+        <p>Binder + intel + calendar on one infinite desk. Drop a photo. It finds its course, date, and next step.</p>
+        <img src="img/app/field-desk.png" alt="Field Desk binder and cards" style="margin-top:14px;border-radius:16px;border:1px solid var(--line);">
+      </article>
+      <article class="cap mint reveal">
+        <h3>Gap map</h3>
+        <p>We find the exact gap, prove it with practice that transfers, and skip the fake praise. Parents get an honest note.</p>
+        <img src="img/app/dash-contents.png" alt="ACT contents map on MindCraft" style="margin-top:14px;border-radius:16px;border:1px solid var(--line);">
+      </article>
+      <article class="cap peach reveal">
+        <h3>Story practice</h3>
+        <p>Every concept is a scene you walk into. Hard problems with stakes. The map moves when you do.</p>
+        <img src="img/app/story-chapter.png" alt="Story chapter in MindCraft" style="margin-top:14px;border-radius:16px;border:1px solid var(--line);">
+      </article>
+      <article class="cap blue reveal">
+        <h3>Human tutors</h3>
+        <p>College tutors open your map before hello. The hour goes to teaching, not detective work. First session free.</p>
+        <img src="img/app/practice.png" alt="Practice session writing field" style="margin-top:14px;border-radius:16px;border:1px solid var(--line);">
+      </article>
+    </div>
   </div>
 </section>
 
@@ -1030,7 +1119,7 @@
   <div class="wrap">
     <div class="kicker reveal">Chapter 02 · The desk</div>
     <h2 class="h2 reveal">Drop it. <span class="script">It finds its place.</span></h2>
-    <p class="lede reveal">The desk does the organizing so your energy goes to the learning.</p>
+    <p class="lede reveal">Catalog everything school ever gave you. The desk builds your graph. Ask with receipts. Your energy goes to the learning.</p>
 
     <div class="steps">
       <div class="stepcard peach reveal">
@@ -1316,9 +1405,9 @@
   <div class="wrap">
     <div class="kicker reveal">Epilogue · Why we build</div>
     <h2 class="h2 reveal">You were never bad at math.</h2>
-    <p class="reveal">Math didn't lose you. The story did. Most tools treat math like a list of chores. We treat it like a place: stories with stakes, questions that belong to them, and a map that remembers every step you take.</p>
-    <p class="reveal">MindCraft pairs you with real college tutors, learns how you learn, and turns scattered school chaos into progress you can see.</p>
-    <p class="reveal">And the bank behind the desk holds about 1,500 real ACT questions. Imagine each one living inside a world: a scene you walk into, a sim you can touch, a story that needs your answer. That is where this is going. <span class="craft">Not magic. Craft.</span></p>
+    <p class="reveal">Math didn't lose you. The story did. Somebody decided you were not a math person. They described a moment. You heard a verdict. MindCraft rebuilds the narrative: every gap has a shape, every concept is a scene you have not played yet.</p>
+    <p class="reveal">From street conversations with parents, students, and tutors, the same ask keeps showing up: exact gaps, practice that transfers when the question looks different, and an honest note home. Not another streak. Not unlimited AI homework chat.</p>
+    <p class="reveal">The bank behind the desk holds about 1,500 real ACT questions. Imagine each one living inside a world. That is where this is going. <span class="craft">Not magic. Craft.</span></p>
   </div>
 </section>
 
@@ -1371,8 +1460,12 @@
     <h2 class="h2 reveal">The stuff everyone asks first.</h2>
     <div class="faq-list reveal">
       <details>
-        <summary>Is this just another planner?</summary>
-        <p>No. Planners hold what you type. The desk acts on what you drop. It files your stuff, plans your night, and turns practice into a map that moves.</p>
+        <summary>Is this just another planner or AI homework bot?</summary>
+        <p>No. Planners hold what you type. Chat bots answer tonight and forget tomorrow. MindCraft is an operating system for knowledge: file, map, train, prove transfer, brief a human tutor.</p>
+      </details>
+      <details>
+        <summary>What does “gym membership for math” mean?</summary>
+        <p>You still do the reps. The desk is the floor and the trainer: it points at the exact weak lift, tracks what transferred, and keeps the next session honest.</p>
       </details>
       <details>
         <summary>What can I drop on the desk?</summary>
@@ -1409,8 +1502,8 @@
       <div class="cta-bg"></div>
       <div class="cta-veil"></div>
       <div class="inner">
-        <h2>Feel what it's like <em>to be good.</em></h2>
-        <p>Set up your desk in four minutes. Drop three files, take the gap scan, run your first mission tonight.</p>
+        <h2>Claim your desk. <em>Feel the click.</em></h2>
+        <p>Join the free beta. Drop three files, take the gap scan, run your first mission tonight. We follow up within an hour if you leave your email.</p>
         <p class="apply-done" id="applyDone" hidden>Got it. A real human replies within 48 hours.</p>
         <div class="cta-row" role="tablist" aria-label="Choose an application type">
           <button class="btn primary" type="button" id="applyTabStudent" role="tab" aria-selected="true">Sign up as a student</button>
@@ -1456,6 +1549,19 @@
     </div>
   </div>
 </section>
+
+<!-- Soft capture: collect visitor emails for 1-hour follow-up -->
+<aside class="email-dock" id="emailDock" aria-live="polite" hidden>
+  <button class="x" type="button" id="emailDockClose" aria-label="Close">×</button>
+  <h3>Want the desk brief?</h3>
+  <p>Leave your email. We send one thoughtful follow-up in about an hour. No spam streaks.</p>
+  <form id="emailDockForm">
+    <input type="email" name="email" id="emailDockInput" placeholder="you@email.com" required autocomplete="email">
+    <input type="text" name="_honey" class="honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <button class="btn primary" type="submit">Save my spot</button>
+  </form>
+  <p class="ok" id="emailDockOk" hidden>Got it. Check your inbox in about an hour.</p>
+</aside>
 
 <footer>
   <div class="wrap">
@@ -1815,6 +1921,102 @@
     done.hidden = false;
     document.getElementById('start').scrollIntoView();
   }
+
+  // ---------- Website lead capture → webhook → Admin Leads + 1hr email ----------
+  const LEAD_API = 'https://mindcraft-webhook.vercel.app/api/marketing-lead';
+  async function captureLead(payload){
+    try {
+      await fetch(LEAD_API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        mode: 'cors',
+        keepalive: true,
+      });
+      try { localStorage.setItem('mc_lead_email', payload.email || ''); } catch (_) {}
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  // Soft dock after ~18s or 45% scroll, once per browser
+  (function(){
+    const dock = document.getElementById('emailDock');
+    const form = document.getElementById('emailDockForm');
+    const ok = document.getElementById('emailDockOk');
+    const closeBtn = document.getElementById('emailDockClose');
+    if (!dock || !form) return;
+    let armed = false;
+    function already(){
+      try { return Boolean(localStorage.getItem('mc_lead_email') || localStorage.getItem('mc_lead_dismissed')); }
+      catch (_) { return false; }
+    }
+    function openDock(){
+      if (armed || already()) return;
+      armed = true;
+      dock.hidden = false;
+      requestAnimationFrame(() => dock.classList.add('is-open'));
+    }
+    setTimeout(openDock, 18000);
+    addEventListener('scroll', () => {
+      const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+      if ((scrollY / max) > 0.45) openDock();
+    }, { passive:true });
+    closeBtn && closeBtn.addEventListener('click', () => {
+      dock.classList.remove('is-open');
+      try { localStorage.setItem('mc_lead_dismissed', '1'); } catch (_) {}
+      setTimeout(() => { dock.hidden = true; }, 320);
+    });
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = (document.getElementById('emailDockInput').value || '').trim();
+      const honey = (form.querySelector('[name="_honey"]').value || '').trim();
+      if (!email) return;
+      const btn = form.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      await captureLead({
+        email,
+        name: '',
+        role: 'visitor',
+        source: 'email_dock',
+        page: location.pathname + location.hash,
+        _honey: honey,
+      });
+      form.hidden = true;
+      ok.hidden = false;
+      setTimeout(() => {
+        dock.classList.remove('is-open');
+        setTimeout(() => { dock.hidden = true; }, 320);
+      }, 2200);
+    });
+  })();
+
+  // Also mirror apply forms into marketing_leads (FormSubmit still emails inbox)
+  document.getElementById('applyFormStudent')?.addEventListener('submit', () => {
+    const email = document.getElementById('applyEmail')?.value;
+    const name = document.getElementById('parentName')?.value || document.getElementById('studentName')?.value || '';
+    const note = document.getElementById('goal')?.value || '';
+    if (email) {
+      void captureLead({
+        email, name, role: 'student_apply', source: 'apply_student', note,
+        page: '#start',
+        _honey: document.querySelector('#applyFormStudent [name="_honey"]')?.value || '',
+      });
+    }
+  });
+  document.getElementById('applyFormTutor')?.addEventListener('submit', () => {
+    const email = document.getElementById('tutorEmail')?.value;
+    const name = document.getElementById('tutorName')?.value || '';
+    const note = document.getElementById('tutorBio')?.value || '';
+    if (email) {
+      void captureLead({
+        email, name, role: 'tutor_apply', source: 'apply_tutor', note,
+        page: '#start',
+        _honey: document.querySelector('#applyFormTutor [name="_honey"]')?.value || '',
+      });
+    }
+  });
 </script>
 </body>
 </html>

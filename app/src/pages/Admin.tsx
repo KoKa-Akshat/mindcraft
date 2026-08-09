@@ -3,8 +3,8 @@
  *
  * Internal ops dashboard — accessible only to users with role: 'admin'.
  *
- * Layout: fixed dark left sidebar (Overview / Students / Tutors / Parents /
- * Sessions / Settings) + light main content area.
+ * Layout: fixed dark left sidebar (Overview / Links / Students / Tutors /
+ * Parents / Sessions / Health / Leads / Settings) + light main content area.
  *
  * Features:
  *   - Overview: platform stats, recent sessions, 7-day activity chart
@@ -12,6 +12,7 @@
  *   - Tutors: load, last session, assign-to-student
  *   - Parents: child links + weekly digest mailto
  *   - Sessions: all sessions table + Book Session modal
+ *   - Leads: marketing site emails + editable 1-hour follow-up draft
  *   - Settings: gap-scan testing + ACT bank coverage
  */
 
@@ -99,8 +100,64 @@ interface StudentMeta {
   conceptCount: number
 }
 
-type AdminTab = 'overview' | 'links' | 'students' | 'tutors' | 'parents' | 'sessions' | 'health' | 'settings'
+type AdminTab = 'overview' | 'links' | 'students' | 'tutors' | 'parents' | 'sessions' | 'health' | 'leads' | 'settings'
 type HealthStatus = 'checking' | 'healthy' | 'warning' | 'down' | 'unknown'
+
+interface MarketingLead {
+  id: string
+  email: string
+  name: string
+  role: string
+  source: string
+  note: string
+  visitCount: number
+  createdAt: number | null
+  followUpAt: number | null
+  followUpStatus: string
+  followUpError: string | null
+}
+
+const DEFAULT_FOLLOW_SUBJECT = 'Your desk is waiting · MindCraft'
+const DEFAULT_FOLLOW_BODY = `Hi {{name}},
+
+Thanks for stopping by MindCraft.
+
+School scatters everything into screenshots, planners, and late-night tabs. MindCraft is the operating system for that knowledge — a desk that files what you drop, maps the exact gaps, and turns practice into training you can feel. Think gym membership for math, not another homework chat.
+
+What we keep hearing from families and students: good help looks like an exact gap map, practice that transfers when the question looks different, and an honest note for parents. Not another green streak.
+
+While beta is free, you can claim a seat here:
+https://mindcraft-marketing-site.web.app/#start
+
+Or just reply with your grade (or your student's grade) and what should feel easier in two weeks. A real human reads every note.
+
+Talk soon,
+Akshat + the MindCraft desk
+joinmindcraft@gmail.com`
+
+function tsMs(raw: unknown): number | null {
+  if (raw == null) return null
+  if (typeof raw === 'number' && Number.isFinite(raw)) return raw
+  if (typeof raw === 'object' && typeof (raw as { toMillis?: unknown }).toMillis === 'function') {
+    try { return (raw as { toMillis: () => number }).toMillis() } catch { return null }
+  }
+  return null
+}
+
+function renderFollowTemplate(tpl: string, name: string, email: string): string {
+  const first = name.trim() || 'there'
+  return tpl
+    .replace(/\{\{name\}\}/g, first)
+    .replace(/\{\{email\}\}/g, email)
+}
+
+function followStatusStyle(status: string): { color: string; background: string } {
+  if (status === 'sent') return { color: '#2b6cb0', background: 'rgba(43, 108, 176, 0.12)' }
+  if (status === 'failed') return { color: '#C53030', background: 'rgba(197, 48, 48, 0.1)' }
+  if (status === 'skipped') return { color: '#8A8F98', background: 'rgba(138, 143, 152, 0.14)' }
+  // scheduled (default)
+  return { color: '#247a4d', background: 'rgba(36, 122, 77, 0.12)' }
+}
 
 interface HealthCheck {
   id: string
@@ -212,6 +269,10 @@ const NAV_ITEMS: { id: AdminTab; label: string; icon: JSX.Element }[] = [
     icon: <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 8L9 4l-3 8H2"/><path d="M12 21a9 9 0 1 0-8.5-12"/></svg>,
   },
   {
+    id: 'leads', label: 'Leads',
+    icon: <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>,
+  },
+  {
     id: 'settings', label: 'Settings',
     icon: <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>,
   },
@@ -225,6 +286,7 @@ const TAB_TITLES: Record<AdminTab, { title: string; sub: string }> = {
   parents:  { title: 'Parents',   sub: 'Child links and weekly digests' },
   sessions: { title: 'Sessions',  sub: 'Every session across all tutors' },
   health:   { title: 'System Health', sub: 'Plain-English status for backend, data flow, content, and routes' },
+  leads:    { title: 'Website leads', sub: 'Visitors who left an email · edit the 1-hour follow-up' },
   settings: { title: 'Settings',  sub: 'Platform configuration and testing tools' },
 }
 
@@ -285,6 +347,15 @@ export default function Admin() {
   const [loading, setLoading]   = useState(true)
   const [saving, setSaving]     = useState(false)
 
+  // Marketing leads + 1-hour follow-up draft (Firestore marketing_leads / marketing_settings)
+  const [leads, setLeads] = useState<MarketingLead[]>([])
+  const [leadsLoading, setLeadsLoading] = useState(false)
+  const [followSubject, setFollowSubject] = useState(DEFAULT_FOLLOW_SUBJECT)
+  const [followBody, setFollowBody] = useState(DEFAULT_FOLLOW_BODY)
+  const [followEnabled, setFollowEnabled] = useState(true)
+  const [followBusy, setFollowBusy] = useState(false)
+  const [followSavedNote, setFollowSavedNote] = useState('')
+
   const storyCount = coverageRows.length
   const generatedQuestionCount = coverageRows.reduce((sum, row) => (
     sum + (row.questionSources ?? [])
@@ -310,6 +381,56 @@ export default function Admin() {
   useEffect(() => {
     listAllowlist().then(setAllowlist).catch(() => {})
   }, [])
+
+  // Leads tab — subscribe when open so we don't keep a live listener forever.
+  useEffect(() => {
+    if (tab !== 'leads') return
+    setLeadsLoading(true)
+    const unsub = onSnapshot(
+      query(collection(db, 'marketing_leads'), orderBy('createdAt', 'desc'), limit(200)),
+      snap => {
+        setLeads(snap.docs.map(d => {
+          const data = d.data()
+          return {
+            id: d.id,
+            email: String(data.email || d.id),
+            name: String(data.name || ''),
+            role: String(data.role || 'visitor'),
+            source: String(data.source || ''),
+            note: String(data.note || ''),
+            visitCount: typeof data.visitCount === 'number' ? data.visitCount : 1,
+            createdAt: tsMs(data.createdAt),
+            followUpAt: tsMs(data.followUpAt),
+            followUpStatus: String(data.followUpStatus || 'scheduled'),
+            followUpError: data.followUpError ? String(data.followUpError) : null,
+          }
+        }))
+        setLeadsLoading(false)
+      },
+      () => {
+        setLeadsLoading(false)
+        showToast('Could not load marketing leads.')
+      },
+    )
+
+    // Draft settings — one-shot load; Save writes back.
+    getDoc(doc(db, 'marketing_settings', 'followUpEmail'))
+      .then(snap => {
+        if (!snap.exists()) {
+          setFollowSubject(DEFAULT_FOLLOW_SUBJECT)
+          setFollowBody(DEFAULT_FOLLOW_BODY)
+          setFollowEnabled(true)
+          return
+        }
+        const data = snap.data()
+        setFollowSubject(String(data.subject || DEFAULT_FOLLOW_SUBJECT))
+        setFollowBody(String(data.body || DEFAULT_FOLLOW_BODY))
+        setFollowEnabled(data.enabled !== false)
+      })
+      .catch(() => showToast('Could not load follow-up draft.'))
+
+    return unsub
+  }, [tab])
 
   useEffect(() => {
     const unsub = onSnapshot(
@@ -902,6 +1023,36 @@ export default function Admin() {
       `strengths, and where we're focusing next. Reply to this email any time with questions.\n\n` +
       `Best,\nThe MindCraft Team`
     return `mailto:${p.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+  }
+
+  function leadFollowMailto(lead: MarketingLead): string {
+    const subject = renderFollowTemplate(followSubject || DEFAULT_FOLLOW_SUBJECT, lead.name, lead.email)
+    const body = renderFollowTemplate(followBody || DEFAULT_FOLLOW_BODY, lead.name, lead.email)
+    return `mailto:${encodeURIComponent(lead.email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+  }
+
+  async function saveFollowUpDraft() {
+    setFollowBusy(true)
+    setFollowSavedNote('')
+    try {
+      await setDoc(
+        doc(db, 'marketing_settings', 'followUpEmail'),
+        {
+          subject: followSubject.trim() || DEFAULT_FOLLOW_SUBJECT,
+          body: followBody.trim() || DEFAULT_FOLLOW_BODY,
+          enabled: followEnabled,
+          delayMinutes: 60,
+          updatedAt: serverTimestamp(),
+        },
+        { merge: true },
+      )
+      setFollowSavedNote('Saved.')
+      showToast('Follow-up draft saved.')
+    } catch {
+      showToast('Could not save follow-up draft.')
+    } finally {
+      setFollowBusy(false)
+    }
   }
 
   // ── Overview computations ─────────────────────────────────────────────────
@@ -1680,6 +1831,172 @@ export default function Admin() {
                   </div>
                 </div>
               </div>
+            </div>
+          </>
+        )}
+
+        {/* ── LEADS — marketing site captures + editable 1-hour follow-up ── */}
+        {tab === 'leads' && (
+          <>
+            <div className={s.card} style={{ marginBottom: 20 }}>
+              <div className={s.cardTitleRow}>
+                <span className={s.cardTitle}>Follow-up email draft</span>
+                <span className={s.cardHint}>sends ~1 hour after capture</span>
+              </div>
+              <p className={s.settingsNote}>
+                Cron sends due follow-ups automatically (Resend on the webhook).
+                Use Save here to edit the draft; per-lead mailto opens your mail app with{' '}
+                <code>{'{{name}}'}</code> / <code>{'{{email}}'}</code> filled in.
+              </p>
+              <label className={s.allowlistHeader} style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer' }}>
+                <input
+                  type="checkbox"
+                  checked={followEnabled}
+                  onChange={e => setFollowEnabled(e.target.checked)}
+                />
+                <strong>Enabled</strong>
+                <span className={s.allowlistHint}>— when off, cron skips sending</span>
+              </label>
+              <div className={s.field} style={{ marginBottom: 10 }}>
+                <label htmlFor="follow-subject">Subject</label>
+                <input
+                  id="follow-subject"
+                  className={s.linkInputSm}
+                  style={{ width: '100%' }}
+                  value={followSubject}
+                  onChange={e => setFollowSubject(e.target.value)}
+                  placeholder={DEFAULT_FOLLOW_SUBJECT}
+                />
+              </div>
+              <div className={s.field} style={{ marginBottom: 10 }}>
+                <label htmlFor="follow-body">Body</label>
+                <textarea
+                  id="follow-body"
+                  rows={12}
+                  style={{ width: '100%', padding: 12, borderRadius: 10, border: '1.5px solid var(--bd)', font: 'inherit', resize: 'vertical' }}
+                  value={followBody}
+                  onChange={e => setFollowBody(e.target.value)}
+                  placeholder={DEFAULT_FOLLOW_BODY}
+                />
+              </div>
+              <p className={s.settingsNote} style={{ marginTop: 0 }}>
+                Tokens: <code>{'{{name}}'}</code> and <code>{'{{email}}'}</code>. Empty name becomes “there”.
+              </p>
+              <div className={s.btnCluster}>
+                <button
+                  type="button"
+                  className={s.linkAddBtn}
+                  onClick={() => void saveFollowUpDraft()}
+                  disabled={followBusy}
+                >
+                  {followBusy ? 'Saving…' : 'Save draft'}
+                </button>
+                <button
+                  type="button"
+                  className={s.actionBtn}
+                  onClick={() => {
+                    void (async () => {
+                      if (!WEBHOOK_BASE) {
+                        showToast('Webhook URL missing.')
+                        return
+                      }
+                      try {
+                        const res = await fetch(`${WEBHOOK_BASE}/api/cron-marketing-followup`, {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: '{}',
+                        })
+                        if (res.status === 403) {
+                          showToast('Cron is locked (needs secret). GitHub Actions sends due emails every 20 min.')
+                          return
+                        }
+                        const data = await res.json().catch(() => ({})) as { checked?: number; resendConfigured?: boolean }
+                        if (!res.ok) {
+                          showToast('Follow-up ping failed.')
+                          return
+                        }
+                        showToast(
+                          data.resendConfigured
+                            ? `Checked ${data.checked ?? 0} due lead(s).`
+                            : 'Leads queued — add RESEND_API_KEY on Vercel to auto-send.',
+                        )
+                      } catch {
+                        showToast('Could not reach follow-up cron.')
+                      }
+                    })()
+                  }}
+                >
+                  Send due now
+                </button>
+                {followSavedNote && (
+                  <span className={s.allowlistHint}>{followSavedNote}</span>
+                )}
+              </div>
+            </div>
+
+            <div className={s.card}>
+              <div className={s.cardTitleRow}>
+                <span className={s.cardTitle}>Leads</span>
+                <span className={s.cardHint}>{leads.length} shown</span>
+              </div>
+              {leadsLoading ? (
+                <div className={s.empty}>Loading…</div>
+              ) : leads.length === 0 ? (
+                <div className={s.empty}>No website leads yet.</div>
+              ) : (
+                <div className={s.tableScroll}>
+                  <table className={s.table}>
+                    <thead>
+                      <tr>
+                        <th>Email</th>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Source</th>
+                        <th>Status</th>
+                        <th>Created</th>
+                        <th>Visits</th>
+                        <th>Note</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {leads.map(lead => {
+                        const noteSnippet = lead.note
+                          ? (lead.note.length > 48 ? `${lead.note.slice(0, 48)}…` : lead.note)
+                          : '—'
+                        const statusStyle = followStatusStyle(lead.followUpStatus)
+                        return (
+                          <tr key={lead.id}>
+                            <td>
+                              <a href={leadFollowMailto(lead)}>{lead.email}</a>
+                            </td>
+                            <td>{lead.name || '—'}</td>
+                            <td>{lead.role || '—'}</td>
+                            <td>{lead.source || '—'}</td>
+                            <td>
+                              <span className={s.statusBadge} style={statusStyle} title={lead.followUpError || undefined}>
+                                {lead.followUpStatus || 'scheduled'}
+                              </span>
+                            </td>
+                            <td>{lead.createdAt ? fmtDateTime(lead.createdAt) : '—'}</td>
+                            <td>{lead.visitCount}</td>
+                            <td title={lead.note || undefined}>{noteSnippet}</td>
+                            <td>
+                              <a
+                                className={s.linkAddBtn}
+                                style={{ display: 'inline-block', textDecoration: 'none' }}
+                                href={leadFollowMailto(lead)}
+                              >
+                                Mailto
+                              </a>
+                            </td>
+                          </tr>
+                        )
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              )}
             </div>
           </>
         )}
