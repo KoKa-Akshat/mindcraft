@@ -48,6 +48,7 @@ import QAToolbar       from './components/QAToolbar'
 import { MARKETING_BASE } from './lib/siteUrls'
 import { fetchKnowledgeGraph } from './lib/graphCache'
 import { isTestProfileEmail, resetStudentProfile } from './lib/testProfile'
+import { installDeskAskAuthBridge } from './lib/deskAsk'
 import { clearAuthHandoff, isAuthHandoffActive } from './lib/postLogin'
 
 
@@ -164,6 +165,8 @@ function AuthGuard({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, setUser)
     void auth.authStateReady().then(() => setAuthReady(true))
+    // Bridge Firebase auth into web Desk OS Ask (`window.__MC_DESK_AUTH__`).
+    installDeskAskAuthBridge()
     return unsub
   }, [])
 

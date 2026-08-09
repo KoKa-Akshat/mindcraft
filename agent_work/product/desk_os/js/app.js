@@ -38,6 +38,7 @@ import { createUploadSurface, spawnDashNotes } from './upload.js?v=r9b';
 import { createHomeHub, HOME_ART } from './home.js?v=r9b';
 import { createWidgetFactory } from './widgets.js?v=r9b';
 import { createJournalFocus } from './journal.js?v=r9b';
+import { askDeskAgent, buildDeskContextFromLocal } from './deskAsk.js?v=r9b';
 import { createFieldBookCook } from './fieldbook.js?v=r9b';
 import { createSatellites } from './satellites.js?v=r9b';
 import { createActBookOverlay } from './actBook.js?v=r9b';
@@ -1555,22 +1556,47 @@ function openTutorMap(opts = {}) {
   window.setTimeout(() => tutorMap?.open(opts), 40);
 }
 
-function routeHelp(q) {
+function applyDeskAskActions(actions = []) {
+  for (const action of actions) {
+    const type = action?.type;
+    if (type === 'open_gmail') openTool('mail');
+    else if (type === 'open_apply' || type === 'open_connect') {
+      goHome?.();
+      window.setTimeout(() => {
+        document.getElementById('workflowMarket')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 40);
+    } else if (type === 'refresh_calendar') openTool('calendar');
+    else if (type === 'prepend_intel' && action.payload) {
+      try {
+        const key = 'deskOs.intelLines';
+        const prev = JSON.parse(localStorage.getItem(key) || '[]');
+        const next = [String(action.payload), ...(Array.isArray(prev) ? prev : [])];
+        localStorage.setItem(key, JSON.stringify(next.slice(0, 12)));
+      } catch { /* ignore */ }
+    }
+  }
+}
+
+/** Keyword shortcuts kept as offline / fast path. */
+function routeHelpLocal(q) {
   const s = String(q || '').toLowerCase().trim();
-  if (!s) return;
-  if (/tutor|nearby|map/.test(s)) openTutorMap({ query: s.replace(/tutor|nearby|map|find|a|the/gi, ' ').trim() });
-  else if (/workflow|market|trade|buy/.test(s)) {
+  if (!s) return false;
+  if (/tutor|nearby|map/.test(s)) {
+    openTutorMap({ query: s.replace(/tutor|nearby|map|find|a|the/gi, ' ').trim() });
+    return true;
+  }
+  if (/workflow|market|trade|buy|apply|job/.test(s)) {
     goHome?.();
     window.setTimeout(() => {
       document.getElementById('workflowMarket')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 40);
+    return true;
   }
-  else if (/mail|email|inbox|reply|gmail/.test(s)) openTool('mail');
-  else if (/cal|due|schedule|ics/.test(s)) openTool('calendar');
-  else if (/google|search|scan/.test(s)) openTool('google');
-  else if (/repo|repository|file|filed|archive/.test(s)) {
-    els.toolFieldBook?.click();
-  } else if (/piano|keyboard|twinkle|scale/.test(s)) {
+  if (/mail|email|inbox|reply|gmail/.test(s)) { openTool('mail'); return true; }
+  if (/cal|due|schedule|ics/.test(s)) { openTool('calendar'); return true; }
+  if (/google|search|scan/.test(s)) { openTool('google'); return true; }
+  if (/repo|repository|file|filed|archive/.test(s)) { els.toolFieldBook?.click(); return true; }
+  if (/piano|keyboard|twinkle|scale/.test(s)) {
     openInstance({
       id: 'piano_main',
       kind: 'piano',
@@ -1578,21 +1604,45 @@ function routeHelp(q) {
       seed: 'piano',
       label: 'Piano Field Book',
     });
-  } else if (/act|fieldbook|field book|practice/.test(s)) {
-    openActPractice();
-  } else if (/note|sticky|jot|memo/.test(s)) {
-    showDesk();
-    els.noteInput?.focus();
-  } else if (/bind/.test(s)) openTool('binder');
-  else if (/organ|clean|tidy/.test(s)) openTool('cleanup');
-  else if (/course|graph/.test(s)) openTool('graph');
-  else if (/record|lecture|class|transcri/.test(s)) {
-    showDesk();
-    els.toolRecord?.click();
-  } else if (/drop|upload|pdf|photo/.test(s)) {
-    els.fileInput?.click();
-  } else {
-    showToast(`Heard you · “${s.slice(0, 48)}” (wiring soon)`);
+    return true;
+  }
+  if (/act|fieldbook|field book|practice/.test(s)) { openActPractice(); return true; }
+  if (/note|sticky|jot|memo/.test(s)) { showDesk(); els.noteInput?.focus(); return true; }
+  if (/bind/.test(s)) { openTool('binder'); return true; }
+  if (/organ|clean|tidy/.test(s)) { openTool('cleanup'); return true; }
+  if (/course|graph/.test(s)) { openTool('graph'); return true; }
+  if (/record|lecture|class|transcri/.test(s)) { showDesk(); els.toolRecord?.click(); return true; }
+  if (/drop|upload|pdf|photo/.test(s)) { els.fileInput?.click(); return true; }
+  return false;
+}
+
+async function routeHelp(q) {
+  const s = String(q || '').trim();
+  if (!s) return;
+
+  // Fast local verbs still win for instant navigation.
+  if (routeHelpLocal(s) && !/\b(what|when|why|how|summar|week|today)\b/i.test(s)) {
+    return;
+  }
+
+  const ctx = buildDeskContextFromLocal();
+  // Enrich calendar from IndexedDB when available.
+  try {
+    const events = await listEvents();
+    if (Array.isArray(events) && events.length) {
+      ctx.calendarEvents = events.slice(0, 10).map((ev) => ({
+        day: String(ev.day || ev.date || ''),
+        title: String(ev.title || ev.summary || ''),
+      }));
+    }
+  } catch { /* ignore */ }
+
+  showToast('Thinking…');
+  const result = await askDeskAgent(s, ctx);
+  if (result?.reply) showToast(result.reply);
+  applyDeskAskActions(result?.actions || []);
+  if (!result?.actions?.length && !result?.reply) {
+    if (!routeHelpLocal(s)) showToast(`Heard you · “${s.slice(0, 48)}”`);
   }
 }
 
@@ -1974,8 +2024,8 @@ function wire() {
     e.preventDefault();
     const q = deskAskInput?.value?.trim() || '';
     if (!q) return;
-    routeHelp(q);
     if (deskAskInput) deskAskInput.value = '';
+    void routeHelp(q);
   });
   document.getElementById('deskAskPlus')?.addEventListener('click', () => {
     addBtn?.click();
@@ -1993,9 +2043,9 @@ function wire() {
     const input = /** @type {HTMLInputElement | null} */ (document.getElementById('owlPromptInput'));
     const q = input?.value?.trim() || '';
     if (!q) return;
-    routeHelp(q);
     if (input) input.value = '';
     owlLinks?.closePrompt?.();
+    void routeHelp(q);
   });
 
   els.liveMini?.addEventListener('click', () => {
