@@ -5,6 +5,22 @@
 
 ---
 
+## Active Field Desk checkpoint (2026-08-09)
+
+Native Desk OS + Desk Operator agent work landed today and is **pushed to main**.
+
+| Surface | Tip |
+|---|---|
+| iOS prototype | `/Users/akoirala/Developer/mindcraft/ios-prototype` · tip `4c30ccf` · full note `DESK_SESSION_CHECKPOINT_2026-08-09.md` |
+| Webhook / desk Ask | `webhook/api/desk-ask.ts` · tip includes `a8e0fd7e` |
+| Agent growth ladder | `agent_work/product/DESK_AGENT_GROWTH.md` |
+
+**Locked product shape:** Field Desk home · real Gmail (not AgentMail) · Calendar · Connect enablers · Ask → Desk Operator · live on-device record/tag · Apply today board · hub settings gear.
+
+**Next:** enable Gmail/Calendar APIs on GCP if inbox 403 · harden coffee-shop record · grow agent tools (receipts → mail draft → Job OS → ask_tutor).
+
+---
+
 ## Repo, branch, remote
 
 - **One repo, one remote:** https://github.com/KoKa-Akshat/mindcraft.git
