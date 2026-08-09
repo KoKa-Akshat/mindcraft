@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-09 — Researcher tick: Part CVIII Analogical reasoning & bridge teaching (SAFE-ANALOG)
+
+**Tick type:** Researcher (UTC hour 6 ≡ Red Team slot, but ch108 never written → prefer Researcher per rotation; researcher count since synthesizer v1.14 = 0 → Researcher)  
+**Chapter written:** `chapters/108_analogical_reasoning_bridge_teaching.md` (Part CVIII)  
+**Claim examined:** Whether MindCraft should remediate diagnosed bridges via supported structure-mapping (co-present compare, student alignment, cognitive supports) vs Analogy Score™ / analogy-mention≡pedagogy / surface-story cosplay / AI “this is like…” dumps.
+
+**Doctrine proposed (provisional):** **SAFE-ANALOG** — relations over attributes; notice the join; encode by compare; supports required; name the break; mode gates; densifies SAFE-BRIDGE / TRANSFER / DUAL / GESTURE / PREDICT; no Analogy Score™ / mention≡pedagogy / surface-story≡structure / AI likeness dump / always-analogy / analogy ACT ads. Experiment family **ANALOG-*** (distinct from company-law BRIDGE-* diagnosis/narrative).
+
+**Evidence spine (verified citations):** Gentner (1983) structure-mapping; Gentner & Markman (1997) alignment; Gick & Holyoak (1980) spontaneous transfer failure; Gentner/Loewenstein/Thompson (2003) + Loewenstein et al. (1999) analogical encoding; Richland/Zur/Holyoak (2007) TIMSS supports gap; Richland & McDonough (2010) cuing→discrimination; Richland/Stigler/Holyoak (2012); Richland & Simms (2015) relational HOT.
+
+**Claim killed (this tick):** Analogy Score™ / Mapping Minutes NS / analogy-mention≡pedagogy / surface-story≡structure / AI likeness dump without student mapping / always-analogy dogma / HOT Score™ / Discord≡supported compare / analogy ACT guarantees (provisional kill #62 until synthesizer).
+
+**Experiments:** ANALOG-1…5 + ANALOG-QUAL.
+
+**Next researcher id:** **109** (writing-to-learn in math practice). Researcher count since v1.14 synthesizer: **1**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-09 — Synthesizer tick v1.14: merge Parts C–CVII
 
 **Tick type:** Synthesizer (UTC hour 3; hour%6≠0; ≥8 researcher entries since synthesizer v1.13 → Synthesizer)  

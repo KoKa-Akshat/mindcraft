@@ -98,8 +98,8 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 106 | Peer explanation quality (knowledge-building vs telling) | Roscoe/Chi; teach-back rubric; HITL QA | **DONE** (2026-08-08) — Part CVI / SAFE-PEERX |
 | 107 | Curiosity & prediction before reveal | Epistemic emotions; soft-wrong predict→feedback | **DONE** (2026-08-09) — Part CVII / SAFE-PREDICT |
 | — | **Synthesizer v1.14** | Merge C–CVII SAFE-* into core OS I.4 / XIV / IX / XXI | **DONE** (2026-08-09 UTC 03) |
-| 108 | Analogical reasoning & bridge teaching | Gentner structure-mapping; Map bridge UX | **NEXT** |
-| 109 | Writing-to-learn in math practice | Explanation writing; journal vs FEI; Notes rail | queued |
+| 108 | Analogical reasoning & bridge teaching | Gentner structure-mapping; Map bridge UX | **DONE** (2026-08-09) — Part CVIII / SAFE-ANALOG |
+| 109 | Writing-to-learn in math practice | Explanation writing; journal vs FEI; Notes rail | **NEXT** |
 | 110 | Spatial skills & math identity | Spatial anxiety; FormatId hops; no Spatial Score™ | queued |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
@@ -169,3 +169,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any Embodiment Score™ / Gesture Score™ / Motion Minutes NS / kinesthetic-style meshing / always-add-gesture / manipulative≡gesture≡abstraction / forced produce-only / pose-camera embodiment AI / AR body immersion≡FEI / ACT guarantees from gesture kits (Part CV / SAFE-GESTURE / v1.14 company law)
 - Any Peer Explanation Score™ / Teach Minutes NS / teach-for-XP / knowledge-telling≡quality / Discord≡knowledge-building / AI monologue≡peer teaching / unlock-without-solo after explain / peer-tutoring ACT guarantees (Part CVI / SAFE-PEERX / v1.14 company law)
 - Any Curiosity Score™ / Engagement-from-curiosity NS / cliffhanger-without-commit / postdiction theater / instant-reveal entertainment / guess-for-XP / always-predict dogma / curiosity ACT guarantees (Part CVII / SAFE-PREDICT / v1.14 company law)
+- Any Analogy Score™ / Mapping Minutes NS / analogy-mention≡pedagogy / surface-story≡structure / AI likeness dump without student mapping / always-analogy dogma / HOT Score™ / Discord≡supported compare / analogy ACT guarantees (Part CVIII / SAFE-ANALOG)
