@@ -102,8 +102,8 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 109 | Writing-to-learn in math practice | Explanation writing; journal vs FEI; Notes rail | **DONE** (2026-08-09) — Part CIX / SAFE-WRITE |
 | 110 | Spatial skills & math identity | Spatial anxiety; FormatId hops; no Spatial Score™ | **DONE** (2026-08-09) — Part CX / SAFE-SPATIAL |
 | 111 | Formative assessment cycles in tutor sessions | Black/Wiliam grain; exit tickets vs FEI; no Formative Score™ | **DONE** (2026-08-09) — Part CXI / SAFE-FA |
-| 112 | Feedback literacy — how students use coach feedback | Hattie/Timperley; uptake vs dismiss; soft-wrong action | **NEXT** |
-| 113 | Collaborative problem-solving vs solo FEI | CSCL tradeoffs; group work without solo-transfer washout | queued |
+| 112 | Feedback literacy — how students use coach feedback | Hattie/Timperley; uptake vs dismiss; soft-wrong action | **DONE** (2026-08-09) — Part CXII / SAFE-FBLIT |
+| 113 | Collaborative problem-solving vs solo FEI | CSCL tradeoffs; group work without solo-transfer washout | **NEXT** |
 | 114 | Desirable difficulty scheduling under exam deadlines | Bjork×SAFE-EXAM; when to ease vs hold challenge pre-ACT | queued |
 | 115 | Tutor identity & belonging (near-peer role models) | Representation without tokenism; hire briefs × SAFE-GENDER/ELL | queued |
 | 116 | Offline practice fidelity (paper/whiteboard capture) | Photo-to-Map; attempt grain without phone distraction | queued |
@@ -179,4 +179,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any Writing Score™ / Journal Minutes NS / freewrite diary≡learning / longer-essay≡deeper / AI rewrite≡WTL / Notes scrapbook without FEI / always-journal dogma / writing ACT guarantees (Part CIX / SAFE-WRITE)
 - Any Spatial Score™ / Mental Rotation Minutes NS / isolated brain-training≡math identity / innate or boys-better spatial costume / always-add-3D / Spatial Personality™ / unscaffolded diagram flood / spatial ACT guarantees (Part CX / SAFE-SPATIAL)
 - Any Formative Score™ / Assessment Minutes NS / exit-ticket≡learning / Black–Wiliam 0.4–0.7 product ads / more-quizzes≡formative / gradebook cosplay / “got it?”≡closed cycle / AfL ACT guarantees (Part CXI / SAFE-FA)
-- Any Formative Score™ / Assessment Minutes NS / exit-ticket≡learning / Black–Wiliam 0.4–0.7 product ads / more-quizzes≡formative / gradebook cosplay / “got it?”≡closed cycle / AfL ACT guarantees (Part CXI / SAFE-FA)
+- Any Feedback Literacy Score™ / Feedback Minutes NS / delivery≡uptake / thumbs-up≡used / longer≡more literate / illiteracy-shame without design fix / always-more-feedback dogma / feedback-literacy ACT guarantees (Part CXII / SAFE-FBLIT)

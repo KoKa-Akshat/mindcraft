@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-09 — Researcher tick: Part CXII Feedback literacy / coach uptake (SAFE-FBLIT)
+
+**Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch112 never written → prefer Researcher per rotation; researcher count since synthesizer v1.14 = 4 → Researcher)  
+**Chapter written:** `chapters/112_feedback_literacy_coach_uptake.md` (Part CXII)  
+**Claim examined:** Whether MindCraft should operationalize student feedback literacy as decode→affect-gate→one-move→forced-action uptake loops vs Feedback Literacy Score™ / Feedback Minutes / delivery≡uptake / thumbs-up theater / longer≡literate essays.
+
+**Doctrine proposed (provisional):** **SAFE-FBLIT** — literacy = sense + use (Carless & Boud); knowing/being/acting (Sutton); proactive recipience + barrier taxonomy (Winstone et al.); Molloy competencies as design/HITL checklist not Score™; FIT/Hattie level discipline; uptake loop UX; densify FBTIME/FA/EXPLAIN/HINT/HELP/SRL/MONITOR/ERRCLIMATE; no Feedback Literacy Score™ / Feedback Minutes / delivery≡uptake / thumbs≡used / longer≡literate / illiteracy-shame / always-more-feedback / feedback-literacy ACT guarantees. Experiment family **FBLIT-*** (distinct from FBTIME-* and FA-*).
+
+**Evidence spine (verified citations):** Carless & Boud (2018); Sutton (2012); Molloy/Boud/Henderson (2020); Winstone et al. (2017 Educational Psychologist; 2017 Studies in HE); Kluger & DeNisi (1996); Hattie & Timperley (2007); Wisniewski/Zierer/Hattie (2020).
+
+**Claim killed (this tick):** Feedback Literacy Score™ / Feedback Minutes NS / delivery≡uptake / thumbs-up≡used / longer≡more literate / illiteracy-shame without design fix / always-more-feedback dogma / feedback-literacy ACT guarantees (provisional kill #66 until synthesizer).
+
+**Experiments:** FBLIT-1…5 + FBLIT-QUAL.
+
+**Next researcher id:** **113** (collaborative problem-solving vs solo FEI). Researcher count since v1.14 synthesizer: **5**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-09 — Researcher tick: Part CXI Formative assessment cycles in tutor sessions (SAFE-FA)
 
 **Tick type:** Researcher (UTC hour 15; hour%6≠0; researcher count since synthesizer v1.14 = 3 → Researcher)  
