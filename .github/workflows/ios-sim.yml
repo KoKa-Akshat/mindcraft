@@ -73,7 +73,11 @@ jobs:
             -destination 'generic/platform=iOS Simulator' \
             -derivedDataPath dd \
             CODE_SIGNING_ALLOWED=NO \
-            2>&1 | tail -120
+            2>&1 | tee build.log | tail -60
+
+      - name: Show compile errors
+        if: failure()
+        run: grep -E "error:" -B3 -A8 build.log | head -120
 
       - name: Run XCUITest suite on iPad simulator (best effort)
         id: uitests
