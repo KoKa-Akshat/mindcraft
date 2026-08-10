@@ -380,6 +380,8 @@ struct JesseKitchenBackgroundView: UIViewRepresentable {
 extension Notification.Name {
     static let mcKitchenExitProjects = Notification.Name("mcKitchenExitProjects")
     static let mcKitchenReady = Notification.Name("mcKitchenReady")
+    /// Work-area Manage button → hub page (tutors map + workflow market).
+    static let mcOpenHubFromDesk = Notification.Name("mcOpenHubFromDesk")
 }
 
 /// Breaks WKWebView ↔ coordinator retain cycles that crash on Field Desk reopen.

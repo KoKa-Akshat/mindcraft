@@ -3843,3 +3843,45 @@ Tracker and Connect health data — both grayed out for now.
 ### Verify
 `testDeskHubMasteryGoalAndCheckIn` — map search field + Application Tracker /
 Health insights soon badges.
+
+---
+
+## 2026-08-10 — Projects → Malevolent Shrine → work area pass (cloud session)
+
+Akshat's live asks, implemented in code by a Linux cloud agent — **NOT yet
+built or device-verified (no Xcode in that environment). First action on the
+Mac: build, run the suite, screenshot, then commit a verification note.**
+
+### Shipped (code-level)
+1. **Jesse's top-right chrome** (`FieldDeskView`): Create icon (stub toast —
+   Akshat's Figma pass lands the real studio) + Sign out icon
+   (`authService.signOut()`) next to the volume toggle. `topChrome` trailing
+   padding widened 56 → 148.
+2. **Projects screen** (`FieldDeskView.projectsScreen`): Projects /
+   `openDesk` kitchen actions now land on a neat Malevolent Shrine project
+   card (`MalevolentShrineStage`, title "Malevolent Shrine", OPEN capsule,
+   back-to-Jesse's pill) instead of jumping straight into the desk. Tapping
+   the shrine runs the existing polka `openStandaloneDesk()` path.
+3. **Work area toolbars** (`worlds/deskweb/desk.html`): fixed top bar
+   (Malevolent Shrine title + Manage) and bottom dock (+ / Record / Binder /
+   Calendar / zoom). Browser-verified 9/9 (screenshots in the shared-repo
+   session artifacts).
+4. **+ shows things**: + opens a 4-item tray (Note / Memo / Doc / Record);
+   Doc spawns a blank page tile, Calendar dock button spawns a clearly
+   labeled sample "This week" tile.
+5. **Transcription + Binder tiles**: transcription is draggable, has no
+   remove control; the center tile is now a Binder cover (was a Jesse's
+   Kitchen screenshot) — movable, not removable; tap → "Ask your binder"
+   command bar.
+6. **Manage → hub**: desk.html Manage posts `{action:'manage'}` over a new
+   `deskAction` `WKScriptMessageHandler` on `StandaloneDeskView`;
+   `FieldDeskView.openManageHubFromDesk()` closes the desk and posts
+   `.mcOpenHubFromDesk`; `DeskShellView` presents the full hub (tutors map +
+   workflow market expanded) as a cover with a Back-to-desk pill. Guard
+   included for the `fieldDeskRoute` cover-on-cover case.
+
+### Verify next session (Mac)
+Build + run on `id=00008103-0012296E01D0C01E` (foreground, no
+Monitor-waits): fresh launch → Create/Sign out/volume top-right → Projects →
+shrine screen → tap → work area with both toolbars → + tray → Manage → hub
+page → Back to desk. Screenshot each.

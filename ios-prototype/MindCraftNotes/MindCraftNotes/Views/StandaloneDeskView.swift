@@ -9,6 +9,8 @@ import WebKit
 /// so none of the overlay hit-testing complexity applies here.
 struct StandaloneDeskView: View {
     var onBackToKitchen: () -> Void
+    /// Manage button inside the web desk → hub page (map + workflow market).
+    var onManage: (() -> Void)? = nil
 
     private static let paper = Color(red: 247 / 255, green: 248 / 255, blue: 244 / 255)
     private static let ink = Color(red: 20 / 255, green: 58 / 255, blue: 46 / 255)
@@ -17,7 +19,7 @@ struct StandaloneDeskView: View {
         ZStack(alignment: .topLeading) {
             Self.paper.ignoresSafeArea()
 
-            DeskWebView()
+            DeskWebView(onManage: onManage)
                 .ignoresSafeArea()
 
             Button(action: onBackToKitchen) {
@@ -46,6 +48,8 @@ struct StandaloneDeskView: View {
 }
 
 private struct DeskWebView: UIViewRepresentable {
+    var onManage: (() -> Void)?
+
     static var deskURL: URL {
         if let override = UserDefaults.standard.string(forKey: "deskOs.standaloneDeskURL"),
            let url = URL(string: override) {
@@ -54,10 +58,17 @@ private struct DeskWebView: UIViewRepresentable {
         return URL(string: "\(KitchenSchemeHandler.scheme)://desk/desk.html")!
     }
 
+    func makeCoordinator() -> Coordinator {
+        Coordinator(onManage: onManage)
+    }
+
     func makeUIView(context: Context) -> WKWebView {
         let config = WKWebViewConfiguration()
         config.allowsInlineMediaPlayback = true
         config.setURLSchemeHandler(KitchenSchemeHandler(), forURLScheme: KitchenSchemeHandler.scheme)
+        // Same `deskAction` bridge shape the kitchen embed uses — the desk
+        // page posts {action:'manage'} from its Manage button.
+        config.userContentController.add(context.coordinator, name: "deskAction")
 
         let view = WKWebView(frame: .zero, configuration: config)
         view.isOpaque = true
@@ -74,7 +85,35 @@ private struct DeskWebView: UIViewRepresentable {
         return view
     }
 
-    func updateUIView(_ uiView: WKWebView, context: Context) {}
+    func updateUIView(_ uiView: WKWebView, context: Context) {
+        context.coordinator.onManage = onManage
+    }
+
+    static func dismantleUIView(_ uiView: WKWebView, coordinator: Coordinator) {
+        uiView.configuration.userContentController.removeScriptMessageHandler(forName: "deskAction")
+    }
+
+    final class Coordinator: NSObject, WKScriptMessageHandler {
+        var onManage: (() -> Void)?
+
+        init(onManage: (() -> Void)?) {
+            self.onManage = onManage
+        }
+
+        func userContentController(
+            _ userContentController: WKUserContentController,
+            didReceive message: WKScriptMessage
+        ) {
+            guard message.name == "deskAction",
+                  let body = message.body as? [String: Any],
+                  let action = body["action"] as? String else { return }
+            if action == "manage" {
+                DispatchQueue.main.async { [weak self] in
+                    self?.onManage?()
+                }
+            }
+        }
+    }
 }
 
 /// White polka dots growing from the center until they merge into a solid

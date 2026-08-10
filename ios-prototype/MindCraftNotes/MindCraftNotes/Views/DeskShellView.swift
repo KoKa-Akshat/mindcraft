@@ -75,6 +75,9 @@ struct DeskShellView: View {
     @State private var showManage = false
     @State private var showCreateInstance = false
     @State private var openCustomId: String?
+    /// Full hub page (tutors map + workflow market) opened from the work
+    /// area's Manage button.
+    @State private var showHubPage = false
 
     var body: some View {
         ZStack {
@@ -119,6 +122,43 @@ struct DeskShellView: View {
         .animation(.easeInOut(duration: 0.45), value: showBoot)
         .onReceive(NotificationCenter.default.publisher(for: .mcKitchenReady)) { _ in
             kitchenReady = true
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .mcOpenHubFromDesk)) { _ in
+            tutorsExpanded = true
+            workflowsExpanded = true
+            // If Field Desk is up as a cover, dismiss it first — presenting
+            // two covers from the same host silently fails.
+            if fieldDeskRoute != nil {
+                fieldDeskRoute = nil
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
+                    showHubPage = true
+                }
+            } else {
+                showHubPage = true
+            }
+        }
+        .fullScreenCover(isPresented: $showHubPage) {
+            ZStack(alignment: .bottom) {
+                hub
+                Button {
+                    showHubPage = false
+                } label: {
+                    HStack(spacing: 8) {
+                        Image(systemName: "chevron.left")
+                            .font(.system(size: 12, weight: .heavy))
+                        Text("Back to desk")
+                            .font(.system(size: 13, weight: .heavy, design: .rounded))
+                    }
+                    .foregroundColor(Color(shellHex: "f4f7f4"))
+                    .padding(.horizontal, 18)
+                    .padding(.vertical, 11)
+                    .background(Capsule().fill(Color(shellHex: "1f2a22")))
+                    .shadow(color: .black.opacity(0.25), radius: 12, y: 5)
+                }
+                .buttonStyle(.plain)
+                .padding(.bottom, 18)
+                .accessibilityIdentifier("hubPageBackToDesk")
+            }
         }
         .onAppear {
             // Start loading Jesse immediately under the boot slide.
