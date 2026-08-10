@@ -1280,21 +1280,22 @@
   .story-led .hero h1{font-size:72px; max-width:11ch; letter-spacing:0;}
   .story-led .hero .lead{max-width:48ch;}
   .story-led .workspace-board{
-    height:540px; border-color:rgba(255,255,255,.2);
+    height:540px; border-color:rgba(20,58,46,.13);
     background:
-      radial-gradient(circle,rgba(255,255,255,.46) 2px,transparent 2.6px),
-      radial-gradient(circle at 50% 42%,rgba(23,52,42,.42),transparent 54%),
-      #080b09;
+      radial-gradient(circle,rgba(20,58,46,.2) 2px,transparent 2.6px),
+      linear-gradient(180deg,rgba(255,255,255,.98),rgba(247,249,245,.96)),
+      #fbfcf9;
     background-size:54px 54px,auto,auto;
     background-position:18px 18px,center,center;
+    box-shadow:0 34px 95px rgba(0,0,0,.22),inset 0 1px 0 #fff;
   }
   .story-led .workspace-cluster{inset:30px 26px 34px; transform-origin:50% 48%;}
   .story-led .paper-main{
-    appearance:none; left:31%; top:30px; width:38%; height:330px; z-index:7; --r:-.35deg;
+    appearance:none; left:27.5%; top:34px; width:45%; height:354px; z-index:7; --r:-.25deg;
   }
   .story-led .paper-main img{object-position:center;}
   .story-led .memo-preview{
-    left:3%; top:150px; width:28%; min-height:146px; z-index:5; padding:18px 17px;
+    left:2%; top:168px; width:27%; min-height:146px; z-index:5; padding:18px 17px;
     background:#fffdf0; --r:-1.2deg;
   }
   .story-led .memo-preview::before{
@@ -1310,29 +1311,31 @@
     font-size:17px; line-height:1.25; font-weight:600;
   }
   .story-led .act-preview{
-    right:2%; top:142px; width:29%; height:174px; z-index:5; --r:.9deg; padding:7px;
+    right:1%; top:156px; width:30%; height:184px; z-index:5; --r:.8deg; padding:7px;
   }
-  .story-led .act-preview-grid{display:grid; grid-template-columns:1.2fr .8fr; gap:5px; height:128px; overflow:hidden; border-radius:10px;}
+  .story-led .act-preview-grid{display:grid; grid-template-columns:1.35fr .65fr; gap:5px; height:138px; overflow:hidden; border-radius:10px; background:#0b2119;}
   .story-led .act-preview-grid img{border-radius:0; object-fit:cover; object-position:left top;}
   .story-led .act-preview > span{
     display:block; padding:7px 3px 1px; color:#143a2e; font-size:10px; font-weight:1000;
     letter-spacing:.06em; text-transform:uppercase;
   }
-  .story-led .transcribe-card{left:35%; top:305px; width:34%;}
+  .story-led .paper-label{color:rgba(20,58,46,.58); text-shadow:0 1px 0 #fff;}
   .desk-tools{
     position:absolute; z-index:24; right:20px; top:20px; display:flex; align-items:center; gap:9px;
   }
   .desk-tools .add-note{position:static; width:46px; height:46px; box-shadow:0 14px 34px rgba(0,0,0,.38);}
   .desk-zoom{
-    display:grid; grid-template-columns:1fr 1fr; overflow:hidden; border:1px solid rgba(255,255,255,.18);
-    border-radius:14px; background:rgba(7,12,9,.78); -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px);
+    display:grid; grid-template-columns:1fr 1fr; overflow:hidden; border:1px solid rgba(20,58,46,.14);
+    border-radius:14px; background:rgba(255,255,255,.9); -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px);
+    box-shadow:0 12px 28px rgba(20,58,46,.1);
   }
   .desk-zoom button{
-    width:38px; height:38px; border:0; border-right:1px solid rgba(255,255,255,.14);
-    background:transparent; color:#fff; font-size:19px; font-weight:900; cursor:pointer;
+    width:38px; height:38px; border:0; border-right:1px solid rgba(20,58,46,.12);
+    background:transparent; color:#143a2e; font-size:19px; font-weight:900; cursor:pointer;
   }
   .desk-zoom button:last-child{border-right:0;}
-  .desk-zoom button:hover{background:rgba(255,255,255,.1);}
+  .desk-zoom button:hover{background:rgba(20,58,46,.07);}
+  .desk-tools .add-note{background:#07110e; color:#fff;}
   .desk-prompt{
     position:absolute; z-index:22; left:50%; bottom:18px; width:min(460px,calc(100% - 40px));
     min-height:58px; padding:7px 7px 7px 17px; display:grid; grid-template-columns:1fr auto; gap:8px;
@@ -1347,6 +1350,19 @@
   .desk-prompt input::placeholder{color:rgba(255,255,255,.44);}
   .desk-prompt button{width:44px; height:44px; border:0; border-radius:13px; background:var(--lime); color:#07110e; font-size:19px; cursor:pointer;}
   .story-led .note-composer{top:74px; right:20px;}
+
+  .credibility{
+    padding:42px 0 64px; background:#07110e; color:#fff;
+    border-top:1px solid rgba(255,255,255,.1);
+  }
+  .cred-stats{display:grid; grid-template-columns:repeat(3,1fr); gap:34px; text-align:center;}
+  .cred-stats > div{min-width:0;}
+  .cred-stats strong{display:block; color:var(--lime); font-family:"Fredoka",sans-serif; font-size:22px; letter-spacing:0;}
+  .cred-stats span{display:block; margin-top:5px; color:rgba(255,255,255,.5); font-size:11px; font-weight:900;}
+  .credibility .intro-schools{margin-top:36px; padding-top:28px; border-color:rgba(255,255,255,.1);}
+  .credibility .intro-schools > span{color:rgba(255,255,255,.48);}
+  .credibility .intro-schools li{filter:drop-shadow(0 10px 18px rgba(0,0,0,.24));}
+  .credibility .intro-schools .mac img{filter:brightness(0) invert(1);}
 
   .story-beat{min-height:min(92svh,900px); display:flex; align-items:center; overflow:hidden;}
   .story-beat .kicker,.mission-story .kicker{margin-bottom:18px;}
@@ -1408,6 +1424,7 @@
   .lesson-canvas{position:relative; height:520px; margin-top:52px;}
   .lesson-canvas figure{position:absolute; overflow:hidden; border:7px solid #fff; border-radius:8px; box-shadow:0 24px 68px rgba(20,58,46,.17);}
   .lesson-canvas img{width:100%; height:100%; object-fit:cover;}
+  .detail-two img{object-fit:contain; background:#07110e;}
   .lesson-main{left:15%; top:0; width:50%; height:440px; z-index:3; transform:rotate(-1deg);}
   .lesson-main figcaption{position:absolute; left:14px; bottom:13px; padding:7px 10px; border-radius:6px; background:rgba(6,15,12,.84); color:#fff; font-size:10px; font-weight:1000; letter-spacing:.06em;}
   .lesson-detail{width:27%; height:230px;}
@@ -1422,19 +1439,16 @@
   .care-story h2{color:#fff; font-size:62px;}
   .care-story h2 span{display:block; color:var(--lime);}
   .care-copy p{margin-top:24px; max-width:42ch; color:rgba(255,255,255,.64); font-size:18px; line-height:1.55; font-weight:800;}
-  .care-handoff{position:relative; min-height:480px; display:grid; align-content:center;}
-  .care-context{
-    position:relative; z-index:2; width:76%; padding:30px; border:1px solid rgba(255,255,255,.14); border-radius:8px;
-    background:rgba(255,255,255,.07); box-shadow:0 30px 90px rgba(0,0,0,.34);
-    -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px);
-  }
-  .care-context small{color:var(--lime); font-size:9px; font-weight:1000; letter-spacing:.17em;}
-  .care-context b{display:block; margin-top:14px; font-family:"Fredoka",sans-serif; font-size:25px; line-height:1.2;}
-  .care-context span{display:block; margin-top:16px; color:rgba(255,255,255,.58); font-size:14px; line-height:1.5; font-weight:800;}
-  .care-people{position:absolute; z-index:3; right:0; bottom:22px; display:flex; gap:15px; align-items:flex-end;}
+  .care-handoff{position:relative; min-height:440px; display:grid; align-content:center;}
+  .jesse-care{max-width:16ch; color:#fff; font-family:"DM Serif Display",Georgia,serif; font-size:35px; line-height:1.24;}
+  .jesse-care::before{content:"“"; color:var(--lime);}
+  .jesse-care::after{content:"”"; color:var(--lime);}
+  .care-people{position:static; display:flex; gap:24px; align-items:flex-start; margin-top:42px;}
   .care-people figure{width:132px;}
-  .care-people figure:first-child{transform:translateY(-72px);}
+  .care-people figure:nth-child(2){transform:translateY(24px);}
+  .care-people figure:nth-child(3){transform:translateY(-14px);}
   .care-people img{width:112px; height:112px; object-fit:cover; border:5px solid #fff; border-radius:50%; box-shadow:0 20px 50px rgba(0,0,0,.42);}
+  .care-people figure:nth-child(3) img{object-position:50% 18%;}
   .care-people figcaption{margin-top:10px; color:#fff; font-size:12px; font-weight:1000; line-height:1.25;}
   .care-people figcaption span{color:rgba(255,255,255,.42); font-size:10px;}
 
@@ -1443,8 +1457,9 @@
   .act-proof-visual{position:relative; min-height:540px;}
   .act-proof-visual figure{position:absolute; overflow:hidden; border:7px solid #fff; border-radius:8px; box-shadow:0 26px 78px rgba(20,58,46,.18);}
   .act-proof-visual img{width:100%; height:100%; object-fit:cover; object-position:left top;}
-  .act-dash{left:0; top:18px; width:80%; height:430px; transform:rotate(-1.1deg);}
-  .act-practice{right:0; bottom:12px; width:40%; height:340px; transform:rotate(1.4deg);}
+  .act-dash{left:0; top:64px; width:88%; height:340px; transform:rotate(-1.1deg); background:#07110e;}
+  .act-dash img{object-fit:contain; background:#07110e;}
+  .act-practice{right:0; bottom:26px; width:36%; height:300px; transform:rotate(1.4deg);}
   .act-proof-copy h2{font-size:62px;}
   .act-proof-copy h2 span{display:block;}
   .act-proof-copy > p{margin-top:22px; color:rgba(20,58,46,.62); font-size:18px; line-height:1.55; font-weight:800;}
@@ -1490,15 +1505,13 @@
     .story-led .hero .lead{font-size:16px;}
     .story-led .workspace-board{height:440px; background-size:42px 42px,auto,auto; background-position:12px 12px,center,center;}
     .story-led .workspace-cluster{inset:22px 14px 50px; transform-origin:50% 44%;}
-    .story-led .paper-main{left:18%; top:28px; width:64%; height:246px;}
-    .story-led .memo-preview{left:-9%; top:168px; width:38%; min-height:118px; padding:13px 12px;}
-    .story-led .memo-preview [data-note-copy]{font-size:13px;}
-    .story-led .act-preview{right:-8%; top:170px; width:39%; height:122px; padding:5px;}
+    .story-led .paper-main{left:16%; top:26px; width:68%; height:274px;}
+    .story-led .memo-preview{left:1%; top:196px; width:32%; min-height:105px; padding:12px 10px;}
+    .story-led .memo-preview b,.story-led .memo-preview [data-note-copy]{display:none;}
+    .story-led .act-preview{right:1%; top:198px; width:33%; height:108px; padding:5px;}
+    .story-led .memo-preview .paper-label,.story-led .act-preview .paper-label{display:none;}
     .story-led .act-preview-grid{height:82px; gap:3px;}
     .story-led .act-preview > span{font-size:8px; padding-top:5px;}
-    .story-led .transcribe-card{left:24%; top:228px; width:54%; padding:11px 12px;}
-    .story-led .transcribe-card p{font-size:11px;}
-    .story-led .transcribe-card span{font-size:9px;}
     .desk-tools{right:12px; top:12px; gap:7px;}
     .desk-tools .add-note{width:42px; height:42px;}
     .desk-zoom button{width:34px; height:34px;}
@@ -1509,6 +1522,9 @@
     .story-led .hero-trust{justify-content:flex-start; gap:10px 18px;}
     .story-led .trust span{display:none;}
     .story-led .trust b{font-size:12px;}
+    .credibility{padding:38px 0 52px;}
+    .cred-stats{grid-template-columns:1fr; gap:18px;}
+    .credibility .intro-schools{margin-top:28px; padding-top:24px;}
     .story-beat{padding:82px 0;}
     .story-beat h2,.mission-story h2,.across-copy h2,.care-story h2,.act-proof-copy h2{font-size:40px;}
     .story-intro p,.across-copy p,.lesson-heading p,.care-copy p,.act-proof-copy > p{font-size:16px;}
@@ -1525,15 +1541,14 @@
     .lesson-detail{width:38%; height:170px;}
     .detail-one{right:-4%; top:22px;}
     .detail-two{right:1%; bottom:0;}
-    .care-handoff{min-height:410px;}
-    .care-context{width:100%; padding:22px;}
-    .care-context b{font-size:20px;}
-    .care-people{position:static; justify-content:flex-end; margin-top:24px;}
+    .care-handoff{min-height:auto; margin-top:44px;}
+    .jesse-care{font-size:28px;}
+    .care-people{justify-content:space-between; gap:10px; margin-top:28px;}
     .care-people figure{width:92px;}
     .care-people img{width:82px; height:82px; border-width:4px;}
-    .care-people figure:first-child{transform:none;}
+    .care-people figure:nth-child(n){transform:none;}
     .act-proof-visual{min-height:390px;}
-    .act-dash{width:84%; height:300px;}
+    .act-dash{top:28px; width:88%; height:250px;}
     .act-practice{width:42%; height:235px;}
     .mission-story{min-height:92svh;}
     .mission-inner{padding-top:100px; padding-bottom:100px;}
@@ -1593,8 +1608,8 @@
     </div>
 
     <div class="hero-shot">
-      <div class="hero-note">your desk is already paying attention ↓</div>
-      <div class="workspace-board" id="heroDesk" aria-label="Interactive MindCraft workspace with Jesse's Kitchen, memo, transcription, and ACT learning map">
+      <div class="hero-note">Jesse's desk · zoom, move, make it yours ↓</div>
+      <div class="workspace-board" id="heroDesk" aria-label="Interactive MindCraft workspace with Jesse's Kitchen, a memo, and an ACT learning map">
         <div class="workspace-cluster" id="workspaceCluster">
           <button class="paper-card paper-main workspace-item" type="button" id="jesseCard" data-draggable aria-label="Open Jesse's Kitchen prompt" aria-expanded="false">
             <span class="paper-label">Jesse's Kitchen</span>
@@ -1608,19 +1623,11 @@
           <figure class="paper-card act-preview workspace-item" data-draggable>
             <figcaption class="paper-label">ACT · personal route</figcaption>
             <div class="act-preview-grid">
-              <img src="img/app/dash-grid.png" alt="MindCraft ACT learning dashboard">
+              <img src="img/new-dash-home.jpg" alt="Current MindCraft ACT learning dashboard">
               <img src="img/app/practice.png" alt="MindCraft personalized practice screen">
             </div>
             <span>Exact gap → next lesson</span>
           </figure>
-          <div class="transcribe-card" aria-live="polite">
-            <div class="transcribe-top">
-              <b>Auto transcribing</b>
-              <span class="transcribe-live" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-            </div>
-            <p id="transcribeLine">Noticed: visual examples help Jesse move from setup to solution.</p>
-            <span>Added to Jesse's learning map.</span>
-          </div>
         </div>
         <div class="desk-tools">
           <div class="desk-zoom" aria-label="Desk zoom controls">
@@ -1652,6 +1659,26 @@
     <a class="scroll-cue" href="#learns"><span>see what the desk remembers</span><i>↓</i></a>
   </div>
 </header>
+
+<section class="credibility" id="proof" aria-label="MindCraft proof and university community">
+  <div class="wrap">
+    <div class="cred-stats">
+      <div><strong>1,500+</strong><span>real ACT questions behind the map</span></div>
+      <div><strong>One learning model</strong><span>that grows across subjects</span></div>
+      <div><strong>Real people</strong><span>ready with context</span></div>
+    </div>
+    <div class="intro-schools" aria-label="Universities represented in the MindCraft community">
+      <span>From rooms at</span>
+      <ul>
+        <li class="mac"><img src="img/logos/macalester.png" alt="Macalester College"></li>
+        <li class="unc"><img src="img/logos/unc.svg" alt="UNC Chapel Hill"></li>
+        <li class="oxf"><img src="img/logos/oxford.svg" alt="University of Oxford"></li>
+        <li class="ken"><img src="img/logos/kenyon.svg" alt="Kenyon College"></li>
+        <li class="uwc"><img src="img/logos/uwc.png" alt="United World Colleges"></li>
+      </ul>
+    </div>
+  </div>
+</section>
 
 <!-- ================= PERSONALIZATION STORY ================= -->
 <section class="story-beat learns-you" id="learns">
@@ -1724,7 +1751,7 @@
         <img src="img/story-linear-equations.jpg" alt="A story-rich visual lesson about equations and navigation">
       </figure>
       <figure class="lesson-detail detail-two">
-        <img src="img/app/dash-grid.png" alt="A growing library of personalized MindCraft lessons">
+        <img src="img/new-dash-home.jpg" alt="The current MindCraft dashboard with personalized learning paths">
       </figure>
       <div class="lesson-words" aria-hidden="true">
         <span>algebra</span><span>climate</span><span>history</span><span>music</span><span>anything</span>
@@ -1742,14 +1769,11 @@
       <p class="reveal">When you need help, your tutor opens the same map: where you paused, what worked, and what to try next.</p>
     </div>
     <div class="care-handoff reveal">
-      <div class="care-context">
-        <small>BEFORE HELLO</small>
-        <b>Jesse understands the picture before the formula.</b>
-        <span>Start with one visual example. Ask Jesse to explain the intersection back.</span>
-      </div>
+      <p class="jesse-care">Jesse gets a tutor who already knows where to begin.</p>
       <div class="care-people">
         <figure><img src="img/akshat-koirala.jpg" alt="Akshat, a MindCraft tutor"><figcaption>Akshat<br><span>ready with context</span></figcaption></figure>
         <figure><img src="img/abhigya-koirala.jpeg" alt="Abhigya, a MindCraft math tutor"><figcaption>Abhigya<br><span>ready with context</span></figcaption></figure>
+        <figure><img src="img/blake-kell.jpg" alt="Blake, a MindCraft tutor"><figcaption>Blake<br><span>ready with context</span></figcaption></figure>
       </div>
     </div>
   </div>
@@ -1759,7 +1783,7 @@
 <section class="story-beat act-proof" id="act-proof">
   <div class="wrap act-proof-grid">
     <div class="act-proof-visual reveal">
-      <figure class="act-dash"><img src="img/gap_scan.png" alt="MindCraft ACT gap scan showing a student's exact math gaps"></figure>
+      <figure class="act-dash"><img src="img/new-dash-home.jpg" alt="Current MindCraft ACT learning dashboard"></figure>
       <figure class="act-practice"><img src="img/app/practice.png" alt="MindCraft personalized ACT practice"></figure>
     </div>
     <div class="act-proof-copy">
