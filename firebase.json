@@ -23,6 +23,8 @@
       ],
       "rewrites": [
         { "source": "/desk-os", "destination": "/desk-os/index.html" },
+        { "source": "/desk-os/studio", "destination": "/desk-os/studio/index.html" },
+        { "source": "/desk-os/workflows", "destination": "/desk-os/workflows/index.html" },
         { "source": "**", "destination": "/index.html" }
       ],
       "headers": [

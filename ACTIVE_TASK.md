@@ -4,6 +4,20 @@
 
 ---
 
+## Studio Create pass — LOCKED (2026-08-10)
+
+`agent_work/product/studio_prototype_2026-08-10/` · note `STUDIO_PASS_LOCKED.md`  
+Jesse center · timeline Media→Looks · no Classic · Ask dock scroll hide/show.
+
+## Fable 5 dashes — Studio + Workflows (2026-08-10)
+
+Real desk-os apps (dense + bottom Ask search):  
+`agent_work/product/desk_os/studio/` · `…/workflows/` · note `FABLE5_DASHES.md`  
+Live after CI: `/studio` · `/workflows` (also `/desk-os/studio/?v=f5` · `/desk-os/workflows/?v=f5`)  
+iOS overlay still: `SchedulingWorkflowsView` on Field Desk.
+
+---
+
 ## LinkedIn launch workflow — DEFERRED (after platform done)
 
 Plan saved: `agent_work/product/LINKEDIN_LAUNCH_WORKFLOW_LATER.md`  

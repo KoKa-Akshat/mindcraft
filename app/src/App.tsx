@@ -261,6 +261,20 @@ function DeskOsRedirect() {
   return null
 }
 
+function DeskStudioRedirect() {
+  useEffect(() => {
+    window.location.replace('/desk-os/studio/?v=f5')
+  }, [])
+  return null
+}
+
+function DeskWorkflowsRedirect() {
+  useEffect(() => {
+    window.location.replace('/desk-os/workflows/?v=f5')
+  }, [])
+  return null
+}
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -363,6 +377,10 @@ export default function App() {
             Short in-app aliases so the live preview is easy to open. */}
         <Route path="/desk" element={<DeskOsRedirect />} />
         <Route path="/try/desk" element={<DeskOsRedirect />} />
+        <Route path="/studio" element={<DeskStudioRedirect />} />
+        <Route path="/try/studio" element={<DeskStudioRedirect />} />
+        <Route path="/workflows" element={<DeskWorkflowsRedirect />} />
+        <Route path="/try/workflows" element={<DeskWorkflowsRedirect />} />
 
         {/* Root of app host → marketing site (landing lives on mindcraft-marketing-site.web.app) */}
         <Route path="/" element={<MarketingRedirect />} />

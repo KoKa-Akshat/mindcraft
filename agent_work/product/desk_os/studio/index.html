@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MindCraft Studio · Create</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,500;9..40,600;9..40,700;9..40,800&family=Fredoka:wght@600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="studio.css">
+</head>
+<body>
+<header class="top">
+  <a class="back" href="/desk-os/?v=r9b">◀ Desk</a>
+  <input class="title" id="projectTitle" value="Untitled Story" maxlength="80" aria-label="Project title">
+  <a class="link" href="/desk-os/workflows/?v=f5">Workflows →</a>
+  <button class="craft" id="craftBtn">Craft story</button>
+</header>
+
+<main class="board" id="board">
+  <aside class="col left" id="leftCol"></aside>
+  <section class="stageWrap">
+    <div class="stage" id="stage">
+      <div class="stageMedia" id="stageMedia"></div>
+      <div class="stageOverlay" id="stageOverlay"></div>
+      <div class="jesseHero" id="jesseHero">
+        <img src="kitchen-warm.jpg" alt="">
+        <div class="veil">
+          <h2>Jesse’s Kitchen</h2>
+          <p>Drop media · build scenes · craft.</p>
+        </div>
+      </div>
+      <div class="stageChrome">
+        <button id="playBtn" title="Play">▶</button>
+        <span id="timecode">0:00</span>
+        <button id="useJesse" class="lime">Use Jesse →</button>
+      </div>
+    </div>
+  </section>
+  <aside class="col right" id="rightCol"></aside>
+  <section class="timeline" id="timeline">
+    <div class="tlHead">
+      <strong>Timeline</strong>
+      <span id="tlHint">Tap media to add scenes</span>
+    </div>
+    <div class="track" data-track="scenes">
+      <label>SCENES</label>
+      <div class="lane" id="sceneLane"></div>
+    </div>
+    <div class="track" data-track="words">
+      <label>WORDS</label>
+      <div class="lane" id="wordLane"></div>
+    </div>
+    <div class="track" data-track="music">
+      <label>MUSIC</label>
+      <div class="lane" id="musicLane"></div>
+    </div>
+  </section>
+</main>
+
+<form class="deskAsk" id="deskAsk" autocomplete="off">
+  <button type="button" class="askPlus" id="askPlus" title="Add media">+</button>
+  <input id="askInput" type="search" placeholder="Search widgets · media · text · stickers · looks…" aria-label="Search widgets">
+  <button type="submit" class="askGo" title="Go">↑</button>
+</form>
+
+<input type="file" id="fileInput" accept="image/*,video/*,audio/*" multiple hidden>
+<audio id="musicEl" preload="auto"></audio>
+<div id="toast" hidden></div>
+<script src="studio.js"></script>
+</body>
+</html>
