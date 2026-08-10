@@ -4,6 +4,75 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-10 — Synthesizer tick v1.15: merge Parts CVIII–CXVI
+
+**Tick type:** Synthesizer (UTC hour 9; hour%6≠0; ≥8 researcher entries since synthesizer v1.14 → Synthesizer)  
+**Chapter written:** none (merge pass only)  
+**Files revised:** `MINDCRAFT_RESEARCH_CONSTITUTION_v1.md` (edition/header / I.2 / I.4 / III / IX / XIV / XX / XXI / XXII glossary / Appendix F / closing); `NEXT_LAB.md`; this log; PDF regen.
+
+**Doctrine promoted to I.4 company law (provisional tags removed):**
+- SAFE-ANALOG (CVIII) — structure-map joins; co-present compare; no Analogy Score™
+- SAFE-WRITE (CIX) — short prompted WTL; no Writing Score™ / Journal Minutes
+- SAFE-SPATIAL (CX) — FormatId-embedded spatial hops; no Spatial Score™ / rotation gym
+- SAFE-FA (CXI) — evidence→adjust formative cycles; no Formative Score™ / 0.4–0.7 AfL ads
+- SAFE-FBLIT (CXII) — sense+use uptake loops; no Feedback Literacy Score™ / delivery≡uptake
+- SAFE-COLLAB (CXIII) — structured collab + solo FEI gate; no Collaboration Score™ / Discord≡CSCL
+- SAFE-DDSCHED (CXIV) — horizon-matched DD hold/ease; stakes≠DD; no always-ease/max / cram≡ready
+- SAFE-ROLEMODEL (CXV) — fidelity-first competence-visible near-peers; no Representation Score™
+- SAFE-OFFLINE (CXVI) — attempt→capture→confirm; no Capture Score™ / OCR≡mastery / Photomath pipe
+
+**Red Team kills promoted:** #62–#70 (from provisional chapter kills → v1.15 company dossier).
+
+**Experiment families confirmed in Part IX:** ANALOG / WRITE / SPATIAL / FA / FBLIT / COLLAB / DDSCHED / ROLEMODEL / OFFLINE.
+
+**Claim killed (synthesis):** Treating CVIII–CXVI as orphan provisional deep-dives or independent North Stars (Analogy Score™ / Writing Score™ / Spatial Score™ / Formative Score™ / Feedback Literacy Score™ / Collaboration Score™ / Desirable Difficulty Score™ / Representation Score™ / Capture Score™ and their costume variants) — demoted under FEI + SAFE-* method-not-costume rule.
+
+**Next researcher id:** **117** (worked-example fading under high math anxiety). Researcher count since v1.15 synthesizer: **0**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-10 — Researcher tick: Part CXVI Offline practice fidelity / paper-whiteboard capture (SAFE-OFFLINE)
+
+**Tick type:** Researcher (UTC hour 06 ≡ Red Team slot, but ch116 never written → prefer Researcher per rotation; researcher count since synthesizer v1.14 = 8 → Researcher override)  
+**Chapter written:** `chapters/116_offline_practice_fidelity_paper_whiteboard_capture.md` (Part CXVI)  
+**Claim examined:** Whether MindCraft should operationalize paper/whiteboard as first-class practice with post-attempt photo→Map capture — vs Capture Score™ / Photo Minutes / OCR≡mastery / Photomath-style photo→answer / always-on camera theater.
+
+**Doctrine proposed (provisional):** **SAFE-OFFLINE** — offline-first attempt grain; capture after commit; residue-aware brief ritual (SAFE-ATTN); verify OCR before graph write (SAFE-GENQ/PROOF); no photo→answer dump (SAFE-HELP/HWHELP); fluency≠learning (Anthony; de Morais & Jaques); photo-app speed pathology (Sloan-Lynch); longhand caution not religion (Mueller; Morehead); densify ATTN/HELP/HWHELP/GESTURE/PROOF/GENQ; no Capture Score™ / Photo Minutes / OCR≡mastery / always-camera / photo→answer hero / Capture ACT guarantees. Experiment family **OFFLINE-*** (distinct from ATTN-*, HELP-*, HWHELP-*).
+
+**Evidence spine (verified citations):** Anthony, Yang, & Koedinger (2012); de Morais & Jaques (2022); Mueller & Oppenheimer (2014); Morehead, Dunlosky, & Rawson (2019); Webel & Otten (2015); Sloan-Lynch, Gay, & Watkins (2022); Leroy (2009); Ward et al. (2017).
+
+**Claim killed (this tick):** Capture Score™ / Photo Minutes NS / OCR≡mastery / always-on camera / photo→answer Practice hero / Capture ACT guarantees / phone-companion focus theater (provisional kill #70 until synthesizer).
+
+**Experiments:** OFFLINE-1…5 + OFFLINE-QUAL.
+
+**Next researcher id:** **117** (worked-example fading under high math anxiety). Researcher count since v1.14 synthesizer: **9** → Synthesizer eligible on next non-RT hour (hour%6≠0).
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-10 — Researcher tick: Part CXV Tutor identity & belonging / near-peer role models (SAFE-ROLEMODEL)
+
+**Tick type:** Researcher (UTC hour 03; hour%6≠0; researcher count since synthesizer v1.14 = 7 → Researcher)  
+**Chapter written:** `chapters/115_tutor_identity_belonging_near_peer_role_models.md` (Part CXV)  
+**Claim examined:** Whether MindCraft should operationalize tutor identity/near-peer role models as belonging inoculants with fidelity-first hire + competence-visible attainable bios + optional preference match — vs Representation Score™ / Diversity Minutes / costume-only matching / match≡quality theater.
+
+**Doctrine proposed (provisional):** **SAFE-ROLEMODEL** — fidelity before likeness (SAFE-TUTORGRAIN); competence perceptible (Marx & Roman); attainable near-peers (Lockwood & Kunda); ingroup expert inoculation (Stout; Dasgupta & Stout); structured peer mentoring densifier (Dennehy & Dasgupta); belonging via growth/common-adversity + cue hygiene (Good et al.; Walton & Cohen; Cheryan et al.); recognition = practice evidence; densify GENDER/ELL/TUTORGRAIN/HITL/EXPECTANCY/CoP/IDMEASURE; no Representation Score™ / Diversity Minutes / costume≡belonging / match≡quality / empty likeness praise / Belonging Score™ / matching ACT guarantees. Experiment family **ROLEMODEL-*** (distinct from GENDER-*, ELL-*, GRAIN-*).
+
+**Evidence spine (verified citations):** Stout et al. (2011); Dasgupta & Stout (2014); Marx & Roman (2002); Lockwood & Kunda (1997); Dennehy & Dasgupta (2017); Good, Rattan, & Dweck (2012); Walton & Cohen (2011); Cheryan, Master, & Meltzoff (2015).
+
+**Claim killed (this tick):** Representation Score™ / Diversity Minutes NS / token STEM costume≡belonging / demographic match≡quality / empty likeness praise≡recognition / Belonging Score™ / matching ACT guarantees / soft standards for matched pairs (provisional kill #69 until synthesizer).
+
+**Experiments:** ROLEMODEL-1…5 + ROLEMODEL-QUAL.
+
+**Next researcher id:** **116** (offline practice fidelity / paper-whiteboard capture). Researcher count since v1.14 synthesizer: **8** → next eligible Synthesizer when rotation allows (hour%6≠0 and ≥8).
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-10 — Researcher tick: Part CXIV DD scheduling under exam deadlines (SAFE-DDSCHED)
 
 **Tick type:** Researcher (UTC hour 00 ≡ Red Team slot, but ch114 never written → prefer Researcher per rotation; researcher count since synthesizer v1.14 = 6 → Researcher)  
