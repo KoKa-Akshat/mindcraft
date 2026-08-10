@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-10 — Researcher tick: Part CXIX Classroom orchestration of Map during live tutoring (SAFE-MAPORCH)
+
+**Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch119 never written → prefer Researcher per rotation; researcher count since synthesizer v1.15 = 2 → Researcher)  
+**Chapter written:** `chapters/119_classroom_orchestration_map_live_tutoring.md` (Part CXIX)  
+**Claim examined:** Whether MindCraft should open Knowledge Map mid-session as a grain-slice diagnosis that changes the next attempt — vs always-on student Map, mid-attempt full-graph dumps, or Map Minutes as a North Star.
+
+**Doctrine proposed (provisional):** **SAFE-MAPORCH** — densifies SAFE-HITL × SAFE-FA × SAFE-ATTN × SAFE-BRIDGE: brief before pour; attempt before student Map; grain-slice not ontology tour; open to adjust (contingency); tutor-private pane OK; no Map Minutes NS. Experiment family **MAPORCH-*** (distinct from HITL-* / FA-*).
+
+**Evidence spine (verified citations):** van de Pol, Volman, & Beishuizen (2010); Blankenship & Dansereau (2000); Amadieu et al. (2009); Dönmez & Akbulut (2021); Leroy (2009); van Es & Sherin (2021).
+
+**Claim killed (this tick):** Always-on student Map / Map Minutes·Map Score™ NS / mid-attempt full-graph dump / Map-open≡cycle-closed / dual-screen Map+problem default / ontology tour≡tutoring / ACT guarantees from Map airtime (provisional kill #73 until synthesizer).
+
+**Experiments:** MAPORCH-1…5 + MAPORCH-QUAL.
+
+**Next researcher id:** **120** (tutor burnout early-warning without wellness theater). Researcher count since v1.15 synthesizer: **3**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-10 — Researcher tick: Part CXVIII Parent message framing after soft-wrong streaks (SAFE-SOFTMSG)
 
 **Tick type:** Researcher (UTC hour 15; hour%6≠0; researcher count since synthesizer v1.15 = 1 → Researcher)  
