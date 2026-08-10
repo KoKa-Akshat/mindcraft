@@ -13,9 +13,9 @@
 
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import Anthropic from '@anthropic-ai/sdk'
-import { setCors } from '../lib/cors'
-import { loadHistory, saveExchange } from '../lib/conversationStore'
-import { verifyToken } from '../lib/verifyToken'
+import { setCors } from '../cors'
+import { loadHistory, saveExchange } from '../conversationStore'
+import { verifyToken } from '../verifyToken'
 
 const client = new Anthropic()
 const MODEL = 'claude-sonnet-4-20250514'

@@ -9,9 +9,9 @@
 
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { FieldValue, Timestamp } from 'firebase-admin/firestore'
-import { db } from '../lib/firebase'
-import { setCors } from '../lib/cors'
-import { DEFAULT_FOLLOWUP } from '../lib/sendMarketingEmail'
+import { db } from '../firebase'
+import { setCors } from '../cors'
+import { DEFAULT_FOLLOWUP } from '../sendMarketingEmail'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const FOLLOWUP_DELAY_MS = 60 * 60 * 1000 // 1 hour

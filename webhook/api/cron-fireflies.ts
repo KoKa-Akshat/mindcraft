@@ -22,6 +22,23 @@ const FIREFLIES_API = 'https://api.fireflies.ai/graphql'
 const FIREFLIES_KEY = process.env.FIREFLIES_API_KEY!
 
 export default async function handler(_req: VercelRequest, res: VercelResponse) {
+  // Daily safety net for marketing follow-ups (Hobby Vercel can't cron */20).
+  // Primary cadence is GitHub Actions → /api/cron-marketing-followup.
+  try {
+    const base = process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : 'https://mindcraft-webhook.vercel.app'
+    const secret = process.env.ANTHROPIC_API_KEY?.slice(-8) || ''
+    void fetch(
+      `${base}/api/app-actions?action=cron-marketing-followup&secret=${encodeURIComponent(secret)}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: '{}',
+      },
+    )
+  } catch { /* non-fatal */ }
+
   if (!FIREFLIES_KEY) {
     return res.status(200).json({ ok: false, note: 'FIREFLIES_API_KEY not configured' })
   }

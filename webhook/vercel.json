@@ -1,110 +1,37 @@
 {
   "functions": {
-    "api/calendly.ts": {
-      "maxDuration": 10
-    },
-    "api/fireflies.ts": {
-      "maxDuration": 30
-    },
-    "api/generate-summary.ts": {
-      "maxDuration": 30
-    },
-    "api/cron-fireflies.ts": {
-      "maxDuration": 60
-    },
-    "api/research-agent.ts": {
-      "maxDuration": 60
-    },
-    "api/generate-questions.ts": {
-      "maxDuration": 30
-    },
-    "api/gemini.ts": {
-      "maxDuration": 30
-    },
-    "api/story-module.ts": {
-      "maxDuration": 30
-    },
-    "api/jarvis.ts": {
-      "maxDuration": 60
-    },
-    "api/agent-check-in.ts": {
-      "maxDuration": 15
-    },
-    "api/transcribe-scratch.ts": {
-      "maxDuration": 30
-    },
-    "api/app-actions.ts": {
-      "maxDuration": 45
-    },
-    "api/marketing-lead.ts": {
-      "maxDuration": 15
-    },
-    "api/cron-marketing-followup.ts": {
-      "maxDuration": 60
-    }
+    "api/calendly.ts": { "maxDuration": 10 },
+    "api/fireflies.ts": { "maxDuration": 30 },
+    "api/generate-summary.ts": { "maxDuration": 30 },
+    "api/cron-fireflies.ts": { "maxDuration": 60 },
+    "api/research-agent.ts": { "maxDuration": 60 },
+    "api/generate-questions.ts": { "maxDuration": 30 },
+    "api/gemini.ts": { "maxDuration": 30 },
+    "api/story-module.ts": { "maxDuration": 30 },
+    "api/jarvis.ts": { "maxDuration": 60 },
+    "api/agent-check-in.ts": { "maxDuration": 15 },
+    "api/transcribe-scratch.ts": { "maxDuration": 30 },
+    "api/app-actions.ts": { "maxDuration": 60 }
   },
   "rewrites": [
-    {
-      "source": "/api/create-classroom",
-      "destination": "/api/app-actions?action=create-classroom"
-    },
-    {
-      "source": "/api/join-classroom",
-      "destination": "/api/app-actions?action=join-classroom"
-    },
-    {
-      "source": "/api/link-child",
-      "destination": "/api/app-actions?action=link-child"
-    },
-    {
-      "source": "/api/admin-link",
-      "destination": "/api/app-actions?action=admin-link"
-    },
-    {
-      "source": "/api/grant-admin",
-      "destination": "/api/app-actions?action=grant-admin"
-    },
-    {
-      "source": "/api/delete-session",
-      "destination": "/api/app-actions?action=delete-session"
-    },
-    {
-      "source": "/api/publish-summary",
-      "destination": "/api/app-actions?action=publish-summary"
-    },
-    {
-      "source": "/api/register-calendly",
-      "destination": "/api/app-actions?action=register-calendly"
-    },
-    {
-      "source": "/api/concept-graph",
-      "destination": "/api/app-actions?action=concept-graph"
-    },
-    {
-      "source": "/api/parse-homework",
-      "destination": "/api/app-actions?action=parse-homework"
-    },
-    {
-      "source": "/api/spark-experience",
-      "destination": "/api/app-actions?action=spark-experience"
-    },
-    {
-      "source": "/api/deploy-rules",
-      "destination": "/api/app-actions?action=deploy-rules"
-    }
+    { "source": "/api/create-classroom", "destination": "/api/app-actions?action=create-classroom" },
+    { "source": "/api/join-classroom", "destination": "/api/app-actions?action=join-classroom" },
+    { "source": "/api/link-child", "destination": "/api/app-actions?action=link-child" },
+    { "source": "/api/admin-link", "destination": "/api/app-actions?action=admin-link" },
+    { "source": "/api/grant-admin", "destination": "/api/app-actions?action=grant-admin" },
+    { "source": "/api/delete-session", "destination": "/api/app-actions?action=delete-session" },
+    { "source": "/api/publish-summary", "destination": "/api/app-actions?action=publish-summary" },
+    { "source": "/api/register-calendly", "destination": "/api/app-actions?action=register-calendly" },
+    { "source": "/api/concept-graph", "destination": "/api/app-actions?action=concept-graph" },
+    { "source": "/api/parse-homework", "destination": "/api/app-actions?action=parse-homework" },
+    { "source": "/api/spark-experience", "destination": "/api/app-actions?action=spark-experience" },
+    { "source": "/api/deploy-rules", "destination": "/api/app-actions?action=deploy-rules" },
+    { "source": "/api/marketing-lead", "destination": "/api/app-actions?action=marketing-lead" },
+    { "source": "/api/cron-marketing-followup", "destination": "/api/app-actions?action=cron-marketing-followup" },
+    { "source": "/api/desk-ask", "destination": "/api/app-actions?action=desk-ask" }
   ],
   "crons": [
-    {
-      "path": "/api/cron-fireflies",
-      "schedule": "0 6 * * *"
-    },
-    {
-      "path": "/api/research-agent",
-      "schedule": "0 0 * * *"
-    },
-    {
-      "path": "/api/cron-marketing-followup",
-      "schedule": "*/20 * * * *"
-    }
+    { "path": "/api/cron-fireflies", "schedule": "0 6 * * *" },
+    { "path": "/api/research-agent", "schedule": "0 0 * * *" }
   ]
 }

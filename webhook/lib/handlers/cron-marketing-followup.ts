@@ -8,12 +8,12 @@
 
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { FieldValue, Timestamp } from 'firebase-admin/firestore'
-import { db } from '../lib/firebase'
+import { db } from '../firebase'
 import {
   DEFAULT_FOLLOWUP,
   renderTemplate,
   sendMarketingEmail,
-} from '../lib/sendMarketingEmail'
+} from '../sendMarketingEmail'
 
 function authorized(req: VercelRequest): boolean {
   const cronSecret = process.env.CRON_SECRET?.trim()
