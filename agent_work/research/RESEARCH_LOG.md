@@ -18,7 +18,7 @@ Append-only. Newest entries at top.
 
 **Experiments:** BURNWARN-1…5 + BURNWARN-QUAL.
 
-**Next researcher id:** **121** (explanation quality rubrics for AI coach wraps). Researcher count since v1.15 synthesizer: **4**.
+**Next researcher id:** **121** (explanation quality rubrics for AI coach wraps). Researcher count since v1.15 synthesizer: **4**. Queue extended with id **123** (<3 unfinished rule).
 
 **PDF:** Regenerate after this tick.
 

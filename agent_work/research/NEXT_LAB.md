@@ -114,6 +114,7 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 120 | Tutor burnout early-warning without wellness theater | SAFE-WORKFORCE × affect privacy; fidelity dips before exit | **DONE** (2026-08-10) — Part CXX / SAFE-BURNWARN |
 | 121 | Explanation quality rubrics for AI coach wraps | SAFE-EXPLAIN × SAFE-GENQ; principle-short QA gates | **NEXT** |
 | 122 | Partial-credit & soft-wrong taxonomy productization | SAFE-MISCON × SAFE-FBLIT; mark types without gradebook cosplay | queued |
+| 123 | Exam-week tutor load shedding playbooks | SAFE-BURNWARN × SAFE-DDSCHED; protect FEI fidelity under ACT crunch | queued |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 

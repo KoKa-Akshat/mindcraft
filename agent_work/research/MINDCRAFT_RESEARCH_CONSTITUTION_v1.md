@@ -1753,6 +1753,7 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 3bk. Tutor burnout early-warning without wellness theater — **DONE** Part CXX / SAFE-BURNWARN (provisional)  
 3bl. Explanation quality rubrics for AI coach wraps — queued id 121 **NEXT**  
 3bm. Partial-credit & soft-wrong taxonomy productization — queued id 122  
+3bn. Exam-week tutor load shedding playbooks — queued id 123  
 4. Equity audit of story worlds — **DONE** (Part XXXVI)  
 5. Competitive teardown — **DONE** session audits (Part XXXV); usage telemetry still open  
 6. Formal Bayesian update process for Constitution claims — **DONE** Part LXX / SAFE-LABMETA  
