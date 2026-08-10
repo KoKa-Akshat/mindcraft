@@ -3885,3 +3885,30 @@ Build + run on `id=00008103-0012296E01D0C01E` (foreground, no
 Monitor-waits): fresh launch → Create/Sign out/volume top-right → Projects →
 shrine screen → tap → work area with both toolbars → + tray → Manage → hub
 page → Back to desk. Screenshot each.
+
+### Evening round (same day, cloud session) — dash rework
+
+Akshat's second pass, all code-level, browser-verified on the web side,
+**Swift still not device-built**. See `MAC_VERIFY_NEXT.md` for the paste-in
+Mac charter. Syntax parse (swiftc 6.0.3 `-parse` on Linux): all touched
+files clean — type-check happens at the Mac build.
+
+1. Ask bar + tool dock moved to the BOTTOM overlay (swipe up reveals).
+2. topChrome slimmed: Call + name only (raccoon / Home / desk pill
+   removed — old a11y ids `fieldDeskRaccoon`, `fieldDeskImmerse`,
+   `fieldDeskLabel` are gone; tests referencing them need updating).
+3. Top-right cluster is mode-aware: Jesse's landing → Create + Sign out +
+   Volume; work mode → Jesse's + Manage + Volume (Manage posts
+   `.mcOpenHubFromDesk`).
+4. Projects → polka bloom → shrine screen (was direct).
+5. New placeables `.gdoc` + `.slides` across DeskCardID / PlaceableWidget /
+   sizes / points / rects / cards / addPanel.
+6. `StandaloneDeskView` routes web `deskAction` messages: back / act /
+   soundOn / soundOff / manage; native Kitchen pill replaced by the web
+   top bar (hidden a11y button keeps `standaloneDeskBackToKitchen`).
+7. `worlds/deskweb/desk.html` dash: Volume/Jesse's/Manage top bar, ACT map
+   inside Binder (posts `act`), Intel + Gmail + Gcal tiles, paused
+   transcriber with play, + tray = Memo/Gdoc/Presentation/Intel.
+   Browser-verified 6/6.
+8. Marketing composite shipped live separately (gym hero on the
+   learning-OS page, stat strip removed).
