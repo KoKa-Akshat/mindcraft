@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-10 — Researcher tick: Part CXX Tutor burnout early-warning without wellness theater (SAFE-BURNWARN)
+
+**Tick type:** Researcher (UTC hour 21; hour%6≠0; researcher count since synthesizer v1.15 = 3 → Researcher)  
+**Chapter written:** `chapters/120_tutor_burnout_early_warning_without_wellness_theater.md` (Part CXX)  
+**Claim examined:** Whether MindCraft should detect tutor burnout risk via fidelity dips + JD-R load redesign — vs Burnout Score™ products, mandatory mood gates, emotion-AI “care,” or wellness-module theater that leaves caseload unchanged.
+
+**Doctrine proposed (provisional):** **SAFE-BURNWARN** — densifies SAFE-WORKFORCE × SAFE-PRIVACY × SAFE-HITL: fidelity/load early warn; org redesign first; optional coach-private check-ins; no Burnout Score™ / Wellness Minutes / tutor ERT. Experiment family **BURNWARN-*** (distinct from WORK-* / PRIV-*).
+
+**Evidence spine (verified citations):** Demerouti et al. (2001); Bakker & Demerouti (2017); Madigan & Kim (2021); Klusmann et al. (2022); Panagioti et al. (2017); Bes et al. (2023).
+
+**Claim killed (this tick):** Burnout Score™ / Wellness Minutes NS / mandatory mood gate / tutor emotion-AI / wellness-module-as-primary under demand spike / retention-% without fidelity / sell tutor-affect dashboards / ACT guarantees from wellness packaging (provisional kill #74 until synthesizer).
+
+**Experiments:** BURNWARN-1…5 + BURNWARN-QUAL.
+
+**Next researcher id:** **121** (explanation quality rubrics for AI coach wraps). Researcher count since v1.15 synthesizer: **4**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-10 — Researcher tick: Part CXIX Classroom orchestration of Map during live tutoring (SAFE-MAPORCH)
 
 **Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch119 never written → prefer Researcher per rotation; researcher count since synthesizer v1.15 = 2 → Researcher)  

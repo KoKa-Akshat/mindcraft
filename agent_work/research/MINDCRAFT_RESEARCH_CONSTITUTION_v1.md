@@ -109,8 +109,9 @@
 | CXVII | `chapters/117_worked_example_fading_under_high_math_anxiety.md` | Fade × anxiety; SAFE-FADEX; protect then fade (provisional) |
 | CXVIII | `chapters/118_parent_message_framing_after_soft_wrong_streaks.md` | Parent soft-wrong framing; SAFE-SOFTMSG; grain+CTA not nag (provisional) |
 | CXIX | `chapters/119_classroom_orchestration_map_live_tutoring.md` | Map live-session orchestration; SAFE-MAPORCH; brief→slice→adjust (provisional) |
+| CXX | `chapters/120_tutor_burnout_early_warning_without_wellness_theater.md` | Tutor burnout early-warning; SAFE-BURNWARN; fidelity/load→redesign (provisional) |
 
-Queued next: see `NEXT_LAB.md` (Part CXX tutor burnout early-warning, then 121+).
+Queued next: see `NEXT_LAB.md` (Part CXXI explanation quality rubrics, then 122+).
 
 **Synthesizer note (v1.15):** Nine researcher chapters (CVIII–CXVI) landed after v1.14 as provisional I.4 densifiers — analogical bridge teaching, writing-to-learn, spatial FormatId hops, formative assessment cycles, feedback literacy, collaborative vs solo FEI, DD scheduling under exam deadlines, tutor near-peer role models, and offline paper/whiteboard capture. This edition promotes each stack to company law (removes provisional tags), formalizes Red Team kills #62–#70, confirms ANALOG/WRITE/SPATIAL/FA/FBLIT/COLLAB/DDSCHED/ROLEMODEL/OFFLINE experiment families in Part IX, and refreshes metrics/glossary/competitive implication. Deep-dive files remain authoritative for citations; the OS keeps only *surviving* product rules.
 
@@ -1749,8 +1750,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 3bh. Worked-example fading under high math anxiety — **DONE** Part CXVII / SAFE-FADEX (provisional)  
 3bi. Parent message framing after soft-wrong streaks — **DONE** Part CXVIII / SAFE-SOFTMSG (provisional)  
 3bj. Classroom orchestration of Map during live tutoring — **DONE** Part CXIX / SAFE-MAPORCH (provisional)  
-3bk. Tutor burnout early-warning without wellness theater — queued id 120 **NEXT**  
-3bl. Explanation quality rubrics for AI coach wraps — queued id 121  
+3bk. Tutor burnout early-warning without wellness theater — **DONE** Part CXX / SAFE-BURNWARN (provisional)  
+3bl. Explanation quality rubrics for AI coach wraps — queued id 121 **NEXT**  
 3bm. Partial-credit & soft-wrong taxonomy productization — queued id 122  
 4. Equity audit of story worlds — **DONE** (Part XXXVI)  
 5. Competitive teardown — **DONE** session audits (Part XXXV); usage telemetry still open  
