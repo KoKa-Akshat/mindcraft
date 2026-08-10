@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0a1612" />
-  <title>MindCraft · Field Desk · Jesse’s Kitchen</title>
+  <title>MindCraft · Field Desk · Jesse’s Kitchen 3D</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
@@ -13,104 +13,124 @@
 <body>
   <div class="room" aria-hidden="true"></div>
 
-  <p class="room-hint">Landscape Field Desk · drag to pan the canvas</p>
+  <p class="room-hint">Landscape Field Desk · tap Jesse’s Kitchen for the real 3D world</p>
 
   <div class="stage-wrap">
     <div class="ipad" role="region" aria-label="Field Desk on iPad">
       <div class="ipad-bezel">
         <div class="ipad-camera" aria-hidden="true"></div>
         <div class="ipad-screen">
-          <header class="desk-chrome">
-            <button type="button" class="brand-hit" id="brandHit" aria-label="MindCraft · open Connect">
-              <img class="brand-mark" src="img/mascot.png" alt="" draggable="false" />
-              <span class="wordmark">Mind<span>Craft</span></span>
-            </button>
-            <p class="desk-tag">Field Desk</p>
-            <p class="desk-soft">Your home. Learn lives here.</p>
-          </header>
-
-          <div class="desk-viewport" id="deskViewport">
-            <div class="desk-plane" id="deskPlane">
-              <div class="desk-texture" aria-hidden="true"></div>
-
-              <!-- Connect nest -->
-              <article class="card card-connect" data-card="connect" style="--x: 4%; --y: 12%;">
-                <p class="kicker">Connect</p>
-                <h2>Your tools, on the desk</h2>
-                <ul class="connect-list">
-                  <li><span class="dot gmail"></span>Gmail</li>
-                  <li><span class="dot cal"></span>Calendar</li>
-                  <li><span class="dot drive"></span>Drive</li>
-                </ul>
-                <button type="button" class="ghost-link" data-open-connect>Set up Google</button>
-              </article>
-
-              <!-- Memo -->
-              <article class="card card-memo paper" data-card="memo" style="--x: 28%; --y: 8%;">
-                <p class="kicker ink">Memo</p>
-                <ol class="memo-lines">
-                  <li>Finish ACT set before Friday</li>
-                  <li>Drop chem notes into Drive</li>
-                  <li>Ask the desk about tomorrow</li>
-                </ol>
-              </article>
-
-              <!-- Featured: Jesse's Kitchen -->
-              <button type="button" class="zone-kitchen" id="kitchenZone" style="--x: 48%; --y: 10%;" aria-label="Jesse’s Kitchen · open intro">
-                <img class="zone-bg" src="img/kitchen-warm.jpg" alt="" draggable="false" />
-                <span class="zone-veil" aria-hidden="true"></span>
-                <span class="zone-body">
-                  <span class="kicker lime">Story world</span>
-                  <span class="zone-title">Jesse’s Kitchen</span>
-                  <span class="zone-sub">Step in. Find where you stand.</span>
-                </span>
+          <!-- Desk home -->
+          <div class="screen-layer is-on" id="deskLayer">
+            <header class="desk-chrome">
+              <button type="button" class="brand-hit" id="brandHit" aria-label="MindCraft · open Connect">
+                <img class="brand-mark" src="img/mascot.png" alt="" draggable="false" />
+                <span class="wordmark">Mind<span>Craft</span></span>
               </button>
+              <p class="desk-tag">Field Desk</p>
+              <p class="desk-soft">Your home. Learn lives here.</p>
+            </header>
 
-              <!-- Learn / Binder -->
-              <button type="button" class="card card-learn paper" id="learnZone" data-card="learn" style="--x: 4%; --y: 52%;" aria-label="Open Learn dash">
-                <p class="kicker ink">Learn · Binder</p>
-                <h2>One Learn surface</h2>
-                <p class="card-lead">ACT map, story practice, and resume workflows share the same desk home.</p>
-                <ul class="learn-rails">
-                  <li>
-                    <strong>ACT map</strong>
-                    <span>Your path across concepts</span>
-                  </li>
-                  <li>
-                    <strong>Story practice</strong>
-                    <span>Questions inside Jesse’s world</span>
-                  </li>
-                  <li>
-                    <strong>Resume · workflows</strong>
-                    <span>Pick up where you left off</span>
-                  </li>
-                </ul>
-                <span class="ghost-link learn-open">Open Learn dash →</span>
-              </button>
+            <div class="desk-viewport" id="deskViewport">
+              <div class="desk-plane" id="deskPlane">
+                <div class="desk-texture" aria-hidden="true"></div>
 
-              <!-- Intel -->
-              <article class="card card-intel" data-card="intel" style="--x: 42%; --y: 58%;">
-                <p class="kicker">Intel</p>
-                <h2>What the desk noticed</h2>
-                <ul class="intel-bits">
-                  <li><em>Tonight</em> · 2 dues from mail</li>
-                  <li><em>Weak spot</em> · linear equations</li>
-                  <li><em>Ready</em> · story practice in Kitchen</li>
-                </ul>
-              </article>
+                <article class="card card-connect" data-card="connect" style="--x: 4%; --y: 12%;">
+                  <p class="kicker">Connect</p>
+                  <h2>Your tools, on the desk</h2>
+                  <ul class="connect-list">
+                    <li><span class="dot gmail"></span>Gmail</li>
+                    <li><span class="dot cal"></span>Calendar</li>
+                    <li><span class="dot drive"></span>Drive</li>
+                  </ul>
+                  <button type="button" class="ghost-link" data-open-connect>Set up Google</button>
+                </article>
 
-              <!-- Small sticky -->
-              <aside class="sticky" style="--x: 72%; --y: 62%;" aria-hidden="true">
-                Drag the desk.<br />Tap the kitchen.<br />Tap the raccoon for Connect.
-              </aside>
+                <article class="card card-memo paper" data-card="memo" style="--x: 28%; --y: 8%;">
+                  <p class="kicker ink">Memo</p>
+                  <ol class="memo-lines">
+                    <li>Enter Jesse’s Kitchen (3D)</li>
+                    <li>Drop chem notes into Drive</li>
+                    <li>Ask the desk about tomorrow</li>
+                  </ol>
+                </article>
+
+                <!-- Featured: live 3D Jesse's Kitchen (Ramen Shop world) -->
+                <button type="button" class="zone-kitchen" id="kitchenZone" style="--x: 48%; --y: 10%;" aria-label="Jesse’s Kitchen 3D · enter world">
+                  <img class="zone-bg" src="img/kitchen-3d-preview.png" alt="" draggable="false" />
+                  <span class="zone-veil" aria-hidden="true"></span>
+                  <span class="zone-body">
+                    <span class="kicker lime">3D world · Jesse Zhou</span>
+                    <span class="zone-title">Jesse’s Kitchen</span>
+                    <span class="zone-sub">Live Three.js room inside this desk</span>
+                  </span>
+                </button>
+
+                <button type="button" class="card card-learn paper" id="learnZone" data-card="learn" style="--x: 4%; --y: 52%;" aria-label="Open Learn dash">
+                  <p class="kicker ink">Learn · Binder</p>
+                  <h2>One Learn surface</h2>
+                  <p class="card-lead">ACT map, story practice, and resume workflows share the same desk home. The kitchen is the door in.</p>
+                  <ul class="learn-rails">
+                    <li>
+                      <strong>ACT map</strong>
+                      <span>Your path across concepts</span>
+                    </li>
+                    <li>
+                      <strong>Story practice</strong>
+                      <span>Questions inside Jesse’s world</span>
+                    </li>
+                    <li>
+                      <strong>Resume · workflows</strong>
+                      <span>Pick up where you left off</span>
+                    </li>
+                  </ul>
+                  <span class="ghost-link learn-open">Open Learn dash →</span>
+                </button>
+
+                <article class="card card-intel" data-card="intel" style="--x: 42%; --y: 58%;">
+                  <p class="kicker">Intel</p>
+                  <h2>What the desk noticed</h2>
+                  <ul class="intel-bits">
+                    <li><em>Tonight</em> · 2 dues from mail</li>
+                    <li><em>Weak spot</em> · linear equations</li>
+                    <li><em>Ready</em> · 3D kitchen diagnostic</li>
+                  </ul>
+                </article>
+
+                <aside class="sticky" style="--x: 72%; --y: 62%;" aria-hidden="true">
+                  Drag the desk.<br />Tap the kitchen for the real 3D asset.<br />Logo → Connect.
+                </aside>
+              </div>
             </div>
+
+            <footer class="desk-askbar" aria-label="Ask the desk">
+              <span class="ask-plus" aria-hidden="true">+</span>
+              <span class="ask-placeholder">Ask MindCraft</span>
+              <span class="ask-go" aria-hidden="true">↗</span>
+            </footer>
           </div>
 
-          <footer class="desk-askbar" aria-label="Ask the desk">
-            <span class="ask-plus" aria-hidden="true">+</span>
-            <span class="ask-placeholder">Ask MindCraft</span>
-            <span class="ask-go" aria-hidden="true">↗</span>
-          </footer>
+          <!-- 3D kitchen fills the same iPad screen -->
+          <div class="screen-layer world-layer" id="worldLayer" hidden>
+            <header class="world-chrome">
+              <button type="button" class="world-back" id="worldBack">← Desk</button>
+              <p class="world-title">Jesse’s Kitchen · 3D</p>
+              <span class="world-chip">worlds/world2</span>
+            </header>
+            <div class="world-frame">
+              <iframe
+                id="kitchenFrame"
+                title="Jesse’s Kitchen 3D world"
+                allow="fullscreen; autoplay"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+              ></iframe>
+              <div class="world-loading" id="worldLoading">
+                <p>Loading Jesse’s Kitchen…</p>
+                <p class="world-loading-sub">Three.js · Ramen Shop asset from GitHub</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="ipad-home" aria-hidden="true"></div>
@@ -156,7 +176,7 @@
     </div>
   </div>
 
-  <!-- Learn dash overlay (real landscape dash inside the iPad frame) -->
+  <!-- Learn dash overlay -->
   <div class="modal learn-modal" id="learnModal" hidden>
     <div class="modal-backdrop" data-close-learn></div>
     <div class="learn-sheet paper" role="dialog" aria-modal="true" aria-labelledby="learnTitle">
@@ -164,35 +184,17 @@
       <div class="learn-head">
         <p class="kicker ink">Learn · on this desk</p>
         <h2 id="learnTitle">Same home. Map, stories, resume.</h2>
-        <p class="modal-lead">This is the landscape Learn dash students open from the binder. One cohesive surface, not separate products.</p>
+        <p class="modal-lead">Landscape Learn dash from the binder. Jesse’s Kitchen is the 3D door into this same Learn surface.</p>
       </div>
       <figure class="learn-dash-frame">
         <img src="img/dash-landscape.jpg" alt="MindCraft Learn dash in landscape" />
       </figure>
       <div class="learn-pills" aria-hidden="true">
         <span>Gap map</span>
-        <span>Jesse’s Kitchen</span>
+        <span>Jesse’s Kitchen 3D</span>
         <span>Resume · workflows</span>
       </div>
       <button type="button" class="btn-lime" data-close-learn>Back to Field Desk</button>
-    </div>
-  </div>
-
-  <!-- Kitchen intro overlay -->
-  <div class="modal kitchen-modal" id="kitchenModal" hidden>
-    <div class="modal-backdrop" data-close-kitchen></div>
-    <div class="kitchen-sheet" role="dialog" aria-modal="true" aria-labelledby="kitchenTitle">
-      <button type="button" class="modal-x light" data-close-kitchen aria-label="Close">×</button>
-      <div class="kitchen-hero">
-        <img src="img/jesse-kitchen-intro.jpg" alt="Jesse’s Kitchen" />
-        <div class="kitchen-hero-veil"></div>
-        <div class="kitchen-copy">
-          <p class="kicker lime">Diagnostic intro</p>
-          <h2 id="kitchenTitle">Step into Jesse’s Kitchen</h2>
-          <p>Warm light. Real stakes. A short story walk that places you on the ACT map, then opens story practice from the same Learn surface on your Field Desk.</p>
-          <button type="button" class="btn-lime" data-close-kitchen>Enter the kitchen</button>
-        </div>
-      </div>
     </div>
   </div>
 

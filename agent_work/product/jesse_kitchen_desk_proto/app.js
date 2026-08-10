@@ -1,16 +1,39 @@
-/* Field Desk proto · pan canvas + Connect + Kitchen overlay */
+/* Field Desk proto · pan canvas + Connect + live 3D Jesse Kitchen (worlds/world2) */
 
 (() => {
   const viewport = document.getElementById('deskViewport');
   const plane = document.getElementById('deskPlane');
   const connectModal = document.getElementById('connectModal');
-  const kitchenModal = document.getElementById('kitchenModal');
   const learnModal = document.getElementById('learnModal');
   const brandHit = document.getElementById('brandHit');
   const kitchenZone = document.getElementById('kitchenZone');
   const learnZone = document.getElementById('learnZone');
+  const deskLayer = document.getElementById('deskLayer');
+  const worldLayer = document.getElementById('worldLayer');
+  const worldBack = document.getElementById('worldBack');
+  const kitchenFrame = document.getElementById('kitchenFrame');
+  const worldLoading = document.getElementById('worldLoading');
 
   if (!viewport || !plane) return;
+
+  /**
+   * Resolve the 3D world URL.
+   * Prefer local worlds/world2 when this page is served from the MindCraft repo root.
+   * Fall back to the deployed Firebase world host so the proto still demos from a shallow server.
+   */
+  function kitchenWorldUrl() {
+    const { protocol, hostname, port, pathname } = window.location;
+    const localish = hostname === 'localhost' || hostname === '127.0.0.1';
+    // Served from repo root: /agent_work/product/jesse_kitchen_desk_proto/
+    if (localish && pathname.includes('/agent_work/product/jesse_kitchen_desk_proto')) {
+      return `${protocol}//${hostname}${port ? `:${port}` : ''}/worlds/world2/index.html`;
+    }
+    // Relative climb when proto folder is opened under a parent static server
+    if (localish) {
+      return new URL('../../../worlds/world2/index.html', window.location.href).href;
+    }
+    return 'https://mindcraft-world1.web.app/';
+  }
 
   const state = {
     x: 0,
@@ -21,6 +44,7 @@
     startY: 0,
     originX: 0,
     originY: 0,
+    worldLoaded: false,
   };
 
   function clampPan() {
@@ -39,7 +63,6 @@
     plane.style.transform = `translate(${state.x}px, ${state.y}px)`;
   }
 
-  // Start slightly centered on the kitchen zone
   function bootPan() {
     const vw = viewport.clientWidth;
     const vh = viewport.clientHeight;
@@ -84,7 +107,6 @@
   viewport.addEventListener('pointerup', pointerUp);
   viewport.addEventListener('pointercancel', pointerUp);
 
-  // Wheel / trackpad pan
   viewport.addEventListener(
     'wheel',
     (e) => {
@@ -107,10 +129,38 @@
     el.hidden = true;
     const open =
       (connectModal && !connectModal.hidden) ||
-      (kitchenModal && !kitchenModal.hidden) ||
       (learnModal && !learnModal.hidden);
     if (!open) document.body.style.overflow = '';
   }
+
+  function openKitchenWorld() {
+    if (!worldLayer || !deskLayer || !kitchenFrame) return;
+    deskLayer.classList.remove('is-on');
+    deskLayer.hidden = true;
+    worldLayer.hidden = false;
+    worldLayer.classList.add('is-on');
+    if (worldLoading) worldLoading.hidden = false;
+
+    const url = kitchenWorldUrl();
+    if (!state.worldLoaded || kitchenFrame.src !== url) {
+      kitchenFrame.src = url;
+      state.worldLoaded = true;
+    }
+  }
+
+  function closeKitchenWorld() {
+    if (!worldLayer || !deskLayer) return;
+    worldLayer.classList.remove('is-on');
+    worldLayer.hidden = true;
+    deskLayer.hidden = false;
+    deskLayer.classList.add('is-on');
+    // Keep iframe warm so re-entry is instant; unload only if you need GPU back:
+    // kitchenFrame.removeAttribute('src'); state.worldLoaded = false;
+  }
+
+  kitchenFrame?.addEventListener('load', () => {
+    if (worldLoading) worldLoading.hidden = true;
+  });
 
   brandHit?.addEventListener('click', () => openModal(connectModal));
 
@@ -128,17 +178,15 @@
   kitchenZone?.addEventListener('click', (e) => {
     if (state.moved) return;
     e.stopPropagation();
-    openModal(kitchenModal);
+    openKitchenWorld();
   });
+
+  worldBack?.addEventListener('click', () => closeKitchenWorld());
 
   learnZone?.addEventListener('click', (e) => {
     if (state.moved) return;
     e.stopPropagation();
     openModal(learnModal);
-  });
-
-  document.querySelectorAll('[data-close-kitchen]').forEach((el) => {
-    el.addEventListener('click', () => closeModal(kitchenModal));
   });
 
   document.querySelectorAll('[data-close-learn]').forEach((el) => {
@@ -147,8 +195,11 @@
 
   document.addEventListener('keydown', (e) => {
     if (e.key !== 'Escape') return;
+    if (worldLayer && !worldLayer.hidden) {
+      closeKitchenWorld();
+      return;
+    }
     closeModal(connectModal);
-    closeModal(kitchenModal);
     closeModal(learnModal);
   });
 
