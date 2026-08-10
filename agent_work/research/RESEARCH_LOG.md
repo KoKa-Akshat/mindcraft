@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-10 — Researcher tick: Part CXV Tutor identity & belonging / near-peer role models (SAFE-ROLEMODEL)
+
+**Tick type:** Researcher (UTC hour 03; hour%6≠0; researcher count since synthesizer v1.14 = 7 → Researcher)  
+**Chapter written:** `chapters/115_tutor_identity_belonging_near_peer_role_models.md` (Part CXV)  
+**Claim examined:** Whether MindCraft should operationalize tutor identity/near-peer role models as belonging inoculants with fidelity-first hire + competence-visible attainable bios + optional preference match — vs Representation Score™ / Diversity Minutes / costume-only matching / match≡quality theater.
+
+**Doctrine proposed (provisional):** **SAFE-ROLEMODEL** — fidelity before likeness (SAFE-TUTORGRAIN); competence perceptible (Marx & Roman); attainable near-peers (Lockwood & Kunda); ingroup expert inoculation (Stout; Dasgupta & Stout); structured peer mentoring densifier (Dennehy & Dasgupta); belonging via growth/common-adversity + cue hygiene (Good et al.; Walton & Cohen; Cheryan et al.); recognition = practice evidence; densify GENDER/ELL/TUTORGRAIN/HITL/EXPECTANCY/CoP/IDMEASURE; no Representation Score™ / Diversity Minutes / costume≡belonging / match≡quality / empty likeness praise / Belonging Score™ / matching ACT guarantees. Experiment family **ROLEMODEL-*** (distinct from GENDER-*, ELL-*, GRAIN-*).
+
+**Evidence spine (verified citations):** Stout et al. (2011); Dasgupta & Stout (2014); Marx & Roman (2002); Lockwood & Kunda (1997); Dennehy & Dasgupta (2017); Good, Rattan, & Dweck (2012); Walton & Cohen (2011); Cheryan, Master, & Meltzoff (2015).
+
+**Claim killed (this tick):** Representation Score™ / Diversity Minutes NS / token STEM costume≡belonging / demographic match≡quality / empty likeness praise≡recognition / Belonging Score™ / matching ACT guarantees / soft standards for matched pairs (provisional kill #69 until synthesizer).
+
+**Experiments:** ROLEMODEL-1…5 + ROLEMODEL-QUAL.
+
+**Next researcher id:** **116** (offline practice fidelity / paper-whiteboard capture). Researcher count since v1.14 synthesizer: **8** → next eligible Synthesizer when rotation allows (hour%6≠0 and ≥8).
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-10 — Researcher tick: Part CXIV DD scheduling under exam deadlines (SAFE-DDSCHED)
 
 **Tick type:** Researcher (UTC hour 00 ≡ Red Team slot, but ch114 never written → prefer Researcher per rotation; researcher count since synthesizer v1.14 = 6 → Researcher)  
