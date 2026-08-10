@@ -462,7 +462,11 @@
   /* Tutors — one split stage, equal panes, no awkward overlap */
   .tutors{background:linear-gradient(180deg, var(--blue), var(--cream));}
   .tutor-head{margin-bottom:36px;}
-  .tutor-head .h2{max-width:18ch;}
+  .tutor-head .h2{max-width:22ch;}
+  .tutor-lede{
+    margin:14px 0 0; max-width:54ch; font-size:17px; font-weight:700;
+    line-height:1.5; color:var(--muted);
+  }
   .tutor-head-row{
     margin-top:22px; display:grid;
     grid-template-columns:minmax(0,1fr) minmax(0,1fr);
@@ -918,7 +922,7 @@
     .stepcard{min-height:270px; padding:16px 14px 12px;}
     .stepcard h3{font-size:22px;}
     .step-art{min-height:170px;}
-    .tutor-head .h2{max-width:16ch;}
+    .tutor-head .h2{max-width:20ch;}
     .tutor-head-row{gap:18px;}
     .tutor-quote{padding:18px 20px 16px; max-width:100%; justify-self:stretch;}
     .tutor-quote p{font-size:clamp(17px,1.9vw,21px);}
@@ -1302,20 +1306,21 @@
   <div class="wrap">
     <div class="tutor-head">
       <div class="kicker reveal">Chapter 05 · The allies</div>
-      <h2 class="h2 reveal">A college tutor near you.</h2>
+      <h2 class="h2 reveal">Find a tutor near you <span class="script">to help with anything.</span></h2>
+      <p class="tutor-lede reveal">High-achieving students from some of the top U.S. colleges. They open your map before hello, so the hour goes to teaching, not catching up. First session free.</p>
       <div class="tutor-head-row">
         <div class="scan-points">
           <div class="scan-point reveal">
             <span class="pip">1</span>
-            <p>They open your map before hello.</p>
+            <p>Homework, tests, confidence, whatever is stuck.</p>
           </div>
           <div class="scan-point reveal">
             <span class="pip">2</span>
-            <p>The hour goes to teaching, not catching up.</p>
+            <p>Real college tutors who still remember junior year.</p>
           </div>
           <div class="scan-point reveal">
             <span class="pip">3</span>
-            <p>First session free. Real college tutors.</p>
+            <p>Search near you. Book in minutes.</p>
           </div>
         </div>
         <blockquote class="tutor-quote reveal">
