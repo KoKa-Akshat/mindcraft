@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-10 — Researcher tick: Part CXVIII Parent message framing after soft-wrong streaks (SAFE-SOFTMSG)
+
+**Tick type:** Researcher (UTC hour 15; hour%6≠0; researcher count since synthesizer v1.15 = 1 → Researcher)  
+**Chapter written:** `chapters/118_parent_message_framing_after_soft_wrong_streaks.md` (Part CXVIII)  
+**Claim examined:** Whether MindCraft parent digests after soft-wrong runs should be grain-named + failure-enhancing + one autonomy-supportive CTA — vs Miss Streak shame, live wrong-answer stalk, empty mindset posters, or controlling “sit until correct” scripts.
+
+**Doctrine proposed (provisional):** **SAFE-SOFTMSG** — densifies SAFE-PDASH × SAFE-FBLIT × SAFE-ERRCLIMATE: name the grain; failure-is-enhancing not ability verdict; one return CTA; autonomy>control; do not recruit math-anxious parents into more intrusive help; no Miss Streak / live stalk / Parent Correctness Score™; belief posters ≠ product. Experiment family **SOFTMSG-*** (distinct from PDASH-* / FBLIT-*).
+
+**Evidence spine (verified citations):** Jiang et al. (2023); Wu, Barger, Oh, & Pomerantz (2022); Maloney et al. (2015); Retanal et al. (2021); Park et al. (2023); Haimovitz & Dweck (2016); MacDonald et al. (2024).
+
+**Claim killed (this tick):** Miss Streak / soft-wrong shame push / live wrong-answer stalk / Parent Correctness Score™ / empty “mistakes are good!” without grain+CTA / controlling “sit until correct” default / growth-mindset parent letter≡FEI / ACT guarantees from parent messaging (provisional kill #72 until synthesizer).
+
+**Experiments:** SOFTMSG-1…5 + SOFTMSG-QUAL.
+
+**Next researcher id:** **119** (classroom orchestration of Map during live tutoring). Researcher count since v1.15 synthesizer: **2**. Queue extended with ids 120–122 (<3 unfinished rule).
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-10 — Researcher tick: Part CXVII Worked-example fading under high math anxiety (SAFE-FADEX)
 
 **Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch117 never written → prefer Researcher per rotation; researcher count since synthesizer v1.15 = 0)  
