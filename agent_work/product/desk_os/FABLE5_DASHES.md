@@ -1,19 +1,12 @@
-# Fable 5 dashes — Studio + Workflows (2026-08-10)
+# Desk dashes — Studio Create (locked board)
 
-Source: `agent_work/product/desk_os/{studio,workflows}/`  
-Synced into `app/public/desk-os` on `npm run build` / CI.
+**Studio Create** = the floating-card Create space (Jesse center · Media/Text/Stickers/Music/Looks · timeline · bottom Ask).
 
-## Live links (after push to main)
+Source of truth for the board: `agent_work/product/studio_prototype_2026-08-10/`  
+Shipped live path: `agent_work/product/desk_os/studio/` (synced at build).
 
-| Dash | Short | Full |
-|------|--------|------|
-| **Studio** (video/photo create) | https://mindcraft-93858.web.app/studio | https://mindcraft-93858.web.app/desk-os/studio/?v=f5 |
-| **Workflows** (poll / signup / 1:1 / Calendly) | https://mindcraft-93858.web.app/workflows | https://mindcraft-93858.web.app/desk-os/workflows/?v=f5 |
+## Live link
+https://mindcraft-93858.web.app/studio  
+https://mindcraft-93858.web.app/desk-os/studio/?v=create11
 
-Local: `cd app && npm run sync:desk-os && npm run dev` → same paths on `:5173`.
-
-## Behavior
-- Bottom desk Ask/search filters widgets; scroll down tucks, scroll up shows
-- Dense layout (tight gaps, short chrome)
-- Studio: IndexedDB media, timeline play, text/stickers/captions/looks, Craft
-- Workflows: localStorage publish + `?w=` respond/vote/claim; Booking → Calendly
+Workflows dash is separate (`/workflows`) — Studio focus is this Create board only.

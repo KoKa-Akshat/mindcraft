@@ -5,67 +5,2638 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MindCraft Studio · Create</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,500;9..40,600;9..40,700;9..40,800&family=Fredoka:wght@600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="studio.css">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@600;700;800;900&family=Fredoka:wght@500;600;700&family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --bg:#0a0b10; --bg2:#0e1018; --panel:#151823; --panel2:#1b1f2e; --panel3:#232840;
+  --ink:#f4f1e8; --muted:#9aa3b5; --line:#05060a;
+  --grass:#72c74a; --grass-d:#3e8a26; --dirt:#8a5a33; --dirt-d:#5e3a1e;
+  --stone:#8b93a3; --torch:#ffab3d; --lava:#ff5a3c; --portal:#b45cff;
+  --water:#4fc3f7; --gold:#ffd54a; --creeper:#5dd257; --red:#ff5a5a;
+}
+*{box-sizing:border-box; margin:0; padding:0}
+html,body{height:100%}
+body{
+  background:
+    radial-gradient(1200px 500px at 70% -10%, rgba(180,92,255,.10), transparent 60%),
+    radial-gradient(900px 420px at 10% 110%, rgba(114,199,74,.08), transparent 60%),
+    var(--bg);
+  color:var(--ink);
+  font-family:'Nunito',system-ui,sans-serif;
+  overflow:hidden;
+}
+button{font-family:inherit; border:none; background:none; color:inherit; cursor:pointer}
+h1,h2,h3,.pix{font-family:'Press Start 2P',monospace; line-height:1.5}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:var(--panel3); border:2px solid var(--line)}
+::-webkit-scrollbar-track{background:transparent}
+
+/* ============ PIXEL UTILITIES ============ */
+.pxl{border:3px solid var(--line); box-shadow: inset 0 3px 0 rgba(255,255,255,.13), inset 0 -4px 0 rgba(0,0,0,.35)}
+.raise{box-shadow: 0 5px 0 var(--line), inset 0 3px 0 rgba(255,255,255,.16), inset 0 -4px 0 rgba(0,0,0,.3)}
+.btn{
+  font-family:'Press Start 2P',monospace; font-size:10px; letter-spacing:.5px;
+  padding:12px 16px; background:var(--grass); color:#08130a;
+  border:3px solid var(--line); box-shadow:0 5px 0 var(--line);
+  transition:transform .05s, box-shadow .05s; user-select:none;
+  image-rendering:pixelated; text-transform:uppercase;
+}
+.btn:hover{transform:translateY(-2px); box-shadow:0 7px 0 var(--line)}
+.btn:active{transform:translateY(3px); box-shadow:0 2px 0 var(--line)}
+.btn.orange{background:var(--torch); color:#1d0f00}
+.btn.purple{background:var(--portal); color:#fff}
+.btn.blue{background:var(--water); color:#04222e}
+.btn.ghost{background:var(--panel3); color:var(--ink)}
+.btn.small{font-size:8px; padding:8px 10px; box-shadow:0 4px 0 var(--line)}
+.chip{
+  display:inline-flex; align-items:center; gap:6px;
+  background:var(--panel2); border:3px solid var(--line);
+  padding:6px 10px; font-size:12px; font-weight:800; color:var(--muted);
+}
+
+/* ============ TOASTS ============ */
+#toastWrap{position:fixed; left:16px; bottom:16px; z-index:999; display:flex; flex-direction:column; gap:8px}
+.toast{
+  background:var(--panel2); border:3px solid var(--line); box-shadow:0 5px 0 var(--line);
+  padding:10px 14px; font-weight:900; font-size:13px; display:flex; gap:8px; align-items:center;
+  animation:toastIn .18s steps(3) both;
+}
+.toast .xp{font-family:'Press Start 2P'; font-size:9px; color:var(--gold)}
+@keyframes toastIn{from{transform:translateY(20px); opacity:0}to{transform:none; opacity:1}}
+.toast.out{animation:toastOut .3s steps(4) both}
+@keyframes toastOut{to{transform:translateY(14px); opacity:0}}
+
+/* ============ HOME ============ */
+#homeView{height:100vh; overflow-y:auto; padding:0 28px 60px}
+.homeHead{display:flex; align-items:center; justify-content:space-between; padding:22px 4px 8px}
+.logo{display:flex; align-items:center; gap:12px}
+.logo .cube{width:34px; height:34px; background:linear-gradient(180deg,var(--grass) 40%, var(--dirt) 40%); border:3px solid var(--line); box-shadow:0 4px 0 var(--line); image-rendering:pixelated}
+.logo h1{font-size:14px}
+.logo h1 span{color:var(--grass)}
+.hero{
+  margin-top:26px; padding:34px 30px; background:
+    linear-gradient(180deg, rgba(114,199,74,.12), transparent 55%),
+    var(--panel);
+  border:3px solid var(--line); box-shadow:0 6px 0 var(--line);
+  position:relative; overflow:hidden;
+}
+.hero::after{
+  content:''; position:absolute; inset:auto 0 0 0; height:14px;
+  background:repeating-linear-gradient(90deg, var(--grass) 0 14px, var(--grass-d) 14px 28px);
+  border-top:3px solid var(--line);
+}
+.hero h2{font-size:20px; line-height:1.7; max-width:640px}
+.hero h2 em{font-style:normal; color:var(--torch)}
+.hero p{margin:14px 0 22px; color:var(--muted); font-weight:800; max-width:560px; font-size:15px}
+.heroBtns{display:flex; gap:12px; flex-wrap:wrap}
+.sectionTitle{font-size:11px; color:var(--muted); margin:34px 0 14px; letter-spacing:1px}
+.questGrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:14px}
+.questCard{
+  text-align:left; background:var(--panel2); border:3px solid var(--line); box-shadow:0 5px 0 var(--line);
+  padding:16px; transition:transform .06s, box-shadow .06s;
+}
+.questCard:hover{transform:translateY(-3px); box-shadow:0 8px 0 var(--line)}
+.questCard .qicon{font-size:30px; display:block; margin-bottom:10px}
+.questCard h3{font-size:10px; line-height:1.6; margin-bottom:8px}
+.questCard p{font-size:12.5px; color:var(--muted); font-weight:800}
+.questCard .tag{margin-top:10px; display:inline-block; font-family:'Press Start 2P'; font-size:7px; padding:5px 8px; background:var(--panel3); border:2px solid var(--line); color:var(--water)}
+.projGrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:14px}
+.projCard{background:var(--panel2); border:3px solid var(--line); box-shadow:0 5px 0 var(--line); overflow:hidden; text-align:left}
+.projCard .cover{height:110px; display:flex; align-items:center; justify-content:center; font-size:38px; border-bottom:3px solid var(--line)}
+.projCard .meta{padding:10px 12px}
+.projCard .meta b{display:block; font-size:13px}
+.projCard .meta span{font-size:11px; color:var(--muted); font-weight:800}
+.homeFoot{margin-top:40px; color:var(--muted); font-size:12px; font-weight:800; text-align:center}
+
+/* ============ EDITOR LAYOUT ============ */
+#editorView{height:100vh; display:grid; grid-template-rows:auto 1fr auto; }
+.topbar{
+  display:flex; align-items:center; gap:14px; padding:10px 14px;
+  background:var(--panel); border-bottom:3px solid var(--line);
+}
+.topbar .title{
+  font-weight:900; font-size:15px; padding:6px 10px; background:var(--panel2);
+  border:3px solid var(--line); min-width:180px; outline:none;
+}
+.topbar .title:focus{border-color:var(--torch)}
+.coach{display:flex; gap:6px; margin-left:auto}
+.coach .step{
+  font-family:'Press Start 2P'; font-size:7px; padding:6px 8px;
+  background:var(--panel2); border:2px solid var(--line); color:var(--muted);
+}
+.coach .step.done{background:var(--grass-d); color:#eaffe0}
+.xpwrap{display:flex; align-items:center; gap:8px}
+.xpbar{width:120px; height:16px; background:var(--panel2); border:3px solid var(--line); position:relative}
+.xpbar i{position:absolute; inset:0; width:0%; background:repeating-linear-gradient(90deg,var(--gold) 0 8px, #e0a92f 8px 16px); transition:width .3s steps(6)}
+.lvl{font-family:'Press Start 2P'; font-size:8px; color:var(--gold); white-space:nowrap}
+
+.workspace{
+  display:grid; grid-template-columns:260px minmax(0,1fr) 280px; gap:12px; padding:12px; min-height:0;
+  transition: grid-template-columns .45s cubic-bezier(.22,.9,.24,1);
+}
+/* Create Mode hides classic workspace — float canvas takes over */
+.workspace.create-mode{display:none !important}
+#floatCanvas{display:none; flex:1; min-height:0; position:relative; overflow:hidden}
+#editorView.create-on{
+  background:#f4f2ec;
+  /* topbar · float canvas (timeline lives inside the canvas as a card) */
+  grid-template-rows:auto 1fr;
+  font-family:'DM Sans','Nunito',system-ui,sans-serif;
+}
+#editorView.create-on #floatCanvas{display:block}
+#editorView.create-on > .timelineWrap{display:none}
+#editorView.create-on .topbar{
+  background:rgba(247,243,238,.88); border-bottom:1px solid rgba(20,58,46,.08);
+  backdrop-filter:blur(14px); gap:10px;
+}
+#editorView.create-on .topbar .title{
+  background:#fff; border:1px solid rgba(20,16,12,.08); border-radius:14px;
+  box-shadow:0 6px 20px rgba(20,58,46,.06); color:#143a2e;
+  font:700 15px/1.2 'Fredoka','Nunito',sans-serif; letter-spacing:-.01em;
+}
+#editorView.create-on .coach{display:none}
+#editorView.create-on .btn{
+  font-family:'DM Sans','Nunito',sans-serif; font-weight:700; font-size:12px;
+  letter-spacing:0; text-transform:none; border-radius:14px;
+  border:1px solid rgba(20,16,12,.08); box-shadow:0 6px 18px rgba(20,58,46,.08);
+  padding:10px 14px;
+}
+#editorView.create-on .btn:hover{transform:translateY(-1px); box-shadow:0 10px 22px rgba(20,58,46,.12)}
+#editorView.create-on .btn:active{transform:none}
+#editorView.create-on .btn.ghost{background:#fff; color:#143a2e}
+#editorView.create-on .btn.purple{background:#143a2e; color:#c4f547}
+#editorView.create-on .btn.orange{background:#c4f547; color:#0c1207}
+#editorView.create-on #createModeBtn{display:none !important}
+#editorView.create-on .timelineNode .inspector:empty{display:none}
+#editorView.create-on .timelineNode .inspector:not(:empty){
+  margin-bottom:8px; padding-bottom:6px; border-bottom:1px solid rgba(20,16,12,.06);
+}
+#editorView.create-on .timelineNode.timelineWrap{
+  margin:0; border:1px solid rgba(20,16,12,.05);
+  background:#fff; border-radius:22px;
+  box-shadow:0 18px 44px rgba(20,58,46,.10), 0 1px 0 rgba(255,255,255,.95) inset;
+  padding:14px 14px 12px; overflow:auto; cursor:grab; z-index:9;
+}
+#editorView.create-on .timelineNode.timelineWrap:active{cursor:grabbing}
+#editorView.create-on .track{background:#f3f0ea; border:1px solid rgba(20,16,12,.08); border-radius:14px}
+#editorView.create-on .tracklabel{
+  color:#8a8174; font-family:'DM Sans',sans-serif; font-size:10px; font-weight:700; letter-spacing:.08em;
+}
+#editorView.create-on .clip{
+  font-family:'DM Sans',sans-serif; border-radius:12px; border-width:2px;
+}
+#editorView.create-on .inspector{
+  font-family:'DM Sans',sans-serif; color:#8a8174; font-weight:600;
+}
+#editorView.create-on .inspector .btn,
+#editorView.create-on .inspector button{
+  font-family:'DM Sans',sans-serif !important; font-size:11px !important;
+  letter-spacing:0 !important; text-transform:none !important;
+  border-radius:12px !important; box-shadow:0 4px 12px rgba(20,58,46,.08) !important;
+  border:1px solid rgba(20,16,12,.08) !important;
+}
+#editorView.create-on .toast,
+#toastWrap .toast{
+  font-family:'DM Sans',sans-serif; border-radius:14px; border:1px solid rgba(20,16,12,.08);
+  box-shadow:0 10px 28px rgba(20,58,46,.12);
+}
+
+/* ===== CREATE SPACE · spatial tool canvas ===== */
+.floatBg{
+  position:absolute; inset:0;
+  background-color:#f7f5f0;
+  background-image:
+    radial-gradient(900px 420px at 18% 12%, rgba(196,245,71,.10), transparent 60%),
+    radial-gradient(800px 380px at 88% 78%, rgba(20,58,46,.05), transparent 55%),
+    radial-gradient(rgba(28,26,23,.10) 1.05px, transparent 1.15px);
+  background-size:auto, auto, 22px 22px;
+}
+/* Dash-style Ask · docks at bottom · pops in on scroll-up */
+.floatAsk{
+  position:absolute; left:50%; bottom:16px; z-index:42;
+  width:min(560px, 92%); display:flex; align-items:center; gap:10px;
+  padding:8px 10px 8px 8px;
+  background:linear-gradient(180deg, rgba(36,58,46,.94), rgba(18,34,26,.97));
+  border-radius:999px;
+  box-shadow:0 16px 40px rgba(8,20,14,.28), 0 0 0 1px rgba(185,232,111,.22);
+  border:1px solid rgba(185,232,111,.2);
+  backdrop-filter:blur(14px);
+  transform:translateX(-50%) translateY(0);
+  opacity:1;
+  transition: transform .35s cubic-bezier(.22,.9,.24,1), opacity .28s ease;
+}
+.floatAsk.is-hidden{
+  transform:translateX(-50%) translateY(120%);
+  opacity:0; pointer-events:none;
+}
+.jesseDock{
+  width:40px; height:40px; border-radius:50%; flex:none; overflow:hidden; cursor:pointer;
+  border:2px solid rgba(185,232,111,.35); background:#143a2e; position:relative;
+  opacity:.55; filter:grayscale(.2);
+  transition: transform .25s cubic-bezier(.22,.9,.24,1), box-shadow .25s, opacity .35s, filter .35s, border-color .35s;
+}
+.jesseDock.live{
+  opacity:1; filter:none; border-color:#c4f547; background:#143a2e;
+  box-shadow:0 0 0 3px rgba(196,245,71,.35);
+}
+.jesseDock.live:hover{transform:scale(1.06)}
+.jesseDock img{width:100%; height:100%; object-fit:cover}
+.jesseDock .pulse{display:none}
+.jesseDock.live .pulse{
+  display:block; position:absolute; inset:-3px; border-radius:50%; border:2px solid #c4f547;
+  animation:jdock 1.8s ease-out infinite; pointer-events:none;
+}
+@keyframes jdock{0%{transform:scale(.9); opacity:.8}100%{transform:scale(1.35); opacity:0}}
+.floatAsk input{
+  flex:1; border:0; outline:0; background:transparent;
+  font:600 14px/1.3 'DM Sans',sans-serif; color:#f4efe2; min-width:0;
+}
+.floatAsk input::placeholder{color:rgba(244,239,226,.55)}
+.floatAsk .askGo{
+  flex:none; width:34px; height:34px; border-radius:50%; background:#c4f547; color:#0c1207;
+  font-weight:800; font-size:15px; display:grid; place-items:center;
+}
+.zoomHUD{
+  position:absolute; right:18px; top:18px; z-index:40; display:flex; gap:6px;
+  background:rgba(255,255,255,.9); border:1px solid rgba(20,16,12,.06);
+  border-radius:999px; padding:4px; box-shadow:0 10px 28px rgba(20,58,46,.08);
+}
+.zoomHUD button{
+  width:34px; height:34px; border-radius:50%; font:700 16px/1 'DM Sans',sans-serif; color:#143a2e;
+}
+.zoomHUD button:hover{background:#f3f0ea}
+.zoomHUD .zlabel{
+  min-width:48px; display:grid; place-items:center;
+  font:700 11px/1 'DM Sans',sans-serif; color:#8a8174;
+}
+
+.floatBoard{
+  position:absolute; inset:0; overflow:auto; cursor:grab; touch-action:none;
+}
+.floatBoard::-webkit-scrollbar{width:8px; height:8px}
+.floatBoard::-webkit-scrollbar-thumb{background:rgba(20,58,46,.18); border-radius:99px}
+.floatBoard.panning{cursor:grabbing}
+.floatWorld{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  transform:scale(var(--cz,1)) translate(var(--cx,0px), var(--cy,0px));
+  transform-origin:center center;
+  will-change:transform;
+}
+.floatStack{position:relative; width:100%; height:100%; min-height:100%}
+
+/* canvas nodes — drag + resize A→Z board */
+.cnode{
+  position:absolute; box-sizing:border-box;
+  border-radius:22px;
+  touch-action:none;
+}
+.cnode .tlab{
+  position:absolute; top:-20px; left:4px; z-index:2;
+  font:700 11px/1 'DM Sans',sans-serif; letter-spacing:.06em; text-transform:uppercase; color:#9a9286;
+  pointer-events:none;
+}
+.cnode.selected{
+  z-index:20;
+  outline:2px solid #143a2e;
+  outline-offset:3px;
+  box-shadow:0 28px 64px rgba(20,58,46,.16), 0 0 0 4px rgba(196,245,71,.22);
+}
+.cnode .hndl{
+  display:none; position:absolute; width:12px; height:12px; border-radius:50%;
+  background:#fff; border:2px solid #143a2e; z-index:5;
+  box-shadow:0 2px 8px rgba(20,58,46,.2);
+}
+.cnode.selected .hndl{display:block}
+.cnode .hndl.nw{left:-7px; top:-7px; cursor:nwse-resize}
+.cnode .hndl.n{left:50%; top:-7px; transform:translateX(-50%); cursor:ns-resize}
+.cnode .hndl.ne{right:-7px; top:-7px; cursor:nesw-resize}
+.cnode .hndl.e{right:-7px; top:50%; transform:translateY(-50%); cursor:ew-resize}
+.cnode .hndl.se{right:-7px; bottom:-7px; cursor:nwse-resize}
+.cnode .hndl.s{left:50%; bottom:-7px; transform:translateX(-50%); cursor:ns-resize}
+.cnode .hndl.sw{left:-7px; bottom:-7px; cursor:nesw-resize}
+.cnode .hndl.w{left:-7px; top:50%; transform:translateY(-50%); cursor:ew-resize}
+.cnode.dragging{opacity:.96; z-index:30}
+.selBar{
+  position:absolute; top:16px; left:50%; transform:translateX(-50%); z-index:41;
+  display:none; align-items:center; gap:6px; padding:5px 8px;
+  background:rgba(255,255,255,.94); border:1px solid rgba(20,16,12,.08);
+  border-radius:999px; box-shadow:0 10px 28px rgba(20,58,46,.10);
+  font:700 11px/1 'DM Sans',sans-serif; color:#143a2e;
+}
+.selBar.show{display:flex}
+.selBar button{
+  padding:7px 10px; border-radius:999px; background:#f3f0ea; color:#143a2e;
+}
+.selBar button:hover{background:#c4f547}
+
+/* floating TOOL cards — straight, spacious, always actionable */
+.tcard{
+  background:#fff; overflow:hidden;
+  border:1px solid rgba(20,16,12,.05);
+  box-shadow:0 18px 44px rgba(20,58,46,.09), 0 1px 0 rgba(255,255,255,.95) inset;
+  cursor:grab; display:flex; flex-direction:column;
+}
+.tcard:active{cursor:grabbing}
+.tcard:hover{box-shadow:0 26px 56px rgba(20,58,46,.13)}
+.tcard.open{
+  box-shadow:0 28px 64px rgba(20,58,46,.14), 0 0 0 2px rgba(196,245,71,.45);
+}
+.tcard .thead{
+  display:flex; align-items:center; gap:10px; padding:14px 14px 6px;
+  cursor:grab;
+}
+.tcard .tico{
+  width:38px; height:38px; border-radius:13px; display:grid; place-items:center;
+  font-size:18px; background:#f3f0ea; flex:none;
+}
+.tcard .tico.g{background:rgba(196,245,71,.28)}
+.tcard .tico.i{background:rgba(20,58,46,.10)}
+.tcard .ttxt b{
+  display:block; font:700 15px/1.15 'Fredoka','DM Sans',sans-serif; color:#143a2e; letter-spacing:-.01em;
+}
+.tcard .ttxt span{display:block; margin-top:2px; font:600 12px/1.3 'DM Sans',sans-serif; color:#8a8174}
+.tcard .tbody{
+  flex:1; padding:4px 12px 14px; display:block; min-height:0; overflow:auto;
+}
+.tchip{
+  display:inline-flex; align-items:center; justify-content:center; gap:6px;
+  padding:8px 10px; border-radius:12px; background:#f7f5f0; margin:0 6px 6px 0;
+  font:700 12px/1 'DM Sans',sans-serif; color:#143a2e; border:1px solid transparent;
+}
+.tchip:hover{border-color:#c4f547; background:#f4fbe6}
+.tchip.on{background:#143a2e; color:#c4f547}
+.tmediaGrid{display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin-top:4px}
+.tmediaGrid .tm{
+  aspect-ratio:1; border-radius:12px; overflow:hidden; background:#efece6; position:relative;
+}
+.tmediaGrid .tm img,.tmediaGrid .tm video{width:100%; height:100%; object-fit:cover; display:block}
+.tmediaGrid .tm.add{
+  display:grid; place-items:center; border:1.5px dashed rgba(20,58,46,.22);
+  background:#fbfaf7; color:#143a2e; font:800 18px/1 'DM Sans',sans-serif;
+}
+.tfield{
+  width:100%; border:1px solid rgba(20,16,12,.1); border-radius:12px; padding:9px 10px;
+  font:600 12px/1.3 'DM Sans',sans-serif; background:#fbfaf7; color:#143a2e; outline:none;
+}
+.tfield:focus{border-color:#c4f547; box-shadow:0 0 0 3px rgba(196,245,71,.25)}
+.tgo{
+  margin-top:8px; width:100%; border-radius:12px; padding:10px;
+  background:#c4f547; color:#0c1207; font:800 12px/1 'DM Sans',sans-serif;
+}
+
+/* center stage — Jesse default, swaps to loot when timeline has scenes */
+.centerNode{
+  z-index:8;
+  background:transparent;
+  border-radius:28px;
+  overflow:visible;
+}
+.centerNode .stageShell{
+  position:absolute; inset:0; border-radius:28px; overflow:hidden;
+  background:#143a2e; border:10px solid #fff;
+  box-shadow:0 34px 70px rgba(20,58,46,.18), 0 0 0 1px rgba(20,16,12,.05);
+}
+.jesseHero{
+  position:absolute; inset:0; width:100%; height:100%;
+  border:0; border-radius:0; overflow:hidden; cursor:pointer;
+  background:#143a2e; z-index:2;
+  transition: opacity .4s ease;
+}
+.jesseHero img{width:100%; height:100%; object-fit:cover; display:block}
+.jesseHero .veil{
+  position:absolute; inset:auto 0 0; padding:22px 18px 18px;
+  background:linear-gradient(transparent, rgba(8,20,14,.82)); color:#f7f3ee;
+}
+.jesseHero .veil b{
+  display:block; font-family:'Instrument Serif',Georgia,serif; font-size:clamp(22px, 2.4vw, 32px); font-weight:400; line-height:1.05;
+}
+.jesseHero .veil span{display:block; margin-top:7px; font:600 12px/1.35 'DM Sans',sans-serif; color:rgba(247,243,238,.88)}
+.jesseHero .useJesse{
+  margin-top:10px; display:inline-flex; align-items:center; gap:6px;
+  padding:8px 11px; border-radius:999px; background:#c4f547; color:#0c1207;
+  font:800 12px/1 'DM Sans',sans-serif;
+}
+.jesseHero.docked{opacity:0; pointer-events:none}
+
+.createStage{
+  position:absolute; inset:0; z-index:3;
+  display:none; flex-direction:column; align-items:stretch; gap:0;
+  width:auto; height:auto; transform:none;
+}
+.createStage.show{display:flex; animation:stageIn .4s cubic-bezier(.22,.9,.24,1) both}
+@keyframes stageIn{from{opacity:0}to{opacity:1}}
+.createStage .phone{
+  position:absolute; inset:0;
+  width:100% !important; height:100% !important; min-height:0 !important;
+  max-height:none !important; aspect-ratio:auto !important;
+  border:0 !important; border-radius:0 !important; box-shadow:none !important;
+}
+.createStage .controls{
+  position:absolute; left:0; right:0; bottom:12px; z-index:40;
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  background:transparent; pointer-events:none;
+}
+.createStage .controls > *{pointer-events:auto}
+.createStage .controls .playbtn{
+  background:#143a2e; color:#c4f547; border-radius:50%;
+  border:0; box-shadow:0 8px 20px rgba(20,58,46,.2);
+  font-family:'DM Sans',sans-serif;
+}
+.createStage .timelabel{color:#6f6a61; font:700 13px/1 'DM Sans',sans-serif}
+.createStage .stageHint{
+  font:600 12px/1.3 'DM Sans',sans-serif; color:#8a8174; text-align:center;
+}
+
+/* intel sheet */
+.intelSheet{
+  position:absolute; right:18px; top:72px; bottom:18px; width:min(300px, 86vw); z-index:50;
+  background:#fff; border-radius:24px; padding:22px 18px; overflow:auto;
+  border:1px solid rgba(20,16,12,.06);
+  box-shadow:0 24px 60px rgba(20,58,46,.14);
+  transform:translateX(16px); opacity:0; pointer-events:none;
+  transition: .35s cubic-bezier(.22,.9,.24,1);
+}
+.intelSheet.open{transform:none; opacity:1; pointer-events:auto}
+.intelSheet h3{
+  font-family:'Instrument Serif',Georgia,serif; font-size:28px; font-weight:400; color:#143a2e; margin-bottom:6px;
+}
+.intelSheet .sub{font:600 13px/1.4 'DM Sans',sans-serif; color:#8a8174; margin-bottom:16px}
+.intelSheet .bit{
+  padding:12px; border-radius:14px; background:#f7f5f0; margin-bottom:8px;
+  font:700 13px/1.35 'DM Sans',sans-serif; color:#143a2e; cursor:pointer;
+  border:1px solid transparent; text-align:left; width:100%;
+}
+.intelSheet .bit:hover{border-color:#c4f547; background:#f4fbe6}
+.intelSheet .bit small{display:block; margin-top:4px; font-weight:600; color:#8a8174}
+.intelSheet .closeIntel{
+  position:absolute; top:14px; right:14px; width:30px; height:30px; border-radius:50%;
+  background:#f0ebe3; font-weight:800; color:#143a2e;
+}
+
+.workspace.fs-stage{
+  position:fixed; inset:0; z-index:80; padding:14px; gap:0;
+  grid-template-columns:1fr; background:rgba(5,6,10,.96); display:grid !important;
+}
+.workspace.fs-stage .panel{display:none !important}
+#editorView.fs-on .timelineWrap,
+#editorView.fs-on .topbar .coach{display:none !important}
+#editorView.fs-on.create-on .timelineWrap{display:none !important}
+#editorView.fs-on{grid-template-rows:auto 1fr}
+.workspace.fs-stage .stage{max-width:none; height:100%}
+.workspace.fs-stage .phone{
+  max-height:none; height:100%; width:auto; max-width:min(520px, 92vw);
+  box-shadow:0 0 0 3px var(--line), 0 20px 80px rgba(114,199,74,.18);
+}
+.panel{background:var(--panel); border:3px solid var(--line); box-shadow:0 5px 0 var(--line); display:flex; flex-direction:column; min-height:0; transition:width .35s ease}
+.panel .phead{
+  font-family:'Press Start 2P'; font-size:9px; padding:12px;
+  border-bottom:3px solid var(--line); display:flex; align-items:center; gap:8px;
+  background:var(--panel2);
+}
+.panel .pbody{padding:12px; overflow-y:auto; flex:1; min-height:0}
+
+/* ============ CHEST (ASSETS) ============ */
+.dropzone{
+  border:3px dashed var(--stone); background:var(--bg2); padding:18px 12px;
+  text-align:center; cursor:pointer; transition:background .15s, border-color .15s;
+}
+.dropzone.drag{background:#14240f; border-color:var(--grass)}
+.dropzone .big{font-size:28px; display:block; margin-bottom:8px}
+.dropzone b{font-size:13px}
+.dropzone p{font-size:11px; color:var(--muted); font-weight:800; margin-top:4px}
+.assetGrid{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px}
+.asset{
+  background:var(--panel2); border:3px solid var(--line); overflow:hidden; cursor:grab;
+  transition:transform .06s, box-shadow .2s; position:relative;
+}
+.asset:hover{transform:translateY(-2px)}
+.asset:active{cursor:grabbing}
+.asset.flying{opacity:.35}
+.asset .thumb{height:72px; width:100%; object-fit:cover; display:block; border-bottom:3px solid var(--line); background:#000; image-rendering:auto}
+.asset .aname{font-size:10.5px; font-weight:900; padding:5px 6px 2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.asset .kind{
+  position:absolute; top:4px; left:4px; font-family:'Press Start 2P'; font-size:6px;
+  background:var(--line); color:var(--water); padding:3px 5px;
+}
+.asset .rm{
+  position:absolute; top:4px; right:4px; width:22px; height:22px; z-index:2;
+  font-size:12px; line-height:1; background:rgba(0,0,0,.7); color:#fff;
+  border:2px solid var(--line); display:grid; place-items:center;
+}
+.asset .rm:hover{background:var(--red)}
+.asset .row{display:grid; grid-template-columns:1fr 1fr}
+.asset .addbtn, .asset .useBtn{
+  width:100%; font-family:'Press Start 2P'; font-size:6px; padding:7px 4px;
+  background:var(--panel3); color:var(--grass); border-top:2px solid var(--line);
+}
+.asset .useBtn{color:var(--torch); border-left:2px solid var(--line)}
+.asset .addbtn:hover{background:var(--grass); color:#08130a}
+.asset .useBtn:hover{background:var(--torch); color:#1d0f00}
+
+/* fly ghost for Create Mode zoom */
+.flyGhost{
+  position:fixed; z-index:200; pointer-events:none; border:3px solid var(--torch);
+  box-shadow:0 12px 40px rgba(0,0,0,.5); border-radius:4px; overflow:hidden;
+  transition: top .55s cubic-bezier(.22,.9,.24,1), left .55s cubic-bezier(.22,.9,.24,1),
+    width .55s cubic-bezier(.22,.9,.24,1), height .55s cubic-bezier(.22,.9,.24,1),
+    opacity .2s .45s, transform .55s cubic-bezier(.22,.9,.24,1);
+  transform:rotate(-4deg) scale(1);
+}
+.flyGhost img, .flyGhost video{width:100%; height:100%; object-fit:cover; display:block}
+.flyGhost.go{
+  transform:rotate(0) scale(1);
+}
+
+/* ============ STAGE ============ */
+.stage{
+  display:flex; flex-direction:column; align-items:center; gap:10px; min-height:0; padding:4px 0;
+  position:relative;
+}
+.stageBar{display:flex; align-items:center; gap:8px; width:min(100%, 360px); justify-content:flex-end}
+.stageBar .modeChip{
+  margin-right:auto; font-family:'Press Start 2P'; font-size:7px; padding:7px 9px;
+  background:var(--panel2); border:2px solid var(--line); color:var(--muted);
+}
+.stageBar .modeChip.on{background:#1a3a14; color:var(--grass); border-color:var(--grass)}
+.phone{
+  height:100%; max-height:calc(100% - 56px); aspect-ratio:9/16; background:#000;
+  border:5px solid var(--line); box-shadow:0 8px 0 var(--line), 0 0 60px rgba(114,199,74,.12);
+  position:relative; overflow:hidden;
+  transition: max-height .45s cubic-bezier(.22,.9,.24,1), width .45s cubic-bezier(.22,.9,.24,1),
+    box-shadow .35s ease, transform .45s cubic-bezier(.22,.9,.24,1);
+}
+.workspace.create-mode .phone{
+  max-height:calc(100% - 48px); width:auto;
+  box-shadow:0 10px 0 var(--line), 0 0 80px rgba(255,171,61,.18);
+  transform:scale(1.02);
+}
+.phone.pulse-in{animation:stagePop .45s cubic-bezier(.22,.9,.24,1)}
+@keyframes stagePop{0%{transform:scale(.86); filter:brightness(1.4)}100%{transform:scale(1); filter:none}}
+.segments{position:absolute; top:8px; left:8px; right:8px; display:flex; gap:4px; z-index:30}
+.segments i{flex:1; height:5px; background:rgba(255,255,255,.28); position:relative; overflow:hidden}
+.segments i b{position:absolute; inset:0; width:0%; background:#fff}
+.handleRow{position:absolute; top:20px; left:10px; z-index:30; display:flex; align-items:center; gap:7px}
+.handleRow .av{width:22px; height:22px; background:linear-gradient(180deg,var(--grass) 50%,var(--dirt) 50%); border:2px solid #fff; image-rendering:pixelated}
+.handleRow span{font-size:11px; font-weight:900; text-shadow:0 1px 3px #000}
+.mediawrap{position:absolute; inset:0; display:flex; align-items:center; justify-content:center}
+.mediawrap img,.mediawrap video{width:100%; height:100%; object-fit:cover}
+.stagePlaceholder{
+  position:absolute; inset:0; display:flex; flex-direction:column; gap:12px;
+  align-items:center; justify-content:center; text-align:center; padding:24px; z-index:5;
+  background:
+    linear-gradient(rgba(10,11,16,.55), rgba(10,11,16,.75)),
+    repeating-conic-gradient(#14171f 0% 25%, #0e1016 0% 50%) 0 0/28px 28px;
+}
+.stagePlaceholder .pix{font-size:9px; color:var(--muted); line-height:2}
+.stagePlaceholder .big{font-size:34px}
+.overlayLayer{position:absolute; inset:0; z-index:20}
+.textov{
+  position:absolute; transform:translate(-50%,-50%); cursor:grab; user-select:none;
+  max-width:86%; text-align:center; outline:none; padding:4px 8px; touch-action:none;
+}
+.textov:active{cursor:grabbing}
+.textov.sel{outline:2px dashed var(--torch)}
+.textov .del{
+  position:absolute; top:-14px; right:-14px; width:22px; height:22px; font-size:11px; line-height:1;
+  background:var(--red); border:2px solid var(--line); color:#fff; display:none;
+}
+.textov.sel .del{display:block}
+.t-blocky{font-family:'Press Start 2P'; font-size:13px; color:#fff; text-shadow:2px 2px 0 #000, -2px 2px 0 #000, 2px -2px 0 #000, -2px -2px 0 #000; line-height:1.8}
+.t-neon{font-family:'Nunito'; font-weight:900; font-size:22px; color:#9ff3ff; text-shadow:0 0 8px #22d3ee, 0 0 22px #22d3ee}
+.t-sticker{font-family:'Nunito'; font-weight:900; font-size:18px; background:var(--gold); color:#111; padding:4px 12px; border:3px solid var(--line); box-shadow:3px 3px 0 var(--line)}
+.stickerov{position:absolute; transform:translate(-50%,-50%); font-size:44px; cursor:grab; user-select:none; text-shadow:0 3px 0 rgba(0,0,0,.4); touch-action:none}
+.stickerov:active{cursor:grabbing}
+.captions{
+  position:absolute; left:0; right:0; bottom:14%; z-index:25; text-align:center; padding:0 14px;
+  pointer-events:none;
+}
+.captions span{
+  display:inline-block; font-family:'Press Start 2P'; font-size:11px; color:#fff;
+  background:rgba(0,0,0,.65); padding:7px 10px; border:2px solid rgba(255,255,255,.15);
+  animation:capPop .16s steps(2) both;
+}
+@keyframes capPop{from{transform:scale(.6); opacity:0}to{transform:scale(1); opacity:1}}
+.controls{display:flex; align-items:center; gap:12px}
+.playbtn{
+  width:52px; height:52px; font-size:18px; background:var(--torch); color:#1d0f00;
+  border:3px solid var(--line); box-shadow:0 5px 0 var(--line);
+}
+.playbtn:active{transform:translateY(3px); box-shadow:0 2px 0 var(--line)}
+.timelabel{font-family:'Press Start 2P'; font-size:9px; color:var(--muted)}
+.fxlabel{font-size:11px; font-weight:900; color:var(--portal)}
+
+/* ============ TOOLS ============ */
+.toolTabs{display:grid; grid-template-columns:repeat(3,1fr); gap:6px; padding:10px; border-bottom:3px solid var(--line); background:var(--panel2)}
+.toolTab{
+  font-family:'Press Start 2P'; font-size:7px; padding:9px 4px; text-align:center;
+  background:var(--panel3); border:2px solid var(--line); color:var(--muted);
+}
+.toolTab .ti{display:block; font-size:15px; font-family:'Nunito'; margin-bottom:4px}
+.toolTab.on{background:var(--grass); color:#08130a}
+.toolTab.on .ti{filter:none}
+.toolPanel{padding:12px; overflow-y:auto; flex:1; min-height:0}
+.tpTitle{font-family:'Press Start 2P'; font-size:8px; color:var(--muted); margin:4px 0 10px}
+.tplList{display:flex; flex-direction:column; gap:10px}
+.tplCard{
+  text-align:left; background:var(--panel2); border:3px solid var(--line); box-shadow:0 4px 0 var(--line);
+  padding:12px; transition:transform .06s;
+}
+.tplCard:hover{transform:translateY(-2px)}
+.tplCard b{font-size:12.5px; display:flex; gap:8px; align-items:center}
+.tplCard p{font-size:11px; color:var(--muted); font-weight:800; margin-top:4px}
+.presetRow{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px}
+.presetChip{
+  font-size:11px; font-weight:900; padding:8px 10px; background:var(--panel2);
+  border:3px solid var(--line);
+}
+.presetChip.on{background:var(--water); color:#04222e}
+.stickerGrid{display:grid; grid-template-columns:repeat(4,1fr); gap:8px}
+.stickerBtn{
+  font-size:24px; padding:10px 0; background:var(--panel2); border:3px solid var(--line);
+  transition:transform .06s;
+}
+.stickerBtn:hover{transform:scale(1.12)}
+.musicList{display:flex; flex-direction:column; gap:8px}
+.musicItem{
+  display:flex; align-items:center; gap:10px; padding:10px; background:var(--panel2);
+  border:3px solid var(--line); text-align:left;
+}
+.musicItem.on{border-color:var(--gold); background:#2a2410}
+.musicItem .note{font-size:18px}
+.musicItem b{font-size:12.5px; display:block}
+.musicItem span{font-size:10px; color:var(--muted); font-weight:800}
+.musicItem .eq{margin-left:auto; display:flex; gap:2px; align-items:flex-end; height:16px}
+.musicItem .eq i{width:4px; background:var(--gold); height:4px}
+.musicItem.on .eq i{animation:eq .5s infinite alternate steps(3)}
+.musicItem.on .eq i:nth-child(2){animation-delay:.12s}
+.musicItem.on .eq i:nth-child(3){animation-delay:.24s}
+@keyframes eq{from{height:4px}to{height:16px}}
+.spotBox{background:var(--panel2); border:3px solid var(--line); padding:12px; margin-bottom:14px}
+.spotBox .spotHead{display:flex; align-items:center; gap:8px; margin-bottom:10px}
+.spotBox .spotHead b{font-size:12.5px}
+.spotBox .spotHead .badge{font-family:'Press Start 2P'; font-size:6px; background:#1DB954; color:#04140a; padding:4px 6px; border:2px solid var(--line)}
+.spotRow{display:flex; gap:6px}
+.spotInput{
+  flex:1; min-width:0; background:var(--bg2); border:3px solid var(--line); color:var(--ink);
+  font-family:'Nunito'; font-weight:800; font-size:12px; padding:9px;
+}
+.spotInput::placeholder{color:#667; font-weight:700}
+.spotCard{
+  display:flex; gap:10px; align-items:center; margin-top:10px; padding:8px;
+  background:var(--bg2); border:3px solid #1DB954; text-align:left;
+}
+.spotCard img{width:48px; height:48px; object-fit:cover; border:2px solid var(--line); flex:none; background:#222}
+.spotCard b{font-size:12.5px; display:block; line-height:1.3}
+.spotCard span{font-size:11px; color:var(--muted); font-weight:800}
+.spotCard .spotActions{margin-left:auto; display:flex; flex-direction:column; gap:4px}
+.spotEmbed{margin-top:10px; border:3px solid var(--line); overflow:hidden; background:#000; min-height:80px}
+.spotEmbed iframe{display:block; width:100%; border:0; height:80px}
+.igMusic[hidden]{display:none !important}
+.igMusic{
+  position:absolute; left:50%; top:62%; transform:translate(-50%,-50%); z-index:28;
+  display:flex; align-items:center; gap:8px; max-width:86%;
+  background:rgba(0,0,0,.42); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+  border:2px solid rgba(255,255,255,.35); border-radius:999px; padding:6px 12px 6px 6px;
+  pointer-events:none; box-shadow:0 4px 16px rgba(0,0,0,.35);
+}
+.igMusic .disc{
+  width:28px; height:28px; border-radius:50%; flex:none;
+  background:conic-gradient(#111 0 20%, #1DB954 0 40%, #111 0 60%, #1DB954 0 80%, #111 0);
+  border:2px solid #fff; animation:spinDisc 3s linear infinite;
+  background-image:none; background-color:#1DB954;
+  display:flex; align-items:center; justify-content:center; font-size:12px;
+  overflow:hidden;
+}
+.igMusic .disc img{width:100%; height:100%; object-fit:cover}
+.igMusic .marquee{overflow:hidden; max-width:160px; white-space:nowrap}
+.igMusic .marquee i{
+  display:inline-block; font-style:normal; font-size:12px; font-weight:900; color:#fff;
+  padding-left:100%; animation:marq 8s linear infinite; text-shadow:0 1px 3px #000;
+}
+@keyframes spinDisc{to{transform:rotate(360deg)}}
+@keyframes marq{to{transform:translateX(-100%)}}
+.fxGrid{display:grid; grid-template-columns:1fr 1fr; gap:8px}
+.fxBtn{
+  padding:0; background:var(--panel2); border:3px solid var(--line); overflow:hidden; text-align:center;
+}
+.fxBtn.on{border-color:var(--portal)}
+.fxBtn .swatch{height:44px; background:linear-gradient(135deg,#5b8ac4,#8a5a33 60%,#72c74a)}
+.fxBtn span{font-size:10.5px; font-weight:900; display:block; padding:6px}
+.switchRow{display:flex; align-items:center; justify-content:space-between; padding:10px; background:var(--panel2); border:3px solid var(--line); margin-bottom:12px}
+.switchRow b{font-size:12.5px}
+.switch{width:52px; height:26px; background:var(--panel3); border:3px solid var(--line); position:relative}
+.switch i{position:absolute; top:1px; left:2px; width:18px; height:16px; background:var(--stone); transition:left .12s steps(2)}
+.switch.on{background:var(--grass-d)}
+.switch.on i{left:26px; background:var(--gold)}
+.capInput{width:100%; background:var(--bg2); border:3px solid var(--line); color:var(--ink); font-family:'Nunito'; font-weight:800; font-size:12.5px; padding:9px}
+.hint{font-size:11px; color:var(--muted); font-weight:800; margin-top:10px; line-height:1.5}
+
+/* ============ TIMELINE ============ */
+.timelineWrap{margin:0 12px 12px; padding:10px 12px}
+.inspector{
+  display:flex; align-items:center; gap:10px; min-height:40px; margin-bottom:8px;
+  font-size:12px; font-weight:900; flex-wrap:wrap;
+}
+.inspector .ib{
+  font-family:'Press Start 2P'; font-size:8px; padding:8px 10px;
+  background:var(--panel3); border:2px solid var(--line); color:var(--ink);
+}
+.inspector .ib:hover{background:var(--panel2)}
+.inspector .ib.warn{color:var(--red)}
+.inspector .muted{color:var(--muted)}
+.trackrow{display:flex; align-items:center; gap:10px; margin-top:6px}
+.tracklabel{width:70px; font-family:'Press Start 2P'; font-size:7px; color:var(--muted); text-align:right; flex:none}
+.track{
+  position:relative; flex:1; background:var(--bg2); border:3px solid var(--line);
+  display:flex; gap:4px; padding:4px; overflow-x:auto; overflow-y:hidden; align-items:center;
+}
+#videoTrack{height:64px}
+#textTrack,#musicTrack{height:36px}
+.track.dragover{background:#14240f; border-color:var(--grass)}
+.clip{
+  height:100%; flex:none; border:3px solid var(--line); position:relative; cursor:pointer;
+  background-size:cover; background-position:center; image-rendering:auto; overflow:hidden;
+}
+.clip.sel{border-color:var(--torch); box-shadow:0 0 0 2px var(--torch)}
+.clip .dur{
+  position:absolute; right:2px; bottom:2px; font-family:'Press Start 2P'; font-size:6px;
+  background:rgba(0,0,0,.75); color:var(--gold); padding:2px 4px;
+}
+.clip .cname{
+  position:absolute; left:2px; top:2px; right:2px; font-size:9px; font-weight:900;
+  color:#fff; text-shadow:0 1px 2px #000; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.miniChip{
+  height:100%; display:flex; align-items:center; padding:0 10px; gap:6px; flex:none;
+  background:var(--panel3); border:3px solid var(--line); font-size:10.5px; font-weight:900;
+  white-space:nowrap;
+}
+.miniChip.gold{border-color:#6b5a17; color:var(--gold)}
+.playhead{position:absolute; top:0; bottom:0; width:3px; background:var(--red); z-index:10; pointer-events:none; box-shadow:0 0 6px var(--red)}
+.emptyTrack{font-size:11px; font-weight:800; color:var(--muted); padding:0 10px}
+
+/* ============ EXPORT MODAL ============ */
+.modalBack{position:fixed; inset:0; background:rgba(5,6,10,.8); z-index:200; display:flex; align-items:center; justify-content:center}
+.modal{width:min(480px, 92vw); background:var(--panel); border:4px solid var(--line); box-shadow:0 10px 0 var(--line); padding:26px; text-align:center; position:relative; overflow:hidden}
+.modal h3{font-size:12px; margin-bottom:18px; line-height:1.8}
+.craftGrid{display:flex; gap:4px; justify-content:center; margin:14px 0}
+.craftGrid i{width:16px; height:16px; background:var(--panel3); border:2px solid var(--line)}
+.craftGrid i.f{background:var(--grass)}
+.craftStatus{font-size:12.5px; font-weight:900; color:var(--muted); min-height:20px}
+.doneWrap{display:none}
+.doneWrap .bigOk{font-size:44px; margin:6px 0 12px}
+.doneWrap p{font-weight:800; color:var(--muted); font-size:13px; margin-bottom:16px}
+.modalBtns{display:flex; gap:10px; justify-content:center; flex-wrap:wrap}
+.confetti{position:absolute; top:-12px; width:8px; height:8px; z-index:5; animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(560px) rotate(540deg)}}
+
+/* misc */
+.smallNote{font-size:10px; color:var(--muted); font-weight:800}
+@media (max-width:980px){
+  .workspace{grid-template-columns:230px 1fr 240px}
+}
+</style>
 </head>
 <body>
-<header class="top">
-  <a class="back" href="/desk-os/?v=r9b">◀ Desk</a>
-  <input class="title" id="projectTitle" value="Untitled Story" maxlength="80" aria-label="Project title">
-  <a class="link" href="/desk-os/workflows/?v=f5">Workflows →</a>
-  <button class="craft" id="craftBtn">Craft story</button>
-</header>
 
-<main class="board" id="board">
-  <aside class="col left" id="leftCol"></aside>
-  <section class="stageWrap">
-    <div class="stage" id="stage">
-      <div class="stageMedia" id="stageMedia"></div>
-      <div class="stageOverlay" id="stageOverlay"></div>
-      <div class="jesseHero" id="jesseHero">
-        <img src="kitchen-warm.jpg" alt="">
-        <div class="veil">
-          <h2>Jesse’s Kitchen</h2>
-          <p>Drop media · build scenes · craft.</p>
+<div id="toastWrap"></div>
+
+<!-- ================= HOME ================= -->
+<section id="homeView">
+  <div class="homeHead">
+    <div class="logo">
+      <div class="cube"></div>
+      <h1>MINDCRAFT <span>STUDIO</span></h1>
+    </div>
+    <span class="chip">simple edit space · not lessons</span>
+  </div>
+
+  <div class="hero pxl">
+    <h2>DROP LOOT.<br><em>MAKE A STORY.</em></h2>
+    <p>Upload photos, clips, or sounds into the chest. Stack scenes on the timeline. Add text, stickers, a beat, captions. Craft it. That’s it — just editing tools.</p>
+    <div class="heroBtns">
+      <button class="btn orange" onclick="newProject()">▶ START EDITING</button>
+      <button class="btn purple" onclick="applyQuest('vibe')">USE STARTER PACK</button>
+    </div>
+  </div>
+
+  <h2 class="sectionTitle">QUICK STARTERS (OPTIONAL)</h2>
+  <div class="questGrid" id="homeQuests"></div>
+
+  <p class="homeFoot">MindCraft Studio · prototype · Stories format (9:16) · files stay on your device</p>
+</section>
+
+<!-- ================= EDITOR ================= -->
+<section id="editorView" hidden>
+  <div class="topbar">
+    <button class="btn ghost small" id="navBackBtn" onclick="navBack()">◀ STUDIO</button>
+    <div class="title" id="projTitle" contenteditable="true" spellcheck="false">Untitled Build</div>
+    <div class="coach" id="coach">
+      <span class="step" data-step="loot">1 DROP LOOT</span>
+      <span class="step" data-step="clip">2 BUILD TIMELINE</span>
+      <span class="step" data-step="text">3 ADD WORDS</span>
+      <span class="step" data-step="export">4 CRAFT IT</span>
+    </div>
+    <button class="btn purple small" id="createModeBtn" onclick="toggleCreateMode()" hidden>Create space</button>
+    <button class="btn orange" onclick="exportFlow()">Craft story</button>
+  </div>
+
+  <div class="workspace" id="workspace">
+    <!-- CHEST -->
+    <aside class="panel" id="chestPanel">
+      <div class="phead" id="chestHead" title="Expand chest">🧰 ASSET CHEST</div>
+      <div class="pbody">
+        <div class="dropzone" id="dropzone">
+          <span class="big">📦</span>
+          <b>Drop your loot here</b>
+          <p>images · clips · sounds<br>or click to browse</p>
+        </div>
+        <input type="file" id="fileInput" multiple accept="image/*,video/*,audio/*" style="display:none">
+        <div class="assetGrid" id="assetGrid"></div>
+        <p class="hint">USE → zooms into the story. ✕ removes loot. Or drag onto SCENES.</p>
+      </div>
+    </aside>
+
+    <!-- STAGE -->
+    <section class="stage" id="stage">
+      <div class="stageBar">
+        <span class="modeChip" id="modeChip">EDIT SPACE</span>
+        <button class="btn ghost small" id="expandBtn" onclick="toggleFullscreenStage()">⛶ EXPAND</button>
+      </div>
+      <div class="phone" id="phone">
+        <div class="segments" id="segments"></div>
+        <div class="handleRow"><div class="av"></div><span>maya.builds · Studio</span></div>
+        <div class="mediawrap" id="mediawrap">
+          <img id="mediaImg" alt="" hidden>
+          <video id="mediaVid" muted playsinline hidden></video>
+        </div>
+        <div class="stagePlaceholder" id="stagePlaceholder">
+          <span class="big">⛏️</span>
+          <span class="pix">DROP LOOT IN THE CHEST<br>THEN HIT USE — IT ZOOMS HERE</span>
+        </div>
+        <div class="overlayLayer" id="overlayLayer"></div>
+        <div class="igMusic" id="igMusic" hidden>
+          <div class="disc" id="igDisc">🎵</div>
+          <div class="marquee"><i id="igMarquee">song · artist</i></div>
+        </div>
+        <div class="captions" id="captions"></div>
+      </div>
+      <div class="controls">
+        <button class="playbtn" id="playBtn" onclick="togglePlay()">▶</button>
+        <span class="timelabel" id="timeLabel">0.0 / 0.0s</span>
+        <span class="fxlabel" id="fxLabel"></span>
+      </div>
+    </section>
+
+    <!-- TOOLS -->
+    <aside class="panel tools-rail" id="toolsPanel">
+      <div class="phead" id="toolsHead" title="Expand tools">🛠 TOOLS</div>
+      <div class="toolTabs" id="toolTabs">
+        <button class="toolTab on" data-tab="text"><span class="ti">🔤</span>TEXT</button>
+        <button class="toolTab" data-tab="stickers"><span class="ti">💎</span>STICKERS</button>
+        <button class="toolTab" data-tab="music"><span class="ti">🎵</span>MUSIC</button>
+        <button class="toolTab" data-tab="captions"><span class="ti">💬</span>CAPTIONS</button>
+        <button class="toolTab" data-tab="fx"><span class="ti">✨</span>FX</button>
+        <button class="toolTab" data-tab="quests"><span class="ti">🧱</span>STARTERS</button>
+      </div>
+      <div class="toolPanel" id="toolPanel"></div>
+    </aside>
+  </div>
+
+  <!-- CREATE SPACE · zoomable floating tool canvas -->
+  <div id="floatCanvas" aria-label="Create space">
+    <div class="floatBg" aria-hidden="true"></div>
+
+    <div class="floatAsk">
+      <button type="button" class="jesseDock" id="jesseDock" title="Ask Jesse for edit intel" aria-label="Ask Jesse">
+        <img src="img/mascot.png" alt="Jesse">
+        <i class="pulse" aria-hidden="true"></i>
+      </button>
+      <input id="jesseAsk" type="search" placeholder="Ask Jesse how to edit this…" autocomplete="off">
+      <button type="button" class="askGo" id="jesseAskGo" aria-label="Ask">↗</button>
+    </div>
+
+    <div class="zoomHUD" aria-label="Canvas zoom">
+      <button type="button" id="zoomOut" aria-label="Zoom out">−</button>
+      <span class="zlabel" id="zoomLabel">100%</span>
+      <button type="button" id="zoomIn" aria-label="Zoom in">+</button>
+      <button type="button" id="zoomReset" aria-label="Reset view" title="Reset">⊡</button>
+      <button type="button" id="layoutReset" aria-label="Reset layout" title="Reset card layout">↺</button>
+    </div>
+
+    <div class="selBar" id="selBar" aria-label="Selection">
+      <span id="selBarLabel">Story</span>
+      <button type="button" id="selResetNode">Reset size</button>
+      <button type="button" id="selDeselect">Done</button>
+    </div>
+
+    <div class="floatBoard" id="floatBoard">
+      <div class="floatWorld" id="floatWorld" style="--cz:1; --cx:0px; --cy:0px">
+        <div class="floatStack" id="floatStack">
+          <div class="cnode centerNode" id="centerNode" data-node="center">
+            <span class="tlab">Story</span>
+            <div class="stageShell">
+              <button type="button" class="jesseHero" id="jesseHero" aria-label="Jesse’s kitchen — use in story">
+                <img id="jesseHeroImg" src="img/kitchen-warm.jpg" alt="Jesse’s Kitchen">
+                <div class="veil">
+                  <b>Jesse’s Kitchen</b>
+                  <span>Load loot and this stage swaps to your clip.</span>
+                  <span class="useJesse">Use in story →</span>
+                </div>
+              </button>
+              <div class="createStage" id="createStage"></div>
+            </div>
+          </div>
+          <!-- tool cards injected here -->
         </div>
       </div>
-      <div class="stageChrome">
-        <button id="playBtn" title="Play">▶</button>
-        <span id="timecode">0:00</span>
-        <button id="useJesse" class="lime">Use Jesse →</button>
+    </div>
+
+    <aside class="intelSheet" id="intelSheet" aria-hidden="true">
+      <button type="button" class="closeIntel" id="closeIntel" aria-label="Close">✕</button>
+      <h3>Jesse’s intel</h3>
+      <p class="sub" id="intelSub">Tap a tip — it applies to your story.</p>
+      <div id="intelBits"></div>
+    </aside>
+  </div>
+
+  <!-- TIMELINE (parks into Create canvas as a resizable card) -->
+  <div class="panel timelineWrap" id="timelineWrap">
+    <div class="inspector" id="inspector"></div>
+    <div class="trackrow">
+      <span class="tracklabel">SCENES</span>
+      <div class="track" id="videoTrack"><div class="playhead" id="playhead" style="left:4px"></div></div>
+    </div>
+    <div class="trackrow">
+      <span class="tracklabel">WORDS</span>
+      <div class="track" id="textTrack"></div>
+    </div>
+    <div class="trackrow">
+      <span class="tracklabel">MUSIC</span>
+      <div class="track" id="musicTrack"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EXPORT MODAL ================= -->
+<div class="modalBack" id="exportModal" style="display:none">
+  <div class="modal" id="exportBox">
+    <div id="craftWrap">
+      <h3>CRAFTING YOUR STORY…</h3>
+      <div class="craftGrid" id="craftGrid"></div>
+      <div class="craftStatus" id="craftStatus">Mining pixels…</div>
+    </div>
+    <div class="doneWrap" id="doneWrap">
+      <div class="bigOk">🏆</div>
+      <h3>STORY CRAFTED!</h3>
+      <p>9:16 · ready for Stories · saved to your chest (prototype: no real render yet)</p>
+      <div class="modalBtns">
+        <button class="btn blue" onclick="closeExport()">KEEP EDITING</button>
+        <button class="btn" onclick="closeExport(); goHome()">BACK TO STUDIO</button>
       </div>
     </div>
-  </section>
-  <aside class="col right" id="rightCol"></aside>
-  <section class="timeline" id="timeline">
-    <div class="tlHead">
-      <strong>Timeline</strong>
-      <span id="tlHint">Tap media to add scenes</span>
-    </div>
-    <div class="track" data-track="scenes">
-      <label>SCENES</label>
-      <div class="lane" id="sceneLane"></div>
-    </div>
-    <div class="track" data-track="words">
-      <label>WORDS</label>
-      <div class="lane" id="wordLane"></div>
-    </div>
-    <div class="track" data-track="music">
-      <label>MUSIC</label>
-      <div class="lane" id="musicLane"></div>
-    </div>
-  </section>
-</main>
+  </div>
+</div>
 
-<form class="deskAsk" id="deskAsk" autocomplete="off">
-  <button type="button" class="askPlus" id="askPlus" title="Add media">+</button>
-  <input id="askInput" type="search" placeholder="Search widgets · media · text · stickers · looks…" aria-label="Search widgets">
-  <button type="submit" class="askGo" title="Go">↑</button>
-</form>
+<script>
+'use strict';
+window.__errs = [];
+window.onerror = (m, s, l) => { window.__errs.push(m + ' @' + l); };
 
-<input type="file" id="fileInput" accept="image/*,video/*,audio/*" multiple hidden>
-<audio id="musicEl" preload="auto"></audio>
-<div id="toast" hidden></div>
-<script src="studio.js"></script>
+/* ============ STATE ============ */
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+let _uid = 1; const uid = () => 'id' + (_uid++);
+
+const PX = 18; // pixels per second on the timeline
+
+const state = {
+  assets: [], clips: [], texts: [], stickers: [],
+  musicId: null, spotify: null, captionsOn: true, effect: 'none',
+  playing: false, t: 0, selClip: null, selText: null,
+  xp: 0, done: { loot: false, clip: false, text: false, export: false },
+  createMode: false, fsStage: false,
+  selectedNode: null, layout: null,
+  activeTool: null, canvasZoom: 1, canvasX: 0, canvasY: 0,
+};
+
+const LEVELS = [
+  { xp: 0, name: 'DIRT DIGGER' },
+  { xp: 60, name: 'STONE STACKER' },
+  { xp: 140, name: 'REDSTONE ROOKIE' },
+  { xp: 260, name: 'DIAMOND DIRECTOR' },
+  { xp: 420, name: 'NETHERSTAR STUDIO' },
+];
+
+const EFFECTS = {
+  none:  { label: 'No filter',  css: 'none' },
+  cave:  { label: 'Cave',       css: 'brightness(.75) contrast(1.25) saturate(.9)' },
+  nether:{ label: 'Nether',     css: 'hue-rotate(-40deg) saturate(1.7) contrast(1.1)' },
+  golden:{ label: 'Golden Hour',css: 'sepia(.45) brightness(1.12) contrast(1.05)' },
+  frost: { label: 'Frost',      css: 'hue-rotate(160deg) saturate(1.2) brightness(1.05)' },
+  meme:  { label: 'Meme Deep-Fry', css: 'saturate(2.4) contrast(1.5)' },
+};
+
+const STICKERS = ['⚔️','🛡️','💎','🔥','⛏️','🧟','🐷','⭐','➕','➗','📐','🧮','😂','🤯','✅','❗'];
+
+/* ============ SAMPLE ASSETS (SVG data URIs) ============ */
+function svgThumb(label, bg, fg, glyph) {
+  const s = `<svg xmlns='http://www.w3.org/2000/svg' width='360' height='640'>
+    <rect width='360' height='640' fill='${bg}'/>
+    <rect x='0' y='520' width='360' height='120' fill='${fg}' opacity='.55'/>
+    <rect x='30' y='60' width='60' height='60' fill='${fg}' opacity='.5'/>
+    <rect x='270' y='140' width='44' height='44' fill='${fg}' opacity='.35'/>
+    <rect x='90' y='430' width='52' height='52' fill='${fg}' opacity='.45'/>
+    <text x='180' y='330' font-size='120' text-anchor='middle'>${glyph}</text>
+    <text x='180' y='590' font-size='26' text-anchor='middle' fill='#ffffff' font-family='monospace' font-weight='bold'>${label}</text>
+  </svg>`;
+  return 'data:image/svg+xml;utf8,' + encodeURIComponent(s);
+}
+
+const JESSE_IMG = 'img';
+const SEED_ASSETS = [
+  { name: "Jesse’s Kitchen", kind: 'image', src: `${JESSE_IMG}/kitchen-warm.jpg`, jesse: true },
+  { name: 'Kitchen Desk',    kind: 'image', src: `${JESSE_IMG}/jesse-kitchen-intro.jpg`, jesse: true },
+  { name: 'Kitchen 3D',      kind: 'image', src: `${JESSE_IMG}/kitchen-3d-preview.png`, jesse: true },
+  { name: 'Dash Landscape',  kind: 'image', src: `${JESSE_IMG}/dash-landscape.jpg`, jesse: true },
+  { name: 'Jesse Mascot',    kind: 'image', src: `${JESSE_IMG}/mascot.png`, jesse: true },
+  { name: 'Blocky Cave',   kind: 'image', src: svgThumb('BLOCKY CAVE', '#12141f', '#3a4468', '⛏️') },
+  { name: 'Pixel Hills',   kind: 'image', src: svgThumb('PIXEL HILLS', '#2e6b1e', '#72c74a', '⛰️') },
+  { name: 'Purple Portal', kind: 'image', src: svgThumb('PURPLE PORTAL', '#180f2e', '#b45cff', '🌀') },
+];
+
+const MUSIC_TRACKS = [
+  { id: 'cave',  name: 'Cave Vibes',  vibe: 'chill chiptune · 100 bpm', bpm: 100, base: 196, notes: [0,3,5,7,10,7,5,3] },
+  { id: 'speed', name: 'Speedrun',    vibe: 'hype chiptune · 145 bpm',  bpm: 145, base: 262, notes: [0,0,7,0,10,0,12,10] },
+];
+
+const QUESTS = [
+  { id: 'vibe', icon: '🌀', title: 'PORTAL VIBE', desc: '3 moody scenes + words. Remix or replace with your uploads.', tag: 'STARTER',
+    clips: ['Purple Portal', 'Blocky Cave', 'Lava Flow'],
+    texts: ['NEW DROP', 'watch this', '✦ crafted in Studio'] },
+  { id: 'day', icon: '⛰️', title: 'DAY IN THE HILLS', desc: 'Bright outdoor pack. Swap in your photos fast.', tag: 'STARTER',
+    clips: ['Pixel Hills', 'Blocky Cave'],
+    texts: ['out here', 'same place, different day'] },
+  { id: 'meme', icon: '😂', title: 'MEME PACK', desc: 'Loud text energy. Drop your own clips on top.', tag: 'STARTER',
+    clips: ['Lava Flow', 'Pizza Fractions', 'Purple Portal'],
+    texts: ['WAIT FOR IT', 'no way', 'certified moment'] },
+  { id: 'free', icon: '📦', title: 'EMPTY CHEST', desc: 'Blank timeline. Upload your stuff and go.', tag: 'CLEAN',
+    clips: [], texts: [] },
+];
+
+/* ============ TOASTS & XP ============ */
+function toast(msg, xpAmt) {
+  const el = document.createElement('div');
+  el.className = 'toast';
+  el.innerHTML = (xpAmt ? `<span class="xp">+${xpAmt} XP</span>` : '') + `<span>${msg}</span>`;
+  $('#toastWrap').appendChild(el);
+  setTimeout(() => { el.classList.add('out'); setTimeout(() => el.remove(), 320); }, 2300);
+}
+
+function levelFor(xp) {
+  let cur = LEVELS[0], next = null;
+  for (let i = 0; i < LEVELS.length; i++) {
+    if (xp >= LEVELS[i].xp) { cur = LEVELS[i]; next = LEVELS[i + 1] || null; }
+  }
+  return { cur, next, idx: LEVELS.indexOf(cur) };
+}
+
+function addXP(n, label) {
+  const before = levelFor(state.xp).idx;
+  state.xp += n;
+  const after = levelFor(state.xp);
+  toast(label, n);
+  if (after.idx > before) toast(`LEVEL UP! You are now ${after.cur.name}`, null);
+  renderXP();
+}
+
+function renderXP() { /* XP toasts only — no learning meter */ }
+
+function markDone(step) {
+  if (state.done[step]) return;
+  state.done[step] = true;
+  const el = document.querySelector(`.step[data-step="${step}"]`);
+  if (el) el.classList.add('done');
+}
+
+/* ============ VIEWS ============ */
+const FROM_JESSE = /(?:^|[?&])from=jesse(?:&|$)/.test(location.search) || /(?:^|[?&])embed=1(?:&|$)/.test(location.search);
+
+function navBack() {
+  if (FROM_JESSE && window.parent && window.parent !== window) {
+    pause();
+    window.parent.postMessage({ type: 'mc-studio-put-back' }, '*');
+    return;
+  }
+  goHome();
+}
+function goHome() {
+  pause();
+  $('#homeView').hidden = false;
+  $('#editorView').hidden = true;
+}
+function goEditor() {
+  $('#homeView').hidden = true;
+  $('#editorView').hidden = false;
+}
+function newProject() {
+  state.clips = []; state.texts = []; state.stickers = [];
+  state.musicId = null; state.spotify = null; state.effect = 'none'; state.selClip = null; state.t = 0;
+  state.activeTool = 'media';
+  state.canvasZoom = 1; state.canvasX = 0; state.canvasY = 0;
+  $('#projTitle').textContent = 'Untitled Story';
+  goEditor();
+  renderAll();
+  setCreateMode(true);
+  toast('Create space ready');
+}
+
+/* ============ ASSETS ============ */
+function seedAssets() {
+  SEED_ASSETS.forEach(a => state.assets.push({ id: uid(), ...a, seeded: true }));
+}
+
+function onFiles(files) {
+  let added = 0;
+  let firstId = null;
+  [...files].forEach(f => {
+    const kind = f.type.startsWith('video') ? 'video' : f.type.startsWith('audio') ? 'audio' : 'image';
+    const src = URL.createObjectURL(f);
+    const id = uid();
+    state.assets.unshift({ id, name: f.name.replace(/\.[^.]+$/, ''), kind, src, file: true });
+    if (!firstId && kind !== 'audio') firstId = id;
+    added++;
+  });
+  if (added) {
+    renderChest(); renderToolPanel();
+    markDone('loot');
+    addXP(10, added + ' loot added to chest');
+    if (state.createMode) {
+      state.activeTool = 'media';
+      renderToolCards();
+      if (firstId) {
+        addClip(firstId);
+        const clip = state.clips[state.clips.length - 1];
+        if (clip) previewClip(clip.id);
+        toast('On the timeline — Jesse tucked by search');
+      }
+    } else if (firstId) {
+      setTimeout(() => useAssetInCreate(firstId), 80);
+    }
+  }
+}
+
+function removeAsset(id) {
+  const a = assetById(id);
+  if (!a) return;
+  // Pull clips that used this asset
+  const victimClips = state.clips.filter(c => c.assetId === id).map(c => c.id);
+  victimClips.forEach(delClip);
+  if (a.file && a.src) { try { URL.revokeObjectURL(a.src); } catch (_) {} }
+  state.assets = state.assets.filter(x => x.id !== id);
+  renderChest(); refreshStage();
+  if (state.createMode) { renderFloatCards(); syncJessePlacement(); }
+  toast(a.seeded ? 'Starter pack item removed' : 'Loot removed');
+}
+
+function renderChest() {
+  const grid = $('#assetGrid');
+  grid.innerHTML = '';
+  state.assets.filter(a => a.kind !== 'audio').forEach(a => {
+    const card = document.createElement('div');
+    card.className = 'asset';
+    card.dataset.aid = a.id;
+    card.draggable = true;
+    card.addEventListener('dragstart', e => e.dataTransfer.setData('text/plain', a.id));
+    const media = a.kind === 'video'
+      ? `<video class="thumb" src="${a.src}" muted></video>`
+      : `<img class="thumb" src="${a.src}" alt="">`;
+    card.innerHTML = `
+      ${media}
+      <span class="kind">${a.kind === 'video' ? 'VID' : 'IMG'}</span>
+      <button class="rm" title="Remove loot" aria-label="Remove">✕</button>
+      <div class="aname">${a.name}</div>
+      <div class="row">
+        <button class="addbtn">+ ADD</button>
+        <button class="useBtn">USE ✦</button>
+      </div>`;
+    card.querySelector('.rm').onclick = (e) => { e.stopPropagation(); removeAsset(a.id); };
+    card.querySelector('.addbtn').onclick = (e) => { e.stopPropagation(); addClip(a.id); };
+    card.querySelector('.useBtn').onclick = (e) => { e.stopPropagation(); useAssetInCreate(a.id, card); };
+    grid.appendChild(card);
+  });
+}
+
+/* ============ CREATE SPACE · A→Z RESIZABLE CANVAS ============ */
+const CREATE_TOOLS = [
+  { id: 'media',    label: 'Media',    hint: 'Photos & clips',     icon: '📷', tone: 'g' },
+  { id: 'text',     label: 'Text',     hint: 'Titles that stick',  icon: 'Aa', tone: 'i' },
+  { id: 'captions', label: 'Captions', hint: 'Mute-friendly',      icon: '💬', tone: 'g' },
+  { id: 'stickers', label: 'Stickers', hint: 'Slap-on energy',     icon: '✦',  tone: 'g' },
+  { id: 'music',    label: 'Music',    hint: 'Spotify like IG',    icon: '♪',  tone: 'i' },
+  { id: 'fx',       label: 'Looks',    hint: 'One-tap filters',    icon: '◎',  tone: 'i' },
+];
+
+/* Locked neat board — timeline spans Media→Looks; Jesse center slightly larger */
+const DEFAULT_LAYOUT = {
+  center:   { l: 31.5, t: 1.5, w: 37, h: 63 },
+  media:    { l: 2.5,  t: 3,  w: 16.5, h: 26 },
+  text:     { l: 2.5,  t: 32, w: 16.5, h: 20 },
+  captions: { l: 2.5,  t: 55, w: 16.5, h: 16 },
+  stickers: { l: 81,   t: 3,  w: 16.5, h: 20 },
+  music:    { l: 81,   t: 26, w: 16.5, h: 22 },
+  fx:       { l: 81,   t: 51, w: 16.5, h: 16 },
+  timeline: { l: 2.5,  t: 74, w: 95, h: 24 },
+};
+const LAYOUT_KEY = 'mc_studio_create_layout_v5';
+const HANDLES = ['nw','n','ne','e','se','s','sw','w'];
+
+function cloneLayout(src) {
+  const out = {};
+  Object.keys(src).forEach(k => { out[k] = { ...src[k] }; });
+  return out;
+}
+
+function ensureLayout() {
+  if (state.layout) return state.layout;
+  try {
+    const raw = localStorage.getItem(LAYOUT_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      state.layout = { ...cloneLayout(DEFAULT_LAYOUT), ...parsed };
+      Object.keys(DEFAULT_LAYOUT).forEach(k => {
+        state.layout[k] = { ...DEFAULT_LAYOUT[k], ...(parsed[k] || {}) };
+      });
+      return state.layout;
+    }
+  } catch (_) {}
+  state.layout = cloneLayout(DEFAULT_LAYOUT);
+  return state.layout;
+}
+
+function saveLayout() {
+  try { localStorage.setItem(LAYOUT_KEY, JSON.stringify(state.layout)); } catch (_) {}
+}
+
+function resetLayout() {
+  state.layout = cloneLayout(DEFAULT_LAYOUT);
+  saveLayout();
+  renderCreateBoard();
+  toast('Layout reset');
+}
+
+function applyBox(el, box) {
+  if (!el || !box) return;
+  el.style.left = box.l + '%';
+  el.style.top = box.t + '%';
+  el.style.width = box.w + '%';
+  el.style.height = box.h + '%';
+}
+
+function attachHandles(el) {
+  HANDLES.forEach(h => {
+    const d = document.createElement('i');
+    d.className = 'hndl ' + h;
+    d.dataset.handle = h;
+    el.appendChild(d);
+  });
+}
+
+function selectNode(id) {
+  state.selectedNode = id || null;
+  $$('.cnode').forEach(n => n.classList.toggle('selected', n.dataset.node === id));
+  const bar = $('#selBar');
+  const lab = $('#selBarLabel');
+  if (bar) bar.classList.toggle('show', !!id);
+  if (lab && id) {
+    const tool = CREATE_TOOLS.find(t => t.id === id);
+    lab.textContent = id === 'center' ? 'Story' : id === 'timeline' ? 'Timeline' : (tool ? tool.label : id);
+  }
+}
+
+function setCreateMode(on) {
+  state.createMode = !!on;
+  const ws = $('#workspace');
+  const ed = $('#editorView');
+  if (!ws || !ed) return;
+  ws.classList.toggle('create-mode', state.createMode);
+  ed.classList.toggle('create-on', state.createMode);
+  const btn = $('#createModeBtn');
+  const chip = $('#modeChip');
+  if (btn) btn.hidden = true;
+  if (chip) {
+    chip.textContent = state.createMode ? 'CREATE SPACE' : 'EDIT SPACE';
+    chip.classList.toggle('on', state.createMode);
+  }
+  if (state.createMode) {
+    // Lock neat board every enter
+    state.layout = cloneLayout(DEFAULT_LAYOUT);
+    saveLayout();
+    parkPhoneInCreate();
+    parkTimelineInCreate();
+    renderCreateBoard();
+    syncJessePlacement();
+    applyCanvasTransform();
+    selectNode(null);
+    const ask = $('.floatAsk');
+    if (ask) ask.classList.remove('is-hidden');
+  } else {
+    returnPhoneToClassic();
+    returnTimelineToClassic();
+    closeIntel();
+    state.activeTool = null;
+    selectNode(null);
+  }
+}
+
+function toggleCreateMode() {
+  if (state.fsStage) toggleFullscreenStage(false);
+  setCreateMode(!state.createMode);
+  toast(state.createMode ? 'Create space — drag / resize everything' : 'Classic three-panel editor');
+}
+
+function parkPhoneInCreate() {
+  const phone = $('#phone');
+  const host = $('#createStage');
+  if (!phone || !host) return;
+  if (phone.parentElement !== host) host.appendChild(phone);
+  const c = $('#playBtn') && $('#playBtn').closest('.controls');
+  if (c && c.parentElement !== host) host.appendChild(c);
+}
+
+function returnPhoneToClassic() {
+  const phone = $('#phone');
+  const stage = $('#stage');
+  if (!phone || !stage) return;
+  const bar = stage.querySelector('.stageBar');
+  if (bar) stage.insertBefore(phone, bar.nextSibling);
+  else stage.appendChild(phone);
+  const c = $('#playBtn') && $('#playBtn').closest('.controls');
+  if (c) stage.appendChild(c);
+}
+
+function parkTimelineInCreate() {
+  const tl = $('#timelineWrap');
+  const stack = $('#floatStack');
+  if (!tl || !stack) return;
+  tl.classList.add('cnode', 'timelineNode');
+  tl.dataset.node = 'timeline';
+  if (!tl.querySelector(':scope > .tlab')) {
+    const lab = document.createElement('span');
+    lab.className = 'tlab';
+    lab.textContent = 'Timeline';
+    tl.prepend(lab);
+  }
+  if (tl.parentElement !== stack) stack.appendChild(tl);
+}
+
+function returnTimelineToClassic() {
+  const tl = $('#timelineWrap');
+  const ed = $('#editorView');
+  if (!tl || !ed) return;
+  tl.classList.remove('cnode', 'timelineNode', 'selected', 'dragging');
+  tl.querySelectorAll(':scope > .hndl, :scope > .tlab').forEach(el => el.remove());
+  tl.style.left = '';
+  tl.style.top = '';
+  tl.style.width = '';
+  tl.style.height = '';
+  delete tl.dataset.bound;
+  delete tl.dataset.node;
+  ed.appendChild(tl);
+}
+
+function syncJessePlacement() {
+  const hero = $('#jesseHero');
+  const stage = $('#createStage');
+  const dock = $('#jesseDock');
+  const hasClips = state.clips.length > 0;
+  // Jesse default in center until loot is on the timeline
+  if (hero) hero.classList.toggle('docked', hasClips);
+  if (stage) stage.classList.toggle('show', hasClips);
+  if (dock) {
+    dock.classList.toggle('live', hasClips);
+    dock.title = hasClips ? 'Jesse — tap for edit intel' : 'Load loot — Jesse docks here when the stage swaps';
+  }
+  const ask = $('#jesseAsk');
+  if (ask) ask.placeholder = hasClips
+    ? 'Ask Jesse how to edit this…'
+    : 'Jesse’s in the center — load loot to swap the stage';
+  const lab = document.querySelector('#centerNode > .tlab');
+  if (lab) lab.textContent = hasClips ? 'Story' : "Jesse’s";
+}
+
+function applyCanvasTransform() {
+  const world = $('#floatWorld');
+  const label = $('#zoomLabel');
+  if (!world) return;
+  const z = state.canvasZoom || 1;
+  const x = state.canvasX || 0;
+  const y = state.canvasY || 0;
+  world.style.setProperty('--cz', String(z));
+  world.style.setProperty('--cx', x + 'px');
+  world.style.setProperty('--cy', y + 'px');
+  if (label) label.textContent = Math.round(z * 100) + '%';
+}
+
+function setCanvasZoom(z) {
+  state.canvasZoom = Math.max(0.55, Math.min(1.6, z));
+  applyCanvasTransform();
+}
+
+function openTool(id) {
+  state.activeTool = state.activeTool === id ? null : id;
+  selectNode(id);
+  renderToolCards();
+}
+
+function useJesseInStory() {
+  let a = state.assets.find(x => x.jesse && x.name === "Jesse’s Kitchen");
+  if (!a) a = state.assets.find(x => x.jesse);
+  if (!a) {
+    toast('Jesse’s asset missing');
+    return;
+  }
+  if (!state.clips.some(c => c.assetId === a.id)) addClip(a.id);
+  const clip = state.clips.find(c => c.assetId === a.id) || state.clips[state.clips.length - 1];
+  if (clip) previewClip(clip.id);
+  syncJessePlacement();
+  renderToolCards();
+  toast('Stage swapped to Jesse’s Kitchen');
+}
+
+function toolBodyHTML(id) {
+  if (id === 'media') {
+    const visuals = state.assets.filter(a => a.kind !== 'audio').slice(0, 8);
+    const cells = [`<button type="button" class="tm add" data-act="upload" title="Upload">+</button>`]
+      .concat(visuals.map(a => {
+        const media = a.kind === 'video'
+          ? `<video src="${a.src}" muted></video>`
+          : `<img src="${a.src}" alt="">`;
+        return `<button type="button" class="tm" data-aid="${a.id}" title="${esc(a.name)}">${media}</button>`;
+      })).join('');
+    return `<div class="tmediaGrid">${cells}</div>
+      <p style="margin-top:8px;font:600 11px/1.3 'DM Sans',sans-serif;color:#8a8174">Tap loot — center stage swaps from Jesse.</p>`;
+  }
+  if (id === 'text') {
+    return `
+      <button type="button" class="tchip" data-act="text-blocky">Blocky</button>
+      <button type="button" class="tchip" data-act="text-neon">Neon</button>
+      <button type="button" class="tchip" data-act="text-sticker">Sticker tag</button>
+      <p style="margin-top:6px;font:600 11px/1.3 'DM Sans',sans-serif;color:#8a8174">Drops on the story — drag to place.</p>`;
+  }
+  if (id === 'stickers') {
+    return ['🔥','💎','⚡','🌿','🎯','✨'].map(g =>
+      `<button type="button" class="tchip" data-act="sticker" data-g="${g}">${g}</button>`
+    ).join('');
+  }
+  if (id === 'music') {
+    const linked = state.spotify ? esc(state.spotify.title || 'Track linked') : '';
+    return `
+      <input class="tfield" id="createSpotify" type="url" placeholder="Paste Spotify link…" value="${state.spotify?.url || ''}">
+      <button type="button" class="tgo" data-act="spotify">Connect track</button>
+      ${linked ? `<p style="margin-top:8px;font:600 11px 'DM Sans',sans-serif;color:#143a2e">♪ ${linked}</p>` : ''}`;
+  }
+  if (id === 'captions') {
+    return `
+      <button type="button" class="tchip ${state.captionsOn ? 'on' : ''}" data-act="cap-toggle">${state.captionsOn ? 'Captions on' : 'Captions off'}</button>
+      <p style="margin-top:6px;font:600 11px/1.3 'DM Sans',sans-serif;color:#8a8174">Most people watch muted — keep these on.</p>`;
+  }
+  if (id === 'fx') {
+    return ['none','warm','cool','noir','pop'].map(fx =>
+      `<button type="button" class="tchip ${state.effect === fx ? 'on' : ''}" data-act="fx" data-fx="${fx}">${fx}</button>`
+    ).join('');
+  }
+  return '';
+}
+
+function bindToolCardActions(card, id) {
+  card.querySelectorAll('[data-act], [data-aid]').forEach(el => {
+    el.addEventListener('click', e => {
+      e.stopPropagation();
+      const act = el.dataset.act;
+      const aid = el.dataset.aid;
+      if (aid) {
+        addClip(aid);
+        const clip = state.clips[state.clips.length - 1];
+        if (clip) previewClip(clip.id);
+        toast('Loot on stage — Jesse docked by search');
+        return;
+      }
+      if (act === 'upload') { $('#fileInput')?.click(); return; }
+      if (act?.startsWith('text-') || act === 'sticker' || act === 'fx' || act === 'cap-toggle') {
+        if (!state.clips.length) useJesseInStory();
+      }
+      if (act === 'text-blocky') { addText('blocky'); toast('Text on story — drag it'); return; }
+      if (act === 'text-neon') { addText('neon'); toast('Neon title dropped'); return; }
+      if (act === 'text-sticker') { addText('sticker'); toast('Sticker tag dropped'); return; }
+      if (act === 'sticker') { addSticker(el.dataset.g || '✦'); return; }
+      if (act === 'spotify') {
+        const inp = card.querySelector('#createSpotify');
+        const url = (inp && inp.value || '').trim();
+        if (!url) { toast('Paste a Spotify link first'); return; }
+        let classic = $('#spotInput');
+        if (!classic) {
+          classic = document.createElement('input');
+          classic.id = 'spotInput';
+          classic.hidden = true;
+          document.body.appendChild(classic);
+        }
+        classic.value = url;
+        Promise.resolve(connectSpotifyLink()).then(() => renderToolCards());
+        return;
+      }
+      if (act === 'cap-toggle') { toggleCaptions(); renderToolCards(); return; }
+      if (act === 'fx') {
+        state.effect = el.dataset.fx || 'none';
+        applyEffect();
+        renderToolCards();
+        toast(state.effect === 'none' ? 'Look cleared' : `Look: ${state.effect}`);
+      }
+    });
+  });
+}
+
+function bindNodeInteract(el, id) {
+  const startMove = (e) => {
+    if (e.button != null && e.button !== 0) return;
+    if (e.target.closest('[data-act], [data-aid], input, textarea, button.tgo, button.tchip, button.tm, a, .playbtn')) return;
+    const handle = e.target.closest('.hndl')?.dataset.handle || null;
+    // double-purpose: clicking jesse use / veil still allowed via hero click handler
+    if (!handle && e.target.closest('#jesseHero .useJesse')) return;
+
+    // Timeline: keep track/clip clicks interactive — drag from chrome / resize handles
+    if (!handle && id === 'timeline' && e.target.closest('.clip, .track, .playhead')) {
+      selectNode(id);
+      return;
+    }
+
+    e.preventDefault();
+    e.stopPropagation();
+    selectNode(id);
+    if (id !== 'center' && id !== 'timeline' && !handle) state.activeTool = id;
+
+    const layout = ensureLayout();
+    const box0 = { ...layout[id] };
+    const stack = $('#floatStack').getBoundingClientRect();
+    const z = state.canvasZoom || 1;
+    const ox = e.clientX, oy = e.clientY;
+    el.classList.add('dragging');
+
+    const move = (ev) => {
+      const dx = ((ev.clientX - ox) / z) / stack.width * 100;
+      const dy = ((ev.clientY - oy) / z) / stack.height * 100;
+      let next = { ...box0 };
+      if (!handle) {
+        next.l = Math.max(0, Math.min(100 - box0.w, box0.l + dx));
+        next.t = Math.max(0, Math.min(100 - box0.h, box0.t + dy));
+      } else {
+        const minW = id === 'center' ? 16 : id === 'timeline' ? 36 : 12;
+        const minH = id === 'center' ? 28 : id === 'timeline' ? 18 : 14;
+        if (handle.includes('e')) next.w = Math.max(minW, Math.min(100 - box0.l, box0.w + dx));
+        if (handle.includes('s')) next.h = Math.max(minH, Math.min(100 - box0.t, box0.h + dy));
+        if (handle.includes('w')) {
+          const nl = Math.max(0, Math.min(box0.l + box0.w - minW, box0.l + dx));
+          next.w = box0.w + (box0.l - nl);
+          next.l = nl;
+        }
+        if (handle.includes('n')) {
+          const nt = Math.max(0, Math.min(box0.t + box0.h - minH, box0.t + dy));
+          next.h = box0.h + (box0.t - nt);
+          next.t = nt;
+        }
+      }
+      layout[id] = next;
+      applyBox(el, next);
+    };
+    const up = () => {
+      el.classList.remove('dragging');
+      saveLayout();
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', up);
+      if (id !== 'center') renderToolCards();
+    };
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', up);
+  };
+  el.addEventListener('pointerdown', startMove);
+}
+
+function renderCenterNode() {
+  const node = $('#centerNode');
+  if (!node) return;
+  ensureLayout();
+  applyBox(node, state.layout.center);
+  node.querySelectorAll(':scope > .hndl').forEach(h => h.remove());
+  attachHandles(node);
+  node.classList.toggle('selected', state.selectedNode === 'center');
+  if (!node.dataset.bound) {
+    node.dataset.bound = '1';
+    bindNodeInteract(node, 'center');
+  }
+}
+
+function renderTimelineNode() {
+  const node = $('#timelineWrap');
+  const stack = $('#floatStack');
+  if (!node || !stack || !state.createMode) return;
+  ensureLayout();
+  parkTimelineInCreate();
+  applyBox(node, state.layout.timeline || DEFAULT_LAYOUT.timeline);
+  node.querySelectorAll(':scope > .hndl').forEach(h => h.remove());
+  attachHandles(node);
+  node.classList.toggle('selected', state.selectedNode === 'timeline');
+  if (!node.dataset.bound) {
+    node.dataset.bound = '1';
+    bindNodeInteract(node, 'timeline');
+  }
+}
+
+function renderToolCards() {
+  const stack = $('#floatStack');
+  if (!stack) return;
+  ensureLayout();
+  [...stack.querySelectorAll('.tcard')].forEach(el => el.remove());
+  CREATE_TOOLS.forEach((t) => {
+    const open = state.activeTool === t.id || state.selectedNode === t.id;
+    const card = document.createElement('article');
+    card.className = 'cnode tcard' + (open ? ' open' : '') + (state.selectedNode === t.id ? ' selected' : '');
+    card.dataset.node = t.id;
+    card.dataset.tool = t.id;
+    applyBox(card, state.layout[t.id] || DEFAULT_LAYOUT[t.id]);
+    card.innerHTML = `
+      <span class="tlab">${t.label}</span>
+      <div class="thead">
+        <div class="tico ${t.tone}">${t.icon}</div>
+        <div class="ttxt"><b>${t.label}</b><span>${t.hint}</span></div>
+      </div>
+      <div class="tbody">${toolBodyHTML(t.id)}</div>`;
+    attachHandles(card);
+    bindToolCardActions(card, t.id);
+    bindNodeInteract(card, t.id);
+    stack.appendChild(card);
+  });
+  renderCenterNode();
+  renderTimelineNode();
+  syncJessePlacement();
+}
+
+function renderCreateBoard() {
+  renderToolCards();
+}
+
+function renderFloatCards() { renderToolCards(); }
+
+const INTEL_TIPS = [
+  { t: 'Cut the first second', s: 'Hooks hit faster when you trim dead air.', act: () => { if (state.selClip) bumpDur(state.selClip, -1); else toast('Select a scene first'); } },
+  { t: 'Drop a neon title', s: 'One big word — tap Text on the board.', act: () => { openTool('text'); addText('neon'); toast('Neon title dropped'); } },
+  { t: 'Connect Spotify', s: 'Paste a track in the Music card.', act: () => openTool('music') },
+  { t: 'Captions on', s: 'Most people watch muted.', act: () => { state.captionsOn = true; captionsTick(true); renderToolCards(); toast('Captions on'); } },
+  { t: 'Zoom the board', s: 'Scroll or use + / − to feel the space.', act: () => setCanvasZoom((state.canvasZoom || 1) + 0.15) },
+];
+
+function openIntel(seed) {
+  const sheet = $('#intelSheet');
+  const bits = $('#intelBits');
+  const sub = $('#intelSub');
+  if (!sheet || !bits) return;
+  if (sub) sub.textContent = seed
+    ? `Jesse on “${seed}” — try one:`
+    : (state.clips.length ? 'Your story’s live — here’s how to tighten it.' : 'Start with Media — then I’ll help you edit.');
+  bits.innerHTML = '';
+  INTEL_TIPS.forEach(tip => {
+    const b = document.createElement('button');
+    b.className = 'bit';
+    b.type = 'button';
+    b.innerHTML = `${tip.t}<small>${tip.s}</small>`;
+    b.onclick = () => tip.act();
+    bits.appendChild(b);
+  });
+  sheet.classList.add('open');
+  sheet.setAttribute('aria-hidden', 'false');
+}
+
+function closeIntel() {
+  const sheet = $('#intelSheet');
+  if (!sheet) return;
+  sheet.classList.remove('open');
+  sheet.setAttribute('aria-hidden', 'true');
+}
+
+function askJesse() {
+  const q = ($('#jesseAsk') && $('#jesseAsk').value || '').trim();
+  openIntel(q || null);
+  toast(q ? 'Jesse pulled intel' : 'Jesse’s edit intel');
+}
+
+function toggleFullscreenStage(force) {
+  state.fsStage = force === undefined ? !state.fsStage : !!force;
+  const ws = $('#workspace');
+  const ed = $('#editorView');
+  if (!ws) return;
+  ws.classList.toggle('fs-stage', state.fsStage);
+  if (ed) ed.classList.toggle('fs-on', state.fsStage);
+  const btn = $('#expandBtn');
+  if (btn) btn.textContent = state.fsStage ? '↙ SHRINK' : '⛶ EXPAND';
+  if (state.fsStage) setCreateMode(true);
+  toast(state.fsStage ? 'Fullscreen story' : 'Stage shrunk');
+}
+
+function useAssetInCreate(assetId, fromEl) {
+  const a = assetById(assetId);
+  if (!a || a.kind === 'audio') return;
+  const card = fromEl || document.querySelector(`.asset[data-aid="${assetId}"]`);
+  const phone = $('#phone');
+  const cardRect = card && card.getBoundingClientRect();
+  const cardVisible = cardRect && cardRect.width > 2 && cardRect.height > 2;
+  // Create Mode float board (or hidden chest): skip fly ghost, just land
+  if (!cardVisible || !phone || state.createMode) {
+    setCreateMode(true);
+    addClip(assetId);
+    const clip = state.clips[state.clips.length - 1];
+    if (clip) previewClip(clip.id);
+    toast('On the timeline — Jesse tucked by search');
+    return;
+  }
+
+  const from = card.getBoundingClientRect();
+  const to = phone.getBoundingClientRect();
+  card.classList.add('flying');
+
+  const ghost = document.createElement('div');
+  ghost.className = 'flyGhost';
+  ghost.style.top = from.top + 'px';
+  ghost.style.left = from.left + 'px';
+  ghost.style.width = from.width + 'px';
+  ghost.style.height = from.height + 'px';
+  if (a.kind === 'video') {
+    ghost.innerHTML = `<video src="${a.src}" muted autoplay playsinline></video>`;
+  } else {
+    ghost.innerHTML = `<img src="${a.src}" alt="">`;
+  }
+  document.body.appendChild(ghost);
+
+  setCreateMode(true);
+  requestAnimationFrame(() => {
+    ghost.classList.add('go');
+    ghost.style.top = to.top + 'px';
+    ghost.style.left = to.left + 'px';
+    ghost.style.width = to.width + 'px';
+    ghost.style.height = to.height + 'px';
+  });
+
+  setTimeout(() => {
+    ghost.remove();
+    card.classList.remove('flying');
+    addClip(assetId);
+    const clip = state.clips[state.clips.length - 1];
+    if (clip) previewClip(clip.id);
+    phone.classList.remove('pulse-in');
+    void phone.offsetWidth;
+    phone.classList.add('pulse-in');
+    toast('Loot landed in the story');
+  }, 560);
+}
+
+/* ============ CLIPS / TIMELINE ============ */
+function assetById(id) { return state.assets.find(a => a.id === id); }
+function clipById(id) { return state.clips.find(c => c.id === id); }
+
+function addClip(assetId) {
+  const a = assetById(assetId);
+  if (!a || a.kind === 'audio') return;
+  const clip = { id: uid(), assetId, dur: a.kind === 'video' ? 6 : 4, caption: a.name };
+  state.clips.push(clip);
+  state.selClip = clip.id;
+  markDone('clip');
+  addXP(10, 'Scene block placed');
+  renderTimeline(); renderInspector(); showTime(0, clipIndexById(clip.id));
+  if (state.createMode) {
+    parkPhoneInCreate();
+    syncJessePlacement();
+    renderFloatCards();
+  }
+}
+
+function clipIndexById(id) { return state.clips.findIndex(c => c.id === id); }
+
+function delClip(id) {
+  state.clips = state.clips.filter(c => c.id !== id);
+  if (state.selClip === id) state.selClip = null;
+  pause(); renderTimeline(); renderInspector(); refreshStage();
+  if (state.createMode) {
+    syncJessePlacement();
+    renderFloatCards();
+  }
+}
+
+function moveClip(id, dir) {
+  const i = clipIndexById(id); const j = i + dir;
+  if (i < 0 || j < 0 || j >= state.clips.length) return;
+  [state.clips[i], state.clips[j]] = [state.clips[j], state.clips[i]];
+  renderTimeline(); renderInspector();
+}
+
+function bumpDur(id, delta) {
+  const c = clipById(id); if (!c) return;
+  c.dur = Math.max(2, Math.min(15, c.dur + delta));
+  renderTimeline(); renderInspector();
+}
+
+function schedule() {
+  let t = 0;
+  return state.clips.map(c => { const seg = { c, start: t, end: t + c.dur }; t += c.dur; return seg; });
+}
+function totalDur() { return state.clips.reduce((s, c) => s + c.dur, 0); }
+
+function renderTimeline() {
+  const track = $('#videoTrack');
+  [...track.querySelectorAll('.clip, .emptyTrack')].forEach(e => e.remove());
+  if (!state.clips.length) {
+    const e = document.createElement('span');
+    e.className = 'emptyTrack';
+    e.textContent = 'Drag loot here to build your story →';
+    track.appendChild(e);
+  }
+  state.clips.forEach(c => {
+    const a = assetById(c.assetId);
+    const el = document.createElement('div');
+    el.className = 'clip' + (state.selClip === c.id ? ' sel' : '');
+    el.style.width = (c.dur * PX * 1.6) + 'px';
+    el.style.backgroundImage = a.kind === 'image' ? `url("${a.src}")` : 'linear-gradient(135deg,#26304d,#101322)';
+    el.innerHTML = `<span class="cname">${a.kind === 'video' ? '🎬 ' : ''}${a.name}</span><span class="dur">${c.dur}s</span>`;
+    el.onclick = () => { state.selClip = c.id; state.selText = null; renderTimeline(); renderInspector(); previewClip(c.id); };
+    track.appendChild(el);
+  });
+
+  const textTrack = $('#textTrack');
+  textTrack.innerHTML = '';
+  if (!state.texts.length) textTrack.innerHTML = '<span class="emptyTrack">Words show over every scene (prototype)</span>';
+  state.texts.forEach(t => {
+    const chip = document.createElement('div');
+    chip.className = 'miniChip';
+    chip.innerHTML = `🔤 <span>${(t.text || '').slice(0, 18) || 'text'}</span>`;
+    chip.onclick = () => selectText(t.id);
+    textTrack.appendChild(chip);
+  });
+
+  const musicTrack = $('#musicTrack');
+  musicTrack.innerHTML = '';
+  if (state.spotify) {
+    const chip = document.createElement('div');
+    chip.className = 'miniChip gold';
+    chip.innerHTML = `🟢 <span>${esc(state.spotify.title)} · ${esc(state.spotify.artist)}</span>`;
+    chip.onclick = () => { curTab = 'music'; $$('.toolTab').forEach(t => t.classList.toggle('on', t.dataset.tab === 'music')); renderToolPanel(); };
+    musicTrack.appendChild(chip);
+  } else if (state.musicId) {
+    const m = MUSIC_TRACKS.find(x => x.id === state.musicId) || state.assets.find(a => a.id === state.musicId);
+    const chip = document.createElement('div');
+    chip.className = 'miniChip gold';
+    chip.innerHTML = `🎵 <span>${m ? (m.name || 'Track') : 'Track'} · loops the whole story</span>`;
+    musicTrack.appendChild(chip);
+  } else {
+    musicTrack.innerHTML = '<span class="emptyTrack">Paste a Spotify link in MUSIC — like IG</span>';
+  }
+  renderSegments();
+  updateTimeLabel();
+  renderSpotifySticker();
+}
+
+function esc(s) {
+  return String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function renderInspector() {
+  const box = $('#inspector');
+  if (!box) return;
+  const c = clipById(state.selClip);
+  if (!c) { box.innerHTML = ''; return; }
+  const a = assetById(c.assetId);
+  box.innerHTML = `
+    <span><b>${esc(a?.name || 'Scene')}</b></span>
+    <button class="ib" onclick="bumpDur('${c.id}',-1)">− 1s</button>
+    <span>${c.dur}s</span>
+    <button class="ib" onclick="bumpDur('${c.id}',1)">+ 1s</button>
+    <button class="ib" onclick="moveClip('${c.id}',-1)">◀</button>
+    <button class="ib" onclick="moveClip('${c.id}',1)">▶</button>
+    <button class="ib warn" onclick="delClip('${c.id}')">Remove</button>`;
+}
+
+/* drag & drop onto timeline */
+function bindTimelineDnD() {
+  const track = $('#videoTrack');
+  track.addEventListener('dragover', e => { e.preventDefault(); track.classList.add('dragover'); });
+  track.addEventListener('dragleave', () => track.classList.remove('dragover'));
+  track.addEventListener('drop', e => {
+    e.preventDefault(); track.classList.remove('dragover');
+    if (e.dataTransfer.files && e.dataTransfer.files.length) { onFiles(e.dataTransfer.files); return; }
+    const id = e.dataTransfer.getData('text/plain');
+    if (id) addClip(id);
+  });
+}
+
+/* ============ STAGE / PREVIEW ============ */
+let curIdx = -1;
+
+function refreshStage() {
+  $('#stagePlaceholder').style.display = state.clips.length ? 'none' : 'flex';
+  if (!state.clips.length) { $('#mediaImg').hidden = true; $('#mediaVid').hidden = true; }
+}
+
+function showClipByIdx(i) {
+  const seg = schedule()[i];
+  if (!seg) return;
+  curIdx = i;
+  const a = assetById(seg.c.assetId);
+  const img = $('#mediaImg'), vid = $('#mediaVid');
+  if (a.kind === 'video') {
+    img.hidden = true; vid.hidden = false;
+    if (vid.src !== a.src) vid.src = a.src;
+    vid.currentTime = 0;
+    if (state.playing) vid.play().catch(() => {});
+  } else {
+    vid.pause(); vid.hidden = true; img.hidden = false;
+    img.src = a.src;
+  }
+  applyEffect();
+  refreshStage();
+}
+
+function previewClip(clipId) {
+  const i = clipIndexById(clipId);
+  const segs = schedule();
+  if (i >= 0) { state.t = segs[i].start; showClipByIdx(i); updatePlayhead(); updateSegments(); captionsTick(true); }
+}
+
+function applyEffect() {
+  const f = EFFECTS[state.effect] || EFFECTS.none;
+  $('#mediawrap').style.filter = f.css;
+  $('#fxLabel').textContent = state.effect === 'none' ? '' : '✨ ' + f.label;
+}
+
+function renderSegments() {
+  const seg = $('#segments');
+  seg.innerHTML = state.clips.map(() => '<i><b></b></i>').join('');
+}
+
+function updateSegments() {
+  const segs = schedule();
+  const bars = $$('#segments i b');
+  segs.forEach((s, i) => {
+    if (!bars[i]) return;
+    let pct = 0;
+    if (state.t >= s.end) pct = 100;
+    else if (state.t > s.start) pct = (state.t - s.start) / (s.end - s.start) * 100;
+    bars[i].style.width = pct + '%';
+  });
+}
+
+function updatePlayhead() {
+  $('#playhead').style.left = (4 + state.t * PX * 1.6) + 'px';
+}
+
+function updateTimeLabel() {
+  $('#timeLabel').textContent = state.t.toFixed(1) + ' / ' + totalDur().toFixed(1) + 's';
+}
+
+/* captions */
+let lastCapKey = '';
+function captionsTick(force) {
+  const capEl = $('#captions');
+  if (!state.captionsOn || !state.clips.length) { capEl.innerHTML = ''; lastCapKey = ''; return; }
+  const segs = schedule();
+  const seg = segs.find(s => state.t >= s.start && state.t < s.end) || segs[segs.length - 1];
+  if (!seg) { capEl.innerHTML = ''; return; }
+  const words = (seg.c.caption || '').split(/\s+/).filter(Boolean);
+  if (!words.length) { capEl.innerHTML = ''; return; }
+  const prog = Math.min(.999, (state.t - seg.start) / (seg.end - seg.start));
+  const count = Math.max(1, Math.ceil(prog * words.length));
+  const key = seg.c.id + ':' + count;
+  if (key !== lastCapKey || force) {
+    lastCapKey = key;
+    capEl.innerHTML = `<span>${words.slice(0, count).join(' ')}</span>`;
+  }
+}
+
+/* play loop */
+let rafId = null, t0 = 0, tBase = 0;
+
+function togglePlay() { state.playing ? pause() : play(); }
+
+function play() {
+  if (!state.clips.length) { toast('Add scenes to the timeline first!'); return; }
+  if (state.t >= totalDur()) state.t = 0;
+  state.playing = true; tBase = state.t; t0 = performance.now();
+  $('#playBtn').textContent = '❚❚';
+  const segs = schedule();
+  const idx = segs.findIndex(s => state.t >= s.start && state.t < s.end);
+  showClipByIdx(idx < 0 ? 0 : idx);
+  startMusic();
+  rafId = requestAnimationFrame(tick);
+}
+
+function pause() {
+  state.playing = false;
+  if (rafId) cancelAnimationFrame(rafId);
+  $('#playBtn').textContent = '▶';
+  $('#mediaVid').pause();
+  stopMusic();
+}
+
+function tick(now) {
+  if (!state.playing) return;
+  state.t = tBase + (now - t0) / 1000;
+  const total = totalDur();
+  if (state.t >= total) {
+    state.t = total;
+    updateSegments(); updatePlayhead(); updateTimeLabel();
+    pause();
+    toast('Story finished! Craft it when ready ⚒');
+    return;
+  }
+  const segs = schedule();
+  const idx = segs.findIndex(s => state.t >= s.start && state.t < s.end);
+  if (idx !== curIdx && idx >= 0) showClipByIdx(idx);
+  updateSegments(); updatePlayhead(); updateTimeLabel(); captionsTick(false);
+  rafId = requestAnimationFrame(tick);
+}
+
+/* ============ MUSIC (Spotify connect + WebAudio chiptune) ============ */
+let ac = null, seqTimer = null, htmlAudio = null;
+
+function parseSpotifyUrl(raw) {
+  const s = (raw || '').trim();
+  if (!s) return null;
+  // open.spotify.com/track/ID , /intl-xx/track/ID , spotify:track:ID , short links
+  let m = s.match(/open\.spotify\.com\/(?:intl-[a-z]{2}\/)?track\/([a-zA-Z0-9]+)/i);
+  if (m) return { type: 'track', id: m[1], url: `https://open.spotify.com/track/${m[1]}` };
+  m = s.match(/spotify:track:([a-zA-Z0-9]+)/i);
+  if (m) return { type: 'track', id: m[1], url: `https://open.spotify.com/track/${m[1]}` };
+  m = s.match(/open\.spotify\.com\/(?:intl-[a-z]{2}\/)?(album|playlist)\/([a-zA-Z0-9]+)/i);
+  if (m) return { type: m[1], id: m[2], url: `https://open.spotify.com/${m[1]}/${m[2]}` };
+  return null;
+}
+
+async function fetchSpotifyMeta(url) {
+  const oembed = 'https://open.spotify.com/oembed?url=' + encodeURIComponent(url);
+  const proxies = [
+    oembed,
+    'https://api.allorigins.win/raw?url=' + encodeURIComponent(oembed),
+    'https://corsproxy.io/?' + encodeURIComponent(oembed),
+  ];
+  for (const endpoint of proxies) {
+    try {
+      const ctrl = new AbortController();
+      const timer = setTimeout(() => ctrl.abort(), 5000);
+      const r = await fetch(endpoint, { signal: ctrl.signal });
+      clearTimeout(timer);
+      if (!r.ok) continue;
+      const data = await r.json();
+      if (data && (data.title || data.thumbnail_url)) return data;
+    } catch (_) { /* try next */ }
+  }
+  return null;
+}
+
+function splitSpotifyTitle(title) {
+  // oEmbed title is often "Song · Artist" or "Song - Artist"
+  const t = (title || '').trim();
+  const parts = t.split(/\s*[·|—–-]\s+/);
+  if (parts.length >= 2) return { title: parts[0].trim(), artist: parts.slice(1).join(' · ').trim() };
+  return { title: t || 'Spotify track', artist: 'Spotify' };
+}
+
+async function connectSpotifyLink() {
+  const input = $('#spotInput');
+  const status = $('#spotStatus');
+  const parsed = parseSpotifyUrl(input ? input.value : '');
+  if (!parsed) {
+    toast('Paste a Spotify song link (open.spotify.com/track/…)');
+    if (status) status.textContent = 'Need a Spotify track link.';
+    return;
+  }
+  if (status) status.textContent = 'Connecting…';
+  const meta = await fetchSpotifyMeta(parsed.url);
+  const split = splitSpotifyTitle(meta && meta.title);
+  // oEmbed is flaky / often blocked — always connect via embed + sticker anyway
+  const title = (meta && split.title && split.title !== 'Spotify track') ? split.title : 'Connected song';
+  const artist = (meta && split.artist && split.artist !== 'Spotify') ? split.artist : 'Spotify · tap player to hear';
+  state.spotify = {
+    type: parsed.type,
+    id: parsed.id,
+    url: parsed.url,
+    title,
+    artist,
+    thumb: (meta && meta.thumbnail_url) || '',
+    embed: `https://open.spotify.com/embed/${parsed.type}/${parsed.id}?utm_source=mindcraft&theme=0`,
+  };
+  // Spotify song replaces built-in beat (IG-style one song)
+  state.musicId = null;
+  stopMusic();
+  addXP(8, 'Song connected');
+  toast('Song connected — like IG 🎵');
+  renderTimeline(); renderToolPanel(); renderSpotifySticker();
+}
+
+function clearSpotify() {
+  state.spotify = null;
+  renderTimeline(); renderToolPanel(); renderSpotifySticker();
+  toast('Song removed');
+}
+
+function renderSpotifySticker() {
+  const el = $('#igMusic');
+  if (!el) return;
+  if (!state.spotify) { el.hidden = true; return; }
+  el.hidden = false;
+  const disc = $('#igDisc');
+  const mq = $('#igMarquee');
+  const label = `${state.spotify.title} · ${state.spotify.artist} · ${state.spotify.title} · ${state.spotify.artist}`;
+  if (mq) mq.textContent = label;
+  if (disc) {
+    if (state.spotify.thumb) {
+      disc.innerHTML = `<img src="${state.spotify.thumb}" alt="">`;
+    } else {
+      disc.textContent = '🎵';
+    }
+  }
+}
+
+function setMusic(id) {
+  // Built-in / upload beats clear Spotify connect
+  if (state.musicId === id) {
+    state.musicId = null;
+  } else {
+    state.musicId = id;
+    state.spotify = null;
+  }
+  stopMusic();
+  if (state.musicId && state.playing) startMusic();
+  if (state.musicId) addXP(5, 'Beat equipped');
+  renderTimeline(); renderToolPanel(); renderSpotifySticker();
+}
+
+function startMusic() {
+  if (state.spotify) return; // Spotify plays via embed preview in MUSIC panel
+  if (!state.musicId) return;
+  const trk = MUSIC_TRACKS.find(t => t.id === state.musicId);
+  if (trk) {
+    ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+    if (ac.state === 'suspended') ac.resume();
+    let i = 0;
+    const stepMs = 60000 / trk.bpm / 2;
+    seqTimer = setInterval(() => {
+      const n = trk.notes[i++ % trk.notes.length];
+      const osc = ac.createOscillator(), g = ac.createGain();
+      osc.type = 'square';
+      osc.frequency.value = trk.base * Math.pow(2, n / 12);
+      g.gain.setValueAtTime(.045, ac.currentTime);
+      g.gain.exponentialRampToValueAtTime(.001, ac.currentTime + .11);
+      osc.connect(g); g.connect(ac.destination);
+      osc.start(); osc.stop(ac.currentTime + .12);
+    }, stepMs);
+  } else {
+    const a = assetById(state.musicId);
+    if (a && a.kind === 'audio') {
+      htmlAudio = htmlAudio || new Audio();
+      htmlAudio.src = a.src; htmlAudio.loop = true; htmlAudio.volume = .5;
+      htmlAudio.play().catch(() => {});
+    }
+  }
+}
+
+function stopMusic() {
+  if (seqTimer) { clearInterval(seqTimer); seqTimer = null; }
+  if (htmlAudio) htmlAudio.pause();
+}
+
+/* ============ TEXT & STICKERS ============ */
+function addText(preset) {
+  const t = { id: uid(), text: 'DOUBLE-TAP TO EDIT', x: 50, y: 42, preset: preset || 'blocky' };
+  state.texts.push(t);
+  state.selText = t.id;
+  markDone('text');
+  addXP(8, 'Words placed on the story');
+  renderOverlays(); renderTimeline();
+}
+
+function selectText(id) {
+  state.selText = id;
+  renderOverlays();
+}
+
+function addSticker(glyph) {
+  state.stickers.push({ id: uid(), glyph, x: 30 + Math.random() * 40, y: 25 + Math.random() * 45 });
+  addXP(4, 'Sticker slapped on');
+  renderOverlays();
+}
+
+function renderOverlays() {
+  const layer = $('#overlayLayer');
+  layer.innerHTML = '';
+  state.texts.forEach(t => {
+    const el = document.createElement('div');
+    el.className = `textov t-${t.preset}` + (state.selText === t.id ? ' sel' : '');
+    el.style.left = t.x + '%'; el.style.top = t.y + '%';
+    el.textContent = t.text;
+    const del = document.createElement('button');
+    del.className = 'del'; del.textContent = '✕';
+    del.onclick = e => { e.stopPropagation(); state.texts = state.texts.filter(x => x.id !== t.id); renderOverlays(); renderTimeline(); };
+    el.appendChild(del);
+    bindOverlayDrag(el, t, () => { state.selText = t.id; renderOverlays(); });
+    el.addEventListener('dblclick', () => {
+      el.contentEditable = 'true'; el.focus();
+      document.execCommand && document.execCommand('selectAll', false, null);
+      const save = () => {
+        el.contentEditable = 'false';
+        t.text = el.textContent.replace('✕', '').trim() || 'text';
+        renderOverlays(); renderTimeline();
+      };
+      el.addEventListener('blur', save, { once: true });
+    });
+    layer.appendChild(el);
+  });
+  state.stickers.forEach(s => {
+    const el = document.createElement('div');
+    el.className = 'stickerov';
+    el.style.left = s.x + '%'; el.style.top = s.y + '%';
+    el.textContent = s.glyph;
+    bindOverlayDrag(el, s);
+    el.addEventListener('dblclick', () => { state.stickers = state.stickers.filter(x => x.id !== s.id); renderOverlays(); });
+    layer.appendChild(el);
+  });
+}
+
+function bindOverlayDrag(el, item, onDown) {
+  el.addEventListener('pointerdown', e => {
+    if (el.isContentEditable) return;
+    e.preventDefault();
+    if (onDown) onDown();
+    const phone = $('#phone').getBoundingClientRect();
+    const move = ev => {
+      item.x = Math.max(4, Math.min(96, (ev.clientX - phone.left) / phone.width * 100));
+      item.y = Math.max(4, Math.min(96, (ev.clientY - phone.top) / phone.height * 100));
+      el.style.left = item.x + '%'; el.style.top = item.y + '%';
+    };
+    const up = () => { window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', up); };
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', up);
+  });
+}
+
+/* ============ TOOL PANEL ============ */
+let curTab = 'text';
+
+function renderToolPanel() {
+  const box = $('#toolPanel');
+  if (curTab === 'quests') {
+    box.innerHTML = '<div class="tpTitle">OPTIONAL STARTERS</div><div class="tplList" id="tplList"></div><p class="hint">Just scene packs — not lessons. Or ignore this and upload your own loot.</p>';
+    const list = box.querySelector('#tplList');
+    QUESTS.forEach(q => {
+      const b = document.createElement('button');
+      b.className = 'tplCard';
+      b.innerHTML = `<b><span>${q.icon}</span>${q.title}</b><p>${q.desc}</p>`;
+      b.onclick = () => applyQuest(q.id);
+      list.appendChild(b);
+    });
+  }
+  if (curTab === 'text') {
+    box.innerHTML = `
+      <div class="tpTitle">TEXT STYLES</div>
+      <div class="presetRow">
+        <button class="presetChip" onclick="addText('blocky')">BLOCKY</button>
+        <button class="presetChip" onclick="addText('neon')">NEON</button>
+        <button class="presetChip" onclick="addText('sticker')">STICKER TAG</button>
+      </div>
+      <button class="btn blue" onclick="addText('blocky')">+ ADD TEXT</button>
+      <p class="hint">Drag words anywhere on the story. Double-tap to edit. ✕ to remove.</p>`;
+  }
+  if (curTab === 'stickers') {
+    box.innerHTML = '<div class="tpTitle">STICKER CHEST</div><div class="stickerGrid" id="stkGrid"></div><p class="hint">Tap to drop a sticker, then drag it. Double-tap a sticker to remove.</p>';
+    const g = box.querySelector('#stkGrid');
+    STICKERS.forEach(s => {
+      const b = document.createElement('button');
+      b.className = 'stickerBtn'; b.textContent = s;
+      b.onclick = () => addSticker(s);
+      g.appendChild(b);
+    });
+  }
+  if (curTab === 'music') {
+    const sp = state.spotify;
+    const spotConnected = sp ? `
+      <div class="spotCard">
+        ${sp.thumb ? `<img src="${esc(sp.thumb)}" alt="">` : '<div style="width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:#1DB954;border:2px solid var(--line)">🎵</div>'}
+        <div><b>${esc(sp.title)}</b><span>${esc(sp.artist)} · Spotify</span></div>
+        <div class="spotActions">
+          <button class="btn ghost small" onclick="clearSpotify()">REMOVE</button>
+        </div>
+      </div>
+      <div class="spotEmbed"><iframe src="${esc(sp.embed)}" allow="encrypted-media; clipboard-write" loading="lazy" title="Spotify"></iframe></div>
+      <p class="hint">Sticker shows on your story (IG-style). Preview plays in the Spotify player above — full in-story mix needs a music license later.</p>` : `
+      <div class="spotRow">
+        <input class="spotInput" id="spotInput" placeholder="Paste Spotify link… open.spotify.com/track/…">
+        <button class="btn small" style="background:#1DB954;color:#04140a" onclick="connectSpotifyLink()">CONNECT</button>
+      </div>
+      <button class="btn ghost small" style="margin-top:8px;width:100%" onclick="document.getElementById('spotInput').value='https://open.spotify.com/track/0VjIjW4GlUZUMMdkwHjJpl'; connectSpotifyLink()">TRY SAMPLE SONG</button>
+      <p class="hint" id="spotStatus">Works like IG: paste a song link → sticker on your story.</p>`;
+
+    const items = MUSIC_TRACKS.map(t => `
+      <button class="musicItem ${state.musicId === t.id ? 'on' : ''}" onclick="setMusic('${t.id}')">
+        <span class="note">🎵</span>
+        <span><b>${t.name}</b><span>${t.vibe}</span></span>
+        <span class="eq"><i></i><i></i><i></i></span>
+      </button>`).join('');
+    const uploads = state.assets.filter(a => a.kind === 'audio').map(a => `
+      <button class="musicItem ${state.musicId === a.id ? 'on' : ''}" onclick="setMusic('${a.id}')">
+        <span class="note">🎤</span>
+        <span><b>${a.name}</b><span>your upload</span></span>
+        <span class="eq"><i></i><i></i><i></i></span>
+      </button>`).join('');
+
+    box.innerHTML = `
+      <div class="spotBox">
+        <div class="spotHead"><span class="badge">SPOTIFY</span><b>Add music from a link</b></div>
+        ${spotConnected}
+      </div>
+      <div class="tpTitle">OR STUDIO BEATS / YOUR UPLOADS</div>
+      <div class="musicList">${items}${uploads}</div>
+      <p class="hint">Drop an audio file in the chest for your own sound. Spotify connect clears beats (one song at a time).</p>`;
+
+    if (!sp) {
+      const inp = $('#spotInput');
+      if (inp) {
+        inp.addEventListener('keydown', e => { if (e.key === 'Enter') connectSpotifyLink(); });
+        // demo helper chip
+      }
+    }
+  }
+  if (curTab === 'captions') {
+    const c = clipById(state.selClip);
+    box.innerHTML = `
+      <div class="switchRow"><b>Auto-captions</b><button class="switch ${state.captionsOn ? 'on' : ''}" onclick="toggleCaptions()"><i></i></button></div>
+      <div class="tpTitle">WORDS FOR SELECTED SCENE</div>
+      ${c ? `<input class="capInput" id="capInput" value="${(c.caption || '').replace(/"/g, '&quot;')}" placeholder="What should this scene say?">
+             <p class="hint">Captions pop word-by-word while the story plays — like real Stories. In the full version this comes from your voice automatically.</p>`
+          : '<p class="hint">Select a scene block on the timeline first.</p>'}`;
+    const inp = box.querySelector('#capInput');
+    if (inp) inp.addEventListener('input', () => { const cc = clipById(state.selClip); if (cc) cc.caption = inp.value; });
+  }
+  if (curTab === 'fx') {
+    box.innerHTML = '<div class="tpTitle">FILTERS</div><div class="fxGrid" id="fxGrid"></div><p class="hint">Filters apply to the whole story in this prototype.</p>';
+    const g = box.querySelector('#fxGrid');
+    Object.entries(EFFECTS).forEach(([key, f]) => {
+      const b = document.createElement('button');
+      b.className = 'fxBtn' + (state.effect === key ? ' on' : '');
+      b.innerHTML = `<div class="swatch" style="filter:${f.css}"></div><span>${f.label}</span>`;
+      b.onclick = () => { state.effect = key; applyEffect(); renderToolPanel(); addXP(3, 'Filter: ' + f.label); };
+      g.appendChild(b);
+    });
+  }
+}
+
+function toggleCaptions() {
+  state.captionsOn = !state.captionsOn;
+  captionsTick(true);
+  renderToolPanel();
+}
+
+function bindTabs() {
+  $('#toolTabs').addEventListener('click', e => {
+    const btn = e.target.closest('.toolTab');
+    if (!btn) return;
+    curTab = btn.dataset.tab;
+    $$('.toolTab').forEach(t => t.classList.toggle('on', t === btn));
+    renderToolPanel();
+  });
+}
+
+/* ============ QUESTS ============ */
+function applyQuest(id) {
+  const q = QUESTS.find(x => x.id === id);
+  if (!q) return;
+  state.clips = []; state.texts = []; state.stickers = []; state.selClip = null; state.t = 0;
+  $('#projTitle').textContent = q.title.charAt(0) + q.title.slice(1).toLowerCase();
+  q.clips.forEach(name => {
+    const a = state.assets.find(x => x.name === name);
+    if (a) state.clips.push({ id: uid(), assetId: a.id, dur: 4, caption: '' });
+  });
+  q.texts.forEach((txt, i) => {
+    if (state.clips[i]) state.clips[i].caption = txt;
+    state.texts.push({ id: uid(), text: txt, x: 50, y: 24 + i * 18, preset: i === 0 ? 'blocky' : (i === 1 ? 'neon' : 'sticker') });
+  });
+  goEditor();
+  renderAll();
+  if (state.clips.length) { markDone('clip'); previewClip(state.clips[0].id); }
+  toast(q.id === 'free' ? 'Empty chest — drop your loot!' : 'Starter loaded. Swap scenes with your uploads.');
+  addXP(6, 'Starter loaded');
+}
+
+function renderHomeQuests() {
+  const grid = $('#homeQuests');
+  grid.innerHTML = '';
+  QUESTS.forEach(q => {
+    const b = document.createElement('button');
+    b.className = 'questCard';
+    b.innerHTML = `<span class="qicon">${q.icon}</span><h3>${q.title}</h3><p>${q.desc}</p><span class="tag">${q.tag}</span>`;
+    b.onclick = () => applyQuest(q.id);
+    grid.appendChild(b);
+  });
+}
+
+/* ============ EXPORT ============ */
+const CRAFT_STEPS = ['Mining pixels…', 'Smelting colors…', 'Enchanting captions…', 'Taming the beat…', 'Polishing diamonds…'];
+
+function exportFlow() {
+  if (!state.clips.length) { toast('Nothing to craft yet — add scenes first!'); return; }
+  pause();
+  $('#exportModal').style.display = 'flex';
+  $('#craftWrap').style.display = 'block';
+  $('#doneWrap').style.display = 'none';
+  const grid = $('#craftGrid');
+  grid.innerHTML = Array.from({ length: 20 }, () => '<i></i>').join('');
+  const cells = [...grid.children];
+  let i = 0;
+  const timer = setInterval(() => {
+    if (i < cells.length) {
+      cells[i].classList.add('f');
+      $('#craftStatus').textContent = CRAFT_STEPS[Math.floor(i / cells.length * CRAFT_STEPS.length)];
+      i++;
+    } else {
+      clearInterval(timer);
+      $('#craftWrap').style.display = 'none';
+      $('#doneWrap').style.display = 'block';
+      confetti();
+      if (!state.done.export) { markDone('export'); addXP(50, 'First story crafted!'); }
+      else addXP(20, 'Story crafted');
+    }
+  }, 110);
+}
+
+function confetti() {
+  const box = $('#exportBox');
+  const colors = ['#72c74a', '#ffd54a', '#4fc3f7', '#b45cff', '#ff5a3c'];
+  for (let i = 0; i < 46; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = Math.random() * 100 + '%';
+    c.style.background = colors[i % colors.length];
+    c.style.animationDuration = (1.1 + Math.random() * 1.4) + 's';
+    c.style.animationDelay = (Math.random() * .5) + 's';
+    box.appendChild(c);
+    setTimeout(() => c.remove(), 3200);
+  }
+}
+
+function closeExport() { $('#exportModal').style.display = 'none'; }
+
+/* ============ WIRING ============ */
+function bindChest() {
+  const dz = $('#dropzone'), fi = $('#fileInput');
+  dz.onclick = () => fi.click();
+  fi.onchange = () => { onFiles(fi.files); fi.value = ''; };
+  ['dragover', 'dragenter'].forEach(ev => dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.add('drag'); }));
+  ['dragleave', 'drop'].forEach(ev => dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.remove('drag'); }));
+  dz.addEventListener('drop', e => onFiles(e.dataTransfer.files));
+}
+
+function bindKeys() {
+  window.addEventListener('keydown', e => {
+    if (e.target.isContentEditable || /INPUT|TEXTAREA/.test(e.target.tagName)) return;
+    if (e.code === 'Space') { e.preventDefault(); if (!$('#editorView').hidden) togglePlay(); }
+    if ((e.code === 'Backspace' || e.code === 'Delete') && state.selClip) delClip(state.selClip);
+    if (e.code === 'Escape') {
+      if (state.fsStage) toggleFullscreenStage(false);
+      else if (state.createMode) setCreateMode(false);
+    }
+    if ((e.key === 'f' || e.key === 'F') && !$('#editorView').hidden) toggleFullscreenStage();
+    if ((e.key === 'c' || e.key === 'C') && !$('#editorView').hidden) toggleCreateMode();
+  });
+}
+
+function bindCreateRails() {
+  const chestHead = $('#chestHead');
+  const toolsHead = $('#toolsHead');
+  if (chestHead) chestHead.onclick = () => { if (state.createMode) setCreateMode(false); };
+  if (toolsHead) toolsHead.onclick = () => { if (state.createMode) setCreateMode(false); };
+
+  const dock = $('#jesseDock');
+  const hero = $('#jesseHero');
+  const askGo = $('#jesseAskGo');
+  const ask = $('#jesseAsk');
+  const close = $('#closeIntel');
+  if (dock) dock.onclick = () => askJesse();
+  if (hero) {
+    hero.onclick = (e) => {
+      if (e.target.closest('.useJesse')) useJesseInStory();
+      else selectNode('center');
+    };
+  }
+  if (askGo) askGo.onclick = () => askJesse();
+  if (ask) ask.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); askJesse(); }
+  });
+  if (close) close.onclick = () => closeIntel();
+
+  $('#zoomIn') && ($('#zoomIn').onclick = () => setCanvasZoom((state.canvasZoom || 1) + 0.12));
+  $('#zoomOut') && ($('#zoomOut').onclick = () => setCanvasZoom((state.canvasZoom || 1) - 0.12));
+  $('#zoomReset') && ($('#zoomReset').onclick = () => {
+    state.canvasZoom = 1; state.canvasX = 0; state.canvasY = 0; applyCanvasTransform();
+  });
+  $('#layoutReset') && ($('#layoutReset').onclick = () => resetLayout());
+  $('#selResetNode') && ($('#selResetNode').onclick = () => {
+    const id = state.selectedNode;
+    if (!id) return;
+    ensureLayout();
+    state.layout[id] = { ...DEFAULT_LAYOUT[id] };
+    saveLayout();
+    renderCreateBoard();
+    selectNode(id);
+    toast('Size reset');
+  });
+  $('#selDeselect') && ($('#selDeselect').onclick = () => selectNode(null));
+
+  const board = $('#floatBoard');
+  if (board) {
+    ['dragover', 'dragenter'].forEach(ev => board.addEventListener(ev, e => e.preventDefault()));
+    board.addEventListener('drop', e => {
+      e.preventDefault();
+      if (e.dataTransfer?.files?.length) {
+        state.activeTool = 'media';
+        onFiles(e.dataTransfer.files);
+      }
+    });
+    let lastBoardScroll = board.scrollTop || 0;
+    const syncAskDock = (dy) => {
+      const ask = $('.floatAsk');
+      if (!ask || !state.createMode) return;
+      // scroll up → pop ask bar; scroll down → tuck it
+      if (dy < -2) ask.classList.remove('is-hidden');
+      else if (dy > 2) ask.classList.add('is-hidden');
+    };
+    board.addEventListener('scroll', () => {
+      const y = board.scrollTop;
+      syncAskDock(y - lastBoardScroll);
+      lastBoardScroll = y;
+    }, { passive: true });
+    board.addEventListener('wheel', e => {
+      if (!state.createMode) return;
+      syncAskDock(e.deltaY);
+      if (e.ctrlKey || e.metaKey) {
+        e.preventDefault();
+        const delta = e.deltaY > 0 ? -0.06 : 0.06;
+        setCanvasZoom((state.canvasZoom || 1) + delta);
+      }
+    }, { passive: false });
+
+    let pan = null;
+    board.addEventListener('pointerdown', e => {
+      if (!state.createMode) return;
+      if (e.target.closest('.cnode, .selBar, .zoomHUD, .floatAsk, button, input, a')) return;
+      selectNode(null);
+      pan = { x: e.clientX, y: e.clientY, ox: state.canvasX || 0, oy: state.canvasY || 0 };
+      board.classList.add('panning');
+      board.setPointerCapture?.(e.pointerId);
+    });
+    board.addEventListener('pointermove', e => {
+      if (!pan) return;
+      const z = state.canvasZoom || 1;
+      state.canvasX = pan.ox + (e.clientX - pan.x) / z;
+      state.canvasY = pan.oy + (e.clientY - pan.y) / z;
+      applyCanvasTransform();
+    });
+    const endPan = () => { pan = null; board.classList.remove('panning'); };
+    board.addEventListener('pointerup', endPan);
+    board.addEventListener('pointercancel', endPan);
+  }
+}
+
+function showTime(t, idx) {
+  state.t = t;
+  if (idx >= 0) showClipByIdx(idx);
+  updatePlayhead(); updateSegments(); updateTimeLabel();
+}
+
+function renderAll() {
+  renderChest(); renderTimeline(); renderInspector(); renderOverlays();
+  renderToolPanel(); refreshStage(); renderXP(); applyEffect(); renderSegments();
+  updatePlayhead(); updateTimeLabel(); captionsTick(true); renderSpotifySticker();
+  if (state.createMode) { renderFloatCards(); syncJessePlacement(); }
+}
+
+function init() {
+  seedAssets();
+  renderHomeQuests();
+  bindChest(); bindTimelineDnD(); bindTabs(); bindKeys(); bindCreateRails();
+  renderAll();
+  // Jump straight into the editor so you can upload + edit immediately
+  newProject();
+  if (FROM_JESSE) {
+    const btn = $('#navBackBtn');
+    if (btn) btn.textContent = '← KITCHEN';
+  }
+}
+init();
+</script>
 </body>
 </html>
