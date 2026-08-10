@@ -1229,6 +1229,10 @@ struct FieldDeskView: View {
             placedWidgets.remove(.gmail)
         case .notes:
             placedWidgets.remove(.notes)
+        case .gdoc:
+            placedWidgets.remove(.gdoc)
+        case .slides:
+            placedWidgets.remove(.slides)
         }
         if focusedCard == id { focusedCard = nil }
     }
