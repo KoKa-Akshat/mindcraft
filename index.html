@@ -13,11 +13,11 @@
 <meta property="og:url" content="https://mindcraft-marketing-site.web.app/">
 <meta property="og:title" content="MindCraft · The operating system for student knowledge">
 <meta property="og:description" content="School is scattered. MindCraft is the desk that connects it: binder, gap map, story practice, real tutors. Gym membership energy for math.">
-<meta property="og:image" content="https://mindcraft-marketing-site.web.app/img/app/field-desk.png">
+<meta property="og:image" content="https://mindcraft-marketing-site.web.app/img/app/dash-landscape.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="MindCraft · The operating system for student knowledge">
 <meta name="twitter:description" content="Drop it. Map the gap. Train until it transfers. Real college tutors, briefed by your map.">
-<meta name="twitter:image" content="https://mindcraft-marketing-site.web.app/img/app/field-desk.png">
+<meta name="twitter:image" content="https://mindcraft-marketing-site.web.app/img/app/dash-landscape.jpg">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -829,31 +829,50 @@
   }
   .cta .cta-row .btn[aria-selected="false"]{opacity:.65;}
 
-  /* Soft email capture (visitors) */
-  .email-dock{
-    position:fixed; z-index:60; left:50%; bottom:max(16px, env(safe-area-inset-bottom));
-    transform:translateX(-50%) translateY(120%);
-    width:min(560px, calc(100% - 24px));
-    background:rgba(10,22,18,.94); color:var(--paper);
-    border:1px solid rgba(196,245,71,.35); border-radius:22px;
-    padding:14px 16px; box-shadow:0 24px 70px rgba(0,0,0,.45);
-    transition:transform .35s var(--ease), opacity .25s var(--ease);
-    opacity:0; pointer-events:none;
+  /* Memorable landscape product shots (no portrait crops on the landing) */
+  .shot-rail{
+    margin-top:36px; display:grid; gap:22px;
   }
-  .email-dock.is-open{transform:translateX(-50%) translateY(0); opacity:1; pointer-events:auto;}
-  .email-dock h3{font-family:"Fredoka",sans-serif; font-size:18px; letter-spacing:-.03em; margin-bottom:4px;}
-  .email-dock p{font-size:13px; font-weight:700; color:rgba(255,253,247,.72); margin-bottom:10px; line-height:1.35;}
-  .email-dock form{display:flex; gap:8px; flex-wrap:wrap;}
-  .email-dock input[type="email"]{
-    flex:1 1 180px; min-height:46px; border-radius:14px; border:1.5px solid rgba(255,253,247,.2);
-    background:#fff; color:var(--ink); padding:0 12px; font:inherit; font-weight:700;
+  .shot-wide{
+    position:relative; border-radius:28px; overflow:hidden;
+    border:1px solid var(--line); background:#0a1612;
+    box-shadow:0 28px 70px rgba(20,58,46,.14);
   }
-  .email-dock .btn{min-height:46px; padding:0 16px; font-size:11px;}
-  .email-dock .x{
-    position:absolute; top:8px; right:12px; border:0; background:transparent; color:rgba(255,253,247,.7);
-    font-size:22px; cursor:pointer; line-height:1;
+  .shot-wide img{display:block; width:100%; height:auto; aspect-ratio:16/10; object-fit:cover; object-position:center top;}
+  .shot-wide .call{
+    position:absolute; left:14px; bottom:14px; right:14px;
+    display:flex; flex-wrap:wrap; gap:8px; pointer-events:none;
   }
-  .email-dock .ok{color:var(--lime); font-weight:900; font-size:13px; margin-top:8px;}
+  .shot-wide .call span{
+    background:rgba(255,253,247,.94); color:var(--ink); border:1px solid rgba(196,245,71,.55);
+    border-radius:999px; padding:7px 12px; font-size:12px; font-weight:900;
+    box-shadow:0 10px 28px rgba(0,0,0,.18);
+  }
+  .learn-one{
+    margin-top:28px; display:grid; grid-template-columns:1.15fr .85fr; gap:18px; align-items:stretch;
+  }
+  .learn-one .panel{
+    border-radius:28px; border:1px solid var(--line); padding:26px 24px;
+    background:linear-gradient(160deg, var(--mint), var(--sand));
+    box-shadow:0 18px 46px rgba(20,58,46,.08);
+  }
+  .learn-one .panel h3{font-size:28px; letter-spacing:-.03em; margin:0 0 8px;}
+  .learn-one .panel p{font-size:15.5px; font-weight:700; color:var(--muted); line-height:1.45; margin:0 0 14px;}
+  .learn-one .rails{display:grid; gap:10px; margin:0; padding:0; list-style:none;}
+  .learn-one .rails li{
+    background:rgba(255,253,247,.78); border:1px solid var(--line); border-radius:16px;
+    padding:12px 14px; font-weight:800; color:var(--ink);
+  }
+  .learn-one .rails li strong{display:block; font-size:14px; margin-bottom:2px;}
+  .learn-one .rails li span{display:block; font-size:12.5px; font-weight:700; color:var(--muted);}
+  .learn-one .shot{
+    border-radius:28px; overflow:hidden; border:1px solid var(--line); background:#0a1612;
+    box-shadow:0 22px 56px rgba(20,58,46,.12);
+  }
+  .learn-one .shot img{display:block; width:100%; height:100%; min-height:280px; object-fit:cover; object-position:center top;}
+  @media(max-width:900px){
+    .learn-one{grid-template-columns:1fr;}
+  }
 
   /* iPad / tablet (portrait + landscape, Mini through Pro) */
   @media(max-width:1180px) and (min-width:641px){
@@ -1013,9 +1032,9 @@
 
   <div class="hero-stage">
     <div>
-      <a class="hero-announce" href="#os"><i>NEW</i> The OS for student knowledge →</a>
+      <a class="hero-announce" href="#os"><i>NEW</i> One desk. One Learn surface. →</a>
       <h1>Knowledge has no operating system. <em>Until now.</em></h1>
-      <p class="lead">MindCraft is the desk that connects school: binder, gap map, story practice, real tutors. Like a <b>gym membership for math</b>. You show up. The system trains the exact gap.</p>
+      <p class="lead">MindCraft is the desk that connects school into one memorable place: Field Desk, Learn (gap map, stories, resume workflows), and real tutors. Like a <b>gym membership for math</b>. You show up. The system trains the exact gap.</p>
       <div class="hero-actions">
         <a class="btn primary" href="#start">Claim my desk</a>
         <a class="btn soft" href="#problem">See the mess we fix</a>
@@ -1023,8 +1042,8 @@
     </div>
 
     <div class="hero-shot">
-      <div class="hero-note">your Field Desk ↓</div>
-      <div class="hero-frame"><img src="img/app/field-desk.png" alt="MindCraft Field Desk on iPad: binder, intel, memo, and calendar on one infinite desk"></div>
+      <div class="hero-note">your Field Desk · landscape ↓</div>
+      <div class="hero-frame"><img src="img/app/desk-landscape.png" alt="MindCraft Field Desk in landscape: binder Learn, intel, memo, and calendar on one infinite desk"></div>
       <div class="hero-chip" id="herochip">
         <span class="raw" id="hc-raw">IMG_4127.jpg</span>
         <span class="arrow">→</span>
@@ -1088,29 +1107,35 @@
   <div class="wrap">
     <div class="kicker reveal">Chapter 01.5 · The membership</div>
     <h2 class="h2 reveal">A gym for knowledge. <span class="script">Not another chat box.</span></h2>
-    <p class="lede reveal">Gyms do not do the reps for you. They give you a floor, a plan, and a mirror. MindCraft is that for school: you drop the mess, we route the training, you feel the click.</p>
-    <div class="caps-grid" style="margin-top:28px;">
-      <article class="cap sand reveal">
-        <h3>Field Desk</h3>
-        <p>Binder + intel + calendar on one infinite desk. Drop a photo. It finds its course, date, and next step.</p>
-        <img src="img/app/field-desk.png" alt="Field Desk binder and cards" style="margin-top:14px;border-radius:16px;border:1px solid var(--line);">
-      </article>
-      <article class="cap mint reveal">
-        <h3>Gap map</h3>
-        <p>We find the exact gap, prove it with practice that transfers, and skip the fake praise. Parents get an honest note.</p>
-        <img src="img/app/dash-contents.png" alt="ACT contents map on MindCraft" style="margin-top:14px;border-radius:16px;border:1px solid var(--line);">
-      </article>
-      <article class="cap peach reveal">
-        <h3>Story practice</h3>
-        <p>Every concept is a scene you walk into. Hard problems with stakes. The map moves when you do.</p>
-        <img src="img/app/story-chapter.png" alt="Story chapter in MindCraft" style="margin-top:14px;border-radius:16px;border:1px solid var(--line);">
-      </article>
-      <article class="cap blue reveal">
-        <h3>Human tutors</h3>
-        <p>College tutors open your map before hello. The hour goes to teaching, not detective work. First session free.</p>
-        <img src="img/app/practice.png" alt="Practice session writing field" style="margin-top:14px;border-radius:16px;border:1px solid var(--line);">
-      </article>
+    <p class="lede reveal">Gyms do not do the reps for you. They give you a floor, a plan, and a mirror. MindCraft is that for school: one desk, one Learn home, tutors who already see your map.</p>
+
+    <div class="shot-rail reveal">
+      <figure class="shot-wide">
+        <img src="img/app/desk-landscape.png" alt="MindCraft Field Desk landscape: Learn binder, Connect, intel, and calendar on one scrollable desk">
+        <div class="call" aria-hidden="true">
+          <span>Field Desk</span>
+          <span>Learn · binder</span>
+          <span>Connect · Google</span>
+        </div>
+      </figure>
     </div>
+
+    <div class="learn-one reveal">
+      <div class="panel">
+        <h3>Learn is one surface</h3>
+        <p>Not a stack of products. On the desk, Learn is where the ACT map, story practice, and resume workflows live together. You open one home. The work stays continuous.</p>
+        <ul class="rails">
+          <li><strong>Gap map</strong><span>Exact concept gaps, honest notes for parents</span></li>
+          <li><strong>Story practice</strong><span>Hard problems inside scenes that stick</span></li>
+          <li><strong>Resume &amp; workflows</strong><span>Pick up where you left off, same Learn shelf</span></li>
+        </ul>
+      </div>
+      <figure class="shot">
+        <img src="img/app/dash-landscape.jpg" alt="MindCraft Learn dash in landscape: contents map and this week's review">
+      </figure>
+    </div>
+
+    <p class="lede reveal" style="margin-top:28px;">College tutors open that same map before hello. The hour goes to teaching, not detective work. First session free.</p>
   </div>
 </section>
 
@@ -1204,10 +1229,10 @@
 
     <div class="proof reveal">
       <div class="proof-frame">
-        <div class="proof-bar"><i></i><i></i><i></i><span>mindcraft · your desk</span></div>
-        <img class="crop-demo" src="img/new-dash-home.jpg" alt="The real MindCraft desk: Contents view with watercolor tiles for every concept, and this week's review">
+        <div class="proof-bar"><i></i><i></i><i></i><span>mindcraft · Learn · landscape</span></div>
+        <img class="crop-demo" src="img/app/dash-landscape.jpg" alt="The real MindCraft Learn dash in landscape: contents map with watercolor tiles and this week's review">
       </div>
-      <div class="proof-cap">the real thing, not a mockup</div>
+      <div class="proof-cap">the real dash, landscape, not a mockup</div>
     </div>
     <p class="turn reveal">Filing is the chore. Turn the page for the fun part<i>!</i></p>
   </div>
@@ -1503,7 +1528,7 @@
       <div class="cta-veil"></div>
       <div class="inner">
         <h2>Claim your desk. <em>Feel the click.</em></h2>
-        <p>Join the free beta. Drop three files, take the gap scan, run your first mission tonight. We follow up within an hour if you leave your email.</p>
+        <p>Join the free beta. Drop three files, take the gap scan, run your first mission tonight. After you apply, we send one thoughtful follow-up automatically.</p>
         <p class="apply-done" id="applyDone" hidden>Got it. A real human replies within 48 hours.</p>
         <div class="cta-row" role="tablist" aria-label="Choose an application type">
           <button class="btn primary" type="button" id="applyTabStudent" role="tab" aria-selected="true">Sign up as a student</button>
@@ -1549,19 +1574,6 @@
     </div>
   </div>
 </section>
-
-<!-- Soft capture: collect visitor emails for 1-hour follow-up -->
-<aside class="email-dock" id="emailDock" aria-live="polite" hidden>
-  <button class="x" type="button" id="emailDockClose" aria-label="Close">×</button>
-  <h3>Want the desk brief?</h3>
-  <p>Leave your email. We send one thoughtful follow-up in about an hour. No spam streaks.</p>
-  <form id="emailDockForm">
-    <input type="email" name="email" id="emailDockInput" placeholder="you@email.com" required autocomplete="email">
-    <input type="text" name="_honey" class="honey" tabindex="-1" autocomplete="off" aria-hidden="true">
-    <button class="btn primary" type="submit">Save my spot</button>
-  </form>
-  <p class="ok" id="emailDockOk" hidden>Got it. Check your inbox in about an hour.</p>
-</aside>
 
 <footer>
   <div class="wrap">
@@ -1940,59 +1952,7 @@
     }
   }
 
-  // Soft dock after ~18s or 45% scroll, once per browser
-  (function(){
-    const dock = document.getElementById('emailDock');
-    const form = document.getElementById('emailDockForm');
-    const ok = document.getElementById('emailDockOk');
-    const closeBtn = document.getElementById('emailDockClose');
-    if (!dock || !form) return;
-    let armed = false;
-    function already(){
-      try { return Boolean(localStorage.getItem('mc_lead_email') || localStorage.getItem('mc_lead_dismissed')); }
-      catch (_) { return false; }
-    }
-    function openDock(){
-      if (armed || already()) return;
-      armed = true;
-      dock.hidden = false;
-      requestAnimationFrame(() => dock.classList.add('is-open'));
-    }
-    setTimeout(openDock, 18000);
-    addEventListener('scroll', () => {
-      const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
-      if ((scrollY / max) > 0.45) openDock();
-    }, { passive:true });
-    closeBtn && closeBtn.addEventListener('click', () => {
-      dock.classList.remove('is-open');
-      try { localStorage.setItem('mc_lead_dismissed', '1'); } catch (_) {}
-      setTimeout(() => { dock.hidden = true; }, 320);
-    });
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = (document.getElementById('emailDockInput').value || '').trim();
-      const honey = (form.querySelector('[name="_honey"]').value || '').trim();
-      if (!email) return;
-      const btn = form.querySelector('button[type="submit"]');
-      btn.disabled = true;
-      await captureLead({
-        email,
-        name: '',
-        role: 'visitor',
-        source: 'email_dock',
-        page: location.pathname + location.hash,
-        _honey: honey,
-      });
-      form.hidden = true;
-      ok.hidden = false;
-      setTimeout(() => {
-        dock.classList.remove('is-open');
-        setTimeout(() => { dock.hidden = true; }, 320);
-      }, 2200);
-    });
-  })();
-
-  // Also mirror apply forms into marketing_leads (FormSubmit still emails inbox)
+  // Apply forms → marketing_leads (FormSubmit still emails inbox; follow-up email is automatic)
   document.getElementById('applyFormStudent')?.addEventListener('submit', () => {
     const email = document.getElementById('applyEmail')?.value;
     const name = document.getElementById('parentName')?.value || document.getElementById('studentName')?.value || '';
