@@ -1,15 +1,20 @@
 /**
- * MindCraft world HTML chrome — Enter World, diagnostic entry, post-diagnostic UI.
+ * MindCraft world HTML chrome — Enter World, post-enter UI.
+ * Diagnostic questions removed: Projects goes straight to the app screen.
  */
 (function () {
-  window.__MINDCRAFT_WORLD_BUILD__ = '2026-07-08-world-focus-v1'
+  window.__MINDCRAFT_WORLD_BUILD__ = '2026-08-09-sound-on-no-diag'
 
-  var APP = window.location.hostname === 'localhost'
+  var APP = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
     ? 'http://localhost:5173'
     : 'https://mindcraft-93858.web.app'
 
-  function isDiagDone() {
-    return window.MC_isDiagDone ? window.MC_isDiagDone() : !!localStorage.getItem('mc-diag-done')
+  function inEmbed() {
+    try {
+      return window.self !== window.top || /[?&]embed=1(?:&|$)/.test(window.location.search)
+    } catch (e) {
+      return true
+    }
   }
 
   function applyPostDiagnosticChrome() {
@@ -18,7 +23,6 @@
   }
 
   window.MC_hideProjectsCue = function () {}
-
   window.MC_applyPostDiagnosticChrome = applyPostDiagnosticChrome
 
   // Track whether the user intentionally exited (ESC key).
@@ -34,25 +38,14 @@
       return
     }
     if (!document.fullscreenElement && !userExitedIntentionally) {
-      // Fullscreen lost without ESC (e.g. Projects iframe navigation) — re-enter
       var el = document.documentElement
       var fn = el.requestFullscreen || el.webkitRequestFullscreen
       try { if (fn) fn.call(el) } catch (e) {}
     }
-    // Reset flag after each change so the next exit is detected correctly
     userExitedIntentionally = false
   })
 
-  function inEmbed() {
-    try {
-      return window.self !== window.top || /[?&]embed=1(?:&|$)/.test(window.location.search)
-    } catch (e) {
-      return true
-    }
-  }
-
   function requestFullscreen() {
-    // Inside Field Desk iframe / embed, fullscreen often fails and blocks the feel of "enter".
     if (inEmbed()) return
     var el = document.documentElement
     var fn = el.requestFullscreen || el.webkitRequestFullscreen
@@ -70,71 +63,61 @@
         if (window.Howler.ctx && window.Howler.ctx.resume) window.Howler.ctx.resume()
       }
       if (exp && exp.sounds) {
+        exp.sounds.muted = false
         if (exp.sounds.playClick) exp.sounds.playClick()
         if (exp.sounds.playWhoosh) exp.sounds.playWhoosh()
+        if (exp.sounds.playCooking) exp.sounds.playCooking()
       }
     } catch (e) {}
   }
 
-  function openDiagnosticWhenReady() {
-    if (isDiagDone()) return
-    var tries = 0
-    var timer = window.setInterval(function () {
-      tries += 1
-      if (typeof window.MC_onProjectsOpen === 'function') {
-        window.clearInterval(timer)
-        window.MC_onProjectsOpen()
-      } else if (tries > 40) {
-        window.clearInterval(timer)
+  function goToAppScreen() {
+    // Prefer parent navigation when embedded in Field Desk proto.
+    var url = APP + '/dashboard'
+    try {
+      if (window.top && window.top !== window.self) {
+        window.top.location.href = url
+        return
       }
-    }, 250)
+    } catch (e) {}
+    window.location.href = url
   }
+
+  // Projects / vending menu used to open diagnostic questions — go to the app instead.
+  window.MC_onProjectsOpen = function () {
+    goToAppScreen()
+  }
+  window.MC_onProjectsClose = function () {}
 
   function wireChrome() {
     var badge = document.getElementById('mc-badge')
     var startBtn = document.getElementById('mc-start-btn')
 
     if (badge) badge.classList.add('show')
-    if (isDiagDone()) applyPostDiagnosticChrome()
-
-    function worldHasStarted() {
-      var cooking = document.getElementById('cooking')
-      var overlay = document.querySelector('.overlay')
-      var liveStartBtn = document.getElementById('mc-start-btn')
-      return !liveStartBtn || !cooking || (overlay && overlay.classList.contains('fade'))
-    }
+    applyPostDiagnosticChrome()
 
     if (startBtn) {
       startBtn.addEventListener('click', function () {
         requestFullscreen()
         wakeAudio()
-        setTimeout(openDiagnosticWhenReady, 1100)
-        setTimeout(function () {
-          ;[document, window].forEach(function (t) {
-            t.dispatchEvent(new KeyboardEvent('keydown', { key: 'm', code: 'KeyM', bubbles: true }))
-          })
-        }, 1400)
       }, { once: true })
     }
 
-    var checks = 0
-    var revealTimer = window.setInterval(function () {
-      checks += 1
-      if (worldHasStarted()) {
-        openDiagnosticWhenReady()
-        window.clearInterval(revealTimer)
-      } else if (checks >= 15) {
-        window.clearInterval(revealTimer)
-      }
-    }, 1000)
-
-    var observer = new MutationObserver(function () {
-      if (worldHasStarted()) {
-        openDiagnosticWhenReady()
-        observer.disconnect()
-      }
-    })
-    observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class', 'style'] })
+    // Keep sound awake if the engine re-mutes on boot.
+    var soundTries = 0
+    var soundTimer = window.setInterval(function () {
+      soundTries += 1
+      try {
+        if (window.Howler) {
+          window.Howler.mute(false)
+          window.Howler.volume(1)
+        }
+        if (window.experience && window.experience.sounds) {
+          window.experience.sounds.muted = false
+        }
+      } catch (e) {}
+      if (soundTries >= 20) window.clearInterval(soundTimer)
+    }, 400)
   }
 
   if (document.readyState === 'loading') {

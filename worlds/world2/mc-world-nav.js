@@ -3,8 +3,8 @@
  * Loaded after the bundle so stale cached bundles still get correct routes.
  */
 (function () {
-  var APP = window.location.hostname === 'localhost'
-    ? 'http://localhost:4321'
+  var APP = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? 'http://localhost:5173'
     : 'https://mindcraft-93858.web.app'
 
   function isDiagDone() {
@@ -135,7 +135,11 @@
     if (!ctrl || !ctrl.menuControls || !ctrl.ramenShop || window.MC_openProjectsSign) return !!window.MC_openProjectsSign
 
     window.MC_openProjectsSign = function () {
-      if (window.MC_onProjectsOpen) window.MC_onProjectsOpen()
+      if (window.MC_onProjectsOpen) {
+        window.MC_onProjectsOpen()
+        return
+      }
+      window.location.href = ROUTES.dashboard
     }
     return true
   }
