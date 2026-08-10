@@ -11,6 +11,12 @@ Generate invite links + ask for posting workflow recommendations only after full
 
 ---
 
+## Marketing — reverted to OS story design (2026-08-10)
+
+Akshat call: the "gym membership for learning" OS story (state at `a4cb545b`) is the final marketing design. Reverted `index.html` over the Aug-10 hero redesign + personalized-learning refocus. Browser-verified: hero, chapters, tutors map, no broken assets. Second-slide text nudge cancelled.
+
+---
+
 ## Marketing landing v3 — SHIPPED to main (2026-08-07)
 
 Promoted `agent_work/product/marketing_mockups/` → root `index.html` + `img/` assets.
