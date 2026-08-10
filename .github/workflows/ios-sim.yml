@@ -1,0 +1,112 @@
+name: iOS simulator build+test
+
+# Cloud-side Xcode verification for ios-prototype (no Mac at hand):
+# type-checks the whole app and best-effort runs the XCUITest suite on an
+# iPad simulator. The REAL-DEVICE walk in MAC_VERIFY_NEXT.md still applies.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'ios-prototype/**'
+      - '.github/workflows/ios-sim.yml'
+
+concurrency:
+  group: ios-sim-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    runs-on: macos-15
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Xcode version
+        run: xcodebuild -version && xcrun simctl list runtimes | head -5
+
+      - name: Stub MyScriptRecognizer (gitignored real-credentials file)
+        run: |
+          F="ios-prototype/MindCraftNotes/MindCraftNotes/Networking/MyScriptRecognizer.swift"
+          if [ ! -f "$F" ]; then
+            cat > "$F" <<'EOF'
+          import Foundation
+          import CoreGraphics
+          import PencilKit
+
+          /// CI stub. The real implementation (MyScript credentials) is
+          /// gitignored and only exists on the dev Mac. Recognition paths
+          /// surface a friendly error instead of crashing.
+          enum MyScriptRecognizer {
+              static func recognizeLatex(drawing: PKDrawing, canvasSize: CGSize) async throws -> String {
+                  throw NSError(
+                      domain: "MyScriptRecognizer",
+                      code: 1,
+                      userInfo: [NSLocalizedDescriptionKey: "Handwriting recognition is disabled in CI builds."]
+                  )
+              }
+          }
+          EOF
+            echo "stub written"
+          else
+            echo "real file present"
+          fi
+
+      - name: Pick an iPad simulator
+        id: sim
+        run: |
+          UDID=$(xcrun simctl list devices available -j | python3 -c "
+          import json,sys
+          d=json.load(sys.stdin)['devices']
+          pads=[dev for devs in d.values() for dev in devs if dev.get('isAvailable') and 'iPad' in dev['name']]
+          print(pads[0]['udid'] if pads else '')")
+          echo "udid=$UDID" >> "$GITHUB_OUTPUT"
+          echo "picked: $UDID"
+          xcrun simctl list devices available | grep -m3 iPad || true
+
+      - name: Build for testing (type-checks everything)
+        run: |
+          set -o pipefail
+          xcodebuild build-for-testing \
+            -project ios-prototype/MindCraftNotes/MindCraftNotes.xcodeproj \
+            -scheme MindCraftNotes \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath dd \
+            CODE_SIGNING_ALLOWED=NO \
+            2>&1 | tail -120
+
+      - name: Run XCUITest suite on iPad simulator (best effort)
+        id: uitests
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          xcodebuild test-without-building \
+            -project ios-prototype/MindCraftNotes/MindCraftNotes.xcodeproj \
+            -scheme MindCraftNotes \
+            -destination "id=${{ steps.sim.outputs.udid }}" \
+            -derivedDataPath dd \
+            -resultBundlePath uitests.xcresult \
+            -test-timeouts-enabled YES \
+            2>&1 | tail -200
+
+      - name: Export screenshots from result bundle
+        if: always()
+        continue-on-error: true
+        run: |
+          if [ -d uitests.xcresult ]; then
+            xcrun xcresulttool export attachments --path uitests.xcresult --output-path shots || \
+            xcrun xcresulttool export attachments --legacy --path uitests.xcresult --output-path shots || true
+            ls -la shots 2>/dev/null | head -20 || true
+            zip -qr uitests.xcresult.zip uitests.xcresult || true
+          fi
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-sim-results
+          path: |
+            shots/**
+            uitests.xcresult.zip
+          if-no-files-found: ignore
+          retention-days: 7
