@@ -4,7 +4,7 @@
 **Edition:** v1.14 (Synthesizer consolidation of Parts C–CVII into surviving doctrine)  
 **Research question:** How do humans become *confident mathematical thinkers*?  
 **Product thesis under audit:** The product is identity transformation, not mathematics delivery.  
-**Last updated:** 2026-08-10 (Researcher — Part CXV SAFE-ROLEMODEL provisional)  
+**Last updated:** 2026-08-10 (Researcher — Part CXVI SAFE-OFFLINE provisional)  
 **Growth model:** Core OS (this file) + `chapters/*.md` via `CHAPTER_MANIFEST.txt` → PDF  
 **Scale intent:** Multi-month densification toward 150–300 pages of *evidenced* material — never fluff  
 **Epistemic rule:** Every claim is labeled FACT / HYPOTHESIS / FOUNDER BELIEF / SPECULATION.
@@ -105,8 +105,9 @@
 | CXIII | `chapters/113_collaborative_problem_solving_vs_solo_fei.md` | Collaborative PS vs solo FEI; SAFE-COLLAB (provisional); group≠solo mastery |
 | CXIV | `chapters/114_desirable_difficulty_scheduling_under_exam_deadlines.md` | DD scheduling under exam deadlines; SAFE-DDSCHED (provisional); hold mix / ease load |
 | CXV | `chapters/115_tutor_identity_belonging_near_peer_role_models.md` | Tutor identity & belonging; SAFE-ROLEMODEL (provisional); fidelity-first near-peer |
+| CXVI | `chapters/116_offline_practice_fidelity_paper_whiteboard_capture.md` | Offline practice fidelity; SAFE-OFFLINE (provisional); attempt→capture→confirm |
 
-Queued next: see `NEXT_LAB.md` (Part CXVI offline practice fidelity, then 117+).
+Queued next: see `NEXT_LAB.md` (Part CXVII fade×anxiety, then 118+).
 
 **Synthesizer note (v1.14):** Eight researcher chapters (C–CVII) landed after v1.13 as provisional I.4 appends — worked-example timing across expertise, Zimmerman SRL cycles, generative learning activities, error climate / psychological safety, homework-help vs practice identity, gesture/embodiment, peer explanation quality, and curiosity/prediction-before-reveal. This edition promotes each stack to company law (removes provisional tags), formalizes Red Team kills #54–#61, confirms EXPTIME/SRL/GENACT/ERRCLIM/HWHELP/GESTURE/PEERX/PREDICT experiment families in Part IX, and refreshes metrics/glossary/competitive implication. Deep-dive files remain authoritative for citations; the OS keeps only *surviving* product rules.
 
@@ -214,8 +215,9 @@ Explanations alone rarely produce (1)–(3). Fluent AI explanations can *acceler
 | Collaboration Score™ / Group Minutes / Discord≡CSCL / group-correct≡ready | **KILLED** *(provisional)* | SAFE-COLLAB (CXIII); solo gate + accountability |
 | Desirable Difficulty Score™ / Challenge Minutes / always-ease / always-max / cram≡ready | **KILLED** *(provisional)* | SAFE-DDSCHED (CXIV); horizon hold/ease + stakes≠DD |
 | Representation Score™ / Diversity Minutes / costume≡belonging / match≡quality / empty likeness praise | **KILLED** *(provisional)* | SAFE-ROLEMODEL (CXV); fidelity-first + competence-visible near-peers |
+| Capture Score™ / Photo Minutes / OCR≡mastery / always-camera / photo→answer hero | **KILLED** *(provisional)* | SAFE-OFFLINE (CXVI); attempt→capture→confirm + no Photomath pipe |
 
-**Implication:** Do not bet on “better explanations,” graph-file cosplay, warm-tutor theater, emotion cameras, page-count science, Ivy hire theater, unverified AI banks, FERPA-badge GTM, expanding-SRS mystique, headcount vanity, mastery fireworks, FSRS brand, cram packages, instant-feedback theater, bridge-count ads, day-one greens, format-count cosplay, parent surveillance portals, Talk Ratio theater, immersive lore-as-pedagogy, star-wall / user-count learning proof, item-count / complete-ACT coverage theater, always-full-worked / unlimited-solutions Solver theater, unlimited-hints / never-stuck answer-dump theater, DAU/streak/XP / FEI Score™ dashboard theater, unlimited free hard peeks / Hint Score™ theater, longer≡better / unlimited thorough AI essay theater, struggle-theater / blank-time / always-wait / instant-dump stall UX, fail-first / every-miss-as-PF / discovery-without-consolidation cosplay, guild / master-tutor / modeling-as-lecture / never-fade apprenticeship costume, Focus Score™ / phone-shame / mid-attempt DAU pushes, Dual Coding Score™ / always-add-picture / visual-learner meshing, Monitoring Score™ / one-scan calibration, Session ROI Score™ / tutoring-is-free, Example Timing Score™ / universal E0→E3, SRL Score™ / reflection-streak, Generative Learning Score™ / AI≡generation, Psychological Safety Score™ / Bermuda-triangle, Homework Completion Score™ / Chegg-dump, Embodiment Score™ / pose-camera, Peer Explanation Score™ / Discord≡building, Curiosity Score™ / cliffhanger-without-commit, Analogy Score™ / surface-story≡structure, Writing Score™ / Journal Minutes, Spatial Score™ / Mental Rotation Minutes, Formative Score™ / 0.4–0.7 AfL ads, Feedback Literacy Score™ / delivery≡uptake, Collaboration Score™ / Discord≡CSCL / group-correct≡ready, or Desirable Difficulty Score™ / Challenge Minutes / always-ease-before-ACT / always-max-DD-until-bell / cram-week≡ready calendar theater — subordinate UX under FEI + surviving doctrine. Bet on **FEI + pedagogy wrap + SAFE-* stack**: fear→evidence→identity, with inspectable diagnosis and surviving doctrine densifiers — not calendar theater or Score™ costumes.
+**Implication:** Do not bet on “better explanations,” graph-file cosplay, warm-tutor theater, emotion cameras, page-count science, Ivy hire theater, unverified AI banks, FERPA-badge GTM, expanding-SRS mystique, headcount vanity, mastery fireworks, FSRS brand, cram packages, instant-feedback theater, bridge-count ads, day-one greens, format-count cosplay, parent surveillance portals, Talk Ratio theater, immersive lore-as-pedagogy, star-wall / user-count learning proof, item-count / complete-ACT coverage theater, always-full-worked / unlimited-solutions Solver theater, unlimited-hints / never-stuck answer-dump theater, DAU/streak/XP / FEI Score™ dashboard theater, unlimited free hard peeks / Hint Score™ theater, longer≡better / unlimited thorough AI essay theater, struggle-theater / blank-time / always-wait / instant-dump stall UX, fail-first / every-miss-as-PF / discovery-without-consolidation cosplay, guild / master-tutor / modeling-as-lecture / never-fade apprenticeship costume, Focus Score™ / phone-shame / mid-attempt DAU pushes, Dual Coding Score™ / always-add-picture / visual-learner meshing, Monitoring Score™ / one-scan calibration, Session ROI Score™ / tutoring-is-free, Example Timing Score™ / universal E0→E3, SRL Score™ / reflection-streak, Generative Learning Score™ / AI≡generation, Psychological Safety Score™ / Bermuda-triangle, Homework Completion Score™ / Chegg-dump, Embodiment Score™ / pose-camera, Peer Explanation Score™ / Discord≡building, Curiosity Score™ / cliffhanger-without-commit, Analogy Score™ / surface-story≡structure, Writing Score™ / Journal Minutes, Spatial Score™ / Mental Rotation Minutes, Formative Score™ / 0.4–0.7 AfL ads, Feedback Literacy Score™ / delivery≡uptake, Collaboration Score™ / Discord≡CSCL / group-correct≡ready, Desirable Difficulty Score™ / Challenge Minutes / always-ease-before-ACT / always-max-DD-until-bell / cram-week≡ready calendar theater, or Capture Score™ / Photo Minutes / OCR≡mastery / Photomath-pipe notebook AI — subordinate UX under FEI + surviving doctrine. Bet on **FEI + pedagogy wrap + SAFE-* stack**: fear→evidence→identity, with inspectable diagnosis and surviving doctrine densifiers — not calendar theater or Score™ costumes.
 
 ## I.3 What to optimize (North Star debate)
 
@@ -319,6 +321,7 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 | **SAFE-COLLAB** *(provisional)* | Structured collab + individual accountability + solo FEI gate; densifies PEERX/CoP/PROOF | CXIII | Ban Collaboration Score™ / Group Minutes / Discord≡CSCL / group-correct≡ready |
 | **SAFE-DDSCHED** *(provisional)* | Horizon-matched hold/ease of DD; stakes≠DD; Protect+probe final 72h; densifies DD/EXAM/SCHED/CRAM | CXIV | Ban Desirable Difficulty Score™ / Challenge Minutes / always-ease / always-max / cram≡ready |
 | **SAFE-ROLEMODEL** *(provisional)* | Fidelity-first near-peer; competence-visible attainable bios; optional preference match; densifies GENDER/ELL/TUTORGRAIN | CXV | Ban Representation Score™ / Diversity Minutes / costume≡belonging / match≡quality |
+| **SAFE-OFFLINE** *(provisional)* | Offline-first attempt; post-commit capture; verify before Map; densifies ATTN/HELP/HWHELP/PROOF/GENQ | CXVI | Ban Capture Score™ / Photo Minutes / OCR≡mastery / photo→answer hero |
 | **Block → near-miss interleave → spaced mix** | Blocking = acquisition scaffold; delayed mixed accuracy = readiness signal | XXIX, XXXIX, LXXIV | Ban “shuffle = science”; ban blocked-accuracy vanity |
 | **Student-generated why** | Faded examples + structured principle/misconception prompts *before* AI wrap | XXVI, XL | Ban AI-monologue≡SE; ban explain-own-wrong-first default |
 | **Competitive wedge** | Do not out-content Khan, out-streak Duo, out-delight Brilliant, or out-fluency ChatGPT | XXXV, XX | Sell recoverable struggle + competence evidence + solo transfer |
@@ -326,7 +329,7 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 
 **Merged / demoted (do not treat as separate products):** “AI tutor,” “mastery path,” “growth mindset,” “engagement,” “grit,” “habit streak,” “celebrate mistakes,” “community of practice,” “deliberate practice brand,” “film study,” “recital,” “grandmaster review,” “exposure therapy,” “girl STEM brand,” “WTP survey,” “Identity Score™,” “8-week math person,” “character equity,” “knowledge-graph moat,” “emotion AI empathy,” “science-backed page count,” “Ivy tutor SKU,” “AI wrote N questions,” “FERPA-compliant badge,” “perfect-interval SRS,” “tutor headcount / retention-%,” “mastery fireworks / personal Ebbinghaus,” “FSRS/Anki brain optimizer,” “cram/bootcamp/+points packages,” “instant feedback AI / always-delay science,” “bridge-count / we connect everything,” “day-one personalized mastery / placement belt,” “every format / visual learning / Format Personality™,” “parent fireworks portal / Family Leaderboard / live wrong-answer stalk,” “immersive story world / lore engagement / Story Engagement Score™,” “user-count / star-wall / vague confidence testimonials as learning proof,” “item-count / complete ACT bank / AI fills all holes coverage theater,” “always-full-worked / unlimited solutions / never-fade Solver,” “unlimited hints / never stuck / Help Score™,” “DAU/streak/XP North Star / FEI Score™ / thumbs-up≡learning,” “unlimited free hard peeks / Hint Score™ / XP-for-hints / perfect-hint AI,” “longer≡better / Explanation Score™ / unlimited thorough AI essays / monologue≡SE,” “maximize productive struggle minutes / Struggle Score™ / blank-time grit / always-wait / never-stuck dump,” “fail-first always / every miss is productive failure / PF Score™ / discovery-without-consolidation,” “guild / master tutor / cognitive apprenticeship™ costume / Apprenticeship Score™ / modeling-minutes / never-fade coach,” “Focus Score™ / deep-work theater / phone-shame / mid-attempt streak pings / multitasking digital-native talent,” “Dual Coding Score™ / always-add-picture / decoration-as-dual-coding / visual-learner meshing / animation-first multimedia / split-legend density theater,” and “Monitoring Score™ / metacognition-without-control / easy-only calibration / one-scan calibration theater,” and “AI-replaces-tutors / tutoring-is-free / unlimited-human / hours-booked / Session ROI Score™ theater,” and “SRL Score™ / reflection-streak / survey-SRL≡event / streak≡self-regulation theater,” and “universal E0→E3 destiny / Example Timing Score™ / fixed≡adaptive fade costume,” and “Generative Learning Score™ / AI≡generation / teach-for-XP / eight-strategy GLA bomb,” and “Psychological Safety Score™ / poster safe-space / Bermuda-triangle / praise-fog climate,” and “Homework Completion Score™ / tonight-% / Chegg-dump / assisted≡ready / purity-ban help,” and “Embodiment Score™ / kinesthetic styles / always-gesture / pose-camera AI,” and “Peer Explanation Score™ / teach-for-XP / Discord≡knowledge-building / AI≡peer teaching,” and “Curiosity Score™ / cliffhanger-without-commit / postdiction / guess-for-XP / instant-reveal entertainment” are *not* independent North Stars — they are subordinate UX under FEI + the rows above (borrow *method*, never *costume*).
 
-**Next research bottleneck:** Part CXVI **Offline practice fidelity (paper/whiteboard capture)**. Experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O/WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT/ONTO/HITL/PRIV/LABMETA/GRAIN/GENQ/PROCURE/SCHED/WORK/FORGET/ADAPT/CRAM/FB/BRIDGE/COLD/FORMAT/PDASH/TALK/STORYLOAD/PROOF/COVER/FADE/HELP/INSTR/HINT/EXPLAIN/RETRIEVE/PF/APPRENTICE/ATTN/DUAL/MONITOR/ROI/EXPTIME/SRL/GENACT/ERRCLIM/HWHELP/GESTURE/PEERX/PREDICT/ANALOG/WRITE/SPATIAL/FA/FBLIT/COLLAB/DDSCHED/ROLEMODEL gate claims above L1. Researcher count since v1.14 synthesizer = **8** (Synthesizer eligible next non-RT tick).
+**Next research bottleneck:** Part CXVII **Worked-example fading under high math anxiety**. Experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O/WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT/ONTO/HITL/PRIV/LABMETA/GRAIN/GENQ/PROCURE/SCHED/WORK/FORGET/ADAPT/CRAM/FB/BRIDGE/COLD/FORMAT/PDASH/TALK/STORYLOAD/PROOF/COVER/FADE/HELP/INSTR/HINT/EXPLAIN/RETRIEVE/PF/APPRENTICE/ATTN/DUAL/MONITOR/ROI/EXPTIME/SRL/GENACT/ERRCLIM/HWHELP/GESTURE/PEERX/PREDICT/ANALOG/WRITE/SPATIAL/FA/FBLIT/COLLAB/DDSCHED/ROLEMODEL/OFFLINE gate claims above L1. Researcher count since v1.14 synthesizer = **9** (Synthesizer eligible next non-RT tick).
 
 ---
 
@@ -406,6 +409,7 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 
 | Date | Finding | Type | Action |
 |------|---------|------|--------|
+| 2026-08-10 | SAFE-OFFLINE: attempt→capture→confirm; kill Capture Score™ / OCR≡mastery / photo→answer hero | Evidence | OFFLINE-1…5; next = CXVII fade×anxiety |
 | 2026-08-10 | SAFE-ROLEMODEL: fidelity-first near-peer belonging; kill Representation Score™ / costume≡belonging / match≡quality | Evidence | ROLEMODEL-1…5; next = CXVI offline practice fidelity |
 | 2026-08-10 | SAFE-DDSCHED: horizon-matched DD hold/ease; kill Desirable Difficulty Score™ / always-ease / always-max / cram≡ready | Evidence | DDSCHED-1…5; next = CXV tutor identity & belonging |
 | 2026-08-09 | SAFE-COLLAB: structured collab + solo FEI gate; kill Collaboration Score™ / Discord≡CSCL / group-correct≡ready | Evidence | COLLAB-1…5; next = CXIV DD under exam deadlines |
@@ -1017,6 +1021,8 @@ Core A–D remain. Chapter ticks densified them into families — prefer the den
 
 **Surviving (provisional):** SAFE-ROLEMODEL — fidelity before likeness (SAFE-TUTORGRAIN); competence-visible attainable near-peers (Marx & Roman; Lockwood & Kunda); ingroup expert inoculation (Stout; Dasgupta & Stout); structured peer-mentor densifier (Dennehy & Dasgupta); belonging via growth/common-adversity + cue hygiene (Good et al.; Walton & Cohen; Cheryan et al.); recognition = practice evidence; densifies SAFE-GENDER/ELL/TUTORGRAIN/HITL/EXPECTANCY/CoP/IDMEASURE; instrument ROLEMODEL-* before Representation Score™ / Diversity Minutes / costume≡belonging / match≡quality / empty likeness praise / Belonging Score™ / matching ACT guarantees (CXV).
 
+**Surviving (provisional):** SAFE-OFFLINE — offline-first attempt grain; capture after commit; residue-aware brief ritual (SAFE-ATTN); verify OCR before Map write (SAFE-GENQ/PROOF); no photo→answer dump (SAFE-HELP/HWHELP); fluency≠learning (Anthony; de Morais & Jaques); photo-app speed pathology (Sloan-Lynch); longhand caution not religion (Mueller; Morehead); densifies SAFE-ATTN/HELP/HWHELP/GESTURE/PROOF/GENQ/FORMAT; instrument OFFLINE-* before Capture Score™ / Photo Minutes / OCR≡mastery / always-camera / photo→answer hero / Capture ACT guarantees (CXVI).
+
 ---
 
 # Part XV — References (verified starting set)
@@ -1469,6 +1475,9 @@ Principles that repeatedly change human behavior outside classrooms — filtered
 | `ddsched_stakes_split` | Train sets destaked; prove probes labeled (stakes≠DD) | SAFE-DDSCHED stakes split (CXIV) |
 | `rolemodel_fidelity_first` | Tutor passed GRAIN fidelity before any preference match applied | SAFE-ROLEMODEL hire bar (CXV) |
 | `rolemodel_competence_visible` | Tutor bio/cue shows attainable near-peer competence (not costume-only) | SAFE-ROLEMODEL Marx signal (CXV) |
+| `offline_attempt_before_capture` | Student committed attempt offline before capture unlock | SAFE-OFFLINE attempt grain (CXVI) |
+| `capture_ocr_confirmed` | OCR/Map write confirmed by student or tutor before mastery event | SAFE-OFFLINE verify (CXVI) |
+| `photo_solve_side_door` | Capture path used as answer-app / full-solution dump | SAFE-OFFLINE anti-Photomath (CXVI) |
 
 ## XXI.3 Lagging indicators
 
@@ -1582,6 +1591,7 @@ Ship changes that raise `retry_120s` and mastery-motive `challenge_accept` witho
 | SAFE-COLLAB *(provisional)* | Structured collab + solo FEI gate; no Collaboration Score™ / Group Minutes / Discord≡CSCL / group-correct≡ready (Part CXIII) |
 | SAFE-DDSCHED *(provisional)* | Horizon-matched DD hold/ease; stakes≠DD; no Desirable Difficulty Score™ / Challenge Minutes / always-ease / always-max / cram≡ready (Part CXIV) |
 | SAFE-ROLEMODEL *(provisional)* | Fidelity-first near-peer belonging; competence-visible attainable bios; no Representation Score™ / costume≡belonging / match≡quality (Part CXV) |
+| SAFE-OFFLINE *(provisional)* | Attempt→capture→confirm; no Capture Score™ / Photo Minutes / OCR≡mastery / photo→answer hero (Part CXVI) |
 
 ## Appendix B — Maya interview protocol (qual)
 
@@ -1701,8 +1711,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 3bc. Collaborative problem-solving vs solo FEI — **DONE** Part CXIII / SAFE-COLLAB  
 3bd. Desirable difficulty scheduling under exam deadlines — **DONE** Part CXIV / SAFE-DDSCHED  
 3be. Tutor identity & belonging (near-peer role models) — **DONE** Part CXV / SAFE-ROLEMODEL  
-3bf. Offline practice fidelity (paper/whiteboard capture) — queued id 116 **NEXT**  
-3bg. Worked-example fading under high math anxiety — queued id 117  
+3bf. Offline practice fidelity (paper/whiteboard capture) — **DONE** Part CXVI / SAFE-OFFLINE  
+3bg. Worked-example fading under high math anxiety — queued id 117 **NEXT**  
 3bh. Parent message framing after soft-wrong streaks — queued id 118  
 3bi. Classroom orchestration of Map during live tutoring — queued id 119  
 4. Equity audit of story worlds — **DONE** (Part XXXVI)  
@@ -1791,7 +1801,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 87. **DONE (2026-08-09):** Collaborative problem-solving vs solo FEI (Part CXIII / id 113) — SAFE-COLLAB stack  
 88. **DONE (2026-08-10):** Desirable difficulty scheduling under exam deadlines (Part CXIV / id 114) — SAFE-DDSCHED stack  
 89. **DONE (2026-08-10):** Tutor identity & belonging / near-peer role models (Part CXV / id 115) — SAFE-ROLEMODEL stack  
-90. **NEXT:** Offline practice fidelity / paper-whiteboard capture (id 116)
+90. **DONE (2026-08-10):** Offline practice fidelity / paper-whiteboard capture (Part CXVI / id 116) — SAFE-OFFLINE stack  
+91. **NEXT:** Worked-example fading under high math anxiety (id 117)
 
 ---
 
@@ -1825,4 +1836,4 @@ MindCraft’s deepest risk is not technical failure. It is **winning the wrong g
 
 This Constitution exists so the company notices that risk early, and runs experiments that can kill beloved ideas.
 
-**v1.14 synthesizer pass folded Parts C–CVII into surviving commercial doctrine (I.4 rows SAFE-EXPTIME through SAFE-PREDICT; Red Team kills #54–#61 promoted from provisional). Experiment families EXPTIME/SRL/GENACT/ERRCLIM/HWHELP/GESTURE/PEERX/PREDICT confirmed mounted. Parts CVIII–CXV landed as provisional densifiers (SAFE-ANALOG through SAFE-ROLEMODEL). Next researcher id: CXVI offline practice fidelity. Researcher count since v1.14 = 8 (Synthesizer eligible). Page count is not the finish line — falsifiable truth is.**
+**v1.14 synthesizer pass folded Parts C–CVII into surviving commercial doctrine (I.4 rows SAFE-EXPTIME through SAFE-PREDICT; Red Team kills #54–#61 promoted from provisional). Experiment families EXPTIME/SRL/GENACT/ERRCLIM/HWHELP/GESTURE/PEERX/PREDICT confirmed mounted. Parts CVIII–CXVI landed as provisional densifiers (SAFE-ANALOG through SAFE-OFFLINE). Next researcher id: CXVII fade×anxiety. Researcher count since v1.14 = 9 (Synthesizer eligible). Page count is not the finish line — falsifiable truth is.**

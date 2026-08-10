@@ -106,8 +106,8 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 113 | Collaborative problem-solving vs solo FEI | CSCL tradeoffs; group work without solo-transfer washout | **DONE** (2026-08-09) — Part CXIII / SAFE-COLLAB |
 | 114 | Desirable difficulty scheduling under exam deadlines | Bjork×SAFE-EXAM; when to ease vs hold challenge pre-ACT | **DONE** (2026-08-10) — Part CXIV / SAFE-DDSCHED |
 | 115 | Tutor identity & belonging (near-peer role models) | Representation without tokenism; hire briefs × SAFE-GENDER/ELL | **DONE** (2026-08-10) — Part CXV / SAFE-ROLEMODEL |
-| 116 | Offline practice fidelity (paper/whiteboard capture) | Photo-to-Map; attempt grain without phone distraction | **NEXT** |
-| 117 | Worked-example fading under high math anxiety | SAFE-FADE × SAFE-EXPOSE; when full examples protect vs trap | queued |
+| 116 | Offline practice fidelity (paper/whiteboard capture) | Photo-to-Map; attempt grain without phone distraction | **DONE** (2026-08-10) — Part CXVI / SAFE-OFFLINE |
+| 117 | Worked-example fading under high math anxiety | SAFE-FADE × SAFE-EXPOSE; when full examples protect vs trap | **NEXT** |
 | 118 | Parent message framing after soft-wrong streaks | SAFE-PDASH × SAFE-FBLIT; honesty without nag/shame loops | queued |
 | 119 | Classroom orchestration of Map during live tutoring | HITL + SAFE-FA; when to open Map mid-session vs after | queued |
 
@@ -186,3 +186,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any Collaboration Score™ / Group Minutes NS / Discord≡CSCL learning / group-correct≡ready / free-rider-blind unlocks / always-collab dogma / collab ACT guarantees (Part CXIII / SAFE-COLLAB)
 - Any Desirable Difficulty Score™ / Challenge Minutes NS / always-ease-before-ACT / blocked-comfort≡ready / always-max-DD-until-bell / last-48h scored flood-as-DD / cram-week≡ready / schedule ACT-point guarantees (Part CXIV / SAFE-DDSCHED)
 - Any Representation Score™ / Diversity Minutes NS / token STEM costume≡belonging / demographic match≡quality / empty likeness praise≡recognition / Belonging Score™ / matching ACT guarantees / soft standards for matched pairs (Part CXV / SAFE-ROLEMODEL)
+- Any Capture Score™ / Photo Minutes NS / OCR≡mastery / always-on camera / photo→answer Practice hero / Capture ACT guarantees / phone-companion focus theater (Part CXVI / SAFE-OFFLINE)

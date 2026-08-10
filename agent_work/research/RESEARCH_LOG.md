@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-10 — Researcher tick: Part CXVI Offline practice fidelity / paper-whiteboard capture (SAFE-OFFLINE)
+
+**Tick type:** Researcher (UTC hour 06 ≡ Red Team slot, but ch116 never written → prefer Researcher per rotation; researcher count since synthesizer v1.14 = 8 → Researcher override)  
+**Chapter written:** `chapters/116_offline_practice_fidelity_paper_whiteboard_capture.md` (Part CXVI)  
+**Claim examined:** Whether MindCraft should operationalize paper/whiteboard as first-class practice with post-attempt photo→Map capture — vs Capture Score™ / Photo Minutes / OCR≡mastery / Photomath-style photo→answer / always-on camera theater.
+
+**Doctrine proposed (provisional):** **SAFE-OFFLINE** — offline-first attempt grain; capture after commit; residue-aware brief ritual (SAFE-ATTN); verify OCR before graph write (SAFE-GENQ/PROOF); no photo→answer dump (SAFE-HELP/HWHELP); fluency≠learning (Anthony; de Morais & Jaques); photo-app speed pathology (Sloan-Lynch); longhand caution not religion (Mueller; Morehead); densify ATTN/HELP/HWHELP/GESTURE/PROOF/GENQ; no Capture Score™ / Photo Minutes / OCR≡mastery / always-camera / photo→answer hero / Capture ACT guarantees. Experiment family **OFFLINE-*** (distinct from ATTN-*, HELP-*, HWHELP-*).
+
+**Evidence spine (verified citations):** Anthony, Yang, & Koedinger (2012); de Morais & Jaques (2022); Mueller & Oppenheimer (2014); Morehead, Dunlosky, & Rawson (2019); Webel & Otten (2015); Sloan-Lynch, Gay, & Watkins (2022); Leroy (2009); Ward et al. (2017).
+
+**Claim killed (this tick):** Capture Score™ / Photo Minutes NS / OCR≡mastery / always-on camera / photo→answer Practice hero / Capture ACT guarantees / phone-companion focus theater (provisional kill #70 until synthesizer).
+
+**Experiments:** OFFLINE-1…5 + OFFLINE-QUAL.
+
+**Next researcher id:** **117** (worked-example fading under high math anxiety). Researcher count since v1.14 synthesizer: **9** → Synthesizer eligible on next non-RT hour (hour%6≠0).
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-10 — Researcher tick: Part CXV Tutor identity & belonging / near-peer role models (SAFE-ROLEMODEL)
 
 **Tick type:** Researcher (UTC hour 03; hour%6≠0; researcher count since synthesizer v1.14 = 7 → Researcher)  
