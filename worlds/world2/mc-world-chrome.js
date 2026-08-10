@@ -29,6 +29,10 @@
   }, { capture: true })
 
   document.addEventListener('fullscreenchange', function () {
+    if (inEmbed()) {
+      userExitedIntentionally = false
+      return
+    }
     if (!document.fullscreenElement && !userExitedIntentionally) {
       // Fullscreen lost without ESC (e.g. Projects iframe navigation) — re-enter
       var el = document.documentElement
@@ -39,7 +43,17 @@
     userExitedIntentionally = false
   })
 
+  function inEmbed() {
+    try {
+      return window.self !== window.top || /[?&]embed=1(?:&|$)/.test(window.location.search)
+    } catch (e) {
+      return true
+    }
+  }
+
   function requestFullscreen() {
+    // Inside Field Desk iframe / embed, fullscreen often fails and blocks the feel of "enter".
+    if (inEmbed()) return
     var el = document.documentElement
     var fn = el.requestFullscreen || el.webkitRequestFullscreen
     try {

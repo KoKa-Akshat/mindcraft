@@ -13,9 +13,13 @@ python3 -m http.server 8765
 
 Open: [http://localhost:8765/agent_work/product/jesse_kitchen_desk_proto/](http://localhost:8765/agent_work/product/jesse_kitchen_desk_proto/)
 
-Direct kitchen (same asset): [http://localhost:8765/worlds/world2/](http://localhost:8765/worlds/world2/)
+Direct kitchen (same asset): [http://localhost:8765/worlds/world2/?embed=1](http://localhost:8765/worlds/world2/?embed=1)
 
-Live host fallback (if local world path fails): https://mindcraft-world1.web.app/
+Wait for the loading % to finish, then tap **Enter World →**.
+
+> Note: the Three.js bundle must load `basis/` + `draco/` relative to `worlds/world2/` (patched). Serving only the proto folder (not the repo root) will still break the kitchen.
+
+Live host fallback: https://mindcraft-world1.web.app/
 
 ## Try
 

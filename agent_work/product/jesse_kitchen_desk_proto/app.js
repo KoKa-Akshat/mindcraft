@@ -24,15 +24,18 @@
   function kitchenWorldUrl() {
     const { protocol, hostname, port, pathname } = window.location;
     const localish = hostname === 'localhost' || hostname === '127.0.0.1';
+    const embed = 'embed=1&v=20260809-basis-rel';
     // Served from repo root: /agent_work/product/jesse_kitchen_desk_proto/
     if (localish && pathname.includes('/agent_work/product/jesse_kitchen_desk_proto')) {
-      return `${protocol}//${hostname}${port ? `:${port}` : ''}/worlds/world2/index.html`;
+      return `${protocol}//${hostname}${port ? `:${port}` : ''}/worlds/world2/index.html?${embed}`;
     }
     // Relative climb when proto folder is opened under a parent static server
     if (localish) {
-      return new URL('../../../worlds/world2/index.html', window.location.href).href;
+      const u = new URL('../../../worlds/world2/index.html', window.location.href);
+      u.search = embed;
+      return u.href;
     }
-    return 'https://mindcraft-world1.web.app/';
+    return `https://mindcraft-world1.web.app/?${embed}`;
   }
 
   const state = {
