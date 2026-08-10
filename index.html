@@ -3,20 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>MindCraft · A gym membership for learning</title>
-<meta name="description" content="Like a gym membership for learning. Personalized. Care and support when you need it. Drop school mess on your Field Desk and it finds its place.">
+<title>MindCraft · Learning that learns you</title>
+<meta name="description" content="MindCraft learns how you learn, builds personal lessons across subjects, and brings in human care with context.">
 <meta name="keywords" content="MindCraft, ACT math, student desk, knowledge graph, tutoring, math gaps, high school math, college tutors, learning OS, Field Desk">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <link rel="canonical" href="https://mindcraft-marketing-site.web.app/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="MindCraft">
 <meta property="og:url" content="https://mindcraft-marketing-site.web.app/">
-<meta property="og:title" content="MindCraft · A gym membership for learning">
-<meta property="og:description" content="Personalized. Care and support when you need it.">
+<meta property="og:title" content="MindCraft · Learning that learns you">
+<meta property="og:description" content="A personal learning system that grows with you, across subjects, with real human care.">
 <meta property="og:image" content="https://mindcraft-marketing-site.web.app/img/app/desk-ipad-live.png?v=jesse-desk-1">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="MindCraft · A gym membership for learning">
-<meta name="twitter:description" content="Personalized. Care and support when you need it.">
+<meta name="twitter:title" content="MindCraft · Learning that learns you">
+<meta name="twitter:description" content="A personal learning system that grows with you, across subjects, with real human care.">
 <meta name="twitter:image" content="https://mindcraft-marketing-site.web.app/img/app/desk-ipad-live.png?v=jesse-desk-1">
 <script type="application/ld+json">
 {
@@ -26,7 +26,7 @@
   "applicationCategory": "EducationalApplication",
   "operatingSystem": "Web, iPadOS",
   "url": "https://mindcraft-marketing-site.web.app/",
-  "description": "The operating system for student knowledge: Field Desk binder, ACT gap map, story practice, and college tutors.",
+  "description": "A personal learning system that learns how each student learns, builds dynamic lessons across subjects, and brings in human tutors with context.",
   "offers": {
     "@type": "Offer",
     "price": "0",
@@ -46,7 +46,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito+Sans:wght@600;700;800;900;1000&family=DM+Serif+Display:ital@0;1&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 <style>
   :root{
     --ink:#143a2e; --leaf:#247a4d; --leaf2:#5fb779; --sprout:#b9e86f;
@@ -154,19 +153,22 @@
 
   /* ---------- Hero ---------- */
   .hero{
-    min-height:calc(100svh - 10px); display:flex; flex-direction:column; justify-content:center; padding:0;
+    min-height:min(96svh,920px); display:flex; flex-direction:column; justify-content:center; padding:0;
     background:
-      linear-gradient(90deg, rgba(3,8,6,.9) 0%, rgba(3,8,6,.48) 45%, rgba(3,8,6,.12) 100%),
-      url("img/app/field-desk-black-background.png") center / cover,
-      #080a09;
+      radial-gradient(ellipse 70% 55% at 74% 36%, rgba(36,122,77,.30), transparent 58%),
+      radial-gradient(ellipse 45% 40% at 14% 74%, rgba(196,245,71,.09), transparent 55%),
+      linear-gradient(160deg, #0a1612 0%, #07110e 48%, #040a08 100%);
     color:#f7f7f2; overflow:hidden;
   }
   .hero::before{
-    content:""; position:absolute; inset:0; pointer-events:none; opacity:.44;
-    background-image:radial-gradient(circle, rgba(255,255,255,.64) 1.7px, transparent 2.2px);
-    background-size:52px 52px; background-position:8px 14px;
-    mask-image:linear-gradient(180deg, transparent 0%, #000 12%, #000 86%, transparent 100%);
+    content:none;
   }
+  .hero-map{position:absolute; inset:0; width:100%; height:100%; opacity:.32; pointer-events:none;}
+  .hero-map line{stroke:rgba(196,245,71,.2); stroke-width:1.1;}
+  .hero-map .n{fill:rgba(255,253,247,.28);}
+  .hero-map .n-lit{fill:var(--lime);}
+  .hero-map .pulse{transform-box:fill-box; transform-origin:center; animation:nodePulse 3.8s var(--ease) infinite;}
+  @keyframes nodePulse{0%,100%{opacity:.55; transform:scale(1);}50%{opacity:1; transform:scale(1.4);}}
   .hero-stage{
     position:relative; z-index:2; width:100%; max-width:1240px; margin:0 auto;
     padding:clamp(112px,12vh,136px) clamp(20px,4vw,48px) clamp(20px,4vh,34px);
@@ -185,7 +187,7 @@
   .hero-announce:hover{background:rgba(255,255,255,.12); transform:translateY(-1px);}
   .hero-announce i{font-style:normal; background:var(--lime); color:#07110e; border-radius:999px; padding:3px 9px; font-size:10px; letter-spacing:.08em;}
   .hero h1{
-    font-size:clamp(48px,6.1vw,82px); color:#f8f8f3; max-width:12.5ch;
+    font-size:clamp(46px,5.6vw,76px); color:#f8f8f3; max-width:12ch;
     animation:rise .8s .06s var(--ease) both;
   }
   .hero h1 em{font-style:normal; color:var(--lime); display:block;}
@@ -238,7 +240,7 @@
   }
   .workspace-cluster{
     position:absolute; inset:26px 24px 34px;
-    transform:translate3d(var(--pan-x), var(--pan-y), 0) scale(1.08);
+    transform:translate3d(var(--pan-x), var(--pan-y), 0) scale(var(--desk-zoom,1));
     transform-origin:center center;
     transition:transform .55s var(--ease);
   }
@@ -1262,9 +1264,286 @@
     .cap:hover{box-shadow:none;}
     .tm-card:hover{border-color:rgba(20,58,46,.1);}
   }
+
+  /* ---------- Story-led marketing experience ---------- */
+  .story-led .problem,
+  .story-led .caps,
+  .story-led .how,
+  .story-led .story,
+  .story-led .tutors,
+  .story-led .act,
+  .story-led .vision,
+  .story-led .makers,
+  .story-led .faq{display:none;}
+
+  .story-led .hero-stage{grid-template-columns:.9fr 1.1fr;}
+  .story-led .hero h1{font-size:72px; max-width:11ch; letter-spacing:0;}
+  .story-led .hero .lead{max-width:48ch;}
+  .story-led .workspace-board{
+    height:540px; border-color:rgba(255,255,255,.2);
+    background:
+      radial-gradient(circle,rgba(255,255,255,.46) 2px,transparent 2.6px),
+      radial-gradient(circle at 50% 42%,rgba(23,52,42,.42),transparent 54%),
+      #080b09;
+    background-size:54px 54px,auto,auto;
+    background-position:18px 18px,center,center;
+  }
+  .story-led .workspace-cluster{inset:30px 26px 34px; transform-origin:50% 48%;}
+  .story-led .paper-main{
+    appearance:none; left:31%; top:30px; width:38%; height:330px; z-index:7; --r:-.35deg;
+  }
+  .story-led .paper-main img{object-position:center;}
+  .story-led .memo-preview{
+    left:3%; top:150px; width:28%; min-height:146px; z-index:5; padding:18px 17px;
+    background:#fffdf0; --r:-1.2deg;
+  }
+  .story-led .memo-preview::before{
+    content:""; position:absolute; top:13px; left:50%; width:46px; height:8px;
+    transform:translateX(-50%) rotate(-2deg); background:rgba(196,245,71,.56);
+  }
+  .story-led .memo-preview b{
+    display:block; margin-top:14px; color:rgba(20,58,46,.48); font-size:10px;
+    font-weight:1000; letter-spacing:.14em; text-transform:uppercase;
+  }
+  .story-led .memo-preview [data-note-copy]{
+    display:block; margin-top:9px; color:#143a2e; font-family:"Fredoka",sans-serif;
+    font-size:17px; line-height:1.25; font-weight:600;
+  }
+  .story-led .act-preview{
+    right:2%; top:142px; width:29%; height:174px; z-index:5; --r:.9deg; padding:7px;
+  }
+  .story-led .act-preview-grid{display:grid; grid-template-columns:1.2fr .8fr; gap:5px; height:128px; overflow:hidden; border-radius:10px;}
+  .story-led .act-preview-grid img{border-radius:0; object-fit:cover; object-position:left top;}
+  .story-led .act-preview > span{
+    display:block; padding:7px 3px 1px; color:#143a2e; font-size:10px; font-weight:1000;
+    letter-spacing:.06em; text-transform:uppercase;
+  }
+  .story-led .transcribe-card{left:35%; top:305px; width:34%;}
+  .desk-tools{
+    position:absolute; z-index:24; right:20px; top:20px; display:flex; align-items:center; gap:9px;
+  }
+  .desk-tools .add-note{position:static; width:46px; height:46px; box-shadow:0 14px 34px rgba(0,0,0,.38);}
+  .desk-zoom{
+    display:grid; grid-template-columns:1fr 1fr; overflow:hidden; border:1px solid rgba(255,255,255,.18);
+    border-radius:14px; background:rgba(7,12,9,.78); -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px);
+  }
+  .desk-zoom button{
+    width:38px; height:38px; border:0; border-right:1px solid rgba(255,255,255,.14);
+    background:transparent; color:#fff; font-size:19px; font-weight:900; cursor:pointer;
+  }
+  .desk-zoom button:last-child{border-right:0;}
+  .desk-zoom button:hover{background:rgba(255,255,255,.1);}
+  .desk-prompt{
+    position:absolute; z-index:22; left:50%; bottom:18px; width:min(460px,calc(100% - 40px));
+    min-height:58px; padding:7px 7px 7px 17px; display:grid; grid-template-columns:1fr auto; gap:8px;
+    align-items:center; border:1px solid rgba(255,255,255,.16); border-radius:18px;
+    background:rgba(5,10,7,.9); box-shadow:0 24px 68px rgba(0,0,0,.44);
+    -webkit-backdrop-filter:blur(18px); backdrop-filter:blur(18px);
+    opacity:0; transform:translate(-50%,10px); pointer-events:none;
+    transition:opacity .22s var(--ease),transform .22s var(--ease);
+  }
+  .desk-prompt.is-open{opacity:1; transform:translate(-50%,0); pointer-events:auto;}
+  .desk-prompt input{min-width:0; border:0; outline:0; background:transparent; color:#fff; font-size:14px; font-weight:900;}
+  .desk-prompt input::placeholder{color:rgba(255,255,255,.44);}
+  .desk-prompt button{width:44px; height:44px; border:0; border-radius:13px; background:var(--lime); color:#07110e; font-size:19px; cursor:pointer;}
+  .story-led .note-composer{top:74px; right:20px;}
+
+  .story-beat{min-height:min(92svh,900px); display:flex; align-items:center; overflow:hidden;}
+  .story-beat .kicker,.mission-story .kicker{margin-bottom:18px;}
+  .story-beat h2,.mission-story h2{
+    max-width:940px; font-family:"Fredoka",sans-serif; font-size:68px; line-height:1.02;
+    letter-spacing:0; color:#102f27;
+  }
+  .story-beat h2 span,.mission-story h2 span{color:var(--leaf);}
+  .story-intro{text-align:center;}
+  .story-intro .kicker{justify-content:center;}
+  .story-intro h2{margin:0 auto;}
+  .story-intro p{margin-top:18px; color:rgba(20,58,46,.58); font-size:20px; line-height:1.4; font-weight:900;}
+
+  .learns-you{background:#fffdf8;}
+  .learning-trace{
+    position:relative; margin-top:78px; display:grid; grid-template-columns:repeat(4,1fr); gap:22px;
+    padding:28px 0 30px; border-top:1px solid rgba(20,58,46,.1); border-bottom:1px solid rgba(20,58,46,.1);
+  }
+  .trace-line{position:absolute; left:7%; right:7%; top:43px; height:2px; background:linear-gradient(90deg,#b9d6cb,var(--leaf),var(--lime));}
+  .trace-point{position:relative; padding-top:34px; text-align:center;}
+  .trace-point i{
+    position:absolute; z-index:2; top:8px; left:50%; width:14px; height:14px; transform:translateX(-50%);
+    border:3px solid #fffdf8; border-radius:50%; background:#87ad9f; box-shadow:0 0 0 1px rgba(20,58,46,.14);
+  }
+  .trace-point.is-learned i{width:20px; height:20px; top:5px; background:var(--lime); box-shadow:0 0 0 7px rgba(196,245,71,.17);}
+  .trace-point small{display:block; color:rgba(20,58,46,.42); font-size:9px; font-weight:1000; letter-spacing:.15em;}
+  .trace-point b{display:block; margin-top:7px; color:#143a2e; font-size:15px; line-height:1.3;}
+  .privacy-line{margin-top:22px; text-align:center; color:rgba(20,58,46,.42); font-size:12px; font-weight:900;}
+
+  .across{background:#eef5f6;}
+  .across-grid{display:grid; grid-template-columns:.85fr 1.15fr; align-items:center; gap:70px;}
+  .across-copy h2{font-size:64px; max-width:9ch;}
+  .across-copy p{margin-top:22px; max-width:42ch; color:rgba(20,58,46,.64); font-size:18px; line-height:1.55; font-weight:800;}
+  .across-copy .engine-note{font-family:"DM Serif Display",Georgia,serif; color:var(--leaf); font-size:20px; font-style:italic;}
+  .domain-map{position:relative; min-height:550px;}
+  .domain-map svg{position:absolute; inset:0; width:100%; height:100%; overflow:visible;}
+  .domain-map path{fill:none; stroke:rgba(36,122,77,.24); stroke-width:2; stroke-dasharray:4 8;}
+  .domain-core{
+    position:absolute; z-index:2; left:50%; top:50%; width:210px; height:210px; transform:translate(-50%,-50%);
+    display:grid; place-content:center; text-align:center; border:1px solid rgba(20,58,46,.12); border-radius:50%;
+    background:#fff; box-shadow:0 28px 80px rgba(20,58,46,.12);
+  }
+  .domain-core small{color:rgba(20,58,46,.42); font-size:9px; font-weight:1000; letter-spacing:.16em;}
+  .domain-core b{display:block; margin-top:9px; color:#143a2e; font-family:"Fredoka",sans-serif; font-size:20px; line-height:1.2;}
+  .domain{
+    position:absolute; z-index:3; min-width:106px; padding:12px 15px; text-align:center;
+    border:1px solid rgba(20,58,46,.12); border-radius:8px; background:#fff;
+    color:#143a2e; font-size:12px; font-weight:1000; box-shadow:0 16px 42px rgba(20,58,46,.1);
+  }
+  .subject-math{left:0; top:9%; background:#fff5df;}
+  .subject-physics{right:0; top:8%; background:#e7f3fb;}
+  .subject-code{left:-2%; bottom:15%; background:#eaf6e5;}
+  .subject-econ{right:-1%; bottom:14%; background:#f6e8ec;}
+  .subject-any{left:50%; bottom:0; transform:translateX(-50%); background:var(--lime);}
+
+  .lesson-world{background:#fff8e9;}
+  .lesson-heading{max-width:850px;}
+  .lesson-heading p{margin-top:22px; max-width:55ch; color:rgba(20,58,46,.62); font-size:18px; line-height:1.5; font-weight:800;}
+  .lesson-canvas{position:relative; height:520px; margin-top:52px;}
+  .lesson-canvas figure{position:absolute; overflow:hidden; border:7px solid #fff; border-radius:8px; box-shadow:0 24px 68px rgba(20,58,46,.17);}
+  .lesson-canvas img{width:100%; height:100%; object-fit:cover;}
+  .lesson-main{left:15%; top:0; width:50%; height:440px; z-index:3; transform:rotate(-1deg);}
+  .lesson-main figcaption{position:absolute; left:14px; bottom:13px; padding:7px 10px; border-radius:6px; background:rgba(6,15,12,.84); color:#fff; font-size:10px; font-weight:1000; letter-spacing:.06em;}
+  .lesson-detail{width:27%; height:230px;}
+  .detail-one{right:6%; top:38px; z-index:2; transform:rotate(1.4deg);}
+  .detail-two{right:12%; bottom:6px; z-index:4; transform:rotate(-.8deg);}
+  .lesson-words{position:absolute; left:0; bottom:20px; display:flex; flex-direction:column; gap:9px;}
+  .lesson-words span{font-family:"Caveat",cursive; color:rgba(20,58,46,.54); font-size:22px; transform:rotate(-2deg);}
+
+  .care-story{background:#101512; color:#fff;}
+  .care-grid{display:grid; grid-template-columns:1fr 1fr; gap:76px; align-items:center;}
+  .care-story .kicker{color:rgba(196,245,71,.7);}
+  .care-story h2{color:#fff; font-size:62px;}
+  .care-story h2 span{display:block; color:var(--lime);}
+  .care-copy p{margin-top:24px; max-width:42ch; color:rgba(255,255,255,.64); font-size:18px; line-height:1.55; font-weight:800;}
+  .care-handoff{position:relative; min-height:480px; display:grid; align-content:center;}
+  .care-context{
+    position:relative; z-index:2; width:76%; padding:30px; border:1px solid rgba(255,255,255,.14); border-radius:8px;
+    background:rgba(255,255,255,.07); box-shadow:0 30px 90px rgba(0,0,0,.34);
+    -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px);
+  }
+  .care-context small{color:var(--lime); font-size:9px; font-weight:1000; letter-spacing:.17em;}
+  .care-context b{display:block; margin-top:14px; font-family:"Fredoka",sans-serif; font-size:25px; line-height:1.2;}
+  .care-context span{display:block; margin-top:16px; color:rgba(255,255,255,.58); font-size:14px; line-height:1.5; font-weight:800;}
+  .care-people{position:absolute; z-index:3; right:0; bottom:22px; display:flex; gap:15px; align-items:flex-end;}
+  .care-people figure{width:132px;}
+  .care-people figure:first-child{transform:translateY(-72px);}
+  .care-people img{width:112px; height:112px; object-fit:cover; border:5px solid #fff; border-radius:50%; box-shadow:0 20px 50px rgba(0,0,0,.42);}
+  .care-people figcaption{margin-top:10px; color:#fff; font-size:12px; font-weight:1000; line-height:1.25;}
+  .care-people figcaption span{color:rgba(255,255,255,.42); font-size:10px;}
+
+  .act-proof{background:#e8f2ed;}
+  .act-proof-grid{display:grid; grid-template-columns:1.12fr .88fr; gap:72px; align-items:center;}
+  .act-proof-visual{position:relative; min-height:540px;}
+  .act-proof-visual figure{position:absolute; overflow:hidden; border:7px solid #fff; border-radius:8px; box-shadow:0 26px 78px rgba(20,58,46,.18);}
+  .act-proof-visual img{width:100%; height:100%; object-fit:cover; object-position:left top;}
+  .act-dash{left:0; top:18px; width:80%; height:430px; transform:rotate(-1.1deg);}
+  .act-practice{right:0; bottom:12px; width:40%; height:340px; transform:rotate(1.4deg);}
+  .act-proof-copy h2{font-size:62px;}
+  .act-proof-copy h2 span{display:block;}
+  .act-proof-copy > p{margin-top:22px; color:rgba(20,58,46,.62); font-size:18px; line-height:1.55; font-weight:800;}
+  .act-proof-steps{margin:28px 0; display:flex; align-items:center; flex-wrap:wrap; gap:10px;}
+  .act-proof-steps span{padding:8px 10px; border-radius:6px; background:#fff; color:#143a2e; font-size:10px; font-weight:1000; letter-spacing:.09em; text-transform:uppercase;}
+  .act-proof-steps i{color:var(--leaf); font-style:normal; font-weight:1000;}
+
+  .mission-story{position:relative; min-height:100svh; display:flex; align-items:center; overflow:hidden; color:#fff; background:#07110e;}
+  .mission-art{position:absolute; inset:0; background:url('img/mindcraft-luxury-map-20260706.jpg') center/cover no-repeat; opacity:.44; transform:scale(1.03);}
+  .mission-shade{position:absolute; inset:0; background:linear-gradient(90deg,rgba(4,10,8,.96) 10%,rgba(4,10,8,.72) 58%,rgba(4,10,8,.48));}
+  .mission-inner{position:relative; z-index:2; padding-top:120px; padding-bottom:120px;}
+  .mission-story .kicker{color:rgba(196,245,71,.76);}
+  .mission-story h2{max-width:900px; color:#fff; font-size:78px;}
+  .mission-story h2 span{display:block; color:var(--lime);}
+  .mission-story p{margin-top:28px; max-width:700px; color:rgba(255,255,255,.72); font-family:"DM Serif Display",Georgia,serif; font-size:25px; line-height:1.45;}
+  .mission-story .btn{margin-top:34px; background:var(--lime); color:#07110e; border-color:var(--lime);}
+  .story-led .cta{background:#fff8e9;}
+
+  @media(max-width:1100px){
+    .story-led .hero h1{font-size:60px;}
+    .story-led .hero-stage{grid-template-columns:1fr;}
+    .story-led .hero-shot{max-width:760px;}
+    .story-beat h2,.mission-story h2{font-size:58px;}
+    .across-grid,.care-grid,.act-proof-grid{gap:44px;}
+    .across-copy h2,.care-story h2,.act-proof-copy h2{font-size:54px;}
+  }
+  @media(max-width:820px){
+    .story-beat{min-height:auto; padding:100px 0;}
+    .across-grid,.care-grid,.act-proof-grid{grid-template-columns:1fr;}
+    .domain-map{min-height:500px; margin-top:10px;}
+    .care-handoff{min-height:430px;}
+    .act-proof-visual{min-height:500px; order:2;}
+    .act-proof-copy{order:1;}
+    .lesson-main{left:8%; width:58%;}
+    .lesson-detail{width:31%;}
+    .detail-one{right:2%;}
+    .detail-two{right:7%;}
+    .lesson-words{display:none;}
+  }
+  @media(max-width:640px){
+    .story-led .hero h1{font-size:46px; max-width:10ch;}
+    .story-led .hero-stage{padding-top:100px;}
+    .story-led .hero .lead{font-size:16px;}
+    .story-led .workspace-board{height:440px; background-size:42px 42px,auto,auto; background-position:12px 12px,center,center;}
+    .story-led .workspace-cluster{inset:22px 14px 50px; transform-origin:50% 44%;}
+    .story-led .paper-main{left:18%; top:28px; width:64%; height:246px;}
+    .story-led .memo-preview{left:-9%; top:168px; width:38%; min-height:118px; padding:13px 12px;}
+    .story-led .memo-preview [data-note-copy]{font-size:13px;}
+    .story-led .act-preview{right:-8%; top:170px; width:39%; height:122px; padding:5px;}
+    .story-led .act-preview-grid{height:82px; gap:3px;}
+    .story-led .act-preview > span{font-size:8px; padding-top:5px;}
+    .story-led .transcribe-card{left:24%; top:228px; width:54%; padding:11px 12px;}
+    .story-led .transcribe-card p{font-size:11px;}
+    .story-led .transcribe-card span{font-size:9px;}
+    .desk-tools{right:12px; top:12px; gap:7px;}
+    .desk-tools .add-note{width:42px; height:42px;}
+    .desk-zoom button{width:34px; height:34px;}
+    .story-led .note-composer{top:62px; right:12px; width:260px;}
+    .desk-prompt{bottom:12px; min-height:52px;}
+    .desk-prompt button{width:38px; height:38px;}
+    .story-led .hero-below{padding-top:6px;}
+    .story-led .hero-trust{justify-content:flex-start; gap:10px 18px;}
+    .story-led .trust span{display:none;}
+    .story-led .trust b{font-size:12px;}
+    .story-beat{padding:82px 0;}
+    .story-beat h2,.mission-story h2,.across-copy h2,.care-story h2,.act-proof-copy h2{font-size:40px;}
+    .story-intro p,.across-copy p,.lesson-heading p,.care-copy p,.act-proof-copy > p{font-size:16px;}
+    .learning-trace{grid-template-columns:1fr; gap:0; margin-top:48px; padding:4px 0; border:0;}
+    .trace-line{left:10px; right:auto; top:18px; bottom:18px; width:2px; height:auto;}
+    .trace-point{padding:15px 0 15px 40px; text-align:left;}
+    .trace-point i,.trace-point.is-learned i{left:10px; top:24px; transform:translate(-50%,-50%);}
+    .domain-map{min-height:390px; transform:scale(.92);}
+    .domain-core{width:160px; height:160px;}
+    .domain-core b{font-size:16px;}
+    .domain{min-width:82px; padding:9px; font-size:10px;}
+    .lesson-canvas{height:400px; margin-top:40px;}
+    .lesson-main{left:0; width:72%; height:330px;}
+    .lesson-detail{width:38%; height:170px;}
+    .detail-one{right:-4%; top:22px;}
+    .detail-two{right:1%; bottom:0;}
+    .care-handoff{min-height:410px;}
+    .care-context{width:100%; padding:22px;}
+    .care-context b{font-size:20px;}
+    .care-people{position:static; justify-content:flex-end; margin-top:24px;}
+    .care-people figure{width:92px;}
+    .care-people img{width:82px; height:82px; border-width:4px;}
+    .care-people figure:first-child{transform:none;}
+    .act-proof-visual{min-height:390px;}
+    .act-dash{width:84%; height:300px;}
+    .act-practice{width:42%; height:235px;}
+    .mission-story{min-height:92svh;}
+    .mission-inner{padding-top:100px; padding-bottom:100px;}
+    .mission-story p{font-size:20px;}
+    .foot-row{align-items:flex-start; flex-direction:column;}
+    .foot-links{max-width:100%; margin-left:0; flex-wrap:wrap; gap:12px 16px;}
+  }
 </style>
 </head>
-<body>
+<body class="story-led">
 <div class="grain"></div>
 <div class="progress" id="progress"></div>
 
@@ -1274,103 +1553,238 @@
     <span class="visually-hidden">MindCraft</span>
   </a>
   <div class="nav-links">
-    <a href="#os">The desk</a>
-    <a href="#how">Drop it</a>
-    <a href="#tutors">Tutors</a>
-    <a href="#faq">FAQ</a>
+    <a href="#learns">How it learns</a>
+    <a href="#anything">Any subject</a>
+    <a href="#care">Care</a>
+    <a href="#mission">Mission</a>
     <a class="join" href="#start">Join free beta</a>
   </div>
 </nav>
 
 <!-- ================= HERO ================= -->
 <header class="hero">
+  <svg class="hero-map" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <line x1="80" y1="120" x2="240" y2="210"/><line x1="240" y1="210" x2="410" y2="150"/>
+    <line x1="410" y1="150" x2="560" y2="260"/><line x1="240" y1="210" x2="300" y2="380"/>
+    <line x1="300" y1="380" x2="470" y2="450"/><line x1="470" y1="450" x2="560" y2="260"/>
+    <line x1="560" y1="260" x2="760" y2="200"/><line x1="760" y1="200" x2="950" y2="290"/>
+    <line x1="470" y1="450" x2="420" y2="620"/><line x1="420" y1="620" x2="220" y2="560"/>
+    <line x1="220" y1="560" x2="300" y2="380"/><line x1="470" y1="450" x2="680" y2="540"/>
+    <line x1="680" y1="540" x2="860" y2="470"/><line x1="860" y1="470" x2="950" y2="290"/>
+    <line x1="860" y1="470" x2="1060" y2="560"/><line x1="950" y1="290" x2="1120" y2="220"/>
+    <circle class="n" cx="80" cy="120" r="5"/><circle class="n" cx="410" cy="150" r="6"/>
+    <circle class="n" cx="760" cy="200" r="5"/><circle class="n" cx="1120" cy="220" r="5"/>
+    <circle class="n" cx="300" cy="380" r="6"/><circle class="n" cx="220" cy="560" r="5"/>
+    <circle class="n" cx="420" cy="620" r="6"/><circle class="n" cx="680" cy="540" r="5"/>
+    <circle class="n" cx="1060" cy="560" r="5"/><circle class="n" cx="240" cy="210" r="5"/>
+    <circle class="n-lit pulse" cx="470" cy="450" r="8"/>
+    <circle class="n-lit" cx="560" cy="260" r="6" opacity=".7"/>
+    <circle class="n-lit pulse" cx="950" cy="290" r="7" style="animation-delay:1.4s;"/>
+  </svg>
   <div class="hero-stage">
     <div>
-      <a class="hero-announce" href="desk.html"><i>NEW</i> Field Desk workspace →</a>
-      <h1>A calm desk that helps you <em>start working.</em></h1>
-      <p class="lead">Drop school mess onto one clean canvas. Papers, plans, gaps, and tutor help float into place without turning your day into admin.</p>
+      <a class="hero-announce" href="#learns"><i>NEW</i> Your personal learning system →</a>
+      <h1>Learning that learns you. <em>Care that finds you.</em></h1>
+      <p class="lead">MindCraft notices what makes ideas click, carries that understanding across subjects, and builds the next lesson around you. When software is not enough, a real tutor arrives with context.</p>
       <div class="hero-actions">
-        <a class="btn primary" href="#start">Claim my desk</a>
-        <a class="btn soft" href="desk.html">Open the workspace</a>
+        <a class="btn primary" href="#start">Build my learning map</a>
+        <a class="btn soft" href="#learns">See how it learns</a>
       </div>
     </div>
 
     <div class="hero-shot">
-      <div class="hero-note">close-up field desk · move around fluidly ↓</div>
-      <div class="workspace-board" aria-label="MindCraft zoomed-out dotted workspace with floating paper cards">
-        <div class="workspace-cluster">
-          <figure class="paper-card paper-main workspace-item" data-draggable>
-            <figcaption class="paper-label">Jesse's Kitchen</figcaption>
+      <div class="hero-note">your desk is already paying attention ↓</div>
+      <div class="workspace-board" id="heroDesk" aria-label="Interactive MindCraft workspace with Jesse's Kitchen, memo, transcription, and ACT learning map">
+        <div class="workspace-cluster" id="workspaceCluster">
+          <button class="paper-card paper-main workspace-item" type="button" id="jesseCard" data-draggable aria-label="Open Jesse's Kitchen prompt" aria-expanded="false">
+            <span class="paper-label">Jesse's Kitchen</span>
             <img src="img/app/desk-ipad-live.png?v=jesse-desk-1" alt="MindCraft Field Desk with calendar and project signs">
-          </figure>
-          <figure class="paper-card paper-left-a workspace-item" data-draggable>
-            <figcaption class="paper-label">Worksheet</figcaption>
-            <img src="img/sample-systems.pdf.png" alt="Systems of equations worksheet">
-          </figure>
-          <figure class="paper-card paper-left-b workspace-item" data-draggable>
-            <figcaption class="paper-label">Gap map</figcaption>
-            <img src="img/gap_scan.png" alt="MindCraft gap scan">
-          </figure>
-          <figure class="paper-card paper-right-a workspace-item" data-draggable>
-            <figcaption class="paper-label">Binder</figcaption>
-            <div class="paper-grid">
-              <img src="img/app/story-chapter.png" alt="Story chapter screen">
-              <img src="img/app/practice.png" alt="Practice screen">
+          </button>
+          <article class="paper-card memo-preview workspace-item" id="pinnedNote" data-draggable>
+            <span class="paper-label">Memo</span>
+            <b>Remember this</b>
+            <span data-note-copy>Visual examples made the graphing step click.</span>
+          </article>
+          <figure class="paper-card act-preview workspace-item" data-draggable>
+            <figcaption class="paper-label">ACT · personal route</figcaption>
+            <div class="act-preview-grid">
+              <img src="img/app/dash-grid.png" alt="MindCraft ACT learning dashboard">
+              <img src="img/app/practice.png" alt="MindCraft personalized practice screen">
             </div>
+            <span>Exact gap → next lesson</span>
           </figure>
-          <figure class="paper-card paper-right-b workspace-item" data-draggable>
-            <figcaption class="paper-label">World</figcaption>
-            <img src="worlds/world2/image.png" alt="MindCraft learning world">
-          </figure>
-          <figure class="portal-card workspace-item" data-draggable>
-            <img src="img/app/field-desk-portal.png" alt="A calm floating voxel study portal">
-          </figure>
-        </div>
-        <div class="transcribe-card" aria-live="polite">
-          <div class="transcribe-top">
-            <b>Auto transcribing</b>
-            <span class="transcribe-live" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <div class="transcribe-card" aria-live="polite">
+            <div class="transcribe-top">
+              <b>Auto transcribing</b>
+              <span class="transcribe-live" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+            </div>
+            <p id="transcribeLine">Noticed: visual examples help Jesse move from setup to solution.</p>
+            <span>Added to Jesse's learning map.</span>
           </div>
-          <p id="transcribeLine">Jesse's Kitchen: graph both equations, then check where the lines meet.</p>
-          <span>Saved as context for tonight's memo.</span>
         </div>
-        <div class="pinned-note" id="pinnedNote">
-          <b>Pinned memo</b>
-          <span>Ask tutor about the graphing step before Thursday.</span>
+        <div class="desk-tools">
+          <div class="desk-zoom" aria-label="Desk zoom controls">
+            <button type="button" id="heroZoomOut" aria-label="Zoom desk out">−</button>
+            <button type="button" id="heroZoomIn" aria-label="Zoom desk in">+</button>
+          </div>
+          <button class="add-note" type="button" id="addNoteBtn" aria-label="Add a note">+</button>
         </div>
-        <button class="add-note" type="button" id="addNoteBtn" aria-label="Add a note">+</button>
         <form class="note-composer" id="noteComposer">
           <label for="noteText">Add note</label>
-          <textarea id="noteText" maxlength="180">Ask tutor about the graphing step before Thursday.</textarea>
+          <textarea id="noteText" maxlength="180" placeholder="Something worth remembering..."></textarea>
           <button type="submit">Pin note</button>
           <div class="note-status" id="noteStatus">Organizes onto the desk.</div>
         </form>
-        <div class="motion-hint"><span>↔</span> pan the desk</div>
+        <form class="desk-prompt" id="deskPrompt">
+          <input id="deskPromptInput" maxlength="140" autocomplete="off" placeholder="Ask Jesse's Kitchen...">
+          <button type="submit" aria-label="Send prompt">→</button>
+        </form>
       </div>
     </div>
   </div>
 
   <div class="hero-below">
     <div class="hero-trust">
-      <div class="trust"><b>Exact gaps</b><span>not another green streak</span></div>
-      <div class="trust"><b>One desk</b><span>binder, intel, Connect</span></div>
-      <div class="trust"><b>Human tutors</b><span>map open before hello</span></div>
-      <div class="trust"><b>Real care</b><span>support when you need it</span></div>
+      <div class="trust"><b>Learns your patterns</b><span>beyond right or wrong</span></div>
+      <div class="trust"><b>Builds the next lesson</b><span>for the way you learn</span></div>
+      <div class="trust"><b>Brings in a person</b><span>with context, not a cold start</span></div>
     </div>
-    <div class="intro-schools" aria-label="Schools behind the desk">
-      <span>From rooms at</span>
-      <ul>
-        <li class="mac"><img src="img/logos/macalester.png" alt="Macalester College"></li>
-        <li class="unc"><img src="img/logos/unc.svg" alt="UNC Chapel Hill"></li>
-        <li class="oxf"><img src="img/logos/oxford.svg" alt="University of Oxford"></li>
-        <li class="ken"><img src="img/logos/kenyon.svg" alt="Kenyon College"></li>
-        <li class="uwc"><img src="img/logos/uwc.png" alt="UWC"></li>
-      </ul>
-      <nav class="intro-social" id="introSocial" aria-label="Find MindCraft out there"></nav>
-    </div>
-    <a class="scroll-cue" href="#problem"><span>the whole story is one scroll</span><i>↓</i></a>
+    <a class="scroll-cue" href="#learns"><span>see what the desk remembers</span><i>↓</i></a>
   </div>
 </header>
+
+<!-- ================= PERSONALIZATION STORY ================= -->
+<section class="story-beat learns-you" id="learns">
+  <div class="wrap">
+    <div class="story-intro reveal">
+      <div class="kicker">01 · It notices</div>
+      <h2>MindCraft learns <span>how you learn.</span></h2>
+      <p>Not only what you missed. What made it click.</p>
+    </div>
+    <div class="learning-trace reveal" aria-label="An example of signals added to a private learning map">
+      <div class="trace-line" aria-hidden="true"></div>
+      <article class="trace-point is-first">
+        <i></i><small>8:14 PM</small><b>Paused at graph setup</b>
+      </article>
+      <article class="trace-point">
+        <i></i><small>8:19 PM</small><b>Diagram made it click</b>
+      </article>
+      <article class="trace-point">
+        <i></i><small>8:26 PM</small><b>Solved without a hint</b>
+      </article>
+      <article class="trace-point is-learned">
+        <i></i><small>LEARNED</small><b>Teach visually first</b>
+      </article>
+    </div>
+    <p class="privacy-line reveal">Private by default. Used to teach, never to sell.</p>
+  </div>
+</section>
+
+<!-- ================= CROSS-DOMAIN ================= -->
+<section class="story-beat across" id="anything">
+  <div class="wrap across-grid">
+    <div class="across-copy">
+      <div class="kicker reveal">02 · It carries</div>
+      <h2 class="reveal">One learner. <span>Every subject.</span></h2>
+      <p class="reveal">When a visual analogy unlocks algebra, MindCraft carries that insight into physics, economics, coding, and whatever comes next.</p>
+      <p class="engine-note reveal">One learning model that grows with you.</p>
+    </div>
+    <div class="domain-map reveal" aria-label="A learning preference traveling across subjects">
+      <div class="domain-core"><small>JESSE'S MAP</small><b>Show the idea.<br>Then name it.</b></div>
+      <span class="domain subject-math">Math</span>
+      <span class="domain subject-physics">Physics</span>
+      <span class="domain subject-code">Coding</span>
+      <span class="domain subject-econ">Economics</span>
+      <span class="domain subject-any">Anything</span>
+      <svg viewBox="0 0 600 520" aria-hidden="true">
+        <path d="M300 260 C190 180 150 110 84 82"/>
+        <path d="M300 260 C410 170 470 120 530 80"/>
+        <path d="M300 260 C175 290 108 324 60 385"/>
+        <path d="M300 260 C420 292 480 330 544 392"/>
+        <path d="M300 260 C305 360 310 405 300 476"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LESSON ENGINE ================= -->
+<section class="story-beat lesson-world" id="worlds">
+  <div class="wrap">
+    <div class="lesson-heading">
+      <div class="kicker reveal">03 · It creates</div>
+      <h2 class="reveal">Anything can become a lesson <span>worth entering.</span></h2>
+      <p class="reveal">Our lesson engine can turn a concept into a world, a story, a challenge, or a guided conversation. The course catalog has no edge.</p>
+    </div>
+    <div class="lesson-canvas reveal">
+      <figure class="lesson-main">
+        <img src="img/new-story-card.jpg" alt="MindCraft story lesson built from a linear equations concept">
+        <figcaption>Linear equations · built as an expedition</figcaption>
+      </figure>
+      <figure class="lesson-detail detail-one">
+        <img src="img/story-linear-equations.jpg" alt="A story-rich visual lesson about equations and navigation">
+      </figure>
+      <figure class="lesson-detail detail-two">
+        <img src="img/app/dash-grid.png" alt="A growing library of personalized MindCraft lessons">
+      </figure>
+      <div class="lesson-words" aria-hidden="true">
+        <span>algebra</span><span>climate</span><span>history</span><span>music</span><span>anything</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HUMAN CARE ================= -->
+<section class="story-beat care-story" id="care">
+  <div class="wrap care-grid">
+    <div class="care-copy">
+      <div class="kicker reveal">04 · It cares</div>
+      <h2 class="reveal">Software can notice the pattern. <span>A person can notice you.</span></h2>
+      <p class="reveal">When you need help, your tutor opens the same map: where you paused, what worked, and what to try next.</p>
+    </div>
+    <div class="care-handoff reveal">
+      <div class="care-context">
+        <small>BEFORE HELLO</small>
+        <b>Jesse understands the picture before the formula.</b>
+        <span>Start with one visual example. Ask Jesse to explain the intersection back.</span>
+      </div>
+      <div class="care-people">
+        <figure><img src="img/akshat-koirala.jpg" alt="Akshat, a MindCraft tutor"><figcaption>Akshat<br><span>ready with context</span></figcaption></figure>
+        <figure><img src="img/abhigya-koirala.jpeg" alt="Abhigya, a MindCraft math tutor"><figcaption>Abhigya<br><span>ready with context</span></figcaption></figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ACT PROOF ================= -->
+<section class="story-beat act-proof" id="act-proof">
+  <div class="wrap act-proof-grid">
+    <div class="act-proof-visual reveal">
+      <figure class="act-dash"><img src="img/gap_scan.png" alt="MindCraft ACT gap scan showing a student's exact math gaps"></figure>
+      <figure class="act-practice"><img src="img/app/practice.png" alt="MindCraft personalized ACT practice"></figure>
+    </div>
+    <div class="act-proof-copy">
+      <div class="kicker reveal">05 · The proof today</div>
+      <h2 class="reveal">ACT is the proving ground. <span>Not the ceiling.</span></h2>
+      <p class="reveal">Find the exact gap. Build the lesson they will remember. Bring in the right human. Prove the learning transfers.</p>
+      <div class="act-proof-steps reveal" aria-label="The MindCraft ACT learning loop">
+        <span>Scan</span><i>→</i><span>Build</span><i>→</i><span>Care</span><i>→</i><span>Grow</span>
+      </div>
+      <a class="btn primary reveal" href="#start">Start with ACT</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MISSION ================= -->
+<section class="mission-story" id="mission">
+  <div class="mission-art" aria-hidden="true"></div>
+  <div class="mission-shade" aria-hidden="true"></div>
+  <div class="wrap mission-inner">
+    <div class="kicker reveal">Our mission</div>
+    <h2 class="reveal">Make exceptional learning <span>accessible to everyone.</span></h2>
+    <p class="reveal">Make math feel possible. Make curiosity feel limitless. Make every learner feel worth understanding.</p>
+    <a class="btn primary reveal" href="#start">Build the future with us</a>
+  </div>
+</section>
 
 <!-- ================= PROBLEM ================= -->
 <section class="problem" id="problem">
@@ -1742,8 +2156,8 @@
       <div class="cta-bg"></div>
       <div class="cta-veil"></div>
       <div class="inner">
-        <h2>Claim your desk. <em>Feel the click.</em></h2>
-        <p>Join the free beta. Drop three files, take the gap scan, run your first mission tonight. After you apply, we send one thoughtful follow-up automatically.</p>
+        <h2>Let MindCraft learn with you. <em>Start with one goal.</em></h2>
+        <p>Join the free beta. We will build your first learning map, find the right starting point, and stay close enough to notice when you need a person.</p>
         <p class="apply-done" id="applyDone" hidden>Got it. A real human replies within 48 hours.</p>
         <div class="cta-row" role="tablist" aria-label="Choose an application type">
           <button class="btn primary" type="button" id="applyTabStudent" role="tab" aria-selected="true">Sign up as a student</button>
@@ -1763,7 +2177,7 @@
               <div class="field"><label for="grade">Grade</label><select id="grade" name="grade" required><option value="">Select grade</option><option>6th</option><option>7th</option><option>8th</option><option>9th</option><option>10th</option><option>11th</option><option>12th</option><option>ACT prep</option></select></div>
               <div class="field full"><label for="goal">What should feel easier?</label><textarea id="goal" name="goal" placeholder="Confidence, ACT math, algebra, study skills..." required></textarea></div>
             </div>
-            <button class="btn primary apply-submit" type="submit">Claim my desk</button>
+            <button class="btn primary apply-submit" type="submit">Build my learning map</button>
             <p class="apply-note">Sends to joinmindcraft@gmail.com. We reply within 48 hours.</p>
           </form>
           <form class="apply-form" id="applyFormTutor" action="https://formsubmit.co/joinmindcraft@gmail.com" method="POST">
@@ -1784,7 +2198,7 @@
             <p class="apply-note">Sends to joinmindcraft@gmail.com. We reply within 48 hours.</p>
           </form>
         </div>
-        <p style="margin:20px 0 0; font-size:13.5px; text-align:center; color:rgba(255,253,247,.72); font-weight:800;">Desk access opens with your beta seat. Claim one above.</p>
+        <p style="margin:20px 0 0; font-size:13.5px; text-align:center; color:rgba(255,253,247,.72); font-weight:800;">A real person reads every application.</p>
       </div>
     </div>
   </div>
@@ -1798,11 +2212,11 @@
         <span class="visually-hidden">MindCraft</span>
       </a>
       <div class="foot-links">
-        <a href="#how">The Desk</a>
-        <a class="ext" href="https://mindcraft-93858.web.app/find-a-tutor" target="_blank" rel="noopener">Find a tutor</a>
-        <a href="#start">Apply</a>
-        <a href="#start">Join the beta</a>
-        <a href="#faq">FAQ</a>
+        <a href="#learns">How it learns</a>
+        <a href="#anything">Any subject</a>
+        <a href="#care">Human care</a>
+        <a href="#mission">Mission</a>
+        <a href="desk.html">Open the Desk</a>
       </div>
       <div class="foot-links foot-social">
         <a href="mailto:joinmindcraft@gmail.com">Email</a>
@@ -1819,7 +2233,6 @@
   </div>
 </footer>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script>
   // ---------- Live tutor map (3 demo tutors, searchable) ----------
   (function(){
@@ -2038,6 +2451,7 @@
 
     board.querySelectorAll('[data-draggable]').forEach(item => {
       let itemDragging = false;
+      let itemMoved = false;
       let sx = 0, sy = 0, bx = 0, by = 0, dx = 0, dy = 0;
       const itemLimit = () => window.matchMedia('(max-width: 640px)').matches ? 42 : 58;
       const itemClamp = v => Math.max(-itemLimit(), Math.min(itemLimit(), v));
@@ -2048,6 +2462,7 @@
       };
       item.addEventListener('pointerdown', e => {
         itemDragging = true;
+        itemMoved = false;
         item.classList.add('is-dragging');
         item.setPointerCapture?.(e.pointerId);
         sx = e.clientX; sy = e.clientY; bx = dx; by = dy;
@@ -2055,11 +2470,13 @@
       });
       item.addEventListener('pointermove', e => {
         if (!itemDragging) return;
+        if (Math.abs(e.clientX - sx) + Math.abs(e.clientY - sy) > 5) itemMoved = true;
         setItem(bx + (e.clientX - sx), by + (e.clientY - sy));
         e.stopPropagation();
       });
       ['pointerup','pointercancel'].forEach(type => item.addEventListener(type, () => {
         itemDragging = false;
+        item.dataset.justDragged = itemMoved ? '1' : '0';
         item.classList.remove('is-dragging');
       }));
     });
@@ -2069,12 +2486,46 @@
     const noteText = document.getElementById('noteText');
     const noteStatus = document.getElementById('noteStatus');
     const pinnedNote = document.getElementById('pinnedNote');
+    const zoomOut = document.getElementById('heroZoomOut');
+    const zoomIn = document.getElementById('heroZoomIn');
+    const jesseCard = document.getElementById('jesseCard');
+    const deskPrompt = document.getElementById('deskPrompt');
+    const deskPromptInput = document.getElementById('deskPromptInput');
+    let deskZoom = 1;
+    const setZoom = value => {
+      deskZoom = Math.max(.78, Math.min(1.22, value));
+      board.style.setProperty('--desk-zoom', deskZoom.toFixed(2));
+    };
+    [zoomOut, zoomIn].forEach(button => button?.addEventListener('pointerdown', e => e.stopPropagation()));
+    zoomOut?.addEventListener('click', () => setZoom(deskZoom - .1));
+    zoomIn?.addEventListener('click', () => setZoom(deskZoom + .1));
     addNoteBtn?.addEventListener('pointerdown', e => e.stopPropagation());
     addNoteBtn?.addEventListener('click', () => {
       composer?.classList.toggle('is-open');
       setTimeout(() => noteText?.focus({ preventScroll:true }), 80);
     });
     composer?.addEventListener('pointerdown', e => e.stopPropagation());
+    deskPrompt?.addEventListener('pointerdown', e => e.stopPropagation());
+    jesseCard?.addEventListener('click', () => {
+      if (jesseCard.dataset.justDragged === '1') {
+        jesseCard.dataset.justDragged = '0';
+        return;
+      }
+      const opening = !deskPrompt?.classList.contains('is-open');
+      deskPrompt?.classList.toggle('is-open', opening);
+      jesseCard.setAttribute('aria-expanded', String(opening));
+      if (opening) setTimeout(() => deskPromptInput?.focus({ preventScroll:true }), 80);
+    });
+    deskPrompt?.addEventListener('submit', e => {
+      e.preventDefault();
+      const prompt = (deskPromptInput?.value || '').trim().slice(0, 140);
+      if (!prompt) return;
+      const line = document.getElementById('transcribeLine');
+      if (line) line.textContent = prompt;
+      deskPromptInput.value = '';
+      deskPrompt.classList.remove('is-open');
+      jesseCard?.setAttribute('aria-expanded','false');
+    });
     composer?.addEventListener('submit', async e => {
       e.preventDefault();
       const text = (noteText?.value || '').trim().slice(0, 180);
@@ -2107,7 +2558,7 @@
         saved = false;
       }
       if (pinnedNote){
-        pinnedNote.querySelector('span').textContent = text;
+        pinnedNote.querySelector('[data-note-copy]').textContent = text;
         pinnedNote.classList.add('is-on');
       }
       noteStatus.textContent = saved ? 'Pinned securely.' : 'Pinned locally for preview.';
@@ -2115,9 +2566,9 @@
     });
 
     const lines = [
-      "Jesse's Kitchen: graph both equations, then check where the lines meet.",
-      "Detected: systems of equations, likely substitution or graphing practice.",
-      "Memo suggestion: ask why the intersection solves both equations."
+      'Noticed: visual examples help Jesse move from setup to solution.',
+      'Carrying that preference into the next ACT lesson.',
+      'Tutor context ready: show the picture before naming the formula.'
     ];
     const transcribeLine = document.getElementById('transcribeLine');
     let lineIndex = 0;
@@ -2134,12 +2585,9 @@
             { duration:230, easing:'cubic-bezier(.16,1,.3,1)' }
           );
         };
-      }, 3000);
+      }, 5200);
     }
 
-    if (new URLSearchParams(location.search).get('pin') === '1' && pinnedNote){
-      pinnedNote.classList.add('is-on');
-    };
   })();
 
   // Scroll reveal
@@ -2151,7 +2599,7 @@
   // Scroll progress + section-aware nav + hide-on-scroll-down
   const bar = document.getElementById('progress');
   const nav = document.querySelector('.nav');
-  const darkSections = [document.querySelector('.vision'), document.querySelector('.act')];
+  const darkSections = [document.querySelector('.hero'), document.querySelector('.care-story'), document.querySelector('.mission-story')];
   let lastScrollY = window.scrollY || 0;
   let navTicking = false;
   function updateNav(){
