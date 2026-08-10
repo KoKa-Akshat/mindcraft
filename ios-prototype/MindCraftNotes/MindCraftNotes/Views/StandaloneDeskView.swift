@@ -9,8 +9,12 @@ import WebKit
 /// so none of the overlay hit-testing complexity applies here.
 struct StandaloneDeskView: View {
     var onBackToKitchen: () -> Void
-    /// Manage button inside the web desk → hub page (map + workflow market).
+    /// Manage button inside the web desk → hub page (instances + map + workflows).
     var onManage: (() -> Void)? = nil
+    /// ACT map inside the binder → ACT dash.
+    var onOpenAct: (() -> Void)? = nil
+    /// Volume pill inside the web desk → kitchen audio.
+    var onSound: ((Bool) -> Void)? = nil
 
     private static let paper = Color(red: 247 / 255, green: 248 / 255, blue: 244 / 255)
     private static let ink = Color(red: 20 / 255, green: 58 / 255, blue: 46 / 255)
@@ -19,36 +23,39 @@ struct StandaloneDeskView: View {
         ZStack(alignment: .topLeading) {
             Self.paper.ignoresSafeArea()
 
-            DeskWebView(onManage: onManage)
-                .ignoresSafeArea()
-
-            Button(action: onBackToKitchen) {
-                HStack(spacing: 7) {
-                    Image(systemName: "chevron.left")
-                        .font(.system(size: 12, weight: .heavy))
-                    Text("Kitchen")
-                        .font(.system(size: 13, weight: .heavy, design: .rounded))
+            // The web top bar owns Volume / Jesse's / Manage — no native pill.
+            DeskWebView(onAction: { action in
+                switch action {
+                case "manage":
+                    onManage?()
+                case "back":
+                    onBackToKitchen()
+                case "act":
+                    onOpenAct?()
+                case "soundOn":
+                    onSound?(true)
+                case "soundOff":
+                    onSound?(false)
+                default:
+                    break
                 }
-                .foregroundColor(Self.ink)
-                .padding(.horizontal, 14)
-                .padding(.vertical, 9)
-                .background(
-                    Capsule()
-                        .fill(Color.white.opacity(0.95))
-                        .shadow(color: .black.opacity(0.16), radius: 10, y: 4)
-                )
-                .overlay(Capsule().strokeBorder(Self.ink.opacity(0.14), lineWidth: 1))
+            })
+            .ignoresSafeArea()
+
+            // Hidden a11y hook kept for tests that closed the desk by id.
+            Button(action: onBackToKitchen) {
+                Color.clear.frame(width: 1, height: 1)
             }
-            .padding(.top, 12)
-            .padding(.leading, 16)
+            .buttonStyle(.plain)
             .accessibilityIdentifier("standaloneDeskBackToKitchen")
+            .accessibilityLabel("Back to Jesse's")
         }
         .accessibilityIdentifier("standaloneDeskRoot")
     }
 }
 
 private struct DeskWebView: UIViewRepresentable {
-    var onManage: (() -> Void)?
+    var onAction: ((String) -> Void)?
 
     static var deskURL: URL {
         if let override = UserDefaults.standard.string(forKey: "deskOs.standaloneDeskURL"),
@@ -59,7 +66,7 @@ private struct DeskWebView: UIViewRepresentable {
     }
 
     func makeCoordinator() -> Coordinator {
-        Coordinator(onManage: onManage)
+        Coordinator(onAction: onAction)
     }
 
     func makeUIView(context: Context) -> WKWebView {
@@ -86,7 +93,7 @@ private struct DeskWebView: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: WKWebView, context: Context) {
-        context.coordinator.onManage = onManage
+        context.coordinator.onAction = onAction
     }
 
     static func dismantleUIView(_ uiView: WKWebView, coordinator: Coordinator) {
@@ -94,10 +101,10 @@ private struct DeskWebView: UIViewRepresentable {
     }
 
     final class Coordinator: NSObject, WKScriptMessageHandler {
-        var onManage: (() -> Void)?
+        var onAction: ((String) -> Void)?
 
-        init(onManage: (() -> Void)?) {
-            self.onManage = onManage
+        init(onAction: ((String) -> Void)?) {
+            self.onAction = onAction
         }
 
         func userContentController(
@@ -107,10 +114,8 @@ private struct DeskWebView: UIViewRepresentable {
             guard message.name == "deskAction",
                   let body = message.body as? [String: Any],
                   let action = body["action"] as? String else { return }
-            if action == "manage" {
-                DispatchQueue.main.async { [weak self] in
-                    self?.onManage?()
-                }
+            DispatchQueue.main.async { [weak self] in
+                self?.onAction?(action)
             }
         }
     }

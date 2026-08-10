@@ -110,11 +110,11 @@ struct FieldDeskView: View {
     }
 
     private enum DeskCardID: String, Hashable, CaseIterable {
-        case connect, intel, binder, memo, calendar, gmail, notes
+        case connect, intel, binder, memo, calendar, gmail, notes, gdoc, slides
     }
 
     private enum PlaceableWidget: String, Hashable, CaseIterable {
-        case binder, calendar, memo, connect, gmail, intel, notes
+        case binder, calendar, memo, connect, gmail, intel, notes, gdoc, slides
     }
 
     /// Until tools are linked, Connect stays on-canvas. After that, place via `+`.
@@ -134,6 +134,8 @@ struct FieldDeskView: View {
             .intel: CGSize(width: 340, height: 220),
             .gmail: CGSize(width: 260, height: 200),
             .notes: CGSize(width: 260, height: 200),
+            .gdoc: CGSize(width: 260, height: 230),
+            .slides: CGSize(width: 320, height: 214),
         ]
     }
 
@@ -149,6 +151,8 @@ struct FieldDeskView: View {
             .intel: CGPoint(x: 24, y: max(420, viewport.height - 280)),
             .gmail: CGPoint(x: right, y: max(360, viewport.height - 320)),
             .notes: CGPoint(x: midX, y: max(400, viewport.height - 260)),
+            .gdoc: CGPoint(x: midX + 90, y: 110),
+            .slides: CGPoint(x: max(260, midX - 60), y: max(250, viewport.height * 0.42)),
         ]
     }
 
@@ -210,6 +214,10 @@ struct FieldDeskView: View {
             focusedCard = .intel
         case .notes:
             focusedCard = .notes
+        case .gdoc:
+            focusedCard = .gdoc
+        case .slides:
+            focusedCard = .slides
         }
         showAddPanel = false
         flash("Placed · \(widget.rawValue)")
@@ -420,7 +428,16 @@ struct FieldDeskView: View {
                 if showStandaloneDesk {
                     StandaloneDeskView(
                         onBackToKitchen: { closeStandaloneDesk() },
-                        onManage: { openManageHubFromDesk() }
+                        onManage: { openManageHubFromDesk() },
+                        onOpenAct: {
+                            closeStandaloneDesk()
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+                                openActDashOnDesk()
+                            }
+                        },
+                        onSound: { on in
+                            kitchenSoundOn = on
+                        }
                     )
                     .zIndex(85)
                 }
@@ -475,20 +492,16 @@ struct FieldDeskView: View {
                     .frame(width: 1, height: 1).position(x: 8, y: 8)
             }
             .frame(width: viewport.width, height: viewport.height)
-            // Ask + dock live at the top; swipe down to reveal, swipe up edge to hide.
-            // Hidden entirely while ACT notes / Gmail / manage overlays own the desk.
+            // Call/name stay top; Ask + dock live at the BOTTOM now (Akshat:
+            // scroll up → search appears at the bottom of the page, not top).
             .overlay(alignment: .top) {
                 if !deskOverlayChromeBlocked {
                     VStack(spacing: 0) {
                         if showTopChrome {
                             topChrome
-                            combinedAskAndDock
-                                .padding(.horizontal, 12)
-                                .padding(.top, 4)
-                                .padding(.bottom, 8)
                                 .transition(.move(edge: .top).combined(with: .opacity))
                         }
-                        // Thin top edge — swipe down to reveal Ask.
+                        // Thin top edge — swipe down also reveals the chrome.
                         Color.clear
                             .frame(height: showTopChrome ? 8 : 22)
                             .frame(maxWidth: .infinity)
@@ -508,51 +521,37 @@ struct FieldDeskView: View {
             }
             .overlay(alignment: .bottom) {
                 if !deskOverlayChromeBlocked {
-                    // Tiny bottom edge only (no Ask down here).
-                    Color.clear
-                        .frame(height: 18)
-                        .frame(maxWidth: .infinity)
-                        .contentShape(Rectangle())
-                        .gesture(
-                            DragGesture(minimumDistance: 6)
-                                .onChanged { value in
-                                    if value.translation.height < -12 { revealTopChrome() }
-                                }
-                        )
+                    VStack(spacing: 0) {
+                        if showTopChrome {
+                            combinedAskAndDock
+                                .padding(.horizontal, 12)
+                                .padding(.top, 8)
+                                .padding(.bottom, 4)
+                                .transition(.move(edge: .bottom).combined(with: .opacity))
+                        }
+                        // Bottom edge — swipe up reveals Ask down here.
+                        Color.clear
+                            .frame(height: showTopChrome ? 8 : 18)
+                            .frame(maxWidth: .infinity)
+                            .contentShape(Rectangle())
+                            .gesture(
+                                DragGesture(minimumDistance: 6)
+                                    .onChanged { value in
+                                        if value.translation.height < -12 { revealTopChrome() }
+                                        if value.translation.height > 12 {
+                                            withAnimation(.easeInOut(duration: 0.2)) { showTopChrome = false }
+                                        }
+                                    }
+                            )
+                    }
+                    .animation(.easeInOut(duration: 0.22), value: showTopChrome)
                 }
             }
-            // Create + sign out + volume pinned top-right on Jesse's.
+            // Pinned top-right: volume first, then context buttons.
+            // Jesse's landing → Create + Sign out. Work desk → Jesse's + Manage.
             .overlay(alignment: .topTrailing) {
                 if !deskOverlayChromeBlocked {
                     HStack(spacing: 8) {
-                        // Create — icon lands now; the full studio ships with
-                        // Akshat's Figma pass.
-                        Button {
-                            flash("Create · new studio coming soon")
-                        } label: {
-                            Image(systemName: "plus.viewfinder")
-                                .font(.system(size: 13, weight: .bold))
-                                .foregroundColor(.white.opacity(0.9))
-                                .frame(width: 36, height: 36)
-                                .background(Circle().fill(Color.black.opacity(0.55)))
-                        }
-                        .buttonStyle(.plain)
-                        .accessibilityIdentifier("fieldDeskCreateButton")
-                        .accessibilityLabel("Create")
-
-                        Button {
-                            authService.signOut()
-                        } label: {
-                            Image(systemName: "rectangle.portrait.and.arrow.right")
-                                .font(.system(size: 13, weight: .bold))
-                                .foregroundColor(.white.opacity(0.9))
-                                .frame(width: 36, height: 36)
-                                .background(Circle().fill(Color.black.opacity(0.55)))
-                        }
-                        .buttonStyle(.plain)
-                        .accessibilityIdentifier("fieldDeskSignOutButton")
-                        .accessibilityLabel("Sign out")
-
                         Button {
                             kitchenSoundOn.toggle()
                             flash(kitchenSoundOn ? "Sound on" : "Sound off")
@@ -568,6 +567,66 @@ struct FieldDeskView: View {
                         .buttonStyle(.plain)
                         .accessibilityIdentifier("fieldDeskSoundToggle")
                         .accessibilityLabel(kitchenSoundOn ? "Mute kitchen" : "Unmute kitchen")
+
+                        if workMode {
+                            Button {
+                                withAnimation(.easeInOut(duration: 0.2)) {
+                                    clearDeskCards(flashMessage: "Jesse's")
+                                }
+                            } label: {
+                                Text("Jesse's")
+                                    .font(.system(size: 12, weight: .heavy, design: .rounded))
+                                    .foregroundColor(.white.opacity(0.92))
+                                    .padding(.horizontal, 13)
+                                    .padding(.vertical, 9)
+                                    .background(Capsule().fill(Color.black.opacity(0.55)))
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityIdentifier("fieldDeskJessesButton")
+                            .accessibilityLabel("Back to Jesse's")
+
+                            Button {
+                                NotificationCenter.default.post(name: .mcOpenHubFromDesk, object: nil)
+                            } label: {
+                                Text("Manage")
+                                    .font(.system(size: 12, weight: .heavy, design: .rounded))
+                                    .foregroundColor(Color(fdHex: "0c1207"))
+                                    .padding(.horizontal, 13)
+                                    .padding(.vertical, 9)
+                                    .background(Capsule().fill(Color(fdHex: "c4f547")))
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityIdentifier("fieldDeskManageButton")
+                            .accessibilityLabel("Manage · instances, tutors, workflows")
+                        } else {
+                            // Create — icon lands now; the full studio ships
+                            // with Akshat's Figma pass.
+                            Button {
+                                flash("Create · new studio coming soon")
+                            } label: {
+                                Image(systemName: "plus.viewfinder")
+                                    .font(.system(size: 13, weight: .bold))
+                                    .foregroundColor(.white.opacity(0.9))
+                                    .frame(width: 36, height: 36)
+                                    .background(Circle().fill(Color.black.opacity(0.55)))
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityIdentifier("fieldDeskCreateButton")
+                            .accessibilityLabel("Create")
+
+                            Button {
+                                authService.signOut()
+                            } label: {
+                                Image(systemName: "rectangle.portrait.and.arrow.right")
+                                    .font(.system(size: 13, weight: .bold))
+                                    .foregroundColor(.white.opacity(0.9))
+                                    .frame(width: 36, height: 36)
+                                    .background(Circle().fill(Color.black.opacity(0.55)))
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityIdentifier("fieldDeskSignOutButton")
+                            .accessibilityLabel("Sign out")
+                        }
                     }
                     .padding(.top, 10)
                     .padding(.trailing, 14)
@@ -685,37 +744,8 @@ struct FieldDeskView: View {
     }
 
     private var topChrome: some View {
-        // Raccoon · Home · Call · Desk · (name at end)
+        // Call · (name at end) — logo / Home / desk pill retired per Akshat.
         HStack(spacing: 10) {
-            Button {
-                // Raccoon → place Connect on Jesse’s.
-                placeWidget(.connect)
-                if !store.isConnected("gdrive") {
-                    activeGuideId = "gdrive"
-                } else if !store.isConnected("gmail") {
-                    activeGuideId = "gmail"
-                } else {
-                    flash("Linked · \(store.connectAt.count) tools")
-                }
-            } label: {
-                ActRaccoonBadge(size: 34)
-            }
-            .buttonStyle(.plain)
-            .accessibilityIdentifier("fieldDeskRaccoon")
-            .accessibilityLabel("Connect Google tools")
-
-            // Home → clean Jesse’s (no cards).
-            DeskHomeButton(
-                action: {
-                    withAnimation(.easeInOut(duration: 0.2)) {
-                        gmailOpenTopReply = false
-                        clearDeskCards(flashMessage: "Home · Jesse’s Kitchen")
-                    }
-                },
-                accessibilityId: "fieldDeskImmerse",
-                accessibilityLabelText: "Home"
-            )
-
             Button {
                 showFindTutor = true
             } label: {
@@ -728,25 +758,6 @@ struct FieldDeskView: View {
             .buttonStyle(.plain)
             .accessibilityIdentifier("fieldDeskCallButton")
             .accessibilityLabel("Call")
-
-            // Desk → clean Jesse’s (no cards).
-            Button {
-                withAnimation(.easeInOut(duration: 0.2)) {
-                    showManage = false
-                    clearDeskCards(flashMessage: "Jesse’s · clear desk")
-                }
-                scheduleChromeHide()
-            } label: {
-                Text("desk")
-                    .font(.system(size: 13, weight: .bold, design: .rounded))
-                    .foregroundColor(Color(fdHex: "0c1207"))
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 7)
-                    .background(Capsule().fill(Color(fdHex: "c4f547")))
-            }
-            .buttonStyle(.plain)
-            .accessibilityIdentifier("fieldDeskLabel")
-            .accessibilityLabel("Clear desk · Jesse’s")
 
             Spacer(minLength: 8)
                 .allowsHitTesting(false)
@@ -807,6 +818,8 @@ struct FieldDeskView: View {
         if placedWidgets.contains(.calendar) { add(.calendar) }
         if placedWidgets.contains(.notes) { add(.notes) }
         if placedWidgets.contains(.memo) { add(.memo) }
+        if placedWidgets.contains(.gdoc) { add(.gdoc) }
+        if placedWidgets.contains(.slides) { add(.slides) }
         if placedWidgets.contains(.intel) || showIntelPanel { add(.intel) }
         if placedWidgets.contains(.connect) || showConnectPanel { add(.connect) }
         if showActStage && !actStageMaximized {
@@ -861,12 +874,77 @@ struct FieldDeskView: View {
                 }
                 .zIndex(focusedCard == .connect ? 21 : 11)
             }
+            if placedWidgets.contains(.gdoc) {
+                movableCard(.gdoc, margin: true, points: points, showClose: true, title: "Gdoc") {
+                    gdocCardBody
+                }
+                .zIndex(focusedCard == .gdoc ? 21 : 11)
+            }
+            if placedWidgets.contains(.slides) {
+                movableCard(.slides, margin: false, points: points, showClose: true, title: "Presentation") {
+                    slidesCardBody
+                }
+                .zIndex(focusedCard == .slides ? 21 : 11)
+            }
             if showActStage && !actStageMaximized {
                 minimizedActChip
                     .zIndex(12)
             }
         }
         .frame(width: viewport.width, height: viewport.height, alignment: .topLeading)
+    }
+
+    /// Blank Gdoc page card — placeable writing surface stub.
+    private var gdocCardBody: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Gdoc · blank page")
+                .font(.system(size: 12, weight: .heavy, design: .rounded))
+                .foregroundColor(Color(fdHex: "1c1a17").opacity(0.55))
+            VStack(alignment: .leading, spacing: 9) {
+                ForEach(0..<6, id: \.self) { i in
+                    RoundedRectangle(cornerRadius: 1.5)
+                        .fill(Color(fdHex: "143a2e").opacity(0.14))
+                        .frame(width: i % 2 == 1 ? 150 : 190, height: 2)
+                }
+            }
+            Spacer(minLength: 0)
+        }
+        .padding(14)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(RoundedRectangle(cornerRadius: 12).fill(Color.white))
+    }
+
+    /// 16:9 Presentation card — placeable deck stub.
+    private var slidesCardBody: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            RoundedRectangle(cornerRadius: 9)
+                .strokeBorder(Color.white.opacity(0.18), lineWidth: 1)
+                .background(
+                    RoundedRectangle(cornerRadius: 9)
+                        .fill(LinearGradient(
+                            colors: [Color(fdHex: "16222c"), Color(fdHex: "0d141b")],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        ))
+                )
+                .overlay(alignment: .topLeading) {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("Untitled deck")
+                            .font(.system(size: 15, weight: .bold, design: .rounded))
+                            .foregroundColor(Color(fdHex: "f4f7f2"))
+                        RoundedRectangle(cornerRadius: 1.5)
+                            .fill(Color.white.opacity(0.22))
+                            .frame(width: 130, height: 2)
+                        RoundedRectangle(cornerRadius: 1.5)
+                            .fill(Color.white.opacity(0.22))
+                            .frame(width: 90, height: 2)
+                    }
+                    .padding(16)
+                }
+        }
+        .padding(10)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(RoundedRectangle(cornerRadius: 12).fill(Color(fdHex: "101820")))
     }
 
     private func pageBoxLauncher(
@@ -1014,9 +1092,13 @@ struct FieldDeskView: View {
         showBlankPage = false
         switch action {
         case .openDesk, .projects:
-            // Projects → the projects screen (Malevolent Shrine card) first;
-            // tapping the shrine enters the work area.
-            withAnimation(.easeInOut(duration: 0.3)) { showProjectsScreen = true }
+            // Projects → white polka bloom → projects screen (Malevolent
+            // Shrine). Tapping the shrine enters the work area.
+            withAnimation(.easeInOut(duration: 0.7)) { polkaProgress = 1 }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+                showProjectsScreen = true
+                withAnimation(.easeInOut(duration: 0.5)) { polkaProgress = 0 }
+            }
         case .wakeJesse:
             flash("Jesse’s Kitchen")
         case .intel:
@@ -2409,6 +2491,26 @@ struct FieldDeskView: View {
                     placeWidget(.memo)
                 }
                 .accessibilityIdentifier("fieldDeskAddMemo")
+
+                addMenuRow(
+                    title: "Gdoc",
+                    subtitle: placedWidgets.contains(.gdoc) ? "Already on desk" : "Blank page card",
+                    system: "doc.text.fill",
+                    enabled: true
+                ) {
+                    placeWidget(.gdoc)
+                }
+                .accessibilityIdentifier("fieldDeskAddGdoc")
+
+                addMenuRow(
+                    title: "Presentation",
+                    subtitle: placedWidgets.contains(.slides) ? "Already on desk" : "Deck card · 16:9",
+                    system: "rectangle.on.rectangle.angled",
+                    enabled: true
+                ) {
+                    placeWidget(.slides)
+                }
+                .accessibilityIdentifier("fieldDeskAddPresentation")
 
                 addMenuRow(
                     title: "Connect",
