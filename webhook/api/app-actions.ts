@@ -21,6 +21,7 @@ import sparkExperience from '../lib/handlers/spark-experience'
 import adminLink from '../lib/handlers/admin-link'
 import deployRules from '../lib/handlers/deploy-rules'
 import marketingLead from '../lib/handlers/marketing-lead'
+import marketingDrop from '../lib/handlers/marketing-drop'
 import cronMarketingFollowup from '../lib/handlers/cron-marketing-followup'
 import deskAsk from '../lib/handlers/desk-ask'
 
@@ -38,6 +39,7 @@ const HANDLERS: Record<string, (req: VercelRequest, res: VercelResponse) => Prom
   'admin-link': adminLink,
   'deploy-rules': deployRules,
   'marketing-lead': marketingLead,
+  'marketing-drop': marketingDrop,
   'cron-marketing-followup': cronMarketingFollowup,
   'desk-ask': deskAsk,
 }

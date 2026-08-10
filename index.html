@@ -3,21 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>MindCraft · The operating system for student knowledge</title>
-<meta name="description" content="MindCraft is the operating system for student knowledge. Like a gym membership for math: drop worksheets, map exact gaps, practice inside stories, and work with college tutors who open your map first.">
+<title>MindCraft · A gym membership for learning</title>
+<meta name="description" content="Like a gym membership for learning. Personalized. Care and support when you need it. Drop school mess on your Field Desk and it finds its place.">
 <meta name="keywords" content="MindCraft, ACT math, student desk, knowledge graph, tutoring, math gaps, high school math, college tutors, learning OS, Field Desk">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <link rel="canonical" href="https://mindcraft-marketing-site.web.app/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="MindCraft">
 <meta property="og:url" content="https://mindcraft-marketing-site.web.app/">
-<meta property="og:title" content="MindCraft · The operating system for student knowledge">
-<meta property="og:description" content="School is scattered. MindCraft is the desk that connects it: binder, gap map, story practice, real tutors. Gym membership energy for math.">
-<meta property="og:image" content="https://mindcraft-marketing-site.web.app/img/app/dash-landscape.jpg">
+<meta property="og:title" content="MindCraft · A gym membership for learning">
+<meta property="og:description" content="Personalized. Care and support when you need it.">
+<meta property="og:image" content="https://mindcraft-marketing-site.web.app/img/app/desk-ipad-live.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="MindCraft · The operating system for student knowledge">
-<meta name="twitter:description" content="Drop it. Map the gap. Train until it transfers. Real college tutors, briefed by your map.">
-<meta name="twitter:image" content="https://mindcraft-marketing-site.web.app/img/app/dash-landscape.jpg">
+<meta name="twitter:title" content="MindCraft · A gym membership for learning">
+<meta name="twitter:description" content="Personalized. Care and support when you need it.">
+<meta name="twitter:image" content="https://mindcraft-marketing-site.web.app/img/app/desk-ipad-live.png">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -41,7 +41,8 @@
   }
 }
 </script>
-<link rel="icon" type="image/png" href="img/mindcraft-logo.png">
+<link rel="icon" type="image/png" href="img/favicon-raccoon.png">
+<link rel="apple-touch-icon" href="img/favicon-raccoon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito+Sans:wght@600;700;800;900;1000&family=DM+Serif+Display:ital@0;1&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
@@ -121,7 +122,18 @@
   @media (prefers-reduced-motion: reduce){
     .nav{transition:none;}
   }
-  .brand{font-family:"Fredoka",sans-serif; font-size:20px; font-weight:700; letter-spacing:-.04em;}
+  .brand{
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:"Fredoka",sans-serif; font-size:18px; font-weight:700; letter-spacing:-.04em;
+  }
+  .brand img{
+    width:34px; height:34px; object-fit:contain; display:block;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,.18));
+  }
+  .brand .visually-hidden{
+    position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+  }
   .brand span{color:var(--gold-deep);}
   .nav-links{display:flex; align-items:center; gap:6px;}
   .nav-links a{
@@ -597,6 +609,19 @@
 
   /* Responsive */
   /* ---------- Drop demo ---------- */
+  .dd-live{
+    display:flex; flex-direction:column; gap:4px; align-items:flex-start;
+    margin:0 0 14px; padding:16px 16px; border-radius:18px; cursor:pointer;
+    border:1.5px dashed rgba(36,122,77,.35); background:rgba(196,245,71,.12);
+    transition:background .2s var(--ease), border-color .2s var(--ease);
+  }
+  .dd-live:hover,.dd-live.is-drag{
+    background:rgba(196,245,71,.22); border-color:var(--leaf);
+  }
+  .dd-live strong{font-size:14px; font-weight:900; color:var(--ink);}
+  .dd-live span{font-size:12px; font-weight:700; color:var(--muted);}
+  .dd-live.is-busy{opacity:.7; pointer-events:none;}
+  #ddLiveBadge{color:var(--leaf); font-weight:900;}
   .dropdemo{
     margin-top:56px; display:grid; grid-template-columns:1.15fr .85fr;
     gap:0; border-radius:32px; border:1px solid var(--line); background:var(--paper);
@@ -999,10 +1024,13 @@
 <div class="progress" id="progress"></div>
 
 <nav class="nav">
-  <a class="brand" href="#">Mind<span>Craft</span></a>
+  <a class="brand" href="#" aria-label="MindCraft home">
+    <img src="img/raccoon-logo.png" alt="" width="34" height="34">
+    <span class="visually-hidden">MindCraft</span>
+  </a>
   <div class="nav-links">
-    <a href="#os">The OS</a>
-    <a href="#how">The desk</a>
+    <a href="#os">The desk</a>
+    <a href="#how">Drop it</a>
     <a href="#tutors">Tutors</a>
     <a href="#faq">FAQ</a>
     <a class="join" href="#start">Join free beta</a>
@@ -1032,9 +1060,9 @@
 
   <div class="hero-stage">
     <div>
-      <a class="hero-announce" href="#os"><i>NEW</i> One desk. One Learn surface. →</a>
-      <h1>Knowledge has no operating system. <em>Until now.</em></h1>
-      <p class="lead">MindCraft is the desk that connects school into one memorable place: Field Desk, Learn (gap map, stories, resume workflows), and real tutors. Like a <b>gym membership for math</b>. You show up. The system trains the exact gap.</p>
+      <a class="hero-announce" href="#os"><i>NEW</i> Your Field Desk →</a>
+      <h1>Like a gym membership <em>for learning.</em></h1>
+      <p class="lead">Personalized. We make sure you get care and support when you need it.</p>
       <div class="hero-actions">
         <a class="btn primary" href="#start">Claim my desk</a>
         <a class="btn soft" href="#problem">See the mess we fix</a>
@@ -1042,8 +1070,8 @@
     </div>
 
     <div class="hero-shot">
-      <div class="hero-note">your Field Desk · landscape ↓</div>
-      <div class="hero-frame"><img src="img/app/desk-landscape.png" alt="MindCraft Field Desk in landscape: binder Learn, intel, memo, and calendar on one infinite desk"></div>
+      <div class="hero-note">your Field Desk · iPad ↓</div>
+      <div class="hero-frame"><img src="img/app/desk-ipad-live.png" alt="MindCraft Field Desk on iPad: binder, intel, memo, calendar, and Connect on one landscape desk"></div>
       <div class="hero-chip" id="herochip">
         <span class="raw" id="hc-raw">IMG_4127.jpg</span>
         <span class="arrow">→</span>
@@ -1055,9 +1083,9 @@
   <div class="hero-below">
     <div class="hero-trust">
       <div class="trust"><b>Exact gaps</b><span>not another green streak</span></div>
-      <div class="trust"><b>42 concepts</b><span>one living ACT math map</span></div>
-      <div class="trust"><b>~1,500</b><span>real questions behind practice</span></div>
+      <div class="trust"><b>One desk</b><span>binder, intel, Connect</span></div>
       <div class="trust"><b>Human tutors</b><span>map open before hello</span></div>
+      <div class="trust"><b>Real care</b><span>support when you need it</span></div>
     </div>
     <div class="intro-schools" aria-label="Schools behind the desk">
       <span>From rooms at</span>
@@ -1102,170 +1130,10 @@
   </div>
 </section>
 
-<!-- ================= OS / GYM ================= -->
-<section class="how" id="os" style="padding-top:0;">
-  <div class="wrap">
-    <div class="kicker reveal">Chapter 01.5 · The membership</div>
-    <h2 class="h2 reveal">A gym for knowledge. <span class="script">Not another chat box.</span></h2>
-    <p class="lede reveal">Gyms do not do the reps for you. They give you a floor, a plan, and a mirror. MindCraft is that for school: one desk, one Learn home, tutors who already see your map.</p>
-
-    <div class="shot-rail reveal">
-      <figure class="shot-wide">
-        <img src="img/app/desk-landscape.png" alt="MindCraft Field Desk landscape: Learn binder, Connect, intel, and calendar on one scrollable desk">
-        <div class="call" aria-hidden="true">
-          <span>Field Desk</span>
-          <span>Learn · binder</span>
-          <span>Connect · Google</span>
-        </div>
-      </figure>
-    </div>
-
-    <div class="learn-one reveal">
-      <div class="panel">
-        <h3>Learn is one surface</h3>
-        <p>Not a stack of products. On the desk, Learn is where the ACT map, story practice, and resume workflows live together. You open one home. The work stays continuous.</p>
-        <ul class="rails">
-          <li><strong>Gap map</strong><span>Exact concept gaps, honest notes for parents</span></li>
-          <li><strong>Story practice</strong><span>Hard problems inside scenes that stick</span></li>
-          <li><strong>Resume &amp; workflows</strong><span>Pick up where you left off, same Learn shelf</span></li>
-        </ul>
-      </div>
-      <figure class="shot">
-        <img src="img/app/dash-landscape.jpg" alt="MindCraft Learn dash in landscape: contents map and this week's review">
-      </figure>
-    </div>
-
-    <p class="lede reveal" style="margin-top:28px;">College tutors open that same map before hello. The hour goes to teaching, not detective work. First session free.</p>
-  </div>
-</section>
-
-<!-- ================= HOW ================= -->
-<section class="how" id="how">
-  <div class="wrap">
-    <div class="kicker reveal">Chapter 02 · The desk</div>
-    <h2 class="h2 reveal">Drop it. <span class="script">It finds its place.</span></h2>
-    <p class="lede reveal">Catalog everything school ever gave you. The desk builds your graph. Ask with receipts. Your energy goes to the learning.</p>
-
-    <div class="steps">
-      <div class="stepcard peach reveal">
-        <h3>Drop it</h3>
-        <div class="step-art">
-          <div class="art-drop"><span class="minichip">IMG_4127.jpg</span></div>
-        </div>
-      </div>
-      <div class="stepcard sand reveal">
-        <h3>Filed for you</h3>
-        <div class="step-art">
-          <div class="art-rows">
-            <div class="art-row"><span class="dot" style="background:var(--teal);"></span>Stoichiometry practice · AP Chem</div>
-            <div class="art-row"><span class="dot" style="background:var(--rose);"></span>Circle theorems notes · Geometry</div>
-            <div class="art-row"><span class="dot" style="background:var(--violet);"></span>Functions worksheet · Algebra II</div>
-          </div>
-        </div>
-      </div>
-      <div class="stepcard mint reveal">
-        <h3>Planned for you</h3>
-        <div class="step-art">
-          <div class="art-list">
-            <div class="art-li done"><span class="box"></span>Chem set 4.2</div>
-            <div class="art-li"><span class="box"></span>Systems worksheet<span class="when">TONIGHT</span></div>
-            <div class="art-li"><span class="box"></span>Gatsby annotations<span class="when">FRI</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="stepcard blue reveal">
-        <h3>Learned for you</h3>
-        <div class="step-art">
-          <svg class="art-map" viewBox="0 0 220 104" preserveAspectRatio="xMidYMid slice">
-            <line x1="30" y1="70" x2="80" y2="34"/><line x1="80" y1="34" x2="140" y2="56"/>
-            <line x1="140" y1="56" x2="192" y2="28"/><line x1="80" y1="34" x2="120" y2="88"/>
-            <line x1="140" y1="56" x2="120" y2="88"/>
-            <circle cx="30" cy="70" r="5"/><circle cx="80" cy="34" r="5"/>
-            <circle cx="192" cy="28" r="5"/><circle cx="120" cy="88" r="5"/>
-            <circle class="lit glow" cx="140" cy="56" r="8"/>
-          </svg>
-        </div>
-      </div>
-    </div>
-
-    <div class="dropdemo reveal" id="dropdemo">
-      <div class="dd-left">
-        <div class="dd-head">
-          DROP SOMETHING
-          <span class="dd-arrow" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12"/><path d="m7 11 5 5 5-5"/></svg>
-          </span>
-        </div>
-        <div class="dd-toss">Toss one of these</div>
-        <div class="dd-pdfs" id="ddPdfs">
-          <button class="dd-pdf is-on" type="button" data-id="systems" aria-pressed="true">
-            <img src="img/sample-systems.pdf.png" alt="Systems of Equations worksheet PDF">
-          </button>
-          <button class="dd-pdf" type="button" data-id="gatsby" aria-pressed="false">
-            <img src="img/sample-gatsby.pdf.png" alt="Gatsby annotations PDF">
-          </button>
-          <button class="dd-pdf" type="button" data-id="chem" aria-pressed="false">
-            <img src="img/sample-chem.pdf.png" alt="Stoichiometry set PDF">
-          </button>
-          <button class="dd-pdf" type="button" data-id="circles" aria-pressed="false">
-            <img src="img/sample-circles.pdf.png" alt="Circle theorems PDF">
-          </button>
-        </div>
-      </div>
-      <div class="dd-right">
-        <div class="dd-note-label">Filed as a note</div>
-        <div class="dd-note" id="ddNote">
-          <h4 id="ddNoteTitle">Systems of Equations</h4>
-          <div class="dd-meta" id="ddNoteMeta">Algebra II · Unit 5 · due Thursday</div>
-          <ul class="dd-bullets" id="ddNoteBody">
-            <li>Named and dated for you</li>
-            <li>Graph + word problem on one page</li>
-            <li>Ready for tonight's study</li>
-          </ul>
-          <div class="dd-whisper" id="ddNoteWhisper">named, dated, waiting in your binder</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="proof reveal">
-      <div class="proof-frame">
-        <div class="proof-bar"><i></i><i></i><i></i><span>mindcraft · Learn · landscape</span></div>
-        <img class="crop-demo" src="img/app/dash-landscape.jpg" alt="The real MindCraft Learn dash in landscape: contents map with watercolor tiles and this week's review">
-      </div>
-      <div class="proof-cap">the real dash, landscape, not a mockup</div>
-    </div>
-    <p class="turn reveal">Filing is the chore. Turn the page for the fun part<i>!</i></p>
-  </div>
-</section>
-
-<!-- ================= STORY ================= -->
-<section class="story" id="story">
-  <div class="wrap">
-    <div class="story-grid">
-      <div class="story-copy">
-        <div class="kicker reveal">Chapter 03 · The adventure</div>
-        <h2 class="h2 reveal">Your notes turn into <span class="script">story adventures.</span></h2>
-        <p class="story-excerpt reveal"><span class="lead-in">Drop a linear equations worksheet</span> and the desk already knows what you're working on. Practice isn't a drill sheet. It's a ship leaving England in 1761.</p>
-        <div class="hero-actions reveal" style="margin-top:22px;">
-          <a class="btn primary ext" href="https://mindcraft-93858.web.app/try/story/linear_equations" target="_blank" rel="noopener">Read a chapter</a>
-        </div>
-      </div>
-      <div class="story-shot reveal">
-        <div class="story-frame"><img src="img/new-story-card.jpg" alt="A MindCraft story card: Linear Equations, William Harrison at sea, bound for Jamaica, 1761"></div>
-        <figure class="story-polaroid">
-          <img src="img/story-linear-equations.jpg" alt="Watercolor of a marine chronometer and compass">
-          <figcaption>the watch that started it</figcaption>
-        </figure>
-      </div>
-    </div>
-    <p class="turn reveal">Stories are one superpower. The desk keeps more in the drawer<i>!</i></p>
-  </div>
-</section>
-
-<!-- ================= CAPABILITIES ================= -->
+<!-- ================= QUIET SUPERPOWER (after problem, before desk shot) ================= -->
 <section class="caps" id="build">
   <div class="wrap">
-    <div class="kicker reveal">Chapter 04 · The powers</div>
+    <div class="kicker reveal">Chapter 01.5 · The powers</div>
     <h2 class="h2 reveal">A quiet superpower for every part of school.</h2>
     <div class="caps-grid">
       <div class="cap featured reveal">
@@ -1320,6 +1188,130 @@
         <h3>Semester archive</h3>
         <p>Finals week, meet everything you did since August. Searchable.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= OS / GYM + live desk ================= -->
+<section class="how" id="os" style="padding-top:0;">
+  <div class="wrap">
+    <div class="kicker reveal">Chapter 02 · The membership</div>
+    <h2 class="h2 reveal">A gym for knowledge. <span class="script">Not another chat box.</span></h2>
+    <p class="lede reveal">You show up. The desk holds the plan. Care and support when you need it.</p>
+
+    <div class="shot-rail reveal">
+      <figure class="shot-wide">
+        <img src="img/app/desk-ipad-live.png" alt="MindCraft Field Desk on iPad in landscape: binder, intel, memo, calendar, Connect">
+        <div class="call" aria-hidden="true">
+          <span>Field Desk</span>
+          <span>Learn · binder</span>
+          <span>Connect · Google</span>
+        </div>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HOW / DROP (live API) ================= -->
+<section class="how" id="how">
+  <div class="wrap">
+    <div class="kicker reveal">Chapter 03 · The desk</div>
+    <h2 class="h2 reveal">Drop it. <span class="script">It finds its place.</span></h2>
+    <p class="lede reveal">Toss a real file or a sample. The desk names it, dates it, and files it. Live.</p>
+
+    <div class="dropdemo reveal" id="dropdemo">
+      <div class="dd-left">
+        <div class="dd-head">
+          DROP SOMETHING
+          <span class="dd-arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12"/><path d="m7 11 5 5 5-5"/></svg>
+          </span>
+        </div>
+        <label class="dd-live" id="ddLiveZone">
+          <input type="file" id="ddLiveFile" accept="image/*,.pdf,text/plain" hidden>
+          <strong>Drop your own file here</strong>
+          <span>PDF, photo, or notes · filed by live API</span>
+        </label>
+        <div class="dd-toss">Or toss a sample</div>
+        <div class="dd-pdfs" id="ddPdfs">
+          <button class="dd-pdf is-on" type="button" data-id="systems" data-file="systems_of_equations.pdf" aria-pressed="true">
+            <img src="img/sample-systems.pdf.png" alt="Systems of Equations worksheet PDF">
+          </button>
+          <button class="dd-pdf" type="button" data-id="gatsby" data-file="gatsby_annotations.pdf" aria-pressed="false">
+            <img src="img/sample-gatsby.pdf.png" alt="Gatsby annotations PDF">
+          </button>
+          <button class="dd-pdf" type="button" data-id="chem" data-file="stoichiometry_set.pdf" aria-pressed="false">
+            <img src="img/sample-chem.pdf.png" alt="Stoichiometry set PDF">
+          </button>
+          <button class="dd-pdf" type="button" data-id="circles" data-file="circle_theorems.pdf" aria-pressed="false">
+            <img src="img/sample-circles.pdf.png" alt="Circle theorems PDF">
+          </button>
+        </div>
+      </div>
+      <div class="dd-right">
+        <div class="dd-note-label">Filed as a note <span id="ddLiveBadge" hidden>· live</span></div>
+        <div class="dd-note" id="ddNote">
+          <h4 id="ddNoteTitle">Systems of Equations</h4>
+          <div class="dd-meta" id="ddNoteMeta">Algebra II · Unit 5 · due Thursday</div>
+          <ul class="dd-bullets" id="ddNoteBody">
+            <li>Named and dated for you</li>
+            <li>Graph + word problem on one page</li>
+            <li>Ready for tonight's study</li>
+          </ul>
+          <div class="dd-whisper" id="ddNoteWhisper">named, dated, waiting in your binder</div>
+        </div>
+      </div>
+    </div>
+    <p class="turn reveal">Filing is the chore. Turn the page for the fun part<i>!</i></p>
+  </div>
+</section>
+
+<!-- ================= STORY + dash ================= -->
+<section class="story" id="story">
+  <div class="wrap">
+    <div class="story-grid">
+      <div class="story-copy">
+        <div class="kicker reveal">Chapter 04 · The adventure</div>
+        <h2 class="h2 reveal">Your notes turn into <span class="script">story adventures.</span></h2>
+        <p class="story-excerpt reveal"><span class="lead-in">Drop a linear equations worksheet</span> and the desk already knows what you're working on. Practice isn't a drill sheet. It's a ship leaving England in 1761.</p>
+        <div class="hero-actions reveal" style="margin-top:22px;">
+          <a class="btn primary ext" href="https://mindcraft-93858.web.app/try/story/linear_equations" target="_blank" rel="noopener">Read a chapter</a>
+        </div>
+      </div>
+      <div class="story-shot reveal">
+        <div class="story-frame"><img src="img/new-story-card.jpg" alt="A MindCraft story card: Linear Equations, William Harrison at sea, bound for Jamaica, 1761"></div>
+        <figure class="story-polaroid">
+          <img src="img/story-linear-equations.jpg" alt="Watercolor of a marine chronometer and compass">
+          <figcaption>the watch that started it</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="proof reveal" style="margin-top:36px;">
+      <div class="proof-frame">
+        <div class="proof-bar"><i></i><i></i><i></i><span>mindcraft · Learn dash</span></div>
+        <img class="crop-demo" src="img/app/dash-landscape.jpg" alt="MindCraft Learn dash in landscape after story practice">
+      </div>
+      <div class="proof-cap">your Learn home after the adventure</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ACT PREP PATH (not a package) ================= -->
+<section class="how" id="prep">
+  <div class="wrap">
+    <div class="kicker reveal">Chapter 05 · Ready for test day</div>
+    <h2 class="h2 reveal">We've built one ACT prep path <span class="script">for you.</span></h2>
+    <p class="lede reveal">Gap map, story practice, and this week's review. One Learn surface. Open it when you're ready.</p>
+    <div class="shot-rail reveal">
+      <figure class="shot-wide">
+        <img src="img/app/dash-landscape.jpg" alt="MindCraft ACT prep Learn dash in landscape">
+        <div class="call" aria-hidden="true">
+          <span>Gap map</span>
+          <span>Story practice</span>
+          <span>This week</span>
+        </div>
+      </figure>
     </div>
   </div>
 </section>
@@ -1405,7 +1397,7 @@
     <div class="act-grid">
       <div>
         <div class="kicker reveal">Chapter 07 · The mission · Live now</div>
-        <h2 class="h2 reveal">The Summer ACT package.</h2>
+        <h2 class="h2 reveal">Summer ACT prep, ready now.</h2>
         <p class="act-lede reveal">One summer. One route back from your test date.</p>
         <div class="act-includes">
           <div class="act-inc reveal"><span class="tick">✓</span><p>Gap scan + your route</p></div>
@@ -1514,7 +1506,7 @@
       </details>
       <details>
         <summary>What does it cost?</summary>
-        <p>The desk is free while we are in beta. Tutoring and the Summer ACT package are paid, and your first tutor session is free so you can decide after you meet.</p>
+        <p>The desk is free while we are in beta. Tutoring and Summer ACT prep are paid, and your first tutor session is free so you can decide after you meet.</p>
       </details>
     </div>
   </div>
@@ -1578,7 +1570,10 @@
 <footer>
   <div class="wrap">
     <div class="foot-row">
-      <a class="brand" href="#">Mind<span style="color:var(--gold-deep);">Craft</span></a>
+      <a class="brand" href="#" aria-label="MindCraft home">
+        <img src="img/raccoon-logo.png" alt="" width="34" height="34">
+        <span class="visually-hidden">MindCraft</span>
+      </a>
       <div class="foot-links">
         <a href="#how">The Desk</a>
         <a class="ext" href="https://mindcraft-93858.web.app/find-a-tutor" target="_blank" rel="noopener">Find a tutor</a>
@@ -1847,28 +1842,29 @@
   nav.addEventListener('focusin', () => nav.classList.remove('is-hidden'));
   updateNav();
 
-  // ---------- Drop demo: toss a PDF → note summary ----------
-  const DD_NOTES = {
+  // ---------- Drop demo: live marketing-drop API + samples ----------
+  const DROP_API = 'https://mindcraft-webhook.vercel.app/api/marketing-drop';
+  const DD_FALLBACK = {
     systems: {
-      title: 'Systems of Equations',
+      title: 'Systems of Equations', course: 'Algebra II',
       meta: 'Algebra II · Unit 5 · due Thursday',
       bullets: ['Named and dated for you', 'Graph + word problem on one page', "Ready for tonight's study"],
       whisper: 'named, dated, waiting in your binder'
     },
     gatsby: {
-      title: 'Gatsby Annotations',
+      title: 'Gatsby Annotations', course: 'English 11',
       meta: 'English 11 · Ch. 4-6 · due Friday',
       bullets: ['Quotes you can reopen fast', 'No more hunting the PDF', 'Filed with the chapter'],
       whisper: 'the desk kept the quotes that matter'
     },
     chem: {
-      title: 'Stoichiometry Set',
+      title: 'Stoichiometry Set', course: 'AP Chem',
       meta: 'AP Chem · Unit 3 · quiz Monday',
       bullets: ['Four problems, one unit', 'Queued before the quiz', 'Unit 3, not IMG_whatever'],
       whisper: 'unit 3, not "IMG_whatever"'
     },
     circles: {
-      title: 'Circle Theorems',
+      title: 'Circle Theorems', course: 'Geometry',
       meta: 'Geometry · Unit 6 · practice',
       bullets: ['Theorems titled for search', 'Practice when you need it', 'Geometry finally has a home'],
       whisper: 'geometry finally has a home'
@@ -1879,33 +1875,95 @@
   const ddMeta = document.getElementById('ddNoteMeta');
   const ddBody = document.getElementById('ddNoteBody');
   const ddWhisper = document.getElementById('ddNoteWhisper');
-  function fillDdNote(n){
+  const ddBadge = document.getElementById('ddLiveBadge');
+  const ddZone = document.getElementById('ddLiveZone');
+  const ddFile = document.getElementById('ddLiveFile');
+  function fillDdNote(n, live){
     ddTitle.textContent = n.title;
-    ddMeta.textContent = n.meta;
-    ddBody.replaceChildren(...n.bullets.map(t => {
+    ddMeta.textContent = n.meta || ((n.course || 'Binder') + ' · filed just now');
+    const bullets = Array.isArray(n.bullets) ? n.bullets : [];
+    ddBody.replaceChildren(...bullets.map(t => {
       const li = document.createElement('li');
       li.textContent = t;
       return li;
     }));
-    ddWhisper.textContent = n.whisper;
+    ddWhisper.textContent = n.whisper || 'named, dated, waiting in your binder';
+    if (ddBadge) ddBadge.hidden = !live;
+    ddNote.style.animation = 'none';
+    void ddNote.offsetWidth;
+    ddNote.style.animation = '';
+  }
+  async function fileViaApi(payload, fallback){
+    if (ddZone) ddZone.classList.add('is-busy');
+    try {
+      const res = await fetch(DROP_API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        mode: 'cors',
+      });
+      if (!res.ok) throw new Error('drop failed');
+      const data = await res.json();
+      fillDdNote(data, data.source === 'live' || Boolean(data.title));
+      return data;
+    } catch (_) {
+      if (fallback) fillDdNote(fallback, false);
+      return fallback;
+    } finally {
+      if (ddZone) ddZone.classList.remove('is-busy');
+    }
   }
   document.querySelectorAll('.dd-pdf').forEach(btn => {
     btn.addEventListener('click', () => {
       const id = btn.dataset.id;
-      const n = DD_NOTES[id];
-      if (!n) return;
+      const fallback = DD_FALLBACK[id];
       document.querySelectorAll('.dd-pdf').forEach(b => {
         const on = b === btn;
         b.classList.toggle('is-on', on);
         b.classList.toggle('is-dim', !on);
         b.setAttribute('aria-pressed', on ? 'true' : 'false');
       });
-      ddNote.style.animation = 'none';
-      void ddNote.offsetWidth;
-      ddNote.style.animation = '';
-      fillDdNote(n);
+      void fileViaApi({ filename: btn.dataset.file || (id + '.pdf') }, fallback);
     });
   });
+  function readFileAsDataUrl(file){
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(String(reader.result || ''));
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+  async function handleLiveFile(file){
+    if (!file) return;
+    const fallback = {
+      title: file.name.replace(/\.[^.]+$/, '') || 'School drop',
+      course: 'Binder',
+      meta: 'Binder · filed just now',
+      bullets: ['Named from what you dropped', 'Ready on your Field Desk', 'Ask can find it later'],
+      whisper: 'dropped, named, waiting in your binder',
+    };
+    let imageBase64;
+    if (file.type.startsWith('image/') && file.size < 900000) {
+      imageBase64 = await readFileAsDataUrl(file);
+    }
+    await fileViaApi({ filename: file.name, imageBase64 }, fallback);
+  }
+  if (ddFile) {
+    ddFile.addEventListener('change', () => handleLiveFile(ddFile.files && ddFile.files[0]));
+  }
+  if (ddZone) {
+    ;['dragenter','dragover'].forEach(ev => ddZone.addEventListener(ev, e => {
+      e.preventDefault(); ddZone.classList.add('is-drag');
+    }));
+    ;['dragleave','drop'].forEach(ev => ddZone.addEventListener(ev, e => {
+      e.preventDefault(); ddZone.classList.remove('is-drag');
+    }));
+    ddZone.addEventListener('drop', e => {
+      const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+      handleLiveFile(f);
+    });
+  }
 
   // ---------- Apply tabs (student / tutor) ----------
   const applyStage = document.getElementById('applyStage');

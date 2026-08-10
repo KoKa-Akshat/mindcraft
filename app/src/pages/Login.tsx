@@ -292,8 +292,8 @@ export default function Login() {
             <FourierCanvas className={s.fourierBg} />
             <div className={s.heroContent}>
               <div className={s.heroIntro}>
-                <div className={s.wordmark}>
-                  <span className={s.wmMind}>Mind</span><span className={s.wmCraft}>Craft</span>
+                <div className={s.wordmark} aria-label="MindCraft">
+                  <img className={s.logoMark} src="/img/raccoon-logo.png" alt="" width={56} height={64} />
                 </div>
                 <h1 className={s.heroTitle}>Come back to your map.</h1>
                 <p className={s.heroCopy}>
