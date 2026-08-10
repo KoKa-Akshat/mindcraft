@@ -106,8 +106,10 @@
 | CXIV | `chapters/114_desirable_difficulty_scheduling_under_exam_deadlines.md` | DD scheduling under exam deadlines; SAFE-DDSCHED; hold mix / ease load |
 | CXV | `chapters/115_tutor_identity_belonging_near_peer_role_models.md` | Tutor identity & belonging; SAFE-ROLEMODEL; fidelity-first near-peer |
 | CXVI | `chapters/116_offline_practice_fidelity_paper_whiteboard_capture.md` | Offline practice fidelity; SAFE-OFFLINE; attempt→capture→confirm |
+| CXVII | `chapters/117_worked_example_fading_under_high_math_anxiety.md` | Fade × anxiety; SAFE-FADEX; protect then fade (provisional) |
+| CXVIII | `chapters/118_parent_message_framing_after_soft_wrong_streaks.md` | Parent soft-wrong framing; SAFE-SOFTMSG; grain+CTA not nag (provisional) |
 
-Queued next: see `NEXT_LAB.md` (Part CXVII fade×anxiety, then 118+).
+Queued next: see `NEXT_LAB.md` (Part CXIX Map orchestration mid-session, then 120+).
 
 **Synthesizer note (v1.15):** Nine researcher chapters (CVIII–CXVI) landed after v1.14 as provisional I.4 densifiers — analogical bridge teaching, writing-to-learn, spatial FormatId hops, formative assessment cycles, feedback literacy, collaborative vs solo FEI, DD scheduling under exam deadlines, tutor near-peer role models, and offline paper/whiteboard capture. This edition promotes each stack to company law (removes provisional tags), formalizes Red Team kills #62–#70, confirms ANALOG/WRITE/SPATIAL/FA/FBLIT/COLLAB/DDSCHED/ROLEMODEL/OFFLINE experiment families in Part IX, and refreshes metrics/glossary/competitive implication. Deep-dive files remain authoritative for citations; the OS keeps only *surviving* product rules.
 
@@ -329,7 +331,7 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 
 **Merged / demoted (do not treat as separate products):** “AI tutor,” “mastery path,” “growth mindset,” “engagement,” “grit,” “habit streak,” “celebrate mistakes,” “community of practice,” “deliberate practice brand,” “film study,” “recital,” “grandmaster review,” “exposure therapy,” “girl STEM brand,” “WTP survey,” “Identity Score™,” “8-week math person,” “character equity,” “knowledge-graph moat,” “emotion AI empathy,” “science-backed page count,” “Ivy tutor SKU,” “AI wrote N questions,” “FERPA-compliant badge,” “perfect-interval SRS,” “tutor headcount / retention-%,” “mastery fireworks / personal Ebbinghaus,” “FSRS/Anki brain optimizer,” “cram/bootcamp/+points packages,” “instant feedback AI / always-delay science,” “bridge-count / we connect everything,” “day-one personalized mastery / placement belt,” “every format / visual learning / Format Personality™,” “parent fireworks portal / Family Leaderboard / live wrong-answer stalk,” “immersive story world / lore engagement / Story Engagement Score™,” “user-count / star-wall / vague confidence testimonials as learning proof,” “item-count / complete ACT bank / AI fills all holes coverage theater,” “always-full-worked / unlimited solutions / never-fade Solver,” “unlimited hints / never stuck / Help Score™,” “DAU/streak/XP North Star / FEI Score™ / thumbs-up≡learning,” “unlimited free hard peeks / Hint Score™ / XP-for-hints / perfect-hint AI,” “longer≡better / Explanation Score™ / unlimited thorough AI essays / monologue≡SE,” “maximize productive struggle minutes / Struggle Score™ / blank-time grit / always-wait / never-stuck dump,” “fail-first always / every miss is productive failure / PF Score™ / discovery-without-consolidation,” “guild / master tutor / cognitive apprenticeship™ costume / Apprenticeship Score™ / modeling-minutes / never-fade coach,” “Focus Score™ / deep-work theater / phone-shame / mid-attempt streak pings / multitasking digital-native talent,” “Dual Coding Score™ / always-add-picture / decoration-as-dual-coding / visual-learner meshing / animation-first multimedia / split-legend density theater,” and “Monitoring Score™ / metacognition-without-control / easy-only calibration / one-scan calibration theater,” and “AI-replaces-tutors / tutoring-is-free / unlimited-human / hours-booked / Session ROI Score™ theater,” and “SRL Score™ / reflection-streak / survey-SRL≡event / streak≡self-regulation theater,” and “universal E0→E3 destiny / Example Timing Score™ / fixed≡adaptive fade costume,” and “Generative Learning Score™ / AI≡generation / teach-for-XP / eight-strategy GLA bomb,” and “Psychological Safety Score™ / poster safe-space / Bermuda-triangle / praise-fog climate,” and “Homework Completion Score™ / tonight-% / Chegg-dump / assisted≡ready / purity-ban help,” and “Embodiment Score™ / kinesthetic styles / always-gesture / pose-camera AI,” and “Peer Explanation Score™ / teach-for-XP / Discord≡knowledge-building / AI≡peer teaching,” and “Curiosity Score™ / cliffhanger-without-commit / postdiction / guess-for-XP / instant-reveal entertainment,” and “Analogy Score™ / Mapping Minutes / mention≡pedagogy / surface-story≡structure / AI likeness dump,” and “Writing Score™ / Journal Minutes / freewrite≡learning / longer≡deeper / AI≡WTL,” and “Spatial Score™ / Mental Rotation Minutes / brain-training≡identity / Spatial Personality™,” and “Formative Score™ / Assessment Minutes / exit-ticket≡learning / 0.4–0.7 AfL ads,” and “Feedback Literacy Score™ / Feedback Minutes / delivery≡uptake / thumbs≡used,” and “Collaboration Score™ / Group Minutes / Discord≡CSCL / group-correct≡ready,” and “Desirable Difficulty Score™ / Challenge Minutes / always-ease-before-ACT / always-max-DD / cram-week≡ready,” and “Representation Score™ / Diversity Minutes / costume≡belonging / match≡quality,” and “Capture Score™ / Photo Minutes / OCR≡mastery / photo→answer / Photomath-pipe” are *not* independent North Stars — they are subordinate UX under FEI + the rows above (borrow *method*, never *costume*).
 
-**Next research bottleneck:** Part CXVII **Worked-example fading under high math anxiety**. Experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O/WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT/ONTO/HITL/PRIV/LABMETA/GRAIN/GENQ/PROCURE/SCHED/WORK/FORGET/ADAPT/CRAM/FB/BRIDGE/COLD/FORMAT/PDASH/TALK/STORYLOAD/PROOF/COVER/FADE/HELP/INSTR/HINT/EXPLAIN/RETRIEVE/PF/APPRENTICE/ATTN/DUAL/MONITOR/ROI/EXPTIME/SRL/GENACT/ERRCLIM/HWHELP/GESTURE/PEERX/PREDICT/ANALOG/WRITE/SPATIAL/FA/FBLIT/COLLAB/DDSCHED/ROLEMODEL/OFFLINE gate claims above L1. Researcher count since v1.15 synthesizer = **0**.
+**Next research bottleneck:** Part CXIX **Classroom orchestration of Map during live tutoring**. Experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O/WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT/ONTO/HITL/PRIV/LABMETA/GRAIN/GENQ/PROCURE/SCHED/WORK/FORGET/ADAPT/CRAM/FB/BRIDGE/COLD/FORMAT/PDASH/TALK/STORYLOAD/PROOF/COVER/FADE/HELP/INSTR/HINT/EXPLAIN/RETRIEVE/PF/APPRENTICE/ATTN/DUAL/MONITOR/ROI/EXPTIME/SRL/GENACT/ERRCLIM/HWHELP/GESTURE/PEERX/PREDICT/ANALOG/WRITE/SPATIAL/FA/FBLIT/COLLAB/DDSCHED/ROLEMODEL/OFFLINE/FADEX/SOFTMSG gate claims above L1. Researcher count since v1.15 synthesizer = **2**. Provisional densifiers pending synthesizer: SAFE-FADEX (CXVII), SAFE-SOFTMSG (CXVIII).
 
 ---
 
@@ -409,6 +411,8 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 
 | Date | Finding | Type | Action |
 |------|---------|------|--------|
+| 2026-08-10 | SAFE-SOFTMSG: grain+failure-enhancing+one CTA after soft-wrong; kill Miss Streak / live stalk / empty mindset posters | Evidence | SOFTMSG-1…5; next = CXIX Map mid-session orchestration |
+| 2026-08-10 | SAFE-FADEX: protect-then-fade under HMA; kill forever-E0 / flood / Anxiety·Calm Score™ fade gates | Evidence | FADEX-1…5; next = CXVIII parent soft-wrong framing |
 | 2026-08-10 | Synthesizer v1.15: merge CVIII–CXVI SAFE-* into I.4; kills #62–#70 | Synthesis | Surviving commercial law; next = CXVII fade×anxiety |
 | 2026-08-10 | SAFE-OFFLINE: attempt→capture→confirm; kill Capture Score™ / OCR≡mastery / photo→answer hero | Evidence | OFFLINE-1…5; next = CXVII fade×anxiety |
 | 2026-08-10 | SAFE-ROLEMODEL: fidelity-first near-peer belonging; kill Representation Score™ / costume≡belonging / match≡quality | Evidence | ROLEMODEL-1…5; next = CXVI offline practice fidelity |
@@ -690,6 +694,8 @@ Core A–D remain. Chapter ticks densified them into families — prefer the den
 | PROOF-* | Competence-card vs star-wall landing / provincial case / two-sided MoC vs +points / opt-in share / parent CBC dated solo | LXXXVI |
 | COVER-* | Honest matrix vs item-count hero / parent CBC holes+seal / district audit packet / in-app gap callout / audit cadence | LXXXVII |
 | FADE-* | Backward completion ladder vs always-full / forward vs backward / fade-up after solos / SE-on-blank / parent CBC fade story | LXXXVIII |
+| FADEX-* | Longer E0/E1 hold for high-MA vs aggressive fade / protective WE on bridge / incorrect mid-rung / destake vs timed fade / parent CBC protect-then-fade | CXVII |
+| SOFTMSG-* | Grain+failure-enhancing+CTA vs miss-shame / autonomy vs controlling tip / anxious-parent pressure-reduce / digest+MoC / parent CBC honest-grain | CXVIII |
 | HELP-* | Contingent instrumental vs unlimited bottom-out / SE-before-hint / help-invite vs freeze / meta-msg vs gate / parent CBC next-step help | LXXXIX |
 | INSTR-* | Lagged FEI vs streak/DAU prediction / tutor KPI co-gates / event fire audit / motive-coded challenge CTA / parent CBC FEI report | XC |
 | HINT-* | Soft-first contingent vs free hard / SE-cost vs dwell / fade×hint couple / peek budget / parent CBC next-step hints | XCI |
@@ -1435,6 +1441,8 @@ Principles that repeatedly change human behavior outside classrooms — filtered
 | `format_hop_solo_transfer_pass` | Solo pass on delayed item in previously weak FormatId | SAFE-FORMAT conversion (LXXXII) |
 | `parent_proof_age_view` | Parent opened proof-age strip / MoC surface | SAFE-PDASH honesty (LXXXIII) |
 | `parent_return_cta_start` | Student return/mission started after parent CTA or digest | SAFE-PDASH action loop (LXXXIII) |
+| `parent_softmsg_open` | Parent opened soft-wrong grain digest (not miss-streak hero) | SAFE-SOFTMSG honesty (CXVIII; provisional) |
+| `parent_intrusion_tip_shown` | Autonomy / anti-control tip shown after soft-wrong run | SAFE-SOFTMSG autonomy>control (CXVIII; provisional) |
 | `student_constructive_share` | Why/SE/soft-wrong turns / student turns (sampled session) | SAFE-TALK construction fidelity (LXXXIV) |
 | `prompt_density` | Eliciting prompts / tutor turns | SAFE-TALK prompt>pour (LXXXIV) |
 | `wait_ms_p50` | Median wait time 1 and 2 (ms) | SAFE-TALK wait coaching (LXXXIV) |
@@ -1733,9 +1741,12 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 3be. Tutor identity & belonging (near-peer role models) — **DONE** Part CXV / SAFE-ROLEMODEL  
 3bf. Offline practice fidelity (paper/whiteboard capture) — **DONE** Part CXVI / SAFE-OFFLINE  
 3bg. **Synthesizer v1.15** — merge CVIII–CXVI into I.4 company law — **DONE**  
-3bh. Worked-example fading under high math anxiety — queued id 117 **NEXT**  
-3bi. Parent message framing after soft-wrong streaks — queued id 118  
-3bj. Classroom orchestration of Map during live tutoring — queued id 119  
+3bh. Worked-example fading under high math anxiety — **DONE** Part CXVII / SAFE-FADEX (provisional)  
+3bi. Parent message framing after soft-wrong streaks — **DONE** Part CXVIII / SAFE-SOFTMSG (provisional)  
+3bj. Classroom orchestration of Map during live tutoring — queued id 119 **NEXT**  
+3bk. Tutor burnout early-warning without wellness theater — queued id 120  
+3bl. Explanation quality rubrics for AI coach wraps — queued id 121  
+3bm. Partial-credit & soft-wrong taxonomy productization — queued id 122  
 4. Equity audit of story worlds — **DONE** (Part XXXVI)  
 5. Competitive teardown — **DONE** session audits (Part XXXV); usage telemetry still open  
 6. Formal Bayesian update process for Constitution claims — **DONE** Part LXX / SAFE-LABMETA  

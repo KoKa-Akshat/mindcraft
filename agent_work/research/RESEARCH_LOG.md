@@ -4,6 +4,46 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-10 — Researcher tick: Part CXVIII Parent message framing after soft-wrong streaks (SAFE-SOFTMSG)
+
+**Tick type:** Researcher (UTC hour 15; hour%6≠0; researcher count since synthesizer v1.15 = 1 → Researcher)  
+**Chapter written:** `chapters/118_parent_message_framing_after_soft_wrong_streaks.md` (Part CXVIII)  
+**Claim examined:** Whether MindCraft parent digests after soft-wrong runs should be grain-named + failure-enhancing + one autonomy-supportive CTA — vs Miss Streak shame, live wrong-answer stalk, empty mindset posters, or controlling “sit until correct” scripts.
+
+**Doctrine proposed (provisional):** **SAFE-SOFTMSG** — densifies SAFE-PDASH × SAFE-FBLIT × SAFE-ERRCLIMATE: name the grain; failure-is-enhancing not ability verdict; one return CTA; autonomy>control; do not recruit math-anxious parents into more intrusive help; no Miss Streak / live stalk / Parent Correctness Score™; belief posters ≠ product. Experiment family **SOFTMSG-*** (distinct from PDASH-* / FBLIT-*).
+
+**Evidence spine (verified citations):** Jiang et al. (2023); Wu, Barger, Oh, & Pomerantz (2022); Maloney et al. (2015); Retanal et al. (2021); Park et al. (2023); Haimovitz & Dweck (2016); MacDonald et al. (2024).
+
+**Claim killed (this tick):** Miss Streak / soft-wrong shame push / live wrong-answer stalk / Parent Correctness Score™ / empty “mistakes are good!” without grain+CTA / controlling “sit until correct” default / growth-mindset parent letter≡FEI / ACT guarantees from parent messaging (provisional kill #72 until synthesizer).
+
+**Experiments:** SOFTMSG-1…5 + SOFTMSG-QUAL.
+
+**Next researcher id:** **119** (classroom orchestration of Map during live tutoring). Researcher count since v1.15 synthesizer: **2**. Queue extended with ids 120–122 (<3 unfinished rule).
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-10 — Researcher tick: Part CXVII Worked-example fading under high math anxiety (SAFE-FADEX)
+
+**Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch117 never written → prefer Researcher per rotation; researcher count since synthesizer v1.15 = 0)  
+**Chapter written:** `chapters/117_worked_example_fading_under_high_math_anxiety.md` (Part CXVII)  
+**Claim examined:** Whether MindCraft should protect HMA learners with worked examples then still fade — vs forever-E0 “anxious track,” day-one aggressive fade flood, or Anxiety/Calm Score™ fade gates.
+
+**Doctrine proposed (provisional):** **SAFE-FADEX** — densifies SAFE-FADE × SAFE-EXPOSE × SAFE-DD: protective WE under anxiety WM load (Mesghina; Ashcraft); longer E0/E1 hold without soft track; gate on grain not meters (Miller-Cotto WM null); peek binge = safety behavior; proof = solo transfer + approach; no forever dump / flood / Calm Score™. Experiment family **FADEX-*** (distinct from FADE-* / EXP-O-*).
+
+**Evidence spine (verified citations):** Ashcraft & Kirk (2001); Ashcraft & Krause (2007); Hembree (1990); Mesghina, Vollman, Trezise, & Richland (2023); Renkl et al. (2002); Renkl & Atkinson (2003); Atkinson, Renkl, & Merrill (2003); Miller-Cotto et al. (2025/2026 BJEP); Barbieri & Booth (2016); Craske et al. (2014).
+
+**Claim killed (this tick):** Forever-E0 anxious track / day-one aggressive fade flood for HMA / Anxiety Score™ or Calm Score™ fade gate / Fade Score™ NS / permanent peek “support” / soft standards for anxious personas / protect-without-fade ChatGPT dump / ACT guarantees from anxiety-aware scaffolding (provisional kill #71 until synthesizer).
+
+**Experiments:** FADEX-1…5 + FADEX-QUAL.
+
+**Next researcher id:** **118** (parent message framing after soft-wrong streaks). Researcher count since v1.15 synthesizer: **1**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-10 — Synthesizer tick v1.15: merge Parts CVIII–CXVI
 
 **Tick type:** Synthesizer (UTC hour 9; hour%6≠0; ≥8 researcher entries since synthesizer v1.14 → Synthesizer)  

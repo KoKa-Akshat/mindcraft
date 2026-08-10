@@ -108,9 +108,12 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 115 | Tutor identity & belonging (near-peer role models) | Representation without tokenism; hire briefs × SAFE-GENDER/ELL | **DONE** (2026-08-10) — Part CXV / SAFE-ROLEMODEL |
 | 116 | Offline practice fidelity (paper/whiteboard capture) | Photo-to-Map; attempt grain without phone distraction | **DONE** (2026-08-10) — Part CXVI / SAFE-OFFLINE |
 | — | **Synthesizer v1.15** | Merge CVIII–CXVI SAFE-* into core OS I.4 / XIV / IX / XXI | **DONE** (2026-08-10 UTC 09) |
-| 117 | Worked-example fading under high math anxiety | SAFE-FADE × SAFE-EXPOSE; when full examples protect vs trap | **NEXT** |
-| 118 | Parent message framing after soft-wrong streaks | SAFE-PDASH × SAFE-FBLIT; honesty without nag/shame loops | queued |
-| 119 | Classroom orchestration of Map during live tutoring | HITL + SAFE-FA; when to open Map mid-session vs after | queued |
+| 117 | Worked-example fading under high math anxiety | SAFE-FADE × SAFE-EXPOSE; when full examples protect vs trap | **DONE** (2026-08-10) — Part CXVII / SAFE-FADEX |
+| 118 | Parent message framing after soft-wrong streaks | SAFE-PDASH × SAFE-FBLIT; honesty without nag/shame loops | **DONE** (2026-08-10) — Part CXVIII / SAFE-SOFTMSG |
+| 119 | Classroom orchestration of Map during live tutoring | HITL + SAFE-FA; when to open Map mid-session vs after | **NEXT** |
+| 120 | Tutor burnout early-warning without wellness theater | SAFE-WORKFORCE × affect privacy; fidelity dips before exit | queued |
+| 121 | Explanation quality rubrics for AI coach wraps | SAFE-EXPLAIN × SAFE-GENQ; principle-short QA gates | queued |
+| 122 | Partial-credit & soft-wrong taxonomy productization | SAFE-MISCON × SAFE-FBLIT; mark types without gradebook cosplay | queued |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 
@@ -188,3 +191,5 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any Desirable Difficulty Score™ / Challenge Minutes NS / always-ease-before-ACT / blocked-comfort≡ready / always-max-DD-until-bell / last-48h scored flood-as-DD / cram-week≡ready / schedule ACT-point guarantees (Part CXIV / SAFE-DDSCHED)
 - Any Representation Score™ / Diversity Minutes NS / token STEM costume≡belonging / demographic match≡quality / empty likeness praise≡recognition / Belonging Score™ / matching ACT guarantees / soft standards for matched pairs (Part CXV / SAFE-ROLEMODEL)
 - Any Capture Score™ / Photo Minutes NS / OCR≡mastery / always-on camera / photo→answer Practice hero / Capture ACT guarantees / phone-companion focus theater (Part CXVI / SAFE-OFFLINE)
+- Any forever-E0 anxious track / day-one aggressive fade flood for HMA / Anxiety Score™ or Calm Score™ fade gate / Fade Score™ NS / permanent peek “support” / soft standards for anxious personas / protect-without-fade ChatGPT dump / ACT guarantees from anxiety-aware scaffolding (Part CXVII / SAFE-FADEX)
+- Any Miss Streak / soft-wrong shame push / live wrong-answer stalk / Parent Correctness Score™ / empty “mistakes are good!” without grain+CTA / controlling “sit until correct” default / growth-mindset parent letter≡FEI / ACT guarantees from parent messaging (Part CXVIII / SAFE-SOFTMSG)
