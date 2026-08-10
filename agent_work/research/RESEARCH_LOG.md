@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-10 — Researcher tick: Part CXVII Worked-example fading under high math anxiety (SAFE-FADEX)
+
+**Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch117 never written → prefer Researcher per rotation; researcher count since synthesizer v1.15 = 0)  
+**Chapter written:** `chapters/117_worked_example_fading_under_high_math_anxiety.md` (Part CXVII)  
+**Claim examined:** Whether MindCraft should protect HMA learners with worked examples then still fade — vs forever-E0 “anxious track,” day-one aggressive fade flood, or Anxiety/Calm Score™ fade gates.
+
+**Doctrine proposed (provisional):** **SAFE-FADEX** — densifies SAFE-FADE × SAFE-EXPOSE × SAFE-DD: protective WE under anxiety WM load (Mesghina; Ashcraft); longer E0/E1 hold without soft track; gate on grain not meters (Miller-Cotto WM null); peek binge = safety behavior; proof = solo transfer + approach; no forever dump / flood / Calm Score™. Experiment family **FADEX-*** (distinct from FADE-* / EXP-O-*).
+
+**Evidence spine (verified citations):** Ashcraft & Kirk (2001); Ashcraft & Krause (2007); Hembree (1990); Mesghina, Vollman, Trezise, & Richland (2023); Renkl et al. (2002); Renkl & Atkinson (2003); Atkinson, Renkl, & Merrill (2003); Miller-Cotto et al. (2025/2026 BJEP); Barbieri & Booth (2016); Craske et al. (2014).
+
+**Claim killed (this tick):** Forever-E0 anxious track / day-one aggressive fade flood for HMA / Anxiety Score™ or Calm Score™ fade gate / Fade Score™ NS / permanent peek “support” / soft standards for anxious personas / protect-without-fade ChatGPT dump / ACT guarantees from anxiety-aware scaffolding (provisional kill #71 until synthesizer).
+
+**Experiments:** FADEX-1…5 + FADEX-QUAL.
+
+**Next researcher id:** **118** (parent message framing after soft-wrong streaks). Researcher count since v1.15 synthesizer: **1**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-10 — Synthesizer tick v1.15: merge Parts CVIII–CXVI
 
 **Tick type:** Synthesizer (UTC hour 9; hour%6≠0; ≥8 researcher entries since synthesizer v1.14 → Synthesizer)  
