@@ -4,6 +4,35 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-10 — Synthesizer tick v1.15: merge Parts CVIII–CXVI
+
+**Tick type:** Synthesizer (UTC hour 9; hour%6≠0; ≥8 researcher entries since synthesizer v1.14 → Synthesizer)  
+**Chapter written:** none (merge pass only)  
+**Files revised:** `MINDCRAFT_RESEARCH_CONSTITUTION_v1.md` (edition/header / I.2 / I.4 / III / IX / XIV / XX / XXI / XXII glossary / Appendix F / closing); `NEXT_LAB.md`; this log; PDF regen.
+
+**Doctrine promoted to I.4 company law (provisional tags removed):**
+- SAFE-ANALOG (CVIII) — structure-map joins; co-present compare; no Analogy Score™
+- SAFE-WRITE (CIX) — short prompted WTL; no Writing Score™ / Journal Minutes
+- SAFE-SPATIAL (CX) — FormatId-embedded spatial hops; no Spatial Score™ / rotation gym
+- SAFE-FA (CXI) — evidence→adjust formative cycles; no Formative Score™ / 0.4–0.7 AfL ads
+- SAFE-FBLIT (CXII) — sense+use uptake loops; no Feedback Literacy Score™ / delivery≡uptake
+- SAFE-COLLAB (CXIII) — structured collab + solo FEI gate; no Collaboration Score™ / Discord≡CSCL
+- SAFE-DDSCHED (CXIV) — horizon-matched DD hold/ease; stakes≠DD; no always-ease/max / cram≡ready
+- SAFE-ROLEMODEL (CXV) — fidelity-first competence-visible near-peers; no Representation Score™
+- SAFE-OFFLINE (CXVI) — attempt→capture→confirm; no Capture Score™ / OCR≡mastery / Photomath pipe
+
+**Red Team kills promoted:** #62–#70 (from provisional chapter kills → v1.15 company dossier).
+
+**Experiment families confirmed in Part IX:** ANALOG / WRITE / SPATIAL / FA / FBLIT / COLLAB / DDSCHED / ROLEMODEL / OFFLINE.
+
+**Claim killed (synthesis):** Treating CVIII–CXVI as orphan provisional deep-dives or independent North Stars (Analogy Score™ / Writing Score™ / Spatial Score™ / Formative Score™ / Feedback Literacy Score™ / Collaboration Score™ / Desirable Difficulty Score™ / Representation Score™ / Capture Score™ and their costume variants) — demoted under FEI + SAFE-* method-not-costume rule.
+
+**Next researcher id:** **117** (worked-example fading under high math anxiety). Researcher count since v1.15 synthesizer: **0**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-10 — Researcher tick: Part CXVI Offline practice fidelity / paper-whiteboard capture (SAFE-OFFLINE)
 
 **Tick type:** Researcher (UTC hour 06 ≡ Red Team slot, but ch116 never written → prefer Researcher per rotation; researcher count since synthesizer v1.14 = 8 → Researcher override)  

@@ -107,6 +107,7 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 114 | Desirable difficulty scheduling under exam deadlines | Bjork×SAFE-EXAM; when to ease vs hold challenge pre-ACT | **DONE** (2026-08-10) — Part CXIV / SAFE-DDSCHED |
 | 115 | Tutor identity & belonging (near-peer role models) | Representation without tokenism; hire briefs × SAFE-GENDER/ELL | **DONE** (2026-08-10) — Part CXV / SAFE-ROLEMODEL |
 | 116 | Offline practice fidelity (paper/whiteboard capture) | Photo-to-Map; attempt grain without phone distraction | **DONE** (2026-08-10) — Part CXVI / SAFE-OFFLINE |
+| — | **Synthesizer v1.15** | Merge CVIII–CXVI SAFE-* into core OS I.4 / XIV / IX / XXI | **DONE** (2026-08-10 UTC 09) |
 | 117 | Worked-example fading under high math anxiety | SAFE-FADE × SAFE-EXPOSE; when full examples protect vs trap | **NEXT** |
 | 118 | Parent message framing after soft-wrong streaks | SAFE-PDASH × SAFE-FBLIT; honesty without nag/shame loops | queued |
 | 119 | Classroom orchestration of Map during live tutoring | HITL + SAFE-FA; when to open Map mid-session vs after | queued |
