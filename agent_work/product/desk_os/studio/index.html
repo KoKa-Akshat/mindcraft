@@ -168,7 +168,6 @@ h1,h2,h3,.pix{font-family:'Press Start 2P',monospace; line-height:1.5}
 #editorView.create-on .btn.purple{background:#143a2e; color:#c4f547}
 #editorView.create-on .btn.orange{background:#c4f547; color:#0c1207}
 #editorView.create-on #createModeBtn{display:none !important}
-#editorView.create-on .zoomHUD{display:none !important}
 #editorView.create-on .timelineNode .inspector:empty{display:none}
 #editorView.create-on .timelineNode .inspector:not(:empty){
   margin-bottom:8px; padding-bottom:6px; border-bottom:1px solid rgba(20,16,12,.06);
@@ -367,11 +366,7 @@ h1,h2,h3,.pix{font-family:'Press Start 2P',monospace; line-height:1.5}
   font:700 12px/1 'DM Sans',sans-serif; color:#143a2e; border:1px solid transparent;
 }
 .tchip:hover{border-color:#c4f547; background:#f4fbe6}
-.tchip.on{background:#c4f547; color:#0c1207; border-color:rgba(20,58,46,.18)}
-/* Captions on matches mockup — full-width lime */
-.tcard[data-tool="captions"] .tchip.on{
-  width:100%; justify-content:center; padding:11px 12px; border-radius:14px; font-size:13px;
-}
+.tchip.on{background:#143a2e; color:#c4f547}
 .tmediaGrid{display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin-top:4px}
 .tmediaGrid .tm{
   aspect-ratio:1; border-radius:12px; overflow:hidden; background:#efece6; position:relative;
@@ -947,7 +942,7 @@ h1,h2,h3,.pix{font-family:'Press Start 2P',monospace; line-height:1.5}
                 <img id="jesseHeroImg" src="img/kitchen-warm.jpg" alt="Jesse’s Kitchen">
                 <div class="veil">
                   <b>Jesse’s Kitchen</b>
-                  <span>Your story stage. Tap to put this on the timeline — I dock by search and help you edit.</span>
+                  <span>Load loot and this stage swaps to your clip.</span>
                   <span class="useJesse">Use in story →</span>
                 </div>
               </button>
@@ -1255,7 +1250,7 @@ const DEFAULT_LAYOUT = {
   fx:       { l: 81,   t: 51, w: 16.5, h: 16 },
   timeline: { l: 2.5,  t: 74, w: 95, h: 24 },
 };
-const LAYOUT_KEY = 'mc_studio_create_layout_v6';
+const LAYOUT_KEY = 'mc_studio_create_layout_v5';
 const HANDLES = ['nw','n','ne','e','se','s','sw','w'];
 
 function cloneLayout(src) {

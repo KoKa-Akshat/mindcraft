@@ -9,11 +9,10 @@
 `agent_work/product/studio_prototype_2026-08-10/` · note `STUDIO_PASS_LOCKED.md`  
 Jesse center · timeline Media→Looks · no Classic · Ask dock scroll hide/show.
 
-## Studio Create board — LIVE (2026-08-10)
+## Studio Create board — LOCKED create10 (2026-08-10)
 
-Restored floating-card Create design (not the dense f5 rewrite).  
-Source: `desk_os/studio/` ← locked board from `studio_prototype_2026-08-10/`.  
-**Link:** https://mindcraft-93858.web.app/studio · `/desk-os/studio/?v=create11`
+User signed off (“perfect job”). Do not regress.  
+**Link:** https://mindcraft-93858.web.app/desk-os/studio/?v=create10 · also `/studio`
 
 ---
 
