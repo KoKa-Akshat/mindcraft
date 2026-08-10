@@ -1,0 +1,452 @@
+[
+  {
+    "question_instance_id": "act_math_t01_q09",
+    "exact_question_text": "Which of the following is equal to ( n – 3) 2 if n = 11?",
+    "concept_path": "Algebra → substitute n = 11 → compute (11−3)^2 → get 64 → test which answer choice equals 64",
+    "primary_topic": "Algebra: Expression Evaluation & Equivalent Forms",
+    "expected_concept_id": "algebraic_manipulation",
+    "archetype_id": "expression_evaluation_answer_choice_equivalence",
+    "overlap_cluster": "algebra-functions"
+  },
+  {
+    "question_instance_id": "act_math_t01_q14",
+    "exact_question_text": "If pq – 3 r = 2, what is the value of q in terms of p and r ?",
+    "concept_path": "Algebra → start with pq−3r=2 → move −3r to other side → pq=2+3r → divide both sides by p → q=(2+3r)/p",
+    "primary_topic": "Algebra: Literal Equations & Rearranging Formulas",
+    "expected_concept_id": "algebraic_manipulation",
+    "archetype_id": "literal_equation_solve_for_variable",
+    "overlap_cluster": "algebra-functions"
+  },
+  {
+    "question_instance_id": "act_math_t01_q10",
+    "exact_question_text": "A square field has an area of 22,500 square feet. To the nearest foot, what is the diagonal distance across the field?",
+    "concept_path": "Geometry → square area A=s^2 → find side length → draw diagonal to form right triangle → use Pythagorean theorem or 45-45-90 triangle → round",
+    "primary_topic": "Geometry: Squares, Area & Right Triangles",
+    "expected_concept_id": "area_volume",
+    "archetype_id": "square_area_to_diagonal",
+    "overlap_cluster": null
+  },
+  {
+    "question_instance_id": "act_math_t01_q12",
+    "exact_question_text": "Andrea wants to fill in two sections of her backyard with sod that must be purchased in 2-x-2-foot squares. If the two sections measure 30 x 40 feet and 60 x 80 feet, how many squares of sod does she need to buy?",
+    "concept_path": "Geometry/Measurement → compute each rectangular section area → add total area → compute area of each sod square → divide total area by square area",
+    "primary_topic": "Geometry: Area & Unit Tiling",
+    "expected_concept_id": "area_volume",
+    "archetype_id": "area_tiling_by_unit_square",
+    "overlap_cluster": null
+  },
+  {
+    "question_instance_id": "act_math_t01_q03",
+    "exact_question_text": "If 5 x + 3 = 10 x – 17, what is the value of x ?",
+    "concept_path": "Algebra → identify unknown x → collect variable terms on one side → collect constants on other side → isolate x → verify",
+    "primary_topic": "Algebra: Linear Equations",
+    "expected_concept_id": "basic_equations",
+    "archetype_id": "linear_equation_like_terms",
+    "overlap_cluster": "algebra-functions"
+  },
+  {
+    "question_instance_id": "act_math_t01_q06",
+    "exact_question_text": "When you multiply a number by 4 and then subtract 7, the result is the same as if you first subtracted 7 from the same number and then multiplied by 11. What is the number?",
+    "concept_path": "Algebra → define unknown number as x → translate first process into 4x−7 → translate second process into 11(x−7) → set equal → solve",
+    "primary_topic": "Algebra: Translating Words to Equations",
+    "expected_concept_id": "basic_equations",
+    "archetype_id": "verbal_process_equivalence_equation",
+    "overlap_cluster": "algebra-functions"
+  },
+  {
+    "question_instance_id": "act_math_t04_q13",
+    "exact_question_text": "When she chooses a password, Eloise always uses exactly ten different characters: five letters (A, B, C, D, and E) and five numbers (2, 3, 4, 5, and 6). Additionally, she always ensures that no pair of letters is consecutive and that no pair of numbers is consecutive. How many different passwords conform to these rules?",
+    "concept_path": "Basic Probability → define the sample space → count total possible outcomes and favorable outcomes → simplify the probability or count.",
+    "primary_topic": "Basic Probability",
+    "expected_concept_id": "basic_probability",
+    "archetype_id": "combinatorics_counting_constraints",
+    "overlap_cluster": null
+  },
+  {
+    "question_instance_id": "act_math_t06_q10",
+    "exact_question_text": "A bag contains 7 black socks, 12 white socks, and 17 red socks. If you pick one sock at random from the bag, what is the probability that it will NOT be white?",
+    "concept_path": "Basic Probability → define the sample space → count total possible outcomes and favorable outcomes → simplify the probability or count.",
+    "primary_topic": "Basic Probability",
+    "expected_concept_id": "basic_probability",
+    "archetype_id": "basic_probability",
+    "overlap_cluster": null
+  },
+  {
+    "question_instance_id": "act_math_t03_q08",
+    "exact_question_text": "In the following figure, the area of the shaded region is 10% of the area of the circle. If the radius of the circle is 10, what is the arc length from P to Q ?",
+    "concept_path": "Geometry of Circles → identify the relevant circle measure (radius, diameter, central angle, sector fraction, or tangent relationship) → convert that to the requested quantity.",
+    "primary_topic": "Geometry of Circles",
+    "expected_concept_id": "circles_geometry",
+    "archetype_id": "sector_arc_or_circle_measure",
+    "overlap_cluster": null
+  },
+  {
+    "question_instance_id": "act_math_t03_q15",
+    "exact_question_text": "In the following figure, each circle is tangent to the other two circles, and the two shaded circles are identical to each other. What is the ratio of the shaded region to the nonshaded region?",
+    "concept_path": "Geometry of Circles → identify the relevant circle measure (radius, diameter, central angle, sector fraction, or tangent relationship) → convert that to the requested quantity.",
+    "primary_topic": "Geometry of Circles",
+    "expected_concept_id": "circles_geometry",
+    "archetype_id": "circle_region_or_tangent",
+    "overlap_cluster": null
+  },
+  {
+    "question_instance_id": "act_math_t03_q09",
+    "exact_question_text": "Given that i 2 = –1, what is the value of (4 + 2 i )(4 – 2 i )?",
+    "concept_path": "Complex Numbers → rewrite powers of i using i^2 = -1 → expand or simplify carefully → combine real and imaginary parts or exploit conjugate structure.",
+    "primary_topic": "Complex Numbers",
+    "expected_concept_id": "complex_numbers",
+    "archetype_id": "complex_arithmetic",
+    "overlap_cluster": null
+  },
+  {
+    "question_instance_id": "act_math_t08_q14",
+    "exact_question_text": "In the complex numbers, where , the conjugate of any value a + bi is a – bi. What is the result when you multiply 2 + 7 i by its conjugate?",
+    "concept_path": "Complex Numbers → rewrite powers of i using i^2 = -1 → expand or simplify carefully → combine real and imaginary parts or exploit conjugate structure.",
+    "primary_topic": "Complex Numbers",
+    "expected_concept_id": "complex_numbers",
+    "archetype_id": "complex_arithmetic",
+    "overlap_cluster": null
+  },
+  {
+    "question_instance_id": "act_math_t03_q10",
+    "exact_question_text": "Which of the following could be the graph of the equation y = 175 x 2 – 33 x – 2,000?",
+    "concept_path": "Conic Sections → identify the type of curve from its equation or graph → infer the key geometric features (center, radius, direction, vertex, openness) → match the requested property.",
+    "primary_topic": "Conic Sections",
+    "expected_concept_id": "conic_sections",
+    "archetype_id": "parabola_or_conic_graph",
+    "overlap_cluster": null
+  },
+  {
+    "question_instance_id": "act_math_t04_q06",
+    "exact_question_text": "If you plot the equation x 2 + ( y – 2) 2 = 4 as a circle on a standard xy- graph, what is the area of the circle’s region that will lie in Quadrant 1, as shown in the following figure?",
+    "concept_path": "Conic Sections → identify the type of curve from its equation or graph → infer the key geometric features (center, radius, direction, vertex, openness) → match the requested property.",
+    "primary_topic": "Conic Sections",
+    "expected_concept_id": "conic_sections",
+    "archetype_id": "circle_standard_form",
+    "overlap_cluster": null
+  },
+  {
+    "question_instance_id": "act_math_t01_q05",
+    "exact_question_text": "William earned $3,200 per month as a teacher for the ten months from September to June. Then he took a job as a barista at a local café, where he earned $2,000 per month during July and August. What was his average monthly pay for the 12 months?",
+    "concept_path": "Statistics → identify average requested → compute total earnings across all months → divide by total months → average monthly pay",
+    "primary_topic": "Statistics & Averages",
+    "expected_concept_id": "descriptive_statistics",
+    "archetype_id": "weighted_average_monthly_pay",
+    "overlap_cluster": "rates-units-representation"
+  },
+  {
+    "question_instance_id": "act_math_t02_q10",
+    "exact_question_text": "This question refers to the following figure, which shows a graph of the percentage of votes tallied by an online book club regarding the next author that the club should focus on. Which of the following pairs of authors received exactly 30 percent of the votes altogether?",
+    "concept_path": "Pie chart gives author percentages → question asks which pair totals exactly 30% → add each candidate pair’s chart percentages → choose pair(s) summing to 30%.",
+    "primary_topic": "Data Interpretation / Categorical Charts",
+    "expected_concept_id": "descriptive_statistics",
+    "archetype_id": "pie_chart_pair_sum_to_target_percent",
+    "overlap_cluster": "rates-units-representation"
+  },
+  {
+    "question_instance_id": "act_math_t01_q15",
+    "exact_question_text": "If f ( x ) = 4 x 2 – 5 x – 5 and g ( x ) = 2 x – 4, what is the value of ?",
+    "concept_path": "Functions → understand f(x) and g(x) as input-output rules → substitute x=6 into g(x) and x=-5 into f(x) → compute each output carefully → divide the outputs as requested",
+    "primary_topic": "Functions: Evaluation & Substitution",
+    "expected_concept_id": "functions_basics",
+    "archetype_id": "function_evaluation_ratio",
+    "overlap_cluster": "algebra-functions"
+  },
+  {
+    "question_instance_id": "act_math_t02_q08",
+    "exact_question_text": "Anderson has a phone plan that charges a monthly rate of $50 for the first 1,000 minutes plus $0.25 for each additional minute. Which of the following functions models Anderson’s plan for all m > 1,000, with m as the number of minutes per month and f ( m ) as the monthly charge?",
+    "concept_path": "Monthly plan → base charge $50 covers first 1000 minutes → for m>1000, extra minutes = m-1000 → extra charge = 0.25(m-1000) → f(m)=50+0.25(m-1000)=0.25m-200.",
+    "primary_topic": "Functions / Linear Models from Word Problems",
+    "expected_concept_id": "functions_basics",
+    "archetype_id": "threshold_linear_function_from_word_plan",
+    "overlap_cluster": "algebra-functions"
+  },
+  {
+    "question_instance_id": "act_math_t01_q11",
+    "exact_question_text": "What is the slope of a line on a standard xy- plane that passes through the point (1, 3) and (4, –3)?",
+    "concept_path": "Coordinate Geometry → identify two points → compute change in y over change in x → simplify slope → interpret direction",
+    "primary_topic": "Coordinate Geometry: Slope",
+    "expected_concept_id": "linear_equations",
+    "archetype_id": "slope_from_two_points",
+    "overlap_cluster": "algebra-functions"
+  },
+  {
+    "question_instance_id": "act_math_t02_q09",
+    "exact_question_text": "What is the x- intercept of a line that passes through the point (3, 4) and has a slope of 2?",
+    "concept_path": "Given point (3,4) and slope 2 → y=2x+b → 4=2(3)+b → b=-2 → x-intercept occurs when y=0 → 0=2x-2 → x=1.",
+    "primary_topic": "Coordinate Geometry / Linear Equations",
+    "expected_concept_id": "linear_equations",
+    "archetype_id": "line_x_intercept_from_point_and_slope",
+    "overlap_cluster": "algebra-functions"
+  },
+  {
+    "question_instance_id": "act_math_t01_q07",
+    "exact_question_text": "Which of the following inequalities is represented by the following number line?",
+    "concept_path": "Inequalities → read number line endpoint symbols → closed dot means included → open dot means excluded → combine lower and upper bounds into compound inequality",
+    "primary_topic": "Inequalities & Number Lines",
+    "expected_concept_id": "linear_inequalities",
+    "archetype_id": "number_line_to_compound_inequality",
+    "overlap_cluster": null
+  },
+  {
+    "question_instance_id": "act_math_t02_q13",
+    "exact_question_text": "What is the solution set for x for the inequality |2 x + 7| > 11?",
+    "concept_path": "|2x+7|>11 means 2x+7 is more than 11 away from 0 → 2x+7>11 OR 2x+7<-11 → x>2 OR x<-9.",
+    "primary_topic": "Inequalities / Absolute Value",
+    "expected_concept_id": "linear_inequalities",
+    "archetype_id": "absolute_value_greater_than_linear_inequality",
+    "overlap_cluster": null
+  },
+  {
+    "question_instance_id": "act_math_t02_q02",
+    "exact_question_text": "In the following figure, the two horizontal lines are parallel. Which of the following does NOT equal 180°?",
+    "concept_path": "Diagram → identify parallel horizontal lines → use transversal angle relationships and vertical/supplementary angles → verify four expressions equal 180 → select expression that does not equal 180",
+    "primary_topic": "Lines, Angles, and Parallel-Line Geometry",
+    "expected_concept_id": "lines_angles",
+    "archetype_id": "parallel_lines_angle_chasing_not_180",
+    "overlap_cluster": null
+  },
+  {
+    "question_instance_id": "act_math_t03_q03",
+    "exact_question_text": "The following figure is a quadrilateral with one right angle. The other angles are labeled. What is the value of x ?",
+    "concept_path": "Lines and Angles → identify the angle relationships created by the diagram → write an equation from those relationships → solve for the requested angle or variable.",
+    "primary_topic": "Lines and Angles",
+    "expected_concept_id": "lines_angles",
+    "archetype_id": "parallel_lines_or_polygon_angles",
+    "overlap_cluster": null
+  },
+  {
+    "question_instance_id": "act_math_t02_q15",
+    "exact_question_text": "If log 5 x = 2, what is ?",
+    "concept_path": "Read log_5(x)=2 as “5 to what power equals x?” → 5²=x → x=25. If the question asks for √x, then √25=5.",
+    "primary_topic": "Logarithmic Functions",
+    "expected_concept_id": "logarithmic_functions",
+    "archetype_id": "basic_log_equation_to_exponential_form",
+    "overlap_cluster": null
+  },
+  {
+    "question_instance_id": "act_math_t04_q08",
+    "exact_question_text": "On an xy- graph, three corners of a parallelogram are located at (3, 3), (4, – 4), and (–2, –1). Which of the following points could be the remaining corner?",
+    "concept_path": "Logarithmic Functions → rewrite the log statement in exponential form (or vice versa) → solve for the missing value or compare equivalent expressions.",
+    "primary_topic": "Logarithmic Functions",
+    "expected_concept_id": "logarithmic_functions",
+    "archetype_id": "logarithm_translation",
+    "overlap_cluster": null
+  },
+  {
+    "question_instance_id": "act_math_t07_q04",
+    "exact_question_text": "What is the determinant of the matrix ?",
+    "concept_path": "Matrices → identify whether the task is determinant evaluation, addition, subtraction, or scalar multiplication → apply the relevant entry-wise or determinant rule.",
+    "primary_topic": "Matrices",
+    "expected_concept_id": "matrices",
+    "archetype_id": "basic_matrix_operations",
+    "overlap_cluster": null
+  },
+  {
+    "question_instance_id": "act_math_t10_q15",
+    "exact_question_text": "What is the result when you add the matrix to the matrix and multiply the result by 2?",
+    "concept_path": "Matrices → identify whether the task is determinant evaluation, addition, subtraction, or scalar multiplication → apply the relevant entry-wise or determinant rule.",
+    "primary_topic": "Matrices",
+    "expected_concept_id": "matrices",
+    "archetype_id": "basic_matrix_operations",
+    "overlap_cluster": null
+  },
+  {
+    "question_instance_id": "act_math_t03_q14",
+    "exact_question_text": "Andrea and Zach are both waiting for an appointment with a guidance counselor. When they arrived, each received a card from the secretary, telling the hour and minute of his or her arrival. Two minutes ago, Andrea had been waiting exactly as many minutes as Zach. Three minutes from now, Andrea will have been waiting exactly as long as Zach. If the time is now 11:30, at what time did Andrea arrive?",
+    "concept_path": "Units, Measurement, and Dimensional Reasoning → identify the quantities, their units, and how they change → write a clean measurement relationship → solve and check whether the answer unit matches the question.",
+    "primary_topic": "Units, Measurement, and Dimensional Reasoning",
+    "expected_concept_id": "measurement_units",
+    "archetype_id": "elapsed_time_or_measurement",
+    "overlap_cluster": "rates-units-representation"
+  },
+  {
+    "question_instance_id": "act_math_t04_q09",
+    "exact_question_text": "Doug, who runs track for his high school, was challenged to a race by his younger brother, Matt. Matt started running first, and Doug didn’t start running until Matt had finished a quarter-mile lap on the school track. Doug passed Matt as they both finished their sixth lap. If both boys ran at a constant speed, with Doug running 2 miles an hour faster than Matt, what was Matt’s speed?",
+    "concept_path": "Units, Measurement, and Dimensional Reasoning → identify the quantities, their units, and how they change → write a clean measurement relationship → solve and check whether the answer unit matches the question.",
+    "primary_topic": "Units, Measurement, and Dimensional Reasoning",
+    "expected_concept_id": "measurement_units",
+    "archetype_id": "elapsed_time_or_measurement",
+    "overlap_cluster": "rates-units-representation"
+  },
+  {
+    "question_instance_id": "act_math_t01_q04",
+    "exact_question_text": "The number 4 is the smallest positive integer that has exactly three factors: 1, 2, and 4. If k is the next-highest integer that also has exactly three factors, what is the sum of the three factors of k ?",
+    "concept_path": "Number Theory → understand factors → recognize primes have exactly 2 factors → test integers above 4 → identify 9 with factors 1,3,9 → sum factors",
+    "primary_topic": "Number Theory",
+    "expected_concept_id": "number_properties",
+    "archetype_id": "factor_count_exactly_three",
+    "overlap_cluster": null
+  },
+  {
+    "question_instance_id": "act_math_t02_q01",
+    "exact_question_text": "If you multiply two integers together and then add 4, the result is 40. Which of the following could NOT be the sum of the two numbers?",
+    "concept_path": "Words → define integers x,y → xy+4=40 → xy=36 → restrict to integer factor pairs → compare possible sums to answer choices → answer verification needed because several listed sums are possible",
+    "primary_topic": "Number Properties + Algebraic Translation",
+    "expected_concept_id": "number_properties",
+    "archetype_id": "integer_product_then_impossible_sum",
+    "overlap_cluster": null
+  },
+  {
+    "question_instance_id": "act_math_t02_q06",
+    "exact_question_text": "Which of the following equals 12 x 2 y 3 z 4 – 30 xy 2 + 24 x 2 y 5 z ?",
+    "concept_path": "Multi-term expression → find coefficient GCF and variables common to all terms → factor out 6xy² → divide each term → match equivalent expression",
+    "primary_topic": "Polynomial Operations / Algebraic Manipulation",
+    "expected_concept_id": "polynomials",
+    "archetype_id": "polynomial_gcf_factorization_multivariable",
+    "overlap_cluster": null
+  },
+  {
+    "question_instance_id": "act_math_t02_q03",
+    "exact_question_text": "If a and b are the two values of t that satisfy the equation t 2 – 6 t + 8 = 0, with a > b, what is the value of a – b ?",
+    "concept_path": "Phrase “values of t that satisfy” → roots/solutions → factor t²−6t+8 → roots 2 and 4 → assign a=4,b=2 since a>b → a−b=2",
+    "primary_topic": "Quadratic Equations",
+    "expected_concept_id": "quadratic_equations",
+    "archetype_id": "quadratic_roots_then_compare_difference",
+    "overlap_cluster": null
+  },
+  {
+    "question_instance_id": "act_math_t04_q12",
+    "exact_question_text": "If the equation x 2 + mx + n = 0 has two solutions, x = k and x = 2 k, what is the value of mn in terms of k ?",
+    "concept_path": "Quadratic Equations → identify whether the question is about roots, factors, or graph features → use factoring, the quadratic formula, or structural reasoning → interpret the result in the requested form.",
+    "primary_topic": "Quadratic Equations",
+    "expected_concept_id": "quadratic_equations",
+    "archetype_id": "quadratic_roots_or_structure",
+    "overlap_cluster": null
+  },
+  {
+    "question_instance_id": "act_math_t01_q02",
+    "exact_question_text": "Beth got a job painting dorm rooms at her college. At top speed, she could paint 5 identical rooms during one 6-hour shift. How long did she take to paint each room?",
+    "concept_path": "Rates & Units → identify total work and total time → convert to one-unit measure → divide total time by number of rooms → hours per room",
+    "primary_topic": "Rates, Units & Proportional Reasoning",
+    "expected_concept_id": "ratios_proportions",
+    "archetype_id": "unit_rate_time_per_one_item",
+    "overlap_cluster": "rates-units-representation"
+  },
+  {
+    "question_instance_id": "act_math_t03_q11",
+    "exact_question_text": "Sebastian bought a meal at a restaurant and left a 15% tip. With the tip, he paid exactly $35.19. How much did the meal cost without the tip?",
+    "concept_path": "Ratios and Proportions → identify the multiplicative relationship in the story → express it as a proportion, percent equation, or rate equation → solve for the requested quantity → sanity-check the result in context.",
+    "primary_topic": "Ratios and Proportions",
+    "expected_concept_id": "ratios_proportions",
+    "archetype_id": "percent_rate_word_problem",
+    "overlap_cluster": "rates-units-representation"
+  },
+  {
+    "question_instance_id": "act_math_t01_q13",
+    "exact_question_text": "In the following triangle, what is the value of sec n ?",
+    "concept_path": "Trigonometry → identify angle n → identify adjacent side and hypotenuse → compute cos(n)=adjacent/hypotenuse → take reciprocal for sec(n)",
+    "primary_topic": "Trigonometry: Right Triangle Ratios",
+    "expected_concept_id": "right_triangle_geometry",
+    "archetype_id": "right_triangle_secant_ratio",
+    "overlap_cluster": null
+  },
+  {
+    "question_instance_id": "act_math_t02_q14",
+    "exact_question_text": "On a standard xy- graph, what is the distance between (–2, 4) and (1, –2)?",
+    "concept_path": "Points (-2,4) and (1,-2) → Δx=3 and Δy=-6 → distance = √(3²+(-6)²)=√45=3√5.",
+    "primary_topic": "Coordinate Geometry / Distance Formula",
+    "expected_concept_id": "right_triangle_geometry",
+    "archetype_id": "coordinate_distance_between_two_points",
+    "overlap_cluster": null
+  },
+  {
+    "question_instance_id": "act_math_t01_q01",
+    "exact_question_text": "Which of the following numbers completes the sequence 3, 8, 14, 21, 29, ___?",
+    "concept_path": "Sequences & Patterns → finite sequence → compare successive terms → first differences are +5,+6,+7,+8 → continue pattern with +9 → next term",
+    "primary_topic": "Sequences & Patterns",
+    "expected_concept_id": "sequences_series",
+    "archetype_id": "growing_difference_sequence_next_term",
+    "overlap_cluster": null
+  },
+  {
+    "question_instance_id": "act_math_t03_q02",
+    "exact_question_text": "On his first day working out, Anthony did 30 push-ups. On each successive day, he did exactly 3 more push-ups than on the previous day. After completing his push-ups on the 30th day, how many push-ups had he completed on all 30 days?",
+    "concept_path": "Sequences and Series → inspect how the quantity changes from step to step → classify whether the task asks for a next term or a cumulative total → apply the appropriate arithmetic-sequence idea.",
+    "primary_topic": "Sequences and Series",
+    "expected_concept_id": "sequences_series",
+    "archetype_id": "arithmetic_sequence_sum_story",
+    "overlap_cluster": null
+  },
+  {
+    "question_instance_id": "act_math_t02_q05",
+    "exact_question_text": "If you graph the lines 3 x + 2 y = –2 and 5 x – y = 14 on a standard xy- graph, at which point will the lines intersect?",
+    "concept_path": "Two line equations → graph intersection means shared solution → solve system → match coordinate pair",
+    "primary_topic": "Systems of Linear Equations",
+    "expected_concept_id": "systems_of_linear_equations",
+    "archetype_id": "linear_system_intersection_point_from_equations",
+    "overlap_cluster": "algebra-functions"
+  },
+  {
+    "question_instance_id": "act_math_t02_q12",
+    "exact_question_text": "Anne and Katherine are both saving money from their summer jobs to buy bicycles. If Anne had $150 less, she would have exactly as much as Katherine. And if Katherine had twice as much, she would have exactly 3 times as much as Anne. How much money have they saved together?",
+    "concept_path": "Let A=Anne and K=Katherine → A-150 = K/3 → 2K = 3A → solve system → A=300, K=450 → total=750.",
+    "primary_topic": "Systems of Linear Equations / Word Problem Translation",
+    "expected_concept_id": "systems_of_linear_equations",
+    "archetype_id": "two_person_money_system_from_comparative_statements",
+    "overlap_cluster": "algebra-functions"
+  },
+  {
+    "question_instance_id": "act_math_t01_q08",
+    "exact_question_text": "In the following figure, the two triangles are similar. The lengths of their sides are shown. What is the value of y in terms of x ?",
+    "concept_path": "Geometry → identify similar triangles → match corresponding sides → set proportional ratios → solve for missing expression/side length",
+    "primary_topic": "Geometry: Similar Triangles & Proportions",
+    "expected_concept_id": "triangles_congruence",
+    "archetype_id": "similar_triangle_scale_factor",
+    "overlap_cluster": null
+  },
+  {
+    "question_instance_id": "act_math_t03_q12",
+    "exact_question_text": "If , what is the value of cos a ?",
+    "concept_path": "Trigonometry Basics → identify whether the task is a ratio, side-finding, angle-finding, or graph-feature question → use the relevant trig relationship → solve and interpret.",
+    "primary_topic": "Trigonometry Basics",
+    "expected_concept_id": "trigonometry_basics",
+    "archetype_id": "trig_ratio_geometry",
+    "overlap_cluster": null
+  },
+  {
+    "question_instance_id": "act_math_t08_q04",
+    "exact_question_text": "Which of the following is equal to sin x sec x ?",
+    "concept_path": "Trigonometry Basics → identify whether the task is a ratio, side-finding, angle-finding, or graph-feature question → use the relevant trig relationship → solve and interpret.",
+    "primary_topic": "Trigonometry Basics",
+    "expected_concept_id": "trigonometry_basics",
+    "archetype_id": "trig_ratio_geometry",
+    "overlap_cluster": null
+  },
+  {
+    "question_instance_id": "act_math_t03_q01",
+    "exact_question_text": "If pq + 12 = 3 p + pr, and q – r = 7, what is the value of p ?",
+    "concept_path": "Algebraic Structure → identify the structure of the expression (factored, expanded, proportional, literal, etc.) → manipulate it with valid algebraic rules → interpret the final form.",
+    "primary_topic": "Algebraic Structure and Symbolic Manipulation",
+    "expected_concept_id": "algebraic_manipulation",
+    "archetype_id": "symbolic_manipulation_or_logic",
+    "overlap_cluster": "algebra-functions"
+  },
+  {
+    "question_instance_id": "act_math_t02_q04",
+    "exact_question_text": "A rectangular box has two sides whose lengths are 3 centimeters and 9 centimeters and a volume of 135 cm 3 . What is the area of its largest side?",
+    "concept_path": "Two side lengths 3 and 9 plus volume 135 → infer third dimension 5 → compute all face areas 3×9,3×5,9×5 → largest side area 45 cm²",
+    "primary_topic": "3D Geometry / Area and Volume",
+    "expected_concept_id": "area_volume",
+    "archetype_id": "rectangular_prism_volume_to_largest_face_area",
+    "overlap_cluster": null
+  },
+  {
+    "question_instance_id": "act_math_t22_q07",
+    "exact_question_text": "For what value of x , if any, is the equation ( x - 1) 2 = ( x - 7) 2 true?",
+    "concept_path": "Basic One-Variable Equations → translate the statement into an equation if needed → isolate the variable with inverse operations → verify in the original statement.",
+    "primary_topic": "Basic One-Variable Equations",
+    "expected_concept_id": "basic_equations",
+    "archetype_id": "equation_solving_structure",
+    "overlap_cluster": "algebra-functions"
+  },
+  {
+    "question_instance_id": "act_math_t08_q02",
+    "exact_question_text": "A password for a computer system requires exactly 6 characters. Each character can be either one of the 26 letters from A to Z or one of the ten digits from 0 to 9. The first character must be a letter and the last character must be a digit. How many different possible passwords are there?",
+    "concept_path": "Basic Probability → define the sample space → count total possible outcomes and favorable outcomes → simplify the probability or count.",
+    "primary_topic": "Basic Probability",
+    "expected_concept_id": "basic_probability",
+    "archetype_id": "combinatorics_counting_constraints",
+    "overlap_cluster": null
+  }
+]

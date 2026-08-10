@@ -1,0 +1,4 @@
+Query chain:
+ →Find: Target Application 'com.mindcraft.notes-prototype'
+  ↪︎Find: Descendants matching type Other
+    ↪︎Find: Elements matching predicate '"pianoKeyboard" IN identifiers'

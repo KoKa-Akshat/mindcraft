@@ -1,0 +1,2451 @@
+[
+  {
+    "misconception_id": "mis_ratios_proportions__repeated_percentage_change_believes_second",
+    "concept_id": "ratios_proportions",
+    "label": "In repeated percentage change, believes the second change is only a percentage of the f...",
+    "candidates": [
+      {
+        "ingredient_id": "ratios_proportions__cross_multiply_meaning",
+        "label": "Cross multiplication derives from fraction equality",
+        "description": "If a/b = c/d then ad = bc \u2014 cross multiplication is algebraically equivalent to multiplying both sides by bd.",
+        "failure_mode": "Students apply cross multiplication to non-proportion situations or forget it only applies when exactly two fractions are set equal"
+      },
+      {
+        "ingredient_id": "ratios_proportions__proportion_setup",
+        "label": "Proportion sets two equal ratios",
+        "description": "Two ratios form a proportion when they are equal; setting them equal lets you solve for an unknown quantity.",
+        "failure_mode": "Students mix which values go in numerator vs denominator when translating a word problem into a proportion equation"
+      },
+      {
+        "ingredient_id": "ratios_proportions__ratio_as_comparison",
+        "label": "Ratio is multiplicative not additive",
+        "description": "A ratio a:b says how many times larger one quantity is than another, not how much more one is than the other.",
+        "failure_mode": "Students interpret ratio additively: ratio 3:1 means A is 2 more than B, not that A is 3 times B"
+      },
+      {
+        "ingredient_id": "ratios_proportions__unit_rate",
+        "label": "Unit rate expresses ratio per one unit",
+        "description": "A unit rate expresses a ratio with denominator 1, making comparison and scaling straightforward.",
+        "failure_mode": "Students cannot identify which quantity goes in the denominator when setting up a unit rate from a word problem"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_ratios_proportions__thinks_faster_you_travel_longer",
+    "concept_id": "ratios_proportions",
+    "label": "Thinks the faster you travel the longer the time it will take",
+    "candidates": [
+      {
+        "ingredient_id": "ratios_proportions__cross_multiply_meaning",
+        "label": "Cross multiplication derives from fraction equality",
+        "description": "If a/b = c/d then ad = bc \u2014 cross multiplication is algebraically equivalent to multiplying both sides by bd.",
+        "failure_mode": "Students apply cross multiplication to non-proportion situations or forget it only applies when exactly two fractions are set equal"
+      },
+      {
+        "ingredient_id": "ratios_proportions__proportion_setup",
+        "label": "Proportion sets two equal ratios",
+        "description": "Two ratios form a proportion when they are equal; setting them equal lets you solve for an unknown quantity.",
+        "failure_mode": "Students mix which values go in numerator vs denominator when translating a word problem into a proportion equation"
+      },
+      {
+        "ingredient_id": "ratios_proportions__ratio_as_comparison",
+        "label": "Ratio is multiplicative not additive",
+        "description": "A ratio a:b says how many times larger one quantity is than another, not how much more one is than the other.",
+        "failure_mode": "Students interpret ratio additively: ratio 3:1 means A is 2 more than B, not that A is 3 times B"
+      },
+      {
+        "ingredient_id": "ratios_proportions__unit_rate",
+        "label": "Unit rate expresses ratio per one unit",
+        "description": "A unit rate expresses a ratio with denominator 1, making comparison and scaling straightforward.",
+        "failure_mode": "Students cannot identify which quantity goes in the denominator when setting up a unit rate from a word problem"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_ratios_proportions__thinks_finding_percentage_you_divide",
+    "concept_id": "ratios_proportions",
+    "label": "Thinks when finding a percentage you divide by the percentage being asked",
+    "candidates": [
+      {
+        "ingredient_id": "ratios_proportions__cross_multiply_meaning",
+        "label": "Cross multiplication derives from fraction equality",
+        "description": "If a/b = c/d then ad = bc \u2014 cross multiplication is algebraically equivalent to multiplying both sides by bd.",
+        "failure_mode": "Students apply cross multiplication to non-proportion situations or forget it only applies when exactly two fractions are set equal"
+      },
+      {
+        "ingredient_id": "ratios_proportions__proportion_setup",
+        "label": "Proportion sets two equal ratios",
+        "description": "Two ratios form a proportion when they are equal; setting them equal lets you solve for an unknown quantity.",
+        "failure_mode": "Students mix which values go in numerator vs denominator when translating a word problem into a proportion equation"
+      },
+      {
+        "ingredient_id": "ratios_proportions__ratio_as_comparison",
+        "label": "Ratio is multiplicative not additive",
+        "description": "A ratio a:b says how many times larger one quantity is than another, not how much more one is than the other.",
+        "failure_mode": "Students interpret ratio additively: ratio 3:1 means A is 2 more than B, not that A is 3 times B"
+      },
+      {
+        "ingredient_id": "ratios_proportions__unit_rate",
+        "label": "Unit rate expresses ratio per one unit",
+        "description": "A unit rate expresses a ratio with denominator 1, making comparison and scaling straightforward.",
+        "failure_mode": "Students cannot identify which quantity goes in the denominator when setting up a unit rate from a word problem"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_ratios_proportions__thinks_shape_graph_does_not",
+    "concept_id": "ratios_proportions",
+    "label": "Thinks the shape of the graph does not affect the area calculation",
+    "candidates": [
+      {
+        "ingredient_id": "ratios_proportions__cross_multiply_meaning",
+        "label": "Cross multiplication derives from fraction equality",
+        "description": "If a/b = c/d then ad = bc \u2014 cross multiplication is algebraically equivalent to multiplying both sides by bd.",
+        "failure_mode": "Students apply cross multiplication to non-proportion situations or forget it only applies when exactly two fractions are set equal"
+      },
+      {
+        "ingredient_id": "ratios_proportions__proportion_setup",
+        "label": "Proportion sets two equal ratios",
+        "description": "Two ratios form a proportion when they are equal; setting them equal lets you solve for an unknown quantity.",
+        "failure_mode": "Students mix which values go in numerator vs denominator when translating a word problem into a proportion equation"
+      },
+      {
+        "ingredient_id": "ratios_proportions__ratio_as_comparison",
+        "label": "Ratio is multiplicative not additive",
+        "description": "A ratio a:b says how many times larger one quantity is than another, not how much more one is than the other.",
+        "failure_mode": "Students interpret ratio additively: ratio 3:1 means A is 2 more than B, not that A is 3 times B"
+      },
+      {
+        "ingredient_id": "ratios_proportions__unit_rate",
+        "label": "Unit rate expresses ratio per one unit",
+        "description": "A unit rate expresses a ratio with denominator 1, making comparison and scaling straightforward.",
+        "failure_mode": "Students cannot identify which quantity goes in the denominator when setting up a unit rate from a word problem"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_ratios_proportions__thinks_they_double_numerator_turn",
+    "concept_id": "ratios_proportions",
+    "label": "Thinks they double the numerator to turn a fraction into a percentage",
+    "candidates": [
+      {
+        "ingredient_id": "ratios_proportions__cross_multiply_meaning",
+        "label": "Cross multiplication derives from fraction equality",
+        "description": "If a/b = c/d then ad = bc \u2014 cross multiplication is algebraically equivalent to multiplying both sides by bd.",
+        "failure_mode": "Students apply cross multiplication to non-proportion situations or forget it only applies when exactly two fractions are set equal"
+      },
+      {
+        "ingredient_id": "ratios_proportions__proportion_setup",
+        "label": "Proportion sets two equal ratios",
+        "description": "Two ratios form a proportion when they are equal; setting them equal lets you solve for an unknown quantity.",
+        "failure_mode": "Students mix which values go in numerator vs denominator when translating a word problem into a proportion equation"
+      },
+      {
+        "ingredient_id": "ratios_proportions__ratio_as_comparison",
+        "label": "Ratio is multiplicative not additive",
+        "description": "A ratio a:b says how many times larger one quantity is than another, not how much more one is than the other.",
+        "failure_mode": "Students interpret ratio additively: ratio 3:1 means A is 2 more than B, not that A is 3 times B"
+      },
+      {
+        "ingredient_id": "ratios_proportions__unit_rate",
+        "label": "Unit rate expresses ratio per one unit",
+        "description": "A unit rate expresses a ratio with denominator 1, making comparison and scaling straightforward.",
+        "failure_mode": "Students cannot identify which quantity goes in the denominator when setting up a unit rate from a word problem"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_ratios_proportions__thinks_you_just_add_sign",
+    "concept_id": "ratios_proportions",
+    "label": "Thinks you just add a % sign to the numerator to make a fraction into a percentage",
+    "candidates": [
+      {
+        "ingredient_id": "ratios_proportions__cross_multiply_meaning",
+        "label": "Cross multiplication derives from fraction equality",
+        "description": "If a/b = c/d then ad = bc \u2014 cross multiplication is algebraically equivalent to multiplying both sides by bd.",
+        "failure_mode": "Students apply cross multiplication to non-proportion situations or forget it only applies when exactly two fractions are set equal"
+      },
+      {
+        "ingredient_id": "ratios_proportions__proportion_setup",
+        "label": "Proportion sets two equal ratios",
+        "description": "Two ratios form a proportion when they are equal; setting them equal lets you solve for an unknown quantity.",
+        "failure_mode": "Students mix which values go in numerator vs denominator when translating a word problem into a proportion equation"
+      },
+      {
+        "ingredient_id": "ratios_proportions__ratio_as_comparison",
+        "label": "Ratio is multiplicative not additive",
+        "description": "A ratio a:b says how many times larger one quantity is than another, not how much more one is than the other.",
+        "failure_mode": "Students interpret ratio additively: ratio 3:1 means A is 2 more than B, not that A is 3 times B"
+      },
+      {
+        "ingredient_id": "ratios_proportions__unit_rate",
+        "label": "Unit rate expresses ratio per one unit",
+        "description": "A unit rate expresses a ratio with denominator 1, making comparison and scaling straightforward.",
+        "failure_mode": "Students cannot identify which quantity goes in the denominator when setting up a unit rate from a word problem"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_ratios_proportions__thinks_you_need_include_total",
+    "concept_id": "ratios_proportions",
+    "label": "Thinks you need to include the total as well as the individual parts when asked to writ...",
+    "candidates": [
+      {
+        "ingredient_id": "ratios_proportions__cross_multiply_meaning",
+        "label": "Cross multiplication derives from fraction equality",
+        "description": "If a/b = c/d then ad = bc \u2014 cross multiplication is algebraically equivalent to multiplying both sides by bd.",
+        "failure_mode": "Students apply cross multiplication to non-proportion situations or forget it only applies when exactly two fractions are set equal"
+      },
+      {
+        "ingredient_id": "ratios_proportions__proportion_setup",
+        "label": "Proportion sets two equal ratios",
+        "description": "Two ratios form a proportion when they are equal; setting them equal lets you solve for an unknown quantity.",
+        "failure_mode": "Students mix which values go in numerator vs denominator when translating a word problem into a proportion equation"
+      },
+      {
+        "ingredient_id": "ratios_proportions__ratio_as_comparison",
+        "label": "Ratio is multiplicative not additive",
+        "description": "A ratio a:b says how many times larger one quantity is than another, not how much more one is than the other.",
+        "failure_mode": "Students interpret ratio additively: ratio 3:1 means A is 2 more than B, not that A is 3 times B"
+      },
+      {
+        "ingredient_id": "ratios_proportions__unit_rate",
+        "label": "Unit rate expresses ratio per one unit",
+        "description": "A unit rate expresses a ratio with denominator 1, making comparison and scaling straightforward.",
+        "failure_mode": "Students cannot identify which quantity goes in the denominator when setting up a unit rate from a word problem"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_ratios_proportions__writing_number_percentage_another_number",
+    "concept_id": "ratios_proportions",
+    "label": "When writing a number as a percentage of another number gets them the wrong way around",
+    "candidates": [
+      {
+        "ingredient_id": "ratios_proportions__cross_multiply_meaning",
+        "label": "Cross multiplication derives from fraction equality",
+        "description": "If a/b = c/d then ad = bc \u2014 cross multiplication is algebraically equivalent to multiplying both sides by bd.",
+        "failure_mode": "Students apply cross multiplication to non-proportion situations or forget it only applies when exactly two fractions are set equal"
+      },
+      {
+        "ingredient_id": "ratios_proportions__proportion_setup",
+        "label": "Proportion sets two equal ratios",
+        "description": "Two ratios form a proportion when they are equal; setting them equal lets you solve for an unknown quantity.",
+        "failure_mode": "Students mix which values go in numerator vs denominator when translating a word problem into a proportion equation"
+      },
+      {
+        "ingredient_id": "ratios_proportions__ratio_as_comparison",
+        "label": "Ratio is multiplicative not additive",
+        "description": "A ratio a:b says how many times larger one quantity is than another, not how much more one is than the other.",
+        "failure_mode": "Students interpret ratio additively: ratio 3:1 means A is 2 more than B, not that A is 3 times B"
+      },
+      {
+        "ingredient_id": "ratios_proportions__unit_rate",
+        "label": "Unit rate expresses ratio per one unit",
+        "description": "A unit rate expresses a ratio with denominator 1, making comparison and scaling straightforward.",
+        "failure_mode": "Students cannot identify which quantity goes in the denominator when setting up a unit rate from a word problem"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_right_triangle_geometry__does_not_realise_two_letters",
+    "concept_id": "right_triangle_geometry",
+    "label": "Does not realise that two letters together, or a number and letter together, are multip...",
+    "candidates": [
+      {
+        "ingredient_id": "right_triangle__coordinate_distance_formula",
+        "label": "Distance between coordinate points uses a right triangle",
+        "description": "The distance between two coordinate points is found by forming a right triangle from horizontal and vertical changes and applying the Pythagorean theorem.",
+        "failure_mode": "Students subtract coordinates inconsistently or add the raw changes instead of squaring horizontal and vertical differences."
+      },
+      {
+        "ingredient_id": "right_triangle__pythagorean_theorem",
+        "label": "a squared plus b squared equals c squared",
+        "description": "In a right triangle, the sum of squares of the two legs equals the square of the hypotenuse.",
+        "failure_mode": "Students apply the Pythagorean theorem to non-right triangles or add the sides without squaring first"
+      },
+      {
+        "ingredient_id": "right_triangle__side_naming",
+        "label": "Side names depend on the reference angle",
+        "description": "Opposite, adjacent, and hypotenuse are defined relative to a specific chosen angle \u2014 they change when you choose a different angle.",
+        "failure_mode": "Students label opposite and adjacent once and treat those labels as fixed properties of the triangle regardless of which angle is being used"
+      },
+      {
+        "ingredient_id": "right_triangle__sohcahtoa_setup",
+        "label": "Trig ratios are specific side ratios",
+        "description": "sin(theta) = opposite over hypotenuse, cos(theta) = adjacent over hypotenuse, tan(theta) = opposite over adjacent.",
+        "failure_mode": "Students use the wrong trig ratio because they confused opposite and adjacent, or they flip the numerator and denominator"
+      },
+      {
+        "ingredient_id": "right_triangle__special_triangles",
+        "label": "Special triangles have known exact side ratios",
+        "description": "30-60-90 triangles have sides in ratio 1 to root-3 to 2; 45-45-90 triangles have sides in ratio 1 to 1 to root-2.",
+        "failure_mode": "Students place root-3 on the wrong side in a 30-60-90 triangle, putting it opposite 30 degrees instead of opposite 60 degrees"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_right_triangle_geometry__makes_assumption_about_line_segments",
+    "concept_id": "right_triangle_geometry",
+    "label": "Makes an assumption about line segments being equal within a shape",
+    "candidates": [
+      {
+        "ingredient_id": "right_triangle__coordinate_distance_formula",
+        "label": "Distance between coordinate points uses a right triangle",
+        "description": "The distance between two coordinate points is found by forming a right triangle from horizontal and vertical changes and applying the Pythagorean theorem.",
+        "failure_mode": "Students subtract coordinates inconsistently or add the raw changes instead of squaring horizontal and vertical differences."
+      },
+      {
+        "ingredient_id": "right_triangle__pythagorean_theorem",
+        "label": "a squared plus b squared equals c squared",
+        "description": "In a right triangle, the sum of squares of the two legs equals the square of the hypotenuse.",
+        "failure_mode": "Students apply the Pythagorean theorem to non-right triangles or add the sides without squaring first"
+      },
+      {
+        "ingredient_id": "right_triangle__side_naming",
+        "label": "Side names depend on the reference angle",
+        "description": "Opposite, adjacent, and hypotenuse are defined relative to a specific chosen angle \u2014 they change when you choose a different angle.",
+        "failure_mode": "Students label opposite and adjacent once and treat those labels as fixed properties of the triangle regardless of which angle is being used"
+      },
+      {
+        "ingredient_id": "right_triangle__sohcahtoa_setup",
+        "label": "Trig ratios are specific side ratios",
+        "description": "sin(theta) = opposite over hypotenuse, cos(theta) = adjacent over hypotenuse, tan(theta) = opposite over adjacent.",
+        "failure_mode": "Students use the wrong trig ratio because they confused opposite and adjacent, or they flip the numerator and denominator"
+      },
+      {
+        "ingredient_id": "right_triangle__special_triangles",
+        "label": "Special triangles have known exact side ratios",
+        "description": "30-60-90 triangles have sides in ratio 1 to root-3 to 2; 45-45-90 triangles have sides in ratio 1 to 1 to root-2.",
+        "failure_mode": "Students place root-3 on the wrong side in a 30-60-90 triangle, putting it opposite 30 degrees instead of opposite 60 degrees"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_right_triangle_geometry__thinks_square_root_expression_square",
+    "concept_id": "right_triangle_geometry",
+    "label": "Thinks that the square root of an expression square roots each term in the expression,...",
+    "candidates": [
+      {
+        "ingredient_id": "right_triangle__coordinate_distance_formula",
+        "label": "Distance between coordinate points uses a right triangle",
+        "description": "The distance between two coordinate points is found by forming a right triangle from horizontal and vertical changes and applying the Pythagorean theorem.",
+        "failure_mode": "Students subtract coordinates inconsistently or add the raw changes instead of squaring horizontal and vertical differences."
+      },
+      {
+        "ingredient_id": "right_triangle__pythagorean_theorem",
+        "label": "a squared plus b squared equals c squared",
+        "description": "In a right triangle, the sum of squares of the two legs equals the square of the hypotenuse.",
+        "failure_mode": "Students apply the Pythagorean theorem to non-right triangles or add the sides without squaring first"
+      },
+      {
+        "ingredient_id": "right_triangle__side_naming",
+        "label": "Side names depend on the reference angle",
+        "description": "Opposite, adjacent, and hypotenuse are defined relative to a specific chosen angle \u2014 they change when you choose a different angle.",
+        "failure_mode": "Students label opposite and adjacent once and treat those labels as fixed properties of the triangle regardless of which angle is being used"
+      },
+      {
+        "ingredient_id": "right_triangle__sohcahtoa_setup",
+        "label": "Trig ratios are specific side ratios",
+        "description": "sin(theta) = opposite over hypotenuse, cos(theta) = adjacent over hypotenuse, tan(theta) = opposite over adjacent.",
+        "failure_mode": "Students use the wrong trig ratio because they confused opposite and adjacent, or they flip the numerator and denominator"
+      },
+      {
+        "ingredient_id": "right_triangle__special_triangles",
+        "label": "Special triangles have known exact side ratios",
+        "description": "30-60-90 triangles have sides in ratio 1 to root-3 to 2; 45-45-90 triangles have sides in ratio 1 to 1 to root-2.",
+        "failure_mode": "Students place root-3 on the wrong side in a 30-60-90 triangle, putting it opposite 30 degrees instead of opposite 60 degrees"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_sequences_series__asked_for_specific_term_sequence",
+    "concept_id": "sequences_series",
+    "label": "When asked for a specific term in a sequence just gives the next term",
+    "candidates": [
+      {
+        "ingredient_id": "sequences__arithmetic_identification",
+        "label": "Arithmetic sequences have constant difference",
+        "description": "A sequence is arithmetic when each term is produced by adding the same constant (common difference) to the previous term.",
+        "failure_mode": "Students confuse arithmetic and geometric sequences, calling a sequence with multiplied terms arithmetic because the differences appear to follow a pattern"
+      },
+      {
+        "ingredient_id": "sequences__geometric_identification",
+        "label": "Geometric sequences have constant ratio",
+        "description": "A sequence is geometric when each term is produced by multiplying the previous term by the same constant (common ratio).",
+        "failure_mode": "Students check differences rather than ratios when testing for a geometric sequence, missing that the defining property involves multiplication not addition"
+      },
+      {
+        "ingredient_id": "sequences__geometric_series_sum",
+        "label": "Geometric series sum uses closed form formula",
+        "description": "The sum of the first n terms of a geometric series is a1 times (1 minus r to the n) divided by (1 minus r), valid when r is not equal to 1.",
+        "failure_mode": "Students add terms one by one instead of using the formula, or confuse the formula for arithmetic series with the geometric series formula"
+      },
+      {
+        "ingredient_id": "sequences__nth_term_formula",
+        "label": "nth term formulas give any term without listing all",
+        "description": "Arithmetic: a-sub-n = a1 + (n minus 1) times d. Geometric: a-sub-n = a1 times r to the (n minus 1).",
+        "failure_mode": "Students use n instead of (n minus 1) as the multiplier, causing every term to be off by one position"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_sequences_series__believes_difference_between_triangle_numbers",
+    "concept_id": "sequences_series",
+    "label": "Believes the difference between triangle numbers decreases by 1 each time",
+    "candidates": [
+      {
+        "ingredient_id": "sequences__arithmetic_identification",
+        "label": "Arithmetic sequences have constant difference",
+        "description": "A sequence is arithmetic when each term is produced by adding the same constant (common difference) to the previous term.",
+        "failure_mode": "Students confuse arithmetic and geometric sequences, calling a sequence with multiplied terms arithmetic because the differences appear to follow a pattern"
+      },
+      {
+        "ingredient_id": "sequences__geometric_identification",
+        "label": "Geometric sequences have constant ratio",
+        "description": "A sequence is geometric when each term is produced by multiplying the previous term by the same constant (common ratio).",
+        "failure_mode": "Students check differences rather than ratios when testing for a geometric sequence, missing that the defining property involves multiplication not addition"
+      },
+      {
+        "ingredient_id": "sequences__geometric_series_sum",
+        "label": "Geometric series sum uses closed form formula",
+        "description": "The sum of the first n terms of a geometric series is a1 times (1 minus r to the n) divided by (1 minus r), valid when r is not equal to 1.",
+        "failure_mode": "Students add terms one by one instead of using the formula, or confuse the formula for arithmetic series with the geometric series formula"
+      },
+      {
+        "ingredient_id": "sequences__nth_term_formula",
+        "label": "nth term formulas give any term without listing all",
+        "description": "Arithmetic: a-sub-n = a1 + (n minus 1) times d. Geometric: a-sub-n = a1 times r to the (n minus 1).",
+        "failure_mode": "Students use n instead of (n minus 1) as the multiplier, causing every term to be off by one position"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_sequences_series__believes_find_next_traingle_number",
+    "concept_id": "sequences_series",
+    "label": "Believes to find the next traingle number you add the previous two numbers together i.e...",
+    "candidates": [
+      {
+        "ingredient_id": "sequences__arithmetic_identification",
+        "label": "Arithmetic sequences have constant difference",
+        "description": "A sequence is arithmetic when each term is produced by adding the same constant (common difference) to the previous term.",
+        "failure_mode": "Students confuse arithmetic and geometric sequences, calling a sequence with multiplied terms arithmetic because the differences appear to follow a pattern"
+      },
+      {
+        "ingredient_id": "sequences__geometric_identification",
+        "label": "Geometric sequences have constant ratio",
+        "description": "A sequence is geometric when each term is produced by multiplying the previous term by the same constant (common ratio).",
+        "failure_mode": "Students check differences rather than ratios when testing for a geometric sequence, missing that the defining property involves multiplication not addition"
+      },
+      {
+        "ingredient_id": "sequences__geometric_series_sum",
+        "label": "Geometric series sum uses closed form formula",
+        "description": "The sum of the first n terms of a geometric series is a1 times (1 minus r to the n) divided by (1 minus r), valid when r is not equal to 1.",
+        "failure_mode": "Students add terms one by one instead of using the formula, or confuse the formula for arithmetic series with the geometric series formula"
+      },
+      {
+        "ingredient_id": "sequences__nth_term_formula",
+        "label": "nth term formulas give any term without listing all",
+        "description": "Arithmetic: a-sub-n = a1 + (n minus 1) times d. Geometric: a-sub-n = a1 times r to the (n minus 1).",
+        "failure_mode": "Students use n instead of (n minus 1) as the multiplier, causing every term to be off by one position"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_sequences_series__believes_square_numbers_are_triangle",
+    "concept_id": "sequences_series",
+    "label": "Believes square numbers are triangle numbers",
+    "candidates": [
+      {
+        "ingredient_id": "sequences__arithmetic_identification",
+        "label": "Arithmetic sequences have constant difference",
+        "description": "A sequence is arithmetic when each term is produced by adding the same constant (common difference) to the previous term.",
+        "failure_mode": "Students confuse arithmetic and geometric sequences, calling a sequence with multiplied terms arithmetic because the differences appear to follow a pattern"
+      },
+      {
+        "ingredient_id": "sequences__geometric_identification",
+        "label": "Geometric sequences have constant ratio",
+        "description": "A sequence is geometric when each term is produced by multiplying the previous term by the same constant (common ratio).",
+        "failure_mode": "Students check differences rather than ratios when testing for a geometric sequence, missing that the defining property involves multiplication not addition"
+      },
+      {
+        "ingredient_id": "sequences__geometric_series_sum",
+        "label": "Geometric series sum uses closed form formula",
+        "description": "The sum of the first n terms of a geometric series is a1 times (1 minus r to the n) divided by (1 minus r), valid when r is not equal to 1.",
+        "failure_mode": "Students add terms one by one instead of using the formula, or confuse the formula for arithmetic series with the geometric series formula"
+      },
+      {
+        "ingredient_id": "sequences__nth_term_formula",
+        "label": "nth term formulas give any term without listing all",
+        "description": "Arithmetic: a-sub-n = a1 + (n minus 1) times d. Geometric: a-sub-n = a1 times r to the (n minus 1).",
+        "failure_mode": "Students use n instead of (n minus 1) as the multiplier, causing every term to be off by one position"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_sequences_series__believes_there_multiplicative_relationship_between",
+    "concept_id": "sequences_series",
+    "label": "Believes there is a multiplicative relationship between values of terms in a linear seq...",
+    "candidates": [
+      {
+        "ingredient_id": "sequences__arithmetic_identification",
+        "label": "Arithmetic sequences have constant difference",
+        "description": "A sequence is arithmetic when each term is produced by adding the same constant (common difference) to the previous term.",
+        "failure_mode": "Students confuse arithmetic and geometric sequences, calling a sequence with multiplied terms arithmetic because the differences appear to follow a pattern"
+      },
+      {
+        "ingredient_id": "sequences__geometric_identification",
+        "label": "Geometric sequences have constant ratio",
+        "description": "A sequence is geometric when each term is produced by multiplying the previous term by the same constant (common ratio).",
+        "failure_mode": "Students check differences rather than ratios when testing for a geometric sequence, missing that the defining property involves multiplication not addition"
+      },
+      {
+        "ingredient_id": "sequences__geometric_series_sum",
+        "label": "Geometric series sum uses closed form formula",
+        "description": "The sum of the first n terms of a geometric series is a1 times (1 minus r to the n) divided by (1 minus r), valid when r is not equal to 1.",
+        "failure_mode": "Students add terms one by one instead of using the formula, or confuse the formula for arithmetic series with the geometric series formula"
+      },
+      {
+        "ingredient_id": "sequences__nth_term_formula",
+        "label": "nth term formulas give any term without listing all",
+        "description": "Arithmetic: a-sub-n = a1 + (n minus 1) times d. Geometric: a-sub-n = a1 times r to the (n minus 1).",
+        "failure_mode": "Students use n instead of (n minus 1) as the multiplier, causing every term to be off by one position"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_sequences_series__believes_triangle_numbers_are_formed",
+    "concept_id": "sequences_series",
+    "label": "Believes triangle numbers are formed differently to the correct way",
+    "candidates": [
+      {
+        "ingredient_id": "sequences__arithmetic_identification",
+        "label": "Arithmetic sequences have constant difference",
+        "description": "A sequence is arithmetic when each term is produced by adding the same constant (common difference) to the previous term.",
+        "failure_mode": "Students confuse arithmetic and geometric sequences, calling a sequence with multiplied terms arithmetic because the differences appear to follow a pattern"
+      },
+      {
+        "ingredient_id": "sequences__geometric_identification",
+        "label": "Geometric sequences have constant ratio",
+        "description": "A sequence is geometric when each term is produced by multiplying the previous term by the same constant (common ratio).",
+        "failure_mode": "Students check differences rather than ratios when testing for a geometric sequence, missing that the defining property involves multiplication not addition"
+      },
+      {
+        "ingredient_id": "sequences__geometric_series_sum",
+        "label": "Geometric series sum uses closed form formula",
+        "description": "The sum of the first n terms of a geometric series is a1 times (1 minus r to the n) divided by (1 minus r), valid when r is not equal to 1.",
+        "failure_mode": "Students add terms one by one instead of using the formula, or confuse the formula for arithmetic series with the geometric series formula"
+      },
+      {
+        "ingredient_id": "sequences__nth_term_formula",
+        "label": "nth term formulas give any term without listing all",
+        "description": "Arithmetic: a-sub-n = a1 + (n minus 1) times d. Geometric: a-sub-n = a1 times r to the (n minus 1).",
+        "failure_mode": "Students use n instead of (n minus 1) as the multiplier, causing every term to be off by one position"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_sequences_series__does_not_know_definition_term",
+    "concept_id": "sequences_series",
+    "label": "Does not know the definition of term or term-to-term rule",
+    "candidates": [
+      {
+        "ingredient_id": "sequences__arithmetic_identification",
+        "label": "Arithmetic sequences have constant difference",
+        "description": "A sequence is arithmetic when each term is produced by adding the same constant (common difference) to the previous term.",
+        "failure_mode": "Students confuse arithmetic and geometric sequences, calling a sequence with multiplied terms arithmetic because the differences appear to follow a pattern"
+      },
+      {
+        "ingredient_id": "sequences__geometric_identification",
+        "label": "Geometric sequences have constant ratio",
+        "description": "A sequence is geometric when each term is produced by multiplying the previous term by the same constant (common ratio).",
+        "failure_mode": "Students check differences rather than ratios when testing for a geometric sequence, missing that the defining property involves multiplication not addition"
+      },
+      {
+        "ingredient_id": "sequences__geometric_series_sum",
+        "label": "Geometric series sum uses closed form formula",
+        "description": "The sum of the first n terms of a geometric series is a1 times (1 minus r to the n) divided by (1 minus r), valid when r is not equal to 1.",
+        "failure_mode": "Students add terms one by one instead of using the formula, or confuse the formula for arithmetic series with the geometric series formula"
+      },
+      {
+        "ingredient_id": "sequences__nth_term_formula",
+        "label": "nth term formulas give any term without listing all",
+        "description": "Arithmetic: a-sub-n = a1 + (n minus 1) times d. Geometric: a-sub-n = a1 times r to the (n minus 1).",
+        "failure_mode": "Students use n instead of (n minus 1) as the multiplier, causing every term to be off by one position"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_sequences_series__does_not_know_what_square",
+    "concept_id": "sequences_series",
+    "label": "Does not know what a square number is",
+    "candidates": [
+      {
+        "ingredient_id": "sequences__arithmetic_identification",
+        "label": "Arithmetic sequences have constant difference",
+        "description": "A sequence is arithmetic when each term is produced by adding the same constant (common difference) to the previous term.",
+        "failure_mode": "Students confuse arithmetic and geometric sequences, calling a sequence with multiplied terms arithmetic because the differences appear to follow a pattern"
+      },
+      {
+        "ingredient_id": "sequences__geometric_identification",
+        "label": "Geometric sequences have constant ratio",
+        "description": "A sequence is geometric when each term is produced by multiplying the previous term by the same constant (common ratio).",
+        "failure_mode": "Students check differences rather than ratios when testing for a geometric sequence, missing that the defining property involves multiplication not addition"
+      },
+      {
+        "ingredient_id": "sequences__geometric_series_sum",
+        "label": "Geometric series sum uses closed form formula",
+        "description": "The sum of the first n terms of a geometric series is a1 times (1 minus r to the n) divided by (1 minus r), valid when r is not equal to 1.",
+        "failure_mode": "Students add terms one by one instead of using the formula, or confuse the formula for arithmetic series with the geometric series formula"
+      },
+      {
+        "ingredient_id": "sequences__nth_term_formula",
+        "label": "nth term formulas give any term without listing all",
+        "description": "Arithmetic: a-sub-n = a1 + (n minus 1) times d. Geometric: a-sub-n = a1 times r to the (n minus 1).",
+        "failure_mode": "Students use n instead of (n minus 1) as the multiplier, causing every term to be off by one position"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_sequences_series__does_not_notice_all_changes",
+    "concept_id": "sequences_series",
+    "label": "Does not notice all changes in a sequence of visual patterns",
+    "candidates": [
+      {
+        "ingredient_id": "sequences__arithmetic_identification",
+        "label": "Arithmetic sequences have constant difference",
+        "description": "A sequence is arithmetic when each term is produced by adding the same constant (common difference) to the previous term.",
+        "failure_mode": "Students confuse arithmetic and geometric sequences, calling a sequence with multiplied terms arithmetic because the differences appear to follow a pattern"
+      },
+      {
+        "ingredient_id": "sequences__geometric_identification",
+        "label": "Geometric sequences have constant ratio",
+        "description": "A sequence is geometric when each term is produced by multiplying the previous term by the same constant (common ratio).",
+        "failure_mode": "Students check differences rather than ratios when testing for a geometric sequence, missing that the defining property involves multiplication not addition"
+      },
+      {
+        "ingredient_id": "sequences__geometric_series_sum",
+        "label": "Geometric series sum uses closed form formula",
+        "description": "The sum of the first n terms of a geometric series is a1 times (1 minus r to the n) divided by (1 minus r), valid when r is not equal to 1.",
+        "failure_mode": "Students add terms one by one instead of using the formula, or confuse the formula for arithmetic series with the geometric series formula"
+      },
+      {
+        "ingredient_id": "sequences__nth_term_formula",
+        "label": "nth term formulas give any term without listing all",
+        "description": "Arithmetic: a-sub-n = a1 + (n minus 1) times d. Geometric: a-sub-n = a1 times r to the (n minus 1).",
+        "failure_mode": "Students use n instead of (n minus 1) as the multiplier, causing every term to be off by one position"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_sequences_series__does_not_understand_term_quadratic",
+    "concept_id": "sequences_series",
+    "label": "Does not understand the term quadratic",
+    "candidates": [
+      {
+        "ingredient_id": "sequences__arithmetic_identification",
+        "label": "Arithmetic sequences have constant difference",
+        "description": "A sequence is arithmetic when each term is produced by adding the same constant (common difference) to the previous term.",
+        "failure_mode": "Students confuse arithmetic and geometric sequences, calling a sequence with multiplied terms arithmetic because the differences appear to follow a pattern"
+      },
+      {
+        "ingredient_id": "sequences__geometric_identification",
+        "label": "Geometric sequences have constant ratio",
+        "description": "A sequence is geometric when each term is produced by multiplying the previous term by the same constant (common ratio).",
+        "failure_mode": "Students check differences rather than ratios when testing for a geometric sequence, missing that the defining property involves multiplication not addition"
+      },
+      {
+        "ingredient_id": "sequences__geometric_series_sum",
+        "label": "Geometric series sum uses closed form formula",
+        "description": "The sum of the first n terms of a geometric series is a1 times (1 minus r to the n) divided by (1 minus r), valid when r is not equal to 1.",
+        "failure_mode": "Students add terms one by one instead of using the formula, or confuse the formula for arithmetic series with the geometric series formula"
+      },
+      {
+        "ingredient_id": "sequences__nth_term_formula",
+        "label": "nth term formulas give any term without listing all",
+        "description": "Arithmetic: a-sub-n = a1 + (n minus 1) times d. Geometric: a-sub-n = a1 times r to the (n minus 1).",
+        "failure_mode": "Students use n instead of (n minus 1) as the multiplier, causing every term to be off by one position"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_sequences_series__finding_differences_between_terms_sequence",
+    "concept_id": "sequences_series",
+    "label": "When finding the differences between terms in a sequence, believes they can do so from...",
+    "candidates": [
+      {
+        "ingredient_id": "sequences__arithmetic_identification",
+        "label": "Arithmetic sequences have constant difference",
+        "description": "A sequence is arithmetic when each term is produced by adding the same constant (common difference) to the previous term.",
+        "failure_mode": "Students confuse arithmetic and geometric sequences, calling a sequence with multiplied terms arithmetic because the differences appear to follow a pattern"
+      },
+      {
+        "ingredient_id": "sequences__geometric_identification",
+        "label": "Geometric sequences have constant ratio",
+        "description": "A sequence is geometric when each term is produced by multiplying the previous term by the same constant (common ratio).",
+        "failure_mode": "Students check differences rather than ratios when testing for a geometric sequence, missing that the defining property involves multiplication not addition"
+      },
+      {
+        "ingredient_id": "sequences__geometric_series_sum",
+        "label": "Geometric series sum uses closed form formula",
+        "description": "The sum of the first n terms of a geometric series is a1 times (1 minus r to the n) divided by (1 minus r), valid when r is not equal to 1.",
+        "failure_mode": "Students add terms one by one instead of using the formula, or confuse the formula for arithmetic series with the geometric series formula"
+      },
+      {
+        "ingredient_id": "sequences__nth_term_formula",
+        "label": "nth term formulas give any term without listing all",
+        "description": "Arithmetic: a-sub-n = a1 + (n minus 1) times d. Geometric: a-sub-n = a1 times r to the (n minus 1).",
+        "failure_mode": "Students use n instead of (n minus 1) as the multiplier, causing every term to be off by one position"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_sequences_series__given_term_term_sequence_with",
+    "concept_id": "sequences_series",
+    "label": "When given a term to term sequence with multiple steps, applies one step per term",
+    "candidates": [
+      {
+        "ingredient_id": "sequences__arithmetic_identification",
+        "label": "Arithmetic sequences have constant difference",
+        "description": "A sequence is arithmetic when each term is produced by adding the same constant (common difference) to the previous term.",
+        "failure_mode": "Students confuse arithmetic and geometric sequences, calling a sequence with multiplied terms arithmetic because the differences appear to follow a pattern"
+      },
+      {
+        "ingredient_id": "sequences__geometric_identification",
+        "label": "Geometric sequences have constant ratio",
+        "description": "A sequence is geometric when each term is produced by multiplying the previous term by the same constant (common ratio).",
+        "failure_mode": "Students check differences rather than ratios when testing for a geometric sequence, missing that the defining property involves multiplication not addition"
+      },
+      {
+        "ingredient_id": "sequences__geometric_series_sum",
+        "label": "Geometric series sum uses closed form formula",
+        "description": "The sum of the first n terms of a geometric series is a1 times (1 minus r to the n) divided by (1 minus r), valid when r is not equal to 1.",
+        "failure_mode": "Students add terms one by one instead of using the formula, or confuse the formula for arithmetic series with the geometric series formula"
+      },
+      {
+        "ingredient_id": "sequences__nth_term_formula",
+        "label": "nth term formulas give any term without listing all",
+        "description": "Arithmetic: a-sub-n = a1 + (n minus 1) times d. Geometric: a-sub-n = a1 times r to the (n minus 1).",
+        "failure_mode": "Students use n instead of (n minus 1) as the multiplier, causing every term to be off by one position"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_sequences_series__goes_wrong_direction_sequence_identifying",
+    "concept_id": "sequences_series",
+    "label": "Goes the wrong direction in the sequence when identifying term-to-term rule",
+    "candidates": [
+      {
+        "ingredient_id": "sequences__arithmetic_identification",
+        "label": "Arithmetic sequences have constant difference",
+        "description": "A sequence is arithmetic when each term is produced by adding the same constant (common difference) to the previous term.",
+        "failure_mode": "Students confuse arithmetic and geometric sequences, calling a sequence with multiplied terms arithmetic because the differences appear to follow a pattern"
+      },
+      {
+        "ingredient_id": "sequences__geometric_identification",
+        "label": "Geometric sequences have constant ratio",
+        "description": "A sequence is geometric when each term is produced by multiplying the previous term by the same constant (common ratio).",
+        "failure_mode": "Students check differences rather than ratios when testing for a geometric sequence, missing that the defining property involves multiplication not addition"
+      },
+      {
+        "ingredient_id": "sequences__geometric_series_sum",
+        "label": "Geometric series sum uses closed form formula",
+        "description": "The sum of the first n terms of a geometric series is a1 times (1 minus r to the n) divided by (1 minus r), valid when r is not equal to 1.",
+        "failure_mode": "Students add terms one by one instead of using the formula, or confuse the formula for arithmetic series with the geometric series formula"
+      },
+      {
+        "ingredient_id": "sequences__nth_term_formula",
+        "label": "nth term formulas give any term without listing all",
+        "description": "Arithmetic: a-sub-n = a1 + (n minus 1) times d. Geometric: a-sub-n = a1 times r to the (n minus 1).",
+        "failure_mode": "Students use n instead of (n minus 1) as the multiplier, causing every term to be off by one position"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_sequences_series__has_multiplied_value_first_term",
+    "concept_id": "sequences_series",
+    "label": "Has multiplied the value of the first term by the the term being asked",
+    "candidates": [
+      {
+        "ingredient_id": "sequences__arithmetic_identification",
+        "label": "Arithmetic sequences have constant difference",
+        "description": "A sequence is arithmetic when each term is produced by adding the same constant (common difference) to the previous term.",
+        "failure_mode": "Students confuse arithmetic and geometric sequences, calling a sequence with multiplied terms arithmetic because the differences appear to follow a pattern"
+      },
+      {
+        "ingredient_id": "sequences__geometric_identification",
+        "label": "Geometric sequences have constant ratio",
+        "description": "A sequence is geometric when each term is produced by multiplying the previous term by the same constant (common ratio).",
+        "failure_mode": "Students check differences rather than ratios when testing for a geometric sequence, missing that the defining property involves multiplication not addition"
+      },
+      {
+        "ingredient_id": "sequences__geometric_series_sum",
+        "label": "Geometric series sum uses closed form formula",
+        "description": "The sum of the first n terms of a geometric series is a1 times (1 minus r to the n) divided by (1 minus r), valid when r is not equal to 1.",
+        "failure_mode": "Students add terms one by one instead of using the formula, or confuse the formula for arithmetic series with the geometric series formula"
+      },
+      {
+        "ingredient_id": "sequences__nth_term_formula",
+        "label": "nth term formulas give any term without listing all",
+        "description": "Arithmetic: a-sub-n = a1 + (n minus 1) times d. Geometric: a-sub-n = a1 times r to the (n minus 1).",
+        "failure_mode": "Students use n instead of (n minus 1) as the multiplier, causing every term to be off by one position"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_sequences_series__identifies_termtoterm_rule_rather_than",
+    "concept_id": "sequences_series",
+    "label": "Identifies the term-to-term rule rather than the next term in a sequence",
+    "candidates": [
+      {
+        "ingredient_id": "sequences__arithmetic_identification",
+        "label": "Arithmetic sequences have constant difference",
+        "description": "A sequence is arithmetic when each term is produced by adding the same constant (common difference) to the previous term.",
+        "failure_mode": "Students confuse arithmetic and geometric sequences, calling a sequence with multiplied terms arithmetic because the differences appear to follow a pattern"
+      },
+      {
+        "ingredient_id": "sequences__geometric_identification",
+        "label": "Geometric sequences have constant ratio",
+        "description": "A sequence is geometric when each term is produced by multiplying the previous term by the same constant (common ratio).",
+        "failure_mode": "Students check differences rather than ratios when testing for a geometric sequence, missing that the defining property involves multiplication not addition"
+      },
+      {
+        "ingredient_id": "sequences__geometric_series_sum",
+        "label": "Geometric series sum uses closed form formula",
+        "description": "The sum of the first n terms of a geometric series is a1 times (1 minus r to the n) divided by (1 minus r), valid when r is not equal to 1.",
+        "failure_mode": "Students add terms one by one instead of using the formula, or confuse the formula for arithmetic series with the geometric series formula"
+      },
+      {
+        "ingredient_id": "sequences__nth_term_formula",
+        "label": "nth term formulas give any term without listing all",
+        "description": "Arithmetic: a-sub-n = a1 + (n minus 1) times d. Geometric: a-sub-n = a1 times r to the (n minus 1).",
+        "failure_mode": "Students use n instead of (n minus 1) as the multiplier, causing every term to be off by one position"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_sequences_series__miscounts_subtracting_over_zero",
+    "concept_id": "sequences_series",
+    "label": "Miscounts when subtracting over zero",
+    "candidates": [
+      {
+        "ingredient_id": "sequences__arithmetic_identification",
+        "label": "Arithmetic sequences have constant difference",
+        "description": "A sequence is arithmetic when each term is produced by adding the same constant (common difference) to the previous term.",
+        "failure_mode": "Students confuse arithmetic and geometric sequences, calling a sequence with multiplied terms arithmetic because the differences appear to follow a pattern"
+      },
+      {
+        "ingredient_id": "sequences__geometric_identification",
+        "label": "Geometric sequences have constant ratio",
+        "description": "A sequence is geometric when each term is produced by multiplying the previous term by the same constant (common ratio).",
+        "failure_mode": "Students check differences rather than ratios when testing for a geometric sequence, missing that the defining property involves multiplication not addition"
+      },
+      {
+        "ingredient_id": "sequences__geometric_series_sum",
+        "label": "Geometric series sum uses closed form formula",
+        "description": "The sum of the first n terms of a geometric series is a1 times (1 minus r to the n) divided by (1 minus r), valid when r is not equal to 1.",
+        "failure_mode": "Students add terms one by one instead of using the formula, or confuse the formula for arithmetic series with the geometric series formula"
+      },
+      {
+        "ingredient_id": "sequences__nth_term_formula",
+        "label": "nth term formulas give any term without listing all",
+        "description": "Arithmetic: a-sub-n = a1 + (n minus 1) times d. Geometric: a-sub-n = a1 times r to the (n minus 1).",
+        "failure_mode": "Students use n instead of (n minus 1) as the multiplier, causing every term to be off by one position"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_sequences_series__mixes_up_squaring_and_multiplying",
+    "concept_id": "sequences_series",
+    "label": "Mixes up squaring and multiplying by 2 or doubling",
+    "candidates": [
+      {
+        "ingredient_id": "sequences__arithmetic_identification",
+        "label": "Arithmetic sequences have constant difference",
+        "description": "A sequence is arithmetic when each term is produced by adding the same constant (common difference) to the previous term.",
+        "failure_mode": "Students confuse arithmetic and geometric sequences, calling a sequence with multiplied terms arithmetic because the differences appear to follow a pattern"
+      },
+      {
+        "ingredient_id": "sequences__geometric_identification",
+        "label": "Geometric sequences have constant ratio",
+        "description": "A sequence is geometric when each term is produced by multiplying the previous term by the same constant (common ratio).",
+        "failure_mode": "Students check differences rather than ratios when testing for a geometric sequence, missing that the defining property involves multiplication not addition"
+      },
+      {
+        "ingredient_id": "sequences__geometric_series_sum",
+        "label": "Geometric series sum uses closed form formula",
+        "description": "The sum of the first n terms of a geometric series is a1 times (1 minus r to the n) divided by (1 minus r), valid when r is not equal to 1.",
+        "failure_mode": "Students add terms one by one instead of using the formula, or confuse the formula for arithmetic series with the geometric series formula"
+      },
+      {
+        "ingredient_id": "sequences__nth_term_formula",
+        "label": "nth term formulas give any term without listing all",
+        "description": "Arithmetic: a-sub-n = a1 + (n minus 1) times d. Geometric: a-sub-n = a1 times r to the (n minus 1).",
+        "failure_mode": "Students use n instead of (n minus 1) as the multiplier, causing every term to be off by one position"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_sequences_series__mixes_up_term_sequence_and",
+    "concept_id": "sequences_series",
+    "label": "Mixes up term in a sequence and position of a term",
+    "candidates": [
+      {
+        "ingredient_id": "sequences__arithmetic_identification",
+        "label": "Arithmetic sequences have constant difference",
+        "description": "A sequence is arithmetic when each term is produced by adding the same constant (common difference) to the previous term.",
+        "failure_mode": "Students confuse arithmetic and geometric sequences, calling a sequence with multiplied terms arithmetic because the differences appear to follow a pattern"
+      },
+      {
+        "ingredient_id": "sequences__geometric_identification",
+        "label": "Geometric sequences have constant ratio",
+        "description": "A sequence is geometric when each term is produced by multiplying the previous term by the same constant (common ratio).",
+        "failure_mode": "Students check differences rather than ratios when testing for a geometric sequence, missing that the defining property involves multiplication not addition"
+      },
+      {
+        "ingredient_id": "sequences__geometric_series_sum",
+        "label": "Geometric series sum uses closed form formula",
+        "description": "The sum of the first n terms of a geometric series is a1 times (1 minus r to the n) divided by (1 minus r), valid when r is not equal to 1.",
+        "failure_mode": "Students add terms one by one instead of using the formula, or confuse the formula for arithmetic series with the geometric series formula"
+      },
+      {
+        "ingredient_id": "sequences__nth_term_formula",
+        "label": "nth term formulas give any term without listing all",
+        "description": "Arithmetic: a-sub-n = a1 + (n minus 1) times d. Geometric: a-sub-n = a1 times r to the (n minus 1).",
+        "failure_mode": "Students use n instead of (n minus 1) as the multiplier, causing every term to be off by one position"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_sequences_series__only_looks_difference_between_one",
+    "concept_id": "sequences_series",
+    "label": "Only looks at the difference between one pair of terms when discerning the pattern",
+    "candidates": [
+      {
+        "ingredient_id": "sequences__arithmetic_identification",
+        "label": "Arithmetic sequences have constant difference",
+        "description": "A sequence is arithmetic when each term is produced by adding the same constant (common difference) to the previous term.",
+        "failure_mode": "Students confuse arithmetic and geometric sequences, calling a sequence with multiplied terms arithmetic because the differences appear to follow a pattern"
+      },
+      {
+        "ingredient_id": "sequences__geometric_identification",
+        "label": "Geometric sequences have constant ratio",
+        "description": "A sequence is geometric when each term is produced by multiplying the previous term by the same constant (common ratio).",
+        "failure_mode": "Students check differences rather than ratios when testing for a geometric sequence, missing that the defining property involves multiplication not addition"
+      },
+      {
+        "ingredient_id": "sequences__geometric_series_sum",
+        "label": "Geometric series sum uses closed form formula",
+        "description": "The sum of the first n terms of a geometric series is a1 times (1 minus r to the n) divided by (1 minus r), valid when r is not equal to 1.",
+        "failure_mode": "Students add terms one by one instead of using the formula, or confuse the formula for arithmetic series with the geometric series formula"
+      },
+      {
+        "ingredient_id": "sequences__nth_term_formula",
+        "label": "nth term formulas give any term without listing all",
+        "description": "Arithmetic: a-sub-n = a1 + (n minus 1) times d. Geometric: a-sub-n = a1 times r to the (n minus 1).",
+        "failure_mode": "Students use n instead of (n minus 1) as the multiplier, causing every term to be off by one position"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_sequences_series__solving_equation_uses_same_operation",
+    "concept_id": "sequences_series",
+    "label": "When solving an equation, uses the same operation rather than the inverse",
+    "candidates": [
+      {
+        "ingredient_id": "sequences__arithmetic_identification",
+        "label": "Arithmetic sequences have constant difference",
+        "description": "A sequence is arithmetic when each term is produced by adding the same constant (common difference) to the previous term.",
+        "failure_mode": "Students confuse arithmetic and geometric sequences, calling a sequence with multiplied terms arithmetic because the differences appear to follow a pattern"
+      },
+      {
+        "ingredient_id": "sequences__geometric_identification",
+        "label": "Geometric sequences have constant ratio",
+        "description": "A sequence is geometric when each term is produced by multiplying the previous term by the same constant (common ratio).",
+        "failure_mode": "Students check differences rather than ratios when testing for a geometric sequence, missing that the defining property involves multiplication not addition"
+      },
+      {
+        "ingredient_id": "sequences__geometric_series_sum",
+        "label": "Geometric series sum uses closed form formula",
+        "description": "The sum of the first n terms of a geometric series is a1 times (1 minus r to the n) divided by (1 minus r), valid when r is not equal to 1.",
+        "failure_mode": "Students add terms one by one instead of using the formula, or confuse the formula for arithmetic series with the geometric series formula"
+      },
+      {
+        "ingredient_id": "sequences__nth_term_formula",
+        "label": "nth term formulas give any term without listing all",
+        "description": "Arithmetic: a-sub-n = a1 + (n minus 1) times d. Geometric: a-sub-n = a1 times r to the (n minus 1).",
+        "failure_mode": "Students use n instead of (n minus 1) as the multiplier, causing every term to be off by one position"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_sequences_series__squaring_variable_believes_they_also",
+    "concept_id": "sequences_series",
+    "label": "When squaring a variable, believes they also need to square the coefficient",
+    "candidates": [
+      {
+        "ingredient_id": "sequences__arithmetic_identification",
+        "label": "Arithmetic sequences have constant difference",
+        "description": "A sequence is arithmetic when each term is produced by adding the same constant (common difference) to the previous term.",
+        "failure_mode": "Students confuse arithmetic and geometric sequences, calling a sequence with multiplied terms arithmetic because the differences appear to follow a pattern"
+      },
+      {
+        "ingredient_id": "sequences__geometric_identification",
+        "label": "Geometric sequences have constant ratio",
+        "description": "A sequence is geometric when each term is produced by multiplying the previous term by the same constant (common ratio).",
+        "failure_mode": "Students check differences rather than ratios when testing for a geometric sequence, missing that the defining property involves multiplication not addition"
+      },
+      {
+        "ingredient_id": "sequences__geometric_series_sum",
+        "label": "Geometric series sum uses closed form formula",
+        "description": "The sum of the first n terms of a geometric series is a1 times (1 minus r to the n) divided by (1 minus r), valid when r is not equal to 1.",
+        "failure_mode": "Students add terms one by one instead of using the formula, or confuse the formula for arithmetic series with the geometric series formula"
+      },
+      {
+        "ingredient_id": "sequences__nth_term_formula",
+        "label": "nth term formulas give any term without listing all",
+        "description": "Arithmetic: a-sub-n = a1 + (n minus 1) times d. Geometric: a-sub-n = a1 times r to the (n minus 1).",
+        "failure_mode": "Students use n instead of (n minus 1) as the multiplier, causing every term to be off by one position"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_sequences_series__subtracting_fractions_subtracts_numerators_and",
+    "concept_id": "sequences_series",
+    "label": "When subtracting fractions, subtracts the numerators and denominators",
+    "candidates": [
+      {
+        "ingredient_id": "sequences__arithmetic_identification",
+        "label": "Arithmetic sequences have constant difference",
+        "description": "A sequence is arithmetic when each term is produced by adding the same constant (common difference) to the previous term.",
+        "failure_mode": "Students confuse arithmetic and geometric sequences, calling a sequence with multiplied terms arithmetic because the differences appear to follow a pattern"
+      },
+      {
+        "ingredient_id": "sequences__geometric_identification",
+        "label": "Geometric sequences have constant ratio",
+        "description": "A sequence is geometric when each term is produced by multiplying the previous term by the same constant (common ratio).",
+        "failure_mode": "Students check differences rather than ratios when testing for a geometric sequence, missing that the defining property involves multiplication not addition"
+      },
+      {
+        "ingredient_id": "sequences__geometric_series_sum",
+        "label": "Geometric series sum uses closed form formula",
+        "description": "The sum of the first n terms of a geometric series is a1 times (1 minus r to the n) divided by (1 minus r), valid when r is not equal to 1.",
+        "failure_mode": "Students add terms one by one instead of using the formula, or confuse the formula for arithmetic series with the geometric series formula"
+      },
+      {
+        "ingredient_id": "sequences__nth_term_formula",
+        "label": "nth term formulas give any term without listing all",
+        "description": "Arithmetic: a-sub-n = a1 + (n minus 1) times d. Geometric: a-sub-n = a1 times r to the (n minus 1).",
+        "failure_mode": "Students use n instead of (n minus 1) as the multiplier, causing every term to be off by one position"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_sequences_series__subtracting_past_zero_adds_absolute",
+    "concept_id": "sequences_series",
+    "label": "When subtracting past zero, adds the absolute values and then writes the answer with a...",
+    "candidates": [
+      {
+        "ingredient_id": "sequences__arithmetic_identification",
+        "label": "Arithmetic sequences have constant difference",
+        "description": "A sequence is arithmetic when each term is produced by adding the same constant (common difference) to the previous term.",
+        "failure_mode": "Students confuse arithmetic and geometric sequences, calling a sequence with multiplied terms arithmetic because the differences appear to follow a pattern"
+      },
+      {
+        "ingredient_id": "sequences__geometric_identification",
+        "label": "Geometric sequences have constant ratio",
+        "description": "A sequence is geometric when each term is produced by multiplying the previous term by the same constant (common ratio).",
+        "failure_mode": "Students check differences rather than ratios when testing for a geometric sequence, missing that the defining property involves multiplication not addition"
+      },
+      {
+        "ingredient_id": "sequences__geometric_series_sum",
+        "label": "Geometric series sum uses closed form formula",
+        "description": "The sum of the first n terms of a geometric series is a1 times (1 minus r to the n) divided by (1 minus r), valid when r is not equal to 1.",
+        "failure_mode": "Students add terms one by one instead of using the formula, or confuse the formula for arithmetic series with the geometric series formula"
+      },
+      {
+        "ingredient_id": "sequences__nth_term_formula",
+        "label": "nth term formulas give any term without listing all",
+        "description": "Arithmetic: a-sub-n = a1 + (n minus 1) times d. Geometric: a-sub-n = a1 times r to the (n minus 1).",
+        "failure_mode": "Students use n instead of (n minus 1) as the multiplier, causing every term to be off by one position"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_sequences_series__thinks_cube_numbers_are_triangular",
+    "concept_id": "sequences_series",
+    "label": "Thinks cube numbers are triangular numbers",
+    "candidates": [
+      {
+        "ingredient_id": "sequences__arithmetic_identification",
+        "label": "Arithmetic sequences have constant difference",
+        "description": "A sequence is arithmetic when each term is produced by adding the same constant (common difference) to the previous term.",
+        "failure_mode": "Students confuse arithmetic and geometric sequences, calling a sequence with multiplied terms arithmetic because the differences appear to follow a pattern"
+      },
+      {
+        "ingredient_id": "sequences__geometric_identification",
+        "label": "Geometric sequences have constant ratio",
+        "description": "A sequence is geometric when each term is produced by multiplying the previous term by the same constant (common ratio).",
+        "failure_mode": "Students check differences rather than ratios when testing for a geometric sequence, missing that the defining property involves multiplication not addition"
+      },
+      {
+        "ingredient_id": "sequences__geometric_series_sum",
+        "label": "Geometric series sum uses closed form formula",
+        "description": "The sum of the first n terms of a geometric series is a1 times (1 minus r to the n) divided by (1 minus r), valid when r is not equal to 1.",
+        "failure_mode": "Students add terms one by one instead of using the formula, or confuse the formula for arithmetic series with the geometric series formula"
+      },
+      {
+        "ingredient_id": "sequences__nth_term_formula",
+        "label": "nth term formulas give any term without listing all",
+        "description": "Arithmetic: a-sub-n = a1 + (n minus 1) times d. Geometric: a-sub-n = a1 times r to the (n minus 1).",
+        "failure_mode": "Students use n instead of (n minus 1) as the multiplier, causing every term to be off by one position"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_sequences_series__thinks_fibonacci_sequence_must_start",
+    "concept_id": "sequences_series",
+    "label": "Thinks a Fibonacci sequence must start with 1, 1",
+    "candidates": [
+      {
+        "ingredient_id": "sequences__arithmetic_identification",
+        "label": "Arithmetic sequences have constant difference",
+        "description": "A sequence is arithmetic when each term is produced by adding the same constant (common difference) to the previous term.",
+        "failure_mode": "Students confuse arithmetic and geometric sequences, calling a sequence with multiplied terms arithmetic because the differences appear to follow a pattern"
+      },
+      {
+        "ingredient_id": "sequences__geometric_identification",
+        "label": "Geometric sequences have constant ratio",
+        "description": "A sequence is geometric when each term is produced by multiplying the previous term by the same constant (common ratio).",
+        "failure_mode": "Students check differences rather than ratios when testing for a geometric sequence, missing that the defining property involves multiplication not addition"
+      },
+      {
+        "ingredient_id": "sequences__geometric_series_sum",
+        "label": "Geometric series sum uses closed form formula",
+        "description": "The sum of the first n terms of a geometric series is a1 times (1 minus r to the n) divided by (1 minus r), valid when r is not equal to 1.",
+        "failure_mode": "Students add terms one by one instead of using the formula, or confuse the formula for arithmetic series with the geometric series formula"
+      },
+      {
+        "ingredient_id": "sequences__nth_term_formula",
+        "label": "nth term formulas give any term without listing all",
+        "description": "Arithmetic: a-sub-n = a1 + (n minus 1) times d. Geometric: a-sub-n = a1 times r to the (n minus 1).",
+        "failure_mode": "Students use n instead of (n minus 1) as the multiplier, causing every term to be off by one position"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_sequences_series__thinks_first_term_sequence_must",
+    "concept_id": "sequences_series",
+    "label": "Thinks the first term of a sequence must be 1",
+    "candidates": [
+      {
+        "ingredient_id": "sequences__arithmetic_identification",
+        "label": "Arithmetic sequences have constant difference",
+        "description": "A sequence is arithmetic when each term is produced by adding the same constant (common difference) to the previous term.",
+        "failure_mode": "Students confuse arithmetic and geometric sequences, calling a sequence with multiplied terms arithmetic because the differences appear to follow a pattern"
+      },
+      {
+        "ingredient_id": "sequences__geometric_identification",
+        "label": "Geometric sequences have constant ratio",
+        "description": "A sequence is geometric when each term is produced by multiplying the previous term by the same constant (common ratio).",
+        "failure_mode": "Students check differences rather than ratios when testing for a geometric sequence, missing that the defining property involves multiplication not addition"
+      },
+      {
+        "ingredient_id": "sequences__geometric_series_sum",
+        "label": "Geometric series sum uses closed form formula",
+        "description": "The sum of the first n terms of a geometric series is a1 times (1 minus r to the n) divided by (1 minus r), valid when r is not equal to 1.",
+        "failure_mode": "Students add terms one by one instead of using the formula, or confuse the formula for arithmetic series with the geometric series formula"
+      },
+      {
+        "ingredient_id": "sequences__nth_term_formula",
+        "label": "nth term formulas give any term without listing all",
+        "description": "Arithmetic: a-sub-n = a1 + (n minus 1) times d. Geometric: a-sub-n = a1 times r to the (n minus 1).",
+        "failure_mode": "Students use n instead of (n minus 1) as the multiplier, causing every term to be off by one position"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_sequences_series__thinks_first_term_sequence_term",
+    "concept_id": "sequences_series",
+    "label": "Thinks the first term in a sequence is the term before the sequence begins (0th term)",
+    "candidates": [
+      {
+        "ingredient_id": "sequences__arithmetic_identification",
+        "label": "Arithmetic sequences have constant difference",
+        "description": "A sequence is arithmetic when each term is produced by adding the same constant (common difference) to the previous term.",
+        "failure_mode": "Students confuse arithmetic and geometric sequences, calling a sequence with multiplied terms arithmetic because the differences appear to follow a pattern"
+      },
+      {
+        "ingredient_id": "sequences__geometric_identification",
+        "label": "Geometric sequences have constant ratio",
+        "description": "A sequence is geometric when each term is produced by multiplying the previous term by the same constant (common ratio).",
+        "failure_mode": "Students check differences rather than ratios when testing for a geometric sequence, missing that the defining property involves multiplication not addition"
+      },
+      {
+        "ingredient_id": "sequences__geometric_series_sum",
+        "label": "Geometric series sum uses closed form formula",
+        "description": "The sum of the first n terms of a geometric series is a1 times (1 minus r to the n) divided by (1 minus r), valid when r is not equal to 1.",
+        "failure_mode": "Students add terms one by one instead of using the formula, or confuse the formula for arithmetic series with the geometric series formula"
+      },
+      {
+        "ingredient_id": "sequences__nth_term_formula",
+        "label": "nth term formulas give any term without listing all",
+        "description": "Arithmetic: a-sub-n = a1 + (n minus 1) times d. Geometric: a-sub-n = a1 times r to the (n minus 1).",
+        "failure_mode": "Students use n instead of (n minus 1) as the multiplier, causing every term to be off by one position"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_sequences_series__uses_only_first_two_terms",
+    "concept_id": "sequences_series",
+    "label": "Uses only the first two terms of a sequence to work out a term-to-term rule",
+    "candidates": [
+      {
+        "ingredient_id": "sequences__arithmetic_identification",
+        "label": "Arithmetic sequences have constant difference",
+        "description": "A sequence is arithmetic when each term is produced by adding the same constant (common difference) to the previous term.",
+        "failure_mode": "Students confuse arithmetic and geometric sequences, calling a sequence with multiplied terms arithmetic because the differences appear to follow a pattern"
+      },
+      {
+        "ingredient_id": "sequences__geometric_identification",
+        "label": "Geometric sequences have constant ratio",
+        "description": "A sequence is geometric when each term is produced by multiplying the previous term by the same constant (common ratio).",
+        "failure_mode": "Students check differences rather than ratios when testing for a geometric sequence, missing that the defining property involves multiplication not addition"
+      },
+      {
+        "ingredient_id": "sequences__geometric_series_sum",
+        "label": "Geometric series sum uses closed form formula",
+        "description": "The sum of the first n terms of a geometric series is a1 times (1 minus r to the n) divided by (1 minus r), valid when r is not equal to 1.",
+        "failure_mode": "Students add terms one by one instead of using the formula, or confuse the formula for arithmetic series with the geometric series formula"
+      },
+      {
+        "ingredient_id": "sequences__nth_term_formula",
+        "label": "nth term formulas give any term without listing all",
+        "description": "Arithmetic: a-sub-n = a1 + (n minus 1) times d. Geometric: a-sub-n = a1 times r to the (n minus 1).",
+        "failure_mode": "Students use n instead of (n minus 1) as the multiplier, causing every term to be off by one position"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_systems_of_linear_equations__believes_dividing_negative_positive_gives",
+    "concept_id": "systems_of_linear_equations",
+    "label": "Believes dividing a negative by a positive gives a positive answer",
+    "candidates": [
+      {
+        "ingredient_id": "systems__elimination_method",
+        "label": "Elimination cancels one variable by adding equations",
+        "description": "Multiply equations to make the coefficients of one variable equal and opposite, then add to eliminate that variable.",
+        "failure_mode": "Students subtract equations when they should add, or forget to multiply the entire equation (not just one term) before adding"
+      },
+      {
+        "ingredient_id": "systems__no_solution_infinite",
+        "label": "Parallel lines have no solution, identical lines have infinite",
+        "description": "When elimination produces a false statement like 0 = 5, no solution exists (parallel lines); when it produces 0 = 0, infinite solutions exist (same line).",
+        "failure_mode": "Students reach 0 = 5 mid-elimination and think they made an arithmetic error, erasing correct work instead of recognizing the system has no solution"
+      },
+      {
+        "ingredient_id": "systems__solution_as_intersection",
+        "label": "Solution is where both lines cross",
+        "description": "The solution to a system of two equations is the point that satisfies both simultaneously \u2014 geometrically, where the two lines intersect.",
+        "failure_mode": "Students find an x-value by eliminating y but then forget to substitute back to find the y-value, reporting an incomplete solution"
+      },
+      {
+        "ingredient_id": "systems__substitution_method",
+        "label": "Substitution replaces one variable with an expression",
+        "description": "Solve one equation for one variable, then substitute that expression into the other equation to get one equation in one unknown.",
+        "failure_mode": "Students substitute the expression back into the same equation they used to solve it instead of the other equation, producing a tautology"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_systems_of_linear_equations__believes_solution_mx_c_0",
+    "concept_id": "systems_of_linear_equations",
+    "label": "Believes the solution of mx + c = 0 is x =0",
+    "candidates": [
+      {
+        "ingredient_id": "systems__elimination_method",
+        "label": "Elimination cancels one variable by adding equations",
+        "description": "Multiply equations to make the coefficients of one variable equal and opposite, then add to eliminate that variable.",
+        "failure_mode": "Students subtract equations when they should add, or forget to multiply the entire equation (not just one term) before adding"
+      },
+      {
+        "ingredient_id": "systems__no_solution_infinite",
+        "label": "Parallel lines have no solution, identical lines have infinite",
+        "description": "When elimination produces a false statement like 0 = 5, no solution exists (parallel lines); when it produces 0 = 0, infinite solutions exist (same line).",
+        "failure_mode": "Students reach 0 = 5 mid-elimination and think they made an arithmetic error, erasing correct work instead of recognizing the system has no solution"
+      },
+      {
+        "ingredient_id": "systems__solution_as_intersection",
+        "label": "Solution is where both lines cross",
+        "description": "The solution to a system of two equations is the point that satisfies both simultaneously \u2014 geometrically, where the two lines intersect.",
+        "failure_mode": "Students find an x-value by eliminating y but then forget to substitute back to find the y-value, reporting an incomplete solution"
+      },
+      {
+        "ingredient_id": "systems__substitution_method",
+        "label": "Substitution replaces one variable with an expression",
+        "description": "Solve one equation for one variable, then substitute that expression into the other equation to get one equation in one unknown.",
+        "failure_mode": "Students substitute the expression back into the same equation they used to solve it instead of the other equation, producing a tautology"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_systems_of_linear_equations__believes_solution_mx_c_x",
+    "concept_id": "systems_of_linear_equations",
+    "label": "Believes the solution to mx + c = a is the x intercept of y = mx +c",
+    "candidates": [
+      {
+        "ingredient_id": "systems__elimination_method",
+        "label": "Elimination cancels one variable by adding equations",
+        "description": "Multiply equations to make the coefficients of one variable equal and opposite, then add to eliminate that variable.",
+        "failure_mode": "Students subtract equations when they should add, or forget to multiply the entire equation (not just one term) before adding"
+      },
+      {
+        "ingredient_id": "systems__no_solution_infinite",
+        "label": "Parallel lines have no solution, identical lines have infinite",
+        "description": "When elimination produces a false statement like 0 = 5, no solution exists (parallel lines); when it produces 0 = 0, infinite solutions exist (same line).",
+        "failure_mode": "Students reach 0 = 5 mid-elimination and think they made an arithmetic error, erasing correct work instead of recognizing the system has no solution"
+      },
+      {
+        "ingredient_id": "systems__solution_as_intersection",
+        "label": "Solution is where both lines cross",
+        "description": "The solution to a system of two equations is the point that satisfies both simultaneously \u2014 geometrically, where the two lines intersect.",
+        "failure_mode": "Students find an x-value by eliminating y but then forget to substitute back to find the y-value, reporting an incomplete solution"
+      },
+      {
+        "ingredient_id": "systems__substitution_method",
+        "label": "Substitution replaces one variable with an expression",
+        "description": "Solve one equation for one variable, then substitute that expression into the other equation to get one equation in one unknown.",
+        "failure_mode": "Students substitute the expression back into the same equation they used to solve it instead of the other equation, producing a tautology"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_systems_of_linear_equations__reading_value_from_graph_reads",
+    "concept_id": "systems_of_linear_equations",
+    "label": "When reading value from graph, reads from the wrong axes",
+    "candidates": [
+      {
+        "ingredient_id": "systems__elimination_method",
+        "label": "Elimination cancels one variable by adding equations",
+        "description": "Multiply equations to make the coefficients of one variable equal and opposite, then add to eliminate that variable.",
+        "failure_mode": "Students subtract equations when they should add, or forget to multiply the entire equation (not just one term) before adding"
+      },
+      {
+        "ingredient_id": "systems__no_solution_infinite",
+        "label": "Parallel lines have no solution, identical lines have infinite",
+        "description": "When elimination produces a false statement like 0 = 5, no solution exists (parallel lines); when it produces 0 = 0, infinite solutions exist (same line).",
+        "failure_mode": "Students reach 0 = 5 mid-elimination and think they made an arithmetic error, erasing correct work instead of recognizing the system has no solution"
+      },
+      {
+        "ingredient_id": "systems__solution_as_intersection",
+        "label": "Solution is where both lines cross",
+        "description": "The solution to a system of two equations is the point that satisfies both simultaneously \u2014 geometrically, where the two lines intersect.",
+        "failure_mode": "Students find an x-value by eliminating y but then forget to substitute back to find the y-value, reporting an incomplete solution"
+      },
+      {
+        "ingredient_id": "systems__substitution_method",
+        "label": "Substitution replaces one variable with an expression",
+        "description": "Solve one equation for one variable, then substitute that expression into the other equation to get one equation in one unknown.",
+        "failure_mode": "Students substitute the expression back into the same equation they used to solve it instead of the other equation, producing a tautology"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_systems_of_linear_equations__solving_equation_where_there_negative",
+    "concept_id": "systems_of_linear_equations",
+    "label": "When solving an equation where there is a negative sign in front of the variable at the...",
+    "candidates": [
+      {
+        "ingredient_id": "systems__elimination_method",
+        "label": "Elimination cancels one variable by adding equations",
+        "description": "Multiply equations to make the coefficients of one variable equal and opposite, then add to eliminate that variable.",
+        "failure_mode": "Students subtract equations when they should add, or forget to multiply the entire equation (not just one term) before adding"
+      },
+      {
+        "ingredient_id": "systems__no_solution_infinite",
+        "label": "Parallel lines have no solution, identical lines have infinite",
+        "description": "When elimination produces a false statement like 0 = 5, no solution exists (parallel lines); when it produces 0 = 0, infinite solutions exist (same line).",
+        "failure_mode": "Students reach 0 = 5 mid-elimination and think they made an arithmetic error, erasing correct work instead of recognizing the system has no solution"
+      },
+      {
+        "ingredient_id": "systems__solution_as_intersection",
+        "label": "Solution is where both lines cross",
+        "description": "The solution to a system of two equations is the point that satisfies both simultaneously \u2014 geometrically, where the two lines intersect.",
+        "failure_mode": "Students find an x-value by eliminating y but then forget to substitute back to find the y-value, reporting an incomplete solution"
+      },
+      {
+        "ingredient_id": "systems__substitution_method",
+        "label": "Substitution replaces one variable with an expression",
+        "description": "Solve one equation for one variable, then substitute that expression into the other equation to get one equation in one unknown.",
+        "failure_mode": "Students substitute the expression back into the same equation they used to solve it instead of the other equation, producing a tautology"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_systems_of_linear_equations__subtracting_negative_number_subtracts_absolute",
+    "concept_id": "systems_of_linear_equations",
+    "label": "When subtracting a negative number, subtracts the absolute value rather than adding it",
+    "candidates": [
+      {
+        "ingredient_id": "systems__elimination_method",
+        "label": "Elimination cancels one variable by adding equations",
+        "description": "Multiply equations to make the coefficients of one variable equal and opposite, then add to eliminate that variable.",
+        "failure_mode": "Students subtract equations when they should add, or forget to multiply the entire equation (not just one term) before adding"
+      },
+      {
+        "ingredient_id": "systems__no_solution_infinite",
+        "label": "Parallel lines have no solution, identical lines have infinite",
+        "description": "When elimination produces a false statement like 0 = 5, no solution exists (parallel lines); when it produces 0 = 0, infinite solutions exist (same line).",
+        "failure_mode": "Students reach 0 = 5 mid-elimination and think they made an arithmetic error, erasing correct work instead of recognizing the system has no solution"
+      },
+      {
+        "ingredient_id": "systems__solution_as_intersection",
+        "label": "Solution is where both lines cross",
+        "description": "The solution to a system of two equations is the point that satisfies both simultaneously \u2014 geometrically, where the two lines intersect.",
+        "failure_mode": "Students find an x-value by eliminating y but then forget to substitute back to find the y-value, reporting an incomplete solution"
+      },
+      {
+        "ingredient_id": "systems__substitution_method",
+        "label": "Substitution replaces one variable with an expression",
+        "description": "Solve one equation for one variable, then substitute that expression into the other equation to get one equation in one unknown.",
+        "failure_mode": "Students substitute the expression back into the same equation they used to solve it instead of the other equation, producing a tautology"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_triangles_congruence__assumes_angle_size_looks_not",
+    "concept_id": "triangles_congruence",
+    "label": "Assumes an angle is the size that it looks in the (not to scale) diagram",
+    "candidates": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "label": "Angles in any triangle sum to 180 degrees",
+        "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
+        "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown"
+      },
+      {
+        "ingredient_id": "triangles__congruence_criteria",
+        "label": "Congruence is proven with minimal side and angle information",
+        "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+        "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases"
+      },
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "label": "Similar triangles have proportional corresponding sides",
+        "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
+        "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_triangles_congruence__believes_adjacent_sides_rhombus_are",
+    "concept_id": "triangles_congruence",
+    "label": "Believes adjacent sides of a rhombus are always perpendicular",
+    "candidates": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "label": "Angles in any triangle sum to 180 degrees",
+        "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
+        "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown"
+      },
+      {
+        "ingredient_id": "triangles__congruence_criteria",
+        "label": "Congruence is proven with minimal side and angle information",
+        "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+        "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases"
+      },
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "label": "Similar triangles have proportional corresponding sides",
+        "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
+        "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_triangles_congruence__believes_all_triangles_have_right",
+    "concept_id": "triangles_congruence",
+    "label": "Believes all triangles have a right angle",
+    "candidates": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "label": "Angles in any triangle sum to 180 degrees",
+        "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
+        "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown"
+      },
+      {
+        "ingredient_id": "triangles__congruence_criteria",
+        "label": "Congruence is proven with minimal side and angle information",
+        "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+        "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases"
+      },
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "label": "Similar triangles have proportional corresponding sides",
+        "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
+        "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_triangles_congruence__believes_arrowhead_has_four_equal",
+    "concept_id": "triangles_congruence",
+    "label": "Believes an arrowhead has four equal sides",
+    "candidates": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "label": "Angles in any triangle sum to 180 degrees",
+        "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
+        "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown"
+      },
+      {
+        "ingredient_id": "triangles__congruence_criteria",
+        "label": "Congruence is proven with minimal side and angle information",
+        "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+        "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases"
+      },
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "label": "Similar triangles have proportional corresponding sides",
+        "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
+        "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_triangles_congruence__believes_arrows_for_parallel_lines",
+    "concept_id": "triangles_congruence",
+    "label": "Believes the arrows for parallel lines mean equal length",
+    "candidates": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "label": "Angles in any triangle sum to 180 degrees",
+        "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
+        "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown"
+      },
+      {
+        "ingredient_id": "triangles__congruence_criteria",
+        "label": "Congruence is proven with minimal side and angle information",
+        "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+        "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases"
+      },
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "label": "Similar triangles have proportional corresponding sides",
+        "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
+        "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_triangles_congruence__believes_if_shapes_have_rotational",
+    "concept_id": "triangles_congruence",
+    "label": "Believes if shapes have rotational symmetry they must have line symmetry",
+    "candidates": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "label": "Angles in any triangle sum to 180 degrees",
+        "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
+        "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown"
+      },
+      {
+        "ingredient_id": "triangles__congruence_criteria",
+        "label": "Congruence is proven with minimal side and angle information",
+        "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+        "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases"
+      },
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "label": "Similar triangles have proportional corresponding sides",
+        "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
+        "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_triangles_congruence__believes_interior_angle_regular_polygon",
+    "concept_id": "triangles_congruence",
+    "label": "Believes an interior angle in a regular polygon can be found using 180(n+2)/n",
+    "candidates": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "label": "Angles in any triangle sum to 180 degrees",
+        "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
+        "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown"
+      },
+      {
+        "ingredient_id": "triangles__congruence_criteria",
+        "label": "Congruence is proven with minimal side and angle information",
+        "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+        "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases"
+      },
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "label": "Similar triangles have proportional corresponding sides",
+        "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
+        "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_triangles_congruence__believes_isosceles_triangles_cannot_have",
+    "concept_id": "triangles_congruence",
+    "label": "Believes isosceles triangles cannot have right angles",
+    "candidates": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "label": "Angles in any triangle sum to 180 degrees",
+        "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
+        "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown"
+      },
+      {
+        "ingredient_id": "triangles__congruence_criteria",
+        "label": "Congruence is proven with minimal side and angle information",
+        "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+        "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases"
+      },
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "label": "Similar triangles have proportional corresponding sides",
+        "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
+        "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_triangles_congruence__believes_number_sides_gives_order",
+    "concept_id": "triangles_congruence",
+    "label": "Believes the number of sides gives the order of rotational symmetry",
+    "candidates": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "label": "Angles in any triangle sum to 180 degrees",
+        "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
+        "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown"
+      },
+      {
+        "ingredient_id": "triangles__congruence_criteria",
+        "label": "Congruence is proven with minimal side and angle information",
+        "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+        "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases"
+      },
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "label": "Similar triangles have proportional corresponding sides",
+        "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
+        "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_triangles_congruence__believes_rectangle_has_four_equal",
+    "concept_id": "triangles_congruence",
+    "label": "Believes a rectangle has four equal sides",
+    "candidates": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "label": "Angles in any triangle sum to 180 degrees",
+        "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
+        "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown"
+      },
+      {
+        "ingredient_id": "triangles__congruence_criteria",
+        "label": "Congruence is proven with minimal side and angle information",
+        "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+        "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases"
+      },
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "label": "Similar triangles have proportional corresponding sides",
+        "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
+        "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_triangles_congruence__believes_there_are_100_degrees",
+    "concept_id": "triangles_congruence",
+    "label": "Believes there are 100 degrees in a full turn",
+    "candidates": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "label": "Angles in any triangle sum to 180 degrees",
+        "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
+        "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown"
+      },
+      {
+        "ingredient_id": "triangles__congruence_criteria",
+        "label": "Congruence is proven with minimal side and angle information",
+        "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+        "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases"
+      },
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "label": "Similar triangles have proportional corresponding sides",
+        "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
+        "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_triangles_congruence__believes_there_only_one_orientation",
+    "concept_id": "triangles_congruence",
+    "label": "Believes there is only one orientation for the isosceles triangle base angles",
+    "candidates": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "label": "Angles in any triangle sum to 180 degrees",
+        "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
+        "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown"
+      },
+      {
+        "ingredient_id": "triangles__congruence_criteria",
+        "label": "Congruence is proven with minimal side and angle information",
+        "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+        "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases"
+      },
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "label": "Similar triangles have proportional corresponding sides",
+        "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
+        "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_triangles_congruence__confuses_isosceles_and_equilateral_triangles",
+    "concept_id": "triangles_congruence",
+    "label": "Confuses isosceles and equilateral triangles",
+    "candidates": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "label": "Angles in any triangle sum to 180 degrees",
+        "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
+        "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown"
+      },
+      {
+        "ingredient_id": "triangles__congruence_criteria",
+        "label": "Congruence is proven with minimal side and angle information",
+        "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+        "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases"
+      },
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "label": "Similar triangles have proportional corresponding sides",
+        "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
+        "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_triangles_congruence__confuses_isosceles_and_right_angle",
+    "concept_id": "triangles_congruence",
+    "label": "Confuses isosceles and right angle triangles",
+    "candidates": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "label": "Angles in any triangle sum to 180 degrees",
+        "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
+        "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown"
+      },
+      {
+        "ingredient_id": "triangles__congruence_criteria",
+        "label": "Congruence is proven with minimal side and angle information",
+        "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+        "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases"
+      },
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "label": "Similar triangles have proportional corresponding sides",
+        "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
+        "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_triangles_congruence__confuses_isosceles_and_scalene_triangles",
+    "concept_id": "triangles_congruence",
+    "label": "Confuses isosceles and scalene triangles",
+    "candidates": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "label": "Angles in any triangle sum to 180 degrees",
+        "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
+        "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown"
+      },
+      {
+        "ingredient_id": "triangles__congruence_criteria",
+        "label": "Congruence is proven with minimal side and angle information",
+        "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+        "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases"
+      },
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "label": "Similar triangles have proportional corresponding sides",
+        "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
+        "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_triangles_congruence__confuses_octagon_and_pentagon",
+    "concept_id": "triangles_congruence",
+    "label": "Confuses octagon and pentagon",
+    "candidates": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "label": "Angles in any triangle sum to 180 degrees",
+        "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
+        "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown"
+      },
+      {
+        "ingredient_id": "triangles__congruence_criteria",
+        "label": "Congruence is proven with minimal side and angle information",
+        "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+        "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases"
+      },
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "label": "Similar triangles have proportional corresponding sides",
+        "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
+        "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_triangles_congruence__confuses_pentagon_and_hexagon",
+    "concept_id": "triangles_congruence",
+    "label": "Confuses pentagon and hexagon",
+    "candidates": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "label": "Angles in any triangle sum to 180 degrees",
+        "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
+        "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown"
+      },
+      {
+        "ingredient_id": "triangles__congruence_criteria",
+        "label": "Congruence is proven with minimal side and angle information",
+        "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+        "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases"
+      },
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "label": "Similar triangles have proportional corresponding sides",
+        "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
+        "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_triangles_congruence__confuses_scalene_and_right_angle",
+    "concept_id": "triangles_congruence",
+    "label": "Confuses scalene and right angle triangles",
+    "candidates": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "label": "Angles in any triangle sum to 180 degrees",
+        "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
+        "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown"
+      },
+      {
+        "ingredient_id": "triangles__congruence_criteria",
+        "label": "Congruence is proven with minimal side and angle information",
+        "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+        "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases"
+      },
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "label": "Similar triangles have proportional corresponding sides",
+        "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
+        "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_triangles_congruence__does_know_know_equilateral_means",
+    "concept_id": "triangles_congruence",
+    "label": "Does know know equilateral means the same as regular",
+    "candidates": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "label": "Angles in any triangle sum to 180 degrees",
+        "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
+        "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown"
+      },
+      {
+        "ingredient_id": "triangles__congruence_criteria",
+        "label": "Congruence is proven with minimal side and angle information",
+        "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+        "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases"
+      },
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "label": "Similar triangles have proportional corresponding sides",
+        "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
+        "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_triangles_congruence__does_not_know_how_calculate",
+    "concept_id": "triangles_congruence",
+    "label": "Does not know how to calculate the sum of interior angles",
+    "candidates": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "label": "Angles in any triangle sum to 180 degrees",
+        "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
+        "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown"
+      },
+      {
+        "ingredient_id": "triangles__congruence_criteria",
+        "label": "Congruence is proven with minimal side and angle information",
+        "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+        "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases"
+      },
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "label": "Similar triangles have proportional corresponding sides",
+        "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
+        "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_triangles_congruence__does_not_know_how_find",
+    "concept_id": "triangles_congruence",
+    "label": "Does not know how to find order of rotational symmetry",
+    "candidates": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "label": "Angles in any triangle sum to 180 degrees",
+        "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
+        "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown"
+      },
+      {
+        "ingredient_id": "triangles__congruence_criteria",
+        "label": "Congruence is proven with minimal side and angle information",
+        "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+        "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases"
+      },
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "label": "Similar triangles have proportional corresponding sides",
+        "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
+        "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_triangles_congruence__does_not_know_meaning_equilateral",
+    "concept_id": "triangles_congruence",
+    "label": "Does not know the meaning of equilateral",
+    "candidates": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "label": "Angles in any triangle sum to 180 degrees",
+        "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
+        "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown"
+      },
+      {
+        "ingredient_id": "triangles__congruence_criteria",
+        "label": "Congruence is proven with minimal side and angle information",
+        "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+        "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases"
+      },
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "label": "Similar triangles have proportional corresponding sides",
+        "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
+        "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_triangles_congruence__does_not_know_meaning_word",
+    "concept_id": "triangles_congruence",
+    "label": "Does not know the meaning of the word parallel",
+    "candidates": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "label": "Angles in any triangle sum to 180 degrees",
+        "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
+        "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown"
+      },
+      {
+        "ingredient_id": "triangles__congruence_criteria",
+        "label": "Congruence is proven with minimal side and angle information",
+        "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+        "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases"
+      },
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "label": "Similar triangles have proportional corresponding sides",
+        "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
+        "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_triangles_congruence__does_not_know_rectangle_type",
+    "concept_id": "triangles_congruence",
+    "label": "Does not know a rectangle is a type of parallelogram",
+    "candidates": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "label": "Angles in any triangle sum to 180 degrees",
+        "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
+        "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown"
+      },
+      {
+        "ingredient_id": "triangles__congruence_criteria",
+        "label": "Congruence is proven with minimal side and angle information",
+        "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+        "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases"
+      },
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "label": "Similar triangles have proportional corresponding sides",
+        "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
+        "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_triangles_congruence__does_not_recognise_interior_and",
+    "concept_id": "triangles_congruence",
+    "label": "Does not recognise that interior and exterior angles are supplementary",
+    "candidates": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "label": "Angles in any triangle sum to 180 degrees",
+        "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
+        "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown"
+      },
+      {
+        "ingredient_id": "triangles__congruence_criteria",
+        "label": "Congruence is proven with minimal side and angle information",
+        "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+        "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases"
+      },
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "label": "Similar triangles have proportional corresponding sides",
+        "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
+        "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_triangles_congruence__does_not_recognise_parallelogram",
+    "concept_id": "triangles_congruence",
+    "label": "Does not recognise a parallelogram",
+    "candidates": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "label": "Angles in any triangle sum to 180 degrees",
+        "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
+        "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown"
+      },
+      {
+        "ingredient_id": "triangles__congruence_criteria",
+        "label": "Congruence is proven with minimal side and angle information",
+        "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+        "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases"
+      },
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "label": "Similar triangles have proportional corresponding sides",
+        "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
+        "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_triangles_congruence__does_not_recognise_properties_kite",
+    "concept_id": "triangles_congruence",
+    "label": "Does not recognise the properties of a kite",
+    "candidates": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "label": "Angles in any triangle sum to 180 degrees",
+        "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
+        "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown"
+      },
+      {
+        "ingredient_id": "triangles__congruence_criteria",
+        "label": "Congruence is proven with minimal side and angle information",
+        "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+        "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases"
+      },
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "label": "Similar triangles have proportional corresponding sides",
+        "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
+        "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_triangles_congruence__does_not_remember_rhombus_has",
+    "concept_id": "triangles_congruence",
+    "label": "Does not remember that a rhombus has equal sides",
+    "candidates": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "label": "Angles in any triangle sum to 180 degrees",
+        "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
+        "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown"
+      },
+      {
+        "ingredient_id": "triangles__congruence_criteria",
+        "label": "Congruence is proven with minimal side and angle information",
+        "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+        "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases"
+      },
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "label": "Similar triangles have proportional corresponding sides",
+        "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
+        "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_triangles_congruence__does_not_think_variable_with",
+    "concept_id": "triangles_congruence",
+    "label": "Does not think that a variable with no coefficient has a coefficient of 1",
+    "candidates": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "label": "Angles in any triangle sum to 180 degrees",
+        "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
+        "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown"
+      },
+      {
+        "ingredient_id": "triangles__congruence_criteria",
+        "label": "Congruence is proven with minimal side and angle information",
+        "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+        "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases"
+      },
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "label": "Similar triangles have proportional corresponding sides",
+        "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
+        "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_triangles_congruence__does_not_understand_acute_angle",
+    "concept_id": "triangles_congruence",
+    "label": "Does not understand that an acute angle is between 0 and 90 degrees",
+    "candidates": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "label": "Angles in any triangle sum to 180 degrees",
+        "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
+        "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown"
+      },
+      {
+        "ingredient_id": "triangles__congruence_criteria",
+        "label": "Congruence is proven with minimal side and angle information",
+        "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+        "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases"
+      },
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "label": "Similar triangles have proportional corresponding sides",
+        "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
+        "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_triangles_congruence__does_not_understand_base_angles",
+    "concept_id": "triangles_congruence",
+    "label": "Does not understand that base angles in an isosceles are equal",
+    "candidates": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "label": "Angles in any triangle sum to 180 degrees",
+        "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
+        "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown"
+      },
+      {
+        "ingredient_id": "triangles__congruence_criteria",
+        "label": "Congruence is proven with minimal side and angle information",
+        "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+        "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases"
+      },
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "label": "Similar triangles have proportional corresponding sides",
+        "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
+        "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_triangles_congruence__does_not_understand_naming_structure",
+    "concept_id": "triangles_congruence",
+    "label": "Does not understand the naming structure of polygons",
+    "candidates": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "label": "Angles in any triangle sum to 180 degrees",
+        "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
+        "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown"
+      },
+      {
+        "ingredient_id": "triangles__congruence_criteria",
+        "label": "Congruence is proven with minimal side and angle information",
+        "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+        "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases"
+      },
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "label": "Similar triangles have proportional corresponding sides",
+        "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
+        "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_triangles_congruence__does_not_understand_obtuse_angle",
+    "concept_id": "triangles_congruence",
+    "label": "Does not understand that an obtuse angle is between 90 and 180 degrees",
+    "candidates": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "label": "Angles in any triangle sum to 180 degrees",
+        "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
+        "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown"
+      },
+      {
+        "ingredient_id": "triangles__congruence_criteria",
+        "label": "Congruence is proven with minimal side and angle information",
+        "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+        "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases"
+      },
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "label": "Similar triangles have proportional corresponding sides",
+        "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
+        "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_triangles_congruence__does_not_understand_volume_enlarged",
+    "concept_id": "triangles_congruence",
+    "label": "Does not understand that the volume of an enlarged shape is the volume of the original...",
+    "candidates": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "label": "Angles in any triangle sum to 180 degrees",
+        "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
+        "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown"
+      },
+      {
+        "ingredient_id": "triangles__congruence_criteria",
+        "label": "Congruence is proven with minimal side and angle information",
+        "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+        "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases"
+      },
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "label": "Similar triangles have proportional corresponding sides",
+        "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
+        "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_triangles_congruence__thinks_cointerior_angles_are_equal",
+    "concept_id": "triangles_congruence",
+    "label": "Thinks co-interior angles are equal",
+    "candidates": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "label": "Angles in any triangle sum to 180 degrees",
+        "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
+        "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown"
+      },
+      {
+        "ingredient_id": "triangles__congruence_criteria",
+        "label": "Congruence is proven with minimal side and angle information",
+        "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+        "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases"
+      },
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "label": "Similar triangles have proportional corresponding sides",
+        "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
+        "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_triangles_congruence__thinks_interior_angle_regular_polygon",
+    "concept_id": "triangles_congruence",
+    "label": "Thinks the interior angle of a regular polygon is 10n",
+    "candidates": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "label": "Angles in any triangle sum to 180 degrees",
+        "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
+        "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown"
+      },
+      {
+        "ingredient_id": "triangles__congruence_criteria",
+        "label": "Congruence is proven with minimal side and angle information",
+        "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+        "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases"
+      },
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "label": "Similar triangles have proportional corresponding sides",
+        "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
+        "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_triangles_congruence__thinks_interior_angles_any_polygon",
+    "concept_id": "triangles_congruence",
+    "label": "Thinks the interior angles of any polygon add up to 360",
+    "candidates": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "label": "Angles in any triangle sum to 180 degrees",
+        "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
+        "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown"
+      },
+      {
+        "ingredient_id": "triangles__congruence_criteria",
+        "label": "Congruence is proven with minimal side and angle information",
+        "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+        "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases"
+      },
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "label": "Similar triangles have proportional corresponding sides",
+        "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
+        "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_triangles_congruence__thinks_rectangles_have_rotational_symmetry",
+    "concept_id": "triangles_congruence",
+    "label": "Thinks rectangles have rotational symmetry or order 4",
+    "candidates": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "label": "Angles in any triangle sum to 180 degrees",
+        "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
+        "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown"
+      },
+      {
+        "ingredient_id": "triangles__congruence_criteria",
+        "label": "Congruence is proven with minimal side and angle information",
+        "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+        "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases"
+      },
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "label": "Similar triangles have proportional corresponding sides",
+        "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
+        "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_trigonometry_basics__confuses_order_sides_trigonometric_ratio",
+    "concept_id": "trigonometry_basics",
+    "label": "Confuses order of sides in a trigonometric ratio",
+    "candidates": [
+      {
+        "ingredient_id": "trig_basics__angle_as_rotation",
+        "label": "Angle measures an amount of rotation",
+        "description": "An angle is not just a shape between two lines but a measure of how far you rotate from a starting direction.",
+        "failure_mode": "Students believe angles can only be between 0 and 180 degrees and cannot conceptualize angles like 270 degrees or negative angles"
+      },
+      {
+        "ingredient_id": "trig_basics__cos_as_horizontal_component",
+        "label": "cos(theta) is the horizontal projection of the radius",
+        "description": "cos(theta) represents how far the endpoint of a unit radius sits horizontally from the center.",
+        "failure_mode": "Students swap sin and cos in applied problems, using cos for vertical height and sin for horizontal position"
+      },
+      {
+        "ingredient_id": "trig_basics__pythagorean_trig_identity",
+        "label": "sin squared plus cos squared always equals one",
+        "description": "Because sin and cos are the y and x coordinates of a point on the unit circle, they always satisfy the Pythagorean relationship.",
+        "failure_mode": "Students treat this as an isolated memorized formula rather than recognizing it as the Pythagorean theorem applied directly to the unit circle"
+      },
+      {
+        "ingredient_id": "trig_basics__reference_angle",
+        "label": "Reference angle maps any angle to first quadrant",
+        "description": "The reference angle is the acute angle between a terminal side and the nearest x-axis, used to compute trig values in any quadrant.",
+        "failure_mode": "Students compute trig values of angles like 150 or 225 degrees from scratch instead of using the reference angle and adjusting only the sign"
+      },
+      {
+        "ingredient_id": "trig_basics__sin_as_vertical_component",
+        "label": "sin(theta) is the vertical projection of the radius",
+        "description": "sin(theta) represents how high the endpoint of a unit radius sits above the center \u2014 it is literally a vertical distance.",
+        "failure_mode": "Students know sin as opposite over hypotenuse but cannot connect it to the vertical component of a rotating vector, causing failure on circular motion problems like y = 30 + 18 sin(theta)"
+      },
+      {
+        "ingredient_id": "trig_basics__unit_circle_coordinates",
+        "label": "Unit circle point is (cos theta, sin theta)",
+        "description": "On a circle of radius 1, the point reached after rotating by angle theta has x-coordinate equal to cos(theta) and y-coordinate equal to sin(theta).",
+        "failure_mode": "Students know sin and cos as triangle ratios but cannot locate them on the unit circle or apply them to angles beyond 90 degrees"
+      }
+    ]
+  },
+  {
+    "misconception_id": "mis_trigonometry_basics__misremembers_exact_values_trigonometric_functions",
+    "concept_id": "trigonometry_basics",
+    "label": "Misremembers the exact values of trigonometric functions at standard angles",
+    "candidates": [
+      {
+        "ingredient_id": "trig_basics__angle_as_rotation",
+        "label": "Angle measures an amount of rotation",
+        "description": "An angle is not just a shape between two lines but a measure of how far you rotate from a starting direction.",
+        "failure_mode": "Students believe angles can only be between 0 and 180 degrees and cannot conceptualize angles like 270 degrees or negative angles"
+      },
+      {
+        "ingredient_id": "trig_basics__cos_as_horizontal_component",
+        "label": "cos(theta) is the horizontal projection of the radius",
+        "description": "cos(theta) represents how far the endpoint of a unit radius sits horizontally from the center.",
+        "failure_mode": "Students swap sin and cos in applied problems, using cos for vertical height and sin for horizontal position"
+      },
+      {
+        "ingredient_id": "trig_basics__pythagorean_trig_identity",
+        "label": "sin squared plus cos squared always equals one",
+        "description": "Because sin and cos are the y and x coordinates of a point on the unit circle, they always satisfy the Pythagorean relationship.",
+        "failure_mode": "Students treat this as an isolated memorized formula rather than recognizing it as the Pythagorean theorem applied directly to the unit circle"
+      },
+      {
+        "ingredient_id": "trig_basics__reference_angle",
+        "label": "Reference angle maps any angle to first quadrant",
+        "description": "The reference angle is the acute angle between a terminal side and the nearest x-axis, used to compute trig values in any quadrant.",
+        "failure_mode": "Students compute trig values of angles like 150 or 225 degrees from scratch instead of using the reference angle and adjusting only the sign"
+      },
+      {
+        "ingredient_id": "trig_basics__sin_as_vertical_component",
+        "label": "sin(theta) is the vertical projection of the radius",
+        "description": "sin(theta) represents how high the endpoint of a unit radius sits above the center \u2014 it is literally a vertical distance.",
+        "failure_mode": "Students know sin as opposite over hypotenuse but cannot connect it to the vertical component of a rotating vector, causing failure on circular motion problems like y = 30 + 18 sin(theta)"
+      },
+      {
+        "ingredient_id": "trig_basics__unit_circle_coordinates",
+        "label": "Unit circle point is (cos theta, sin theta)",
+        "description": "On a circle of radius 1, the point reached after rotating by angle theta has x-coordinate equal to cos(theta) and y-coordinate equal to sin(theta).",
+        "failure_mode": "Students know sin and cos as triangle ratios but cannot locate them on the unit circle or apply them to angles beyond 90 degrees"
+      }
+    ]
+  }
+]

@@ -1,0 +1,3465 @@
+{
+  "meta": {
+    "ontology": "data/5_level_ontology/01_mindcraft_concept_ontology_v2_6_with_combinations.json",
+    "misconceptions": "data/eedi_misconceptions.json",
+    "threshold": 0.55,
+    "cross_concept_threshold": 0.6,
+    "total_ingredients": 179,
+    "enriched": 95,
+    "no_match": 84
+  },
+  "matches": [
+    {
+      "ingredient_id": "fractions_decimals__part_whole_meaning",
+      "concept_id": "fractions_decimals",
+      "status": "matched",
+      "canonical": "mis_fractions_decimals__mixes_up_numerator_and_denominator",
+      "canonical_name": "Mixes up the numerator and denominator when writing a division as a fraction",
+      "cosine": 0.737,
+      "diagnostic_tags": [
+        "mis_fractions_decimals__mixes_up_numerator_and_denominator",
+        "mis_fractions_decimals__believes_fraction_means_dividing_denominator",
+        "mis_fractions_decimals__does_not_realise_you_can"
+      ],
+      "diagnostic_names": [
+        "Mixes up the numerator and denominator when writing a division as a fraction",
+        "Believes that a fraction means dividing the denominator by the numerator",
+        "Does not realise you can use equivalent fractions to break fractions up into smaller divisions"
+      ]
+    },
+    {
+      "ingredient_id": "fractions_decimals__equivalent_fractions",
+      "concept_id": "fractions_decimals",
+      "status": "matched",
+      "canonical": "mis_fractions_decimals__does_not_realise_you_can",
+      "canonical_name": "Does not realise you can use equivalent fractions to break fractions up into smaller divisions",
+      "cosine": 0.6886,
+      "diagnostic_tags": [
+        "mis_fractions_decimals__does_not_realise_you_can",
+        "mis_fractions_decimals__ordered_fractions_comparing_denominators_rather",
+        "mis_fractions_decimals__simplifies_fraction_adding_or_subtracting"
+      ],
+      "diagnostic_names": [
+        "Does not realise you can use equivalent fractions to break fractions up into smaller divisions",
+        "Ordered fractions by comparing denominators rather than using equivalent fractions.",
+        "Simplifies a fraction by adding or subtracting the same amount from the numerator  and denominator"
+      ]
+    },
+    {
+      "ingredient_id": "fractions_decimals__fraction_arithmetic",
+      "concept_id": "fractions_decimals",
+      "status": "matched",
+      "canonical": "mis_fractions_decimals__does_not_find_common_denominator",
+      "canonical_name": "Does not find a common denominator when adding/subtracting fractions",
+      "cosine": 0.7342,
+      "diagnostic_tags": [
+        "mis_fractions_decimals__does_not_find_common_denominator",
+        "mis_fractions_decimals__adding_fractions_adds_numerators_and",
+        "mis_fractions_decimals__does_not_consider_denominator_adding"
+      ],
+      "diagnostic_names": [
+        "Does not find a common denominator when adding/subtracting fractions",
+        "When adding fractions, adds the numerators and denominators",
+        "Does not consider the denominator when adding/ subtracting fractions. Adds/subtracts the numerator and makes the denominator the one with the highest value."
+      ]
+    },
+    {
+      "ingredient_id": "fractions_decimals__decimal_place_value",
+      "concept_id": "fractions_decimals",
+      "status": "matched",
+      "canonical": "mis_fractions_decimals__does_not_know_how_compare",
+      "canonical_name": "Does not know how to compare decimal numbers",
+      "cosine": 0.6217,
+      "diagnostic_tags": [
+        "mis_fractions_decimals__does_not_know_how_compare",
+        "mis_fractions_decimals__dividing_decimal_multiple_10_just",
+        "mis_fractions_decimals__dividing_decimals_does_not_realize"
+      ],
+      "diagnostic_names": [
+        "Does not know how to compare decimal numbers",
+        "When dividing a decimal by a multiple of 10, just divides the fractional place values ",
+        "When dividing decimals, does not realize that the order and position of the digits (relative to each other) has to remain constant."
+      ]
+    },
+    {
+      "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+      "concept_id": "fractions_decimals",
+      "status": "matched",
+      "canonical": "mis_fractions_decimals__converts_fraction_decimal_using_denominator",
+      "canonical_name": "Converts a fraction to a decimal by using the denominator after the decimal point",
+      "cosine": 0.7076,
+      "diagnostic_tags": [
+        "mis_fractions_decimals__converts_fraction_decimal_using_denominator",
+        "mis_fractions_decimals__converts_fraction_decimal_placing_decimal",
+        "mis_fractions_decimals__converts_fraction_decimal_using_only"
+      ],
+      "diagnostic_names": [
+        "Converts a fraction to a decimal by using the denominator after the decimal point",
+        "Converts a fraction to a decimal by placing a decimal point between the numerator and denominator",
+        "Converts a fraction to a decimal by using only the numerator after the decimal point"
+      ]
+    },
+    {
+      "ingredient_id": "ratios_proportions__ratio_as_comparison",
+      "concept_id": "ratios_proportions",
+      "status": "matched",
+      "canonical": "mis_ratios_proportions__thinks_ratios_are_written_1total",
+      "canonical_name": "Thinks ratios are written as 1:total",
+      "cosine": 0.6962,
+      "diagnostic_tags": [
+        "mis_ratios_proportions__thinks_ratios_are_written_1total",
+        "mis_ratios_proportions__thinks_difference_one_part_ratio",
+        "mis_ratios_proportions__ratio_where_total_given_treats"
+      ],
+      "diagnostic_names": [
+        "Thinks ratios are written as 1:total",
+        "Thinks a difference of one part in a ratio means the quantities will differ by one unit",
+        "In ratio where total is given, treats that as one part without dividing"
+      ]
+    },
+    {
+      "ingredient_id": "ratios_proportions__unit_rate",
+      "concept_id": "ratios_proportions",
+      "status": "matched",
+      "canonical": "mis_ratios_proportions__does_not_realise_ratio_worded",
+      "canonical_name": "Does not realise ratio in worded problem can be simplified",
+      "cosine": 0.7047,
+      "diagnostic_tags": [
+        "mis_ratios_proportions__does_not_realise_ratio_worded",
+        "mis_ratios_proportions__thinks_difference_one_part_ratio",
+        "mis_ratios_proportions__thinks_ratios_are_written_1total"
+      ],
+      "diagnostic_names": [
+        "Does not realise ratio in worded problem can be simplified",
+        "Thinks a difference of one part in a ratio means the quantities will differ by one unit",
+        "Thinks ratios are written as 1:total"
+      ]
+    },
+    {
+      "ingredient_id": "ratios_proportions__proportion_setup",
+      "concept_id": "ratios_proportions",
+      "status": "matched",
+      "canonical": "mis_ratios_proportions__does_not_realise_ratio_worded",
+      "canonical_name": "Does not realise ratio in worded problem can be simplified",
+      "cosine": 0.6933,
+      "diagnostic_tags": [
+        "mis_ratios_proportions__does_not_realise_ratio_worded",
+        "mis_ratios_proportions__ratio_question_where_one_side",
+        "mis_ratios_proportions__ratio_where_total_given_treats"
+      ],
+      "diagnostic_names": [
+        "Does not realise ratio in worded problem can be simplified",
+        "In ratio question where one side of ratio is given, uses that as one part in ratio without dividing",
+        "In ratio where total is given, treats that as one part without dividing"
+      ]
+    },
+    {
+      "ingredient_id": "ratios_proportions__cross_multiply_meaning",
+      "concept_id": "ratios_proportions",
+      "status": "matched",
+      "canonical": "mis_ratios_proportions__ratio_question_where_one_side",
+      "canonical_name": "In ratio question where one side of ratio is given, uses that as one part in ratio without dividing",
+      "cosine": 0.5636,
+      "diagnostic_tags": [
+        "mis_ratios_proportions__ratio_question_where_one_side",
+        "mis_ratios_proportions__converting_ratio_fractions_puts_other",
+        "mis_ratios_proportions__ratio_question_where_difference_between"
+      ],
+      "diagnostic_names": [
+        "In ratio question where one side of ratio is given, uses that as one part in ratio without dividing",
+        "When converting ratio to fractions, puts the other side of the ratio as the denominator rather than the total",
+        "In ratio question where the difference between the sides is given, uses that as the total for one side instead"
+      ]
+    },
+    {
+      "ingredient_id": "order_of_operations__precedence_hierarchy",
+      "concept_id": "order_of_operations",
+      "status": "matched",
+      "canonical": "mis_order_of_operations__performs_subtraction_right_left_if",
+      "canonical_name": "Performs subtraction right to left if priority order means doing a calculation to the right first",
+      "cosine": 0.6636,
+      "diagnostic_tags": [
+        "mis_order_of_operations__performs_subtraction_right_left_if",
+        "mis_order_of_operations__carries_out_operations_from_left",
+        "mis_order_of_operations__carries_out_operations_from_right"
+      ],
+      "diagnostic_names": [
+        "Performs subtraction right to left if priority order means doing a calculation to the right first",
+        "Carries out operations from left to right regardless of priority order",
+        "Carries out operations from right to left regardless of priority order"
+      ]
+    },
+    {
+      "ingredient_id": "order_of_operations__parentheses_override",
+      "concept_id": "order_of_operations",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_algebraic_manipulation__expanding_brackets_multiplies_out_first",
+          "name": "When expanding brackets, multiplies out the first term correctly but adds together the number outside the bracket with the second term inside the bracket.",
+          "cosine": 0.5959
+        },
+        {
+          "misconception_id": "mis_linear_inequalities__expanding_brackets_multiplies_out_first",
+          "name": "When expanding brackets, multiplies out the first term correctly but adds together the number outside the bracket with the second term inside the bracket.",
+          "cosine": 0.5959
+        },
+        {
+          "misconception_id": "mis_algebraic_manipulation__multiplying_out_2_or_more",
+          "name": "When multiplying out 2 or more brackets, does not multiply all the combinations of terms",
+          "cosine": 0.5645
+        }
+      ]
+    },
+    {
+      "ingredient_id": "order_of_operations__left_to_right_rule",
+      "concept_id": "order_of_operations",
+      "status": "matched",
+      "canonical": "mis_order_of_operations__applies_bidmas_strict_order_does",
+      "canonical_name": "Applies BIDMAS in strict order (does not realize addition and subtraction, and multiplication and division, are of equal priority)",
+      "cosine": 0.5756,
+      "diagnostic_tags": [
+        "mis_order_of_operations__applies_bidmas_strict_order_does",
+        "mis_order_of_operations__performs_subtraction_right_left_if"
+      ],
+      "diagnostic_names": [
+        "Applies BIDMAS in strict order (does not realize addition and subtraction, and multiplication and division, are of equal priority)",
+        "Performs subtraction right to left if priority order means doing a calculation to the right first"
+      ]
+    },
+    {
+      "ingredient_id": "order_of_operations__exponent_before_multiply",
+      "concept_id": "order_of_operations",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_factoring_polynomials__does_not_realise_multiplying_variable",
+          "name": "Does not realise multiplying a variable by itself results in a power of that variable",
+          "cosine": 0.5494
+        },
+        {
+          "misconception_id": "mis_algebraic_manipulation__does_not_realise_multiplying_variable",
+          "name": "Does not realise multiplying a variable by itself results in a power of that variable",
+          "cosine": 0.5494
+        },
+        {
+          "misconception_id": "mis_algebraic_manipulation__thinks_multiplying_variable_number_same",
+          "name": "Thinks multiplying a variable by a number is the same as raising that variable to the power of that number",
+          "cosine": 0.5397
+        }
+      ]
+    },
+    {
+      "ingredient_id": "basic_equations__equals_sign_balance",
+      "concept_id": "basic_equations",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_linear_equations__does_not_realise_maintain_balance",
+          "name": "Does not realise that to maintain balance in an equation they must add or subtract the same amount from both sides",
+          "cosine": 0.5641
+        },
+        {
+          "misconception_id": "mis_number_properties__assumes_they_add_all_values",
+          "name": "Assumes they add all values in a worded problem, thereby not interpreting the problem correctly",
+          "cosine": 0.4867
+        },
+        {
+          "misconception_id": "mis_fractions_decimals__solving_equation_adds_instead_dividing",
+          "name": "When solving an equation, adds instead of dividing",
+          "cosine": 0.4808
+        }
+      ]
+    },
+    {
+      "ingredient_id": "basic_equations__inverse_operations",
+      "concept_id": "basic_equations",
+      "status": "matched",
+      "canonical": "mis_linear_equations__thinks_inverse_subtraction_multiplication",
+      "canonical_name": "Thinks the inverse of subtraction is multiplication",
+      "cosine": 0.6524,
+      "diagnostic_tags": [
+        "mis_linear_equations__thinks_inverse_subtraction_multiplication",
+        "mis_functions_basics__thinks_inverse_subtraction_multiplication",
+        "mis_algebraic_manipulation__confuses_inverse_operations_addition_and"
+      ],
+      "diagnostic_names": [
+        "Thinks the inverse of subtraction is multiplication",
+        "Thinks the inverse of subtraction is multiplication",
+        "Confuses the inverse operations of addition and subtraction when rearranging equations"
+      ]
+    },
+    {
+      "ingredient_id": "basic_equations__do_same_to_both_sides",
+      "concept_id": "basic_equations",
+      "status": "matched",
+      "canonical": "mis_linear_equations__does_not_realise_maintain_balance",
+      "canonical_name": "Does not realise that to maintain balance in an equation they must add or subtract the same amount from both sides",
+      "cosine": 0.7517,
+      "diagnostic_tags": [
+        "mis_linear_equations__does_not_realise_maintain_balance",
+        "mis_linear_equations__does_not_understand_multiplying_both",
+        "mis_algebraic_manipulation__does_not_understand_multiplying_both"
+      ],
+      "diagnostic_names": [
+        "Does not realise that to maintain balance in an equation they must add or subtract the same amount from both sides",
+        "Does not understand that when multiplying both sides of an equation by an amount every term must be multiplied by the same amount",
+        "Does not understand that when multiplying both sides of an equation by an amount every term must be multiplied by the same amount"
+      ]
+    },
+    {
+      "ingredient_id": "basic_equations__isolate_variable",
+      "concept_id": "basic_equations",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_linear_equations__solving_equation_forgets_eliminate_coefficient",
+          "name": "When solving an equation forgets to eliminate the coefficient in front of the variable in the last step",
+          "cosine": 0.5157
+        },
+        {
+          "misconception_id": "mis_systems_of_linear_equations__solving_equation_forgets_eliminate_coefficient",
+          "name": "When solving an equation forgets to eliminate the coefficient in front of the variable in the last step",
+          "cosine": 0.5157
+        },
+        {
+          "misconception_id": "mis_algebraic_manipulation__solving_equation_forgets_eliminate_coefficient",
+          "name": "When solving an equation forgets to eliminate the coefficient in front of the variable in the last step",
+          "cosine": 0.5157
+        }
+      ]
+    },
+    {
+      "ingredient_id": "basic_equations__solution_verification",
+      "concept_id": "basic_equations",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_number_properties__confuses_part_and_whole_missing",
+          "name": "Confuses the part and the whole in missing number subtraction problems",
+          "cosine": 0.5391
+        },
+        {
+          "misconception_id": "mis_number_properties__adds_rather_than_subtracts_answering",
+          "name": "Adds rather than subtracts when answering worded problems",
+          "cosine": 0.5212
+        },
+        {
+          "misconception_id": "mis_order_of_operations__adds_rather_than_subtracts_answering",
+          "name": "Adds rather than subtracts when answering worded problems",
+          "cosine": 0.5212
+        }
+      ]
+    },
+    {
+      "ingredient_id": "linear_equations__slope_meaning",
+      "concept_id": "linear_equations",
+      "status": "matched",
+      "canonical": "mis_functions_basics__does_not_interpret_sloping_gradient",
+      "canonical_name": "Does not interpret a sloping gradient as a change in rate",
+      "cosine": 0.6073,
+      "diagnostic_tags": [
+        "mis_functions_basics__does_not_interpret_sloping_gradient"
+      ],
+      "diagnostic_names": [
+        "Does not interpret a sloping gradient as a change in rate"
+      ]
+    },
+    {
+      "ingredient_id": "linear_equations__y_intercept_meaning",
+      "concept_id": "linear_equations",
+      "status": "matched",
+      "canonical": "mis_linear_equations__believes_y_intercept_given_difference",
+      "canonical_name": "Believes the y intercept is given by the difference between the x and y coordinates of any point on the line, not just the point (0, c) ",
+      "cosine": 0.5935,
+      "diagnostic_tags": [
+        "mis_linear_equations__believes_y_intercept_given_difference",
+        "mis_linear_equations__believes_equation_horizontal_line_form",
+        "mis_linear_equations__believes_equation_for_horizontal_line"
+      ],
+      "diagnostic_names": [
+        "Believes the y intercept is given by the difference between the x and y coordinates of any point on the line, not just the point (0, c) ",
+        "Believes the equation of a horizontal line is in the form x = ay, where a is the y intercept",
+        "Believes the equation for a horizontal line is in the form xy = a, where a is the y intercept"
+      ]
+    },
+    {
+      "ingredient_id": "linear_equations__slope_intercept_form",
+      "concept_id": "linear_equations",
+      "status": "matched",
+      "canonical": "mis_linear_equations__believes_ymxc_m_yintercept",
+      "canonical_name": "Believes that in y=mx+c, m is the y-intercept",
+      "cosine": 0.6253,
+      "diagnostic_tags": [
+        "mis_linear_equations__believes_ymxc_m_yintercept"
+      ],
+      "diagnostic_names": [
+        "Believes that in y=mx+c, m is the y-intercept"
+      ]
+    },
+    {
+      "ingredient_id": "linear_equations__two_points_determine_line",
+      "concept_id": "linear_equations",
+      "status": "matched",
+      "canonical": "mis_linear_equations__believes_one_point_enough_specify",
+      "canonical_name": "Believes that one point is enough to specify a line",
+      "cosine": 0.5986,
+      "diagnostic_tags": [
+        "mis_linear_equations__believes_one_point_enough_specify"
+      ],
+      "diagnostic_names": [
+        "Believes that one point is enough to specify a line"
+      ]
+    },
+    {
+      "ingredient_id": "linear_equations__parallel_perpendicular",
+      "concept_id": "linear_equations",
+      "status": "matched",
+      "canonical": "mis_linear_equations__confuses_meaning_parallel_and_perpendicular",
+      "canonical_name": "Confuses the meaning of parallel and perpendicular",
+      "cosine": 0.6548,
+      "diagnostic_tags": [
+        "mis_linear_equations__confuses_meaning_parallel_and_perpendicular",
+        "mis_linear_equations__confuses_meaning_perpendicular_and_vertical",
+        "mis_linear_equations__does_not_know_meaning_perpendicular"
+      ],
+      "diagnostic_names": [
+        "Confuses the meaning of parallel and perpendicular",
+        "Confuses the meaning of perpendicular and vertical ",
+        "Does not know the meaning of perpendicular"
+      ]
+    },
+    {
+      "ingredient_id": "functions_basics__function_as_machine",
+      "concept_id": "functions_basics",
+      "status": "matched",
+      "canonical": "mis_functions_basics__using_function_machine_confuses_input",
+      "canonical_name": "When using a function machine, confuses the input and the output.",
+      "cosine": 0.5671,
+      "diagnostic_tags": [
+        "mis_functions_basics__using_function_machine_confuses_input",
+        "mis_functions_basics__function_machine_confuses_first_operation"
+      ],
+      "diagnostic_names": [
+        "When using a function machine, confuses the input and the output.",
+        "In a function machine, confuses the first operation and the input"
+      ]
+    },
+    {
+      "ingredient_id": "functions_basics__function_notation_meaning",
+      "concept_id": "functions_basics",
+      "status": "matched",
+      "canonical": "mis_functions_basics__function_machine_confuses_first_operation",
+      "canonical_name": "In a function machine, confuses the first operation and the input",
+      "cosine": 0.5836,
+      "diagnostic_tags": [
+        "mis_functions_basics__function_machine_confuses_first_operation",
+        "mis_functions_basics__using_function_machine_confuses_input"
+      ],
+      "diagnostic_names": [
+        "In a function machine, confuses the first operation and the input",
+        "When using a function machine, confuses the input and the output."
+      ]
+    },
+    {
+      "ingredient_id": "functions_basics__domain_range",
+      "concept_id": "functions_basics",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_descriptive_statistics__does_not_include_negative_numbers",
+          "name": "Does not include negative numbers when calculating a range",
+          "cosine": 0.5903
+        },
+        {
+          "misconception_id": "mis_number_properties__placing_negative_number_on_number",
+          "name": "When placing a negative number on a number line student assumes numbers with a greater absolute value are placed to the right.",
+          "cosine": 0.544
+        },
+        {
+          "misconception_id": "mis_linear_inequalities__believes_they_can_multiplydivide_through",
+          "name": "Believes they can multiply/divide through by a negative number without changing the direction of the inequality",
+          "cosine": 0.5143
+        }
+      ]
+    },
+    {
+      "ingredient_id": "functions_basics__function_composition",
+      "concept_id": "functions_basics",
+      "status": "matched",
+      "canonical": "mis_functions_basics__does_not_reverse_order_operations",
+      "canonical_name": "Does not reverse the order of operations when finding the input of a function machine",
+      "cosine": 0.5757,
+      "diagnostic_tags": [
+        "mis_functions_basics__does_not_reverse_order_operations",
+        "mis_functions_basics__reverses_order_operations_but_does"
+      ],
+      "diagnostic_names": [
+        "Does not reverse the order of operations when finding the input of a function machine",
+        "Reverses the order of operations but does not apply the inverse operations when finding the input of a function machine"
+      ]
+    },
+    {
+      "ingredient_id": "functions_basics__one_to_one_invertibility",
+      "concept_id": "functions_basics",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_functions_basics__finding_input_function_machine_thinks",
+          "name": "When finding an input of a function machine thinks you apply the operations given rather than the inverse operation.",
+          "cosine": 0.5349
+        },
+        {
+          "misconception_id": "mis_functions_basics__does_not_apply_inverse_function",
+          "name": "Does not apply the inverse function to every term in an expression",
+          "cosine": 0.5319
+        },
+        {
+          "misconception_id": "mis_linear_equations__does_not_understand_concept_inverse",
+          "name": "Does not understand the concept of inverse operations in algebra",
+          "cosine": 0.5247
+        }
+      ]
+    },
+    {
+      "ingredient_id": "functions_basics__piecewise_context_threshold",
+      "concept_id": "functions_basics",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_functions_basics__does_not_realise_gradient_represents",
+          "name": "Does not realise that gradient represents rate of change",
+          "cosine": 0.4895
+        },
+        {
+          "misconception_id": "mis_functions_basics__does_not_interpret_sloping_gradient",
+          "name": "Does not interpret a sloping gradient as a change in rate",
+          "cosine": 0.455
+        },
+        {
+          "misconception_id": "mis_linear_equations__using_function_machine_confuses_input",
+          "name": "When using a function machine, confuses the input and the output.",
+          "cosine": 0.4465
+        }
+      ]
+    },
+    {
+      "ingredient_id": "right_triangle__pythagorean_theorem",
+      "concept_id": "right_triangle_geometry",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_sequences_series__believes_square_numbers_are_triangle",
+          "name": "Believes square numbers are triangle numbers",
+          "cosine": 0.5679
+        },
+        {
+          "misconception_id": "mis_exponent_rules__thinks_sum_2_numbers_each",
+          "name": "Thinks the sum of 2 numbers, each squared first, is the same as adding the two numbers and then squaring the total",
+          "cosine": 0.5478
+        },
+        {
+          "misconception_id": "mis_exponent_rules__squares_asked_find_square_root",
+          "name": "Squares when asked to find the square root",
+          "cosine": 0.5473
+        }
+      ]
+    },
+    {
+      "ingredient_id": "right_triangle__side_naming",
+      "concept_id": "right_triangle_geometry",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_triangles_congruence__does_not_know_correct_notation",
+          "name": "Does not know the correct notation for labelling a side length",
+          "cosine": 0.5482
+        },
+        {
+          "misconception_id": "mis_lines_angles__student_thinks_any_two_angles",
+          "name": "Student thinks that any two angles along a straight line are equal",
+          "cosine": 0.5279
+        },
+        {
+          "misconception_id": "mis_lines_angles__thinks_alternate_angles_are_always",
+          "name": "Thinks alternate angles are always equal",
+          "cosine": 0.5277
+        }
+      ]
+    },
+    {
+      "ingredient_id": "right_triangle__sohcahtoa_setup",
+      "concept_id": "right_triangle_geometry",
+      "status": "matched",
+      "canonical": "mis_trigonometry_basics__confuses_order_sides_trigonometric_ratio",
+      "canonical_name": "Confuses order of sides in a trigonometric ratio",
+      "cosine": 0.6706,
+      "diagnostic_tags": [
+        "mis_trigonometry_basics__confuses_order_sides_trigonometric_ratio",
+        "mis_ratios_proportions__uses_denominator_converting_from_fractions",
+        "mis_ratios_proportions__ratio_question_where_difference_between"
+      ],
+      "diagnostic_names": [
+        "Confuses order of sides in a trigonometric ratio",
+        "Uses the denominator when converting from fractions to ratio, rather than numerator.",
+        "In ratio question where the difference between the sides is given, uses that as the total for one side instead"
+      ]
+    },
+    {
+      "ingredient_id": "right_triangle__special_triangles",
+      "concept_id": "right_triangle_geometry",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_triangles_congruence__does_not_know_right_angle",
+          "name": "Does not know that a right angle is 90 degrees",
+          "cosine": 0.5385
+        },
+        {
+          "misconception_id": "mis_lines_angles__does_not_know_right_angle",
+          "name": "Does not know that a right angle is 90 degrees",
+          "cosine": 0.5385
+        },
+        {
+          "misconception_id": "mis_area_volume__using_pythagoras_find_height_isosceles",
+          "name": "When using Pythagoras to find the height of an isosceles triangle, uses the whole base instead of half",
+          "cosine": 0.5372
+        }
+      ]
+    },
+    {
+      "ingredient_id": "right_triangle__coordinate_distance_formula",
+      "concept_id": "right_triangle_geometry",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_linear_equations__confuses_midpoint_and_distance_between",
+          "name": "Confuses midpoint and distance between two points",
+          "cosine": 0.5801
+        },
+        {
+          "misconception_id": "mis_linear_equations__does_not_link_pythagoras_theorem",
+          "name": "Does not link Pythagoras Theorem to finding distance between two points",
+          "cosine": 0.5404
+        },
+        {
+          "misconception_id": "mis_geometric_transformations__finding_distance_between_coordinates_includes",
+          "name": "When finding the distance between coordinates, includes the starting number",
+          "cosine": 0.5351
+        }
+      ]
+    },
+    {
+      "ingredient_id": "trig_basics__angle_as_rotation",
+      "concept_id": "trigonometry_basics",
+      "status": "matched",
+      "canonical": "mis_triangles_congruence__uses_more_than_3_letters",
+      "canonical_name": "Uses more than 3 letters to describe an angle",
+      "cosine": 0.6568,
+      "diagnostic_tags": [
+        "mis_triangles_congruence__uses_more_than_3_letters",
+        "mis_lines_angles__student_thinks_any_two_angles",
+        "mis_triangles_congruence__uses_2_letters_describe_angle"
+      ],
+      "diagnostic_names": [
+        "Uses more than 3 letters to describe an angle",
+        "Student thinks that any two angles along a straight line are equal",
+        "Uses 2 letters to describe an angle"
+      ]
+    },
+    {
+      "ingredient_id": "trig_basics__unit_circle_coordinates",
+      "concept_id": "trigonometry_basics",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_lines_angles__does_not_know_angles_around",
+          "name": "Does not know that angles around a point sum to 360",
+          "cosine": 0.5585
+        },
+        {
+          "misconception_id": "mis_triangles_congruence__does_not_know_right_angle",
+          "name": "Does not know that a right angle is 90 degrees",
+          "cosine": 0.5442
+        },
+        {
+          "misconception_id": "mis_lines_angles__does_not_know_right_angle",
+          "name": "Does not know that a right angle is 90 degrees",
+          "cosine": 0.5442
+        }
+      ]
+    },
+    {
+      "ingredient_id": "trig_basics__sin_as_vertical_component",
+      "concept_id": "trigonometry_basics",
+      "status": "matched",
+      "canonical": "mis_trigonometry_basics__uses_sin_cos_required",
+      "canonical_name": "Uses sin when cos is required",
+      "cosine": 0.5988,
+      "diagnostic_tags": [
+        "mis_trigonometry_basics__uses_sin_cos_required"
+      ],
+      "diagnostic_names": [
+        "Uses sin when cos is required"
+      ]
+    },
+    {
+      "ingredient_id": "trig_basics__cos_as_horizontal_component",
+      "concept_id": "trigonometry_basics",
+      "status": "matched",
+      "canonical": "mis_trigonometry_basics__uses_cos_sin_required",
+      "canonical_name": "Uses cos when sin is required",
+      "cosine": 0.6279,
+      "diagnostic_tags": [
+        "mis_trigonometry_basics__uses_cos_sin_required",
+        "mis_trigonometry_basics__uses_sin_cos_required"
+      ],
+      "diagnostic_names": [
+        "Uses cos when sin is required",
+        "Uses sin when cos is required"
+      ]
+    },
+    {
+      "ingredient_id": "trig_basics__reference_angle",
+      "concept_id": "trigonometry_basics",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_lines_angles__does_not_recall_steps_required",
+          "name": "Does not recall the steps required to draw an angle",
+          "cosine": 0.589
+        },
+        {
+          "misconception_id": "mis_lines_angles__thinks_corresponding_angles_sum_180",
+          "name": "Thinks corresponding angles sum to 180 degrees",
+          "cosine": 0.5826
+        },
+        {
+          "misconception_id": "mis_lines_angles__does_not_use_angle_facts",
+          "name": "Does not use angle facts when setting up an equation from an angle diagram",
+          "cosine": 0.5763
+        }
+      ]
+    },
+    {
+      "ingredient_id": "trig_basics__pythagorean_trig_identity",
+      "concept_id": "trigonometry_basics",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_lines_angles__student_thinks_any_two_angles",
+          "name": "Student thinks that any two angles along a straight line are equal",
+          "cosine": 0.5437
+        },
+        {
+          "misconception_id": "mis_trigonometry_basics__uses_sin_cos_required",
+          "name": "Uses sin when cos is required",
+          "cosine": 0.5426
+        },
+        {
+          "misconception_id": "mis_circles_geometry__confuses_radius_with_radius_squared",
+          "name": "Confuses the radius with the radius squared in the equation of a circle",
+          "cosine": 0.5179
+        }
+      ]
+    },
+    {
+      "ingredient_id": "limits__approaching_not_reaching",
+      "concept_id": "limits_continuity",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_fractions_decimals__uses_numerator_improper_fraction_denominator",
+          "name": "Uses the numerator of an improper fraction as the denominator of the equivalent mixed number",
+          "cosine": 0.3478
+        },
+        {
+          "misconception_id": "mis_fractions_decimals__thinks_you_add_number_wholes",
+          "name": "Thinks you add the number of wholes to the numerator when converting a mixed number to an improper fraction.",
+          "cosine": 0.3357
+        },
+        {
+          "misconception_id": "mis_fractions_decimals__thinks_you_multiply_numerator_and",
+          "name": "Thinks you multiply by the numerator and add the denominator when converting a mixed number to an improper fraction",
+          "cosine": 0.3292
+        }
+      ]
+    },
+    {
+      "ingredient_id": "limits__limit_vs_value_distinction",
+      "concept_id": "limits_continuity",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_algebraic_manipulation__thinks_you_cancel_identical_terms",
+          "name": "Thinks that when you cancel identical terms from the numerator and denominator, they just disappear",
+          "cosine": 0.3427
+        },
+        {
+          "misconception_id": "mis_functions_basics__believes_fx_translates_function_right",
+          "name": "Believes f(x) + a translates the function right a units",
+          "cosine": 0.3259
+        },
+        {
+          "misconception_id": "mis_linear_equations__using_function_machine_confuses_input",
+          "name": "When using a function machine, confuses the input and the output.",
+          "cosine": 0.3142
+        }
+      ]
+    },
+    {
+      "ingredient_id": "limits__one_sided_limits",
+      "concept_id": "limits_continuity",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_number_properties__placing_negative_number_on_number",
+          "name": "When placing a negative number on a number line student assumes numbers with a greater absolute value are placed to the right.",
+          "cosine": 0.4545
+        },
+        {
+          "misconception_id": "mis_fractions_decimals__believes_mixed_number_can_contain",
+          "name": "Believes a mixed number can contain an improper fraction",
+          "cosine": 0.4227
+        },
+        {
+          "misconception_id": "mis_fractions_decimals__finds_equivalent_improper_fraction_asked",
+          "name": "Finds an equivalent improper fraction when asked for a mixed number",
+          "cosine": 0.404
+        }
+      ]
+    },
+    {
+      "ingredient_id": "limits__continuity_definition",
+      "concept_id": "limits_continuity",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_functions_basics__confuses_cubic_and_reciprocal_graphs",
+          "name": "confuses cubic and reciprocal graphs",
+          "cosine": 0.4304
+        },
+        {
+          "misconception_id": "mis_ratios_proportions__believes_reciprocal_graph_can_be",
+          "name": "Believes a reciprocal graph can be a straight line",
+          "cosine": 0.4104
+        },
+        {
+          "misconception_id": "mis_linear_equations__confuses_linear_and_reciprocal_graphs",
+          "name": "Confuses linear and reciprocal graphs",
+          "cosine": 0.3939
+        }
+      ]
+    },
+    {
+      "ingredient_id": "limits__limit_as_derivative_setup",
+      "concept_id": "limits_continuity",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_sequences_series__does_not_know_definition_term",
+          "name": "Does not know the definition of term or term-to-term rule",
+          "cosine": 0.4882
+        },
+        {
+          "misconception_id": "mis_functions_basics__does_not_realise_gradient_represents",
+          "name": "Does not realise that gradient represents rate of change",
+          "cosine": 0.4313
+        },
+        {
+          "misconception_id": "mis_sequences_series__identifies_termtoterm_rule_rather_than",
+          "name": "Identifies the term-to-term rule rather than the next term",
+          "cosine": 0.3898
+        }
+      ]
+    },
+    {
+      "ingredient_id": "derivatives__derivative_as_slope",
+      "concept_id": "derivatives",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_functions_basics__does_not_interpret_sloping_gradient",
+          "name": "Does not interpret a sloping gradient as a change in rate",
+          "cosine": 0.4483
+        },
+        {
+          "misconception_id": "mis_linear_equations__does_not_understand_difference_between",
+          "name": "Does not understand the difference between a value on a graph and the gradient of a graph",
+          "cosine": 0.4266
+        },
+        {
+          "misconception_id": "mis_fractions_decimals__dividend_mixed_number_and_divisor",
+          "name": "When the dividend is a mixed number and the divisor is an integer, thinks they only perform the calculation with the integers.",
+          "cosine": 0.3843
+        }
+      ]
+    },
+    {
+      "ingredient_id": "derivatives__power_rule",
+      "concept_id": "derivatives",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_area_volume__does_not_know_cubic_means",
+          "name": "Does not know that cubic means the same as cubed in units",
+          "cosine": 0.5666
+        },
+        {
+          "misconception_id": "mis_algebraic_manipulation__believes_cubic_expression_should_have",
+          "name": "Believes a cubic expression should have three terms",
+          "cosine": 0.549
+        },
+        {
+          "misconception_id": "mis_measurement_units__believes_you_cube_conversion_factor",
+          "name": "Believes you cube the conversion factor when dealing with squared units",
+          "cosine": 0.5393
+        }
+      ]
+    },
+    {
+      "ingredient_id": "derivatives__chain_rule",
+      "concept_id": "derivatives",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_linear_equations__believes_gradient_difference_between_change",
+          "name": "Believes gradient is the difference between the change in x and the change in y",
+          "cosine": 0.4302
+        },
+        {
+          "misconception_id": "mis_linear_equations__believes_gradient_change_y_multiplied",
+          "name": "Believes gradient = change in y multiplied by change in x",
+          "cosine": 0.4208
+        },
+        {
+          "misconception_id": "mis_functions_basics__does_not_realise_gradient_represents",
+          "name": "Does not realise that gradient represents rate of change",
+          "cosine": 0.4069
+        }
+      ]
+    },
+    {
+      "ingredient_id": "derivatives__product_quotient_rule",
+      "concept_id": "derivatives",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_exponent_rules__does_not_realise_multiplication_can",
+          "name": "Does not realise that multiplication can be broken down into factors",
+          "cosine": 0.4937
+        },
+        {
+          "misconception_id": "mis_number_properties__does_not_realise_multiplication_can",
+          "name": "Does not realise that multiplication can be broken down into factors",
+          "cosine": 0.4937
+        },
+        {
+          "misconception_id": "mis_number_properties__does_not_correctly_apply_distributive",
+          "name": "Does not correctly apply the distributive property of multiplication",
+          "cosine": 0.4666
+        }
+      ]
+    },
+    {
+      "ingredient_id": "derivatives__derivative_as_rate",
+      "concept_id": "derivatives",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_area_volume__does_not_know_cubic_means",
+          "name": "Does not know that cubic means the same as cubed in units",
+          "cosine": 0.4482
+        },
+        {
+          "misconception_id": "mis_fractions_decimals__does_not_know_how_interpret",
+          "name": "Does not know how to interpret a fraction worded problem ",
+          "cosine": 0.4069
+        },
+        {
+          "misconception_id": "mis_number_properties__does_not_understand_meaning_value",
+          "name": "Does not understand the meaning of \"value\"",
+          "cosine": 0.4004
+        }
+      ]
+    },
+    {
+      "ingredient_id": "linear_inequalities__inequality_as_region",
+      "concept_id": "linear_inequalities",
+      "status": "matched",
+      "canonical": "mis_linear_inequalities__believes_solving_inequality_gives_single",
+      "canonical_name": "Believes solving an inequality gives a single value as a solution",
+      "cosine": 0.6559,
+      "diagnostic_tags": [
+        "mis_linear_inequalities__believes_solving_inequality_gives_single",
+        "mis_linear_inequalities__does_not_understand_inequality_notation",
+        "mis_linear_inequalities__confuses_inequality_symbols_with_equality"
+      ],
+      "diagnostic_names": [
+        "Believes solving an inequality gives a single value as a solution",
+        "Does not understand inequality notation",
+        "Confuses inequality symbols with equality"
+      ]
+    },
+    {
+      "ingredient_id": "linear_inequalities__flip_rule",
+      "concept_id": "linear_inequalities",
+      "status": "matched",
+      "canonical": "mis_linear_inequalities__believes_they_can_multiplydivide_through",
+      "canonical_name": "Believes they can multiply/divide through by a negative number without changing the direction of the inequality",
+      "cosine": 0.6367,
+      "diagnostic_tags": [
+        "mis_linear_inequalities__believes_they_can_multiplydivide_through",
+        "mis_linear_inequalities__thinks_subtracting_negative_makes_your",
+        "mis_linear_inequalities__believes_subtracting_positive_number_from"
+      ],
+      "diagnostic_names": [
+        "Believes they can multiply/divide through by a negative number without changing the direction of the inequality",
+        "Thinks subtracting a negative makes your answer smaller",
+        "Believes subtracting a positive number from a negative number makes the answer less negative"
+      ]
+    },
+    {
+      "ingredient_id": "linear_inequalities__open_closed_circles",
+      "concept_id": "linear_inequalities",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_linear_inequalities__representing_inequality_on_numberline_assumes",
+          "name": "When representing an inequality on a numberline, assumes the filled and unfilled circles have the opposite meaning.",
+          "cosine": 0.4875
+        },
+        {
+          "misconception_id": "mis_area_volume__believes_lines_inside_shape_are",
+          "name": "Believes lines inside the shape are included when finding perimeter",
+          "cosine": 0.414
+        },
+        {
+          "misconception_id": "mis_circles_geometry__confuses_diameter_and_radius",
+          "name": "Confuses diameter and radius",
+          "cosine": 0.4064
+        }
+      ]
+    },
+    {
+      "ingredient_id": "linear_inequalities__compound_inequalities",
+      "concept_id": "linear_inequalities",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_linear_inequalities__believes_any_two_inequalities_can",
+          "name": "Believes any two inequalities can be combined into a double inequality",
+          "cosine": 0.5067
+        },
+        {
+          "misconception_id": "mis_linear_inequalities__believes_inequalities_cannot_be_combined",
+          "name": "Believes inequalities cannot be combined",
+          "cosine": 0.5033
+        },
+        {
+          "misconception_id": "mis_linear_inequalities__believes_inequalities_can_only_include",
+          "name": "Believes inequalities can only include integers",
+          "cosine": 0.4746
+        }
+      ]
+    },
+    {
+      "ingredient_id": "linear_inequalities__absolute_value_split_greater_than",
+      "concept_id": "linear_inequalities",
+      "status": "matched",
+      "canonical": "mis_linear_inequalities__believes_negative_numbers_with_larger",
+      "canonical_name": "Believes negative numbers with a larger absolute value are greater",
+      "cosine": 0.5718,
+      "diagnostic_tags": [
+        "mis_linear_inequalities__believes_negative_numbers_with_larger",
+        "mis_linear_inequalities__believes_they_can_multiplydivide_through"
+      ],
+      "diagnostic_names": [
+        "Believes negative numbers with a larger absolute value are greater",
+        "Believes they can multiply/divide through by a negative number without changing the direction of the inequality"
+      ]
+    },
+    {
+      "ingredient_id": "systems__solution_as_intersection",
+      "concept_id": "systems_of_linear_equations",
+      "status": "matched",
+      "canonical": "mis_systems_of_linear_equations__solving_simultaneous_equations_graphically_they",
+      "canonical_name": "When solving simultaneous equations graphically, they think the solutions are the y-intercepts",
+      "cosine": 0.5543,
+      "diagnostic_tags": [
+        "mis_systems_of_linear_equations__solving_simultaneous_equations_graphically_they",
+        "mis_systems_of_linear_equations__solving_simultaneous_equations_thinks_they"
+      ],
+      "diagnostic_names": [
+        "When solving simultaneous equations graphically, they think the solutions are the y-intercepts",
+        "When solving simultaneous equations, thinks they can ignore one of the variables"
+      ]
+    },
+    {
+      "ingredient_id": "systems__substitution_method",
+      "concept_id": "systems_of_linear_equations",
+      "status": "matched",
+      "canonical": "mis_systems_of_linear_equations__mixes_up_value_two_terms",
+      "canonical_name": "Mixes up the value of two terms when substituting",
+      "cosine": 0.5593,
+      "diagnostic_tags": [
+        "mis_systems_of_linear_equations__mixes_up_value_two_terms"
+      ],
+      "diagnostic_names": [
+        "Mixes up the value of two terms when substituting"
+      ]
+    },
+    {
+      "ingredient_id": "systems__elimination_method",
+      "concept_id": "systems_of_linear_equations",
+      "status": "matched",
+      "canonical": "mis_systems_of_linear_equations__solving_simultaneous_equations_thinks_identical",
+      "canonical_name": "When solving simultaneous equations thinks that identical terms in given equations can be eliminated by either adding or subtracting.",
+      "cosine": 0.7164,
+      "diagnostic_tags": [
+        "mis_systems_of_linear_equations__solving_simultaneous_equations_thinks_identical",
+        "mis_systems_of_linear_equations__subtracts_simultaneous_equations_addition_required",
+        "mis_systems_of_linear_equations__solving_equation_forgets_eliminate_coefficient"
+      ],
+      "diagnostic_names": [
+        "When solving simultaneous equations thinks that identical terms in given equations can be eliminated by either adding or subtracting.",
+        "Subtracts simultaneous equations when addition is required",
+        "When solving an equation forgets to eliminate the coefficient in front of the variable in the last step"
+      ]
+    },
+    {
+      "ingredient_id": "systems__no_solution_infinite",
+      "concept_id": "systems_of_linear_equations",
+      "status": "matched",
+      "canonical": "mis_systems_of_linear_equations__solving_simultaneous_equations_thinks_identical",
+      "canonical_name": "When solving simultaneous equations thinks that identical terms in given equations can be eliminated by either adding or subtracting.",
+      "cosine": 0.5623,
+      "diagnostic_tags": [
+        "mis_systems_of_linear_equations__solving_simultaneous_equations_thinks_identical"
+      ],
+      "diagnostic_names": [
+        "When solving simultaneous equations thinks that identical terms in given equations can be eliminated by either adding or subtracting."
+      ]
+    },
+    {
+      "ingredient_id": "exponent_rules__product_rule",
+      "concept_id": "exponent_rules",
+      "status": "matched",
+      "canonical": "mis_exponent_rules__multiplying_numbers_with_different_bases",
+      "canonical_name": "When multiplying numbers with different bases, multiplies the powers and multiplies the base numbers.",
+      "cosine": 0.6618,
+      "diagnostic_tags": [
+        "mis_exponent_rules__multiplying_numbers_with_different_bases",
+        "mis_exponent_rules__has_cubed_base_number_and",
+        "mis_exponent_rules__has_added_powers_rather_than"
+      ],
+      "diagnostic_names": [
+        "When multiplying numbers with different bases, multiplies the powers and multiplies the base numbers.",
+        "Has cubed the base number and the power",
+        "Has added the powers rather than multiplying them"
+      ]
+    },
+    {
+      "ingredient_id": "exponent_rules__quotient_rule",
+      "concept_id": "exponent_rules",
+      "status": "matched",
+      "canonical": "mis_exponent_rules__believes_dividing_numbers_with_same",
+      "canonical_name": "Believes when dividing numbers with the same base you divide the powers, rather than subtracting",
+      "cosine": 0.6538,
+      "diagnostic_tags": [
+        "mis_exponent_rules__believes_dividing_numbers_with_same",
+        "mis_exponent_rules__makes_number_negative_asked_find",
+        "mis_exponent_rules__correctly_finds_reciprocal_number_but"
+      ],
+      "diagnostic_names": [
+        "Believes when dividing numbers with the same base you divide the powers, rather than subtracting",
+        "Makes the number negative when asked to find the reciprocal",
+        "Correctly finds the reciprocal of a number, but believes it should be opposite in sign to the original number."
+      ]
+    },
+    {
+      "ingredient_id": "exponent_rules__power_rule",
+      "concept_id": "exponent_rules",
+      "status": "matched",
+      "canonical": "mis_exponent_rules__has_added_powers_rather_than",
+      "canonical_name": "Has added the powers rather than multiplying them",
+      "cosine": 0.6259,
+      "diagnostic_tags": [
+        "mis_exponent_rules__has_added_powers_rather_than",
+        "mis_exponent_rules__confuses_powers_and_multiples",
+        "mis_exponent_rules__has_cubed_base_number_and"
+      ],
+      "diagnostic_names": [
+        "Has added the powers rather than multiplying them",
+        "Confuses powers and multiples",
+        "Has cubed the base number and the power"
+      ]
+    },
+    {
+      "ingredient_id": "exponent_rules__negative_exponents",
+      "concept_id": "exponent_rules",
+      "status": "matched",
+      "canonical": "mis_exponent_rules__makes_number_negative_asked_find",
+      "canonical_name": "Makes the number negative when asked to find the reciprocal",
+      "cosine": 0.6195,
+      "diagnostic_tags": [
+        "mis_exponent_rules__makes_number_negative_asked_find",
+        "mis_exponent_rules__can_not_square_root_negative"
+      ],
+      "diagnostic_names": [
+        "Makes the number negative when asked to find the reciprocal",
+        "Can not square root a negative number"
+      ]
+    },
+    {
+      "ingredient_id": "exponent_rules__zero_and_rational",
+      "concept_id": "exponent_rules",
+      "status": "matched",
+      "canonical": "mis_exponent_rules__forgotten_anything_power_0_equals",
+      "canonical_name": "Forgotten that anything to the power of 0 equals 1",
+      "cosine": 0.6388,
+      "diagnostic_tags": [
+        "mis_exponent_rules__forgotten_anything_power_0_equals"
+      ],
+      "diagnostic_names": [
+        "Forgotten that anything to the power of 0 equals 1"
+      ]
+    },
+    {
+      "ingredient_id": "polynomials__like_terms",
+      "concept_id": "polynomials",
+      "status": "matched",
+      "canonical": "mis_algebraic_manipulation__believes_you_add_terms_together",
+      "canonical_name": "Believes you add the terms together when multiplying like terms.",
+      "cosine": 0.6427,
+      "diagnostic_tags": [
+        "mis_algebraic_manipulation__believes_you_add_terms_together",
+        "mis_algebraic_manipulation__collecting_like_terms_only_simplifies"
+      ],
+      "diagnostic_names": [
+        "Believes you add the terms together when multiplying like terms.",
+        "When collecting like terms, only simplifies when there is an addition"
+      ]
+    },
+    {
+      "ingredient_id": "polynomials__distributive_property",
+      "concept_id": "polynomials",
+      "status": "matched",
+      "canonical": "mis_algebraic_manipulation__does_not_know_factorise_quadratic",
+      "canonical_name": "Does not know that to factorise a quadratic expression, to find two numbers that add to give the coefficient of the x term, and multiply to give the non variable term\n",
+      "cosine": 0.621,
+      "diagnostic_tags": [
+        "mis_algebraic_manipulation__does_not_know_factorise_quadratic",
+        "mis_factoring_polynomials__does_not_know_factorise_quadratic"
+      ],
+      "diagnostic_names": [
+        "Does not know that to factorise a quadratic expression, to find two numbers that add to give the coefficient of the x term, and multiply to give the non variable term\n",
+        "Does not know that to factorise a quadratic expression, to find two numbers that add to give the coefficient of the x term, and multiply to give the non variable term\n"
+      ]
+    },
+    {
+      "ingredient_id": "polynomials__foil_expansion",
+      "concept_id": "polynomials",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_algebraic_manipulation__does_not_know_factorise_quadratic",
+          "name": "Does not know that to factorise a quadratic expression, to find two numbers that add to give the coefficient of the x term, and multiply to give the non variable term\n",
+          "cosine": 0.5552
+        },
+        {
+          "misconception_id": "mis_factoring_polynomials__does_not_know_factorise_quadratic",
+          "name": "Does not know that to factorise a quadratic expression, to find two numbers that add to give the coefficient of the x term, and multiply to give the non variable term\n",
+          "cosine": 0.5552
+        },
+        {
+          "misconception_id": "mis_algebraic_manipulation__multiplying_out_2_or_more",
+          "name": "When multiplying out 2 or more brackets, does not multiply all the combinations of terms",
+          "cosine": 0.5518
+        }
+      ]
+    },
+    {
+      "ingredient_id": "polynomials__degree_identification",
+      "concept_id": "polynomials",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_area_volume__does_not_know_cubic_means",
+          "name": "Does not know that cubic means the same as cubed in units",
+          "cosine": 0.4879
+        },
+        {
+          "misconception_id": "mis_exponent_rules__has_cubed_base_number_and",
+          "name": "Has cubed the base number and the power",
+          "cosine": 0.4522
+        },
+        {
+          "misconception_id": "mis_exponent_rules__does_not_know_what_cube",
+          "name": "Does not know what a cube number is",
+          "cosine": 0.4333
+        }
+      ]
+    },
+    {
+      "ingredient_id": "polynomials__greatest_common_factor_factoring",
+      "concept_id": "polynomials",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_exponent_rules__does_not_realise_multiplication_can",
+          "name": "Does not realise that multiplication can be broken down into factors",
+          "cosine": 0.5907
+        },
+        {
+          "misconception_id": "mis_number_properties__does_not_realise_multiplication_can",
+          "name": "Does not realise that multiplication can be broken down into factors",
+          "cosine": 0.5907
+        },
+        {
+          "misconception_id": "mis_factoring_polynomials__factorising_into_single_brackets_only",
+          "name": "When factorising into single brackets, only factors out the numerical values and forgets to factorise possible variables",
+          "cosine": 0.5854
+        }
+      ]
+    },
+    {
+      "ingredient_id": "factoring_polynomials__gcf_extraction",
+      "concept_id": "factoring_polynomials",
+      "status": "matched",
+      "canonical": "mis_factoring_polynomials__believes_they_can_fully_factorise",
+      "canonical_name": "Believes that they can fully factorise an expression by taking out any common factor, not just the HCF",
+      "cosine": 0.594,
+      "diagnostic_tags": [
+        "mis_factoring_polynomials__believes_they_can_fully_factorise",
+        "mis_factoring_polynomials__factorising_finds_factor_goes_into",
+        "mis_factoring_polynomials__factorising_into_single_brackets_only"
+      ],
+      "diagnostic_names": [
+        "Believes that they can fully factorise an expression by taking out any common factor, not just the HCF",
+        "When factorising, finds a factor that goes into only the first term of the expression",
+        "When factorising into single brackets, only factors out the numerical values and forgets to factorise possible variables"
+      ]
+    },
+    {
+      "ingredient_id": "factoring_polynomials__factor_pairs",
+      "concept_id": "factoring_polynomials",
+      "status": "matched",
+      "canonical": "mis_factoring_polynomials__does_not_know_factorise_quadratic",
+      "canonical_name": "Does not know that to factorise a quadratic expression, to find two numbers that add to give the coefficient of the x term, and multiply to give the non variable term\n",
+      "cosine": 0.6905,
+      "diagnostic_tags": [
+        "mis_factoring_polynomials__does_not_know_factorise_quadratic",
+        "mis_factoring_polynomials__believes_factorising_quadratic_they_can",
+        "mis_factoring_polynomials__thinks_quadratic_without_non_variable"
+      ],
+      "diagnostic_names": [
+        "Does not know that to factorise a quadratic expression, to find two numbers that add to give the coefficient of the x term, and multiply to give the non variable term\n",
+        "Believes that when factorising a quadratic, they can choose any two numbers that multiply to give the constant",
+        "Thinks a quadratic without a non variable term, can not be factorised"
+      ]
+    },
+    {
+      "ingredient_id": "factoring_polynomials__ac_method",
+      "concept_id": "factoring_polynomials",
+      "status": "matched",
+      "canonical": "mis_factoring_polynomials__does_not_know_factorise_quadratic",
+      "canonical_name": "Does not know that to factorise a quadratic expression, to find two numbers that add to give the coefficient of the x term, and multiply to give the non variable term\n",
+      "cosine": 0.5931,
+      "diagnostic_tags": [
+        "mis_factoring_polynomials__does_not_know_factorise_quadratic",
+        "mis_factoring_polynomials__factorising_quadratic_without_non_variable",
+        "mis_factoring_polynomials__factorising_quadratic_with_nonunit_coefficient"
+      ],
+      "diagnostic_names": [
+        "Does not know that to factorise a quadratic expression, to find two numbers that add to give the coefficient of the x term, and multiply to give the non variable term\n",
+        "When factorising a quadratic without a non variable term, tries to double bracket factorise",
+        "When factorising a quadratic with a non-unit coefficient of x squared, believes that coefficient will be in front of both x terms in the factorised form"
+      ]
+    },
+    {
+      "ingredient_id": "factoring_polynomials__special_patterns",
+      "concept_id": "factoring_polynomials",
+      "status": "matched",
+      "canonical": "mis_factoring_polynomials__completing_square_form_x_a2",
+      "canonical_name": "When completing the square in the form (x - a)^2 + b, believes b = the original constant",
+      "cosine": 0.5622,
+      "diagnostic_tags": [
+        "mis_factoring_polynomials__completing_square_form_x_a2",
+        "mis_factoring_polynomials__completing_square_believes_always_half"
+      ],
+      "diagnostic_names": [
+        "When completing the square in the form (x - a)^2 + b, believes b = the original constant",
+        "When completing the square, believes that a is always half the x-coefficient. "
+      ]
+    },
+    {
+      "ingredient_id": "radicals__root_as_inverse",
+      "concept_id": "radical_expressions",
+      "status": "matched",
+      "canonical": "mis_radical_expressions__simplifying_surds_leaves_square_root",
+      "canonical_name": "When simplifying surds, leaves the square root of the biggest square number under the root and puts the other number on the outside",
+      "cosine": 0.5815,
+      "diagnostic_tags": [
+        "mis_radical_expressions__simplifying_surds_leaves_square_root",
+        "mis_radical_expressions__simplifying_surds_does_not_multiply",
+        "mis_radical_expressions__simplifying_surds_does_not_square"
+      ],
+      "diagnostic_names": [
+        "When simplifying surds, leaves the square root of the biggest square number under the root and puts the other number on the outside",
+        "When simplifying surds, does not multiply the number in front of the surd with the square root of the largest square number that has been removed from the surd",
+        "When simplifying surds, does not square root the largest square number that goes into the number under the surd before putting it in front of the surd"
+      ]
+    },
+    {
+      "ingredient_id": "radicals__simplification",
+      "concept_id": "radical_expressions",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_exponent_rules__mixes_up_squaring_with_dividing",
+          "name": "Mixes up squaring with dividing by 2",
+          "cosine": 0.584
+        },
+        {
+          "misconception_id": "mis_number_properties__confuses_factors_and_multiples",
+          "name": "Confuses factors and multiples",
+          "cosine": 0.5677
+        },
+        {
+          "misconception_id": "mis_exponent_rules__does_not_realise_multiplication_can",
+          "name": "Does not realise that multiplication can be broken down into factors",
+          "cosine": 0.5676
+        }
+      ]
+    },
+    {
+      "ingredient_id": "radicals__adding_radicals",
+      "concept_id": "radical_expressions",
+      "status": "matched",
+      "canonical": "mis_functions_basics__mixes_up_squaring_and_addition",
+      "canonical_name": "Mixes up squaring and addition",
+      "cosine": 0.6033,
+      "diagnostic_tags": [
+        "mis_functions_basics__mixes_up_squaring_and_addition",
+        "mis_exponent_rules__mixes_up_squaring_and_addition"
+      ],
+      "diagnostic_names": [
+        "Mixes up squaring and addition",
+        "Mixes up squaring and addition"
+      ]
+    },
+    {
+      "ingredient_id": "radicals__rationalizing",
+      "concept_id": "radical_expressions",
+      "status": "matched",
+      "canonical": "mis_algebraic_manipulation__does_not_know_how_simplify",
+      "canonical_name": "Does not know how to simplify algebraic fractions",
+      "cosine": 0.6629,
+      "diagnostic_tags": [
+        "mis_algebraic_manipulation__does_not_know_how_simplify",
+        "mis_algebraic_manipulation__believes_they_should_multiply_each",
+        "mis_algebraic_manipulation__thinks_you_can_divide_terms"
+      ],
+      "diagnostic_names": [
+        "Does not know how to simplify algebraic fractions",
+        "Believes they should multiply each numerator by its original denominator when adding/subtracting fractions",
+        "Thinks you can divide terms by different factors when simplifying an algebraic fraction"
+      ]
+    },
+    {
+      "ingredient_id": "quadratics__solutions_as_x_intercepts",
+      "concept_id": "quadratic_equations",
+      "status": "matched",
+      "canonical": "mis_quadratic_equations__solving_simultaneous_equations_graphically_they",
+      "canonical_name": "When solving simultaneous equations graphically, they think the solutions are the x-intercepts",
+      "cosine": 0.6646,
+      "diagnostic_tags": [
+        "mis_quadratic_equations__solving_simultaneous_equations_graphically_they",
+        "mis_quadratic_equations__finds_y_intercept_asked_read",
+        "mis_quadratic_equations__solves_for_y0_instead_given"
+      ],
+      "diagnostic_names": [
+        "When solving simultaneous equations graphically, they think the solutions are the x-intercepts",
+        "Finds the y intercept when asked to read the solution to a quadratic equation from a graph",
+        "Solves for y=0 instead of given y-value when reading from a quadratic graph"
+      ]
+    },
+    {
+      "ingredient_id": "quadratics__vertex_from_roots",
+      "concept_id": "quadratic_equations",
+      "status": "matched",
+      "canonical": "mis_quadratic_equations__confuses_cubic_and_quadratic_graphs",
+      "canonical_name": "Confuses cubic and quadratic graphs",
+      "cosine": 0.5703,
+      "diagnostic_tags": [
+        "mis_quadratic_equations__confuses_cubic_and_quadratic_graphs",
+        "mis_quadratic_equations__confuses_reciprocal_and_quadratic_graphs"
+      ],
+      "diagnostic_names": [
+        "Confuses cubic and quadratic graphs",
+        "Confuses reciprocal and quadratic graphs"
+      ]
+    },
+    {
+      "ingredient_id": "quadratics__factoring_method",
+      "concept_id": "quadratic_equations",
+      "status": "matched",
+      "canonical": "mis_number_properties__does_not_understand_term_factor",
+      "canonical_name": "Does not understand the term factor",
+      "cosine": 0.6468,
+      "diagnostic_tags": [
+        "mis_number_properties__does_not_understand_term_factor",
+        "mis_algebraic_manipulation__incorrectly_factorises_quadratic",
+        "mis_algebraic_manipulation__does_not_know_factorise_quadratic"
+      ],
+      "diagnostic_names": [
+        "Does not understand the term factor",
+        "Incorrectly factorises a quadratic",
+        "Does not know that to factorise a quadratic expression, to find two numbers that add to give the coefficient of the x term, and multiply to give the non variable term\n"
+      ]
+    },
+    {
+      "ingredient_id": "quadratics__quadratic_formula",
+      "concept_id": "quadratic_equations",
+      "status": "matched",
+      "canonical": "mis_quadratic_equations__misremembers_quadratic_formula",
+      "canonical_name": "Misremembers the quadratic formula",
+      "cosine": 0.6552,
+      "diagnostic_tags": [
+        "mis_quadratic_equations__misremembers_quadratic_formula"
+      ],
+      "diagnostic_names": [
+        "Misremembers the quadratic formula"
+      ]
+    },
+    {
+      "ingredient_id": "quadratics__discriminant_meaning",
+      "concept_id": "quadratic_equations",
+      "status": "matched",
+      "canonical": "mis_quadratic_equations__believes_discriminant_must_be_perfect",
+      "canonical_name": "Believes the discriminant must be a perfect square for an equation to have real solutions",
+      "cosine": 0.618,
+      "diagnostic_tags": [
+        "mis_quadratic_equations__believes_discriminant_must_be_perfect",
+        "mis_quadratic_equations__believes_discriminant_0_means_there"
+      ],
+      "diagnostic_names": [
+        "Believes the discriminant must be a perfect square for an equation to have real solutions",
+        "Believes that a discriminant of 0 means there are no real solutions"
+      ]
+    },
+    {
+      "ingredient_id": "descriptive_statistics__mean_as_balance",
+      "concept_id": "descriptive_statistics",
+      "status": "matched",
+      "canonical": "mis_descriptive_statistics__believes_outlier_value_data_set",
+      "canonical_name": "Believes an outlier is the value in a data set with the biggest denominator, even if this value is close to the mean",
+      "cosine": 0.6198,
+      "diagnostic_tags": [
+        "mis_descriptive_statistics__believes_outlier_value_data_set",
+        "mis_descriptive_statistics__asked_for_mean_list_data"
+      ],
+      "diagnostic_names": [
+        "Believes an outlier is the value in a data set with the biggest denominator, even if this value is close to the mean",
+        "When asked for the mean of a list of data, gives the median"
+      ]
+    },
+    {
+      "ingredient_id": "descriptive_statistics__median_as_middle",
+      "concept_id": "descriptive_statistics",
+      "status": "matched",
+      "canonical": "mis_descriptive_statistics__finding_median_from_even_dataset",
+      "canonical_name": "When finding the median from a even dataset does not understand we must find the midpoint of the two values in the middle",
+      "cosine": 0.7721,
+      "diagnostic_tags": [
+        "mis_descriptive_statistics__finding_median_from_even_dataset",
+        "mis_descriptive_statistics__finding_median_for_odd_numbered",
+        "mis_descriptive_statistics__asked_for_mean_list_data"
+      ],
+      "diagnostic_names": [
+        "When finding the median from a even dataset does not understand we must find the midpoint of the two values in the middle",
+        "When finding the median for an odd numbered data set, find the midpoint of two values rather than giving the middle value",
+        "When asked for the mean of a list of data, gives the median"
+      ]
+    },
+    {
+      "ingredient_id": "descriptive_statistics__mean_vs_median",
+      "concept_id": "descriptive_statistics",
+      "status": "matched",
+      "canonical": "mis_descriptive_statistics__asked_for_mean_list_data",
+      "canonical_name": "When asked for the mean of a list of data, gives the median",
+      "cosine": 0.5867,
+      "diagnostic_tags": [
+        "mis_descriptive_statistics__asked_for_mean_list_data",
+        "mis_descriptive_statistics__finds_mean_instead_median",
+        "mis_descriptive_statistics__finds_median_instead_mean"
+      ],
+      "diagnostic_names": [
+        "When asked for the mean of a list of data, gives the median",
+        "Finds the mean instead of the median",
+        "Finds the median instead of the mean"
+      ]
+    },
+    {
+      "ingredient_id": "descriptive_statistics__spread_measures",
+      "concept_id": "descriptive_statistics",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_descriptive_statistics__thinks_higher_average_means_more",
+          "name": "Thinks a higher average means more consistent data",
+          "cosine": 0.3915
+        },
+        {
+          "misconception_id": "mis_descriptive_statistics__thinks_greater_range_means_more",
+          "name": "Thinks a greater range means more consistent data",
+          "cosine": 0.3903
+        },
+        {
+          "misconception_id": "mis_descriptive_statistics__mixes_up_quantitative_and_qualitative",
+          "name": "Mixes up quantitative and qualitative data types",
+          "cosine": 0.3875
+        }
+      ]
+    },
+    {
+      "ingredient_id": "descriptive_statistics__categorical_chart_reading",
+      "concept_id": "descriptive_statistics",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_ratios_proportions__reading_value_from_graph_reads",
+          "name": "When reading value from graph, reads from the wrong axes.",
+          "cosine": 0.5065
+        },
+        {
+          "misconception_id": "mis_functions_basics__reading_value_from_graph_reads",
+          "name": "When reading value from graph, reads from the wrong axes.",
+          "cosine": 0.5065
+        },
+        {
+          "misconception_id": "mis_systems_of_linear_equations__reading_value_from_graph_reads",
+          "name": "When reading value from graph, reads from the wrong axes.",
+          "cosine": 0.5065
+        }
+      ]
+    },
+    {
+      "ingredient_id": "basic_probability__probability_as_ratio",
+      "concept_id": "basic_probability",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_basic_probability__lists_outcomes_rather_than_counts",
+          "name": "Lists outcomes rather than counts how many outcomes",
+          "cosine": 0.5499
+        },
+        {
+          "misconception_id": "mis_basic_probability__forgets_denominator_probability",
+          "name": "Forgets the denominator in probability",
+          "cosine": 0.5123
+        },
+        {
+          "misconception_id": "mis_basic_probability__gives_probability_out_number_nonsuccesses",
+          "name": "Gives the probability out of the number of non-successes rather than the total",
+          "cosine": 0.5116
+        }
+      ]
+    },
+    {
+      "ingredient_id": "basic_probability__complement_rule",
+      "concept_id": "basic_probability",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_basic_probability__does_not_understand_set_notation",
+          "name": "Does not understand set notation for complement (eg. A')",
+          "cosine": 0.503
+        },
+        {
+          "misconception_id": "mis_linear_equations__subtracting_negative_number_from_positive",
+          "name": "When subtracting a negative number from a positive number, uses a method which assumes one of the negative signs can be ignored ",
+          "cosine": 0.449
+        },
+        {
+          "misconception_id": "mis_quadratic_equations__subtracting_negative_number_from_positive",
+          "name": "When subtracting a negative number from a positive number, uses a method which assumes one of the negative signs can be ignored ",
+          "cosine": 0.449
+        }
+      ]
+    },
+    {
+      "ingredient_id": "basic_probability__and_or_distinction",
+      "concept_id": "basic_probability",
+      "status": "matched",
+      "canonical": "mis_algebraic_manipulation__confuses_collecting_like_terms_with",
+      "canonical_name": "Confuses collecting like terms with multiplication",
+      "cosine": 0.6114,
+      "diagnostic_tags": [
+        "mis_algebraic_manipulation__confuses_collecting_like_terms_with"
+      ],
+      "diagnostic_names": [
+        "Confuses collecting like terms with multiplication"
+      ]
+    },
+    {
+      "ingredient_id": "basic_probability__conditional_probability",
+      "concept_id": "basic_probability",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_basic_probability__does_not_reduce_denominator_item",
+          "name": "Does not reduce the denominator when an item is not replaced in a probability question",
+          "cosine": 0.4382
+        },
+        {
+          "misconception_id": "mis_basic_probability__thinks_denominator_combined_probablity_will",
+          "name": "Thinks the denominator in a combined probablity will be the same as the denominator in the probability of the first event.",
+          "cosine": 0.4368
+        },
+        {
+          "misconception_id": "mis_basic_probability__adds_numerators_working_out_combined",
+          "name": "Adds the numerators when working out a combined probability",
+          "cosine": 0.4187
+        }
+      ]
+    },
+    {
+      "ingredient_id": "exponential_functions__base_and_exponent",
+      "concept_id": "exponential_functions",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_order_of_operations__has_multiplied_base_number_and",
+          "name": "Has multiplied the base number and the power",
+          "cosine": 0.5815
+        },
+        {
+          "misconception_id": "mis_algebraic_manipulation__has_multiplied_base_number_and",
+          "name": "Has multiplied the base number and the power",
+          "cosine": 0.5815
+        },
+        {
+          "misconception_id": "mis_exponent_rules__multiplying_numbers_with_different_bases",
+          "name": "When multiplying numbers with different bases, multiplies the powers and multiplies the base numbers.",
+          "cosine": 0.5496
+        }
+      ]
+    },
+    {
+      "ingredient_id": "exponential_functions__growth_vs_decay",
+      "concept_id": "exponential_functions",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_exponent_rules__has_cubed_base_number_and",
+          "name": "Has cubed the base number and the power",
+          "cosine": 0.4308
+        },
+        {
+          "misconception_id": "mis_exponent_rules__believes_dividing_numbers_with_same",
+          "name": "Believes when dividing numbers with the same base you divide the powers, rather than subtracting",
+          "cosine": 0.4264
+        },
+        {
+          "misconception_id": "mis_number_properties__does_not_recognise_subtracting_larger",
+          "name": "Does not recognise that subtracting a larger number from a smaller number will give a negative answer",
+          "cosine": 0.4257
+        }
+      ]
+    },
+    {
+      "ingredient_id": "exponential_functions__constant_ratio",
+      "concept_id": "exponential_functions",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_linear_equations__does_not_understand_multiplying_both",
+          "name": "Does not understand that when multiplying both sides of an equation by an amount every term must be multiplied by the same amount",
+          "cosine": 0.5171
+        },
+        {
+          "misconception_id": "mis_algebraic_manipulation__does_not_understand_multiplying_both",
+          "name": "Does not understand that when multiplying both sides of an equation by an amount every term must be multiplied by the same amount",
+          "cosine": 0.5171
+        },
+        {
+          "misconception_id": "mis_algebraic_manipulation__thinks_multiplying_variable_number_same",
+          "name": "Thinks multiplying a variable by a number is the same as raising that variable to the power of that number",
+          "cosine": 0.5074
+        }
+      ]
+    },
+    {
+      "ingredient_id": "exponential_functions__initial_value",
+      "concept_id": "exponential_functions",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_number_properties__does_not_understand_term_factor",
+          "name": "Does not understand the term factor",
+          "cosine": 0.5276
+        },
+        {
+          "misconception_id": "mis_ratios_proportions__does_not_understand_how_find",
+          "name": "Does not understand how to find a scale factor",
+          "cosine": 0.5177
+        },
+        {
+          "misconception_id": "mis_ratios_proportions__calculating_scale_factor_thinks_division",
+          "name": "When calculating a scale factor, thinks the division is the other way around.",
+          "cosine": 0.4863
+        }
+      ]
+    },
+    {
+      "ingredient_id": "logarithmic_functions__log_as_inverse_exp",
+      "concept_id": "logarithmic_functions",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_exponent_rules__multiplying_numbers_with_different_bases",
+          "name": "When multiplying numbers with different bases, multiplies the powers and multiplies the base numbers.",
+          "cosine": 0.5117
+        },
+        {
+          "misconception_id": "mis_algebraic_manipulation__thinks_multiplying_variable_number_same",
+          "name": "Thinks multiplying a variable by a number is the same as raising that variable to the power of that number",
+          "cosine": 0.4991
+        },
+        {
+          "misconception_id": "mis_order_of_operations__has_multiplied_base_number_and",
+          "name": "Has multiplied the base number and the power",
+          "cosine": 0.4851
+        }
+      ]
+    },
+    {
+      "ingredient_id": "logarithmic_functions__log_product_rule",
+      "concept_id": "logarithmic_functions",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_basic_probability__adds_rather_than_multiplies_using",
+          "name": "Adds rather than multiplies when using the product rule for counting",
+          "cosine": 0.5314
+        },
+        {
+          "misconception_id": "mis_linear_equations__does_not_understand_multiplying_both",
+          "name": "Does not understand that when multiplying both sides of an equation by an amount every term must be multiplied by the same amount",
+          "cosine": 0.5022
+        },
+        {
+          "misconception_id": "mis_algebraic_manipulation__does_not_understand_multiplying_both",
+          "name": "Does not understand that when multiplying both sides of an equation by an amount every term must be multiplied by the same amount",
+          "cosine": 0.5022
+        }
+      ]
+    },
+    {
+      "ingredient_id": "logarithmic_functions__log_power_rule",
+      "concept_id": "logarithmic_functions",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_quadratic_equations__substituting_value_into_nonlinear_term",
+          "name": "When substituting a value into a non-linear term with a coefficient, multiplies by the coefficient then calculates the power.",
+          "cosine": 0.5514
+        },
+        {
+          "misconception_id": "mis_factoring_polynomials__does_not_realise_multiplying_variable",
+          "name": "Does not realise multiplying a variable by itself results in a power of that variable",
+          "cosine": 0.5433
+        },
+        {
+          "misconception_id": "mis_algebraic_manipulation__does_not_realise_multiplying_variable",
+          "name": "Does not realise multiplying a variable by itself results in a power of that variable",
+          "cosine": 0.5433
+        }
+      ]
+    },
+    {
+      "ingredient_id": "logarithmic_functions__log_properties_combined",
+      "concept_id": "logarithmic_functions",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_algebraic_manipulation__has_made_order_operations_mistake",
+          "name": "Has made an order of operations mistake when writing a formula from a given situation",
+          "cosine": 0.4556
+        },
+        {
+          "misconception_id": "mis_algebraic_manipulation__misunderstands_order_operations_algebraic_expressions",
+          "name": "Misunderstands order of operations in algebraic expressions",
+          "cosine": 0.4208
+        },
+        {
+          "misconception_id": "mis_sequences_series__uses_only_first_two_terms",
+          "name": "Uses only the first two terms of a sequence to work out a term-to-term rule",
+          "cosine": 0.396
+        }
+      ]
+    },
+    {
+      "ingredient_id": "logarithmic_functions__basic_log_equation_conversion",
+      "concept_id": "logarithmic_functions",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_algebraic_manipulation__thinks_multiplying_variable_number_same",
+          "name": "Thinks multiplying a variable by a number is the same as raising that variable to the power of that number",
+          "cosine": 0.4867
+        },
+        {
+          "misconception_id": "mis_linear_equations__does_not_understand_multiplying_both",
+          "name": "Does not understand that when multiplying both sides of an equation by an amount every term must be multiplied by the same amount",
+          "cosine": 0.4779
+        },
+        {
+          "misconception_id": "mis_algebraic_manipulation__does_not_understand_multiplying_both",
+          "name": "Does not understand that when multiplying both sides of an equation by an amount every term must be multiplied by the same amount",
+          "cosine": 0.4779
+        }
+      ]
+    },
+    {
+      "ingredient_id": "sequences__arithmetic_identification",
+      "concept_id": "sequences_series",
+      "status": "matched",
+      "canonical": "mis_sequences_series__believes_you_multiply_constant_difference",
+      "canonical_name": "Believes you multiply the constant difference by the term number to get the term value",
+      "cosine": 0.5895,
+      "diagnostic_tags": [
+        "mis_sequences_series__believes_you_multiply_constant_difference",
+        "mis_sequences_series__finding_differences_between_terms_sequence"
+      ],
+      "diagnostic_names": [
+        "Believes you multiply the constant difference by the term number to get the term value",
+        "When finding the differences between terms in a sequence, believes they can do so from right to left "
+      ]
+    },
+    {
+      "ingredient_id": "sequences__geometric_identification",
+      "concept_id": "sequences_series",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_ratios_proportions__may_have_estimated_using_ratios",
+          "name": "May have estimated when using ratios with geometry",
+          "cosine": 0.5425
+        },
+        {
+          "misconception_id": "mis_ratios_proportions__thinks_difference_one_part_ratio",
+          "name": "Thinks a difference of one part in a ratio means the quantities will differ by one unit",
+          "cosine": 0.504
+        },
+        {
+          "misconception_id": "mis_order_of_operations__performs_addition_ahead_multiplication",
+          "name": "Performs addition ahead of multiplication",
+          "cosine": 0.4901
+        }
+      ]
+    },
+    {
+      "ingredient_id": "sequences__nth_term_formula",
+      "concept_id": "sequences_series",
+      "status": "matched",
+      "canonical": "mis_sequences_series__uses_first_term_numerical_part",
+      "canonical_name": "Uses first term as numerical part of nth term rule",
+      "cosine": 0.6233,
+      "diagnostic_tags": [
+        "mis_sequences_series__uses_first_term_numerical_part",
+        "mis_sequences_series__finding_nth_term_linear_sequence",
+        "mis_sequences_series__finding_nth_term_rule_for"
+      ],
+      "diagnostic_names": [
+        "Uses first term as numerical part of nth term rule",
+        "When finding the nth term of a linear sequence, thinks the the first term is the coefficient in front of n.",
+        "When finding the nth term rule for a quadratic sequence, believes they only need to use the first term to calculate the coefficient of n "
+      ]
+    },
+    {
+      "ingredient_id": "sequences__geometric_series_sum",
+      "concept_id": "sequences_series",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_number_properties__does_not_know_meaning_word",
+          "name": "Does not know the meaning of the word \"sum\"",
+          "cosine": 0.5418
+        },
+        {
+          "misconception_id": "mis_algebraic_manipulation__asked_add_fractions_uses_method",
+          "name": "When asked to add fractions uses the method for multiplying fractions instead.",
+          "cosine": 0.4722
+        },
+        {
+          "misconception_id": "mis_sequences_series__has_multiplied_value_first_term",
+          "name": "Has multiplied the value of the first term by the the term being asked",
+          "cosine": 0.4667
+        }
+      ]
+    },
+    {
+      "ingredient_id": "lines_angles__supplementary_complementary",
+      "concept_id": "lines_angles",
+      "status": "matched",
+      "canonical": "mis_lines_angles__thinks_corresponding_angles_sum_180",
+      "canonical_name": "Thinks corresponding angles sum to 180 degrees",
+      "cosine": 0.6044,
+      "diagnostic_tags": [
+        "mis_lines_angles__thinks_corresponding_angles_sum_180",
+        "mis_lines_angles__using_180_degree_protractor_measure",
+        "mis_lines_angles__confuses_alternate_and_opposite_angles"
+      ],
+      "diagnostic_names": [
+        "Thinks corresponding angles sum to 180 degrees",
+        "When using a 180 degree protractor to measure reflex angles gives the value of the acute or obtuse angle that is a complement to 360",
+        "Confuses alternate and opposite angles"
+      ]
+    },
+    {
+      "ingredient_id": "lines_angles__vertical_angles",
+      "concept_id": "lines_angles",
+      "status": "matched",
+      "canonical": "mis_lines_angles__student_thinks_any_two_angles",
+      "canonical_name": "Student thinks that any two angles along a straight line are equal",
+      "cosine": 0.7445,
+      "diagnostic_tags": [
+        "mis_lines_angles__student_thinks_any_two_angles",
+        "mis_lines_angles__does_not_know_vertically_opposite",
+        "mis_lines_angles__thinks_alternate_angles_are_always"
+      ],
+      "diagnostic_names": [
+        "Student thinks that any two angles along a straight line are equal",
+        "Does not know that vertically opposite angles are equal",
+        "Thinks alternate angles are always equal"
+      ]
+    },
+    {
+      "ingredient_id": "lines_angles__transversal_angles",
+      "concept_id": "lines_angles",
+      "status": "matched",
+      "canonical": "mis_lines_angles__confuses_cointerior_and_alternate_angles",
+      "canonical_name": "Confuses co-interior and alternate angles",
+      "cosine": 0.6642,
+      "diagnostic_tags": [
+        "mis_lines_angles__confuses_cointerior_and_alternate_angles",
+        "mis_lines_angles__confuses_cointerior_and_corresponding_angles",
+        "mis_lines_angles__confuses_alternate_and_opposite_angles"
+      ],
+      "diagnostic_names": [
+        "Confuses co-interior and alternate angles",
+        "Confuses co-interior and corresponding angles",
+        "Confuses alternate and opposite angles"
+      ]
+    },
+    {
+      "ingredient_id": "lines_angles__parallel_line_angle_chasing",
+      "concept_id": "lines_angles",
+      "status": "matched",
+      "canonical": "mis_lines_angles__student_thinks_any_two_angles",
+      "canonical_name": "Student thinks that any two angles along a straight line are equal",
+      "cosine": 0.6764,
+      "diagnostic_tags": [
+        "mis_lines_angles__student_thinks_any_two_angles",
+        "mis_lines_angles__thinks_only_angles_on_parallel",
+        "mis_lines_angles__thinks_alternate_angles_are_always"
+      ],
+      "diagnostic_names": [
+        "Student thinks that any two angles along a straight line are equal",
+        "Thinks only angles on parallel lines can be alternate",
+        "Thinks alternate angles are always equal"
+      ]
+    },
+    {
+      "ingredient_id": "triangles__angle_sum",
+      "concept_id": "triangles_congruence",
+      "status": "matched",
+      "canonical": "mis_triangles_congruence__does_not_know_angles_triangle",
+      "canonical_name": "Does not know that angles in a triangle sum to 180 degrees",
+      "cosine": 0.7915,
+      "diagnostic_tags": [
+        "mis_triangles_congruence__does_not_know_angles_triangle",
+        "mis_triangles_congruence__forgets_subtract_sum_angles_we",
+        "mis_triangles_congruence__does_not_consider_all_three"
+      ],
+      "diagnostic_names": [
+        "Does not know that angles in a triangle sum to 180 degrees",
+        "Forgets to subtract sum of angles we know from 180 to find missing angle in a triangle",
+        "Does not consider that all three angles in a triangle sum to 180 degrees"
+      ]
+    },
+    {
+      "ingredient_id": "triangles__congruence_criteria",
+      "concept_id": "triangles_congruence",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_triangles_congruence__does_not_understand_shapes_are",
+          "name": "Does not understand that shapes are congruent if they have the same size and shape",
+          "cosine": 0.5037
+        },
+        {
+          "misconception_id": "mis_lines_angles__student_thinks_any_two_angles",
+          "name": "Student thinks that any two angles along a straight line are equal",
+          "cosine": 0.5013
+        },
+        {
+          "misconception_id": "mis_triangles_congruence__believes_isosceles_triangles_cannot_have",
+          "name": "Believes isosceles triangles cannot have right angles",
+          "cosine": 0.4736
+        }
+      ]
+    },
+    {
+      "ingredient_id": "triangles__similarity_ratios",
+      "concept_id": "triangles_congruence",
+      "status": "matched",
+      "canonical": "mis_triangles_congruence__thinks_angles_which_look_same",
+      "canonical_name": "Thinks angles which look the same on diagram will be equal",
+      "cosine": 0.5807,
+      "diagnostic_tags": [
+        "mis_triangles_congruence__thinks_angles_which_look_same",
+        "mis_triangles_congruence__does_not_understand_all_angles",
+        "mis_triangles_congruence__confuses_scalene_and_right_angle"
+      ],
+      "diagnostic_names": [
+        "Thinks angles which look the same on diagram will be equal",
+        "Does not understand that all angles and sides must be equal for regular shapes",
+        "Confuses scalene and right angle triangles"
+      ]
+    },
+    {
+      "ingredient_id": "circles__arc_length_sector",
+      "concept_id": "circles_geometry",
+      "status": "matched",
+      "canonical": "mis_circles_geometry__confuses_arc_and_diameter",
+      "canonical_name": "Confuses arc and diameter",
+      "cosine": 0.6481,
+      "diagnostic_tags": [
+        "mis_circles_geometry__confuses_arc_and_diameter",
+        "mis_circles_geometry__confuses_circumference_and_radius"
+      ],
+      "diagnostic_names": [
+        "Confuses arc and diameter",
+        "Confuses circumference and radius"
+      ]
+    },
+    {
+      "ingredient_id": "circles__inscribed_angle",
+      "concept_id": "circles_geometry",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_lines_angles__student_thinks_any_two_angles",
+          "name": "Student thinks that any two angles along a straight line are equal",
+          "cosine": 0.5996
+        },
+        {
+          "misconception_id": "mis_lines_angles__thinks_alternate_angles_are_always",
+          "name": "Thinks alternate angles are always equal",
+          "cosine": 0.5653
+        },
+        {
+          "misconception_id": "mis_lines_angles__thinks_angles_which_look_same",
+          "name": "Thinks angles which look the same on diagram will be equal",
+          "cosine": 0.5568
+        }
+      ]
+    },
+    {
+      "ingredient_id": "circles__tangent_properties",
+      "concept_id": "circles_geometry",
+      "status": "matched",
+      "canonical": "mis_circles_geometry__confuses_tangent_and_radius",
+      "canonical_name": "Confuses tangent and radius",
+      "cosine": 0.7017,
+      "diagnostic_tags": [
+        "mis_circles_geometry__confuses_tangent_and_radius",
+        "mis_circles_geometry__confuses_tangent_and_circumference",
+        "mis_circles_geometry__confuses_tangent_and_chord"
+      ],
+      "diagnostic_names": [
+        "Confuses tangent and radius",
+        "Confuses tangent and circumference",
+        "Confuses tangent and chord"
+      ]
+    },
+    {
+      "ingredient_id": "circles__semicircle_area_from_diameter",
+      "concept_id": "circles_geometry",
+      "status": "matched",
+      "canonical": "mis_circles_geometry__does_not_know_term_diameter",
+      "canonical_name": "Does not know the term 'diameter'",
+      "cosine": 0.5562,
+      "diagnostic_tags": [
+        "mis_circles_geometry__does_not_know_term_diameter",
+        "mis_circles_geometry__confuses_diameter_and_radius"
+      ],
+      "diagnostic_names": [
+        "Does not know the term 'diameter'",
+        "Confuses diameter and radius"
+      ]
+    },
+    {
+      "ingredient_id": "area_volume__standard_formulas",
+      "concept_id": "area_volume",
+      "status": "matched",
+      "canonical": "mis_area_volume__has_used_slant_height_and",
+      "canonical_name": "Has used slant height and base to find area of a triangle rather than perpendicular height and base",
+      "cosine": 0.7456,
+      "diagnostic_tags": [
+        "mis_area_volume__has_used_slant_height_and",
+        "mis_area_volume__has_multiplied_base_slant_height",
+        "mis_area_volume__doesnt_know_area_triangle_formula"
+      ],
+      "diagnostic_names": [
+        "Has used slant height and base to find area of a triangle rather than perpendicular height and base",
+        "Has multiplied base by slant height and perpendicular height to find area of a triangle",
+        "Doesn't know the area of a triangle formula"
+      ]
+    },
+    {
+      "ingredient_id": "area_volume__composite_figures",
+      "concept_id": "area_volume",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_area_volume__beileves_you_can_use_full",
+          "name": "Beileves you can use the full length when finding an area of part of a composite shape, when part of the length is needed",
+          "cosine": 0.4241
+        },
+        {
+          "misconception_id": "mis_area_volume__does_not_know_how_find",
+          "name": "Does not know how to find missing lengths in a composite shape",
+          "cosine": 0.4186
+        },
+        {
+          "misconception_id": "mis_right_triangle_geometry__does_not_know_how_find",
+          "name": "Does not know how to find missing lengths in a composite shape",
+          "cosine": 0.4186
+        }
+      ]
+    },
+    {
+      "ingredient_id": "area_volume__volume_as_base_times_height",
+      "concept_id": "area_volume",
+      "status": "matched",
+      "canonical": "mis_area_volume__does_not_know_units_volume",
+      "canonical_name": "Does not know that units of volume are usually cubed",
+      "cosine": 0.6299,
+      "diagnostic_tags": [
+        "mis_area_volume__does_not_know_units_volume",
+        "mis_area_volume__does_not_convert_measurements_have"
+      ],
+      "diagnostic_names": [
+        "Does not know that units of volume are usually cubed",
+        "Does not convert measurements to have the same units before calculating area or volume"
+      ]
+    },
+    {
+      "ingredient_id": "area_volume__rectangular_prism_face_areas",
+      "concept_id": "area_volume",
+      "status": "matched",
+      "canonical": "mis_area_volume__think_cross_section_prism_biggest",
+      "canonical_name": "Think cross section of a prism is the biggest face",
+      "cosine": 0.664,
+      "diagnostic_tags": [
+        "mis_area_volume__think_cross_section_prism_biggest",
+        "mis_area_volume__thinks_cross_section_prism_can",
+        "mis_area_volume__confuses_triangular_prism_with_pyramid"
+      ],
+      "diagnostic_names": [
+        "Think cross section of a prism is the biggest face",
+        "Thinks cross section of a prism can be any face",
+        "Confuses triangular prism with pyramid"
+      ]
+    },
+    {
+      "ingredient_id": "area_volume__square_side_from_area",
+      "concept_id": "area_volume",
+      "status": "matched",
+      "canonical": "mis_area_volume__does_not_know_units_area",
+      "canonical_name": "Does not know units of area should be squared",
+      "cosine": 0.5946,
+      "diagnostic_tags": [
+        "mis_area_volume__does_not_know_units_area",
+        "mis_area_volume__thinks_diagonal_square_same_length",
+        "mis_area_volume__cannot_identify_correct_side_lengths"
+      ],
+      "diagnostic_names": [
+        "Does not know units of area should be squared",
+        "Thinks the diagonal of a square is the same length as the side of the square",
+        "Cannot identify the correct side lengths to use when asked to find the area of a face"
+      ]
+    },
+    {
+      "ingredient_id": "transformations__translation_rules",
+      "concept_id": "geometric_transformations",
+      "status": "matched",
+      "canonical": "mis_geometric_transformations__describing_translation_miscounts_crossing_axis",
+      "canonical_name": "When describing a translation, miscounts when crossing an axis",
+      "cosine": 0.5805,
+      "diagnostic_tags": [
+        "mis_geometric_transformations__describing_translation_miscounts_crossing_axis",
+        "mis_geometric_transformations__mistakes_rotations_for_translations",
+        "mis_geometric_transformations__describing_translation_counts_corners_squares"
+      ],
+      "diagnostic_names": [
+        "When describing a translation, miscounts when crossing an axis",
+        "Mistakes rotations for translations",
+        "When describing a translation, counts the corners of squares (including the starting one) rather than the number of jumps between squares."
+      ]
+    },
+    {
+      "ingredient_id": "transformations__reflection_rules",
+      "concept_id": "geometric_transformations",
+      "status": "matched",
+      "canonical": "mis_geometric_transformations__believes_reflection_always_switches_x",
+      "canonical_name": "Believes that reflection always switches the x and y coordinates",
+      "cosine": 0.7599,
+      "diagnostic_tags": [
+        "mis_geometric_transformations__believes_reflection_always_switches_x",
+        "mis_geometric_transformations__believes_reflection_y_x_switches",
+        "mis_geometric_transformations__believes_reflection_y_x_changes"
+      ],
+      "diagnostic_names": [
+        "Believes that reflection always switches the x and y coordinates",
+        "Believes reflection in y = -x switches x and y coordinates",
+        "Believes reflection in y = -x changes sign of x coordinate only"
+      ]
+    },
+    {
+      "ingredient_id": "transformations__rotation_rules",
+      "concept_id": "geometric_transformations",
+      "status": "matched",
+      "canonical": "mis_geometric_transformations__believes_you_do_not_need",
+      "canonical_name": "Believes you do not need to give the direction when describing a rotation",
+      "cosine": 0.6225,
+      "diagnostic_tags": [
+        "mis_geometric_transformations__believes_you_do_not_need",
+        "mis_geometric_transformations__asked_rotate_180_degrees_rotates",
+        "mis_geometric_transformations__mixes_up_clockwise_and_anticlockwise"
+      ],
+      "diagnostic_names": [
+        "Believes you do not need to give the direction when describing a rotation",
+        "When asked to rotate by 180 degrees rotates by 90 degrees",
+        "Mixes up clockwise and anticlockwise"
+      ]
+    },
+    {
+      "ingredient_id": "rational_expressions__factor_first",
+      "concept_id": "rational_expressions",
+      "status": "matched",
+      "canonical": "mis_algebraic_manipulation__thinks_you_cancel_identical_terms",
+      "canonical_name": "Thinks that when you cancel identical terms from the numerator and denominator, they just disappear",
+      "cosine": 0.6088,
+      "diagnostic_tags": [
+        "mis_algebraic_manipulation__thinks_you_cancel_identical_terms",
+        "mis_algebraic_manipulation__incorrectly_cancels_what_they_believe"
+      ],
+      "diagnostic_names": [
+        "Thinks that when you cancel identical terms from the numerator and denominator, they just disappear",
+        "Incorrectly cancels what they believe is a factor in algebraic fractions"
+      ]
+    },
+    {
+      "ingredient_id": "rational_expressions__lcd_method",
+      "concept_id": "rational_expressions",
+      "status": "matched",
+      "canonical": "mis_algebraic_manipulation__addingsubtracting_fractions_addssubtracts_denominators_and",
+      "canonical_name": "When adding/subtracting fractions, adds/subtracts the denominators and multiplies the numerators",
+      "cosine": 0.7079,
+      "diagnostic_tags": [
+        "mis_algebraic_manipulation__addingsubtracting_fractions_addssubtracts_denominators_and",
+        "mis_fractions_decimals__does_not_find_common_denominator",
+        "mis_algebraic_manipulation__does_not_find_common_denominator"
+      ],
+      "diagnostic_names": [
+        "When adding/subtracting fractions, adds/subtracts the denominators and multiplies the numerators",
+        "Does not find a common denominator when adding/subtracting fractions",
+        "Does not find a common denominator when adding/subtracting fractions"
+      ]
+    },
+    {
+      "ingredient_id": "rational_expressions__excluded_values",
+      "concept_id": "rational_expressions",
+      "status": "matched",
+      "canonical": "mis_fractions_decimals__does_not_recognise_fraction_can",
+      "canonical_name": "Does not recognise when a fraction can be simplified",
+      "cosine": 0.6849,
+      "diagnostic_tags": [
+        "mis_fractions_decimals__does_not_recognise_fraction_can",
+        "mis_functions_basics__believes_fraction_with_equal_numerator",
+        "mis_algebraic_manipulation__simplifying_thinks_they_write_0"
+      ],
+      "diagnostic_names": [
+        "Does not recognise when a fraction can be simplified",
+        "Believes that a fraction with equal numerator and denominator cancels to 0",
+        "When simplifying, thinks they write 0 in front of a negative number in the final answer, instead of just writing the negative number"
+      ]
+    },
+    {
+      "ingredient_id": "complex_numbers__i_definition",
+      "concept_id": "complex_numbers",
+      "status": "matched",
+      "canonical": "mis_exponent_rules__can_not_square_root_negative",
+      "canonical_name": "Can not square root a negative number",
+      "cosine": 0.6222,
+      "diagnostic_tags": [
+        "mis_exponent_rules__can_not_square_root_negative",
+        "mis_quadratic_equations__believes_you_can_square_root",
+        "mis_linear_inequalities__does_not_think_square_root"
+      ],
+      "diagnostic_names": [
+        "Can not square root a negative number",
+        "Believes you can square root a negative number",
+        "Does not think a square root can be negative"
+      ]
+    },
+    {
+      "ingredient_id": "complex_numbers__powers_of_i",
+      "concept_id": "complex_numbers",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_algebraic_manipulation__multiplies_before_applying_power",
+          "name": "Multiplies before applying a power ",
+          "cosine": 0.5354
+        },
+        {
+          "misconception_id": "mis_exponent_rules__does_not_understand_root_power",
+          "name": "Does not understand the root power of 4",
+          "cosine": 0.4976
+        },
+        {
+          "misconception_id": "mis_exponent_rules__has_added_powers_rather_than",
+          "name": "Has added the powers rather than multiplying them",
+          "cosine": 0.4916
+        }
+      ]
+    },
+    {
+      "ingredient_id": "complex_numbers__complex_arithmetic",
+      "concept_id": "complex_numbers",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_algebraic_manipulation__simplifying_thinks_they_write_0",
+          "name": "When simplifying, thinks they write 0 in front of a negative number in the final answer, instead of just writing the negative number",
+          "cosine": 0.526
+        },
+        {
+          "misconception_id": "mis_quadratic_equations__thinks_1_squared_2",
+          "name": "Thinks 1 squared is 2",
+          "cosine": 0.4631
+        },
+        {
+          "misconception_id": "mis_order_of_operations__believes_negative_positive_squared_where",
+          "name": "Believes the negative of a positive squared (where there are no brackets) gives a positive answer",
+          "cosine": 0.4573
+        }
+      ]
+    },
+    {
+      "ingredient_id": "vectors__component_decomposition",
+      "concept_id": "vectors",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_lines_angles__confuses_corresponding_and_vertically_opposite",
+          "name": "Confuses corresponding and vertically opposite angles",
+          "cosine": 0.5178
+        },
+        {
+          "misconception_id": "mis_trigonometry_basics__uses_sin_cos_required",
+          "name": "Uses sin when cos is required",
+          "cosine": 0.4955
+        },
+        {
+          "misconception_id": "mis_lines_angles__confuses_vertically_opposite_angles_and",
+          "name": "Confuses vertically opposite angles and angles around a point",
+          "cosine": 0.4838
+        }
+      ]
+    },
+    {
+      "ingredient_id": "vectors__vector_addition",
+      "concept_id": "vectors",
+      "status": "matched",
+      "canonical": "mis_geometric_transformations__adding_column_vectors_multiplies_rather",
+      "canonical_name": "When adding column vectors, multiplies rather than adds",
+      "cosine": 0.6314,
+      "diagnostic_tags": [
+        "mis_geometric_transformations__adding_column_vectors_multiplies_rather"
+      ],
+      "diagnostic_names": [
+        "When adding column vectors, multiplies rather than adds"
+      ]
+    },
+    {
+      "ingredient_id": "vectors__dot_product_meaning",
+      "concept_id": "vectors",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_linear_equations__does_not_know_meaning_perpendicular",
+          "name": "Does not know the meaning of perpendicular",
+          "cosine": 0.5084
+        },
+        {
+          "misconception_id": "mis_linear_equations__confuses_meaning_parallel_and_perpendicular",
+          "name": "Confuses the meaning of parallel and perpendicular",
+          "cosine": 0.5027
+        },
+        {
+          "misconception_id": "mis_triangles_congruence__confuses_meaning_parallel_and_perpendicular",
+          "name": "Confuses the meaning of parallel and perpendicular",
+          "cosine": 0.5027
+        }
+      ]
+    },
+    {
+      "ingredient_id": "matrices__dimensions_and_compatibility",
+      "concept_id": "matrices",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_exponent_rules__does_not_realise_multiplication_can",
+          "name": "Does not realise that multiplication can be broken down into factors",
+          "cosine": 0.5578
+        },
+        {
+          "misconception_id": "mis_number_properties__does_not_realise_multiplication_can",
+          "name": "Does not realise that multiplication can be broken down into factors",
+          "cosine": 0.5578
+        },
+        {
+          "misconception_id": "mis_number_properties__multiplying_treats_digits_other_columns",
+          "name": "When multiplying, treats digits in other columns as if they are units",
+          "cosine": 0.536
+        }
+      ]
+    },
+    {
+      "ingredient_id": "matrices__multiplication_order",
+      "concept_id": "matrices",
+      "status": "matched",
+      "canonical": "mis_number_properties__does_not_correctly_apply_commutative",
+      "canonical_name": "Does not correctly apply the commutative property of multiplication",
+      "cosine": 0.6001,
+      "diagnostic_tags": [
+        "mis_number_properties__does_not_correctly_apply_commutative",
+        "mis_fractions_decimals__does_not_correctly_apply_commutative",
+        "mis_algebraic_manipulation__does_not_correctly_apply_commutative"
+      ],
+      "diagnostic_names": [
+        "Does not correctly apply the commutative property of multiplication",
+        "Does not correctly apply the commutative property of multiplication",
+        "Does not correctly apply the commutative property of multiplication"
+      ]
+    },
+    {
+      "ingredient_id": "matrices__row_operations",
+      "concept_id": "matrices",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_number_properties__tries_multiply_within_place_value",
+          "name": "Tries to multiply within place value columns during column multiplication",
+          "cosine": 0.3985
+        },
+        {
+          "misconception_id": "mis_number_properties__assumes_they_add_all_values",
+          "name": "Assumes they add all values in a worded problem, thereby not interpreting the problem correctly",
+          "cosine": 0.3697
+        },
+        {
+          "misconception_id": "mis_number_properties__forgets_carry_tens_doing_column",
+          "name": "Forgets to carry the tens when doing column multiplication",
+          "cosine": 0.3681
+        }
+      ]
+    },
+    {
+      "ingredient_id": "conics__identification",
+      "concept_id": "conic_sections",
+      "status": "matched",
+      "canonical": "mis_circles_geometry__confuses_radius_with_radius_squared",
+      "canonical_name": "Confuses the radius with the radius squared in the equation of a circle",
+      "cosine": 0.6019,
+      "diagnostic_tags": [
+        "mis_circles_geometry__confuses_radius_with_radius_squared"
+      ],
+      "diagnostic_names": [
+        "Confuses the radius with the radius squared in the equation of a circle"
+      ]
+    },
+    {
+      "ingredient_id": "conics__completing_the_square",
+      "concept_id": "conic_sections",
+      "status": "matched",
+      "canonical": "mis_factoring_polynomials__completing_square_form_x_a2",
+      "canonical_name": "When completing the square in the form (x - a)^2 + b, believes b = the original constant",
+      "cosine": 0.6995,
+      "diagnostic_tags": [
+        "mis_factoring_polynomials__completing_square_form_x_a2",
+        "mis_factoring_polynomials__completing_square_believes_constant_bracket",
+        "mis_quadratic_equations__believes_completed_square_form_they"
+      ],
+      "diagnostic_names": [
+        "When completing the square in the form (x - a)^2 + b, believes b = the original constant",
+        "When completing the square, believes the constant in the bracket is the coefficient of x",
+        "Believes that in completed square form, they need to change the sign of the constant to get the turning point"
+      ]
+    },
+    {
+      "ingredient_id": "conics__circle_standard_form",
+      "concept_id": "conic_sections",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_algebraic_manipulation__has_used_subtraction_sign_represent",
+          "name": "Has used a subtraction sign to represent division",
+          "cosine": 0.4896
+        },
+        {
+          "misconception_id": "mis_number_properties__placing_negative_number_on_number",
+          "name": "When placing a negative number on a number line student assumes numbers with a greater absolute value are placed to the right.",
+          "cosine": 0.4761
+        },
+        {
+          "misconception_id": "mis_factoring_polynomials__believes_completed_square_form_they",
+          "name": "Believes that in completed square form, they need to change the signs of both values to get the turning point",
+          "cosine": 0.4635
+        }
+      ]
+    },
+    {
+      "ingredient_id": "prob_dist__distribution_as_model",
+      "concept_id": "probability_distributions",
+      "status": "matched",
+      "canonical": "mis_basic_probability__does_not_understand_probability_1",
+      "canonical_name": "Does not understand that a probability of 1 represents something that is certain",
+      "cosine": 0.6357,
+      "diagnostic_tags": [
+        "mis_basic_probability__does_not_understand_probability_1",
+        "mis_basic_probability__does_not_understand_probability_something"
+      ],
+      "diagnostic_names": [
+        "Does not understand that a probability of 1 represents something that is certain",
+        "Does not understand that the probability of something not happening is 1 minus the probability of it happening"
+      ]
+    },
+    {
+      "ingredient_id": "prob_dist__normal_empirical_rule",
+      "concept_id": "probability_distributions",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_fractions_decimals__does_not_know_you_can",
+          "name": "Does not know that you can have a decimal percentage",
+          "cosine": 0.4185
+        },
+        {
+          "misconception_id": "mis_ratios_proportions__does_not_understand_percentage_can",
+          "name": "Does not understand a percentage can be applied to something not out of 100",
+          "cosine": 0.4099
+        },
+        {
+          "misconception_id": "mis_fractions_decimals__assumes_converting_decimal_percentage_fraction",
+          "name": "Assumes that converting a decimal percentage to a fraction, they can just convert the decimal to a fraction, instead of writing the decimal over 100.",
+          "cosine": 0.3874
+        }
+      ]
+    },
+    {
+      "ingredient_id": "prob_dist__z_score_transformation",
+      "concept_id": "probability_distributions",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_number_properties__placing_negative_number_on_number",
+          "name": "When placing a negative number on a number line student assumes numbers with a greater absolute value are placed to the right.",
+          "cosine": 0.3609
+        },
+        {
+          "misconception_id": "mis_lines_angles__correct_scale_but_wrong_value",
+          "name": "Correct scale but wrong value on protractor reading.",
+          "cosine": 0.341
+        },
+        {
+          "misconception_id": "mis_basic_probability__does_not_work_out_all",
+          "name": "Does not work out all possibilites when given an 'at least' question in probability",
+          "cosine": 0.34
+        }
+      ]
+    },
+    {
+      "ingredient_id": "deriv_apps__critical_points",
+      "concept_id": "applications_of_derivatives",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_quadratic_equations__solving_simultaneous_equations_graphically_they",
+          "name": "When solving simultaneous equations graphically, they think the solutions are the x-intercepts",
+          "cosine": 0.4164
+        },
+        {
+          "misconception_id": "mis_systems_of_linear_equations__believes_they_solve_mx_c",
+          "name": "Believes they solve mx + c = 0 by substituting in x = 0",
+          "cosine": 0.395
+        },
+        {
+          "misconception_id": "mis_quadratic_equations__believes_graph_x_squared_c",
+          "name": "Believes the graph of x squared + c has the turning point of (-c, 0)",
+          "cosine": 0.3941
+        }
+      ]
+    },
+    {
+      "ingredient_id": "deriv_apps__first_derivative_test",
+      "concept_id": "applications_of_derivatives",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_quadratic_equations__believes_completed_square_form_they",
+          "name": "Believes that in completed square form, they need to change the sign of the constant to get the turning point",
+          "cosine": 0.4209
+        },
+        {
+          "misconception_id": "mis_number_properties__placing_negative_number_on_number",
+          "name": "When placing a negative number on a number line student assumes numbers with a greater absolute value are placed to the right.",
+          "cosine": 0.3874
+        },
+        {
+          "misconception_id": "mis_factoring_polynomials__believes_completed_square_form_they",
+          "name": "Believes that in completed square form, they need to change the signs of both values to get the turning point",
+          "cosine": 0.3784
+        }
+      ]
+    },
+    {
+      "ingredient_id": "deriv_apps__second_derivative_test",
+      "concept_id": "applications_of_derivatives",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_functions_basics__believes_less_steep_gradient_corresponds",
+          "name": "Believes a less steep gradient corresponds to a faster speed",
+          "cosine": 0.4059
+        },
+        {
+          "misconception_id": "mis_functions_basics__believes_steeper_downwards_line_on",
+          "name": "Believes a steeper downwards line on a graph means a slower decrease",
+          "cosine": 0.3655
+        },
+        {
+          "misconception_id": "mis_linear_equations__believes_gradient_difference_between_change",
+          "name": "Believes gradient is the difference between the change in x and the change in y",
+          "cosine": 0.334
+        }
+      ]
+    },
+    {
+      "ingredient_id": "deriv_apps__optimization_setup",
+      "concept_id": "applications_of_derivatives",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_systems_of_linear_equations__solving_simultaneous_equations_thinks_they",
+          "name": "When solving simultaneous equations, thinks they can ignore one of the variables",
+          "cosine": 0.3736
+        },
+        {
+          "misconception_id": "mis_algebraic_manipulation__misunderstands_process_making_variable_subject",
+          "name": "Misunderstands the process of making a variable the subject of an equation",
+          "cosine": 0.3525
+        },
+        {
+          "misconception_id": "mis_algebraic_manipulation__thinks_we_can_remove_division",
+          "name": "Thinks that we can remove a division symbol and just write the variables next to each other",
+          "cosine": 0.3451
+        }
+      ]
+    },
+    {
+      "ingredient_id": "integrals__antiderivative_concept",
+      "concept_id": "integrals",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_algebraic_manipulation__does_not_add_on_constant",
+          "name": "Does not add on the constant in a worded substitution problem",
+          "cosine": 0.4353
+        },
+        {
+          "misconception_id": "mis_systems_of_linear_equations__believes_they_solve_mx_c",
+          "name": "Believes they solve mx + c = 0 by substituting in x = 0",
+          "cosine": 0.4335
+        },
+        {
+          "misconception_id": "mis_algebraic_manipulation__does_not_realise_subtracting_negative",
+          "name": "Does not realise that subtracting a negative is the same as adding it's additive inverse",
+          "cosine": 0.4312
+        }
+      ]
+    },
+    {
+      "ingredient_id": "integrals__definite_integral_as_area",
+      "concept_id": "integrals",
+      "status": "matched",
+      "canonical": "mis_ratios_proportions__thinks_shape_graph_does_not",
+      "canonical_name": "Thinks the shape of the graph does not affect the area calculation",
+      "cosine": 0.6165,
+      "diagnostic_tags": [
+        "mis_ratios_proportions__thinks_shape_graph_does_not"
+      ],
+      "diagnostic_names": [
+        "Thinks the shape of the graph does not affect the area calculation"
+      ]
+    },
+    {
+      "ingredient_id": "integrals__fundamental_theorem",
+      "concept_id": "integrals",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_linear_equations__subtracting_negative_number_from_positive",
+          "name": "When subtracting a negative number from a positive number, uses a method which assumes one of the negative signs can be ignored ",
+          "cosine": 0.3636
+        },
+        {
+          "misconception_id": "mis_quadratic_equations__subtracting_negative_number_from_positive",
+          "name": "When subtracting a negative number from a positive number, uses a method which assumes one of the negative signs can be ignored ",
+          "cosine": 0.3636
+        },
+        {
+          "misconception_id": "mis_algebraic_manipulation__subtracting_negative_number_from_positive",
+          "name": "When subtracting a negative number from a positive number, uses a method which assumes one of the negative signs can be ignored ",
+          "cosine": 0.3636
+        }
+      ]
+    },
+    {
+      "ingredient_id": "integrals__definite_vs_indefinite",
+      "concept_id": "integrals",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_algebraic_manipulation__asked_add_fractions_uses_method",
+          "name": "When asked to add fractions uses the method for multiplying fractions instead.",
+          "cosine": 0.4673
+        },
+        {
+          "misconception_id": "mis_linear_equations__thinks_they_solve_mx_c",
+          "name": "Thinks they solve mx + c = a, by substituting in the value of a for x and therefore calculating ma + c",
+          "cosine": 0.4539
+        },
+        {
+          "misconception_id": "mis_exponent_rules__adds_calculating_area_instead_multiplying",
+          "name": "Adds when calculating area instead of multiplying",
+          "cosine": 0.4417
+        }
+      ]
+    },
+    {
+      "ingredient_id": "integral_apps__area_between_curves",
+      "concept_id": "applications_of_integrals",
+      "status": "matched",
+      "canonical": "mis_ratios_proportions__believes_finding_area_under_graph",
+      "canonical_name": "Believes that when finding area under graph you can use the upper y value rather than average of upper and lower",
+      "cosine": 0.6596,
+      "diagnostic_tags": [
+        "mis_ratios_proportions__believes_finding_area_under_graph",
+        "mis_ratios_proportions__thinks_shape_graph_does_not"
+      ],
+      "diagnostic_names": [
+        "Believes that when finding area under graph you can use the upper y value rather than average of upper and lower",
+        "Thinks the shape of the graph does not affect the area calculation"
+      ]
+    },
+    {
+      "ingredient_id": "integral_apps__net_change_theorem",
+      "concept_id": "applications_of_integrals",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_ratios_proportions__does_not_understand_area_under",
+          "name": "Does not understand that area under a speed time graph gives distance because distance = speed x time",
+          "cosine": 0.5121
+        },
+        {
+          "misconception_id": "mis_ratios_proportions__believes_length_line_velocity_time",
+          "name": "Believes the length of the line in a velocity time graph gives the distance (rather than the area underneath that line).",
+          "cosine": 0.4875
+        },
+        {
+          "misconception_id": "mis_functions_basics__does_not_realise_gradient_represents",
+          "name": "Does not realise that gradient represents rate of change",
+          "cosine": 0.4867
+        }
+      ]
+    },
+    {
+      "ingredient_id": "inferential__sampling_variability",
+      "concept_id": "inferential_statistics",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_descriptive_statistics__thinks_lower_average_means_data",
+          "name": "Thinks a lower average means the data is more consistent",
+          "cosine": 0.4882
+        },
+        {
+          "misconception_id": "mis_descriptive_statistics__thinks_higher_average_means_more",
+          "name": "Thinks a higher average means more consistent data",
+          "cosine": 0.4735
+        },
+        {
+          "misconception_id": "mis_descriptive_statistics__believes_you_divide_1_number",
+          "name": "Believes you divide 1 by the number of values, rather than the total, when finding the mean",
+          "cosine": 0.4695
+        }
+      ]
+    },
+    {
+      "ingredient_id": "inferential__hypothesis_structure",
+      "concept_id": "inferential_statistics",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_exponent_rules__changing_number_standard_form_omits",
+          "name": "When changing a number to standard form omits zero's of significance ",
+          "cosine": 0.3834
+        },
+        {
+          "misconception_id": "mis_exponent_rules__assumes_fact_without_considering_enough",
+          "name": "Assumes a fact without considering enough examples",
+          "cosine": 0.3671
+        },
+        {
+          "misconception_id": "mis_sequences_series__assumes_fact_without_considering_enough",
+          "name": "Assumes a fact without considering enough examples",
+          "cosine": 0.3671
+        }
+      ]
+    },
+    {
+      "ingredient_id": "inferential__p_value_interpretation",
+      "concept_id": "inferential_statistics",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_basic_probability__does_not_understand_probability_0",
+          "name": "Does not understand that a probability of 0 represents something that is impossible",
+          "cosine": 0.5058
+        },
+        {
+          "misconception_id": "mis_basic_probability__does_not_understand_probability_1",
+          "name": "Does not understand that a probability of 1 represents something that is certain",
+          "cosine": 0.4746
+        },
+        {
+          "misconception_id": "mis_ratios_proportions__does_not_understand_percentage_can",
+          "name": "Does not understand a percentage can be applied to something not out of 100",
+          "cosine": 0.436
+        }
+      ]
+    },
+    {
+      "ingredient_id": "number_properties__factor_definition",
+      "concept_id": "number_properties",
+      "status": "matched",
+      "canonical": "mis_number_properties__confuses_factors_and_multiples",
+      "canonical_name": "Confuses factors and multiples",
+      "cosine": 0.6544,
+      "diagnostic_tags": [
+        "mis_number_properties__confuses_factors_and_multiples",
+        "mis_number_properties__does_not_understand_factors_are",
+        "mis_number_properties__does_not_know_meaning_common"
+      ],
+      "diagnostic_names": [
+        "Confuses factors and multiples",
+        "Does not understand that factors are divisors which split the number into equal groups",
+        "Does not know the meaning of common, eg. common factor"
+      ]
+    },
+    {
+      "ingredient_id": "number_properties__prime_composite",
+      "concept_id": "number_properties",
+      "status": "matched",
+      "canonical": "mis_number_properties__does_not_think_number_can",
+      "canonical_name": "Does not think a number can be a factor of itself",
+      "cosine": 0.5811,
+      "diagnostic_tags": [
+        "mis_number_properties__does_not_think_number_can"
+      ],
+      "diagnostic_names": [
+        "Does not think a number can be a factor of itself"
+      ]
+    },
+    {
+      "ingredient_id": "number_properties__factor_pairs",
+      "concept_id": "number_properties",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_exponent_rules__squares_asked_find_square_root",
+          "name": "Squares when asked to find the square root",
+          "cosine": 0.5848
+        },
+        {
+          "misconception_id": "mis_quadratic_equations__squares_asked_find_square_root",
+          "name": "Squares when asked to find the square root",
+          "cosine": 0.5848
+        },
+        {
+          "misconception_id": "mis_exponent_rules__halves_asked_find_square_root",
+          "name": "Halves when asked to find the square root",
+          "cosine": 0.5546
+        }
+      ]
+    },
+    {
+      "ingredient_id": "number_properties__perfect_square_odd_factors",
+      "concept_id": "number_properties",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_basic_probability__does_not_know_what_square",
+          "name": "Does not know what a square number is",
+          "cosine": 0.5419
+        },
+        {
+          "misconception_id": "mis_sequences_series__does_not_know_what_square",
+          "name": "Does not know what a square number is",
+          "cosine": 0.5419
+        },
+        {
+          "misconception_id": "mis_exponent_rules__does_not_know_what_square",
+          "name": "Does not know what a square number is",
+          "cosine": 0.5419
+        }
+      ]
+    },
+    {
+      "ingredient_id": "number_properties__factor_count_exactly_three",
+      "concept_id": "number_properties",
+      "status": "matched",
+      "canonical": "mis_number_properties__confuses_factors_and_multiples",
+      "canonical_name": "Confuses factors and multiples",
+      "cosine": 0.6279,
+      "diagnostic_tags": [
+        "mis_number_properties__confuses_factors_and_multiples",
+        "mis_number_properties__does_not_think_number_can"
+      ],
+      "diagnostic_names": [
+        "Confuses factors and multiples",
+        "Does not think a number can be a factor of itself"
+      ]
+    },
+    {
+      "ingredient_id": "number_properties__parity_even_odd_product_sum",
+      "concept_id": "number_properties",
+      "status": "matched",
+      "canonical": "mis_basic_probability__mixes_up_odd_and_even",
+      "canonical_name": "Mixes up odd and even numbers",
+      "cosine": 0.6279,
+      "diagnostic_tags": [
+        "mis_basic_probability__mixes_up_odd_and_even",
+        "mis_sequences_series__mixes_up_odd_and_even",
+        "mis_exponent_rules__mixes_up_odd_and_even"
+      ],
+      "diagnostic_names": [
+        "Mixes up odd and even numbers",
+        "Mixes up odd and even numbers",
+        "Mixes up odd and even numbers"
+      ]
+    },
+    {
+      "ingredient_id": "number_properties__factor_pair_sum_search",
+      "concept_id": "number_properties",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_factoring_polynomials__factorising_into_double_brackets_finds",
+          "name": "When factorising into double brackets, finds the sum of two values which give the non variable term in the expression rather than the product",
+          "cosine": 0.5196
+        },
+        {
+          "misconception_id": "mis_algebraic_manipulation__does_not_know_factorise_quadratic",
+          "name": "Does not know that to factorise a quadratic expression, to find two numbers that add to give the coefficient of the x term, and multiply to give the non variable term\n",
+          "cosine": 0.4926
+        },
+        {
+          "misconception_id": "mis_factoring_polynomials__does_not_know_factorise_quadratic",
+          "name": "Does not know that to factorise a quadratic expression, to find two numbers that add to give the coefficient of the x term, and multiply to give the non variable term\n",
+          "cosine": 0.4926
+        }
+      ]
+    },
+    {
+      "ingredient_id": "measurement_units__unit_label_consistency",
+      "concept_id": "measurement_units",
+      "status": "matched",
+      "canonical": "mis_measurement_units__does_not_convert_measurements_have",
+      "canonical_name": "Does not convert measurements to have the same units before calculating area or volume",
+      "cosine": 0.5921,
+      "diagnostic_tags": [
+        "mis_measurement_units__does_not_convert_measurements_have"
+      ],
+      "diagnostic_names": [
+        "Does not convert measurements to have the same units before calculating area or volume"
+      ]
+    },
+    {
+      "ingredient_id": "measurement_units__unit_rate_per_one",
+      "concept_id": "measurement_units",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_measurement_units__multiplies_converting_larger_unit",
+          "name": "Multiplies when converting to a larger unit",
+          "cosine": 0.5217
+        },
+        {
+          "misconception_id": "mis_ratios_proportions__thinks_you_need_include_total",
+          "name": "Thinks you need to include the total as well as the individual parts when asked to write a ratio",
+          "cosine": 0.5064
+        },
+        {
+          "misconception_id": "mis_systems_of_linear_equations__does_not_include_units_answer",
+          "name": "Does not include units in answer.",
+          "cosine": 0.4826
+        }
+      ]
+    },
+    {
+      "ingredient_id": "measurement_units__linear_vs_square_units",
+      "concept_id": "measurement_units",
+      "status": "matched",
+      "canonical": "mis_measurement_units__does_not_recognise_metres_unit",
+      "canonical_name": "Does not recognise metres as a unit of length",
+      "cosine": 0.5733,
+      "diagnostic_tags": [
+        "mis_measurement_units__does_not_recognise_metres_unit",
+        "mis_measurement_units__does_not_recognise_inches_unit"
+      ],
+      "diagnostic_names": [
+        "Does not recognise metres as a unit of length",
+        "Does not recognise inches (\") as a unit of length"
+      ]
+    },
+    {
+      "ingredient_id": "measurement_units__compound_unit_conversion",
+      "concept_id": "measurement_units",
+      "status": "matched",
+      "canonical": "mis_measurement_units__converted_hours_minutes_instead_hours",
+      "canonical_name": "Converted hours to minutes instead of hours to seconds",
+      "cosine": 0.7029,
+      "diagnostic_tags": [
+        "mis_measurement_units__converted_hours_minutes_instead_hours",
+        "mis_measurement_units__converted_seconds_minutes_instead_seconds",
+        "mis_measurement_units__does_not_square_conversion_factor"
+      ],
+      "diagnostic_names": [
+        "Converted hours to minutes instead of hours to seconds",
+        "Converted seconds to minutes instead of seconds to hours",
+        "Does not square the conversion factor when converting squared units"
+      ]
+    },
+    {
+      "ingredient_id": "algebraic_manipulation__like_terms",
+      "concept_id": "algebraic_manipulation",
+      "status": "matched",
+      "canonical": "mis_algebraic_manipulation__believes_you_add_terms_together",
+      "canonical_name": "Believes you add the terms together when multiplying like terms.",
+      "cosine": 0.6749,
+      "diagnostic_tags": [
+        "mis_algebraic_manipulation__believes_you_add_terms_together",
+        "mis_algebraic_manipulation__collecting_like_terms_only_simplifies",
+        "mis_algebraic_manipulation__collecting_like_terms_treats_subtractions"
+      ],
+      "diagnostic_names": [
+        "Believes you add the terms together when multiplying like terms.",
+        "When collecting like terms, only simplifies when there is an addition",
+        "When collecting like terms, treats subtractions as if they are additions"
+      ]
+    },
+    {
+      "ingredient_id": "algebraic_manipulation__symbolic_substitution",
+      "concept_id": "algebraic_manipulation",
+      "status": "matched",
+      "canonical": "mis_algebraic_manipulation__changes_given_operation_substituting",
+      "canonical_name": "Changes the given operation when substituting",
+      "cosine": 0.6451,
+      "diagnostic_tags": [
+        "mis_algebraic_manipulation__changes_given_operation_substituting",
+        "mis_algebraic_manipulation__does_not_consider_variable_evaluating",
+        "mis_algebraic_manipulation__does_not_add_on_constant"
+      ],
+      "diagnostic_names": [
+        "Changes the given operation when substituting",
+        "Does not consider the variable when evaluating an expression that requires substitution.",
+        "Does not add on the constant in a worded substitution problem"
+      ]
+    },
+    {
+      "ingredient_id": "algebraic_manipulation__literal_equation_rearrangement",
+      "concept_id": "algebraic_manipulation",
+      "status": "matched",
+      "canonical": "mis_algebraic_manipulation__confuses_term_with_equation",
+      "canonical_name": "Confuses a term with an equation",
+      "cosine": 0.5966,
+      "diagnostic_tags": [
+        "mis_algebraic_manipulation__confuses_term_with_equation",
+        "mis_algebraic_manipulation__does_not_understand_multiplying_both"
+      ],
+      "diagnostic_names": [
+        "Confuses a term with an equation",
+        "Does not understand that when multiplying both sides of an equation by an amount every term must be multiplied by the same amount"
+      ]
+    },
+    {
+      "ingredient_id": "algebraic_manipulation__equivalent_forms",
+      "concept_id": "algebraic_manipulation",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_algebraic_manipulation__has_not_realised_answer_may",
+          "name": "Has not realised that the answer may be changed by the insertion of brackets",
+          "cosine": 0.4712
+        },
+        {
+          "misconception_id": "mis_fractions_decimals__does_not_understand_equivalent_fractions",
+          "name": "Does not understand equivalent fractions",
+          "cosine": 0.4504
+        },
+        {
+          "misconception_id": "mis_algebraic_manipulation__does_not_understand_equivalent_fractions",
+          "name": "Does not understand equivalent fractions",
+          "cosine": 0.4504
+        }
+      ]
+    },
+    {
+      "ingredient_id": "algebraic_manipulation__clearing_fractions",
+      "concept_id": "algebraic_manipulation",
+      "status": "matched",
+      "canonical": "mis_algebraic_manipulation__simplifies_fraction_adding_or_subtracting",
+      "canonical_name": "Simplifies a fraction by adding or subtracting the same amount from the numerator  and denominator",
+      "cosine": 0.6386,
+      "diagnostic_tags": [
+        "mis_algebraic_manipulation__simplifies_fraction_adding_or_subtracting",
+        "mis_algebraic_manipulation__believes_they_should_multiply_each",
+        "mis_algebraic_manipulation__subtracting_fractions_subtracts_numerators_and"
+      ],
+      "diagnostic_names": [
+        "Simplifies a fraction by adding or subtracting the same amount from the numerator  and denominator",
+        "Believes they should multiply each numerator by its original denominator when adding/subtracting fractions",
+        "When subtracting fractions, subtracts the numerators and multiplies the denominators"
+      ]
+    },
+    {
+      "ingredient_id": "representation_translation__words_to_equation",
+      "concept_id": "representation_translation",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_algebraic_manipulation__misunderstands_process_making_variable_subject",
+          "name": "Misunderstands the process of making a variable the subject of an equation",
+          "cosine": 0.449
+        },
+        {
+          "misconception_id": "mis_algebraic_manipulation__thinks_two_variables_next_each",
+          "name": "Thinks two variables next to each other represent addition",
+          "cosine": 0.4469
+        },
+        {
+          "misconception_id": "mis_quadratic_equations__thinks_two_variables_next_each",
+          "name": "Thinks two variables next to each other represent addition",
+          "cosine": 0.4469
+        }
+      ]
+    },
+    {
+      "ingredient_id": "representation_translation__number_line_to_inequality",
+      "concept_id": "representation_translation",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_linear_inequalities__representing_inequality_on_numberline_assumes",
+          "name": "When representing an inequality on a numberline, assumes the filled and unfilled circles have the opposite meaning.",
+          "cosine": 0.5928
+        },
+        {
+          "misconception_id": "mis_number_properties__placing_negative_number_on_number",
+          "name": "When placing a negative number on a number line student assumes numbers with a greater absolute value are placed to the right.",
+          "cosine": 0.5886
+        },
+        {
+          "misconception_id": "mis_linear_inequalities__using_inequality_notation_thinks_greater",
+          "name": "When using inequality notation, thinks \"greater than/less than or equal to\" symbols are instead the \"greater than/less than\" symbols and vice versa",
+          "cosine": 0.5662
+        }
+      ]
+    },
+    {
+      "ingredient_id": "representation_translation__diagram_to_ratio",
+      "concept_id": "representation_translation",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_triangles_congruence__does_not_understand_shapes_are",
+          "name": "Does not understand that shapes are congruent if they have the same size and shape",
+          "cosine": 0.5736
+        },
+        {
+          "misconception_id": "mis_triangles_congruence__thinks_congruent_shapes_are_same",
+          "name": "Thinks congruent shapes are the same shape but can be different sizes",
+          "cosine": 0.5443
+        },
+        {
+          "misconception_id": "mis_ratios_proportions__not_able_spot_proportional_relationship",
+          "name": "Is not able to spot a proportional relationship pictorially unless they are laid out in groups",
+          "cosine": 0.5282
+        }
+      ]
+    },
+    {
+      "ingredient_id": "representation_translation__graph_to_rate",
+      "concept_id": "representation_translation",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_functions_basics__believes_steeper_downwards_line_on",
+          "name": "Believes a steeper downwards line on a graph means a slower decrease",
+          "cosine": 0.5806
+        },
+        {
+          "misconception_id": "mis_functions_basics__believes_upward_slope_on_distancetime",
+          "name": "Believes an upward slope on a distance-time graph means travelling back towards the starting point.",
+          "cosine": 0.5419
+        },
+        {
+          "misconception_id": "mis_functions_basics__believes_downward_slope_on_speedtime",
+          "name": "Believes a downward slope on a speed-time graph shows positive acceleration",
+          "cosine": 0.5367
+        }
+      ]
+    },
+    {
+      "ingredient_id": "representation_translation__implicit_structure_detection",
+      "concept_id": "representation_translation",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_quadratic_equations__believes_they_can_divide_variable",
+          "name": "Believes they can divide by a variable without checking whether it could equal zero",
+          "cosine": 0.403
+        },
+        {
+          "misconception_id": "mis_linear_equations__subtracting_negative_number_from_positive",
+          "name": "When subtracting a negative number from a positive number, uses a method which assumes one of the negative signs can be ignored ",
+          "cosine": 0.3611
+        },
+        {
+          "misconception_id": "mis_quadratic_equations__subtracting_negative_number_from_positive",
+          "name": "When subtracting a negative number from a positive number, uses a method which assumes one of the negative signs can be ignored ",
+          "cosine": 0.3611
+        }
+      ]
+    },
+    {
+      "ingredient_id": "act_strategy__plug_in_answer_choices",
+      "concept_id": "act_strategy",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_number_properties__assumes_they_add_all_values",
+          "name": "Assumes they add all values in a worded problem, thereby not interpreting the problem correctly",
+          "cosine": 0.4411
+        },
+        {
+          "misconception_id": "mis_number_properties__subtracts_rather_than_multiplies_answering",
+          "name": "Subtracts rather than multiplies when answering worded problems",
+          "cosine": 0.4372
+        },
+        {
+          "misconception_id": "mis_systems_of_linear_equations__solving_simultaneous_equations_thinks_identical",
+          "name": "When solving simultaneous equations thinks that identical terms in given equations can be eliminated by either adding or subtracting.",
+          "cosine": 0.4319
+        }
+      ]
+    },
+    {
+      "ingredient_id": "act_strategy__estimate_and_eliminate",
+      "concept_id": "act_strategy",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_number_properties__difficulty_with_translating_mathematical_answer",
+          "name": "Difficulty with translating a mathematical answer into a real world context",
+          "cosine": 0.4628
+        },
+        {
+          "misconception_id": "mis_number_properties__believes_rounding_numbers_down_would",
+          "name": "Believes rounding numbers down would give an overestimate",
+          "cosine": 0.4438
+        },
+        {
+          "misconception_id": "mis_number_properties__believes_you_can_not_take",
+          "name": "Believes you can not take away a larger number from a smaller one",
+          "cosine": 0.4367
+        }
+      ]
+    },
+    {
+      "ingredient_id": "act_strategy__draw_auxiliary_diagram",
+      "concept_id": "act_strategy",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_lines_angles__describes_lines_asked_describe_angles",
+          "name": "Describes lines when asked to describe angles",
+          "cosine": 0.4603
+        },
+        {
+          "misconception_id": "mis_lines_angles__does_not_recall_steps_required",
+          "name": "Does not recall the steps required to draw an angle",
+          "cosine": 0.4391
+        },
+        {
+          "misconception_id": "mis_area_volume__believes_lines_inside_shape_are",
+          "name": "Believes lines inside the shape are included when finding perimeter",
+          "cosine": 0.4177
+        }
+      ]
+    },
+    {
+      "ingredient_id": "act_strategy__strategy_selection",
+      "concept_id": "act_strategy",
+      "status": "no_match",
+      "top_candidates": [
+        {
+          "misconception_id": "mis_descriptive_statistics__mixes_up_quantitative_and_qualitative",
+          "name": "Mixes up quantitative and qualitative data types",
+          "cosine": 0.3107
+        },
+        {
+          "misconception_id": "mis_number_properties__divides_rather_than_multiplies_answering",
+          "name": "Divides rather than multiplies when answering worded problems",
+          "cosine": 0.3079
+        },
+        {
+          "misconception_id": "mis_algebraic_manipulation__asked_add_fractions_uses_method",
+          "name": "When asked to add fractions uses the method for multiplying fractions instead.",
+          "cosine": 0.2974
+        }
+      ]
+    }
+  ]
+}

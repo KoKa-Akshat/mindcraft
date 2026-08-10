@@ -1,0 +1,119 @@
+{
+  "id": "accounting_basics",
+  "subject": "Accounting",
+  "course": "Accounting Foundations",
+  "metaphor": "Balance Lab",
+  "audience": "Students learning the logic of financial statements",
+  "units": [
+    {
+      "id": "transaction_lens",
+      "name": "Transaction Lens",
+      "metaphor": "Seeing the two-sided effect of every business event",
+      "description": "Students learn to translate real events into accounting movement."
+    },
+    {
+      "id": "ledger_engine",
+      "name": "Ledger Engine",
+      "metaphor": "Keeping the machine balanced as values move",
+      "description": "Students practice debits, credits, and account types."
+    },
+    {
+      "id": "statement_bridge",
+      "name": "Statement Bridge",
+      "metaphor": "Connecting entries to the story of the business",
+      "description": "Students see how transactions become statements."
+    }
+  ],
+  "concepts": [
+    {
+      "id": "accounting_equation",
+      "name": "Accounting Equation",
+      "unit_id": "transaction_lens",
+      "level": "foundational",
+      "description": "Assets equal liabilities plus equity.",
+      "story": "The accounting equation is the balance beam under the whole subject.",
+      "grit_prompt": "When a transaction feels confusing, return to the beam. Something moved, but the system still balances.",
+      "visual_metaphor": "A balance scale holding assets on one side and claims on the other.",
+      "ingredients": [
+        {
+          "id": "accounting_equation__claim_on_assets",
+          "label": "Claims on assets",
+          "description": "Liabilities and equity explain who has a claim on company resources.",
+          "failure_mode": "The student treats equity as cash instead of ownership claim.",
+          "practice_prompt": "Classify who has a claim after a simple purchase or loan.",
+          "visual_metaphor": "Colored claim tags attached to a stack of resources."
+        }
+      ],
+      "tags": ["foundation", "balance"]
+    },
+    {
+      "id": "debits_and_credits",
+      "name": "Debits and Credits",
+      "unit_id": "ledger_engine",
+      "level": "core",
+      "description": "Debit and credit are directions in the ledger, not good and bad.",
+      "story": "A ledger is a map. Debit and credit are left and right turns.",
+      "grit_prompt": "Mixing up debit and credit is normal at first. Each correction strengthens the direction sense.",
+      "visual_metaphor": "Two lanes carrying values through a ledger machine.",
+      "ingredients": [
+        {
+          "id": "debits_and_credits__normal_balance",
+          "label": "Normal balance",
+          "description": "Each account type has a side where increases usually live.",
+          "failure_mode": "The student memorizes isolated rules without account type logic.",
+          "practice_prompt": "Predict the normal balance for asset, liability, equity, revenue, and expense accounts.",
+          "visual_metaphor": "Account types docking on their home side of the ledger."
+        }
+      ],
+      "tags": ["ledger", "transactions"]
+    },
+    {
+      "id": "journal_entries",
+      "name": "Journal Entries",
+      "unit_id": "ledger_engine",
+      "level": "core",
+      "description": "Recording transactions with accounts, debit amounts, and credit amounts.",
+      "story": "A journal entry is a tiny story of what changed and why the books still balance.",
+      "grit_prompt": "A wrong entry is useful data. Find the account, find the side, rebalance.",
+      "visual_metaphor": "A transaction flowing into two equal columns.",
+      "ingredients": [
+        {
+          "id": "journal_entries__dual_effect",
+          "label": "Dual effect",
+          "description": "Every transaction affects at least two accounts.",
+          "failure_mode": "The student records only one side of a transaction.",
+          "practice_prompt": "Name both accounts affected by a cash purchase, sale, or loan.",
+          "visual_metaphor": "One spark lighting two connected nodes."
+        }
+      ],
+      "tags": ["ledger", "practice"]
+    },
+    {
+      "id": "financial_statement_flow",
+      "name": "Financial Statement Flow",
+      "unit_id": "statement_bridge",
+      "level": "advanced",
+      "description": "Understanding how account balances feed into financial statements.",
+      "story": "Statements are the final story the ledger tells about the business.",
+      "grit_prompt": "If the statements do not make sense yet, trace one account at a time. Clarity compounds.",
+      "visual_metaphor": "Ledger streams merging into three clear reports.",
+      "ingredients": [
+        {
+          "id": "financial_statement_flow__statement_destination",
+          "label": "Statement destination",
+          "description": "Each account type belongs on a particular statement.",
+          "failure_mode": "The student puts revenue, assets, and expenses on the wrong report.",
+          "practice_prompt": "Route accounts to income statement, balance sheet, or retained earnings.",
+          "visual_metaphor": "Accounts moving down labeled channels into reports."
+        }
+      ],
+      "tags": ["statements", "synthesis"]
+    }
+  ],
+  "edges": [
+    { "from": "accounting_equation", "to": "debits_and_credits", "relation": "prerequisite", "strength": 0.92 },
+    { "from": "debits_and_credits", "to": "journal_entries", "relation": "prerequisite", "strength": 0.9 },
+    { "from": "journal_entries", "to": "financial_statement_flow", "relation": "unlocks", "strength": 0.82 },
+    { "from": "accounting_equation", "to": "financial_statement_flow", "relation": "bridge", "strength": 0.55 }
+  ]
+}

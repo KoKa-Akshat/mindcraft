@@ -1,0 +1,66 @@
+Application, 0x10c935180, pid: 3140, label: 'MindCraftNotes' <App element pid: 3140>
+  Window (Main), 0x10c9352c0, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 3140, elementOrHash.elementID: 4379316112.4>
+    Other, 0x10c935400, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 3140, elementOrHash.elementID: 4405297152.6>
+      Other, 0x10c935540, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 3140, elementOrHash.elementID: 4379386176.8>
+        Other, 0x10c935680, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 3140, elementOrHash.elementID: 4405118272.10>
+          Other, 0x10c9357c0, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 3140, elementOrHash.elementID: 4379384832.11>
+            Other, 0x10c935900, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 3140, elementOrHash.elementID: 4745124416.12>
+              ScrollView, 0x10c935a40, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 3140, elementOrHash.elementID: 4743905280.13>
+                Other, 0x10c935b80, {{0.0, 32.0}, {820.0, 811.0}} <AX element pid: 3140, elementOrHash.elementID: 4559195648.14>
+                  StaticText, 0x10c935cc0, {{24.0, 58.0}, {51.5, 26.5}}, label: 'Mind' <AX element pid: 3140, elementOrHash.elementID: 4405132608.16>
+                  StaticText, 0x10c935e00, {{75.5, 58.0}, {53.0, 26.5}}, label: 'Craft' <AX element pid: 3140, elementOrHash.elementID: 4745019392.17>
+                  StaticText, 0x10c935f40, {{156.5, 63.2}, {70.0, 16.0}}, label: 'Dashboard' <AX element pid: 3140, elementOrHash.elementID: 4745019840.18>
+                  StaticText, 0x10c936080, {{658.0, 56.0}, {56.5, 16.0}}, label: 'Shreeyut' <AX element pid: 3140, elementOrHash.elementID: 4745020288.19>
+                  StaticText, 0x10c9361c0, {{580.0, 73.0}, {134.5, 13.5}}, label: 'akshatkoirala@gmail.com' <AX element pid: 3140, elementOrHash.elementID: 4745020736.20>
+                  Button, 0x10c936300, {{722.0, 57.5}, {74.5, 27.5}}, identifier: 'deskShellSignOut', label: 'Sign out' <AX element pid: 3140, elementOrHash.elementID: 4745021184.21>
+                  StaticText, 0x10c936440, {{24.0, 106.5}, {263.0, 31.5}}, label: 'good morning, Shreeyut.' <AX element pid: 3140, elementOrHash.elementID: 4745021632.22>
+                  Button, 0x10c936580, {{556.0, 106.5}, {240.0, 48.0}}, identifier: 'deskHubCallButton', label: 'Start your mastery check-in' <AX element pid: 3140, elementOrHash.elementID: 4745027456.23>
+                    StaticText, 0x10c9366c0, {{568.5, 123.2}, {157.5, 14.5}}, label: 'Start your mastery check-in' <AX element pid: 3140, elementOrHash.elementID: 4745026560.33>
+                    Image, 0x10c936800, {{762.5, 121.0}, {19.0, 19.0}}, identifier: 'phone.fill', label: 'Call' <AX element pid: 3140, elementOrHash.elementID: 4745027008.34>
+                  StaticText, 0x10c936940, {{40.0, 160.0}, {62.5, 13.5}}, label: 'SET GOAL' <AX element pid: 3140, elementOrHash.elementID: 4745022080.24>
+                  Button, 0x10c936a80, {{40.0, 182.5}, {98.5, 34.0}}, identifier: 'deskGoalInstance', label: 'field-desk' <AX element pid: 3140, elementOrHash.elementID: 4745023872.25>
+                    Button, 0x10c936bc0, {{40.0, 182.5}, {98.5, 34.0}} <AX element pid: 3140, elementOrHash.elementID: 4406724352.35>
+                      StaticText, 0x10c936d00, {{51.0, 191.5}, {62.0, 16.0}}, label: 'field-desk' <AX element pid: 3140, elementOrHash.elementID: 4745022528.64>
+                      Image, 0x10c936e40, {{120.0, 195.0}, {6.5, 9.5}}, identifier: 'chevron.up.chevron.down', label: 'Up And Down Chevrons' <AX element pid: 3140, elementOrHash.elementID: 4745022976.65>
+                  Button, 0x10c936f80, {{146.5, 182.5}, {128.5, 34.0}}, identifier: 'deskGoalType', label: 'Tasks for today' <AX element pid: 3140, elementOrHash.elementID: 4745025664.26>
+                    Button, 0x10c9370c0, {{146.5, 182.5}, {128.5, 34.0}} <AX element pid: 3140, elementOrHash.elementID: 4406725248.36>
+                      StaticText, 0x10c937200, {{157.5, 191.5}, {92.0, 16.0}}, label: 'Tasks for today' <AX element pid: 3140, elementOrHash.elementID: 4745024320.67>
+                      Image, 0x10c937340, {{256.5, 195.0}, {6.5, 9.5}}, identifier: 'chevron.up.chevron.down', label: 'Up And Down Chevrons' <AX element pid: 3140, elementOrHash.elementID: 4745024768.68>
+                  StaticText, 0x10c937480, {{40.0, 225.5}, {156.5, 14.5}}, identifier: 'deskGoalEcho', label: 'field-desk → Tasks for today' <AX element pid: 3140, elementOrHash.elementID: 4745026112.27>
+                  StaticText, 0x10c9375c0, {{172.0, 304.0}, {82.0, 26.5}}, label: 'Mastery' <AX element pid: 3140, elementOrHash.elementID: 4745028352.28>
+                  StaticText, 0x10c937700, {{172.0, 334.5}, {28.5, 33.5}}, identifier: 'deskMasteryPct', label: '—' <AX element pid: 3140, elementOrHash.elementID: 4745028800.29>
+                  StaticText, 0x10c937840, {{24.0, 426.0}, {132.5, 23.0}}, label: 'Your instances' <AX element pid: 3140, elementOrHash.elementID: 4745029248.30>
+                  Other, 0x10c937980, {{40.0, 481.5}, {732.0, 296.2}} <AX element pid: 3140, elementOrHash.elementID: 4745123520.31>
+                    Image, 0x10c937ac0, {{41.0, 483.0}, {13.5, 13.5}}, identifier: 'gearshape.fill', label: 'gearshape.fill' <AX element pid: 3140, elementOrHash.elementID: 4745029696.37>
+                    StaticText, 0x10c937c00, {{221.2, 483.5}, {25.5, 12.0}}, label: 'Desk' <AX element pid: 3140, elementOrHash.elementID: 4745030144.38>
+                    Image, 0x10c937d40, {{42.5, 512.0}, {18.5, 18.5}}, identifier: 'square.grid.2x2.fill', label: 'Grid 2x2' <AX element pid: 3140, elementOrHash.elementID: 4745030592.39>
+                    StaticText, 0x10c937e80, {{73.5, 511.5}, {78.5, 19.5}}, label: 'field-desk' <AX element pid: 3140, elementOrHash.elementID: 4745031040.40>
+                    Button, 0x1091e1180, {{52.0, 550.0}, {78.0, 14.5}}, label: 'Coming soon', Disabled <AX element pid: 3140, elementOrHash.elementID: 4745031488.41>
+                    StaticText, 0x1091e2080, {{40.0, 582.5}, {43.5, 13.5}}, label: 'Running' <AX element pid: 3140, elementOrHash.elementID: 4745031936.42>
+                    StaticText, 0x1091e3480, {{40.0, 608.0}, {54.5, 13.5}}, label: '12 / 1,000' <AX element pid: 3140, elementOrHash.elementID: 4745032384.43>
+                    StaticText, 0x10ca84000, {{40.0, 633.5}, {77.0, 12.0}}, label: 'Execution steps' <AX element pid: 3140, elementOrHash.elementID: 4745032832.44>
+                    Image, 0x10ca84140, {{303.5, 481.5}, {13.5, 13.5}}, identifier: 'deskInstance_actFieldBook', label: 'gearshape.fill' <AX element pid: 3140, elementOrHash.elementID: 4745033280.45>
+                    StaticText, 0x10ca84280, {{487.8, 482.0}, {21.5, 12.0}}, identifier: 'deskInstance_actFieldBook', label: 'ACT' <AX element pid: 3140, elementOrHash.elementID: 4745033728.46>
+                    Image, 0x10ca843c0, {{305.0, 510.5}, {17.0, 21.5}}, identifier: 'deskInstance_actFieldBook', label: 'book.closed.fill' <AX element pid: 3140, elementOrHash.elementID: 4745034176.47>
+                    StaticText, 0x10ca84500, {{334.7, 511.5}, {104.0, 19.5}}, identifier: 'deskInstance_actFieldBook', label: 'act-fieldbook' <AX element pid: 3140, elementOrHash.elementID: 4745034624.48>
+                    Button, 0x10ca84640, {{314.5, 551.5}, {86.0, 14.5}}, identifier: 'deskInstance_actFieldBook', label: 'Open instance' <AX element pid: 3140, elementOrHash.elementID: 4745035072.49>
+                    StaticText, 0x10ca84780, {{302.7, 584.0}, {43.5, 13.5}}, identifier: 'deskInstance_actFieldBook', label: 'Running' <AX element pid: 3140, elementOrHash.elementID: 4745117696.50>
+                    StaticText, 0x10ca848c0, {{302.7, 609.5}, {49.5, 13.5}}, identifier: 'deskInstance_actFieldBook', label: '0 / 1,000' <AX element pid: 3140, elementOrHash.elementID: 4745118144.51>
+                    StaticText, 0x10ca84a00, {{302.7, 635.0}, {77.0, 12.0}}, identifier: 'deskInstance_actFieldBook', label: 'Execution steps' <AX element pid: 3140, elementOrHash.elementID: 4745118592.52>
+                    Image, 0x10ca84b40, {{566.5, 483.0}, {13.5, 13.5}}, identifier: 'gearshape.fill', label: 'gearshape.fill' <AX element pid: 3140, elementOrHash.elementID: 4745119040.53>
+                    StaticText, 0x10ca84c80, {{743.5, 483.5}, {28.5, 12.0}}, label: 'Piano' <AX element pid: 3140, elementOrHash.elementID: 4745119488.54>
+                    Image, 0x10ca84dc0, {{568.0, 512.0}, {23.5, 18.5}}, identifier: 'pianokeys', label: 'Piano' <AX element pid: 3140, elementOrHash.elementID: 4745119936.55>
+                    StaticText, 0x10ca84f00, {{603.8, 511.5}, {88.5, 19.5}}, label: 'piano-book' <AX element pid: 3140, elementOrHash.elementID: 4745120384.56>
+                    Button, 0x10ca85040, {{577.5, 550.0}, {78.0, 14.5}}, label: 'Coming soon', Disabled <AX element pid: 3140, elementOrHash.elementID: 4745120832.57>
+                    StaticText, 0x10ca85180, {{565.3, 582.5}, {43.5, 13.5}}, label: 'Running' <AX element pid: 3140, elementOrHash.elementID: 4745121280.58>
+                    StaticText, 0x10ca852c0, {{565.3, 608.0}, {49.5, 13.5}}, label: '0 / 1,000' <AX element pid: 3140, elementOrHash.elementID: 4745121728.59>
+                    StaticText, 0x10ca85400, {{565.3, 633.5}, {77.0, 12.0}}, label: 'Execution steps' <AX element pid: 3140, elementOrHash.elementID: 4745122176.60>
+                    StaticText, 0x10ca85540, {{138.6, 720.2}, {17.5, 33.5}}, label: '+' <AX element pid: 3140, elementOrHash.elementID: 4745122624.61>
+                    StaticText, 0x10ca85680, {{89.3, 761.8}, {116.0, 16.0}}, label: 'Create an instance' <AX element pid: 3140, elementOrHash.elementID: 4745123072.62>
+                Other, 0x10ca857c0, {{787.0, 18.0}, {30.0, 1144.0}}, label: 'Vertical scroll bar, 1 page', value: 0% <AX element pid: 3140, elementOrHash.elementID: 4559197696.15>
+                  Other, 0x10ca85900, {{814.0, 338.0}, {3.0, 821.0}} <AX element pid: 3140, elementOrHash.elementID: 4405127680.32>
+                Other, 0x10ca85a40, {{787.0, 18.0}, {30.0, 1144.0}}, label: 'Vertical scroll bar, 1 page', value: 0% <AX element pid: 3140, elementOrHash.elementID: 4559197696.15>
+                  Other, 0x10ca85b80, {{814.0, 338.0}, {3.0, 821.0}} <AX element pid: 3140, elementOrHash.elementID: 4405127680.32>
+  Window, 0x10ca85cc0, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 3140, elementOrHash.elementID: 4405101824.5>
+    Other, 0x10ca85e00, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 3140, elementOrHash.elementID: 4405120064.7>
+      Other, 0x10ca85f40, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 3140, elementOrHash.elementID: 4405121408.9>

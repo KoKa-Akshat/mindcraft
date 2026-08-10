@@ -1,0 +1,286 @@
+{
+  "generatedKept": 104,
+  "dropped": 45,
+  "drops": [
+    {
+      "id": "gen-fractions_decimals-1-word-problem-3",
+      "expectedIndex": 2,
+      "solverIndex": 1,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-fractions_decimals-1-diagram-1",
+      "expectedIndex": 2,
+      "solverIndex": 1,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-fractions_decimals-1-diagram-2",
+      "expectedIndex": 0,
+      "solverIndex": 1,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-fractions_decimals-1-number-line-1",
+      "expectedIndex": 2,
+      "solverIndex": 1,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-fractions_decimals-1-coordinate-graph-3",
+      "expectedIndex": 0,
+      "solverIndex": 1,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-fractions_decimals-1-table-2",
+      "expectedIndex": 2,
+      "solverIndex": 1,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-fractions_decimals-1-table-3",
+      "expectedIndex": 2,
+      "solverIndex": 0,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-fractions_decimals-2-word-problem-3",
+      "expectedIndex": 3,
+      "solverIndex": 2,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-fractions_decimals-3-number-line-2",
+      "expectedIndex": 2,
+      "solverIndex": 0,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-fractions_decimals-3-symbolic-expression-3",
+      "expectedIndex": 1,
+      "solverIndex": 2,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-fractions_decimals-3-coordinate-graph-1",
+      "expectedIndex": 1,
+      "solverIndex": 0,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-fractions_decimals-3-table-1",
+      "expectedIndex": 2,
+      "solverIndex": 1,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-fractions_decimals-3-table-3",
+      "expectedIndex": 1,
+      "solverIndex": 0,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-ratios_proportions-1-word-problem-2",
+      "expectedIndex": 1,
+      "solverIndex": 0,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-ratios_proportions-1-diagram-1",
+      "expectedIndex": 3,
+      "solverIndex": 2,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-ratios_proportions-1-diagram-2",
+      "expectedIndex": 2,
+      "solverIndex": 1,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-ratios_proportions-1-number-line-1",
+      "expectedIndex": 0,
+      "solverIndex": 1,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-ratios_proportions-1-number-line-3",
+      "expectedIndex": 2,
+      "solverIndex": 0,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-ratios_proportions-1-symbolic-expression-1",
+      "expectedIndex": 1,
+      "solverIndex": 2,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-ratios_proportions-1-symbolic-expression-2",
+      "expectedIndex": 0,
+      "solverIndex": 1,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-ratios_proportions-1-symbolic-expression-3",
+      "expectedIndex": 1,
+      "solverIndex": 0,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-ratios_proportions-1-coordinate-graph-2",
+      "expectedIndex": 1,
+      "solverIndex": 2,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-ratios_proportions-1-table-1",
+      "expectedIndex": 1,
+      "solverIndex": 3,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-ratios_proportions-2-word-problem-1",
+      "expectedIndex": 1,
+      "solverIndex": 0,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-ratios_proportions-2-diagram-1",
+      "expectedIndex": 1,
+      "solverIndex": 2,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-ratios_proportions-2-diagram-2",
+      "expectedIndex": 2,
+      "solverIndex": 1,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-ratios_proportions-2-diagram-3",
+      "expectedIndex": 1,
+      "solverIndex": 0,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-ratios_proportions-2-symbolic-expression-1",
+      "expectedIndex": 0,
+      "solverIndex": 1,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-ratios_proportions-2-coordinate-graph-2",
+      "expectedIndex": 1,
+      "solverIndex": 0,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-ratios_proportions-3-diagram-1",
+      "expectedIndex": 1,
+      "solverIndex": 2,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-ratios_proportions-3-number-line-1",
+      "expectedIndex": 0,
+      "solverIndex": 2,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-ratios_proportions-3-symbolic-expression-3",
+      "expectedIndex": 0,
+      "solverIndex": 2,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-ratios_proportions-3-coordinate-graph-3",
+      "expectedIndex": 2,
+      "solverIndex": 0,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-order_of_operations-1-coordinate-graph-1",
+      "expectedIndex": 2,
+      "solverIndex": 0,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-order_of_operations-1-table-2",
+      "expectedIndex": 0,
+      "solverIndex": 2,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-order_of_operations-2-word-problem-1",
+      "expectedIndex": 1,
+      "solverIndex": 2,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-order_of_operations-2-symbolic-expression-3",
+      "expectedIndex": 0,
+      "solverIndex": 2,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-order_of_operations-2-table-1",
+      "expectedIndex": 0,
+      "solverIndex": 1,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-order_of_operations-2-table-2",
+      "expectedIndex": 0,
+      "solverIndex": 1,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-order_of_operations-2-table-3",
+      "expectedIndex": 1,
+      "solverIndex": 2,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-order_of_operations-3-number-line-2",
+      "expectedIndex": 0,
+      "solverIndex": 1,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-order_of_operations-3-number-line-3",
+      "expectedIndex": 2,
+      "solverIndex": 1,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-order_of_operations-3-symbolic-expression-1",
+      "expectedIndex": 2,
+      "solverIndex": 0,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-order_of_operations-3-symbolic-expression-2",
+      "expectedIndex": 0,
+      "solverIndex": 3,
+      "reason": "solver_disagreed"
+    },
+    {
+      "id": "gen-order_of_operations-3-coordinate-graph-2",
+      "expectedIndex": 3,
+      "solverIndex": 0,
+      "reason": "solver_disagreed"
+    }
+  ],
+  "completedTargets": [
+    "order_of_operations:L2:symbolic_expression",
+    "order_of_operations:L2:coordinate_graph",
+    "order_of_operations:L2:table",
+    "order_of_operations:L3:word_problem",
+    "order_of_operations:L3:diagram",
+    "order_of_operations:L3:number_line",
+    "order_of_operations:L3:symbolic_expression",
+    "order_of_operations:L3:coordinate_graph"
+  ]
+}

@@ -1,0 +1,11 @@
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+    <circle cx="32" cy="32" r="30" fill="#fbf3e2" stroke="#33230f" stroke-width="2.5"/>
+    <circle cx="32" cy="32" r="30" fill="none" stroke="#eddab3" stroke-width="1" opacity="0.6"/>
+    <g transform="translate(32 32)">
+    <!-- classic fraction 3/4 with a decimal point flourish -->
+    <text x="0" y="-6" text-anchor="middle" font-family="Georgia, serif" font-size="13" font-weight="700" fill="#1d3a8a">3</text>
+    <line x1="-10" y1="1" x2="10" y2="1" stroke="#33230f" stroke-width="2.2" stroke-linecap="round"/>
+    <text x="0" y="14" text-anchor="middle" font-family="Georgia, serif" font-size="13" font-weight="700" fill="#33230f">4</text>
+    <circle cx="14" cy="-12" r="2.2" fill="#c99a3a"/>
+  </g>
+  </svg>

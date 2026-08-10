@@ -1,0 +1,11 @@
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+    <circle cx="32" cy="32" r="30" fill="#fbf3e2" stroke="#33230f" stroke-width="2.5"/>
+    <circle cx="32" cy="32" r="30" fill="none" stroke="#eddab3" stroke-width="1" opacity="0.6"/>
+    <g transform="translate(32 32)">
+    <!-- number line with open circle + ray -->
+    <line x1="-18" y1="0" x2="18" y2="0" stroke="#33230f" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="-4" cy="0" r="4" fill="#fbf3e2" stroke="#1d3a8a" stroke-width="2.2"/>
+    <path d="M0 0 h14" stroke="#c99a3a" stroke-width="2.6" stroke-linecap="round"/>
+    <path d="M12 -4 L18 0 L12 4 Z" fill="#c99a3a"/>
+  </g>
+  </svg>

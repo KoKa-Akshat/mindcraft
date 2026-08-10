@@ -1,0 +1,104 @@
+{
+  "id": "piano_beginner",
+  "subject": "Piano",
+  "course": "Beginner Piano",
+  "metaphor": "Music World",
+  "audience": "Students learning their first songs and building practice grit.",
+  "units": [
+    {
+      "id": "rhythm_river",
+      "name": "Rhythm River",
+      "metaphor": "A steady current that keeps every song moving.",
+      "description": "Pulse, counting, note values, and staying steady under pressure."
+    },
+    {
+      "id": "keyboard_village",
+      "name": "Keyboard Village",
+      "metaphor": "A familiar neighborhood of notes and patterns.",
+      "description": "Note names, hand position, intervals, and keyboard geography."
+    },
+    {
+      "id": "coordination_bridge",
+      "name": "Coordination Bridge",
+      "metaphor": "Where both hands learn to move together without panic.",
+      "description": "Hand independence, simple chords, and slow-loop repair."
+    }
+  ],
+  "concepts": [
+    {
+      "id": "steady_pulse",
+      "name": "Steady Pulse",
+      "unit_id": "rhythm_river",
+      "level": "foundational",
+      "description": "Keeping a consistent beat while playing or resting.",
+      "story": "Pulse is the ground under the music. When it holds, everything else can stand.",
+      "grit_prompt": "If the beat wobbles, slow down. A steady comeback counts more than a fast mistake.",
+      "visual_metaphor": "A glowing metronome river with evenly spaced stepping stones.",
+      "ingredients": [
+        {
+          "id": "steady_pulse__counting_beats",
+          "label": "Counting beats aloud",
+          "description": "Saying the beat while playing so timing becomes visible.",
+          "failure_mode": "Student plays by feel and loses the beat when notes get harder.",
+          "practice_prompt": "Clap and count four slow measures before touching the keys.",
+          "visual_metaphor": "Four stones lighting up one at a time."
+        },
+        {
+          "id": "steady_pulse__tempo_control",
+          "label": "Tempo control",
+          "description": "Keeping the same speed from beginning to end.",
+          "failure_mode": "Student speeds up easy parts and rushes through hard parts.",
+          "practice_prompt": "Play the same measure three times at 60 BPM without speeding up.",
+          "visual_metaphor": "A metronome beam that stays the same length."
+        }
+      ],
+      "tags": ["rhythm", "practice", "foundation"]
+    },
+    {
+      "id": "keyboard_geography",
+      "name": "Keyboard Geography",
+      "unit_id": "keyboard_village",
+      "level": "foundational",
+      "description": "Finding notes by recognizing black-key groups and intervals.",
+      "story": "The keyboard stops being a blur when landmarks appear.",
+      "grit_prompt": "Getting lost is normal. Find the two-black-key group and rebuild your map.",
+      "visual_metaphor": "A village map built around groups of two and three black keys.",
+      "ingredients": [
+        {
+          "id": "keyboard_geography__black_key_groups",
+          "label": "Black-key landmarks",
+          "description": "Using groups of two and three black keys to locate white-key notes.",
+          "failure_mode": "Student memorizes isolated notes and cannot recover after getting lost.",
+          "practice_prompt": "Find every C on the keyboard using only the two-black-key group.",
+          "visual_metaphor": "Landmark towers above every C."
+        }
+      ],
+      "tags": ["notes", "visual", "foundation"]
+    },
+    {
+      "id": "left_hand_independence",
+      "name": "Left-Hand Independence",
+      "unit_id": "coordination_bridge",
+      "level": "core",
+      "description": "Keeping a simple left-hand pattern stable while the right hand moves.",
+      "story": "Independence begins when one hand can stay calm while the other explores.",
+      "grit_prompt": "Do not fight both hands at once. Stabilize one hand, then invite the other back in.",
+      "visual_metaphor": "Two bridges crossing the same river at different rhythms.",
+      "ingredients": [
+        {
+          "id": "left_hand_independence__pattern_loop",
+          "label": "Left-hand loop",
+          "description": "Repeating a short bass or chord pattern without drifting.",
+          "failure_mode": "Student changes the left hand whenever the right hand becomes demanding.",
+          "practice_prompt": "Loop the left hand alone until it feels boring, then add one right-hand note.",
+          "visual_metaphor": "A looped path glowing under the left hand."
+        }
+      ],
+      "tags": ["coordination", "hands", "grit"]
+    }
+  ],
+  "edges": [
+    { "from": "steady_pulse", "to": "left_hand_independence", "relation": "prerequisite", "strength": 0.8 },
+    { "from": "keyboard_geography", "to": "left_hand_independence", "relation": "bridge", "strength": 0.7 }
+  ]
+}

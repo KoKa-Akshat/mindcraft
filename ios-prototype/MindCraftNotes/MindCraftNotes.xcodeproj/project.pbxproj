@@ -1,0 +1,974 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		01D8ED16A0944B308DB5D6C8 /* MindCraftNotesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964D60BF9F534C938B4170EB /* MindCraftNotesUITests.swift */; };
+		0237EE1B70CC4D8DB21A639B /* LaTeXMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20548665090C49E3A52E9BE8 /* LaTeXMath.swift */; };
+		03E3A9AC7EC0438791EED1B2 /* LaTeXDisplayText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F652917CF738425093DEE541 /* LaTeXDisplayText.swift */; };
+		044BEB21A5E2D8744455C7F2 /* wizard-doodle-cheer.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BB03A317B6A9CB5F0D8C128 /* wizard-doodle-cheer.png */; };
+		0488FF0AF1C04DCCB33C8ED2 /* OutcomeClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CEEF844EFE4193B796ED23 /* OutcomeClient.swift */; };
+		07E1F3565FD9F6A870432C44 /* PlottablePointsExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85EC6FCFFB7752E3F55BC22 /* PlottablePointsExtractor.swift */; };
+		0FB945513AC3BD9B9D898CF2 /* SVGImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A270692D86516903DC8773D /* SVGImageView.swift */; };
+		105C091D2824B49561936062 /* actToc.json in Resources */ = {isa = PBXBuildFile; fileRef = C804A39BF276CEEBF088A65C /* actToc.json */; };
+		11DF2394C1B5D24E677DC1E1 /* TutorDirectoryClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD38C7392605523E1A10E7F6 /* TutorDirectoryClient.swift */; };
+		1F9E043A15C0940CA4A9CDB5 /* PolynomialExpression.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16F5501162A4F865EFC69C0 /* PolynomialExpression.swift */; };
+		20FE9273DBB5C8611FB6D861 /* RouteClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FECBAC947388E48E0524B2D /* RouteClient.swift */; };
+		2ED5A15418DF8B11D28A484D /* KnowledgeMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037C287CDFB7C16477B6DBF0 /* KnowledgeMapView.swift */; };
+		2F77E6F02BAEAA94951E8376 /* conceptIcons in Resources */ = {isa = PBXBuildFile; fileRef = F36436A531016328ECDE0C4D /* conceptIcons */; };
+		45DD6448870A218F1EA9A065 /* ConceptGraphLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAB6A727D2FD6844F72EAF7 /* ConceptGraphLoader.swift */; };
+		492FAAFC14165DDE1B982889 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F694CCC4A5DFC0743DE8A087 /* Assets.xcassets */; };
+		4B874A2E7B02C154C06C75FE /* NotesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D7B26A0454408F10798AFA /* NotesListView.swift */; };
+		4BD1130C4D6F4DCC9B5F8D5B /* stickers in Resources */ = {isa = PBXBuildFile; fileRef = 1DF7DBC6BF7548ED8B257865 /* stickers */; };
+		512B20F3A3B243F387FD0AFC /* QuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7A7972B0C44CE194A6D634 /* QuestionView.swift */; };
+		51634C64A486CFCB3A5F4829 /* FormulaCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54EE348EA08742A29688BF10 /* FormulaCardView.swift */; };
+		52C78F8B73F5660C828E4BD5 /* conceptStories.json in Resources */ = {isa = PBXBuildFile; fileRef = 3F11364E2053080C0A10CBB1 /* conceptStories.json */; };
+		58AD051935ED6A6A902DACDA /* PracticeSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556F5046AF8C8C22E031B975 /* PracticeSessionView.swift */; };
+		60C8889C6B8DFFDFD1C63FB5 /* FirebaseBootstrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E044A4E94D7F34216D068C /* FirebaseBootstrap.swift */; };
+		644D81C7CC9F5FDE773C3A27 /* AltDiagramSplitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71B0E74E82D928A06BE3928 /* AltDiagramSplitter.swift */; };
+		662A4D2F92F6C3FAE0B08896 /* HomeworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0317BB30BAEC751F016F6F0F /* HomeworkClient.swift */; };
+		6A51541E9F79B94FEA0F207C /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5428A47D8655E6D13382E35 /* GraphView.swift */; };
+		6CB3A318117BA59DFBAFB2B7 /* StoryArtLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A80100A96CF6F45F4C8C55A /* StoryArtLoader.swift */; };
+		6F7FC9EB90394695AA3FFF61 /* StickersShelfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DECD1EEEF419421EBDCABAD4 /* StickersShelfView.swift */; };
+		700E2339472ADB98B635D5AD /* conceptGraph.json in Resources */ = {isa = PBXBuildFile; fileRef = 9C5A189A567C149C7E1D34F1 /* conceptGraph.json */; };
+		763A49F23F7D4F1AB3188ECC /* MindCraftNotesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A74CA882801493092A9127F /* MindCraftNotesApp.swift */; };
+		7869C262B727FB7D115F4A2F /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B2C0A75B7798044001A892 /* AuthService.swift */; };
+		7B0241FF6DC5A084EEFC9B48 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 4EA3DB63C1CC574240263223 /* FirebaseAuth */; };
+		832F52CD564C2C1CA71BB4CC /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2DEFA331CCE58D98C0F61F /* LoginView.swift */; };
+		87C1DC075E078CFE838ACC26 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 6F5EECD612652564C64E12E5 /* FirebaseFirestore */; };
+		8ACCA09803A0C1DF9B8F19BB /* FirestoreStudentStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EAAFE0F66A60907CDB1C332 /* FirestoreStudentStore.swift */; };
+		9A6F2325A1FDC007FA06B7CA /* KnowledgeGraphClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333EDEE01284D66F3CAF76DD /* KnowledgeGraphClient.swift */; };
+		9D00117C89A5E8CB2AA33B3D /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3890F71414E363C12CC19397 /* DashboardView.swift */; };
+		A19B01C1A6E7F8091B2C3D4E /* AgentMailClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19B01C1A6E7F8091B2C3D4E /* AgentMailClient.swift */; };
+		A1B2C3D4E5F60718293A4B5C /* desk in Resources */ = {isa = PBXBuildFile; fileRef = B2C3D4E5F60718293A4B5C6D /* desk */; };
+		A29B02C2A6E7F8091B2C3D4E /* AgentMailInboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29B02C2A6E7F8091B2C3D4E /* AgentMailInboxView.swift */; };
+		A311D97B749C8B429FB7A34B /* LiveSessionClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7262B1A341CC17EEC08DFE /* LiveSessionClient.swift */; };
+		A39B03C3A6E7F8091B2C3D4E /* AccountManageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39B03C3A6E7F8091B2C3D4E /* AccountManageView.swift */; };
+		A3E01DEA9E457CF7B43D8FEB /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 716E4F08BB6B9FFFBB68959F /* FirebaseCore */; };
+		A48A1E9C157F4E7EA3822414 /* MindCraftNotes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FAAFB7B2FB6B48A2BA5C98FD /* MindCraftNotes.xcdatamodeld */; };
+		A49B04C4A6E7F8091B2C3D4E /* CreateInstanceStudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49B04C4A6E7F8091B2C3D4E /* CreateInstanceStudioView.swift */; };
+		A49BCREATESTUDIO01A2B3 /* CreateStudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49BCREATESTUDIO01A2B3 /* CreateStudioView.swift */; };
+		A49BSHRINE01A2B3C4D5 /* MalevolentShrineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49BSHRINE01A2B3C4D5 /* MalevolentShrineView.swift */; };
+		A59B05C5A6E7F8091B2C3D4E /* TestInstanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59B05C5A6E7F8091B2C3D4E /* TestInstanceView.swift */; };
+		A5D03DAF65CF41F7A92AAD08 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906A283899CF496999C6ED72 /* CanvasView.swift */; };
+		A606F052EBFC4394BA07E3DB /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8533094AB64B10828A047B /* PersistenceController.swift */; };
+		A69B06C6A6E7F8091B2C3D4E /* testInstanceSeed.json in Resources */ = {isa = PBXBuildFile; fileRef = B69B06C6A6E7F8091B2C3D4E /* testInstanceSeed.json */; };
+		A79B07C7A6E7F8091B2C3D4E /* DeskInstanceChrome.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79B07C7A6E7F8091B2C3D4E /* DeskInstanceChrome.swift */; };
+		A89B08C8A6E7F8091B2C3D4E /* SpeechCaptureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89B08C8A6E7F8091B2C3D4E /* SpeechCaptureController.swift */; };
+		A8AC7157E11A0001B2C3D4E5 /* ActInstanceShellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8AC7157E11A0001B2C3D4E5 /* ActInstanceShellView.swift */; };
+		A8BFBB951F764F03AE79B888 /* DrawingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B50609A6CA341D392B5BC37 /* DrawingStore.swift */; };
+		A99B09C9A6E7F8091B2C3D4E /* DeskPanCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99B09C9A6E7F8091B2C3D4E /* DeskPanCanvas.swift */; };
+		B2C50496636E2ED7186E0232 /* DiagnosticGateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9818B2D6693B4381129CB08 /* DiagnosticGateView.swift */; };
+		B2C588BED4E177EC84C2B5D1 /* QuestionBankLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DAA6B2A396F72A1E1B6C97 /* QuestionBankLoader.swift */; };
+		B3D89B38899B7A196FE908B0 /* ContentsRoadmapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CA309BCDE2728C6DFBAC50 /* ContentsRoadmapView.swift */; };
+		B6D6AA355463EFC63FE955AC /* CoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF74AFB2926183A3809D49B /* CoverView.swift */; };
+		B791829F16C3DA51F9F0B4AC /* DashboardModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F3BB8E68F90068711F0AD0 /* DashboardModels.swift */; };
+		B8A5F9AE5D7DF0DF5E25686E /* generatedDiagrams in Resources */ = {isa = PBXBuildFile; fileRef = 42CA396ADD5F655BFD64F7BE /* generatedDiagrams */; };
+		B8C4D20E5F607192B3C4D5E6 /* PianoFieldBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B3C19D4E5F6081A2B3C4D5 /* PianoFieldBookView.swift */; };
+		B99809ABB94C82E8507779D1 /* FindTutorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62ECD0E2F4F5C5176CDD4C3 /* FindTutorView.swift */; };
+		BA7B5C7EB4044BF6AFCD4340 /* StickerCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9668CDF69E284D128DF3FCBB /* StickerCatalog.swift */; };
+		BB68152F46D5AE90ED29E360 /* SessionNotesClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9A2FA726DCF7636F59A480 /* SessionNotesClient.swift */; };
+		BD71B02DB217E387F7D829E1 /* ConceptContentLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB82C0A2726F21F1D51FB529 /* ConceptContentLoader.swift */; };
+		C395E316CD6E4A6BAB5701D4 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F360A2512BB14A758E7A8BD5 /* WelcomeView.swift */; };
+		C6D853AD3DD7E07164282908 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 7314E3633FB32FCF9B9FB4EB /* GoogleSignIn */; };
+		C781B03E36C42C7ED7AE0CBB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4A81130391A74A14FA1DFAEA /* GoogleService-Info.plist */; };
+		C9976561557088A1859FCB58 /* DeskShellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 670F10E849C346E2127D94CF /* DeskShellView.swift */; };
+		C9D282AA1D204B1F981F3677 /* SampleQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBA83ACF9DE4E17BFF71157 /* SampleQuestion.swift */; };
+		CE95BCEDAC5366E8EFEB972E /* ConceptChapterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789E888BA344DB5E76A0F09C /* ConceptChapterView.swift */; };
+		D0BLANKPAGE01A2B3C4D5E6F7 /* BlankDeskPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0BLANKPAGE01A2B3C4D5E6F7 /* BlankDeskPageView.swift */; };
+		D1MACAPPLY01A2B3C4D5E6F7 /* MacalesterApplyWorkflowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1MACAPPLY01A2B3C4D5E6F7 /* MacalesterApplyWorkflowView.swift */; };
+		D2JESSEKITCH01A2B3C4D5E6 /* JesseKitchenBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2JESSEKITCH01A2B3C4D5E6 /* JesseKitchenBackgroundView.swift */; };
+		D2PASSTHRU01A2B3C4D5E6F7 /* PassThroughOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2PASSTHRU01A2B3C4D5E6F7 /* PassThroughOverlay.swift */; };
+		D2KITSCHEME01A2B3C4D5E6 /* KitchenSchemeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2KITSCHEME01A2B3C4D5E6 /* KitchenSchemeHandler.swift */; };
+		D3STANDDESK01A2B3C4D5E6 /* StandaloneDeskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3STANDDESK01A2B3C4D5E6 /* StandaloneDeskView.swift */; };
+		W2RESBUILD01A2B3C4D5E6F7 /* world2 in Resources */ = {isa = PBXBuildFile; fileRef = W2FOLDERREF01A2B3C4D5E6 /* world2 */; };
+		W3DESKWEBRES01A2B3C4D5E6 /* deskweb in Resources */ = {isa = PBXBuildFile; fileRef = W3DESKWEBREF01A2B3C4D5E6 /* deskweb */; };
+		D2MACSEED01A2B3C4D5E6F7 /* macalesterApplySeed.json in Resources */ = {isa = PBXBuildFile; fileRef = C2MACSEED01A2B3C4D5E6F7 /* macalesterApplySeed.json */; };
+		D3666FF9C139BB65FFB380A2 /* questionBank.json in Resources */ = {isa = PBXBuildFile; fileRef = A05918461089BFC725BB84F8 /* questionBank.json */; };
+		D3JOBOSMODEL01A2B3C4 /* JobOSModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3JOBOSMODEL01A2B3C4 /* JobOSModels.swift */; };
+		D4JOBOSSTORE01A2B3C4 /* JobOSStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4JOBOSSTORE01A2B3C4 /* JobOSStore.swift */; };
+		D5JOBOSSHELL01A2B3C4 /* JobOSShellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5JOBOSSHELL01A2B3C4 /* JobOSShellView.swift */; };
+		D61E1093C9F9476A8193B4BD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473BF2A15353473E8B559067 /* ContentView.swift */; };
+		D6GMAILCLIENT01A2B3C4 /* GmailClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6GMAILCLIENT01A2B3C4 /* GmailClient.swift */; };
+		D701D0CAFA36FDCD398C790B /* storyArt in Resources */ = {isa = PBXBuildFile; fileRef = 6C6EE743854CB1274F574739 /* storyArt */; };
+		D7GMAILBOXVW01A2B3C4 /* GmailWorkflowBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7GMAILBOXVW01A2B3C4 /* GmailWorkflowBoxView.swift */; };
+		D8DESKCALLOAD01A2B3 /* DeskCalendarLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DESKCALLOAD01A2B3 /* DeskCalendarLoader.swift */; };
+		D9DESKASKCLIENT01A2 /* DeskAskClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DESKASKCLIENT01A2 /* DeskAskClient.swift */; };
+		D9BOOTMOTIV01A2B3C4 /* BootMotivationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BOOTMOTIV01A2B3C4 /* BootMotivationClient.swift */; };
+		D9DESKRECORDSH01A2 /* DeskRecordSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DESKRECORDSH01A2 /* DeskRecordSheet.swift */; };
+		DAE6F420718293B4C5D6E7F8 /* FieldDeskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D5E31F607182A3B4C5D6E7 /* FieldDeskView.swift */; };
+		DB8E5A9D2D06DFC8246BA1F0 /* WorkPracticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788775E6F0E0DB324F25E292 /* WorkPracticeView.swift */; };
+		E1F7A5318293A4C5D6E7F809 /* ActFieldChrome.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E6F420718293B4C5D6E7F8 /* ActFieldChrome.swift */; };
+		E58FA0E3DF3B8556BD025DCB /* conceptContent.json in Resources */ = {isa = PBXBuildFile; fileRef = CC3901FD3CB48D913D28033E /* conceptContent.json */; };
+		F551930B299395BF13DE599B /* ConceptStoryLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2846DA5EC14603B4929385 /* ConceptStoryLoader.swift */; };
+		F9D2B15E3C8E5F02B4D67E91 /* pianoSeed.json in Resources */ = {isa = PBXBuildFile; fileRef = E8C1A04F2B7D4E91A3C56D80 /* pianoSeed.json */; };
+		F9DA4CD5DC7B22166725A5CC /* MyScriptRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7028A09FF6E145FFCC90FF6A /* MyScriptRecognizer.swift */; };
+		FBE308BC7B92F7029BDDC696 /* WeeklyReviewWalkthroughView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85B66E366E7264EAE7C1DED /* WeeklyReviewWalkthroughView.swift */; };
+		FC08164293A4B5C6D7E8F91A /* FieldDeskStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF705318293A4C5D6E7F809 /* FieldDeskStore.swift */; };
+		FDF39E67C5A70EE93BC960C4 /* DiagnosticClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEC353EF8F1EADA0F99E274 /* DiagnosticClient.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		23187A5B956946CC8BA60B50 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4ACEA82977ED4BCE8F4C46B6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D8231B1575314C78BEEF7199;
+			remoteInfo = MindCraftNotes;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0317BB30BAEC751F016F6F0F /* HomeworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeworkClient.swift; sourceTree = "<group>"; };
+		037C287CDFB7C16477B6DBF0 /* KnowledgeMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnowledgeMapView.swift; sourceTree = "<group>"; };
+		0A74CA882801493092A9127F /* MindCraftNotesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MindCraftNotesApp.swift; sourceTree = "<group>"; };
+		12E044A4E94D7F34216D068C /* FirebaseBootstrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseBootstrap.swift; sourceTree = "<group>"; };
+		14B2C0A75B7798044001A892 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		1A2DEFA331CCE58D98C0F61F /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		1DF7DBC6BF7548ED8B257865 /* stickers */ = {isa = PBXFileReference; lastKnownFileType = folder; path = stickers; sourceTree = "<group>"; };
+		20548665090C49E3A52E9BE8 /* LaTeXMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaTeXMath.swift; sourceTree = "<group>"; };
+		26D7B26A0454408F10798AFA /* NotesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesListView.swift; sourceTree = "<group>"; };
+		2EAAFE0F66A60907CDB1C332 /* FirestoreStudentStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreStudentStore.swift; sourceTree = "<group>"; };
+		333EDEE01284D66F3CAF76DD /* KnowledgeGraphClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnowledgeGraphClient.swift; sourceTree = "<group>"; };
+		3890F71414E363C12CC19397 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		3BB03A317B6A9CB5F0D8C128 /* wizard-doodle-cheer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wizard-doodle-cheer.png"; sourceTree = "<group>"; };
+		3F11364E2053080C0A10CBB1 /* conceptStories.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = conceptStories.json; sourceTree = "<group>"; };
+		3F7A7972B0C44CE194A6D634 /* QuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionView.swift; sourceTree = "<group>"; };
+		42CA396ADD5F655BFD64F7BE /* generatedDiagrams */ = {isa = PBXFileReference; lastKnownFileType = folder; path = generatedDiagrams; sourceTree = "<group>"; };
+		45CA309BCDE2728C6DFBAC50 /* ContentsRoadmapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentsRoadmapView.swift; sourceTree = "<group>"; };
+		45F3BB8E68F90068711F0AD0 /* DashboardModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardModels.swift; sourceTree = "<group>"; };
+		473BF2A15353473E8B559067 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		4A80100A96CF6F45F4C8C55A /* StoryArtLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryArtLoader.swift; sourceTree = "<group>"; };
+		4A81130391A74A14FA1DFAEA /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		4D3894FD26F293BA8CCA0712 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		54EE348EA08742A29688BF10 /* FormulaCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormulaCardView.swift; sourceTree = "<group>"; };
+		556F5046AF8C8C22E031B975 /* PracticeSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeSessionView.swift; sourceTree = "<group>"; };
+		5A9A2FA726DCF7636F59A480 /* SessionNotesClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionNotesClient.swift; sourceTree = "<group>"; };
+		5B50609A6CA341D392B5BC37 /* DrawingStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingStore.swift; sourceTree = "<group>"; };
+		670F10E849C346E2127D94CF /* DeskShellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskShellView.swift; sourceTree = "<group>"; };
+		6A270692D86516903DC8773D /* SVGImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGImageView.swift; sourceTree = "<group>"; };
+		6C6EE743854CB1274F574739 /* storyArt */ = {isa = PBXFileReference; lastKnownFileType = folder; path = storyArt; sourceTree = "<group>"; };
+		6FECBAC947388E48E0524B2D /* RouteClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteClient.swift; sourceTree = "<group>"; };
+		7028A09FF6E145FFCC90FF6A /* MyScriptRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyScriptRecognizer.swift; sourceTree = "<group>"; };
+		788775E6F0E0DB324F25E292 /* WorkPracticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkPracticeView.swift; sourceTree = "<group>"; };
+		789E888BA344DB5E76A0F09C /* ConceptChapterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConceptChapterView.swift; sourceTree = "<group>"; };
+		7EF74AFB2926183A3809D49B /* CoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverView.swift; sourceTree = "<group>"; };
+		80CEEF844EFE4193B796ED23 /* OutcomeClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutcomeClient.swift; sourceTree = "<group>"; };
+		8BF232E3B60D4484AC821058 /* MindCraftNotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MindCraftNotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		906A283899CF496999C6ED72 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
+		92DAA6B2A396F72A1E1B6C97 /* QuestionBankLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionBankLoader.swift; sourceTree = "<group>"; };
+		964D60BF9F534C938B4170EB /* MindCraftNotesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MindCraftNotesUITests.swift; sourceTree = "<group>"; };
+		9668CDF69E284D128DF3FCBB /* StickerCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerCatalog.swift; sourceTree = "<group>"; };
+		9C5A189A567C149C7E1D34F1 /* conceptGraph.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = conceptGraph.json; sourceTree = "<group>"; };
+		9F8533094AB64B10828A047B /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
+		9FAB6A727D2FD6844F72EAF7 /* ConceptGraphLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConceptGraphLoader.swift; sourceTree = "<group>"; };
+		A05918461089BFC725BB84F8 /* questionBank.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = questionBank.json; sourceTree = "<group>"; };
+		A7B3C19D4E5F6081A2B3C4D5 /* PianoFieldBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PianoFieldBookView.swift; sourceTree = "<group>"; };
+		B19B01C1A6E7F8091B2C3D4E /* AgentMailClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentMailClient.swift; sourceTree = "<group>"; };
+		B29B02C2A6E7F8091B2C3D4E /* AgentMailInboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentMailInboxView.swift; sourceTree = "<group>"; };
+		B2C3D4E5F60718293A4B5C6D /* desk */ = {isa = PBXFileReference; lastKnownFileType = folder; path = desk; sourceTree = "<group>"; };
+		B39B03C3A6E7F8091B2C3D4E /* AccountManageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManageView.swift; sourceTree = "<group>"; };
+		B49B04C4A6E7F8091B2C3D4E /* CreateInstanceStudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateInstanceStudioView.swift; sourceTree = "<group>"; };
+		B49BCREATESTUDIO01A2B3 /* CreateStudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateStudioView.swift; sourceTree = "<group>"; };
+		B49BSHRINE01A2B3C4D5 /* MalevolentShrineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalevolentShrineView.swift; sourceTree = "<group>"; };
+		B5428A47D8655E6D13382E35 /* GraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
+		B59B05C5A6E7F8091B2C3D4E /* TestInstanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestInstanceView.swift; sourceTree = "<group>"; };
+		B69B06C6A6E7F8091B2C3D4E /* testInstanceSeed.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = testInstanceSeed.json; sourceTree = "<group>"; };
+		B79B07C7A6E7F8091B2C3D4E /* DeskInstanceChrome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskInstanceChrome.swift; sourceTree = "<group>"; };
+		B89B08C8A6E7F8091B2C3D4E /* SpeechCaptureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechCaptureController.swift; sourceTree = "<group>"; };
+		B8AC7157E11A0001B2C3D4E5 /* ActInstanceShellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActInstanceShellView.swift; sourceTree = "<group>"; };
+		B99B09C9A6E7F8091B2C3D4E /* DeskPanCanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskPanCanvas.swift; sourceTree = "<group>"; };
+		C0BLANKPAGE01A2B3C4D5E6F7 /* BlankDeskPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlankDeskPageView.swift; sourceTree = "<group>"; };
+		C1MACAPPLY01A2B3C4D5E6F7 /* MacalesterApplyWorkflowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacalesterApplyWorkflowView.swift; sourceTree = "<group>"; };
+		C2JESSEKITCH01A2B3C4D5E6 /* JesseKitchenBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JesseKitchenBackgroundView.swift; sourceTree = "<group>"; };
+		C2PASSTHRU01A2B3C4D5E6F7 /* PassThroughOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassThroughOverlay.swift; sourceTree = "<group>"; };
+		C2KITSCHEME01A2B3C4D5E6 /* KitchenSchemeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitchenSchemeHandler.swift; sourceTree = "<group>"; };
+		C3STANDDESK01A2B3C4D5E6 /* StandaloneDeskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandaloneDeskView.swift; sourceTree = "<group>"; };
+		W2FOLDERREF01A2B3C4D5E6 /* world2 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = world2; path = ../../worlds/world2; sourceTree = SOURCE_ROOT; };
+		W3DESKWEBREF01A2B3C4D5E6 /* deskweb */ = {isa = PBXFileReference; lastKnownFileType = folder; name = deskweb; path = ../../worlds/deskweb; sourceTree = SOURCE_ROOT; };
+		C2MACSEED01A2B3C4D5E6F7 /* macalesterApplySeed.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = macalesterApplySeed.json; sourceTree = "<group>"; };
+		C3JOBOSMODEL01A2B3C4 /* JobOSModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobOSModels.swift; sourceTree = "<group>"; };
+		C4JOBOSSTORE01A2B3C4 /* JobOSStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobOSStore.swift; sourceTree = "<group>"; };
+		C5JOBOSSHELL01A2B3C4 /* JobOSShellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobOSShellView.swift; sourceTree = "<group>"; };
+		C6GMAILCLIENT01A2B3C4 /* GmailClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GmailClient.swift; sourceTree = "<group>"; };
+		C7GMAILBOXVW01A2B3C4 /* GmailWorkflowBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GmailWorkflowBoxView.swift; sourceTree = "<group>"; };
+		C804A39BF276CEEBF088A65C /* actToc.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = actToc.json; sourceTree = "<group>"; };
+		C8DESKCALLOAD01A2B3 /* DeskCalendarLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskCalendarLoader.swift; sourceTree = "<group>"; };
+		C9818B2D6693B4381129CB08 /* DiagnosticGateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticGateView.swift; sourceTree = "<group>"; };
+		C9D5E31F607182A3B4C5D6E7 /* FieldDeskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldDeskView.swift; sourceTree = "<group>"; };
+		C9DESKASKCLIENT01A2 /* DeskAskClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskAskClient.swift; sourceTree = "<group>"; };
+		C9BOOTMOTIV01A2B3C4 /* BootMotivationClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BootMotivationClient.swift; sourceTree = "<group>"; };
+		C9DESKRECORDSH01A2 /* DeskRecordSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskRecordSheet.swift; sourceTree = "<group>"; };
+		CC3901FD3CB48D913D28033E /* conceptContent.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = conceptContent.json; sourceTree = "<group>"; };
+		CCBA83ACF9DE4E17BFF71157 /* SampleQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleQuestion.swift; sourceTree = "<group>"; };
+		CD38C7392605523E1A10E7F6 /* TutorDirectoryClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorDirectoryClient.swift; sourceTree = "<group>"; };
+		CF2846DA5EC14603B4929385 /* ConceptStoryLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConceptStoryLoader.swift; sourceTree = "<group>"; };
+		D0E6F420718293B4C5D6E7F8 /* ActFieldChrome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActFieldChrome.swift; sourceTree = "<group>"; };
+		D85B66E366E7264EAE7C1DED /* WeeklyReviewWalkthroughView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyReviewWalkthroughView.swift; sourceTree = "<group>"; };
+		D85EC6FCFFB7752E3F55BC22 /* PlottablePointsExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlottablePointsExtractor.swift; sourceTree = "<group>"; };
+		DA7262B1A341CC17EEC08DFE /* LiveSessionClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveSessionClient.swift; sourceTree = "<group>"; };
+		DECD1EEEF419421EBDCABAD4 /* StickersShelfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickersShelfView.swift; sourceTree = "<group>"; };
+		DFEC353EF8F1EADA0F99E274 /* DiagnosticClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticClient.swift; sourceTree = "<group>"; };
+		E16F5501162A4F865EFC69C0 /* PolynomialExpression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolynomialExpression.swift; sourceTree = "<group>"; };
+		E62ECD0E2F4F5C5176CDD4C3 /* FindTutorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindTutorView.swift; sourceTree = "<group>"; };
+		E8C1A04F2B7D4E91A3C56D80 /* pianoSeed.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = pianoSeed.json; sourceTree = "<group>"; };
+		EB82C0A2726F21F1D51FB529 /* ConceptContentLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConceptContentLoader.swift; sourceTree = "<group>"; };
+		EBF705318293A4C5D6E7F809 /* FieldDeskStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldDeskStore.swift; sourceTree = "<group>"; };
+		F360A2512BB14A758E7A8BD5 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		F36436A531016328ECDE0C4D /* conceptIcons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = conceptIcons; sourceTree = "<group>"; };
+		F652917CF738425093DEE541 /* LaTeXDisplayText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaTeXDisplayText.swift; sourceTree = "<group>"; };
+		F694CCC4A5DFC0743DE8A087 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F70C7AF77E584E6BA8B8EC67 /* MindCraftNotesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MindCraftNotesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F71B0E74E82D928A06BE3928 /* AltDiagramSplitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AltDiagramSplitter.swift; sourceTree = "<group>"; };
+		FAAFB7B2FB6B48A2BA5C98FD /* MindCraftNotes.xcdatamodeld */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodeld; path = MindCraftNotes.xcdatamodeld; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1A5302F6E8BA49DB8F2CBA7F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7B0241FF6DC5A084EEFC9B48 /* FirebaseAuth in Frameworks */,
+				87C1DC075E078CFE838ACC26 /* FirebaseFirestore in Frameworks */,
+				A3E01DEA9E457CF7B43D8FEB /* FirebaseCore in Frameworks */,
+				C6D853AD3DD7E07164282908 /* GoogleSignIn in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		695653B047BA4071A5190988 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		46CCBC5C033F41B0B8DDA153 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				CCBA83ACF9DE4E17BFF71157 /* SampleQuestion.swift */,
+				92DAA6B2A396F72A1E1B6C97 /* QuestionBankLoader.swift */,
+				CF2846DA5EC14603B4929385 /* ConceptStoryLoader.swift */,
+				EB82C0A2726F21F1D51FB529 /* ConceptContentLoader.swift */,
+				F71B0E74E82D928A06BE3928 /* AltDiagramSplitter.swift */,
+				9FAB6A727D2FD6844F72EAF7 /* ConceptGraphLoader.swift */,
+				4A80100A96CF6F45F4C8C55A /* StoryArtLoader.swift */,
+				9668CDF69E284D128DF3FCBB /* StickerCatalog.swift */,
+				E16F5501162A4F865EFC69C0 /* PolynomialExpression.swift */,
+				D85EC6FCFFB7752E3F55BC22 /* PlottablePointsExtractor.swift */,
+				20548665090C49E3A52E9BE8 /* LaTeXMath.swift */,
+				F652917CF738425093DEE541 /* LaTeXDisplayText.swift */,
+				45F3BB8E68F90068711F0AD0 /* DashboardModels.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		69F98E73CF0447B08CDE07ED /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8BF232E3B60D4484AC821058 /* MindCraftNotes.app */,
+				F70C7AF77E584E6BA8B8EC67 /* MindCraftNotesUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		881AD4F40ABC4B50900CD199 /* MindCraftNotes */ = {
+			isa = PBXGroup;
+			children = (
+				0A74CA882801493092A9127F /* MindCraftNotesApp.swift */,
+				473BF2A15353473E8B559067 /* ContentView.swift */,
+				4D3894FD26F293BA8CCA0712 /* Info.plist */,
+				4A81130391A74A14FA1DFAEA /* GoogleService-Info.plist */,
+				F694CCC4A5DFC0743DE8A087 /* Assets.xcassets */,
+				46CCBC5C033F41B0B8DDA153 /* Models */,
+				C627E357213949CF86907BA2 /* Views */,
+				CC0E5B2941DB4BA29EDF0047 /* Persistence */,
+				8C462CB4424809F19EE5E26D /* Networking */,
+				CA5A54D600251645F06C0493 /* Resources */,
+			);
+			path = MindCraftNotes;
+			sourceTree = "<group>";
+		};
+		8C462CB4424809F19EE5E26D /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				7028A09FF6E145FFCC90FF6A /* MyScriptRecognizer.swift */,
+				12E044A4E94D7F34216D068C /* FirebaseBootstrap.swift */,
+				14B2C0A75B7798044001A892 /* AuthService.swift */,
+				2EAAFE0F66A60907CDB1C332 /* FirestoreStudentStore.swift */,
+				333EDEE01284D66F3CAF76DD /* KnowledgeGraphClient.swift */,
+				5A9A2FA726DCF7636F59A480 /* SessionNotesClient.swift */,
+				CD38C7392605523E1A10E7F6 /* TutorDirectoryClient.swift */,
+				DFEC353EF8F1EADA0F99E274 /* DiagnosticClient.swift */,
+				6FECBAC947388E48E0524B2D /* RouteClient.swift */,
+				0317BB30BAEC751F016F6F0F /* HomeworkClient.swift */,
+				80CEEF844EFE4193B796ED23 /* OutcomeClient.swift */,
+				DA7262B1A341CC17EEC08DFE /* LiveSessionClient.swift */,
+				B19B01C1A6E7F8091B2C3D4E /* AgentMailClient.swift */,
+				C6GMAILCLIENT01A2B3C4 /* GmailClient.swift */,
+				C9DESKASKCLIENT01A2 /* DeskAskClient.swift */,
+				C9BOOTMOTIV01A2B3C4 /* BootMotivationClient.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		8F079C361D1A40B38B8B6ECE /* MindCraftNotesUITests */ = {
+			isa = PBXGroup;
+			children = (
+				964D60BF9F534C938B4170EB /* MindCraftNotesUITests.swift */,
+			);
+			path = MindCraftNotesUITests;
+			sourceTree = "<group>";
+		};
+		C627E357213949CF86907BA2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3F7A7972B0C44CE194A6D634 /* QuestionView.swift */,
+				906A283899CF496999C6ED72 /* CanvasView.swift */,
+				B5428A47D8655E6D13382E35 /* GraphView.swift */,
+				1A2DEFA331CCE58D98C0F61F /* LoginView.swift */,
+				3890F71414E363C12CC19397 /* DashboardView.swift */,
+				45CA309BCDE2728C6DFBAC50 /* ContentsRoadmapView.swift */,
+				788775E6F0E0DB324F25E292 /* WorkPracticeView.swift */,
+				26D7B26A0454408F10798AFA /* NotesListView.swift */,
+				037C287CDFB7C16477B6DBF0 /* KnowledgeMapView.swift */,
+				E62ECD0E2F4F5C5176CDD4C3 /* FindTutorView.swift */,
+				789E888BA344DB5E76A0F09C /* ConceptChapterView.swift */,
+				C9818B2D6693B4381129CB08 /* DiagnosticGateView.swift */,
+				6A270692D86516903DC8773D /* SVGImageView.swift */,
+				7EF74AFB2926183A3809D49B /* CoverView.swift */,
+				DECD1EEEF419421EBDCABAD4 /* StickersShelfView.swift */,
+				F360A2512BB14A758E7A8BD5 /* WelcomeView.swift */,
+				556F5046AF8C8C22E031B975 /* PracticeSessionView.swift */,
+				54EE348EA08742A29688BF10 /* FormulaCardView.swift */,
+				D85B66E366E7264EAE7C1DED /* WeeklyReviewWalkthroughView.swift */,
+				670F10E849C346E2127D94CF /* DeskShellView.swift */,
+				A7B3C19D4E5F6081A2B3C4D5 /* PianoFieldBookView.swift */,
+				C9D5E31F607182A3B4C5D6E7 /* FieldDeskView.swift */,
+				C9DESKRECORDSH01A2 /* DeskRecordSheet.swift */,
+				C0BLANKPAGE01A2B3C4D5E6F7 /* BlankDeskPageView.swift */,
+				C2JESSEKITCH01A2B3C4D5E6 /* JesseKitchenBackgroundView.swift */,
+				C2PASSTHRU01A2B3C4D5E6F7 /* PassThroughOverlay.swift */,
+				C2KITSCHEME01A2B3C4D5E6 /* KitchenSchemeHandler.swift */,
+				C3STANDDESK01A2B3C4D5E6 /* StandaloneDeskView.swift */,
+				C1MACAPPLY01A2B3C4D5E6F7 /* MacalesterApplyWorkflowView.swift */,
+				E1JOBOSGROUP01A2B3C4 /* JobOS */,
+				D0E6F420718293B4C5D6E7F8 /* ActFieldChrome.swift */,
+				EBF705318293A4C5D6E7F809 /* FieldDeskStore.swift */,
+				B29B02C2A6E7F8091B2C3D4E /* AgentMailInboxView.swift */,
+				C7GMAILBOXVW01A2B3C4 /* GmailWorkflowBoxView.swift */,
+				C8DESKCALLOAD01A2B3 /* DeskCalendarLoader.swift */,
+				B39B03C3A6E7F8091B2C3D4E /* AccountManageView.swift */,
+				B49B04C4A6E7F8091B2C3D4E /* CreateInstanceStudioView.swift */,
+				B49BCREATESTUDIO01A2B3 /* CreateStudioView.swift */,
+				B49BSHRINE01A2B3C4D5 /* MalevolentShrineView.swift */,
+				B59B05C5A6E7F8091B2C3D4E /* TestInstanceView.swift */,
+				B79B07C7A6E7F8091B2C3D4E /* DeskInstanceChrome.swift */,
+				B8AC7157E11A0001B2C3D4E5 /* ActInstanceShellView.swift */,
+				B89B08C8A6E7F8091B2C3D4E /* SpeechCaptureController.swift */,
+				B99B09C9A6E7F8091B2C3D4E /* DeskPanCanvas.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		CA5A54D600251645F06C0493 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				CB2CDC89BE2B87C8E5B16E21 /* Fonts */,
+				C804A39BF276CEEBF088A65C /* actToc.json */,
+				A05918461089BFC725BB84F8 /* questionBank.json */,
+				E8C1A04F2B7D4E91A3C56D80 /* pianoSeed.json */,
+				B69B06C6A6E7F8091B2C3D4E /* testInstanceSeed.json */,
+				C2MACSEED01A2B3C4D5E6F7 /* macalesterApplySeed.json */,
+				3F11364E2053080C0A10CBB1 /* conceptStories.json */,
+				CC3901FD3CB48D913D28033E /* conceptContent.json */,
+				9C5A189A567C149C7E1D34F1 /* conceptGraph.json */,
+				42CA396ADD5F655BFD64F7BE /* generatedDiagrams */,
+				6C6EE743854CB1274F574739 /* storyArt */,
+				1DF7DBC6BF7548ED8B257865 /* stickers */,
+				B2C3D4E5F60718293A4B5C6D /* desk */,
+				F36436A531016328ECDE0C4D /* conceptIcons */,
+				W2FOLDERREF01A2B3C4D5E6 /* world2 */,
+				W3DESKWEBREF01A2B3C4D5E6 /* deskweb */,
+				3BB03A317B6A9CB5F0D8C128 /* wizard-doodle-cheer.png */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		CB2CDC89BE2B87C8E5B16E21 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		CC0E5B2941DB4BA29EDF0047 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				9F8533094AB64B10828A047B /* PersistenceController.swift */,
+				5B50609A6CA341D392B5BC37 /* DrawingStore.swift */,
+				FAAFB7B2FB6B48A2BA5C98FD /* MindCraftNotes.xcdatamodeld */,
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
+		E1JOBOSGROUP01A2B3C4 /* JobOS */ = {
+			isa = PBXGroup;
+			children = (
+				C3JOBOSMODEL01A2B3C4 /* JobOSModels.swift */,
+				C4JOBOSSTORE01A2B3C4 /* JobOSStore.swift */,
+				C5JOBOSSHELL01A2B3C4 /* JobOSShellView.swift */,
+			);
+			path = JobOS;
+			sourceTree = "<group>";
+		};
+		F13DDA86A69446A49BD23BFB = {
+			isa = PBXGroup;
+			children = (
+				881AD4F40ABC4B50900CD199 /* MindCraftNotes */,
+				8F079C361D1A40B38B8B6ECE /* MindCraftNotesUITests */,
+				69F98E73CF0447B08CDE07ED /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		93105ACF7F694703BD2D54C4 /* MindCraftNotesUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3619693BA0DE4E45B0CB2B1A /* Build configuration list for PBXNativeTarget "MindCraftNotesUITests" */;
+			buildPhases = (
+				D4FA1494BA7F413197F54B87 /* Sources */,
+				695653B047BA4071A5190988 /* Frameworks */,
+				6B72F7BC00924D14A7EF5FA1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7D8CC2B33D9F4C02942A778C /* PBXTargetDependency */,
+			);
+			name = MindCraftNotesUITests;
+			productName = MindCraftNotesUITests;
+			productReference = F70C7AF77E584E6BA8B8EC67 /* MindCraftNotesUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		D8231B1575314C78BEEF7199 /* MindCraftNotes */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 37A58923972C4CA1A5435B88 /* Build configuration list for PBXNativeTarget "MindCraftNotes" */;
+			buildPhases = (
+				7C08AFADFE9647158AD04F8A /* Sources */,
+				1A5302F6E8BA49DB8F2CBA7F /* Frameworks */,
+				1F96E44786D04741BDE5FA6F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MindCraftNotes;
+			packageProductDependencies = (
+				4EA3DB63C1CC574240263223 /* FirebaseAuth */,
+				6F5EECD612652564C64E12E5 /* FirebaseFirestore */,
+				716E4F08BB6B9FFFBB68959F /* FirebaseCore */,
+				7314E3633FB32FCF9B9FB4EB /* GoogleSignIn */,
+			);
+			productName = MindCraftNotes;
+			productReference = 8BF232E3B60D4484AC821058 /* MindCraftNotes.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4ACEA82977ED4BCE8F4C46B6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1620;
+				LastUpgradeCheck = 1620;
+				TargetAttributes = {
+					93105ACF7F694703BD2D54C4 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = D8231B1575314C78BEEF7199;
+					};
+					D8231B1575314C78BEEF7199 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+				};
+			};
+			buildConfigurationList = D496EF25DD234DBD9C116AD9 /* Build configuration list for PBXProject "MindCraftNotes" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F13DDA86A69446A49BD23BFB;
+			packageReferences = (
+				27D133A0F995B31A942566E9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				42BABC02F98DF8B1C4EE6E7A /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+			);
+			productRefGroup = 69F98E73CF0447B08CDE07ED /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D8231B1575314C78BEEF7199 /* MindCraftNotes */,
+				93105ACF7F694703BD2D54C4 /* MindCraftNotesUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1F96E44786D04741BDE5FA6F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C781B03E36C42C7ED7AE0CBB /* GoogleService-Info.plist in Resources */,
+				492FAAFC14165DDE1B982889 /* Assets.xcassets in Resources */,
+				105C091D2824B49561936062 /* actToc.json in Resources */,
+				D3666FF9C139BB65FFB380A2 /* questionBank.json in Resources */,
+				F9D2B15E3C8E5F02B4D67E91 /* pianoSeed.json in Resources */,
+				A69B06C6A6E7F8091B2C3D4E /* testInstanceSeed.json in Resources */,
+				D2MACSEED01A2B3C4D5E6F7 /* macalesterApplySeed.json in Resources */,
+				52C78F8B73F5660C828E4BD5 /* conceptStories.json in Resources */,
+				E58FA0E3DF3B8556BD025DCB /* conceptContent.json in Resources */,
+				700E2339472ADB98B635D5AD /* conceptGraph.json in Resources */,
+				B8A5F9AE5D7DF0DF5E25686E /* generatedDiagrams in Resources */,
+				D701D0CAFA36FDCD398C790B /* storyArt in Resources */,
+				4BD1130C4D6F4DCC9B5F8D5B /* stickers in Resources */,
+				A1B2C3D4E5F60718293A4B5C /* desk in Resources */,
+				2F77E6F02BAEAA94951E8376 /* conceptIcons in Resources */,
+				W2RESBUILD01A2B3C4D5E6F7 /* world2 in Resources */,
+				W3DESKWEBRES01A2B3C4D5E6 /* deskweb in Resources */,
+				044BEB21A5E2D8744455C7F2 /* wizard-doodle-cheer.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6B72F7BC00924D14A7EF5FA1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7C08AFADFE9647158AD04F8A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				763A49F23F7D4F1AB3188ECC /* MindCraftNotesApp.swift in Sources */,
+				D61E1093C9F9476A8193B4BD /* ContentView.swift in Sources */,
+				C9D282AA1D204B1F981F3677 /* SampleQuestion.swift in Sources */,
+				B2C588BED4E177EC84C2B5D1 /* QuestionBankLoader.swift in Sources */,
+				512B20F3A3B243F387FD0AFC /* QuestionView.swift in Sources */,
+				A5D03DAF65CF41F7A92AAD08 /* CanvasView.swift in Sources */,
+				A606F052EBFC4394BA07E3DB /* PersistenceController.swift in Sources */,
+				A8BFBB951F764F03AE79B888 /* DrawingStore.swift in Sources */,
+				A48A1E9C157F4E7EA3822414 /* MindCraftNotes.xcdatamodeld in Sources */,
+				1F9E043A15C0940CA4A9CDB5 /* PolynomialExpression.swift in Sources */,
+				07E1F3565FD9F6A870432C44 /* PlottablePointsExtractor.swift in Sources */,
+				6A51541E9F79B94FEA0F207C /* GraphView.swift in Sources */,
+				0237EE1B70CC4D8DB21A639B /* LaTeXMath.swift in Sources */,
+				03E3A9AC7EC0438791EED1B2 /* LaTeXDisplayText.swift in Sources */,
+				F9DA4CD5DC7B22166725A5CC /* MyScriptRecognizer.swift in Sources */,
+				60C8889C6B8DFFDFD1C63FB5 /* FirebaseBootstrap.swift in Sources */,
+				7869C262B727FB7D115F4A2F /* AuthService.swift in Sources */,
+				A311D97B749C8B429FB7A34B /* LiveSessionClient.swift in Sources */,
+				832F52CD564C2C1CA71BB4CC /* LoginView.swift in Sources */,
+				8ACCA09803A0C1DF9B8F19BB /* FirestoreStudentStore.swift in Sources */,
+				9A6F2325A1FDC007FA06B7CA /* KnowledgeGraphClient.swift in Sources */,
+				9D00117C89A5E8CB2AA33B3D /* DashboardView.swift in Sources */,
+				B3D89B38899B7A196FE908B0 /* ContentsRoadmapView.swift in Sources */,
+				B791829F16C3DA51F9F0B4AC /* DashboardModels.swift in Sources */,
+				DB8E5A9D2D06DFC8246BA1F0 /* WorkPracticeView.swift in Sources */,
+				BB68152F46D5AE90ED29E360 /* SessionNotesClient.swift in Sources */,
+				4B874A2E7B02C154C06C75FE /* NotesListView.swift in Sources */,
+				2ED5A15418DF8B11D28A484D /* KnowledgeMapView.swift in Sources */,
+				11DF2394C1B5D24E677DC1E1 /* TutorDirectoryClient.swift in Sources */,
+				B99809ABB94C82E8507779D1 /* FindTutorView.swift in Sources */,
+				F551930B299395BF13DE599B /* ConceptStoryLoader.swift in Sources */,
+				BD71B02DB217E387F7D829E1 /* ConceptContentLoader.swift in Sources */,
+				CE95BCEDAC5366E8EFEB972E /* ConceptChapterView.swift in Sources */,
+				FDF39E67C5A70EE93BC960C4 /* DiagnosticClient.swift in Sources */,
+				B2C50496636E2ED7186E0232 /* DiagnosticGateView.swift in Sources */,
+				644D81C7CC9F5FDE773C3A27 /* AltDiagramSplitter.swift in Sources */,
+				45DD6448870A218F1EA9A065 /* ConceptGraphLoader.swift in Sources */,
+				20FE9273DBB5C8611FB6D861 /* RouteClient.swift in Sources */,
+				0488FF0AF1C04DCCB33C8ED2 /* OutcomeClient.swift in Sources */,
+				0FB945513AC3BD9B9D898CF2 /* SVGImageView.swift in Sources */,
+				6CB3A318117BA59DFBAFB2B7 /* StoryArtLoader.swift in Sources */,
+				BA7B5C7EB4044BF6AFCD4340 /* StickerCatalog.swift in Sources */,
+				B6D6AA355463EFC63FE955AC /* CoverView.swift in Sources */,
+				6F7FC9EB90394695AA3FFF61 /* StickersShelfView.swift in Sources */,
+				C395E316CD6E4A6BAB5701D4 /* WelcomeView.swift in Sources */,
+				662A4D2F92F6C3FAE0B08896 /* HomeworkClient.swift in Sources */,
+				58AD051935ED6A6A902DACDA /* PracticeSessionView.swift in Sources */,
+				51634C64A486CFCB3A5F4829 /* FormulaCardView.swift in Sources */,
+				FBE308BC7B92F7029BDDC696 /* WeeklyReviewWalkthroughView.swift in Sources */,
+				C9976561557088A1859FCB58 /* DeskShellView.swift in Sources */,
+				B8C4D20E5F607192B3C4D5E6 /* PianoFieldBookView.swift in Sources */,
+				DAE6F420718293B4C5D6E7F8 /* FieldDeskView.swift in Sources */,
+				D0BLANKPAGE01A2B3C4D5E6F7 /* BlankDeskPageView.swift in Sources */,
+				D2JESSEKITCH01A2B3C4D5E6 /* JesseKitchenBackgroundView.swift in Sources */,
+				D2PASSTHRU01A2B3C4D5E6F7 /* PassThroughOverlay.swift in Sources */,
+				D2KITSCHEME01A2B3C4D5E6 /* KitchenSchemeHandler.swift in Sources */,
+				D3STANDDESK01A2B3C4D5E6 /* StandaloneDeskView.swift in Sources */,
+				D1MACAPPLY01A2B3C4D5E6F7 /* MacalesterApplyWorkflowView.swift in Sources */,
+				D5JOBOSSHELL01A2B3C4 /* JobOSShellView.swift in Sources */,
+				D4JOBOSSTORE01A2B3C4 /* JobOSStore.swift in Sources */,
+				D3JOBOSMODEL01A2B3C4 /* JobOSModels.swift in Sources */,
+				E1F7A5318293A4C5D6E7F809 /* ActFieldChrome.swift in Sources */,
+				FC08164293A4B5C6D7E8F91A /* FieldDeskStore.swift in Sources */,
+				A19B01C1A6E7F8091B2C3D4E /* AgentMailClient.swift in Sources */,
+				D6GMAILCLIENT01A2B3C4 /* GmailClient.swift in Sources */,
+				D9DESKASKCLIENT01A2 /* DeskAskClient.swift in Sources */,
+				D9BOOTMOTIV01A2B3C4 /* BootMotivationClient.swift in Sources */,
+				D9DESKRECORDSH01A2 /* DeskRecordSheet.swift in Sources */,
+				A29B02C2A6E7F8091B2C3D4E /* AgentMailInboxView.swift in Sources */,
+				D7GMAILBOXVW01A2B3C4 /* GmailWorkflowBoxView.swift in Sources */,
+				D8DESKCALLOAD01A2B3 /* DeskCalendarLoader.swift in Sources */,
+				A39B03C3A6E7F8091B2C3D4E /* AccountManageView.swift in Sources */,
+				A49B04C4A6E7F8091B2C3D4E /* CreateInstanceStudioView.swift in Sources */,
+				A49BCREATESTUDIO01A2B3 /* CreateStudioView.swift in Sources */,
+				A49BSHRINE01A2B3C4D5 /* MalevolentShrineView.swift in Sources */,
+				A59B05C5A6E7F8091B2C3D4E /* TestInstanceView.swift in Sources */,
+				A79B07C7A6E7F8091B2C3D4E /* DeskInstanceChrome.swift in Sources */,
+				A8AC7157E11A0001B2C3D4E5 /* ActInstanceShellView.swift in Sources */,
+				A89B08C8A6E7F8091B2C3D4E /* SpeechCaptureController.swift in Sources */,
+				A99B09C9A6E7F8091B2C3D4E /* DeskPanCanvas.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D4FA1494BA7F413197F54B87 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01D8ED16A0944B308DB5D6C8 /* MindCraftNotesUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7D8CC2B33D9F4C02942A778C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D8231B1575314C78BEEF7199 /* MindCraftNotes */;
+			targetProxy = 23187A5B956946CC8BA60B50 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0ED093D9F27748AFADE05D53 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGNING_ALLOWED = YES;
+				CODE_SIGNING_REQUIRED = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 65;
+				DEVELOPMENT_TEAM = N86VJTK78C;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.65;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mindcraft.notes.prototype.akshat.uitests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = 2;
+				TEST_TARGET_NAME = MindCraftNotes;
+			};
+			name = Debug;
+		};
+		23677C5E84AE4815AACD5DCC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_VERSION = 5.0;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		3DB6F0763D354C6892812F68 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGNING_ALLOWED = YES;
+				CODE_SIGNING_REQUIRED = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 65;
+				DEVELOPMENT_TEAM = N86VJTK78C;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.65;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mindcraft.notes.prototype.akshat.uitests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = 2;
+				TEST_TARGET_NAME = MindCraftNotes;
+			};
+			name = Release;
+		};
+		80DED57B85584107B6FA5EE1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS = NO;
+				CODE_SIGNING_ALLOWED = YES;
+				CODE_SIGNING_REQUIRED = YES;
+				CODE_SIGN_ENTITLEMENTS = MindCraftNotes/MindCraftNotes.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 65;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = N86VJTK78C;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MindCraftNotes/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "MindCraft Desk";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.65;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mindcraft.notes.prototype.akshat";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Release;
+		};
+		96E11012CE7D4C0981181307 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		A77DDBCE8D5C42808ED03C9C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS = NO;
+				CODE_SIGNING_ALLOWED = YES;
+				CODE_SIGNING_REQUIRED = YES;
+				CODE_SIGN_ENTITLEMENTS = MindCraftNotes/MindCraftNotes.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 65;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = N86VJTK78C;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MindCraftNotes/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "MindCraft Desk";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.65;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mindcraft.notes.prototype.akshat";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3619693BA0DE4E45B0CB2B1A /* Build configuration list for PBXNativeTarget "MindCraftNotesUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0ED093D9F27748AFADE05D53 /* Debug */,
+				3DB6F0763D354C6892812F68 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		37A58923972C4CA1A5435B88 /* Build configuration list for PBXNativeTarget "MindCraftNotes" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A77DDBCE8D5C42808ED03C9C /* Debug */,
+				80DED57B85584107B6FA5EE1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D496EF25DD234DBD9C116AD9 /* Build configuration list for PBXProject "MindCraftNotes" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				96E11012CE7D4C0981181307 /* Debug */,
+				23677C5E84AE4815AACD5DCC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		27D133A0F995B31A942566E9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.16.0;
+			};
+		};
+		42BABC02F98DF8B1C4EE6E7A /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4EA3DB63C1CC574240263223 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 27D133A0F995B31A942566E9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		6F5EECD612652564C64E12E5 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 27D133A0F995B31A942566E9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		716E4F08BB6B9FFFBB68959F /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 27D133A0F995B31A942566E9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		7314E3633FB32FCF9B9FB4EB /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 42BABC02F98DF8B1C4EE6E7A /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 4ACEA82977ED4BCE8F4C46B6 /* Project object */;
+}

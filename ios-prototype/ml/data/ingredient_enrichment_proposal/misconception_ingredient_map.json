@@ -1,0 +1,1427 @@
+{
+  "_meta": {
+    "generated_at": "2026-07-28T12:06:56.932381+00:00",
+    "llm_temperature": 0,
+    "margin_threshold": 0.15,
+    "model": "all-MiniLM-L6-v2",
+    "proposal_deterministic": true,
+    "similarity_threshold": 0.7,
+    "validation": {
+      "anchor_self_consistency": {
+        "eligible_families": 61,
+        "hit": 29,
+        "ontology_anchor_links": 95,
+        "ontology_families": 88,
+        "proposal_top1_hit": 42,
+        "proposal_top1_rate": 0.688525,
+        "rate": 0.47541
+      },
+      "auto_accept_threshold_sweep": [
+        {
+          "accepted": 39,
+          "accuracy": 0.923077,
+          "correct": 36,
+          "eligible_anchor_families": 61,
+          "margin_threshold": 0.1,
+          "similarity_threshold": 0.55
+        },
+        {
+          "accepted": 32,
+          "accuracy": 0.9375,
+          "correct": 30,
+          "eligible_anchor_families": 61,
+          "margin_threshold": 0.15,
+          "similarity_threshold": 0.55
+        },
+        {
+          "accepted": 29,
+          "accuracy": 0.931034,
+          "correct": 27,
+          "eligible_anchor_families": 61,
+          "margin_threshold": 0.2,
+          "similarity_threshold": 0.55
+        },
+        {
+          "accepted": 38,
+          "accuracy": 0.947368,
+          "correct": 36,
+          "eligible_anchor_families": 61,
+          "margin_threshold": 0.1,
+          "similarity_threshold": 0.6
+        },
+        {
+          "accepted": 32,
+          "accuracy": 0.9375,
+          "correct": 30,
+          "eligible_anchor_families": 61,
+          "margin_threshold": 0.15,
+          "similarity_threshold": 0.6
+        },
+        {
+          "accepted": 29,
+          "accuracy": 0.931034,
+          "correct": 27,
+          "eligible_anchor_families": 61,
+          "margin_threshold": 0.2,
+          "similarity_threshold": 0.6
+        },
+        {
+          "accepted": 35,
+          "accuracy": 0.971429,
+          "correct": 34,
+          "eligible_anchor_families": 61,
+          "margin_threshold": 0.1,
+          "similarity_threshold": 0.65
+        },
+        {
+          "accepted": 31,
+          "accuracy": 0.967742,
+          "correct": 30,
+          "eligible_anchor_families": 61,
+          "margin_threshold": 0.15,
+          "similarity_threshold": 0.65
+        },
+        {
+          "accepted": 28,
+          "accuracy": 0.964286,
+          "correct": 27,
+          "eligible_anchor_families": 61,
+          "margin_threshold": 0.2,
+          "similarity_threshold": 0.65
+        },
+        {
+          "accepted": 34,
+          "accuracy": 0.970588,
+          "correct": 33,
+          "eligible_anchor_families": 61,
+          "margin_threshold": 0.1,
+          "similarity_threshold": 0.7
+        },
+        {
+          "accepted": 30,
+          "accuracy": 0.966667,
+          "correct": 29,
+          "eligible_anchor_families": 61,
+          "margin_threshold": 0.15,
+          "similarity_threshold": 0.7
+        },
+        {
+          "accepted": 27,
+          "accuracy": 0.962963,
+          "correct": 26,
+          "eligible_anchor_families": 61,
+          "margin_threshold": 0.2,
+          "similarity_threshold": 0.7
+        },
+        {
+          "accepted": 27,
+          "accuracy": 1.0,
+          "correct": 27,
+          "eligible_anchor_families": 61,
+          "margin_threshold": 0.1,
+          "similarity_threshold": 0.75
+        },
+        {
+          "accepted": 24,
+          "accuracy": 1.0,
+          "correct": 24,
+          "eligible_anchor_families": 61,
+          "margin_threshold": 0.15,
+          "similarity_threshold": 0.75
+        },
+        {
+          "accepted": 22,
+          "accuracy": 1.0,
+          "correct": 22,
+          "eligible_anchor_families": 61,
+          "margin_threshold": 0.2,
+          "similarity_threshold": 0.75
+        }
+      ],
+      "confirmed_mappings": 58,
+      "coverage": {
+        "ingredients_with_1": 33,
+        "ingredients_with_3": 11,
+        "per_concept": {
+          "act_strategy": {
+            "ingredients_with_1": 0,
+            "ingredients_with_3": 0,
+            "labels": 0
+          },
+          "algebraic_manipulation": {
+            "ingredients_with_1": 2,
+            "ingredients_with_3": 2,
+            "labels": 19
+          },
+          "applications_of_derivatives": {
+            "ingredients_with_1": 0,
+            "ingredients_with_3": 0,
+            "labels": 0
+          },
+          "applications_of_integrals": {
+            "ingredients_with_1": 0,
+            "ingredients_with_3": 0,
+            "labels": 0
+          },
+          "area_volume": {
+            "ingredients_with_1": 2,
+            "ingredients_with_3": 0,
+            "labels": 2
+          },
+          "basic_equations": {
+            "ingredients_with_1": 0,
+            "ingredients_with_3": 0,
+            "labels": 0
+          },
+          "basic_probability": {
+            "ingredients_with_1": 0,
+            "ingredients_with_3": 0,
+            "labels": 0
+          },
+          "circles_geometry": {
+            "ingredients_with_1": 1,
+            "ingredients_with_3": 0,
+            "labels": 1
+          },
+          "complex_numbers": {
+            "ingredients_with_1": 0,
+            "ingredients_with_3": 0,
+            "labels": 0
+          },
+          "conic_sections": {
+            "ingredients_with_1": 0,
+            "ingredients_with_3": 0,
+            "labels": 0
+          },
+          "derivatives": {
+            "ingredients_with_1": 0,
+            "ingredients_with_3": 0,
+            "labels": 0
+          },
+          "descriptive_statistics": {
+            "ingredients_with_1": 2,
+            "ingredients_with_3": 0,
+            "labels": 3
+          },
+          "exponent_rules": {
+            "ingredients_with_1": 3,
+            "ingredients_with_3": 0,
+            "labels": 5
+          },
+          "exponential_functions": {
+            "ingredients_with_1": 0,
+            "ingredients_with_3": 0,
+            "labels": 0
+          },
+          "factoring_polynomials": {
+            "ingredients_with_1": 1,
+            "ingredients_with_3": 0,
+            "labels": 1
+          },
+          "fractions_decimals": {
+            "ingredients_with_1": 3,
+            "ingredients_with_3": 3,
+            "labels": 23
+          },
+          "functions_basics": {
+            "ingredients_with_1": 1,
+            "ingredients_with_3": 0,
+            "labels": 2
+          },
+          "geometric_transformations": {
+            "ingredients_with_1": 1,
+            "ingredients_with_3": 0,
+            "labels": 1
+          },
+          "inferential_statistics": {
+            "ingredients_with_1": 0,
+            "ingredients_with_3": 0,
+            "labels": 0
+          },
+          "integrals": {
+            "ingredients_with_1": 0,
+            "ingredients_with_3": 0,
+            "labels": 0
+          },
+          "limits_continuity": {
+            "ingredients_with_1": 0,
+            "ingredients_with_3": 0,
+            "labels": 0
+          },
+          "linear_equations": {
+            "ingredients_with_1": 2,
+            "ingredients_with_3": 1,
+            "labels": 7
+          },
+          "linear_inequalities": {
+            "ingredients_with_1": 1,
+            "ingredients_with_3": 0,
+            "labels": 1
+          },
+          "lines_angles": {
+            "ingredients_with_1": 1,
+            "ingredients_with_3": 1,
+            "labels": 6
+          },
+          "logarithmic_functions": {
+            "ingredients_with_1": 0,
+            "ingredients_with_3": 0,
+            "labels": 0
+          },
+          "matrices": {
+            "ingredients_with_1": 0,
+            "ingredients_with_3": 0,
+            "labels": 0
+          },
+          "measurement_units": {
+            "ingredients_with_1": 2,
+            "ingredients_with_3": 1,
+            "labels": 6
+          },
+          "number_properties": {
+            "ingredients_with_1": 0,
+            "ingredients_with_3": 0,
+            "labels": 0
+          },
+          "order_of_operations": {
+            "ingredients_with_1": 2,
+            "ingredients_with_3": 1,
+            "labels": 4
+          },
+          "polynomials": {
+            "ingredients_with_1": 0,
+            "ingredients_with_3": 0,
+            "labels": 0
+          },
+          "probability_distributions": {
+            "ingredients_with_1": 0,
+            "ingredients_with_3": 0,
+            "labels": 0
+          },
+          "quadratic_equations": {
+            "ingredients_with_1": 4,
+            "ingredients_with_3": 1,
+            "labels": 8
+          },
+          "radical_expressions": {
+            "ingredients_with_1": 1,
+            "ingredients_with_3": 1,
+            "labels": 4
+          },
+          "rational_expressions": {
+            "ingredients_with_1": 0,
+            "ingredients_with_3": 0,
+            "labels": 0
+          },
+          "ratios_proportions": {
+            "ingredients_with_1": 0,
+            "ingredients_with_3": 0,
+            "labels": 0
+          },
+          "representation_translation": {
+            "ingredients_with_1": 0,
+            "ingredients_with_3": 0,
+            "labels": 0
+          },
+          "right_triangle_geometry": {
+            "ingredients_with_1": 0,
+            "ingredients_with_3": 0,
+            "labels": 0
+          },
+          "sequences_series": {
+            "ingredients_with_1": 1,
+            "ingredients_with_3": 0,
+            "labels": 1
+          },
+          "systems_of_linear_equations": {
+            "ingredients_with_1": 2,
+            "ingredients_with_3": 0,
+            "labels": 2
+          },
+          "triangles_congruence": {
+            "ingredients_with_1": 1,
+            "ingredients_with_3": 0,
+            "labels": 1
+          },
+          "trigonometry_basics": {
+            "ingredients_with_1": 0,
+            "ingredients_with_3": 0,
+            "labels": 0
+          },
+          "vectors": {
+            "ingredients_with_1": 0,
+            "ingredients_with_3": 0,
+            "labels": 0
+          }
+        }
+      },
+      "embedding_margin": {
+        "cross_genre_margin_median": 0.047897,
+        "margin_lift": 0.014752,
+        "same_genre_margin_median": 0.06265
+      },
+      "l3_labeled_instance_holdout": {
+        "confirmed": 1,
+        "hit": 1,
+        "rate": 0.066667,
+        "total": 15
+      },
+      "l3_reproduction": {
+        "hit": 0,
+        "note": "Only L3 rows carrying both misconception_ids and ingredient_ids are directly joinable.",
+        "rate": 0.0,
+        "total": 10
+      },
+      "provenance_counts": {
+        "embedding": 58
+      },
+      "question_labels": 97
+    }
+  },
+  "map": {
+    "mis_algebraic_manipulation__adding_fractions_adds_numerators_and": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "algebraic_manipulation__symbolic_substitution",
+            "similarity": 0.405597
+          },
+          {
+            "ingredient_id": "algebraic_manipulation__literal_equation_rearrangement",
+            "similarity": 0.388619
+          }
+        ],
+        "concept_id": "algebraic_manipulation",
+        "confidence": 0.791732,
+        "ingredient_id": "algebraic_manipulation__clearing_fractions",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_algebraic_manipulation__asked_multiply_fractions_uses_method": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "algebraic_manipulation__symbolic_substitution",
+            "similarity": 0.472554
+          },
+          {
+            "ingredient_id": "algebraic_manipulation__literal_equation_rearrangement",
+            "similarity": 0.421991
+          }
+        ],
+        "concept_id": "algebraic_manipulation",
+        "confidence": 0.73313,
+        "ingredient_id": "algebraic_manipulation__clearing_fractions",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_algebraic_manipulation__confuses_equation_with_identity": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "algebraic_manipulation__clearing_fractions",
+            "similarity": 0.466379
+          },
+          {
+            "ingredient_id": "algebraic_manipulation__symbolic_substitution",
+            "similarity": 0.398819
+          }
+        ],
+        "concept_id": "algebraic_manipulation",
+        "confidence": 0.730028,
+        "ingredient_id": "algebraic_manipulation__literal_equation_rearrangement",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_algebraic_manipulation__confuses_expression_with_variable": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "algebraic_manipulation__symbolic_substitution",
+            "similarity": 0.481198
+          },
+          {
+            "ingredient_id": "algebraic_manipulation__clearing_fractions",
+            "similarity": 0.435364
+          }
+        ],
+        "concept_id": "algebraic_manipulation",
+        "confidence": 0.72197,
+        "ingredient_id": "algebraic_manipulation__literal_equation_rearrangement",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_algebraic_manipulation__confuses_formula_with_equation": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "algebraic_manipulation__clearing_fractions",
+            "similarity": 0.470906
+          },
+          {
+            "ingredient_id": "algebraic_manipulation__symbolic_substitution",
+            "similarity": 0.400128
+          }
+        ],
+        "concept_id": "algebraic_manipulation",
+        "confidence": 0.846475,
+        "ingredient_id": "algebraic_manipulation__literal_equation_rearrangement",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_algebraic_manipulation__confuses_term_with_equation": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "algebraic_manipulation__clearing_fractions",
+            "similarity": 0.449304
+          },
+          {
+            "ingredient_id": "algebraic_manipulation__like_terms",
+            "similarity": 0.436323
+          }
+        ],
+        "concept_id": "algebraic_manipulation",
+        "confidence": 0.976374,
+        "ingredient_id": "algebraic_manipulation__literal_equation_rearrangement",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_algebraic_manipulation__confuses_term_with_variable": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "algebraic_manipulation__symbolic_substitution",
+            "similarity": 0.398852
+          },
+          {
+            "ingredient_id": "algebraic_manipulation__like_terms",
+            "similarity": 0.398454
+          }
+        ],
+        "concept_id": "algebraic_manipulation",
+        "confidence": 0.787469,
+        "ingredient_id": "algebraic_manipulation__literal_equation_rearrangement",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_algebraic_manipulation__confuses_variable_with_equation": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "algebraic_manipulation__clearing_fractions",
+            "similarity": 0.459668
+          },
+          {
+            "ingredient_id": "algebraic_manipulation__symbolic_substitution",
+            "similarity": 0.448569
+          }
+        ],
+        "concept_id": "algebraic_manipulation",
+        "confidence": 0.835884,
+        "ingredient_id": "algebraic_manipulation__literal_equation_rearrangement",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_algebraic_manipulation__does_not_fully_simplify_fraction": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "algebraic_manipulation__literal_equation_rearrangement",
+            "similarity": 0.425155
+          },
+          {
+            "ingredient_id": "algebraic_manipulation__symbolic_substitution",
+            "similarity": 0.325338
+          }
+        ],
+        "concept_id": "algebraic_manipulation",
+        "confidence": 0.722857,
+        "ingredient_id": "algebraic_manipulation__clearing_fractions",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_algebraic_manipulation__does_not_know_how_simplify": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "algebraic_manipulation__literal_equation_rearrangement",
+            "similarity": 0.371792
+          },
+          {
+            "ingredient_id": "algebraic_manipulation__symbolic_substitution",
+            "similarity": 0.297589
+          }
+        ],
+        "concept_id": "algebraic_manipulation",
+        "confidence": 0.701939,
+        "ingredient_id": "algebraic_manipulation__clearing_fractions",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_algebraic_manipulation__simplifies_fraction_adding_or_subtracting": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "algebraic_manipulation__symbolic_substitution",
+            "similarity": 0.470804
+          },
+          {
+            "ingredient_id": "algebraic_manipulation__literal_equation_rearrangement",
+            "similarity": 0.433446
+          }
+        ],
+        "concept_id": "algebraic_manipulation",
+        "confidence": 0.900085,
+        "ingredient_id": "algebraic_manipulation__clearing_fractions",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_algebraic_manipulation__subtracting_fractions_subtracts_numerators_and": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "algebraic_manipulation__symbolic_substitution",
+            "similarity": 0.395484
+          },
+          {
+            "ingredient_id": "algebraic_manipulation__literal_equation_rearrangement",
+            "similarity": 0.381164
+          }
+        ],
+        "concept_id": "algebraic_manipulation",
+        "confidence": 0.778072,
+        "ingredient_id": "algebraic_manipulation__clearing_fractions",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_area_volume__does_not_know_units_area": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "area_volume__volume_as_base_times_height",
+            "similarity": 0.570871
+          },
+          {
+            "ingredient_id": "area_volume__composite_figures",
+            "similarity": 0.234556
+          }
+        ],
+        "concept_id": "area_volume",
+        "confidence": 0.770348,
+        "ingredient_id": "area_volume__square_side_from_area",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_area_volume__think_cross_section_prism_biggest": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "area_volume__standard_formulas",
+            "similarity": 0.326357
+          },
+          {
+            "ingredient_id": "area_volume__square_side_from_area",
+            "similarity": 0.253943
+          }
+        ],
+        "concept_id": "area_volume",
+        "confidence": 0.830956,
+        "ingredient_id": "area_volume__rectangular_prism_face_areas",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_circles_geometry__does_not_know_term_diameter": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "circles__arc_length_sector",
+            "similarity": 0.579944
+          },
+          {
+            "ingredient_id": "circles__tangent_properties",
+            "similarity": 0.342177
+          }
+        ],
+        "concept_id": "circles_geometry",
+        "confidence": 0.886766,
+        "ingredient_id": "circles__semicircle_area_from_diameter",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_descriptive_statistics__asked_for_mean_list_data": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "descriptive_statistics__median_as_middle",
+            "similarity": 0.296954
+          },
+          {
+            "ingredient_id": "descriptive_statistics__spread_measures",
+            "similarity": 0.280546
+          }
+        ],
+        "concept_id": "descriptive_statistics",
+        "confidence": 0.727496,
+        "ingredient_id": "descriptive_statistics__mean_vs_median",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_descriptive_statistics__finding_median_from_even_dataset": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "descriptive_statistics__mean_as_balance",
+            "similarity": 0.32663
+          },
+          {
+            "ingredient_id": "descriptive_statistics__spread_measures",
+            "similarity": 0.262032
+          }
+        ],
+        "concept_id": "descriptive_statistics",
+        "confidence": 0.761828,
+        "ingredient_id": "descriptive_statistics__median_as_middle",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_exponent_rules__forgotten_anything_power_0_equals": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "exponent_rules__power_rule",
+            "similarity": 0.385676
+          },
+          {
+            "ingredient_id": "exponent_rules__negative_exponents",
+            "similarity": 0.285055
+          }
+        ],
+        "concept_id": "exponent_rules",
+        "confidence": 0.864629,
+        "ingredient_id": "exponent_rules__zero_and_rational",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_exponent_rules__has_added_powers_rather_than": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "exponent_rules__zero_and_rational",
+            "similarity": 0.538589
+          },
+          {
+            "ingredient_id": "exponent_rules__product_rule",
+            "similarity": 0.402228
+          }
+        ],
+        "concept_id": "exponent_rules",
+        "confidence": 0.77389,
+        "ingredient_id": "exponent_rules__power_rule",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_exponent_rules__multiplying_numbers_with_different_bases": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "exponent_rules__zero_and_rational",
+            "similarity": 0.476052
+          },
+          {
+            "ingredient_id": "exponent_rules__quotient_rule",
+            "similarity": 0.402922
+          }
+        ],
+        "concept_id": "exponent_rules",
+        "confidence": 0.759254,
+        "ingredient_id": "exponent_rules__product_rule",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_factoring_polynomials__believes_they_can_fully_factorise": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "factoring_polynomials__ac_method",
+            "similarity": 0.514663
+          },
+          {
+            "ingredient_id": "factoring_polynomials__factor_pairs",
+            "similarity": 0.514663
+          }
+        ],
+        "concept_id": "factoring_polynomials",
+        "confidence": 0.711579,
+        "ingredient_id": "factoring_polynomials__gcf_extraction",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_fractions_decimals__adding_fractions_adds_numerators_and": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+            "similarity": 0.578578
+          },
+          {
+            "ingredient_id": "fractions_decimals__fraction_arithmetic",
+            "similarity": 0.518884
+          }
+        ],
+        "concept_id": "fractions_decimals",
+        "confidence": 0.755262,
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_fractions_decimals__believes_you_can_have_decimals": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "fractions_decimals__part_whole_meaning",
+            "similarity": 0.54978
+          },
+          {
+            "ingredient_id": "fractions_decimals__fraction_arithmetic",
+            "similarity": 0.419044
+          }
+        ],
+        "concept_id": "fractions_decimals",
+        "confidence": 0.723481,
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_fractions_decimals__converts_fraction_decimal_placing_all": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "fractions_decimals__part_whole_meaning",
+            "similarity": 0.46702
+          },
+          {
+            "ingredient_id": "fractions_decimals__fraction_arithmetic",
+            "similarity": 0.379023
+          }
+        ],
+        "concept_id": "fractions_decimals",
+        "confidence": 0.731674,
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_fractions_decimals__converts_fraction_decimal_using_denominator": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "fractions_decimals__part_whole_meaning",
+            "similarity": 0.631012
+          },
+          {
+            "ingredient_id": "fractions_decimals__fraction_arithmetic",
+            "similarity": 0.508561
+          }
+        ],
+        "concept_id": "fractions_decimals",
+        "confidence": 0.953189,
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_fractions_decimals__converts_fraction_decimal_using_only": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "fractions_decimals__part_whole_meaning",
+            "similarity": 0.612223
+          },
+          {
+            "ingredient_id": "fractions_decimals__fraction_arithmetic",
+            "similarity": 0.386219
+          }
+        ],
+        "concept_id": "fractions_decimals",
+        "confidence": 0.881736,
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_fractions_decimals__does_not_find_common_denominator": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "fractions_decimals__part_whole_meaning",
+            "similarity": 0.6701
+          },
+          {
+            "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+            "similarity": 0.658419
+          }
+        ],
+        "concept_id": "fractions_decimals",
+        "confidence": 0.871573,
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_fractions_decimals__mixes_up_numerator_and_denominator": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+            "similarity": 0.725089
+          },
+          {
+            "ingredient_id": "fractions_decimals__fraction_arithmetic",
+            "similarity": 0.588256
+          }
+        ],
+        "concept_id": "fractions_decimals",
+        "confidence": 0.876754,
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_fractions_decimals__simplifies_fraction_adding_or_subtracting": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+            "similarity": 0.644237
+          },
+          {
+            "ingredient_id": "fractions_decimals__fraction_arithmetic",
+            "similarity": 0.490041
+          }
+        ],
+        "concept_id": "fractions_decimals",
+        "confidence": 0.798171,
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_functions_basics__reverses_order_operations_but_does": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "functions_basics__function_notation_meaning",
+            "similarity": 0.523376
+          },
+          {
+            "ingredient_id": "functions_basics__one_to_one_invertibility",
+            "similarity": 0.446347
+          }
+        ],
+        "concept_id": "functions_basics",
+        "confidence": 0.842222,
+        "ingredient_id": "functions_basics__function_composition",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_geometric_transformations__describing_translation_miscounts_crossing_axis": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "transformations__reflection_rules",
+            "similarity": 0.16656
+          },
+          {
+            "ingredient_id": "transformations__rotation_rules",
+            "similarity": 0.004347
+          }
+        ],
+        "concept_id": "geometric_transformations",
+        "confidence": 0.934783,
+        "ingredient_id": "transformations__translation_rules",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_linear_equations__believes_y_intercept_given_difference": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "linear_equations__parallel_perpendicular",
+            "similarity": 0.294751
+          },
+          {
+            "ingredient_id": "linear_equations__slope_meaning",
+            "similarity": 0.26304
+          }
+        ],
+        "concept_id": "linear_equations",
+        "confidence": 0.829978,
+        "ingredient_id": "linear_equations__y_intercept_meaning",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_linear_equations__confuses_meaning_parallel_and_perpendicular": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "linear_equations__slope_meaning",
+            "similarity": 0.316445
+          },
+          {
+            "ingredient_id": "linear_equations__y_intercept_meaning",
+            "similarity": 0.152723
+          }
+        ],
+        "concept_id": "linear_equations",
+        "confidence": 0.986094,
+        "ingredient_id": "linear_equations__parallel_perpendicular",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_linear_equations__confuses_meaning_perpendicular_and_vertical": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "linear_equations__slope_meaning",
+            "similarity": 0.364002
+          },
+          {
+            "ingredient_id": "linear_equations__y_intercept_meaning",
+            "similarity": 0.12534
+          }
+        ],
+        "concept_id": "linear_equations",
+        "confidence": 0.839478,
+        "ingredient_id": "linear_equations__parallel_perpendicular",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_linear_equations__does_not_know_meaning_perpendicular": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "linear_equations__slope_meaning",
+            "similarity": 0.292034
+          },
+          {
+            "ingredient_id": "linear_equations__y_intercept_meaning",
+            "similarity": 0.121973
+          }
+        ],
+        "concept_id": "linear_equations",
+        "confidence": 0.842005,
+        "ingredient_id": "linear_equations__parallel_perpendicular",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_linear_inequalities__believes_subtracting_positive_number_from": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "linear_inequalities__inequality_as_region",
+            "similarity": 0.489352
+          },
+          {
+            "ingredient_id": "linear_inequalities__flip_rule",
+            "similarity": 0.389509
+          }
+        ],
+        "concept_id": "linear_inequalities",
+        "confidence": 0.746756,
+        "ingredient_id": "linear_inequalities__absolute_value_split_greater_than",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_lines_angles__believes_angles_around_point_sum": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "lines_angles__parallel_line_angle_chasing",
+            "similarity": 0.563852
+          },
+          {
+            "ingredient_id": "lines_angles__vertical_angles",
+            "similarity": 0.563852
+          }
+        ],
+        "concept_id": "lines_angles",
+        "confidence": 0.857808,
+        "ingredient_id": "lines_angles__supplementary_complementary",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_lines_angles__believes_vertically_opposite_angles_sum": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "lines_angles__parallel_line_angle_chasing",
+            "similarity": 0.577669
+          },
+          {
+            "ingredient_id": "lines_angles__vertical_angles",
+            "similarity": 0.577669
+          }
+        ],
+        "concept_id": "lines_angles",
+        "confidence": 0.86324,
+        "ingredient_id": "lines_angles__supplementary_complementary",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_lines_angles__does_not_know_angles_on": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "lines_angles__parallel_line_angle_chasing",
+            "similarity": 0.563189
+          },
+          {
+            "ingredient_id": "lines_angles__vertical_angles",
+            "similarity": 0.563189
+          }
+        ],
+        "concept_id": "lines_angles",
+        "confidence": 0.823691,
+        "ingredient_id": "lines_angles__supplementary_complementary",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_lines_angles__thinks_corresponding_angles_sum_180": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "lines_angles__parallel_line_angle_chasing",
+            "similarity": 0.596558
+          },
+          {
+            "ingredient_id": "lines_angles__vertical_angles",
+            "similarity": 0.596558
+          }
+        ],
+        "concept_id": "lines_angles",
+        "confidence": 0.976741,
+        "ingredient_id": "lines_angles__supplementary_complementary",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_measurement_units__converted_hours_minutes_instead_hours": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "measurement_units__unit_label_consistency",
+            "similarity": 0.394013
+          },
+          {
+            "ingredient_id": "measurement_units__linear_vs_square_units",
+            "similarity": 0.385317
+          }
+        ],
+        "concept_id": "measurement_units",
+        "confidence": 0.927281,
+        "ingredient_id": "measurement_units__compound_unit_conversion",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_measurement_units__converted_seconds_minutes_instead_seconds": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "measurement_units__linear_vs_square_units",
+            "similarity": 0.37591
+          },
+          {
+            "ingredient_id": "measurement_units__unit_label_consistency",
+            "similarity": 0.373163
+          }
+        ],
+        "concept_id": "measurement_units",
+        "confidence": 0.86443,
+        "ingredient_id": "measurement_units__compound_unit_conversion",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_measurement_units__does_not_recognise_metres_unit": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "measurement_units__unit_label_consistency",
+            "similarity": 0.521977
+          },
+          {
+            "ingredient_id": "measurement_units__compound_unit_conversion",
+            "similarity": 0.364156
+          }
+        ],
+        "concept_id": "measurement_units",
+        "confidence": 0.93944,
+        "ingredient_id": "measurement_units__linear_vs_square_units",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_measurement_units__does_not_recognise_unit_length": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "measurement_units__unit_label_consistency",
+            "similarity": 0.475989
+          },
+          {
+            "ingredient_id": "measurement_units__compound_unit_conversion",
+            "similarity": 0.303969
+          }
+        ],
+        "concept_id": "measurement_units",
+        "confidence": 0.803353,
+        "ingredient_id": "measurement_units__linear_vs_square_units",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_measurement_units__thinks_there_are_10cm_metre": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "measurement_units__unit_label_consistency",
+            "similarity": 0.461232
+          },
+          {
+            "ingredient_id": "measurement_units__compound_unit_conversion",
+            "similarity": 0.207034
+          }
+        ],
+        "concept_id": "measurement_units",
+        "confidence": 0.744828,
+        "ingredient_id": "measurement_units__linear_vs_square_units",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_order_of_operations__applies_bidmas_strict_order_does": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "order_of_operations__parentheses_override",
+            "similarity": 0.47289
+          },
+          {
+            "ingredient_id": "order_of_operations__exponent_before_multiply",
+            "similarity": 0.388285
+          }
+        ],
+        "concept_id": "order_of_operations",
+        "confidence": 0.758491,
+        "ingredient_id": "order_of_operations__left_to_right_rule",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_order_of_operations__performs_subtraction_wrong_order": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "order_of_operations__parentheses_override",
+            "similarity": 0.458559
+          },
+          {
+            "ingredient_id": "order_of_operations__exponent_before_multiply",
+            "similarity": 0.384674
+          }
+        ],
+        "concept_id": "order_of_operations",
+        "confidence": 0.70699,
+        "ingredient_id": "order_of_operations__precedence_hierarchy",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_quadratic_equations__believes_discriminant_must_be_perfect": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "quadratics__quadratic_formula",
+            "similarity": 0.416957
+          },
+          {
+            "ingredient_id": "quadratics__vertex_from_roots",
+            "similarity": 0.324328
+          }
+        ],
+        "concept_id": "quadratic_equations",
+        "confidence": 0.716904,
+        "ingredient_id": "quadratics__discriminant_meaning",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_quadratic_equations__does_not_recognise_quadratic_graph": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "quadratics__quadratic_formula",
+            "similarity": 0.509004
+          },
+          {
+            "ingredient_id": "quadratics__solutions_as_x_intercepts",
+            "similarity": 0.351668
+          }
+        ],
+        "concept_id": "quadratic_equations",
+        "confidence": 0.711128,
+        "ingredient_id": "quadratics__vertex_from_roots",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_quadratic_equations__misremembers_quadratic_formula": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "quadratics__vertex_from_roots",
+            "similarity": 0.48789
+          },
+          {
+            "ingredient_id": "quadratics__factoring_method",
+            "similarity": 0.424763
+          }
+        ],
+        "concept_id": "quadratic_equations",
+        "confidence": 0.961802,
+        "ingredient_id": "quadratics__quadratic_formula",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_quadratic_equations__solving_simultaneous_equations_graphically_they": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "quadratics__vertex_from_roots",
+            "similarity": 0.47631
+          },
+          {
+            "ingredient_id": "quadratics__quadratic_formula",
+            "similarity": 0.276408
+          }
+        ],
+        "concept_id": "quadratic_equations",
+        "confidence": 0.728712,
+        "ingredient_id": "quadratics__solutions_as_x_intercepts",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_radical_expressions__simplifying_surds_does_not_multiply": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "radicals__rationalizing",
+            "similarity": 0.540425
+          },
+          {
+            "ingredient_id": "radicals__adding_radicals",
+            "similarity": 0.525889
+          }
+        ],
+        "concept_id": "radical_expressions",
+        "confidence": 0.851293,
+        "ingredient_id": "radicals__root_as_inverse",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_radical_expressions__simplifying_surds_does_not_square": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "radicals__rationalizing",
+            "similarity": 0.447318
+          },
+          {
+            "ingredient_id": "radicals__adding_radicals",
+            "similarity": 0.408518
+          }
+        ],
+        "concept_id": "radical_expressions",
+        "confidence": 0.824991,
+        "ingredient_id": "radicals__root_as_inverse",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_radical_expressions__simplifying_surds_leaves_square_root": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "radicals__rationalizing",
+            "similarity": 0.483329
+          },
+          {
+            "ingredient_id": "radicals__adding_radicals",
+            "similarity": 0.432294
+          }
+        ],
+        "concept_id": "radical_expressions",
+        "confidence": 0.864642,
+        "ingredient_id": "radicals__root_as_inverse",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_sequences_series__uses_first_term_numerical_part": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "sequences__geometric_series_sum",
+            "similarity": 0.498713
+          },
+          {
+            "ingredient_id": "sequences__arithmetic_identification",
+            "similarity": 0.371799
+          }
+        ],
+        "concept_id": "sequences_series",
+        "confidence": 0.843553,
+        "ingredient_id": "sequences__nth_term_formula",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_systems_of_linear_equations__mixes_up_value_two_terms": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "systems__elimination_method",
+            "similarity": 0.378567
+          },
+          {
+            "ingredient_id": "systems__no_solution_infinite",
+            "similarity": 0.378567
+          }
+        ],
+        "concept_id": "systems_of_linear_equations",
+        "confidence": 0.852001,
+        "ingredient_id": "systems__substitution_method",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_systems_of_linear_equations__solving_simultaneous_equations_graphically_they": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "systems__elimination_method",
+            "similarity": 0.525197
+          },
+          {
+            "ingredient_id": "systems__no_solution_infinite",
+            "similarity": 0.525197
+          }
+        ],
+        "concept_id": "systems_of_linear_equations",
+        "confidence": 0.73359,
+        "ingredient_id": "systems__solution_as_intersection",
+        "provenance": "embedding"
+      }
+    ],
+    "mis_triangles_congruence__thinks_angles_which_look_same": [
+      {
+        "alternates": [
+          {
+            "ingredient_id": "triangles__angle_sum",
+            "similarity": 0.58304
+          },
+          {
+            "ingredient_id": "triangles__congruence_criteria",
+            "similarity": 0.384927
+          }
+        ],
+        "concept_id": "triangles_congruence",
+        "confidence": 0.841823,
+        "ingredient_id": "triangles__similarity_ratios",
+        "provenance": "embedding"
+      }
+    ]
+  }
+}

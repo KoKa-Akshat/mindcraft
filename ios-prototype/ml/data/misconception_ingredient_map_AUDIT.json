@@ -1,0 +1,1904 @@
+{
+  "_meta": {
+    "audited_by": "fable5",
+    "audit_date": "2026-07-08",
+    "method": "manual_semantic_review",
+    "scope": "embedding cosine>=0.55, priority concepts: fractions_decimals, ratios_proportions, algebraic_manipulation, systems_of_linear_equations, quadratic_equations, linear_equations",
+    "n_reviewed": 286,
+    "n_approved": 155,
+    "n_rejected": 131,
+    "approval_rate": 0.542,
+    "approval_criteria": "Approved if misconception label semantically implies the ingredient failure_mode \u2014 the student demonstrably fails the specific cognitive operation described. Rejected if surface word similarity only, different cognitive operation, or wrong conceptual domain.",
+    "pattern_notes": [
+      "fractions_decimals__part_whole_meaning APPROVED for all errors that treat numerator/denominator as independent numbers (high cosine 0.55-0.71): ordering by denom, simplifying by adding same amount, division errors, improper fraction confusion, etc.",
+      "fractions_decimals__fraction_decimal_conversion APPROVED only for digit-concatenation patterns (3/4 \u2192 0.34 or 3.4) and the conceptual link a/b=a\u00f7b. REJECTED for decimal\u2192% or %\u2192decimal operations.",
+      "fractions_decimals__fraction_arithmetic APPROVED for subtraction analogue of the add-n+d failure, wrong fraction operations in equations, and mixed-number arithmetic. REJECTED for simplification and multiplication-only errors.",
+      "fractions_decimals__equivalent_fractions APPROVED when error is specifically about failing to scale both numerator and denominator by the same factor.",
+      "fractions_decimals__decimal_place_value APPROVED for digit alignment errors in decimal arithmetic.",
+      "ratios_proportions: all proposed links APPROVED except the vague 'may have estimated' link.",
+      "algebraic_manipulation__clearing_fractions REJECTED for all 13 proposed links \u2014 all are fraction arithmetic errors in a non-equation context, not the clearing-fractions technique.",
+      "algebraic_manipulation__symbolic_substitution APPROVED for 2 direct substitution failures.",
+      "systems__elimination_method: all 5 proposed links APPROVED \u2014 direct elimination technique errors.",
+      "quadratics__solutions_as_x_intercepts: all 5 proposed links APPROVED \u2014 graph recognition and graph-solution connection failures.",
+      "linear_equations: all 4 proposed links APPROVED \u2014 direct m/b confusion and parallel/perpendicular notation failures."
+    ]
+  },
+  "approved": {
+    "mis_fractions_decimals__ordered_fractions_comparing_denominators_rather": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6335,
+        "method": "embedding",
+        "cosine": 0.6335
+      }
+    ],
+    "mis_fractions_decimals__simplifies_fraction_adding_or_subtracting": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6546,
+        "method": "embedding",
+        "cosine": 0.6546
+      }
+    ],
+    "mis_fractions_decimals__does_not_find_common_denominator": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.5871,
+        "method": "embedding",
+        "cosine": 0.5871
+      }
+    ],
+    "mis_fractions_decimals__adding_fractions_adds_numerators_and": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.603,
+        "method": "embedding",
+        "cosine": 0.603
+      },
+      {
+        "ingredient_id": "fractions_decimals__equivalent_fractions",
+        "confidence": 0.5529,
+        "method": "embedding",
+        "cosine": 0.5529
+      }
+    ],
+    "mis_fractions_decimals__does_not_consider_denominator_adding": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.5834,
+        "method": "embedding",
+        "cosine": 0.5834
+      }
+    ],
+    "mis_fractions_decimals__converts_fraction_decimal_using_denominator": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.5563,
+        "method": "embedding",
+        "cosine": 0.5563
+      }
+    ],
+    "mis_fractions_decimals__converts_fraction_decimal_placing_decimal": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.602,
+        "method": "embedding",
+        "cosine": 0.602
+      }
+    ],
+    "mis_fractions_decimals__converts_fraction_decimal_using_only": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.5508,
+        "method": "embedding",
+        "cosine": 0.5508
+      }
+    ],
+    "mis_fractions_decimals__thinks_they_can_convert_2": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "confidence": 0.5679,
+        "method": "embedding",
+        "cosine": 0.5679
+      }
+    ],
+    "mis_fractions_decimals__believes_simplifying_fraction_you_can": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6989,
+        "method": "embedding",
+        "cosine": 0.6989
+      }
+    ],
+    "mis_fractions_decimals__dividing_fraction_integer_divides_both": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6941,
+        "method": "embedding",
+        "cosine": 0.6941
+      }
+    ],
+    "mis_fractions_decimals__dividing_fraction_integer_divides_denominator": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6311,
+        "method": "embedding",
+        "cosine": 0.6311
+      }
+    ],
+    "mis_fractions_decimals__denominator_used_for_other_parts": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6925,
+        "method": "embedding",
+        "cosine": 0.6925
+      }
+    ],
+    "mis_fractions_decimals__dividing_integer_fraction_thinks_they": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.7121,
+        "method": "embedding",
+        "cosine": 0.7121
+      }
+    ],
+    "mis_fractions_decimals__dividing_non_unit_fraction_thinks": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6933,
+        "method": "embedding",
+        "cosine": 0.6933
+      }
+    ],
+    "mis_fractions_decimals__dividing_fraction_integer_multiplies_numerator": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6541,
+        "method": "embedding",
+        "cosine": 0.6541
+      }
+    ],
+    "mis_fractions_decimals__multiplying_mixed_numbers_forgets_multiply": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "confidence": 0.6154,
+        "method": "embedding",
+        "cosine": 0.6154
+      }
+    ],
+    "mis_fractions_decimals__has_used_decimal_point_separate": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "confidence": 0.6698,
+        "method": "embedding",
+        "cosine": 0.6698
+      },
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6548,
+        "method": "embedding",
+        "cosine": 0.6548
+      }
+    ],
+    "mis_fractions_decimals__multiplies_denominator_instead_dividing_finding": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6902,
+        "method": "embedding",
+        "cosine": 0.6902
+      }
+    ],
+    "mis_fractions_decimals__converts_fraction_percentage_writing_numerator": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6336,
+        "method": "embedding",
+        "cosine": 0.6336
+      }
+    ],
+    "mis_fractions_decimals__believes_changing_improper_fraction_mixed": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6061,
+        "method": "embedding",
+        "cosine": 0.6061
+      }
+    ],
+    "mis_fractions_decimals__believes_whole_and_remainder_are": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.5679,
+        "method": "embedding",
+        "cosine": 0.5679
+      }
+    ],
+    "mis_fractions_decimals__believes_number_wholes_mixed_number": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.5536,
+        "method": "embedding",
+        "cosine": 0.5536
+      }
+    ],
+    "mis_fractions_decimals__forgets_change_numerators_finding_equivalent": [
+      {
+        "ingredient_id": "fractions_decimals__equivalent_fractions",
+        "confidence": 0.6432,
+        "method": "embedding",
+        "cosine": 0.6432
+      }
+    ],
+    "mis_fractions_decimals__can_identify_multiplier_used_form": [
+      {
+        "ingredient_id": "fractions_decimals__equivalent_fractions",
+        "confidence": 0.588,
+        "method": "embedding",
+        "cosine": 0.588
+      }
+    ],
+    "mis_fractions_decimals__does_not_understand_equivalent_fractions": [
+      {
+        "ingredient_id": "fractions_decimals__equivalent_fractions",
+        "confidence": 0.5982,
+        "method": "embedding",
+        "cosine": 0.5982
+      },
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.5892,
+        "method": "embedding",
+        "cosine": 0.5892
+      }
+    ],
+    "mis_fractions_decimals__believes_equivalent_fractions_are_formed": [
+      {
+        "ingredient_id": "fractions_decimals__equivalent_fractions",
+        "confidence": 0.6073,
+        "method": "embedding",
+        "cosine": 0.6073
+      }
+    ],
+    "mis_fractions_decimals__does_not_understand_how_maintain": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6388,
+        "method": "embedding",
+        "cosine": 0.6388
+      },
+      {
+        "ingredient_id": "fractions_decimals__equivalent_fractions",
+        "confidence": 0.6182,
+        "method": "embedding",
+        "cosine": 0.6182
+      }
+    ],
+    "mis_fractions_decimals__subtracting_fractions_subtracts_numerators_and": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.7163,
+        "method": "embedding",
+        "cosine": 0.7163
+      },
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "confidence": 0.6266,
+        "method": "embedding",
+        "cosine": 0.6266
+      }
+    ],
+    "mis_fractions_decimals__multiplying_fraction_integer_multiplies_both": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6725,
+        "method": "embedding",
+        "cosine": 0.6725
+      }
+    ],
+    "mis_fractions_decimals__subtracting_decimals_with_different_number": [
+      {
+        "ingredient_id": "fractions_decimals__decimal_place_value",
+        "confidence": 0.5591,
+        "method": "embedding",
+        "cosine": 0.5591
+      }
+    ],
+    "mis_fractions_decimals__thinks_adding_decimals_with_different": [
+      {
+        "ingredient_id": "fractions_decimals__decimal_place_value",
+        "confidence": 0.5512,
+        "method": "embedding",
+        "cosine": 0.5512
+      }
+    ],
+    "mis_fractions_decimals__multiplying_decimals_does_not_realize": [
+      {
+        "ingredient_id": "fractions_decimals__decimal_place_value",
+        "confidence": 0.5515,
+        "method": "embedding",
+        "cosine": 0.5515
+      }
+    ],
+    "mis_fractions_decimals__dividing_decimals_with_same_number": [
+      {
+        "ingredient_id": "fractions_decimals__decimal_place_value",
+        "confidence": 0.5505,
+        "method": "embedding",
+        "cosine": 0.5505
+      }
+    ],
+    "mis_fractions_decimals__does_not_know_you_can": [
+      {
+        "ingredient_id": "fractions_decimals__decimal_place_value",
+        "confidence": 0.562,
+        "method": "embedding",
+        "cosine": 0.562
+      }
+    ],
+    "mis_fractions_decimals__does_not_understand_parts_must": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6558,
+        "method": "embedding",
+        "cosine": 0.6558
+      }
+    ],
+    "mis_fractions_decimals__confuses_part_and_whole_fraction": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6173,
+        "method": "embedding",
+        "cosine": 0.6173
+      }
+    ],
+    "mis_fractions_decimals__does_not_understand_denominator_represents": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6954,
+        "method": "embedding",
+        "cosine": 0.6954
+      }
+    ],
+    "mis_fractions_decimals__believes_fractions_with_larger_denominators": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.5569,
+        "method": "embedding",
+        "cosine": 0.5569
+      }
+    ],
+    "mis_fractions_decimals__comparing_unit_fractions_believes_fractions": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6185,
+        "method": "embedding",
+        "cosine": 0.6185
+      }
+    ],
+    "mis_fractions_decimals__believes_unit_fractions_with_difference": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6258,
+        "method": "embedding",
+        "cosine": 0.6258
+      }
+    ],
+    "mis_fractions_decimals__thinks_you_add_number_wholes": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6073,
+        "method": "embedding",
+        "cosine": 0.6073
+      }
+    ],
+    "mis_fractions_decimals__multiplies_number_whole_units_numerator": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.636,
+        "method": "embedding",
+        "cosine": 0.636
+      }
+    ],
+    "mis_fractions_decimals__forgets_add_numerator_converting_from": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "confidence": 0.6178,
+        "method": "embedding",
+        "cosine": 0.6178
+      },
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.5717,
+        "method": "embedding",
+        "cosine": 0.5717
+      }
+    ],
+    "mis_fractions_decimals__uses_numerator_improper_fraction_denominator": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6432,
+        "method": "embedding",
+        "cosine": 0.6432
+      }
+    ],
+    "mis_fractions_decimals__writes_numerator_improper_fraction_number": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6146,
+        "method": "embedding",
+        "cosine": 0.6146
+      }
+    ],
+    "mis_fractions_decimals__thinks_number_wholes_mixed_number": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.5724,
+        "method": "embedding",
+        "cosine": 0.5724
+      }
+    ],
+    "mis_fractions_decimals__thinks_converting_integer_fraction_means": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6915,
+        "method": "embedding",
+        "cosine": 0.6915
+      }
+    ],
+    "mis_fractions_decimals__converting_from_improper_fraction_mixed": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "confidence": 0.6215,
+        "method": "embedding",
+        "cosine": 0.6215
+      },
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.62,
+        "method": "embedding",
+        "cosine": 0.62
+      }
+    ],
+    "mis_fractions_decimals__does_not_know_multiplying_unit": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.7054,
+        "method": "embedding",
+        "cosine": 0.7054
+      }
+    ],
+    "mis_fractions_decimals__thinks_if_you_multiply_fraction": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6513,
+        "method": "embedding",
+        "cosine": 0.6513
+      }
+    ],
+    "mis_fractions_decimals__finds_unit_fraction_asked_find": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.5962,
+        "method": "embedding",
+        "cosine": 0.5962
+      }
+    ],
+    "mis_fractions_decimals__divides_numerator_and_multiplies_denominator": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6949,
+        "method": "embedding",
+        "cosine": 0.6949
+      }
+    ],
+    "mis_fractions_decimals__multiplying_fraction_integer_multiplies_denominator": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.694,
+        "method": "embedding",
+        "cosine": 0.694
+      }
+    ],
+    "mis_fractions_decimals__does_not_know_how_interpret": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.5969,
+        "method": "embedding",
+        "cosine": 0.5969
+      }
+    ],
+    "mis_fractions_decimals__does_not_realize_we_can": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6926,
+        "method": "embedding",
+        "cosine": 0.6926
+      },
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "confidence": 0.6748,
+        "method": "embedding",
+        "cosine": 0.6748
+      }
+    ],
+    "mis_fractions_decimals__believes_you_can_have_decimals": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "confidence": 0.671,
+        "method": "embedding",
+        "cosine": 0.671
+      },
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.5883,
+        "method": "embedding",
+        "cosine": 0.5883
+      }
+    ],
+    "mis_fractions_decimals__converts_fraction_decimal_placing_all": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "confidence": 0.6643,
+        "method": "embedding",
+        "cosine": 0.6643
+      }
+    ],
+    "mis_fractions_decimals__believes_you_add_whole_numerators": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "confidence": 0.6778,
+        "method": "embedding",
+        "cosine": 0.6778
+      },
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6638,
+        "method": "embedding",
+        "cosine": 0.6638
+      }
+    ],
+    "mis_fractions_decimals__subtracting_fraction_from_mixed_number": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6439,
+        "method": "embedding",
+        "cosine": 0.6439
+      },
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "confidence": 0.5574,
+        "method": "embedding",
+        "cosine": 0.5574
+      }
+    ],
+    "mis_fractions_decimals__adding_fractions_changes_common_denominator": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "confidence": 0.6949,
+        "method": "embedding",
+        "cosine": 0.6949
+      },
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6158,
+        "method": "embedding",
+        "cosine": 0.6158
+      },
+      {
+        "ingredient_id": "fractions_decimals__equivalent_fractions",
+        "confidence": 0.5868,
+        "method": "embedding",
+        "cosine": 0.5868
+      }
+    ],
+    "mis_fractions_decimals__multiplying_fractions_adds_numerators_and": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "confidence": 0.6793,
+        "method": "embedding",
+        "cosine": 0.6793
+      },
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.651,
+        "method": "embedding",
+        "cosine": 0.651
+      }
+    ],
+    "mis_fractions_decimals__multiplying_fractions_multiplies_numerator_and": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "confidence": 0.6798,
+        "method": "embedding",
+        "cosine": 0.6798
+      },
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6607,
+        "method": "embedding",
+        "cosine": 0.6607
+      }
+    ],
+    "mis_fractions_decimals__asked_add_fractions_multiplies_instead": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "confidence": 0.6886,
+        "method": "embedding",
+        "cosine": 0.6886
+      },
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6188,
+        "method": "embedding",
+        "cosine": 0.6188
+      }
+    ],
+    "mis_fractions_decimals__multiplies_numerators_adding_fractions_with": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "confidence": 0.6711,
+        "method": "embedding",
+        "cosine": 0.6711
+      },
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6359,
+        "method": "embedding",
+        "cosine": 0.6359
+      }
+    ],
+    "mis_fractions_decimals__thinks_you_multiply_numerator_and": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "confidence": 0.6765,
+        "method": "embedding",
+        "cosine": 0.6765
+      },
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6063,
+        "method": "embedding",
+        "cosine": 0.6063
+      }
+    ],
+    "mis_fractions_decimals__uses_dividing_fractions_method_for": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6764,
+        "method": "embedding",
+        "cosine": 0.6764
+      },
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "confidence": 0.6267,
+        "method": "embedding",
+        "cosine": 0.6267
+      }
+    ],
+    "mis_fractions_decimals__dividing_fractions_does_reciprocal_both": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6693,
+        "method": "embedding",
+        "cosine": 0.6693
+      }
+    ],
+    "mis_fractions_decimals__dividing_fraction_integer_multiplies_both": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.7129,
+        "method": "embedding",
+        "cosine": 0.7129
+      }
+    ],
+    "mis_fractions_decimals__dividing_fraction_integer_both_multiplies": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6822,
+        "method": "embedding",
+        "cosine": 0.6822
+      }
+    ],
+    "mis_fractions_decimals__multiplying_fractions_multiplies_both_numerator": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.714,
+        "method": "embedding",
+        "cosine": 0.714
+      }
+    ],
+    "mis_fractions_decimals__multiplying_fractions_multiplies_denominator": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6455,
+        "method": "embedding",
+        "cosine": 0.6455
+      }
+    ],
+    "mis_fractions_decimals__multiplying_fractions_multiplies_reciprocal_2nd": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6585,
+        "method": "embedding",
+        "cosine": 0.6585
+      }
+    ],
+    "mis_fractions_decimals__believes_common_denominator_must_always": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 0.6301,
+        "method": "embedding",
+        "cosine": 0.6301
+      }
+    ],
+    "mis_ratios_proportions__thinks_ratios_are_written_1total": [
+      {
+        "ingredient_id": "ratios_proportions__proportion_setup",
+        "confidence": 0.6255,
+        "method": "embedding",
+        "cosine": 0.6255
+      }
+    ],
+    "mis_ratios_proportions__thinks_difference_one_part_ratio": [
+      {
+        "ingredient_id": "ratios_proportions__proportion_setup",
+        "confidence": 0.6544,
+        "method": "embedding",
+        "cosine": 0.6544
+      }
+    ],
+    "mis_ratios_proportions__ratio_where_total_given_treats": [
+      {
+        "ingredient_id": "ratios_proportions__unit_rate",
+        "confidence": 0.6128,
+        "method": "embedding",
+        "cosine": 0.6128
+      }
+    ],
+    "mis_ratios_proportions__does_not_realise_ratio_worded": [
+      {
+        "ingredient_id": "ratios_proportions__ratio_as_comparison",
+        "confidence": 0.6026,
+        "method": "embedding",
+        "cosine": 0.6026
+      }
+    ],
+    "mis_ratios_proportions__ratio_question_where_one_side": [
+      {
+        "ingredient_id": "ratios_proportions__ratio_as_comparison",
+        "confidence": 0.6738,
+        "method": "embedding",
+        "cosine": 0.6738
+      },
+      {
+        "ingredient_id": "ratios_proportions__unit_rate",
+        "confidence": 0.6113,
+        "method": "embedding",
+        "cosine": 0.6113
+      }
+    ],
+    "mis_ratios_proportions__converting_ratio_fractions_puts_other": [
+      {
+        "ingredient_id": "ratios_proportions__proportion_setup",
+        "confidence": 0.6482,
+        "method": "embedding",
+        "cosine": 0.6482
+      },
+      {
+        "ingredient_id": "ratios_proportions__ratio_as_comparison",
+        "confidence": 0.5993,
+        "method": "embedding",
+        "cosine": 0.5993
+      },
+      {
+        "ingredient_id": "ratios_proportions__unit_rate",
+        "confidence": 0.5765,
+        "method": "embedding",
+        "cosine": 0.5765
+      }
+    ],
+    "mis_ratios_proportions__ratio_question_where_difference_between": [
+      {
+        "ingredient_id": "ratios_proportions__proportion_setup",
+        "confidence": 0.6343,
+        "method": "embedding",
+        "cosine": 0.6343
+      },
+      {
+        "ingredient_id": "ratios_proportions__ratio_as_comparison",
+        "confidence": 0.6201,
+        "method": "embedding",
+        "cosine": 0.6201
+      },
+      {
+        "ingredient_id": "ratios_proportions__unit_rate",
+        "confidence": 0.5979,
+        "method": "embedding",
+        "cosine": 0.5979
+      }
+    ],
+    "mis_ratios_proportions__uses_denominator_converting_from_fractions": [
+      {
+        "ingredient_id": "ratios_proportions__ratio_as_comparison",
+        "confidence": 0.6155,
+        "method": "embedding",
+        "cosine": 0.6155
+      },
+      {
+        "ingredient_id": "ratios_proportions__proportion_setup",
+        "confidence": 0.5951,
+        "method": "embedding",
+        "cosine": 0.5951
+      },
+      {
+        "ingredient_id": "ratios_proportions__unit_rate",
+        "confidence": 0.585,
+        "method": "embedding",
+        "cosine": 0.585
+      }
+    ],
+    "mis_ratios_proportions__divides_total_amount_each_side": [
+      {
+        "ingredient_id": "ratios_proportions__proportion_setup",
+        "confidence": 0.5715,
+        "method": "embedding",
+        "cosine": 0.5715
+      },
+      {
+        "ingredient_id": "ratios_proportions__ratio_as_comparison",
+        "confidence": 0.5652,
+        "method": "embedding",
+        "cosine": 0.5652
+      }
+    ],
+    "mis_ratios_proportions__mixes_up_sides_ratio": [
+      {
+        "ingredient_id": "ratios_proportions__proportion_setup",
+        "confidence": 0.617,
+        "method": "embedding",
+        "cosine": 0.617
+      },
+      {
+        "ingredient_id": "ratios_proportions__ratio_as_comparison",
+        "confidence": 0.5668,
+        "method": "embedding",
+        "cosine": 0.5668
+      }
+    ],
+    "mis_ratios_proportions__finds_one_part_ratio_but": [
+      {
+        "ingredient_id": "ratios_proportions__ratio_as_comparison",
+        "confidence": 0.5769,
+        "method": "embedding",
+        "cosine": 0.5769
+      },
+      {
+        "ingredient_id": "ratios_proportions__proportion_setup",
+        "confidence": 0.5529,
+        "method": "embedding",
+        "cosine": 0.5529
+      }
+    ],
+    "mis_ratios_proportions__converts_fraction_percentage_writing_numerator": [
+      {
+        "ingredient_id": "ratios_proportions__proportion_setup",
+        "confidence": 0.5779,
+        "method": "embedding",
+        "cosine": 0.5779
+      }
+    ],
+    "mis_ratios_proportions__thinks_they_double_numerator_turn": [
+      {
+        "ingredient_id": "ratios_proportions__proportion_setup",
+        "confidence": 0.5731,
+        "method": "embedding",
+        "cosine": 0.5731
+      }
+    ],
+    "mis_ratios_proportions__attempts_simplify_ratio_subtracting_from": [
+      {
+        "ingredient_id": "ratios_proportions__proportion_setup",
+        "confidence": 0.5741,
+        "method": "embedding",
+        "cosine": 0.5741
+      }
+    ],
+    "mis_ratios_proportions__simplifying_ratio_divides_one_side": [
+      {
+        "ingredient_id": "ratios_proportions__ratio_as_comparison",
+        "confidence": 0.6107,
+        "method": "embedding",
+        "cosine": 0.6107
+      },
+      {
+        "ingredient_id": "ratios_proportions__proportion_setup",
+        "confidence": 0.5592,
+        "method": "embedding",
+        "cosine": 0.5592
+      }
+    ],
+    "mis_ratios_proportions__multiplies_up_without_finding_unit": [
+      {
+        "ingredient_id": "ratios_proportions__unit_rate",
+        "confidence": 0.5685,
+        "method": "embedding",
+        "cosine": 0.5685
+      }
+    ],
+    "mis_ratios_proportions__thinks_number_ratio_total": [
+      {
+        "ingredient_id": "ratios_proportions__ratio_as_comparison",
+        "confidence": 0.649,
+        "method": "embedding",
+        "cosine": 0.649
+      },
+      {
+        "ingredient_id": "ratios_proportions__proportion_setup",
+        "confidence": 0.5949,
+        "method": "embedding",
+        "cosine": 0.5949
+      },
+      {
+        "ingredient_id": "ratios_proportions__unit_rate",
+        "confidence": 0.5946,
+        "method": "embedding",
+        "cosine": 0.5946
+      }
+    ],
+    "mis_ratios_proportions__does_not_realise_order_important": [
+      {
+        "ingredient_id": "ratios_proportions__ratio_as_comparison",
+        "confidence": 0.6092,
+        "method": "embedding",
+        "cosine": 0.6092
+      }
+    ],
+    "mis_ratios_proportions__does_not_understand_relationship_between": [
+      {
+        "ingredient_id": "ratios_proportions__ratio_as_comparison",
+        "confidence": 0.6623,
+        "method": "embedding",
+        "cosine": 0.6623
+      },
+      {
+        "ingredient_id": "ratios_proportions__proportion_setup",
+        "confidence": 0.6241,
+        "method": "embedding",
+        "cosine": 0.6241
+      },
+      {
+        "ingredient_id": "ratios_proportions__unit_rate",
+        "confidence": 0.612,
+        "method": "embedding",
+        "cosine": 0.612
+      }
+    ],
+    "mis_ratios_proportions__converting_fractions_ratios_puts_other": [
+      {
+        "ingredient_id": "ratios_proportions__proportion_setup",
+        "confidence": 0.6324,
+        "method": "embedding",
+        "cosine": 0.6324
+      },
+      {
+        "ingredient_id": "ratios_proportions__ratio_as_comparison",
+        "confidence": 0.5767,
+        "method": "embedding",
+        "cosine": 0.5767
+      },
+      {
+        "ingredient_id": "ratios_proportions__unit_rate",
+        "confidence": 0.5536,
+        "method": "embedding",
+        "cosine": 0.5536
+      }
+    ],
+    "mis_ratios_proportions__writing_number_percentage_another_number": [
+      {
+        "ingredient_id": "ratios_proportions__proportion_setup",
+        "confidence": 0.5617,
+        "method": "embedding",
+        "cosine": 0.5617
+      }
+    ],
+    "mis_ratios_proportions__thinks_you_need_include_total": [
+      {
+        "ingredient_id": "ratios_proportions__unit_rate",
+        "confidence": 0.6211,
+        "method": "embedding",
+        "cosine": 0.6211
+      },
+      {
+        "ingredient_id": "ratios_proportions__ratio_as_comparison",
+        "confidence": 0.6123,
+        "method": "embedding",
+        "cosine": 0.6123
+      },
+      {
+        "ingredient_id": "ratios_proportions__proportion_setup",
+        "confidence": 0.5961,
+        "method": "embedding",
+        "cosine": 0.5961
+      }
+    ],
+    "mis_ratios_proportions__uses_numerators_convert_fractions_ratio": [
+      {
+        "ingredient_id": "ratios_proportions__proportion_setup",
+        "confidence": 0.6033,
+        "method": "embedding",
+        "cosine": 0.6033
+      },
+      {
+        "ingredient_id": "ratios_proportions__ratio_as_comparison",
+        "confidence": 0.5968,
+        "method": "embedding",
+        "cosine": 0.5968
+      }
+    ],
+    "mis_ratios_proportions__subtracts_rather_than_dividing_find": [
+      {
+        "ingredient_id": "ratios_proportions__unit_rate",
+        "confidence": 0.5769,
+        "method": "embedding",
+        "cosine": 0.5769
+      }
+    ],
+    "mis_ratios_proportions__drawing_bar_diagram_for_ratio": [
+      {
+        "ingredient_id": "ratios_proportions__ratio_as_comparison",
+        "confidence": 0.5506,
+        "method": "embedding",
+        "cosine": 0.5506
+      }
+    ],
+    "mis_ratios_proportions__confuses_additive_and_multiplicative_relationships": [
+      {
+        "ingredient_id": "ratios_proportions__ratio_as_comparison",
+        "confidence": 0.6372,
+        "method": "embedding",
+        "cosine": 0.6372
+      }
+    ],
+    "mis_algebraic_manipulation__substitutes_incorrectly": [
+      {
+        "ingredient_id": "algebraic_manipulation__symbolic_substitution",
+        "confidence": 0.5511,
+        "method": "embedding",
+        "cosine": 0.5511
+      }
+    ],
+    "mis_algebraic_manipulation__subtracting_negative_number_from_positive": [
+      {
+        "ingredient_id": "algebraic_manipulation__symbolic_substitution",
+        "confidence": 0.5521,
+        "method": "embedding",
+        "cosine": 0.5521
+      }
+    ],
+    "mis_systems_of_linear_equations__solving_simultaneous_equations_thinks_they": [
+      {
+        "ingredient_id": "systems__elimination_method",
+        "confidence": 0.6222,
+        "method": "embedding",
+        "cosine": 0.6222
+      }
+    ],
+    "mis_systems_of_linear_equations__believes_eliminating_variable_if_signs": [
+      {
+        "ingredient_id": "systems__elimination_method",
+        "confidence": 0.5587,
+        "method": "embedding",
+        "cosine": 0.5587
+      }
+    ],
+    "mis_systems_of_linear_equations__believes_eliminating_variable_regardless_signs": [
+      {
+        "ingredient_id": "systems__elimination_method",
+        "confidence": 0.5682,
+        "method": "embedding",
+        "cosine": 0.5682
+      }
+    ],
+    "mis_systems_of_linear_equations__solving_simultaneous_equations_thinks_you": [
+      {
+        "ingredient_id": "systems__elimination_method",
+        "confidence": 0.6142,
+        "method": "embedding",
+        "cosine": 0.6142
+      }
+    ],
+    "mis_systems_of_linear_equations__solving_simultaneous_equations_believes_terms": [
+      {
+        "ingredient_id": "systems__elimination_method",
+        "confidence": 0.6217,
+        "method": "embedding",
+        "cosine": 0.6217
+      }
+    ],
+    "mis_quadratic_equations__confuses_cubic_and_quadratic_graphs": [
+      {
+        "ingredient_id": "quadratics__solutions_as_x_intercepts",
+        "confidence": 0.5723,
+        "method": "embedding",
+        "cosine": 0.5723
+      }
+    ],
+    "mis_quadratic_equations__confuses_reciprocal_and_quadratic_graphs": [
+      {
+        "ingredient_id": "quadratics__solutions_as_x_intercepts",
+        "confidence": 0.5674,
+        "method": "embedding",
+        "cosine": 0.5674
+      }
+    ],
+    "mis_quadratic_equations__does_not_recognise_quadratic_graph": [
+      {
+        "ingredient_id": "quadratics__solutions_as_x_intercepts",
+        "confidence": 0.5912,
+        "method": "embedding",
+        "cosine": 0.5912
+      }
+    ],
+    "mis_quadratic_equations__believes_both_x_and_y": [
+      {
+        "ingredient_id": "quadratics__solutions_as_x_intercepts",
+        "confidence": 0.5546,
+        "method": "embedding",
+        "cosine": 0.5546
+      }
+    ],
+    "mis_quadratic_equations__believes_both_solutions_quadratic_will": [
+      {
+        "ingredient_id": "quadratics__solutions_as_x_intercepts",
+        "confidence": 0.5534,
+        "method": "embedding",
+        "cosine": 0.5534
+      }
+    ],
+    "mis_linear_equations__believes_ymxc_m_yintercept": [
+      {
+        "ingredient_id": "linear_equations__y_intercept_meaning",
+        "confidence": 0.5529,
+        "method": "embedding",
+        "cosine": 0.5529
+      }
+    ],
+    "mis_linear_equations__believes_gradients_perpendicular_lines_are": [
+      {
+        "ingredient_id": "linear_equations__parallel_perpendicular",
+        "confidence": 0.5518,
+        "method": "embedding",
+        "cosine": 0.5518
+      }
+    ],
+    "mis_linear_equations__believes_solution_mx_c_x": [
+      {
+        "ingredient_id": "linear_equations__y_intercept_meaning",
+        "confidence": 0.5589,
+        "method": "embedding",
+        "cosine": 0.5589
+      }
+    ],
+    "mis_linear_equations__does_not_recognise_notation_for": [
+      {
+        "ingredient_id": "linear_equations__parallel_perpendicular",
+        "confidence": 0.5799,
+        "method": "embedding",
+        "cosine": 0.5799
+      }
+    ]
+  },
+  "rejected": {
+    "mis_fractions_decimals__mixes_up_numerator_and_denominator": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Structural n/d flip when writing a fraction \u2260 digit-concatenation in fraction\u2192decimal conversion"
+      },
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "reason": "Role-swap error does not implicate the add-without-common-denom failure"
+      },
+      {
+        "ingredient_id": "fractions_decimals__equivalent_fractions",
+        "reason": "No equivalence-creation operation implicated"
+      }
+    ],
+    "mis_fractions_decimals__believes_fraction_means_dividing_denominator": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "reason": "Division-direction error \u2260 adding n/d without common denominator"
+      },
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Not a digit-concatenation conversion error"
+      }
+    ],
+    "mis_fractions_decimals__does_not_realise_you_can": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Equivalent-fractions-as-tool gap \u2260 digit-concatenation"
+      },
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "reason": "Not an addition-arithmetic failure"
+      }
+    ],
+    "mis_fractions_decimals__simplifies_fraction_adding_or_subtracting": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "reason": "Additive simplification is an equivalent_fractions error, not addition-with-common-denom error"
+      },
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Not a conversion error"
+      }
+    ],
+    "mis_fractions_decimals__does_not_find_common_denominator": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Not a conversion error"
+      }
+    ],
+    "mis_fractions_decimals__adding_fractions_adds_numerators_and": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Not a conversion error"
+      }
+    ],
+    "mis_fractions_decimals__does_not_consider_denominator_adding": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Below 0.55 threshold; not a conversion error"
+      }
+    ],
+    "mis_fractions_decimals__dividing_decimal_multiple_10_just": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Decimal\u00f7power-of-10 is a place-value error, not fraction\u2192decimal conversion"
+      }
+    ],
+    "mis_fractions_decimals__converts_fraction_decimal_using_denominator": [
+      {
+        "ingredient_id": "fractions_decimals__equivalent_fractions",
+        "reason": "Digit-placement error does not implicate equivalence creation"
+      }
+    ],
+    "mis_fractions_decimals__converts_fraction_decimal_placing_decimal": [
+      {
+        "ingredient_id": "fractions_decimals__equivalent_fractions",
+        "reason": "Digit-placement error does not implicate equivalence creation"
+      }
+    ],
+    "mis_fractions_decimals__converts_fraction_decimal_using_only": [
+      {
+        "ingredient_id": "fractions_decimals__equivalent_fractions",
+        "reason": "Digit-placement error does not implicate equivalence creation"
+      }
+    ],
+    "mis_fractions_decimals__does_not_recognise_fraction_can": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "reason": "Not recognising simplifiability is algorithmic, not a part-whole structural failure"
+      }
+    ],
+    "mis_fractions_decimals__thinks_you_need_just_add": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Decimal\u2192percentage (adding %) is a different operation from fraction\u2192decimal"
+      }
+    ],
+    "mis_fractions_decimals__divides_instead_multiplies_converting_decimal": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Decimal\u2192percentage division error, different domain"
+      }
+    ],
+    "mis_fractions_decimals__believes_simplifying_fraction_you_can": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "reason": "Simplification error \u2260 addition-arithmetic failure"
+      },
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Not a conversion error"
+      }
+    ],
+    "mis_fractions_decimals__dividing_fraction_integer_divides_both": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Not a conversion error"
+      }
+    ],
+    "mis_fractions_decimals__dividing_fraction_integer_divides_denominator": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Not a conversion error"
+      }
+    ],
+    "mis_fractions_decimals__does_not_know_how_write": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Not knowing how to write a fraction \u2260 digit-concatenation conversion"
+      }
+    ],
+    "mis_fractions_decimals__dividing_integer_fraction_thinks_they": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Not a conversion error"
+      },
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "reason": "Division-of-integer-by-fraction \u2260 addition-arithmetic failure"
+      }
+    ],
+    "mis_fractions_decimals__dividing_non_unit_fraction_thinks": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "reason": "Wrong reciprocal in division \u2260 addition-arithmetic failure"
+      },
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Not a conversion error"
+      }
+    ],
+    "mis_fractions_decimals__dividing_fraction_integer_multiplies_numerator": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Not a conversion error"
+      }
+    ],
+    "mis_fractions_decimals__multiplying_mixed_numbers_forgets_multiply": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "reason": "Procedural omission in mixed-number multiplication \u2260 part-whole structural failure"
+      },
+      {
+        "ingredient_id": "fractions_decimals__equivalent_fractions",
+        "reason": "Not an equivalence-creation error"
+      }
+    ],
+    "mis_fractions_decimals__has_used_decimal_point_separate": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "reason": "Digit-placement error \u2260 addition-arithmetic failure"
+      }
+    ],
+    "mis_fractions_decimals__does_not_know_how_say": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "reason": "Verbalization is linguistic/terminological, not a part-whole structural failure"
+      },
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Not a conversion error"
+      },
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "reason": "Not an arithmetic error"
+      }
+    ],
+    "mis_fractions_decimals__thinks_numbers_greater_than_1": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Scope-of-fractions misconception \u2260 digit-concatenation"
+      },
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "reason": "Does not match the specific failure_mode"
+      }
+    ],
+    "mis_fractions_decimals__thinks_finding_fraction_amount_means": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "reason": "Confusing multiplication with subtraction \u2260 treating n/d as separate numbers"
+      },
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Not a conversion error"
+      },
+      {
+        "ingredient_id": "fractions_decimals__equivalent_fractions",
+        "reason": "Not an equivalence-creation error"
+      }
+    ],
+    "mis_fractions_decimals__multiplies_denominator_instead_dividing_finding": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "reason": "Finding fraction-of-amount \u2260 addition-arithmetic failure"
+      },
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Not a conversion error"
+      }
+    ],
+    "mis_fractions_decimals__converts_fraction_percentage_writing_numerator": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Fraction\u2192percentage is a different operation from fraction\u2192decimal"
+      }
+    ],
+    "mis_fractions_decimals__forgets_change_numerators_finding_equivalent": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "reason": "Equivalence scaling error \u2260 addition-arithmetic failure"
+      },
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "reason": "Not specifically a part-whole structural failure"
+      }
+    ],
+    "mis_fractions_decimals__subtracting_fractions_subtracts_numerators_and": [
+      {
+        "ingredient_id": "fractions_decimals__equivalent_fractions",
+        "reason": "Subtracting n and d as separate numbers \u2260 equivalence-creation error"
+      }
+    ],
+    "mis_fractions_decimals__multiplying_fraction_integer_multiplies_both": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Not a conversion error"
+      },
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "reason": "Multiplication error \u2260 addition-arithmetic failure"
+      }
+    ],
+    "mis_fractions_decimals__thinks_they_just_remove_decimal": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Decimal\u2192percentage (removing decimal) is a different operation"
+      }
+    ],
+    "mis_fractions_decimals__solving_equation_multiplies_instead_dividing": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "reason": "Equation-solving operation error in wrong conceptual domain"
+      }
+    ],
+    "mis_fractions_decimals__solving_equation_adds_instead_dividing": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "reason": "Equation-solving error, not fraction addition"
+      }
+    ],
+    "mis_fractions_decimals__can_identify_multiplier_used_form": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "reason": "Knowing multiplier but not applying = procedural omission, not part-whole failure"
+      },
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "reason": "Not addition-arithmetic"
+      }
+    ],
+    "mis_fractions_decimals__assumes_fractions_with_prime_numerators": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "reason": "GCF algorithm gap \u2260 part-whole structural failure"
+      }
+    ],
+    "mis_fractions_decimals__believes_you_can_have_decimals": [
+      {
+        "ingredient_id": "fractions_decimals__equivalent_fractions",
+        "reason": "Decimal-in-fraction confusion \u2260 equivalence-creation error"
+      }
+    ],
+    "mis_fractions_decimals__thinks_you_add_number_wholes": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "reason": "Mixed-number-to-improper conversion \u2260 addition-with-common-denom"
+      }
+    ],
+    "mis_fractions_decimals__subtracting_fraction_from_mixed_number": [
+      {
+        "ingredient_id": "fractions_decimals__equivalent_fractions",
+        "reason": "Ignoring fractional structure \u2260 equivalence-creation error"
+      }
+    ],
+    "mis_fractions_decimals__does_not_recognise_simplifying_fraction": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "reason": "Recognizing when to simplify is strategic, not arithmetic failure"
+      },
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "reason": "Connection too vague to specific failure_mode"
+      }
+    ],
+    "mis_fractions_decimals__multiplying_decimals_divides_wrong_power": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Decimal-multiplication place-value error \u2260 fraction\u2192decimal"
+      }
+    ],
+    "mis_fractions_decimals__multiplies_number_whole_units_numerator": [
+      {
+        "ingredient_id": "fractions_decimals__equivalent_fractions",
+        "reason": "Not an equivalence-creation error"
+      },
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Not a conversion error"
+      }
+    ],
+    "mis_fractions_decimals__forgets_add_numerator_converting_from": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Not a conversion error"
+      }
+    ],
+    "mis_fractions_decimals__does_not_know_multiplying_unit": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "reason": "Unit-fraction-as-division \u2260 addition-arithmetic failure"
+      },
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Not a conversion error"
+      }
+    ],
+    "mis_fractions_decimals__thinks_if_you_multiply_fraction": [
+      {
+        "ingredient_id": "fractions_decimals__equivalent_fractions",
+        "reason": "Fraction-squaring misconception \u2260 equivalence-creation error"
+      },
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Not a conversion error"
+      }
+    ],
+    "mis_fractions_decimals__does_not_know_how_interpret": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Word-problem interpretation gap \u2260 digit-concatenation"
+      }
+    ],
+    "mis_fractions_decimals__dividing_fractions_does_reciprocal_first": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "reason": "Wrong-fraction-reciprocal choice is procedural, not a part-whole failure"
+      },
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Not a conversion error"
+      },
+      {
+        "ingredient_id": "fractions_decimals__equivalent_fractions",
+        "reason": "Not equivalence error"
+      }
+    ],
+    "mis_fractions_decimals__finds_unit_fraction_asked_find": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "reason": "Finding fraction-of-amount \u2260 addition-arithmetic"
+      },
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Not a conversion error"
+      }
+    ],
+    "mis_fractions_decimals__divides_numerator_and_multiplies_denominator": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Not a conversion error"
+      },
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "reason": "Division-of-amount error \u2260 addition-arithmetic failure"
+      }
+    ],
+    "mis_fractions_decimals__multiplying_fraction_integer_multiplies_denominator": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "reason": "Multiplication error \u2260 addition-arithmetic failure"
+      },
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Not a conversion error"
+      }
+    ],
+    "mis_fractions_decimals__does_not_realize_we_can": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "reason": "Division=fraction conceptual link \u2260 addition-arithmetic failure"
+      }
+    ],
+    "mis_fractions_decimals__thinks_you_just_add_sign": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "reason": "Fraction\u2192percentage sign error \u2260 addition-arithmetic"
+      },
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "reason": "Not a part-whole structural failure"
+      },
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Fraction\u2192percentage \u2260 fraction\u2192decimal"
+      }
+    ],
+    "mis_fractions_decimals__believes_dividing_decimal_same_dividing": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Decimal arithmetic error \u2260 fraction\u2192decimal digit-concatenation"
+      },
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "reason": "Decimal arithmetic \u2260 part-whole failure"
+      }
+    ],
+    "mis_fractions_decimals__does_not_understand_how_maintain": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "reason": "Equivalence maintenance \u2260 addition-arithmetic failure"
+      }
+    ],
+    "mis_fractions_decimals__multiplying_fractions_multiplies_both_numerator": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "reason": "Multiplication error \u2260 addition-arithmetic failure"
+      },
+      {
+        "ingredient_id": "fractions_decimals__equivalent_fractions",
+        "reason": "Not equivalence error"
+      }
+    ],
+    "mis_fractions_decimals__multiplying_fractions_multiplies_denominator": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "reason": "Multiplication error \u2260 addition-arithmetic failure"
+      },
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Not a conversion error"
+      }
+    ],
+    "mis_fractions_decimals__multiplying_fractions_adds_numerators_and": [
+      {
+        "ingredient_id": "fractions_decimals__equivalent_fractions",
+        "reason": "Arithmetic error \u2260 equivalence-creation error"
+      }
+    ],
+    "mis_fractions_decimals__multiplying_fractions_multiplies_numerator_and": [
+      {
+        "ingredient_id": "fractions_decimals__equivalent_fractions",
+        "reason": "Arithmetic error \u2260 equivalence-creation error"
+      }
+    ],
+    "mis_fractions_decimals__dividing_decimal_integer_divides_wrong": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Wrong-power decimal division \u2260 fraction\u2192decimal"
+      }
+    ],
+    "mis_fractions_decimals__converting_percentage_decimal_just_writes": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Percentage\u2192decimal different operation domain from fraction\u2192decimal"
+      }
+    ],
+    "mis_fractions_decimals__uses_numerator_improper_fraction_denominator": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "reason": "Role confusion in mixed number \u2260 addition-arithmetic"
+      }
+    ],
+    "mis_fractions_decimals__assumes_converting_decimal_percentage_fraction": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Decimal-percentage\u2192fraction conversion \u2260 fraction\u2192decimal"
+      }
+    ],
+    "mis_fractions_decimals__assumes_decimal_point_can_be": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Decimal-percentage\u2192fraction conversion \u2260 fraction\u2192decimal"
+      }
+    ],
+    "mis_fractions_decimals__converting_from_improper_fraction_mixed": [
+      {
+        "ingredient_id": "fractions_decimals__equivalent_fractions",
+        "reason": "Not an equivalence-creation error"
+      }
+    ],
+    "mis_fractions_decimals__dividing_fraction_integer_multiplies_both": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Not a conversion error"
+      },
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "reason": "Not addition-arithmetic"
+      }
+    ],
+    "mis_fractions_decimals__dividing_decimals_divides_rather_than": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Decimal arithmetic \u2260 fraction\u2192decimal"
+      },
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "reason": "Decimal arithmetic error \u2260 part-whole failure"
+      }
+    ],
+    "mis_fractions_decimals__dividing_decimal_whole_number_ignores": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Decimal arithmetic \u2260 fraction\u2192decimal"
+      }
+    ],
+    "mis_fractions_decimals__uses_dividing_fractions_method_for": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Not a conversion error"
+      }
+    ],
+    "mis_fractions_decimals__thinks_you_multiply_numerator_and": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Not a conversion error"
+      }
+    ],
+    "mis_fractions_decimals__multiplies_numerators_adding_fractions_with": [
+      {
+        "ingredient_id": "fractions_decimals__equivalent_fractions",
+        "reason": "Arithmetic error \u2260 equivalence-creation error"
+      }
+    ],
+    "mis_fractions_decimals__asked_add_fractions_multiplies_instead": [
+      {
+        "ingredient_id": "fractions_decimals__equivalent_fractions",
+        "reason": "Wrong-operation error \u2260 equivalence-creation error"
+      }
+    ],
+    "mis_fractions_decimals__gives_rounded_whole_number_instead": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Rounding error \u2260 digit-concatenation conversion"
+      }
+    ],
+    "mis_fractions_decimals__multiplying_decimal_integer_ignores_decimal": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Decimal multiplication error \u2260 fraction\u2192decimal"
+      }
+    ],
+    "mis_fractions_decimals__does_not_understand_denominator_represents": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "reason": "Conceptual denominator gap \u2260 addition-arithmetic failure"
+      }
+    ],
+    "mis_fractions_decimals__multiplying_fractions_multiplies_reciprocal_2nd": [
+      {
+        "ingredient_id": "fractions_decimals__equivalent_fractions",
+        "reason": "Wrong operation \u2260 equivalence-creation error"
+      },
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Not a conversion error"
+      }
+    ],
+    "mis_fractions_decimals__dividing_fractions_does_reciprocal_both": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Not a conversion error"
+      }
+    ],
+    "mis_fractions_decimals__thinks_converting_integer_fraction_means": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Not a conversion error"
+      },
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "reason": "Not addition-arithmetic"
+      }
+    ],
+    "mis_fractions_decimals__dividing_decimals_with_same_number": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Decimal quotient assumption \u2260 fraction\u2192decimal"
+      }
+    ],
+    "mis_fractions_decimals__dividing_fraction_integer_both_multiplies": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Not a conversion error"
+      }
+    ],
+    "mis_fractions_decimals__converts_fraction_percentage_putting_sign": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "reason": "Fraction\u2192percentage \u2260 fraction\u2192decimal"
+      },
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "reason": "Algorithmic/procedural error \u2260 part-whole structural failure"
+      }
+    ],
+    "mis_ratios_proportions__may_have_estimated_using_ratios": [
+      {
+        "ingredient_id": "ratios_proportions__ratio_as_comparison",
+        "reason": "Estimation vagueness insufficient to diagnose specific multiplicative-vs-additive failure"
+      }
+    ],
+    "mis_algebraic_manipulation__does_not_know_how_simplify": [
+      {
+        "ingredient_id": "algebraic_manipulation__clearing_fractions",
+        "reason": "Simplifying algebraic fractions (factoring+canceling) \u2260 clearing fractions from equations"
+      }
+    ],
+    "mis_algebraic_manipulation__thinks_you_can_divide_terms": [
+      {
+        "ingredient_id": "algebraic_manipulation__clearing_fractions",
+        "reason": "Simplification via inconsistent division \u2260 clearing fractions from equations"
+      }
+    ],
+    "mis_algebraic_manipulation__thinks_you_cancel_identical_terms": [
+      {
+        "ingredient_id": "algebraic_manipulation__clearing_fractions",
+        "reason": "Cancellation-of-identical-terms error \u2260 clearing fractions from equations"
+      }
+    ],
+    "mis_algebraic_manipulation__addingsubtracting_fractions_addssubtracts_denominators_and": [
+      {
+        "ingredient_id": "algebraic_manipulation__clearing_fractions",
+        "reason": "Fraction addition rule error \u2260 clearing fractions from equations by multiplying through"
+      }
+    ],
+    "mis_algebraic_manipulation__does_not_find_common_denominator": [
+      {
+        "ingredient_id": "algebraic_manipulation__clearing_fractions",
+        "reason": "No-common-denom error \u2260 multiplying through by LCD in equation"
+      }
+    ],
+    "mis_algebraic_manipulation__adding_fractions_adds_numerators_and": [
+      {
+        "ingredient_id": "algebraic_manipulation__clearing_fractions",
+        "reason": "Adds n+d error \u2260 clearing fractions from equations"
+      }
+    ],
+    "mis_algebraic_manipulation__removes_common_denominator_making_equivalent": [
+      {
+        "ingredient_id": "algebraic_manipulation__clearing_fractions",
+        "reason": "Equivalent algebraic fraction error \u2260 clearing fractions from equations"
+      }
+    ],
+    "mis_algebraic_manipulation__asked_multiply_fractions_uses_method": [
+      {
+        "ingredient_id": "algebraic_manipulation__clearing_fractions",
+        "reason": "Wrong method for multiplying fractions \u2260 clearing fractions from equations"
+      }
+    ],
+    "mis_algebraic_manipulation__multiplying_fractions_adds_numerators_and": [
+      {
+        "ingredient_id": "algebraic_manipulation__clearing_fractions",
+        "reason": "Fraction multiplication error \u2260 clearing fractions from equations"
+      }
+    ],
+    "mis_algebraic_manipulation__multiplying_fractions_multiplies_reciprocal_2nd": [
+      {
+        "ingredient_id": "algebraic_manipulation__clearing_fractions",
+        "reason": "Wrong reciprocal \u2260 clearing fractions from equations"
+      }
+    ],
+    "mis_algebraic_manipulation__multiplying_fractions_multiplies_denominator": [
+      {
+        "ingredient_id": "algebraic_manipulation__clearing_fractions",
+        "reason": "Fraction multiplication error \u2260 clearing fractions from equations"
+      }
+    ],
+    "mis_algebraic_manipulation__asked_add_fractions_uses_method": [
+      {
+        "ingredient_id": "algebraic_manipulation__clearing_fractions",
+        "reason": "Wrong operation \u2260 clearing fractions from equations"
+      }
+    ],
+    "mis_algebraic_manipulation__thinks_you_can_divide_variables": [
+      {
+        "ingredient_id": "algebraic_manipulation__clearing_fractions",
+        "reason": "Algebraic fraction simplification \u2260 clearing fractions from equations"
+      }
+    ]
+  }
+}

@@ -1,0 +1,259 @@
+Application, 0x11e9e4c80, pid: 3209, label: 'MindCraftNotes' <App element pid: 3209>
+  Window (Main), 0x11e9e4f00, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 3209, elementOrHash.elementID: 4385366464.4>
+    Other, 0x11e9e5040, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 3209, elementOrHash.elementID: 5487378432.6>
+      Other, 0x11e9e57c0, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 3209, elementOrHash.elementID: 4385370560.8>
+        Other, 0x11e9e5900, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 3209, elementOrHash.elementID: 5487166784.10>
+          Other, 0x11e9e5400, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 3209, elementOrHash.elementID: 4385361280.11>
+            Other, 0x11e9e5680, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 3209, elementOrHash.elementID: 5495740992.12>
+              ScrollView, 0x11e9e5540, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 3209, elementOrHash.elementID: 5494571008.13>
+                Other, 0x11e9e5180, {{0.0, 32.0}, {820.0, 811.0}} <AX element pid: 3209, elementOrHash.elementID: 5494427136.14>
+                  StaticText, 0x11e9e52c0, {{24.0, 58.0}, {51.5, 26.5}}, label: 'Mind' <AX element pid: 3209, elementOrHash.elementID: 5487181120.16>
+                  StaticText, 0x11e9e5a40, {{75.5, 58.0}, {53.0, 26.5}}, label: 'Craft' <AX element pid: 3209, elementOrHash.elementID: 5495685120.17>
+                  StaticText, 0x11e9e5b80, {{156.5, 63.2}, {70.0, 16.0}}, label: 'Dashboard' <AX element pid: 3209, elementOrHash.elementID: 5495685568.18>
+                  StaticText, 0x11e9e5cc0, {{658.0, 56.0}, {56.5, 16.0}}, label: 'Shreeyut' <AX element pid: 3209, elementOrHash.elementID: 5495686016.19>
+                  StaticText, 0x11e9e5e00, {{580.0, 73.0}, {134.5, 13.5}}, label: 'akshatkoirala@gmail.com' <AX element pid: 3209, elementOrHash.elementID: 5495686464.20>
+                  Button, 0x11e9e5f40, {{722.0, 57.5}, {74.5, 27.5}}, identifier: 'deskShellSignOut', label: 'Sign out' <AX element pid: 3209, elementOrHash.elementID: 5495686912.21>
+                  StaticText, 0x11e9e6080, {{24.0, 106.5}, {277.5, 31.5}}, label: 'good afternoon, Shreeyut.' <AX element pid: 3209, elementOrHash.elementID: 5495687360.22>
+                  Button, 0x11e9e61c0, {{556.0, 106.5}, {240.0, 48.0}}, identifier: 'deskHubCallButton', label: 'Start your mastery check-in' <AX element pid: 3209, elementOrHash.elementID: 5495693184.23>
+                    StaticText, 0x11e9e6300, {{568.5, 123.2}, {157.5, 14.5}}, label: 'Start your mastery check-in' <AX element pid: 3209, elementOrHash.elementID: 5495692288.33>
+                    Image, 0x11e9e6440, {{762.5, 121.0}, {19.0, 19.0}}, identifier: 'phone.fill', label: 'Call' <AX element pid: 3209, elementOrHash.elementID: 5495692736.34>
+                  StaticText, 0x11e9e6580, {{40.0, 160.0}, {62.5, 13.5}}, label: 'SET GOAL' <AX element pid: 3209, elementOrHash.elementID: 5495687808.24>
+                  Button, 0x11e9e66c0, {{40.0, 182.5}, {98.5, 34.0}}, identifier: 'deskGoalInstance', label: 'field-desk' <AX element pid: 3209, elementOrHash.elementID: 5495689600.25>
+                    Button, 0x11e9e6800, {{40.0, 182.5}, {98.5, 34.0}} <AX element pid: 3209, elementOrHash.elementID: 5488756480.35>
+                      StaticText, 0x11e9e6940, {{51.0, 191.5}, {62.0, 16.0}}, label: 'field-desk' <AX element pid: 3209, elementOrHash.elementID: 5495688256.64>
+                      Image, 0x11e9e6a80, {{120.0, 195.0}, {6.5, 9.5}}, identifier: 'chevron.up.chevron.down', label: 'Up And Down Chevrons' <AX element pid: 3209, elementOrHash.elementID: 5495688704.65>
+                  Button, 0x11e9e6bc0, {{146.5, 182.5}, {128.5, 34.0}}, identifier: 'deskGoalType', label: 'Tasks for today' <AX element pid: 3209, elementOrHash.elementID: 5495691392.26>
+                    Button, 0x11e9e6d00, {{146.5, 182.5}, {128.5, 34.0}} <AX element pid: 3209, elementOrHash.elementID: 5488757376.36>
+                      StaticText, 0x11e9e6e40, {{157.5, 191.5}, {92.0, 16.0}}, label: 'Tasks for today' <AX element pid: 3209, elementOrHash.elementID: 5495690048.67>
+                      Image, 0x11e9e6f80, {{256.5, 195.0}, {6.5, 9.5}}, identifier: 'chevron.up.chevron.down', label: 'Up And Down Chevrons' <AX element pid: 3209, elementOrHash.elementID: 5495690496.68>
+                  StaticText, 0x11e9e70c0, {{40.0, 225.5}, {156.5, 14.5}}, identifier: 'deskGoalEcho', label: 'field-desk → Tasks for today' <AX element pid: 3209, elementOrHash.elementID: 5495691840.27>
+                  StaticText, 0x11e9e7200, {{172.0, 304.0}, {82.0, 26.5}}, label: 'Mastery' <AX element pid: 3209, elementOrHash.elementID: 5495694080.28>
+                  StaticText, 0x11e9e7340, {{172.0, 334.5}, {28.5, 33.5}}, identifier: 'deskMasteryPct', label: '—' <AX element pid: 3209, elementOrHash.elementID: 5495694528.29>
+                  StaticText, 0x11e9e7480, {{24.0, 426.0}, {132.5, 23.0}}, label: 'Your instances' <AX element pid: 3209, elementOrHash.elementID: 5495694976.30>
+                  Other, 0x11e9e75c0, {{40.0, 481.5}, {732.0, 296.2}} <AX element pid: 3209, elementOrHash.elementID: 5495740096.31>
+                    Image, 0x11e9e7700, {{41.0, 483.0}, {13.5, 13.5}}, identifier: 'gearshape.fill', label: 'gearshape.fill' <AX element pid: 3209, elementOrHash.elementID: 5495695424.37>
+                    StaticText, 0x11e9e7840, {{221.2, 483.5}, {25.5, 12.0}}, label: 'Desk' <AX element pid: 3209, elementOrHash.elementID: 5495695872.38>
+                    Image, 0x11e9e7980, {{42.5, 512.0}, {18.5, 18.5}}, identifier: 'square.grid.2x2.fill', label: 'Grid 2x2' <AX element pid: 3209, elementOrHash.elementID: 5495696320.39>
+                    StaticText, 0x11e9e7ac0, {{73.5, 511.5}, {78.5, 19.5}}, label: 'field-desk' <AX element pid: 3209, elementOrHash.elementID: 5495696768.40>
+                    Button, 0x11e9e7c00, {{52.0, 550.0}, {78.0, 14.5}}, label: 'Coming soon', Disabled <AX element pid: 3209, elementOrHash.elementID: 5495697216.41>
+                    StaticText, 0x11e9e7d40, {{40.0, 582.5}, {43.5, 13.5}}, label: 'Running' <AX element pid: 3209, elementOrHash.elementID: 5495697664.42>
+                    StaticText, 0x11e9e7e80, {{40.0, 608.0}, {54.5, 13.5}}, label: '12 / 1,000' <AX element pid: 3209, elementOrHash.elementID: 5495698112.43>
+                    StaticText, 0x114ea1900, {{40.0, 633.5}, {77.0, 12.0}}, label: 'Execution steps' <AX element pid: 3209, elementOrHash.elementID: 5495698560.44>
+                    Image, 0x114ea1cc0, {{303.5, 481.5}, {13.5, 13.5}}, identifier: 'deskInstance_actFieldBook', label: 'gearshape.fill' <AX element pid: 3209, elementOrHash.elementID: 5495699008.45>
+                    StaticText, 0x114ea0b40, {{487.8, 482.0}, {21.5, 12.0}}, identifier: 'deskInstance_actFieldBook', label: 'ACT' <AX element pid: 3209, elementOrHash.elementID: 5495699456.46>
+                    Image, 0x114ea1680, {{305.0, 510.5}, {17.0, 21.5}}, identifier: 'deskInstance_actFieldBook', label: 'book.closed.fill' <AX element pid: 3209, elementOrHash.elementID: 5495699904.47>
+                    StaticText, 0x114ea0a00, {{334.7, 511.5}, {104.0, 19.5}}, identifier: 'deskInstance_actFieldBook', label: 'act-fieldbook' <AX element pid: 3209, elementOrHash.elementID: 5495700352.48>
+                    Button, 0x114ea1400, {{314.5, 551.5}, {86.0, 14.5}}, identifier: 'deskInstance_actFieldBook', label: 'Open instance' <AX element pid: 3209, elementOrHash.elementID: 5495700800.49>
+                    StaticText, 0x114ea0f00, {{302.7, 584.0}, {43.5, 13.5}}, identifier: 'deskInstance_actFieldBook', label: 'Running' <AX element pid: 3209, elementOrHash.elementID: 5495734272.50>
+                    StaticText, 0x114ea3340, {{302.7, 609.5}, {49.5, 13.5}}, identifier: 'deskInstance_actFieldBook', label: '0 / 1,000' <AX element pid: 3209, elementOrHash.elementID: 5495734720.51>
+                    StaticText, 0x114ea3200, {{302.7, 635.0}, {77.0, 12.0}}, identifier: 'deskInstance_actFieldBook', label: 'Execution steps' <AX element pid: 3209, elementOrHash.elementID: 5495735168.52>
+                    Image, 0x114ea3980, {{566.5, 483.0}, {13.5, 13.5}}, identifier: 'gearshape.fill', label: 'gearshape.fill' <AX element pid: 3209, elementOrHash.elementID: 5495735616.53>
+                    StaticText, 0x114ea17c0, {{743.5, 483.5}, {28.5, 12.0}}, label: 'Piano' <AX element pid: 3209, elementOrHash.elementID: 5495736064.54>
+                    Image, 0x114ea1040, {{568.0, 512.0}, {23.5, 18.5}}, identifier: 'pianokeys', label: 'Piano' <AX element pid: 3209, elementOrHash.elementID: 5495736512.55>
+                    StaticText, 0x114ea2d00, {{603.8, 511.5}, {88.5, 19.5}}, label: 'piano-book' <AX element pid: 3209, elementOrHash.elementID: 5495736960.56>
+                    Button, 0x11e9e8000, {{577.5, 550.0}, {78.0, 14.5}}, label: 'Coming soon', Disabled <AX element pid: 3209, elementOrHash.elementID: 5495737408.57>
+                    StaticText, 0x11e9e8140, {{565.3, 582.5}, {43.5, 13.5}}, label: 'Running' <AX element pid: 3209, elementOrHash.elementID: 5495737856.58>
+                    StaticText, 0x11e9e8280, {{565.3, 608.0}, {49.5, 13.5}}, label: '0 / 1,000' <AX element pid: 3209, elementOrHash.elementID: 5495738304.59>
+                    StaticText, 0x11e9e83c0, {{565.3, 633.5}, {77.0, 12.0}}, label: 'Execution steps' <AX element pid: 3209, elementOrHash.elementID: 5495738752.60>
+                    StaticText, 0x11e9e8500, {{138.6, 720.2}, {17.5, 33.5}}, label: '+' <AX element pid: 3209, elementOrHash.elementID: 5495739200.61>
+                    StaticText, 0x11e9e8640, {{89.3, 761.8}, {116.0, 16.0}}, label: 'Create an instance' <AX element pid: 3209, elementOrHash.elementID: 5495739648.62>
+                Other, 0x11e9e8780, {{787.0, 18.0}, {30.0, 1144.0}}, label: 'Vertical scroll bar, 1 page', value: 0% <AX element pid: 3209, elementOrHash.elementID: 5494429184.15>
+                  Other, 0x11e9e88c0, {{814.0, 338.0}, {3.0, 821.0}} <AX element pid: 3209, elementOrHash.elementID: 5487176192.32>
+                Other, 0x11e9e8a00, {{787.0, 18.0}, {30.0, 1144.0}}, label: 'Vertical scroll bar, 1 page', value: 0% <AX element pid: 3209, elementOrHash.elementID: 5494429184.15>
+                  Other, 0x11e9e8b40, {{814.0, 338.0}, {3.0, 821.0}} <AX element pid: 3209, elementOrHash.elementID: 5487176192.32>
+    Other, 0x11e9e8c80, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 3209, elementOrHash.elementID: 5494432768.71>
+      Other, 0x11e9e8dc0, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 3209, elementOrHash.elementID: 5491037184.72>
+        Other, 0x11e9e8f00, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 3209, elementOrHash.elementID: 5497762048.73>
+          Button, 0x11e9e9040, {{20.0, 50.2}, {123.5, 31.5}}, label: 'Home' <AX element pid: 3209, elementOrHash.elementID: 5497765184.87>
+            StaticText, 0x11e9e9180, {{20.0, 50.2}, {61.0, 31.5}}, label: 'Mind' <AX element pid: 3209, elementOrHash.elementID: 5497764288.99>
+            StaticText, 0x11e9e92c0, {{81.0, 50.2}, {62.5, 31.5}}, label: 'Craft' <AX element pid: 3209, elementOrHash.elementID: 5497764736.100>
+          Button, 0x11e9e9400, {{161.5, 56.5}, {20.5, 19.5}}, identifier: 'map', label: 'Map' <AX element pid: 3209, elementOrHash.elementID: 5495741888.88>
+          Button, 0x11e9e9540, {{204.0, 56.0}, {21.5, 20.0}}, identifier: 'pencil.line', label: 'Work' <AX element pid: 3209, elementOrHash.elementID: 5495749056.89>
+          Button, 0x11e9e9680, {{249.5, 57.0}, {20.0, 18.5}}, identifier: 'note.text', label: 'Notes' <AX element pid: 3209, elementOrHash.elementID: 5495749504.90>
+          Image, 0x11e9e97c0, {{364.0, 46.0}, {40.0, 40.0}} <AX element pid: 3209, elementOrHash.elementID: 5520556032.91>
+          StaticText, 0x11e9e9900, {{416.0, 57.5}, {146.0, 17.0}}, label: 'Catch a green idea mid-air.' <AX element pid: 3209, elementOrHash.elementID: 5520556480.92>
+          Button, 0x11e9e9a40, {{578.0, 51.5}, {114.0, 29.5}}, label: 'Find a Tutor' <AX element pid: 3209, elementOrHash.elementID: 5520557824.93>
+            Image, 0x11e9e9b80, {{588.0, 59.5}, {15.5, 13.5}}, identifier: 'person.crop.circle.badge.questionmark', label: 'person.crop.circle.badge.questionmark' <AX element pid: 3209, elementOrHash.elementID: 5520556928.101>
+            StaticText, 0x11e9e9cc0, {{609.5, 58.8}, {70.5, 14.5}}, label: 'Find a Tutor' <AX element pid: 3209, elementOrHash.elementID: 5520557376.102>
+          StaticText, 0x11e9e9e00, {{704.0, 57.5}, {58.5, 17.0}}, label: 'Shreeyut' <AX element pid: 3209, elementOrHash.elementID: 5520558272.94>
+          Button, 0x11e9e9f40, {{776.5, 56.5}, {22.5, 19.5}}, identifier: 'rectangle.portrait.and.arrow.right', label: 'Sign out' <AX element pid: 3209, elementOrHash.elementID: 5520558720.95>
+          Button, 0x11e9ea080, {{20.0, 92.0}, {151.0, 41.0}}, label: 'today's spark, Geometry of Circles' <AX element pid: 3209, elementOrHash.elementID: 5520560064.96>
+            StaticText, 0x11e9ea1c0, {{32.0, 98.0}, {81.0, 12.0}}, label: 'today's spark' <AX element pid: 3209, elementOrHash.elementID: 5520559168.103>
+            StaticText, 0x11e9ea300, {{32.0, 111.0}, {127.0, 16.0}}, label: 'Geometry of Circles' <AX element pid: 3209, elementOrHash.elementID: 5520559616.104>
+          Button, 0x11e9ea440, {{181.0, 92.0}, {108.0, 41.0}}, label: 'weekly review, Review' <AX element pid: 3209, elementOrHash.elementID: 5520561408.97>
+            StaticText, 0x11e9ea580, {{193.0, 98.0}, {84.0, 12.0}}, label: 'weekly review' <AX element pid: 3209, elementOrHash.elementID: 5520560512.105>
+            StaticText, 0x11e9ea6c0, {{193.0, 111.0}, {46.0, 16.0}}, label: 'Review' <AX element pid: 3209, elementOrHash.elementID: 5520560960.106>
+          ScrollView, 0x11e9ea800, {{0.0, 147.0}, {820.0, 1033.0}} <AX element pid: 3209, elementOrHash.elementID: 5494577152.98>
+            Other, 0x11e9ea940, {{0.0, 147.0}, {820.0, 3680.5}} <AX element pid: 3209, elementOrHash.elementID: 5504283136.107>
+              StaticText, 0x11e9eaa80, {{20.0, 155.0}, {129.5, 36.0}}, label: 'Contents' <AX element pid: 3209, elementOrHash.elementID: 5520561856.109>
+              Image, 0x11e9eabc0, {{69.0, 286.0}, {30.5, 26.0}}, identifier: 'leaf.fill', label: 'Leaf' <AX element pid: 3209, elementOrHash.elementID: 5520562304.110>
+              StaticText, 0x11e9ead00, {{114.0, 279.0}, {128.0, 31.5}}, label: 'Warm-ups' <AX element pid: 3209, elementOrHash.elementID: 5520562752.111>
+              StaticText, 0x11e9eae40, {{114.0, 313.5}, {334.0, 16.0}}, label: 'The fluency you lean on when everything else gets noisy.' <AX element pid: 3209, elementOrHash.elementID: 5520563200.112>
+              Button, 0x11e9eaf80, {{64.0, 336.5}, {218.5, 221.0}}, identifier: 'conceptNode_fractions_decimals', label: '✓, Fractions and Decimals' <AX element pid: 3209, elementOrHash.elementID: 5520564992.113>
+                Image, 0x11e9eb0c0, {{87.0, 336.5}, {172.5, 172.5}} <AX element pid: 3209, elementOrHash.elementID: 5520563648.150>
+                StaticText, 0x11e9eb200, {{256.4, 470.2}, {9.5, 12.0}}, label: '✓' <AX element pid: 3209, elementOrHash.elementID: 5520564096.151>
+                StaticText, 0x11e9eb340, {{118.8, 494.2}, {109.0, 41.0}}, label: 'Fractions and Decimals' <AX element pid: 3209, elementOrHash.elementID: 5520564544.152>
+              Button, 0x11e9eb480, {{300.5, 336.5}, {219.0, 221.0}}, identifier: 'conceptNode_ratios_proportions', label: '✓, Ratios and Proportions' <AX element pid: 3209, elementOrHash.elementID: 5520566784.114>
+                Image, 0x11e9eb5c0, {{323.5, 336.5}, {173.0, 172.5}} <AX element pid: 3209, elementOrHash.elementID: 5520565440.153>
+                StaticText, 0x11e9eb700, {{493.1, 470.2}, {9.5, 12.0}}, label: '✓' <AX element pid: 3209, elementOrHash.elementID: 5520565888.154>
+                StaticText, 0x11e9eb840, {{362.5, 494.2}, {95.0, 41.0}}, label: 'Ratios and Proportions' <AX element pid: 3209, elementOrHash.elementID: 5520566336.155>
+              Button, 0x11e9eb980, {{537.5, 336.5}, {218.5, 221.0}}, identifier: 'conceptNode_order_of_operations', label: 'Order of Operations' <AX element pid: 3209, elementOrHash.elementID: 5520568128.115>
+                Image, 0x11e9ebac0, {{560.5, 336.5}, {172.5, 172.5}} <AX element pid: 3209, elementOrHash.elementID: 5520567232.156>
+                StaticText, 0x11e9ebc00, {{566.4, 504.4}, {160.5, 20.5}}, label: 'Order of Operations' <AX element pid: 3209, elementOrHash.elementID: 5520567680.157>
+              Button, 0x11e9ebd40, {{64.0, 564.5}, {218.5, 221.5}}, identifier: 'conceptNode_basic_equations', label: 'Basic One-Variable Equations' <AX element pid: 3209, elementOrHash.elementID: 5520569472.116>
+                Image, 0x11e9ebe80, {{87.0, 564.5}, {172.5, 172.5}} <AX element pid: 3209, elementOrHash.elementID: 5520568576.158>
+                StaticText, 0x11e9ec000, {{94.1, 722.3}, {158.5, 41.0}}, label: 'Basic One-Variable Equations' <AX element pid: 3209, elementOrHash.elementID: 5520569024.159>
+              Button, 0x11e9ec140, {{300.5, 564.5}, {219.0, 221.5}}, identifier: 'conceptNode_number_properties', label: '✓, Number Properties, Factors, and Divisibility' <AX element pid: 3209, elementOrHash.elementID: 5520571264.117>
+                Image, 0x11e9ec280, {{323.5, 564.5}, {173.0, 172.5}} <AX element pid: 3209, elementOrHash.elementID: 5520569920.160>
+                StaticText, 0x11e9ec3c0, {{493.1, 698.3}, {9.5, 12.0}}, label: '✓' <AX element pid: 3209, elementOrHash.elementID: 5520570368.161>
+                StaticText, 0x11e9ec500, {{319.8, 722.3}, {180.5, 41.0}}, label: 'Number Properties, Factors, and Divisibility' <AX element pid: 3209, elementOrHash.elementID: 5520570816.162>
+              Button, 0x11e9ec640, {{537.5, 564.5}, {218.5, 221.5}}, identifier: 'conceptNode_measurement_units', label: '✓, Units, Measurement, and Dimensional Reasoning' <AX element pid: 3209, elementOrHash.elementID: 5520589696.118>
+                Image, 0x11e9ec780, {{560.5, 564.5}, {172.5, 172.5}} <AX element pid: 3209, elementOrHash.elementID: 5520571712.163>
+                StaticText, 0x11e9ec8c0, {{729.8, 698.3}, {9.5, 12.0}}, label: '✓' <AX element pid: 3209, elementOrHash.elementID: 5520588800.164>
+                StaticText, 0x11e9eca00, {{555.4, 722.3}, {182.5, 41.0}}, label: 'Units, Measurement, and Dimensional Reasoning' <AX element pid: 3209, elementOrHash.elementID: 5520589248.165>
+              Button, 0x11e9ecb40, {{64.0, 755.5}, {692.0, 381.5}}, identifier: 'conceptNode_algebraic_manipulation', label: 'Algebraic Structure and Symbolic Manipulation' <AX element pid: 3209, elementOrHash.elementID: 5520591040.119>
+                Image, 0x11e9ecc80, {{225.5, 755.5}, {369.0, 369.5}} <AX element pid: 3209, elementOrHash.elementID: 5520590144.166>
+                StaticText, 0x11e9ecdc0, {{220.2, 1083.8}, {379.5, 20.5}}, label: 'Algebraic Structure and Symbolic Manipulation' <AX element pid: 3209, elementOrHash.elementID: 5520590592.167>
+              Image, 0x11e9ecf00, {{69.0, 1268.0}, {30.5, 26.0}}, identifier: 'leaf.fill', label: 'Leaf' <AX element pid: 3209, elementOrHash.elementID: 5520591488.120>
+              StaticText, 0x11e9ed040, {{114.0, 1260.8}, {95.5, 31.5}}, label: 'Algebra' <AX element pid: 3209, elementOrHash.elementID: 5520591936.121>
+              StaticText, 0x11e9ed180, {{114.0, 1295.3}, {382.0, 16.0}}, label: 'Equations, functions, and the moves that unlock most ACT items.' <AX element pid: 3209, elementOrHash.elementID: 5520592384.122>
+              Button, 0x11e9ed2c0, {{64.0, 1318.0}, {218.5, 221.5}}, identifier: 'conceptNode_linear_equations', label: '✓, Linear Equations' <AX element pid: 3209, elementOrHash.elementID: 5520594176.123>
+                Image, 0x11e9ed400, {{87.0, 1318.0}, {172.5, 172.5}} <AX element pid: 3209, elementOrHash.elementID: 5520592832.168>
+                StaticText, 0x11e9ed540, {{256.4, 1451.9}, {9.5, 12.0}}, label: '✓' <AX element pid: 3209, elementOrHash.elementID: 5520593280.169>
+                StaticText, 0x11e9ed680, {{105.8, 1486.2}, {135.0, 20.5}}, label: 'Linear Equations' <AX element pid: 3209, elementOrHash.elementID: 5520593728.170>
+              Button, 0x11e9ed7c0, {{300.5, 1318.0}, {219.0, 221.5}}, identifier: 'conceptNode_functions_basics', label: 'Basics of Functions' <AX element pid: 3209, elementOrHash.elementID: 5520595520.124>
+                Image, 0x11e9ed900, {{323.5, 1318.0}, {173.0, 172.5}} <AX element pid: 3209, elementOrHash.elementID: 5520594624.171>
+                StaticText, 0x11e9eda40, {{331.2, 1486.2}, {157.5, 20.5}}, label: 'Basics of Functions' <AX element pid: 3209, elementOrHash.elementID: 5520595072.172>
+              Button, 0x11e9edb80, {{537.5, 1318.0}, {218.5, 221.5}}, identifier: 'conceptNode_linear_inequalities', label: 'Linear Inequalities' <AX element pid: 3209, elementOrHash.elementID: 5520596864.125>
+                Image, 0x11e9edcc0, {{560.5, 1318.0}, {172.5, 172.5}} <AX element pid: 3209, elementOrHash.elementID: 5520595968.173>
+                StaticText, 0x11e9ede00, {{572.7, 1486.2}, {148.0, 20.5}}, label: 'Linear Inequalities' <AX element pid: 3209, elementOrHash.elementID: 5520596416.174>
+              Button, 0x11e9edf40, {{64.0, 1546.0}, {218.5, 221.5}}, identifier: 'conceptNode_systems_of_linear_equations', label: '✓, Systems of Linear Equations' <AX element pid: 3209, elementOrHash.elementID: 5520598656.126>
+                Image, 0x11e9ee080, {{87.0, 1546.0}, {172.5, 173.0}} <AX element pid: 3209, elementOrHash.elementID: 5520597312.175>
+                StaticText, 0x11e9ee1c0, {{256.4, 1680.1}, {9.5, 12.0}}, label: '✓' <AX element pid: 3209, elementOrHash.elementID: 5520597760.176>
+                StaticText, 0x11e9ee300, {{105.8, 1704.1}, {135.0, 41.0}}, label: 'Systems of Linear Equations' <AX element pid: 3209, elementOrHash.elementID: 5520598208.177>
+              Button, 0x11e9ee440, {{300.5, 1546.0}, {219.0, 221.5}}, identifier: 'conceptNode_exponent_rules', label: '✓, Exponent Rules' <AX element pid: 3209, elementOrHash.elementID: 5520600448.127>
+                Image, 0x11e9ee580, {{323.5, 1546.0}, {173.0, 173.0}} <AX element pid: 3209, elementOrHash.elementID: 5520599104.178>
+                StaticText, 0x11e9ee6c0, {{493.1, 1680.1}, {9.5, 12.0}}, label: '✓' <AX element pid: 3209, elementOrHash.elementID: 5520599552.179>
+                StaticText, 0x11e9ee800, {{347.2, 1714.4}, {125.5, 20.5}}, label: 'Exponent Rules' <AX element pid: 3209, elementOrHash.elementID: 5520600000.180>
+              Button, 0x11e9ee940, {{537.5, 1546.0}, {218.5, 221.5}}, identifier: 'conceptNode_polynomials', label: '✓, Polynomial Operations' <AX element pid: 3209, elementOrHash.elementID: 5520602240.128>
+                Image, 0x11e9eea80, {{560.5, 1546.0}, {172.5, 173.0}} <AX element pid: 3209, elementOrHash.elementID: 5520600896.181>
+                StaticText, 0x11e9eebc0, {{729.8, 1680.1}, {9.5, 12.0}}, label: '✓' <AX element pid: 3209, elementOrHash.elementID: 5520601344.182>
+                StaticText, 0x11e9eed00, {{555.4, 1714.4}, {182.5, 20.5}}, label: 'Polynomial Operations' <AX element pid: 3209, elementOrHash.elementID: 5520601792.183>
+              Button, 0x11e9eee40, {{64.0, 1774.5}, {218.5, 221.5}}, identifier: 'conceptNode_factoring_polynomials', label: 'Factoring Polynomials' <AX element pid: 3209, elementOrHash.elementID: 5520603584.129>
+                Image, 0x11e9eef80, {{87.0, 1774.5}, {172.5, 172.5}} <AX element pid: 3209, elementOrHash.elementID: 5520602688.184>
+                StaticText, 0x11e9ef0c0, {{84.1, 1942.5}, {178.5, 20.5}}, label: 'Factoring Polynomials' <AX element pid: 3209, elementOrHash.elementID: 5520603136.185>
+              Button, 0x11e9ef200, {{300.5, 1774.5}, {219.0, 221.5}}, identifier: 'conceptNode_radical_expressions', label: 'Radical Expressions' <AX element pid: 3209, elementOrHash.elementID: 5520621568.130>
+                Image, 0x11e9ef340, {{323.5, 1774.5}, {173.0, 172.5}} <AX element pid: 3209, elementOrHash.elementID: 5520604032.186>
+                StaticText, 0x11e9ef480, {{329.2, 1942.5}, {161.5, 20.5}}, label: 'Radical Expressions' <AX element pid: 3209, elementOrHash.elementID: 5520604480.187>
+              Button, 0x11e9ef5c0, {{537.5, 1774.5}, {218.5, 221.5}}, identifier: 'conceptNode_quadratic_equations', label: '✓, Quadratic Equations' <AX element pid: 3209, elementOrHash.elementID: 5520623360.131>
+                Image, 0x11e9ef700, {{560.5, 1774.5}, {172.5, 172.5}} <AX element pid: 3209, elementOrHash.elementID: 5520622016.188>
+                StaticText, 0x11e9ef840, {{729.8, 1908.3}, {9.5, 12.0}}, label: '✓' <AX element pid: 3209, elementOrHash.elementID: 5520622464.189>
+                StaticText, 0x11e9ef980, {{564.4, 1942.5}, {164.5, 20.5}}, label: 'Quadratic Equations' <AX element pid: 3209, elementOrHash.elementID: 5520622912.190>
+              Button, 0x11e9efac0, {{64.0, 1980.5}, {337.0, 317.5}}, identifier: 'conceptNode_exponential_functions', label: 'Exponential Functions' <AX element pid: 3209, elementOrHash.elementID: 5520624704.132>
+                Image, 0x11e9efc00, {{87.0, 1980.5}, {291.0, 291.0}} <AX element pid: 3209, elementOrHash.elementID: 5520623808.191>
+                StaticText, 0x11e9efd40, {{143.0, 2244.6}, {179.0, 20.5}}, label: 'Exponential Functions' <AX element pid: 3209, elementOrHash.elementID: 5520624256.192>
+              Button, 0x11e9efe80, {{419.0, 1980.5}, {337.0, 317.5}}, identifier: 'conceptNode_sequences_series', label: '✓, Sequences and Series' <AX element pid: 3209, elementOrHash.elementID: 5520626496.133>
+                Image, 0x11e9f0000, {{442.0, 1980.5}, {291.0, 291.0}} <AX element pid: 3209, elementOrHash.elementID: 5520625152.193>
+                StaticText, 0x11e9f0140, {{729.8, 2210.4}, {9.5, 12.0}}, label: '✓' <AX element pid: 3209, elementOrHash.elementID: 5520625600.194>
+                StaticText, 0x11e9f0280, {{498.0, 2244.6}, {179.0, 20.5}}, label: 'Sequences and Series' <AX element pid: 3209, elementOrHash.elementID: 5520626048.195>
+              Image, 0x11e9f03c0, {{69.0, 2428.5}, {30.5, 26.0}}, identifier: 'leaf.fill', label: 'Leaf' <AX element pid: 3209, elementOrHash.elementID: 5520626944.134>
+              StaticText, 0x11e9f0500, {{114.0, 2421.7}, {121.0, 31.5}}, label: 'Geometry' <AX element pid: 3209, elementOrHash.elementID: 5520627392.135>
+              StaticText, 0x11e9f0640, {{114.0, 2456.2}, {286.5, 16.0}}, label: 'Shapes, angles, and space: draw it, then name it.' <AX element pid: 3209, elementOrHash.elementID: 5520627840.136>
+              Button, 0x11e9f0780, {{64.0, 2479.0}, {218.5, 221.5}}, identifier: 'conceptNode_right_triangle_geometry', label: 'Right Triangle Geometry' <AX element pid: 3209, elementOrHash.elementID: 5520629184.137>
+                Image, 0x11e9f08c0, {{87.0, 2479.0}, {172.5, 172.5}} <AX element pid: 3209, elementOrHash.elementID: 5520628288.196>
+                StaticText, 0x11e9f0a00, {{115.6, 2636.8}, {115.5, 41.0}}, label: 'Right Triangle Geometry' <AX element pid: 3209, elementOrHash.elementID: 5520628736.197>
+              Button, 0x11e9f0b40, {{300.5, 2479.0}, {219.0, 221.5}}, identifier: 'conceptNode_trigonometry_basics', label: 'Trigonometry Basics' <AX element pid: 3209, elementOrHash.elementID: 5520630528.138>
+                Image, 0x11e9f0c80, {{323.5, 2479.0}, {173.0, 172.5}} <AX element pid: 3209, elementOrHash.elementID: 5520629632.198>
+                StaticText, 0x11e9f0dc0, {{327.0, 2647.1}, {166.0, 20.5}}, label: 'Trigonometry Basics' <AX element pid: 3209, elementOrHash.elementID: 5520630080.199>
+              Button, 0x11e9f0f00, {{537.5, 2479.0}, {218.5, 221.5}}, identifier: 'conceptNode_lines_angles', label: 'Lines and Angles' <AX element pid: 3209, elementOrHash.elementID: 5520631872.139>
+                Image, 0x11e9f1040, {{560.5, 2479.0}, {172.5, 172.5}} <AX element pid: 3209, elementOrHash.elementID: 5520630976.200>
+                StaticText, 0x11e9f1180, {{577.9, 2647.1}, {137.5, 20.5}}, label: 'Lines and Angles' <AX element pid: 3209, elementOrHash.elementID: 5520631424.201>
+              Button, 0x11e9f12c0, {{64.0, 2707.0}, {218.5, 221.5}}, identifier: 'conceptNode_triangles_congruence', label: '✓, Triangles and Congruence' <AX element pid: 3209, elementOrHash.elementID: 5520633664.140>
+                Image, 0x11e9f1400, {{87.0, 2707.0}, {172.5, 172.5}} <AX element pid: 3209, elementOrHash.elementID: 5520632320.202>
+                StaticText, 0x11e9f1540, {{256.4, 2841.0}, {9.5, 12.0}}, label: '✓' <AX element pid: 3209, elementOrHash.elementID: 5520632768.203>
+                StaticText, 0x11e9f1680, {{117.1, 2865.0}, {112.5, 41.0}}, label: 'Triangles and Congruence' <AX element pid: 3209, elementOrHash.elementID: 5520633216.204>
+              Button, 0x11e9f17c0, {{300.5, 2707.0}, {219.0, 221.5}}, identifier: 'conceptNode_circles_geometry', label: 'Geometry of Circles' <AX element pid: 3209, elementOrHash.elementID: 5520635008.141>
+                Image, 0x11e9f1900, {{323.5, 2707.0}, {173.0, 172.5}} <AX element pid: 3209, elementOrHash.elementID: 5520634112.205>
+                StaticText, 0x11e9f1a40, {{329.8, 2875.2}, {160.5, 20.5}}, label: 'Geometry of Circles' <AX element pid: 3209, elementOrHash.elementID: 5520634560.206>
+              Button, 0x11e9f1b80, {{537.5, 2707.0}, {218.5, 221.5}}, identifier: 'conceptNode_area_volume', label: '✓, Area and Volume' <AX element pid: 3209, elementOrHash.elementID: 5520636800.142>
+                Image, 0x11e9f1cc0, {{560.5, 2707.0}, {172.5, 172.5}} <AX element pid: 3209, elementOrHash.elementID: 5520635456.207>
+                StaticText, 0x11e9f1e00, {{729.8, 2841.0}, {9.5, 12.0}}, label: '✓' <AX element pid: 3209, elementOrHash.elementID: 5520635904.208>
+                StaticText, 0x11e9f1f40, {{578.4, 2875.2}, {136.5, 20.5}}, label: 'Area and Volume' <AX element pid: 3209, elementOrHash.elementID: 5520636352.209>
+              Button, 0x11e9f2080, {{64.0, 2898.5}, {692.0, 381.0}}, identifier: 'conceptNode_geometric_transformations', label: '✓, Geometric Transformations' <AX element pid: 3209, elementOrHash.elementID: 5520671616.143>
+                Image, 0x11e9f21c0, {{225.5, 2898.5}, {369.0, 369.5}} <AX element pid: 3209, elementOrHash.elementID: 5520637248.210>
+                StaticText, 0x11e9f2300, {{591.5, 3192.2}, {9.5, 12.0}}, label: '✓' <AX element pid: 3209, elementOrHash.elementID: 5520670720.211>
+                StaticText, 0x11e9f2440, {{299.5, 3226.4}, {221.0, 20.5}}, label: 'Geometric Transformations' <AX element pid: 3209, elementOrHash.elementID: 5520671168.212>
+              Image, 0x11e9f2580, {{69.0, 3392.0}, {30.5, 26.0}}, identifier: 'leaf.fill', label: 'Leaf' <AX element pid: 3209, elementOrHash.elementID: 5520672064.144>
+              StaticText, 0x11e9f26c0, {{114.0, 3385.2}, {176.0, 31.5}}, label: 'Data & chance' <AX element pid: 3209, elementOrHash.elementID: 5520672512.145>
+              StaticText, 0x11e9f2800, {{114.0, 3419.7}, {361.0, 16.0}}, label: 'Read the story in a table, then weigh what could happen next.' <AX element pid: 3209, elementOrHash.elementID: 5520672960.146>
+              Button, 0x11e9f2940, {{64.0, 3420.0}, {337.0, 318.0}}, identifier: 'conceptNode_descriptive_statistics', label: 'Descriptive Statistics' <AX element pid: 3209, elementOrHash.elementID: 5520674304.147>
+                Image, 0x11e9f2a80, {{87.0, 3420.0}, {291.0, 291.0}} <AX element pid: 3209, elementOrHash.elementID: 5520673408.213>
+                StaticText, 0x11e9f2bc0, {{146.0, 3684.5}, {173.0, 20.5}}, label: 'Descriptive Statistics' <AX element pid: 3209, elementOrHash.elementID: 5520673856.214>
+              Button, 0x11e9f2d00, {{419.0, 3420.0}, {337.0, 318.0}}, identifier: 'conceptNode_basic_probability', label: '✓, Basic Probability' <AX element pid: 3209, elementOrHash.elementID: 5520676096.148>
+                Image, 0x11e9f2e40, {{442.0, 3420.0}, {291.0, 291.0}} <AX element pid: 3209, elementOrHash.elementID: 5520674752.215>
+                StaticText, 0x11e9f2f80, {{729.8, 3650.3}, {9.5, 12.0}}, label: '✓' <AX element pid: 3209, elementOrHash.elementID: 5520675200.216>
+                StaticText, 0x11e9f30c0, {{519.8, 3684.5}, {135.5, 20.5}}, label: 'Basic Probability' <AX element pid: 3209, elementOrHash.elementID: 5520675648.217>
+            Other, 0x11e9f3200, {{787.0, 153.0}, {30.0, 1009.0}}, label: 'Vertical scroll bar, 4 pages', value: 0% <AX element pid: 3209, elementOrHash.elementID: 5504285184.108>
+              Other, 0x11e9f3340, {{814.0, 156.0}, {3.0, 280.0}} <AX element pid: 3209, elementOrHash.elementID: 5520676992.149>
+            Other, 0x11e9f3480, {{787.0, 153.0}, {30.0, 1009.0}}, label: 'Vertical scroll bar, 4 pages', value: 0% <AX element pid: 3209, elementOrHash.elementID: 5504285184.108>
+              Other, 0x11e9f35c0, {{814.0, 156.0}, {3.0, 280.0}} <AX element pid: 3209, elementOrHash.elementID: 5520676992.149>
+    Other, 0x11e9f3700, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 3209, elementOrHash.elementID: 5521055744.242>
+      Other, 0x11e9f3840, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 3209, elementOrHash.elementID: 5491038208.219>
+        Other, 0x11e9f3980, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 3209, elementOrHash.elementID: 5495742336.220>
+          Other, 0x11e9f3ac0, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 3209, elementOrHash.elementID: 5497756224.243>
+            NavigationBar, 0x11e9f3c00, {{0.0, 32.0}, {820.0, 54.0}}, identifier: 'Practice' <AX element pid: 3209, elementOrHash.elementID: 5486407680.244>
+              Other, 0x11e9f3d40, {{14.0, 36.0}, {67.0, 36.0}}, label: 'Close' <AX element pid: 3209, elementOrHash.elementID: 5487270144.298>
+                Other, 0x11e9f3e80, {{14.0, 36.0}, {67.0, 36.0}} <AX element pid: 3209, elementOrHash.elementID: 5545348608.300>
+                  Button, 0x11e9f4000, {{14.0, 36.0}, {67.0, 36.0}}, label: 'Close' <AX element pid: 3209, elementOrHash.elementID: 5545348160.301>
+              StaticText, 0x11e9f4140, {{377.0, 43.5}, {66.0, 21.0}}, label: 'Practice' <AX element pid: 3209, elementOrHash.elementID: 5488767232.299>
+            Other, 0x11e9f4280, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 3209, elementOrHash.elementID: 5497755776.245>
+              Other, 0x11e9f43c0, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 3209, elementOrHash.elementID: 5542118720.248>
+                Other, 0x11e9f4500, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 3209, elementOrHash.elementID: 5488763648.251>
+                  Other, 0x11e9f4640, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 3209, elementOrHash.elementID: 5543828480.253>
+                    Button, 0x11e9f4780, {{20.0, 99.0}, {19.5, 15.0}}, identifier: 'questionNavPrev', label: 'Left', Disabled <AX element pid: 3209, elementOrHash.elementID: 5543835200.302>
+                    StaticText, 0x11e9f48c0, {{361.2, 98.0}, {97.5, 17.0}}, label: 'Question 1 of 1' <AX element pid: 3209, elementOrHash.elementID: 5543835648.303>
+                    Button, 0x11e9f4a00, {{780.5, 99.0}, {19.5, 15.0}}, identifier: 'questionNavNext', label: 'Right', Disabled <AX element pid: 3209, elementOrHash.elementID: 5543836096.304>
+                    ScrollView, 0x11e9f4b40, {{0.0, 127.0}, {820.0, 1053.0}} <AX element pid: 3209, elementOrHash.elementID: 5542595584.305>
+                      Other, 0x11e9f4c80, {{0.0, 127.0}, {820.0, 1001.0}} <AX element pid: 3209, elementOrHash.elementID: 5542768128.310>
+                        ScrollView, 0x11e9f4dc0, {{0.0, 127.0}, {820.0, 1001.0}}, identifier: 'drawingCanvas' <AX element pid: 3209, elementOrHash.elementID: 5490889728.318>
+                          Other, 0x11e9f4f00, {{0.0, 127.0}, {820.0, 1001.0}}, identifier: 'com.apple.pencilkit.tiledView' <AX element pid: 3209, elementOrHash.elementID: 5487273984.327>
+                            Other, 0x11e9f5040, {{0.0, 127.0}, {820.0, 1001.0}} <AX element pid: 3209, elementOrHash.elementID: 5543833856.338>
+                            Other, 0x11e9f5180, {{0.0, 127.0}, {820.0, 1001.0}} <AX element pid: 3209, elementOrHash.elementID: 5543834304.339>
+                          Other, 0x11e9f52c0, {{787.0, 127.0}, {30.0, 1001.0}}, label: 'Vertical scroll bar, 1 page', value: 0% <AX element pid: 3209, elementOrHash.elementID: 5545221120.328>
+                            Other, 0x11e9f5400, {{814.0, 1118.0}, {3.0, 7.0}} <AX element pid: 3209, elementOrHash.elementID: 5545349952.340>
+                          Other, 0x11e9f5540, {{0.0, 1095.0}, {820.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0% <AX element pid: 3209, elementOrHash.elementID: 5545220096.329>
+                            Other, 0x11e9f5680, {{810.0, 1122.0}, {7.0, 3.0}} <AX element pid: 3209, elementOrHash.elementID: 5545349056.341>
+                        StaticText, 0x11e9f57c0, {{68.0, 182.0}, {128.5, 12.0}}, label: 'FRACTIONS DECIMALS' <AX element pid: 3209, elementOrHash.elementID: 5543836544.319>
+                        StaticText, 0x11e9f5900, {{576.5, 179.0}, {185.5, 12.0}}, label: 'cell_fractions_decimals_d1b3e8' <AX element pid: 3209, elementOrHash.elementID: 5543836992.320>
+                        StaticText, 0x11e9f5a40, {{58.0, 207.0}, {704.0, 49.5}}, identifier: 'questionPrompt', label: 'Simon combines 1/4 sack of oats and 1/3 sack of barley for the morning feeding. What fraction of a full sack does this total?' <AX element pid: 3209, elementOrHash.elementID: 5542117824.321>
+                        Button, 0x11e9f5b80, {{56.0, 299.5}, {708.0, 35.0}}, identifier: 'choiceButton_0', label: 'A, 7/12' <AX element pid: 3209, elementOrHash.elementID: 5497754432.322>
+                          StaticText, 0x11e9f5cc0, {{66.2, 305.2}, {9.5, 14.5}}, label: 'A' <AX element pid: 3209, elementOrHash.elementID: 5542118272.330>
+                          StaticText, 0x11e9f5e00, {{94.0, 302.8}, {29.5, 19.5}}, label: '7/12' <AX element pid: 3209, elementOrHash.elementID: 5497754880.331>
+                        Button, 0x11e9f5f40, {{56.0, 343.5}, {708.0, 35.0}}, identifier: 'choiceButton_1', label: 'B, 2/7' <AX element pid: 3209, elementOrHash.elementID: 5497755328.323>
+                          StaticText, 0x11e9f6080, {{66.8, 349.2}, {8.5, 14.5}}, label: 'B' <AX element pid: 3209, elementOrHash.elementID: 5497753536.332>
+                          StaticText, 0x11e9f61c0, {{94.0, 346.8}, {23.0, 19.5}}, label: '2/7' <AX element pid: 3209, elementOrHash.elementID: 5497752640.333>
+                        Button, 0x11e9f6300, {{56.0, 387.5}, {708.0, 35.0}}, identifier: 'choiceButton_2', label: 'C, 2/12' <AX element pid: 3209, elementOrHash.elementID: 5497753088.324>
+                          StaticText, 0x11e9f6440, {{66.2, 393.2}, {9.5, 14.5}}, label: 'C' <AX element pid: 3209, elementOrHash.elementID: 5497749952.334>
+                          StaticText, 0x11e9f6580, {{94.0, 390.8}, {30.5, 19.5}}, label: '2/12' <AX element pid: 3209, elementOrHash.elementID: 5497749504.335>
+                        Button, 0x11e9f66c0, {{56.0, 431.5}, {708.0, 35.0}}, identifier: 'choiceButton_3', label: 'D, 5/12' <AX element pid: 3209, elementOrHash.elementID: 5495748608.325>
+                          StaticText, 0x11e9f6800, {{66.2, 437.2}, {9.5, 14.5}}, label: 'D' <AX element pid: 3209, elementOrHash.elementID: 5497751744.336>
+                          StaticText, 0x11e9f6940, {{94.0, 434.8}, {31.0, 19.5}}, label: '5/12' <AX element pid: 3209, elementOrHash.elementID: 5495749952.337>
+                      Other, 0x11e9f6a80, {{787.0, 133.0}, {30.0, 1029.0}}, label: 'Vertical scroll bar, 1 page', value: 0% <AX element pid: 3209, elementOrHash.elementID: 5545219072.311>
+                        Other, 0x11e9f6bc0, {{814.0, 168.0}, {3.0, 991.0}} <AX element pid: 3209, elementOrHash.elementID: 5545349504.326>
+                      Other, 0x11e9f6d00, {{787.0, 133.0}, {30.0, 1029.0}}, label: 'Vertical scroll bar, 1 page', value: 0% <AX element pid: 3209, elementOrHash.elementID: 5545219072.311>
+                        Other, 0x11e9f6e40, {{814.0, 168.0}, {3.0, 991.0}} <AX element pid: 3209, elementOrHash.elementID: 5545349504.326>
+                    SegmentedControl, 0x11e9f6f80, {{474.0, 151.0}, {246.0, 31.0}}, identifier: 'palmRejectionPicker' <AX element pid: 3209, elementOrHash.elementID: 5543137024.306>
+                      Button, 0x11e9f70c0, {{474.0, 151.0}, {123.0, 32.0}}, label: 'Pencil only', Selected <AX element pid: 3209, elementOrHash.elementID: 5543137792.312>
+                      Button, 0x11e9f7200, {{597.0, 151.0}, {123.0, 32.0}}, label: 'Pencil + finger' <AX element pid: 3209, elementOrHash.elementID: 5543138560.313>
+                    StaticText, 0x11e9f7340, {{728.0, 156.0}, {66.0, 21.5}}, identifier: 'strokeCountLabel', label: '0 strokes' <AX element pid: 3209, elementOrHash.elementID: 5545345024.307>
+                    Button, 0x11e9f7480, {{608.5, 190.0}, {72.0, 30.5}}, label: 'Clear' <AX element pid: 3209, elementOrHash.elementID: 5545346368.308>
+                      Image, 0x11e9f75c0, {{620.5, 199.0}, {11.0, 12.5}}, identifier: 'trash', label: 'Trash' <AX element pid: 3209, elementOrHash.elementID: 5545345472.314>
+                      StaticText, 0x11e9f7700, {{637.5, 198.0}, {32.0, 14.5}}, label: 'Clear' <AX element pid: 3209, elementOrHash.elementID: 5545345920.315>
+                    Button, 0x11e9f7840, {{688.5, 190.0}, {105.5, 30.5}}, identifier: 'recognizeButton', label: 'Recognize', Disabled <AX element pid: 3209, elementOrHash.elementID: 5545347712.309>
+                      Image, 0x11e9f7980, {{701.5, 199.5}, {11.5, 11.5}}, identifier: 'wand.and.stars', label: 'wand.and.stars', Disabled <AX element pid: 3209, elementOrHash.elementID: 5545346816.316>
+                      StaticText, 0x11e9f7ac0, {{719.5, 198.0}, {62.5, 14.5}}, label: 'Recognize', Disabled <AX element pid: 3209, elementOrHash.elementID: 5545347264.317>
+            Other, 0x11e9f7c00, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 3209, elementOrHash.elementID: 5521058304.246>
+              Other, 0x11e9f7d40, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 3209, elementOrHash.elementID: 5521060352.249>
+  Window, 0x11e9f7e80, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 3209, elementOrHash.elementID: 5487265024.5>
+    Other, 0x11e9fc000, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 3209, elementOrHash.elementID: 5487168576.7>
+      Other, 0x11e9fc140, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 3209, elementOrHash.elementID: 5487169920.9>
