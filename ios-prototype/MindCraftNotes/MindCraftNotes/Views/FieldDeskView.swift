@@ -31,6 +31,8 @@ struct FieldDeskView: View {
     @State private var workMode = false
     /// Native Projects menu (Binder / Intel / … + Go Back) — not the vending cat screen.
     @State private var showProjectsPanel = false
+    /// Projects screen — Malevolent Shrine project card; tap → work area.
+    @State private var showProjectsScreen = false
     /// Standalone Desk (deskweb) — entered via the polka vending screen.
     @State private var showStandaloneDesk = false
     /// 0 = clear, 1 = solid white polka sheet covering the screen.
@@ -406,10 +408,21 @@ struct FieldDeskView: View {
                     .accessibilityIdentifier("fieldDeskProjectsPanel")
                 }
 
+                // Projects screen — the Malevolent Shrine project, neatly on
+                // a white void. Tapping the shrine enters the work area.
+                if showProjectsScreen {
+                    projectsScreen
+                        .zIndex(83)
+                        .transition(.opacity)
+                }
+
                 // Standalone Desk — full separation from the kitchen.
                 if showStandaloneDesk {
-                    StandaloneDeskView(onBackToKitchen: { closeStandaloneDesk() })
-                        .zIndex(85)
+                    StandaloneDeskView(
+                        onBackToKitchen: { closeStandaloneDesk() },
+                        onManage: { openManageHubFromDesk() }
+                    )
+                    .zIndex(85)
                 }
 
                 // Polka doorway sheet rides above both worlds while crossing.
@@ -508,27 +521,57 @@ struct FieldDeskView: View {
                         )
                 }
             }
-            // Volume pinned top-right — desk tools live on Jesse via Projects / +.
+            // Create + sign out + volume pinned top-right on Jesse's.
             .overlay(alignment: .topTrailing) {
                 if !deskOverlayChromeBlocked {
-                    Button {
-                        kitchenSoundOn.toggle()
-                        flash(kitchenSoundOn ? "Sound on" : "Sound off")
-                    } label: {
-                        Image(systemName: kitchenSoundOn ? "speaker.wave.2.fill" : "speaker.slash.fill")
-                            .font(.system(size: 13, weight: .bold))
-                            .foregroundColor(kitchenSoundOn ? Color(fdHex: "0c1207") : .white.opacity(0.9))
-                            .frame(width: 36, height: 36)
-                            .background(
-                                Circle().fill(kitchenSoundOn ? Color(fdHex: "c4f547") : Color.black.opacity(0.55))
-                            )
+                    HStack(spacing: 8) {
+                        // Create — icon lands now; the full studio ships with
+                        // Akshat's Figma pass.
+                        Button {
+                            flash("Create · new studio coming soon")
+                        } label: {
+                            Image(systemName: "plus.viewfinder")
+                                .font(.system(size: 13, weight: .bold))
+                                .foregroundColor(.white.opacity(0.9))
+                                .frame(width: 36, height: 36)
+                                .background(Circle().fill(Color.black.opacity(0.55)))
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityIdentifier("fieldDeskCreateButton")
+                        .accessibilityLabel("Create")
+
+                        Button {
+                            authService.signOut()
+                        } label: {
+                            Image(systemName: "rectangle.portrait.and.arrow.right")
+                                .font(.system(size: 13, weight: .bold))
+                                .foregroundColor(.white.opacity(0.9))
+                                .frame(width: 36, height: 36)
+                                .background(Circle().fill(Color.black.opacity(0.55)))
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityIdentifier("fieldDeskSignOutButton")
+                        .accessibilityLabel("Sign out")
+
+                        Button {
+                            kitchenSoundOn.toggle()
+                            flash(kitchenSoundOn ? "Sound on" : "Sound off")
+                        } label: {
+                            Image(systemName: kitchenSoundOn ? "speaker.wave.2.fill" : "speaker.slash.fill")
+                                .font(.system(size: 13, weight: .bold))
+                                .foregroundColor(kitchenSoundOn ? Color(fdHex: "0c1207") : .white.opacity(0.9))
+                                .frame(width: 36, height: 36)
+                                .background(
+                                    Circle().fill(kitchenSoundOn ? Color(fdHex: "c4f547") : Color.black.opacity(0.55))
+                                )
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityIdentifier("fieldDeskSoundToggle")
+                        .accessibilityLabel(kitchenSoundOn ? "Mute kitchen" : "Unmute kitchen")
                     }
-                    .buttonStyle(.plain)
                     .padding(.top, 10)
                     .padding(.trailing, 14)
                     .zIndex(80)
-                    .accessibilityIdentifier("fieldDeskSoundToggle")
-                    .accessibilityLabel(kitchenSoundOn ? "Mute kitchen" : "Unmute kitchen")
                 }
             }
         }
@@ -722,8 +765,8 @@ struct FieldDeskView: View {
                 .allowsHitTesting(false)
         }
         .padding(.horizontal, 16)
-        // Leave room for pinned volume on the trailing edge.
-        .padding(.trailing, 56)
+        // Leave room for pinned Create / sign out / volume on the trailing edge.
+        .padding(.trailing, 148)
         .padding(.top, 10)
         .padding(.bottom, 2)
         .background(
@@ -872,6 +915,81 @@ struct FieldDeskView: View {
         .position(x: x + boxW / 2, y: y + boxH / 2)
     }
 
+    /// Projects screen: the student's one project today, shown neatly.
+    private var projectsScreen: some View {
+        ZStack(alignment: .topLeading) {
+            MalevolentShrineStage(
+                showTitle: true,
+                title: "Malevolent Shrine",
+                subtitle: "Your work area · tap the shrine to enter"
+            )
+            .contentShape(Rectangle())
+            .onTapGesture { enterWorkAreaFromProjects() }
+
+            Button {
+                closeProjectsScreen()
+            } label: {
+                HStack(spacing: 7) {
+                    Image(systemName: "chevron.left")
+                        .font(.system(size: 12, weight: .heavy))
+                    Text("Jesse's")
+                        .font(.system(size: 13, weight: .heavy, design: .rounded))
+                }
+                .foregroundColor(Color(fdHex: "143a2e"))
+                .padding(.horizontal, 14)
+                .padding(.vertical, 9)
+                .background(
+                    Capsule()
+                        .fill(Color.white.opacity(0.95))
+                        .shadow(color: .black.opacity(0.14), radius: 10, y: 4)
+                )
+                .overlay(Capsule().strokeBorder(Color(fdHex: "143a2e").opacity(0.14), lineWidth: 1))
+            }
+            .buttonStyle(.plain)
+            .padding(.top, 14)
+            .padding(.leading, 16)
+            .accessibilityIdentifier("fieldDeskProjectsBack")
+
+            VStack {
+                Spacer()
+                HStack {
+                    Spacer()
+                    Text("OPEN")
+                        .font(.system(size: 12, weight: .heavy, design: .rounded))
+                        .tracking(1.2)
+                        .foregroundColor(Color(fdHex: "0c1207"))
+                        .padding(.horizontal, 22)
+                        .padding(.vertical, 11)
+                        .background(Capsule().fill(Color(fdHex: "c4f547")))
+                        .shadow(color: .black.opacity(0.12), radius: 10, y: 4)
+                    Spacer()
+                }
+                .padding(.bottom, 96)
+            }
+            .allowsHitTesting(false)
+        }
+        .accessibilityIdentifier("fieldDeskProjectsScreen")
+    }
+
+    private func enterWorkAreaFromProjects() {
+        withAnimation(.easeInOut(duration: 0.25)) { showProjectsScreen = false }
+        openStandaloneDesk()
+    }
+
+    private func closeProjectsScreen() {
+        withAnimation(.easeInOut(duration: 0.25)) { showProjectsScreen = false }
+        JesseKitchenBackgroundView.exitProjectsCamera()
+    }
+
+    /// Manage from the work area: land on the hub page (tutors map +
+    /// workflow market) once the desk has closed.
+    private func openManageHubFromDesk() {
+        closeStandaloneDesk()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+            NotificationCenter.default.post(name: .mcOpenHubFromDesk, object: nil)
+        }
+    }
+
     /// Polka dots bloom over the kitchen; the Desk waits underneath.
     private func openStandaloneDesk() {
         guard !showStandaloneDesk else { return }
@@ -896,8 +1014,9 @@ struct FieldDeskView: View {
         showBlankPage = false
         switch action {
         case .openDesk, .projects:
-            // Projects is the door to the standalone Desk (polka fill).
-            openStandaloneDesk()
+            // Projects → the projects screen (Malevolent Shrine card) first;
+            // tapping the shrine enters the work area.
+            withAnimation(.easeInOut(duration: 0.3)) { showProjectsScreen = true }
         case .wakeJesse:
             flash("Jesse’s Kitchen")
         case .intel:

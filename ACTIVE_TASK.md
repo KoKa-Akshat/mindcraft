@@ -18,6 +18,12 @@ Firebase marketing target. App/login CTAs retargeted to `#start` (join beta) whi
 Live: https://mindcraft-marketing-site.web.app — confirm CI green after push.
 
 ---
+## iOS Field Desk · Projects → Malevolent Shrine → work area (2026-08-10, code-level)
+
+Jesse's top-right: Create (stub) + Sign out + volume. Projects → shrine project screen → tap → work area. `worlds/deskweb/desk.html`: top bar (Malevolent Shrine · Manage) + bottom dock (+ tray Note/Memo/Doc/Record · Record toggle · Binder · Calendar · zoom); Binder cover replaces kitchen tile; transcription draggable, no remove. Manage → hub (map + workflows) via `deskAction` bridge. Web side browser-verified 9/9; **Swift NOT device-built yet — build on Mac first** (`ios-prototype/NATIVE_APP_BUILD_PLAN.md` 2026-08-10 entry).
+
+---
+
 ## Desk OS · Piano + ACT interactive books (LIVE on app hosting, 2026-08-08)
 
 Modular extract→tag→generate in `agent_work/product/desk_os/`. Synced into `app/public/desk-os` at build.  
