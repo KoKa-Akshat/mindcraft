@@ -1276,9 +1276,11 @@
   .story-led .makers,
   .story-led .faq{display:none;}
 
-  .story-led .hero-stage{grid-template-columns:.9fr 1.1fr;}
-  .story-led .hero h1{font-size:72px; max-width:11ch; letter-spacing:0;}
-  .story-led .hero .lead{max-width:48ch;}
+  .story-led .hero{min-height:min(90svh,840px);}
+  .story-led .hero-stage{grid-template-columns:1fr 1.15fr; gap:clamp(32px,4vw,52px);}
+  .story-led .hero h1{font-size:clamp(46px,3.5vw,50px); max-width:none; letter-spacing:0; line-height:.98;}
+  .story-led .hero-first-line{display:block; white-space:nowrap;}
+  .story-led .hero .lead{max-width:34ch; margin-top:16px;}
   .story-led .workspace-board{
     height:540px; border-color:rgba(20,58,46,.13);
     background:
@@ -1335,6 +1337,7 @@
   }
   .desk-zoom button:last-child{border-right:0;}
   .desk-zoom button:hover{background:rgba(20,58,46,.07);}
+  .desk-zoom button:disabled{opacity:.3; cursor:default; background:transparent;}
   .desk-tools .add-note{background:#07110e; color:#fff;}
   .desk-prompt{
     position:absolute; z-index:22; left:50%; bottom:18px; width:min(460px,calc(100% - 40px));
@@ -1350,6 +1353,13 @@
   .desk-prompt input::placeholder{color:rgba(255,255,255,.44);}
   .desk-prompt button{width:44px; height:44px; border:0; border-radius:13px; background:var(--lime); color:#07110e; font-size:19px; cursor:pointer;}
   .story-led .note-composer{top:74px; right:20px;}
+  .story-led .user-note{
+    position:absolute; width:190px; min-height:112px; z-index:16; padding:17px 16px;
+    border:1px solid rgba(211,169,0,.2); border-radius:15px; background:#fffdf0;
+    box-shadow:0 18px 46px rgba(20,58,46,.14); cursor:grab;
+  }
+  .story-led .user-note b{display:block; color:rgba(20,58,46,.45); font-size:9px; font-weight:1000; letter-spacing:.14em; text-transform:uppercase;}
+  .story-led .user-note span{display:block; margin-top:8px; color:#143a2e; font-family:"Fredoka",sans-serif; font-size:15px; line-height:1.2; overflow-wrap:anywhere;}
 
   .credibility{
     padding:42px 0 64px; background:#07110e; color:#fff;
@@ -1479,7 +1489,7 @@
   .story-led .cta{background:#fff8e9;}
 
   @media(max-width:1100px){
-    .story-led .hero h1{font-size:60px;}
+    .story-led .hero h1{font-size:50px;}
     .story-led .hero-stage{grid-template-columns:1fr;}
     .story-led .hero-shot{max-width:760px;}
     .story-beat h2,.mission-story h2{font-size:58px;}
@@ -1500,7 +1510,8 @@
     .lesson-words{display:none;}
   }
   @media(max-width:640px){
-    .story-led .hero h1{font-size:46px; max-width:10ch;}
+    .story-led .hero h1{font-size:43px; max-width:none;}
+    .story-led .hero-first-line{font-size:32px; white-space:nowrap;}
     .story-led .hero-stage{padding-top:100px;}
     .story-led .hero .lead{font-size:16px;}
     .story-led .workspace-board{height:440px; background-size:42px 42px,auto,auto; background-position:12px 12px,center,center;}
@@ -1516,6 +1527,8 @@
     .desk-tools .add-note{width:42px; height:42px;}
     .desk-zoom button{width:34px; height:34px;}
     .story-led .note-composer{top:62px; right:12px; width:260px;}
+    .story-led .user-note{width:136px; min-height:92px; padding:13px 12px;}
+    .story-led .user-note span{font-size:12px;}
     .desk-prompt{bottom:12px; min-height:52px;}
     .desk-prompt button{width:38px; height:38px;}
     .story-led .hero-below{padding-top:6px;}
@@ -1599,8 +1612,8 @@
   <div class="hero-stage">
     <div>
       <a class="hero-announce" href="#learns"><i>NEW</i> Your personal learning system →</a>
-      <h1>Learning that learns you. <em>Care that finds you.</em></h1>
-      <p class="lead">MindCraft notices what makes ideas click, carries that understanding across subjects, and builds the next lesson around you. When software is not enough, a real tutor arrives with context.</p>
+      <h1><span class="hero-first-line">Learning that learns you.</span><em>Care that finds you.</em></h1>
+      <p class="lead">Every lesson remembers what made you click.</p>
       <div class="hero-actions">
         <a class="btn primary" href="#start">Build my learning map</a>
         <a class="btn soft" href="#learns">See how it learns</a>
@@ -1608,7 +1621,7 @@
     </div>
 
     <div class="hero-shot">
-      <div class="hero-note">Jesse's desk · zoom, move, make it yours ↓</div>
+      <div class="hero-note">Move it. Make it yours. ↓</div>
       <div class="workspace-board" id="heroDesk" aria-label="Interactive MindCraft workspace with Jesse's Kitchen, a memo, and an ACT learning map">
         <div class="workspace-cluster" id="workspaceCluster">
           <button class="paper-card paper-main workspace-item" type="button" id="jesseCard" data-draggable aria-label="Open Jesse's Kitchen prompt" aria-expanded="false">
@@ -2445,9 +2458,13 @@
   (function(){
     const board = document.querySelector('.workspace-board');
     if (!board) return;
+    let deskZoom = 1;
     let dragging = false;
     let startX = 0, startY = 0, baseX = 0, baseY = 0, panX = 0, panY = 0;
-    const limit = () => window.matchMedia('(max-width: 640px)').matches ? 26 : 34;
+    const limit = () => {
+      const base = window.matchMedia('(max-width: 640px)').matches ? 26 : 34;
+      return base + Math.max(0,deskZoom - 1) * Math.min(board.clientWidth,board.clientHeight) * .42;
+    };
     const clamp = (v) => Math.max(-limit(), Math.min(limit(), v));
     const setPan = (x, y) => {
       panX = clamp(x); panY = clamp(y);
@@ -2473,7 +2490,7 @@
     board.addEventListener('pointercancel', () => { dragging = false; });
     board.addEventListener('pointerleave', () => { if (!dragging) setPan(0, 0); });
 
-    board.querySelectorAll('[data-draggable]').forEach(item => {
+    const bindWorkspaceDrag = item => {
       let itemDragging = false;
       let itemMoved = false;
       let sx = 0, sy = 0, bx = 0, by = 0, dx = 0, dy = 0;
@@ -2495,7 +2512,7 @@
       item.addEventListener('pointermove', e => {
         if (!itemDragging) return;
         if (Math.abs(e.clientX - sx) + Math.abs(e.clientY - sy) > 5) itemMoved = true;
-        setItem(bx + (e.clientX - sx), by + (e.clientY - sy));
+        setItem(bx + (e.clientX - sx) / deskZoom, by + (e.clientY - sy) / deskZoom);
         e.stopPropagation();
       });
       ['pointerup','pointercancel'].forEach(type => item.addEventListener(type, () => {
@@ -2503,26 +2520,30 @@
         item.dataset.justDragged = itemMoved ? '1' : '0';
         item.classList.remove('is-dragging');
       }));
-    });
+    };
+    board.querySelectorAll('[data-draggable]').forEach(bindWorkspaceDrag);
 
     const composer = document.getElementById('noteComposer');
     const addNoteBtn = document.getElementById('addNoteBtn');
     const noteText = document.getElementById('noteText');
     const noteStatus = document.getElementById('noteStatus');
-    const pinnedNote = document.getElementById('pinnedNote');
+    const workspaceCluster = document.getElementById('workspaceCluster');
     const zoomOut = document.getElementById('heroZoomOut');
     const zoomIn = document.getElementById('heroZoomIn');
     const jesseCard = document.getElementById('jesseCard');
     const deskPrompt = document.getElementById('deskPrompt');
     const deskPromptInput = document.getElementById('deskPromptInput');
-    let deskZoom = 1;
+    let createdNoteCount = 0;
     const setZoom = value => {
-      deskZoom = Math.max(.78, Math.min(1.22, value));
+      deskZoom = Math.max(.33, Math.min(3, value));
       board.style.setProperty('--desk-zoom', deskZoom.toFixed(2));
+      zoomOut.disabled = deskZoom <= .34;
+      zoomIn.disabled = deskZoom >= 2.99;
     };
     [zoomOut, zoomIn].forEach(button => button?.addEventListener('pointerdown', e => e.stopPropagation()));
-    zoomOut?.addEventListener('click', () => setZoom(deskZoom - .1));
-    zoomIn?.addEventListener('click', () => setZoom(deskZoom + .1));
+    zoomOut?.addEventListener('click', () => setZoom(deskZoom / 1.35));
+    zoomIn?.addEventListener('click', () => setZoom(deskZoom * 1.35));
+    setZoom(1);
     addNoteBtn?.addEventListener('pointerdown', e => e.stopPropagation());
     addNoteBtn?.addEventListener('click', () => {
       composer?.classList.toggle('is-open');
@@ -2550,11 +2571,49 @@
       deskPrompt.classList.remove('is-open');
       jesseCard?.setAttribute('aria-expanded','false');
     });
+    const appendWorkspaceNote = text => {
+      if (!workspaceCluster) return;
+      const index = createdNoteCount++;
+      const note = document.createElement('article');
+      note.className = 'paper-card user-note workspace-item';
+      note.dataset.draggable = '';
+      const mobile = window.matchMedia('(max-width:640px)').matches;
+      const positions = mobile
+        ? [
+            { left:'2px', top:'270px', rotate:'-1deg' },
+            { right:'2px', top:'276px', rotate:'1deg' },
+            { left:'30%', top:'8px', rotate:'.5deg' }
+          ]
+        : [
+            { left:'4%', top:'330px', rotate:'-1deg' },
+            { right:'4%', top:'332px', rotate:'1deg' },
+            { left:'36%', top:'8px', rotate:'.5deg' },
+            { right:'5%', top:'24px', rotate:'-1deg' }
+          ];
+      const position = positions[index % positions.length];
+      Object.entries(position).forEach(([key,value]) => {
+        if (key === 'rotate') note.style.setProperty('--r',value);
+        else note.style[key] = value;
+      });
+      const cycle = Math.floor(index / positions.length);
+      note.style.setProperty('--drag-x',(cycle * 12) + 'px');
+      note.style.setProperty('--drag-y',(cycle * 10) + 'px');
+      const label = document.createElement('b');
+      label.textContent = 'New memo';
+      const copy = document.createElement('span');
+      copy.textContent = text;
+      note.append(label,copy);
+      workspaceCluster.appendChild(note);
+      bindWorkspaceDrag(note);
+    };
     composer?.addEventListener('submit', async e => {
       e.preventDefault();
       const text = (noteText?.value || '').trim().slice(0, 180);
       if (!text) return;
-      noteStatus.textContent = 'Organizing...';
+      appendWorkspaceNote(text);
+      noteText.value = '';
+      composer.classList.remove('is-open');
+      noteStatus.textContent = 'Saving...';
       const payload = {
         note: text,
         source: 'marketing_field_desk',
@@ -2581,12 +2640,7 @@
       } catch (_) {
         saved = false;
       }
-      if (pinnedNote){
-        pinnedNote.querySelector('[data-note-copy]').textContent = text;
-        pinnedNote.classList.add('is-on');
-      }
       noteStatus.textContent = saved ? 'Pinned securely.' : 'Pinned locally for preview.';
-      composer.classList.remove('is-open');
     });
 
     const lines = [

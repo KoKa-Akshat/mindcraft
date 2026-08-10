@@ -77,6 +77,7 @@
     box-shadow:0 30px 74px rgba(20,58,46,.22),0 0 0 5px rgba(196,245,71,.14);
   }
   .tile.is-dragging{z-index:30; cursor:grabbing; transition:none;}
+  .tile.is-resizing{z-index:31; transition:none;}
   .tile img{border-radius:11px; pointer-events:none;}
   .tile-label{
     position:absolute; left:3px; top:-28px; white-space:nowrap;
@@ -104,8 +105,20 @@
   .memo-kicker{display:block; margin-top:7px; color:rgba(20,58,46,.46); font-size:10px; font-weight:1000; letter-spacing:.14em; text-transform:uppercase;}
   .memo-preview p{margin-top:11px; font-family:"Fredoka",sans-serif; font-size:clamp(16px,1.6vw,22px); line-height:1.22; color:#163b30;}
   .memo-preview small{display:block; margin-top:14px; color:rgba(20,58,46,.48); font-size:11px; font-weight:900; line-height:1.35;}
-  .act-preview{right:5%; top:20%; width:28%; height:24%; --r:.9deg; background:#07110e;}
+  .act-preview{right:4%; bottom:5%; width:26%; height:22%; --r:.9deg; background:#07110e;}
   .act-preview img{object-fit:contain; border-radius:11px;}
+
+  .resize-handle{
+    position:absolute; z-index:40; right:8px; bottom:8px; width:24px; height:24px;
+    border:1px solid rgba(20,58,46,.13); border-radius:7px; background:rgba(255,255,255,.9);
+    box-shadow:0 5px 14px rgba(20,58,46,.14); cursor:nwse-resize; touch-action:none;
+  }
+  .resize-handle::before,.resize-handle::after{
+    content:""; position:absolute; right:5px; bottom:5px; border-right:2px solid rgba(20,58,46,.56);
+    border-bottom:2px solid rgba(20,58,46,.56); border-radius:1px;
+  }
+  .resize-handle::before{width:9px; height:9px;}
+  .resize-handle::after{width:4px; height:4px;}
 
   .transcript{
     position:absolute; z-index:14; left:50%; top:52%; width:min(320px,30vw);
@@ -131,7 +144,7 @@
   @keyframes voice{0%,100%{transform:scaleY(.52);opacity:.5}50%{transform:scaleY(1);opacity:1}}
 
   .add-note{
-    position:fixed; z-index:50; top:max(24px,env(safe-area-inset-top)); right:max(24px,env(safe-area-inset-right));
+    position:fixed; z-index:50; left:max(24px,env(safe-area-inset-left)); bottom:max(24px,env(safe-area-inset-bottom));
     width:56px; height:56px; display:grid; place-items:center; border:1px solid rgba(7,9,8,.92);
     border-radius:50%; background:var(--ink); color:#fff; font-size:31px; line-height:1;
     box-shadow:0 18px 48px rgba(20,58,46,.22); cursor:pointer;
@@ -141,7 +154,7 @@
   .add-note[aria-expanded="true"]{transform:rotate(45deg); background:var(--lime); color:var(--ink);}
 
   .zoom-controls{
-    position:fixed; z-index:46; left:max(24px,env(safe-area-inset-left)); bottom:max(24px,env(safe-area-inset-bottom));
+    position:fixed; z-index:46; right:max(24px,env(safe-area-inset-right)); bottom:max(24px,env(safe-area-inset-bottom));
     display:flex; overflow:hidden; border:1px solid rgba(20,58,46,.12); border-radius:15px;
     background:rgba(255,255,255,.9); box-shadow:0 16px 42px rgba(20,58,46,.13);
     -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px);
@@ -152,13 +165,14 @@
   }
   .zoom-controls button + button{border-left:1px solid rgba(20,58,46,.1);}
   .zoom-controls button:hover{background:#eef5eb;}
+  .zoom-controls button:disabled{opacity:.3; cursor:default; background:transparent;}
 
   .note-composer{
-    position:fixed; z-index:49; top:max(92px,calc(env(safe-area-inset-top) + 68px));
-    right:max(24px,env(safe-area-inset-right)); width:min(320px,calc(100vw - 32px));
+    position:fixed; z-index:49; left:max(24px,env(safe-area-inset-left));
+    bottom:max(92px,calc(env(safe-area-inset-bottom) + 68px)); width:min(320px,calc(100vw - 32px));
     padding:14px; border:1px solid rgba(255,255,255,.7); border-radius:18px;
     background:rgba(250,250,246,.97); color:#143a2e; box-shadow:0 28px 80px rgba(0,0,0,.52);
-    opacity:0; transform:translateY(-8px) scale(.98); pointer-events:none;
+    opacity:0; transform:translateY(8px) scale(.98); pointer-events:none;
     transition:opacity .22s var(--ease),transform .22s var(--ease);
   }
   .note-composer.is-open{opacity:1; transform:none; pointer-events:auto;}
@@ -215,7 +229,7 @@
     .scene{inset:72px 18px 36px;}
     .kitchen{left:18%; top:6%; width:64%; height:57%;}
     .memo-preview{left:-6%; top:19%; width:34%; min-height:156px; padding:21px 18px;}
-    .act-preview{right:-7%; top:22%; width:35%; height:20%;}
+    .act-preview{right:-2%; bottom:7%; width:34%; height:20%;}
     .transcript{top:43%; width:min(300px,58vw);}
     .tile-label{top:-23px; font-size:10px;}
   }
@@ -227,13 +241,13 @@
     .kitchen img{border-radius:8px;}
     .memo-preview{left:0; top:20%; width:32%; min-height:130px; padding:17px 12px;}
     .memo-preview .memo-kicker,.memo-preview p,.memo-preview small{display:none;}
-    .act-preview{right:0; top:22%; width:33%; height:18%; padding:5px;}
+    .act-preview{right:0; bottom:8%; width:33%; height:18%; padding:5px;}
     .transcript{top:39%; width:64vw; padding:12px 13px; border-radius:15px;}
     .transcript p{font-size:12px;}
     .transcript span{font-size:10px;}
-    .add-note{top:max(16px,env(safe-area-inset-top)); right:16px; width:50px; height:50px;}
-    .zoom-controls{left:16px; bottom:max(16px,env(safe-area-inset-bottom));}
-    .note-composer{top:max(76px,calc(env(safe-area-inset-top) + 58px)); right:16px;}
+    .add-note{left:16px; bottom:max(16px,env(safe-area-inset-bottom)); width:50px; height:50px;}
+    .zoom-controls{right:16px; bottom:max(16px,env(safe-area-inset-bottom));}
+    .note-composer{left:16px; bottom:max(76px,calc(env(safe-area-inset-bottom) + 58px));}
     .memo{width:180px; min-height:126px; padding:14px;}
     .memo p{font-size:15px;}
     .command{bottom:max(16px,env(safe-area-inset-bottom)); min-height:60px; padding:7px 7px 7px 15px; border-radius:18px;}
@@ -248,19 +262,19 @@
 <body>
 <main class="desk" id="desk" aria-label="MindCraft Field Desk prototype">
   <div class="scene" id="scene">
-    <button class="tile kitchen" id="kitchen" type="button" data-draggable aria-expanded="false" aria-controls="command" aria-label="Open Jesse's Kitchen prompt">
+    <button class="tile kitchen" id="kitchen" type="button" data-draggable data-resizable aria-expanded="false" aria-controls="command" aria-label="Open Jesse's Kitchen prompt">
       <span class="tile-label">Jesse's Kitchen</span>
       <img src="img/app/desk-ipad-live.png?v=jesse-desk-1" alt="Jesse's Kitchen inside MindCraft Field Desk">
     </button>
 
-    <article class="tile memo-preview" data-draggable>
+    <article class="tile memo-preview" data-draggable data-resizable>
       <span class="tile-label">Memo</span>
       <b class="memo-kicker">Pinned for tonight</b>
       <p>Graph both equations. The meeting point has to satisfy both.</p>
       <small>Jesse saved this from the open worksheet.</small>
     </article>
 
-    <article class="tile act-preview" data-draggable>
+    <article class="tile act-preview" data-draggable data-resizable>
       <span class="tile-label">ACT map</span>
       <img src="img/new-dash-home.jpg" alt="Current MindCraft ACT learning dashboard">
     </article>
@@ -277,7 +291,7 @@
     <div id="noteLayer" aria-live="polite"></div>
   </div>
 
-  <button class="add-note" id="addNote" type="button" aria-label="Add a note" aria-expanded="false" aria-controls="noteComposer">+</button>
+  <button class="add-note" id="addNote" type="button" aria-label="Add a new note" title="Add a new note" aria-expanded="false" aria-controls="noteComposer">+</button>
 
   <nav class="zoom-controls" aria-label="Desk zoom">
     <button id="zoomOut" type="button" aria-label="Zoom out">&minus;</button>
@@ -314,9 +328,12 @@
     const zoomOut = document.getElementById('zoomOut');
     const zoomIn = document.getElementById('zoomIn');
     const noteSpots = [
-      { left:'8%', bottom:'4%', rotate:'-1.4deg' },
-      { left:'38%', bottom:'1%', rotate:'.8deg' },
-      { right:'31%', bottom:'5%', rotate:'-1deg' }
+      { right:'6%', top:'7%', rotate:'1.2deg' },
+      { left:'7%', bottom:'18%', rotate:'-1.4deg' },
+      { right:'35%', top:'2%', rotate:'-.8deg' },
+      { left:'36%', bottom:'1%', rotate:'.8deg' },
+      { right:'7%', bottom:'34%', rotate:'-1deg' },
+      { left:'4%', top:'47%', rotate:'.6deg' }
     ];
 
     let panX = 0;
@@ -329,20 +346,24 @@
     let zoom = 1;
 
     const setZoom = next => {
-      zoom = Math.max(.82, Math.min(1.18, next));
+      zoom = Math.max(.33, Math.min(3, next));
       scene.style.setProperty('--zoom', zoom.toFixed(2));
+      zoomOut.disabled = zoom <= .34;
+      zoomIn.disabled = zoom >= 2.99;
     };
 
-    zoomOut.addEventListener('click', () => setZoom(zoom - .08));
-    zoomIn.addEventListener('click', () => setZoom(zoom + .08));
+    zoomOut.addEventListener('click', () => setZoom(zoom / 1.35));
+    zoomIn.addEventListener('click', () => setZoom(zoom * 1.35));
     desk.addEventListener('wheel', event => {
       if (Math.abs(event.deltaY) < 2 || event.target.closest('textarea,input')) return;
       event.preventDefault();
-      setZoom(zoom + (event.deltaY < 0 ? .04 : -.04));
+      setZoom(zoom * (event.deltaY < 0 ? 1.08 : .92));
     }, { passive:false });
+    setZoom(1);
 
     const setPan = (x, y) => {
-      const limit = matchMedia('(max-width:520px)').matches ? 20 : 36;
+      const base = matchMedia('(max-width:520px)').matches ? 20 : 36;
+      const limit = base + Math.max(0,zoom - 1) * Math.min(innerWidth,innerHeight) * .45;
       panX = Math.max(-limit, Math.min(limit, x));
       panY = Math.max(-limit, Math.min(limit, y));
       scene.style.setProperty('--pan-x', panX.toFixed(1) + 'px');
@@ -378,6 +399,7 @@
 
       item.addEventListener('pointerdown', event => {
         if (event.button !== undefined && event.button !== 0) return;
+        if (event.target.closest('.resize-handle')) return;
         active = true;
         moved = false;
         startX = event.clientX;
@@ -385,10 +407,10 @@
         baseX = Number(item.dataset.x || 0);
         baseY = Number(item.dataset.y || 0);
         const rect = item.getBoundingClientRect();
-        minX = baseX + 12 - rect.left;
-        maxX = baseX + innerWidth - 12 - rect.right;
-        minY = baseY + 12 - rect.top;
-        maxY = baseY + innerHeight - 12 - rect.bottom;
+        minX = baseX + (12 - rect.left) / zoom;
+        maxX = baseX + (innerWidth - 12 - rect.right) / zoom;
+        minY = baseY + (12 - rect.top) / zoom;
+        maxY = baseY + (innerHeight - 12 - rect.bottom) / zoom;
         item.classList.add('is-dragging');
         item.setPointerCapture?.(event.pointerId);
         event.stopPropagation();
@@ -399,8 +421,8 @@
         const deltaX = event.clientX - startX;
         const deltaY = event.clientY - startY;
         if (Math.abs(deltaX) + Math.abs(deltaY) > 5) moved = true;
-        const safeX = Math.max(minX, Math.min(maxX, baseX + deltaX));
-        const safeY = Math.max(minY, Math.min(maxY, baseY + deltaY));
+        const safeX = Math.max(minX, Math.min(maxX, baseX + deltaX / zoom));
+        const safeY = Math.max(minY, Math.min(maxY, baseY + deltaY / zoom));
         item.dataset.x = safeX.toFixed(1);
         item.dataset.y = safeY.toFixed(1);
         item.style.setProperty('--x', safeX.toFixed(1) + 'px');
@@ -418,9 +440,64 @@
       item.addEventListener('pointercancel', finish);
     };
 
+    const makeResizable = item => {
+      const handle = document.createElement('span');
+      handle.className = 'resize-handle';
+      handle.title = 'Resize panel';
+      handle.setAttribute('aria-hidden','true');
+      item.appendChild(handle);
+
+      let active = false;
+      let startX = 0;
+      let startY = 0;
+      let startWidth = 0;
+      let startHeight = 0;
+
+      handle.addEventListener('pointerdown', event => {
+        if (event.button !== undefined && event.button !== 0) return;
+        active = true;
+        startX = event.clientX;
+        startY = event.clientY;
+        startWidth = item.offsetWidth;
+        startHeight = item.offsetHeight;
+        item.classList.add('is-resizing');
+        handle.setPointerCapture?.(event.pointerId);
+        event.preventDefault();
+        event.stopPropagation();
+      });
+
+      handle.addEventListener('pointermove', event => {
+        if (!active) return;
+        const minWidth = item.classList.contains('kitchen') ? 210 : 125;
+        const minHeight = item.classList.contains('kitchen') ? 250 : 100;
+        const width = Math.max(minWidth,Math.min(scene.clientWidth * .9,startWidth + (event.clientX - startX) / zoom));
+        const height = Math.max(minHeight,Math.min(scene.clientHeight * .88,startHeight + (event.clientY - startY) / zoom));
+        item.style.width = width.toFixed(1) + 'px';
+        item.style.height = height.toFixed(1) + 'px';
+        item.dataset.resized = '1';
+        event.preventDefault();
+        event.stopPropagation();
+      });
+
+      const finish = event => {
+        if (!active) return;
+        active = false;
+        item.classList.remove('is-resizing');
+        setTimeout(() => { item.dataset.resized = '0'; },100);
+        event?.stopPropagation();
+      };
+      handle.addEventListener('pointerup', finish);
+      handle.addEventListener('pointercancel', finish);
+    };
+
     document.querySelectorAll('[data-draggable]').forEach(makeDraggable);
+    document.querySelectorAll('[data-resizable]').forEach(makeResizable);
 
     kitchen.addEventListener('click', () => {
+      if (kitchen.dataset.resized === '1') {
+        kitchen.dataset.resized = '0';
+        return;
+      }
       if (kitchen.dataset.dragged === '1') {
         kitchen.dataset.dragged = '0';
         return;
@@ -455,10 +532,14 @@
       const memo = document.createElement('article');
       memo.className = 'tile memo';
       memo.dataset.draggable = '';
+      memo.dataset.resizable = '';
       Object.entries(spot).forEach(([key,value]) => {
         if (key === 'rotate') memo.style.setProperty('--r', value);
         else memo.style[key] = value;
       });
+      const cycle = Math.floor(index / noteSpots.length);
+      memo.style.setProperty('--x',(cycle * 18) + 'px');
+      memo.style.setProperty('--y',(cycle * 12) + 'px');
       const label = document.createElement('b');
       label.textContent = 'Pinned memo';
       const copy = document.createElement('p');
@@ -466,13 +547,18 @@
       memo.append(label,copy);
       noteLayer.appendChild(memo);
       makeDraggable(memo);
+      makeResizable(memo);
     };
 
     noteComposer.addEventListener('submit', async event => {
       event.preventDefault();
       const text = noteText.value.trim().slice(0,180);
       if (!text) return;
-      noteStatus.textContent = 'Organizing...';
+      addMemo(text);
+      noteText.value = '';
+      noteComposer.classList.remove('is-open');
+      addNote.setAttribute('aria-expanded','false');
+      noteStatus.textContent = 'Saving...';
       const payload = {
         note:text,
         source:'field_desk_prototype',
@@ -499,11 +585,7 @@
       } catch (_) {
         saved = false;
       }
-      addMemo(text);
-      noteText.value = '';
       noteStatus.textContent = saved ? 'Pinned securely.' : 'Pinned locally for this preview.';
-      noteComposer.classList.remove('is-open');
-      addNote.setAttribute('aria-expanded','false');
     });
 
     const transcriptLines = [
