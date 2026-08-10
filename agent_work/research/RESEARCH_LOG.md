@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-10 — Researcher tick: Part CXIV DD scheduling under exam deadlines (SAFE-DDSCHED)
+
+**Tick type:** Researcher (UTC hour 00 ≡ Red Team slot, but ch114 never written → prefer Researcher per rotation; researcher count since synthesizer v1.14 = 6 → Researcher)  
+**Chapter written:** `chapters/114_desirable_difficulty_scheduling_under_exam_deadlines.md` (Part CXIV)  
+**Claim examined:** Whether MindCraft should operationalize pre-ACT calendars as horizon-matched hold/ease of desirable difficulties (Build/Join/Protect+probe) with stakes separate from DD — vs Desirable Difficulty Score™ / Challenge Minutes / always-ease-before-ACT / always-max-DD-until-bell / cram-week≡ready theater.
+
+**Doctrine proposed (provisional):** **SAFE-DDSCHED** — equipped clause never expires (Bjork); ISI matched to remaining RI (Cepeda; Kornell spacing>cram); hold mix while equipped (Rohrer); stakes≠DD (Hinze & Rapp); ease load not readiness standards in final ~72h; densify SAFE-DD/EXAM/SCHED/DURABLE/CRAM; no Desirable Difficulty Score™ / Challenge Minutes / always-ease / always-max / cram≡ready / schedule ACT guarantees. Experiment family **DDSCHED-*** (distinct from DD-*, EXAM-*, SCHED-*, CRAM-*).
+
+**Evidence spine (verified citations):** Bjork (1994); Bjork & Bjork (2011); Cepeda et al. (2006; 2008); Kornell (2009); Rohrer/Dedrick/Stershic (2015); Rohrer et al. (2020); Hinze & Rapp (2014); Yang et al. (2023); Ashcraft & Kirk (2001); Ashcraft & Krause (2007).
+
+**Claim killed (this tick):** Desirable Difficulty Score™ / Challenge Minutes NS / always-ease-before-ACT / blocked-comfort≡ready / always-max-DD-until-bell / last-48h scored flood-as-DD / cram-week≡ready / schedule ACT-point guarantees (provisional kill #68 until synthesizer).
+
+**Experiments:** DDSCHED-1…5 + DDSCHED-QUAL.
+
+**Next researcher id:** **115** (tutor identity & belonging / near-peer role models). Researcher count since v1.14 synthesizer: **7**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-09 — Researcher tick: Part CXIII Collaborative PS vs solo FEI (SAFE-COLLAB)
 
 **Tick type:** Researcher (UTC hour 21; hour%6≠0; researcher count since synthesizer v1.14 = 5 → Researcher)  

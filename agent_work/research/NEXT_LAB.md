@@ -104,8 +104,8 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 111 | Formative assessment cycles in tutor sessions | Black/Wiliam grain; exit tickets vs FEI; no Formative Score™ | **DONE** (2026-08-09) — Part CXI / SAFE-FA |
 | 112 | Feedback literacy — how students use coach feedback | Hattie/Timperley; uptake vs dismiss; soft-wrong action | **DONE** (2026-08-09) — Part CXII / SAFE-FBLIT |
 | 113 | Collaborative problem-solving vs solo FEI | CSCL tradeoffs; group work without solo-transfer washout | **DONE** (2026-08-09) — Part CXIII / SAFE-COLLAB |
-| 114 | Desirable difficulty scheduling under exam deadlines | Bjork×SAFE-EXAM; when to ease vs hold challenge pre-ACT | **NEXT** |
-| 115 | Tutor identity & belonging (near-peer role models) | Representation without tokenism; hire briefs × SAFE-GENDER/ELL | queued |
+| 114 | Desirable difficulty scheduling under exam deadlines | Bjork×SAFE-EXAM; when to ease vs hold challenge pre-ACT | **DONE** (2026-08-10) — Part CXIV / SAFE-DDSCHED |
+| 115 | Tutor identity & belonging (near-peer role models) | Representation without tokenism; hire briefs × SAFE-GENDER/ELL | **NEXT** |
 | 116 | Offline practice fidelity (paper/whiteboard capture) | Photo-to-Map; attempt grain without phone distraction | queued |
 | 117 | Worked-example fading under high math anxiety | SAFE-FADE × SAFE-EXPOSE; when full examples protect vs trap | queued |
 | 118 | Parent message framing after soft-wrong streaks | SAFE-PDASH × SAFE-FBLIT; honesty without nag/shame loops | queued |
@@ -184,3 +184,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any Formative Score™ / Assessment Minutes NS / exit-ticket≡learning / Black–Wiliam 0.4–0.7 product ads / more-quizzes≡formative / gradebook cosplay / “got it?”≡closed cycle / AfL ACT guarantees (Part CXI / SAFE-FA)
 - Any Feedback Literacy Score™ / Feedback Minutes NS / delivery≡uptake / thumbs-up≡used / longer≡more literate / illiteracy-shame without design fix / always-more-feedback dogma / feedback-literacy ACT guarantees (Part CXII / SAFE-FBLIT)
 - Any Collaboration Score™ / Group Minutes NS / Discord≡CSCL learning / group-correct≡ready / free-rider-blind unlocks / always-collab dogma / collab ACT guarantees (Part CXIII / SAFE-COLLAB)
+- Any Desirable Difficulty Score™ / Challenge Minutes NS / always-ease-before-ACT / blocked-comfort≡ready / always-max-DD-until-bell / last-48h scored flood-as-DD / cram-week≡ready / schedule ACT-point guarantees (Part CXIV / SAFE-DDSCHED)
