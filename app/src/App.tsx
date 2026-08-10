@@ -263,7 +263,7 @@ function DeskOsRedirect() {
 
 function DeskStudioRedirect() {
   useEffect(() => {
-    window.location.replace('/desk-os/studio/?v=create11')
+    window.location.replace('/desk-os/studio/?v=create13')
   }, [])
   return null
 }

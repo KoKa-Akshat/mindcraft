@@ -916,7 +916,7 @@ h1,h2,h3,.pix{font-family:'Press Start 2P',monospace; line-height:1.5}
 
     <div class="floatAsk">
       <button type="button" class="jesseDock" id="jesseDock" title="Ask Jesse for edit intel" aria-label="Ask Jesse">
-        <img src="img/mascot.png" alt="Jesse">
+        <img src="../jesse_kitchen_desk_proto/img/mascot.png" alt="Jesse">
         <i class="pulse" aria-hidden="true"></i>
       </button>
       <input id="jesseAsk" type="search" placeholder="Ask Jesse how to edit this…" autocomplete="off">
@@ -944,7 +944,7 @@ h1,h2,h3,.pix{font-family:'Press Start 2P',monospace; line-height:1.5}
             <span class="tlab">Story</span>
             <div class="stageShell">
               <button type="button" class="jesseHero" id="jesseHero" aria-label="Jesse’s kitchen — use in story">
-                <img id="jesseHeroImg" src="img/kitchen-warm.jpg" alt="Jesse’s Kitchen">
+                <img id="jesseHeroImg" src="../jesse_kitchen_desk_proto/img/kitchen-warm.jpg" alt="Jesse’s Kitchen">
                 <div class="veil">
                   <b>Jesse’s Kitchen</b>
                   <span>Your story stage. Tap to put this on the timeline — I dock by search and help you edit.</span>
@@ -1060,7 +1060,7 @@ function svgThumb(label, bg, fg, glyph) {
   return 'data:image/svg+xml;utf8,' + encodeURIComponent(s);
 }
 
-const JESSE_IMG = 'img';
+const JESSE_IMG = '../jesse_kitchen_desk_proto/img';
 const SEED_ASSETS = [
   { name: "Jesse’s Kitchen", kind: 'image', src: `${JESSE_IMG}/kitchen-warm.jpg`, jesse: true },
   { name: 'Kitchen Desk',    kind: 'image', src: `${JESSE_IMG}/jesse-kitchen-intro.jpg`, jesse: true },
