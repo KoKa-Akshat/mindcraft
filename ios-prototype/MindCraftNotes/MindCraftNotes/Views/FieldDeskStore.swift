@@ -69,11 +69,11 @@ final class FieldDeskStore: ObservableObject {
             kind: "files",
             meta: "Your files stay in your Drive · AI read-only",
             steps: [
-                "On drive.google.com, create a folder named exactly: MindCraft Desk",
-                "Drop only the school PDFs and notes you want MindCraft to see into that folder.",
+                "On drive.google.com, create a folder named exactly: The Desk (legacy MindCraft Desk still works).",
+                "Drop only the school PDFs and notes you want The Desk to see into that folder.",
                 "Tap Connect Google Drive below and sign in with the same Google account.",
                 "Approve read-only access to that folder (not your whole Drive).",
-                "MindCraft’s Ask/AI can read files inside MindCraft Desk only. Nothing else. You can revoke anytime in Google Account → Security → Third-party access.",
+                "Ask on The Desk can read files inside that folder only. Nothing else. You can revoke anytime in Google Account → Security → Third-party access.",
             ]
         ),
         Connector(
@@ -213,7 +213,7 @@ final class FieldDeskStore: ObservableObject {
             return "Agent · skim inbox, file key mails into intel"
         }
         if linked == "gdrive" {
-            return "Agent · Ask can read only your MindCraft Desk Drive folder"
+            return "Agent · Ask can read only your Desk Drive folder"
         }
         if linked == "moodle" {
             return "Agent · file Moodle drops into Binder by course"

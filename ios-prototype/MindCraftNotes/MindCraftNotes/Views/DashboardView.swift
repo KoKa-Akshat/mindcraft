@@ -632,20 +632,12 @@ struct DashboardView: View {
                 tab = .home
             }
         } label: {
-            HStack(spacing: 0) {
-                Text("Mind")
-                    .foregroundColor(DeskColor.ink)
-                Text("Craft")
-                    .foregroundColor(DeskColor.brandGreen)
-            }
-            // TODO: swap for Font.mcHand(...)/Caveat Bold once real font files
-            // are bundled into Resources/Fonts/ and UIAppFonts is populated
-            // (build plan §4. Phase 0 left UIAppFonts empty on purpose).
-            // Font.system stands in for now with a matching bold weight.
-            .font(.system(size: 26, weight: .bold, design: .rounded))
+            Text("The Desk")
+                .font(.system(size: 26, weight: .bold, design: .rounded))
+                .foregroundColor(DeskColor.ink)
         }
         .buttonStyle(.plain)
-        .accessibilityLabel("Home")
+        .accessibilityLabel("Home · The Desk")
     }
 
     /// Icon-only nav. Map/Work/Notes, matching the real web's 3 icon

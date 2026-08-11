@@ -59,7 +59,7 @@ final class AgentMailClient: ObservableObject {
 
     // MARK: - Inbox
 
-    func ensureInbox(displayName: String = "MindCraft Desk") async {
+    func ensureInbox(displayName: String = "The Desk") async {
         if hasInbox {
             await refreshMessages()
             return
@@ -67,7 +67,7 @@ final class AgentMailClient: ObservableObject {
         await createInbox(displayName: displayName)
     }
 
-    func createInbox(displayName: String = "MindCraft Desk") async {
+    func createInbox(displayName: String = "The Desk") async {
         guard isConfigured else {
             lastError = "Add an AgentMail API key first (Manage → Mail, or Live Inbox setup)."
             return

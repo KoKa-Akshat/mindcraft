@@ -189,14 +189,18 @@ struct CoverView: View {
                 .foregroundColor(Color(coverHex: "c4f547").opacity(0.72))
 
             Button(action: open) {
-                HStack(spacing: 0) {
-                    Text("Mind").foregroundColor(Color(coverHex: "f5f5f5"))
-                    Text("Craft").foregroundColor(Color(coverHex: "f5d348"))
+                VStack(spacing: 6) {
+                    Text("The Desk")
+                        .font(.system(size: 52, weight: .bold, design: .rounded))
+                        .foregroundColor(Color(coverHex: "f5f5f5"))
+                    Text("by MindCraft")
+                        .font(.system(size: 14, weight: .semibold, design: .rounded))
+                        .foregroundColor(Color(coverHex: "c4f547").opacity(0.85))
+                        .tracking(0.5)
                 }
-                .font(.system(size: 60, weight: .bold, design: .rounded))
             }
             .buttonStyle(.plain)
-            .accessibilityLabel("Open MindCraft")
+            .accessibilityLabel("Open The Desk")
 
             VStack(spacing: 10) {
                 Text("What should we call you?")
@@ -233,7 +237,7 @@ struct CoverView: View {
                     }
                     .buttonStyle(.plain)
                     .accessibilityIdentifier("coverOpenArrow")
-                    .accessibilityLabel(name.trimmingCharacters(in: .whitespaces).isEmpty ? "Open your notebook" : "Open notebook as \(name.trimmingCharacters(in: .whitespaces))")
+                    .accessibilityLabel(name.trimmingCharacters(in: .whitespaces).isEmpty ? "Open The Desk" : "Open The Desk as \(name.trimmingCharacters(in: .whitespaces))")
                 }
             }
             .frame(maxWidth: 320)

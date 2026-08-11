@@ -34,7 +34,7 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             QuestionView(question: questions[selectedIndex], store: store)
-                .navigationTitle("MindCraft Notes")
+                .navigationTitle("The Desk")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .principal) {

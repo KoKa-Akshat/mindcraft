@@ -51,11 +51,16 @@ struct WelcomeView: View {
 
     private var topBar: some View {
         HStack {
-            HStack(spacing: 0) {
-                Text("Mind").foregroundColor(Color(welcomeHex: "f5f5f5"))
-                Text("Craft").foregroundColor(Color(welcomeHex: "f5d348"))
+            VStack(alignment: .leading, spacing: 2) {
+                Text("The Desk")
+                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                    .foregroundColor(Color(welcomeHex: "f5f5f5"))
+                Text("by MindCraft")
+                    .font(.system(size: 11, weight: .semibold, design: .rounded))
+                    .foregroundColor(Color(welcomeHex: "f5d348").opacity(0.9))
             }
-            .font(.system(size: 20, weight: .bold, design: .rounded))
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel("The Desk by MindCraft")
 
             Spacer()
 

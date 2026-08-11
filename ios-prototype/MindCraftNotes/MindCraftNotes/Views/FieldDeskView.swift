@@ -1632,7 +1632,7 @@ struct FieldDeskView: View {
             )
 
             HStack(spacing: 8) {
-                TextField("Ask MindCraft…", text: $askText)
+                TextField("Ask The Desk…", text: $askText)
                     .textFieldStyle(.plain)
                     .foregroundColor(.white)
                     .font(.system(size: 15, weight: .medium, design: .rounded))
@@ -2349,8 +2349,8 @@ struct FieldDeskView: View {
                     // Prototype: mark connected after student follows Drive folder steps.
                     // Full Google Drive OAuth (folder-scoped read-only) wires next.
                     if store.markConnected("gdrive") {
-                        flash("Drive ready · MindCraft Desk folder")
-                        store.prependIntel("Drive · MindCraft Desk · read-only folder linked")
+                        flash("Drive ready · The Desk folder")
+                        store.prependIntel("Drive · The Desk · read-only folder linked")
                     }
                     activeGuideId = nil
                 } label: { guidePrimary(linked ? "Reconnect Drive steps" : "Connect Google Drive") }

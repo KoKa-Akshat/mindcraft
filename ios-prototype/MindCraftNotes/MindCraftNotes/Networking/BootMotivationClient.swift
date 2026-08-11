@@ -34,9 +34,9 @@ enum BootMotivationClient {
         request.timeoutInterval = 8
 
         let prompt = """
-        Write ONE short motivating line for a student who just opened MindCraft Desk.
+        Write ONE short motivating line for a student who just opened The Desk by MindCraft.
         Max 14 words. Warm, specific, no hashtags, no emoji spam, no quotation marks.
-        Tone like: It's tuff you opened MindCraft today, champ.
+        Tone like: Glad you opened The Desk today.
         Reply with ONLY the line.
         """
         let body: [String: Any] = [

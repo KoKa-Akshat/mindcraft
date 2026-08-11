@@ -330,18 +330,15 @@ struct DeskShellView: View {
         .animation(.easeInOut(duration: 0.2), value: toastMessage)
     }
 
-    /// Real port of `.hub-nav`: wordmark + **Manage** (account) on the left,
-    /// user name/email + sign out on the right.
+    /// Real port of `.hub-nav`: **The Desk** wordmark + Settings on the left,
+    /// user name/email + sign out on the right. No company logo in app chrome.
     private var hubNav: some View {
         HStack(alignment: .center) {
             HStack(spacing: 12) {
-                ActRaccoonBadge(size: 40)
-                    .accessibilityIdentifier("deskHubRaccoon")
-                HStack(spacing: 0) {
-                    Text("Mind").foregroundColor(ShellColor.ink)
-                    Text("Craft").foregroundColor(ShellColor.brandGreen)
-                }
-                .font(.system(size: 22, weight: .bold, design: .rounded))
+                Text("The Desk")
+                    .font(.system(size: 22, weight: .bold, design: .rounded))
+                    .foregroundColor(ShellColor.ink)
+                    .accessibilityIdentifier("deskHubWordmark")
 
                 // Settings gear (was Manage).
                 Button { showManage = true } label: {
@@ -380,7 +377,7 @@ struct DeskShellView: View {
                 }
                 .buttonStyle(.plain)
                 .accessibilityIdentifier("deskHubHome")
-                .accessibilityLabel("Open Field Desk")
+                .accessibilityLabel("Open The Desk")
             }
             Button("Sign out") { authService.signOut() }
                 .font(.system(size: 12, weight: .bold, design: .rounded))
@@ -596,7 +593,7 @@ struct DeskShellView: View {
     private var instanceGrid: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 240), spacing: 16)], spacing: 16) {
             instanceCard(
-                id: "desk_main", name: "field-desk", badge: "Desk",
+                id: "desk_main", name: "The Desk", badge: "Home",
                 systemImage: "square.grid.2x2.fill", accent: ShellColor.ink,
                 execUsed: 12, execCap: 1000, running: true, isFunctional: true
             ) {
@@ -1331,7 +1328,7 @@ final class DeskGoalStore: ObservableObject {
     /// hooks are load-bearing); this catalog only feeds the goal setter and
     /// mastery orb.
     static let instanceCatalog: [InstanceRef] = [
-        InstanceRef(id: "desk_main", kind: "desk", name: "field-desk"),
+        InstanceRef(id: "desk_main", kind: "desk", name: "The Desk"),
         InstanceRef(id: "act_main", kind: "act", name: "act-fieldbook"),
         InstanceRef(id: "test_main", kind: "test", name: "test-instance"),
     ]

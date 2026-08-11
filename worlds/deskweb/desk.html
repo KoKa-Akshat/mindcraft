@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>MindCraft Field Desk</title>
-<meta name="description" content="A calm, fluid MindCraft work area with your binder, live transcription, and pinned notes.">
+<title>The Desk by MindCraft</title>
+<meta name="description" content="A calm, fluid work area with your binder, live transcription, and pinned notes.">
 <link rel="icon" type="image/png" href="img/favicon-raccoon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -515,11 +515,11 @@
 </style>
 </head>
 <body>
-<main class="desk" id="desk" aria-label="MindCraft Field Desk prototype">
+<main class="desk" id="desk" aria-label="The Desk work area">
   <header class="topbar" aria-label="Work area toolbar">
     <div class="topbar-title">
       <b>Malevolent Shrine</b>
-      <span>Field Desk work area</span>
+      <span>The Desk · work area</span>
     </div>
     <div class="topbar-spacer"></div>
     <div class="topbar-actions">
@@ -696,7 +696,7 @@
       return false;
     };
 
-    // Native Field Desk chrome owns logo / mode toggle / sign out.
+    // Native The Desk chrome owns wordmark / mode toggle / sign out.
     if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.deskAction) {
       document.body.classList.add('native-chrome');
     }
@@ -1380,7 +1380,7 @@
       const payload = {
         note:text,
         source:'field_desk_prototype',
-        context:'Field Desk worksheet',
+        context:'The Desk worksheet',
         createdAt:new Date().toISOString()
       };
       let saved = false;

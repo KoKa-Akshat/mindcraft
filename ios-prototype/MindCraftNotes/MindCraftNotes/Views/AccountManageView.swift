@@ -42,7 +42,7 @@ struct AccountManageView: View {
 
                     sectionHeader("Billing")
                     VStack(alignment: .leading, spacing: 12) {
-                        Text("MindCraft Beta · free while we ship Desk OS")
+                        Text("The Desk by MindCraft · free beta")
                             .font(.system(size: 15, weight: .semibold, design: .rounded))
                         Text("Plan changes, invoices, and seats land here. For now you are on the founder beta - no card required.")
                             .font(.system(size: 13, weight: .medium, design: .rounded))
@@ -147,20 +147,20 @@ struct MindCraftWhitepaperView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 22) {
-                    Text("MindCraft Whitepaper")
+                    Text("The Desk by MindCraft")
                         .font(.system(size: 28, weight: .bold, design: .serif))
-                    Text("Learning infrastructure that turns scattered school signals into a living Field Desk.")
+                    Text("Learning infrastructure that turns scattered school signals into a living desk — with a map, a story, and a human when you need one.")
                         .font(.system(size: 16, weight: .medium, design: .rounded))
                         .foregroundColor(.secondary)
 
                     block(title: "Mission") {
-                        bullet("Help students own their work - mail, calendar, notes, practice - in one desk.")
+                        bullet("Help students own their work - mail, calendar, notes, practice - in The Desk.")
                         bullet("Make mastery visible with honest check-ins, not vanity scores.")
                         bullet("Keep humans in the loop while agents file, draft, and coach.")
                     }
 
                     block(title: "What we do") {
-                        bullet("Desk OS instances (Field Desk, ACT Field Book, custom books) as durable workspaces.")
+                        bullet("The Desk OS (home desk, ACT Field Book, custom books) as durable workspaces.")
                         bullet("Connectors that land real artifacts into Binder + Intel.")
                         bullet("Practice grounded in a large ACT-aligned question bank with full-page writing.")
                         bullet("Live Call co-working and tutor discovery for real humans nearby.")
@@ -177,10 +177,10 @@ struct MindCraftWhitepaperView: View {
                     block(title: "Principles") {
                         bullet("Local-first where school OAuth is blocked; real Gmail for student mail.")
                         bullet("Never fake progress - empty states stay honest.")
-                        bullet("Ship the desk students can feel, then deepen the agent.")
+                        bullet("Ship The Desk students can feel, then deepen the agent.")
                     }
 
-                    Text("© MindCraft · joinmindcraft.com")
+                    Text("© MindCraft · The Desk · joinmindcraft.com")
                         .font(.system(size: 12, weight: .medium, design: .rounded))
                         .foregroundColor(.secondary)
                         .padding(.top, 8)

@@ -4,6 +4,10 @@
 
 ---
 
+## iOS prototype · The Desk naming (2026-08-11)
+
+Pull **main**, Clean Build, Cmd+R on Mac/iPad. Student-facing chrome now says **The Desk** (no MindCraft wordmark/logo in app chrome). Login/Cover/Welcome: The Desk + by MindCraft. Hub card, Ask, Drive folder, desk.html work area titles aligned.
+
 ## Canon pack for agents (2026-08-11)
 
 Entry: `docs/canon/README.md` · Pedagogy: `docs/canon/PEDAGOGY.md` · Brand Book v1.1 + `BRAND_BOOK.pdf` · Research Constitution v1.16 under `agent_work/research/`. Product: **The Desk by MindCraft** (web) / **The Desk** (app).

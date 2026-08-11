@@ -75,20 +75,20 @@ struct LoginView: View {
         .ignoresSafeArea()
     }
 
-    // MARK: - Wordmark - web's `.wmMind` (#e8f5e0 cream) / `.wmCraft`
-    // (#c4f547 lime), Login.module.css:122-132.
+    // MARK: - Product mark — The Desk (company line secondary).
 
     private var wordmark: some View {
-        HStack(spacing: 0) {
-            Text("Mind")
-                // TODO: swap to Font.mcDisplay(size:, weight:) once
-                // Resources/Fonts/ Fredoka files land (see build plan §4).
-                .font(.system(size: 34, weight: .bold, design: .rounded))
+        VStack(spacing: 6) {
+            Text("The Desk")
+                .font(.system(size: 36, weight: .bold, design: .rounded))
                 .foregroundStyle(Color(mcHex: "e8f5e0"))
-            Text("Craft")
-                .font(.system(size: 34, weight: .bold, design: .rounded))
-                .foregroundStyle(Color(mcHex: "c4f547"))
+            Text("by MindCraft")
+                .font(.system(size: 13, weight: .semibold, design: .rounded))
+                .foregroundStyle(Color(mcHex: "c4f547").opacity(0.9))
+                .tracking(0.4)
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("The Desk by MindCraft")
     }
 
     // MARK: - Card

@@ -805,7 +805,10 @@ final class MindCraftNotesUITests: XCTestCase {
         XCTAssertFalse(app.staticTexts["Start your mastery check-in"].exists,
                        "no bubble copy next to the Call button")
         XCTAssertTrue(app.buttons["deskHubManage"].waitForExistence(timeout: 3),
-                      "expected Manage next to MindCraft")
+                      "expected Settings next to The Desk wordmark")
+        let deskWordmark = app.staticTexts["deskHubWordmark"]
+        XCTAssertTrue(deskWordmark.waitForExistence(timeout: 3) || app.staticTexts["The Desk"].exists,
+                      "expected The Desk hub wordmark")
         XCTAssertTrue(app.buttons["deskHubCreateInstance"].waitForExistence(timeout: 3),
                       "expected tappable Create an instance tile")
         XCTAssertFalse(app.staticTexts["Your instances"].exists,
