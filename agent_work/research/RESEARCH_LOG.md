@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-11 — Researcher tick: Part CXXIII Exam-week tutor load shedding playbooks (SAFE-LOADSHED)
+
+**Tick type:** Researcher (UTC hour 06 ≡ Red Team slot, but ch123 never written → prefer Researcher per rotation; researcher count since synthesizer v1.15 = 6 → Researcher)  
+**Chapter written:** `chapters/123_exam_week_tutor_load_shedding_playbooks.md` (Part CXXIII)  
+**Claim examined:** Whether MindCraft should publish an **exam-week load-shedding playbook** (acuity queue + named pause list + caseload redesign) that protects FEI fidelity under ACT crunch — vs hours-booked theater, wellness-as-fix, hire-surge without coaches, or pour-mode “exam support.”
+
+**Doctrine proposed (provisional):** **SAFE-LOADSHED** — densifies SAFE-BURNWARN × SAFE-DDSCHED × SAFE-WORKFORCE × SAFE-EXAM × SAFE-ROI: shed low-acuity demand; protect thinking minutes; org redesign first; no Load Shed Score™ / infinite-availability brand. Experiment family **LOADSHED-*** (distinct from BURNWARN-*/DDSCHED-*/WORK-*/EXAM-*/ROI-*).
+
+**Evidence spine (verified citations):** von der Embse et al. (2016a; 2016b); Creagh et al. (2023); Kelen et al. (2009; 2017); De Bondt, Sabbe, & Pollaris (2023); Panagioti et al. (2017); Bakker & Demerouti (2017); Tims, Bakker, & Derks (2013).
+
+**Claim killed (this tick):** Hours-booked/session-volume crunch NS / Load Shed Score™·Crunch Minutes / infinite-availability exam brand / wellness-primary under caseload spike / hire-surge without coach bandwidth / pour≡exam support / hospital-cosplay ads / soft standards for crunch personas / ACT guarantees from crunch playbooks (provisional kill #77 until synthesizer).
+
+**Experiments:** LOADSHED-1…5 + LOADSHED-QUAL.
+
+**Next researcher id:** **124** (distractor design for diagnostic soft-wrong MC). Researcher count since v1.15 synthesizer: **7**. Queue extended with ids **126–127** (<3 unfinished rule).
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-11 — Researcher tick: Part CXXII Partial-credit & soft-wrong taxonomy productization (SAFE-TAXON)
 
 **Tick type:** Researcher (UTC hour 03; hour%6≠0; researcher count since synthesizer v1.15 = 5 → Researcher)  
