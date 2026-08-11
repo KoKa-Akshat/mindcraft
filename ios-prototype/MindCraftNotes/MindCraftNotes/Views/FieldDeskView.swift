@@ -2473,7 +2473,7 @@ struct FieldDeskView: View {
 
                 addMenuRow(
                     title: "Gdoc",
-                    subtitle: placedWidgets.contains(.gdoc) ? "Already on desk" : "Blank page card",
+                    subtitle: placedWidgets.contains(.gdoc) ? "Already on desk" : "Whiteboard · write & scribble",
                     system: "doc.text.fill",
                     enabled: true
                 ) {
@@ -2483,7 +2483,7 @@ struct FieldDeskView: View {
 
                 addMenuRow(
                     title: "Presentation",
-                    subtitle: placedWidgets.contains(.slides) ? "Already on desk" : "Deck card · 16:9",
+                    subtitle: placedWidgets.contains(.slides) ? "Already on desk" : "Presentation · slides",
                     system: "rectangle.on.rectangle.angled",
                     enabled: true
                 ) {
