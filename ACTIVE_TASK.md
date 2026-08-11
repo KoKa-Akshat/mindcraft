@@ -49,7 +49,7 @@ Akshat call: the "gym membership for learning" OS story (state at `a4cb545b`) is
 
 Promoted `agent_work/product/marketing_mockups/` → root `index.html` + `img/` assets.
 Firebase marketing target. App/login CTAs retargeted to `#start` (join beta) while app work continues.
-Live: https://mindcraft-marketing-site.web.app — confirm CI green after push.
+Live: https://joinmindcraft.com — confirm CI green after push (DNS cutover: `DOMAIN_SETUP.md`).
 
 ---
 ## iOS Field Desk · Projects → Malevolent Shrine → work area (2026-08-10, code-level)
