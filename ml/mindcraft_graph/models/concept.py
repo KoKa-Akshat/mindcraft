@@ -17,9 +17,9 @@ class Concept(BaseModel):
     population_failure_rate: float = 0.5
 
 
-def estimate_difficulty(concept: Concept, max_order: int) -> float:
-    """Proxy difficulty from curriculum position. Range [0.1, 1.0]."""
-    return 0.1 + 0.9 * (concept.typical_order / max_order)
+def estimate_difficulty(concept: Concept) -> float:
+    """Difficulty from population failure rate. Range [0.1, 1.0]."""
+    return 0.1 + 0.9 * concept.population_failure_rate
 
 
 class OntologyEdge(BaseModel):

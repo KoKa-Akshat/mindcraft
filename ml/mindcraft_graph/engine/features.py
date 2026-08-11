@@ -106,9 +106,8 @@ def compute_concept_profiles(
     difficulty_by_concept: dict[str, float] = {}
 
     if ontology is not None and ontology.concepts:
-        max_order = max(concept.typical_order for concept in ontology.concepts)
         difficulty_by_concept = {
-            concept.id: estimate_difficulty(concept, max_order)
+            concept.id: estimate_difficulty(concept)
             for concept in ontology.concepts
         }
 
