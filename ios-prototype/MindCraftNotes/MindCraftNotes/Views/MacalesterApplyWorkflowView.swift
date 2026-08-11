@@ -366,6 +366,32 @@ struct WorkflowLibraryView: View {
                         }
                     } label: {
                         HStack(spacing: 12) {
+                            Image(systemName: "doc.text.fill")
+                                .foregroundColor(Color(wfHex: "0c1207"))
+                                .frame(width: 36, height: 36)
+                                .background(RoundedRectangle(cornerRadius: 10).fill(Color(wfHex: "c4f547")))
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("Resume builder")
+                                    .font(.system(size: 16, weight: .bold, design: .rounded))
+                                Text("Job OS space · resume, roles, apply packet")
+                                    .font(.system(size: 12, weight: .medium, design: .rounded))
+                                    .foregroundColor(.secondary)
+                            }
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                    .accessibilityIdentifier("workflowOpen_resumeBuilder")
+
+                    Button {
+                        market.buy("application_tracker")
+                        dismiss()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                            onOpenApplyToday()
+                        }
+                    } label: {
+                        HStack(spacing: 12) {
                             Image(systemName: "briefcase.fill")
                                 .foregroundColor(Color(wfHex: "0c1207"))
                                 .frame(width: 36, height: 36)

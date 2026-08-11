@@ -1778,14 +1778,14 @@ private struct DeskBootView: View {
     @State private var glyphPhase = false
 
     private let askTips = [
-        "Ask: help me plan this week",
-        "Ask: pull dues from Gmail into my calendar",
-        "Ask: draft a reply to my top email",
-        "Ask: open Binder and file this",
-        "Ask: apply here — walk me through it",
-        "Ask: what should I focus on today?",
-        "Ask: transcribe this talk into notes",
-        "Ask: connect Calendar and show my clear slots",
+        "Ask: build my resume from this week's wins",
+        "Ask: wire Binder notes into a practice set",
+        "Ask: turn Gmail dues into a study plan",
+        "Ask: draft my Macalester apply packet",
+        "Ask: connect Intel + Calendar and find my free block",
+        "Ask: spin a study playlist from tonight's worksheet",
+        "Ask: make a 3-slide pitch from my project notes",
+        "Ask: what should I lock in before Friday?",
     ]
 
     private let deskGlyphs: [(system: String, tint: Color)] = [

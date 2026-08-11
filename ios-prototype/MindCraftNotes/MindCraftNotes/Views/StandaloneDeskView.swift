@@ -13,6 +13,8 @@ struct StandaloneDeskView: View {
     var onManage: (() -> Void)? = nil
     /// ACT map inside the binder → ACT dash.
     var onOpenAct: (() -> Void)? = nil
+    /// Workflows dock → native workflow library / Job OS.
+    var onWorkflows: (() -> Void)? = nil
     /// Volume pill inside the web desk → kitchen audio.
     var onSound: ((Bool) -> Void)? = nil
 
@@ -23,7 +25,7 @@ struct StandaloneDeskView: View {
         ZStack(alignment: .topLeading) {
             Self.paper.ignoresSafeArea()
 
-            // The web top bar owns Volume / Jesse's / Manage — no native pill.
+            // Native chrome owns logo / mode toggle; web owns the desk plane.
             DeskWebView(onAction: { action in
                 switch action {
                 case "manage":
@@ -32,6 +34,8 @@ struct StandaloneDeskView: View {
                     onBackToKitchen()
                 case "act":
                     onOpenAct?()
+                case "workflows":
+                    onWorkflows?()
                 case "soundOn":
                     onSound?(true)
                 case "soundOff":

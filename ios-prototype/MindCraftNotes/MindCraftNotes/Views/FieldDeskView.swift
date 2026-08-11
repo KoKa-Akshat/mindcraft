@@ -1,6 +1,13 @@
 import SwiftUI
+import UIKit
 import UniformTypeIdentifiers
 import PhotosUI
+
+private enum ShrineBeatPhase: Equatable {
+    case idle
+    case captions
+    case starting
+}
 
 /// **Round 28. Field Desk cards + ACT stage.**
 /// Tap card → shine → drag whole card → bottom-right resize. Canvas-only
@@ -33,6 +40,9 @@ struct FieldDeskView: View {
     @State private var showProjectsPanel = false
     /// Projects screen — Malevolent Shrine project card; tap → work area.
     @State private var showProjectsScreen = false
+    /// Shrine → Gen-Z captions → workspace starting → work desk.
+    @State private var shrineBeatPhase: ShrineBeatPhase = .idle
+    @State private var shrineCaption = ""
     /// Standalone Desk (deskweb) — entered via the polka vending screen.
     @State private var showStandaloneDesk = false
     /// Spatial Create studio (desk-os/studio) — entered via polka from Create.
@@ -224,6 +234,7 @@ struct FieldDeskView: View {
         flash("Placed · \(widget.rawValue)")
     }
 
+    /// Full-screen sheets that hide logo + mode toggle too.
     private var deskOverlayChromeBlocked: Bool {
         showActFieldBook
             || showGmailBox
@@ -232,8 +243,24 @@ struct FieldDeskView: View {
             || showManage
             || showProjectsPanel
             || showProjectsScreen
-            || showStandaloneDesk
-            || showCreateStudio
+            || showWorkflowLibrary
+    }
+
+    /// Jesse kitchen Ask/dock only — Work/Create own their own prompt bars.
+    private var floatDockBlocked: Bool {
+        deskOverlayChromeBlocked || showStandaloneDesk || showCreateStudio
+    }
+
+    private enum ModeToggleKind {
+        case jessesCreate
+        case jessesWork
+        case createWork
+    }
+
+    private var modeToggleKind: ModeToggleKind {
+        if showStandaloneDesk { return .jessesCreate }
+        if showCreateStudio { return .jessesWork }
+        return .createWork
     }
 
     /// Floating cards on Jesse’s (or minimized ACT chip).
@@ -363,7 +390,8 @@ struct FieldDeskView: View {
                 if showApplyToday {
                     JobOSShellView(onClose: { showApplyToday = false })
                         .transition(.opacity)
-                        .zIndex(55)
+                        // Above Work/Create web surfaces so workflows use the big area.
+                        .zIndex(90)
                         .accessibilityIdentifier("fieldDeskApplyTodayOverlay")
                 }
 
@@ -439,6 +467,9 @@ struct FieldDeskView: View {
                                 openActDashOnDesk()
                             }
                         },
+                        onWorkflows: {
+                            showWorkflowLibrary = true
+                        },
                         onSound: { on in
                             kitchenSoundOn = on
                         }
@@ -506,7 +537,7 @@ struct FieldDeskView: View {
             // Call/name stay top; Ask + dock live at the BOTTOM now (Akshat:
             // scroll up → search appears at the bottom of the page, not top).
             .overlay(alignment: .top) {
-                if !deskOverlayChromeBlocked {
+                if !floatDockBlocked {
                     VStack(spacing: 0) {
                         if showTopChrome {
                             topChrome
@@ -531,7 +562,7 @@ struct FieldDeskView: View {
                 }
             }
             .overlay(alignment: .bottom) {
-                if !deskOverlayChromeBlocked {
+                if !floatDockBlocked {
                     VStack(spacing: 0) {
                         if showTopChrome {
                             combinedAskAndDock
@@ -558,107 +589,69 @@ struct FieldDeskView: View {
                     .animation(.easeInOut(duration: 0.22), value: showTopChrome)
                 }
             }
-            // Pinned top-right: Volume · Create · Sign out (clear, separated).
+            // Top-left MindCraft mark → Manage (replaces Manage pill).
+            .overlay(alignment: .topLeading) {
+                if !deskOverlayChromeBlocked {
+                    Button {
+                        openManageFromChrome()
+                    } label: {
+                        HStack(spacing: 8) {
+                            if let item = StickerCatalog.item(id: "raccoon"),
+                               let raccoon = StickerCatalog.image(for: item) {
+                                Image(uiImage: raccoon)
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 28, height: 28)
+                                    .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                            } else {
+                                Text("MC")
+                                    .font(.system(size: 11, weight: .black, design: .rounded))
+                                    .foregroundColor(Color(fdHex: "0c1207"))
+                                    .frame(width: 28, height: 28)
+                                    .background(RoundedRectangle(cornerRadius: 8).fill(Color(fdHex: "c4f547")))
+                            }
+                            Text("MindCraft")
+                                .font(.system(size: 13, weight: .heavy, design: .rounded))
+                                .foregroundColor(Color(fdHex: "143a2e"))
+                        }
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 8)
+                        .background(
+                            Capsule()
+                                .fill(Color.white.opacity(0.96))
+                                .shadow(color: .black.opacity(0.16), radius: 8, y: 3)
+                        )
+                    }
+                    .buttonStyle(.plain)
+                    .padding(.top, 12)
+                    .padding(.leading, 16)
+                    .zIndex(80)
+                    .accessibilityIdentifier("fieldDeskLogoManage")
+                    .accessibilityLabel("MindCraft · Manage")
+                }
+            }
+            // Top-right: mode toggle (Create/Work or Jesse's pair) · Sign out.
             .overlay(alignment: .topTrailing) {
                 if !deskOverlayChromeBlocked {
-                    HStack(spacing: 12) {
+                    HStack(spacing: 10) {
+                        modeToggleBar
+
                         Button {
-                            kitchenSoundOn.toggle()
-                            flash(kitchenSoundOn ? "Sound on" : "Sound off")
+                            authService.signOut()
                         } label: {
-                            Image(systemName: kitchenSoundOn ? "speaker.wave.2.fill" : "speaker.slash.fill")
+                            Image(systemName: "rectangle.portrait.and.arrow.right")
                                 .font(.system(size: 14, weight: .bold))
-                                .foregroundColor(kitchenSoundOn ? Color(fdHex: "0c1207") : Color(fdHex: "143a2e"))
+                                .foregroundColor(Color(fdHex: "143a2e"))
                                 .frame(width: 40, height: 40)
                                 .background(
                                     Circle()
-                                        .fill(kitchenSoundOn ? Color(fdHex: "c4f547") : Color.white.opacity(0.94))
+                                        .fill(Color.white.opacity(0.94))
                                         .shadow(color: .black.opacity(0.18), radius: 8, y: 3)
                                 )
                         }
                         .buttonStyle(.plain)
-                        .accessibilityIdentifier("fieldDeskSoundToggle")
-                        .accessibilityLabel(kitchenSoundOn ? "Mute kitchen" : "Unmute kitchen")
-
-                        if workMode {
-                            Button {
-                                withAnimation(.easeInOut(duration: 0.2)) {
-                                    clearDeskCards(flashMessage: "Jesse's")
-                                }
-                            } label: {
-                                Text("Jesse's")
-                                    .font(.system(size: 12, weight: .heavy, design: .rounded))
-                                    .foregroundColor(Color(fdHex: "143a2e"))
-                                    .padding(.horizontal, 14)
-                                    .padding(.vertical, 10)
-                                    .background(
-                                        Capsule()
-                                            .fill(Color.white.opacity(0.94))
-                                            .shadow(color: .black.opacity(0.18), radius: 8, y: 3)
-                                    )
-                            }
-                            .buttonStyle(.plain)
-                            .accessibilityIdentifier("fieldDeskJessesButton")
-                            .accessibilityLabel("Back to Jesse's")
-
-                            Button {
-                                NotificationCenter.default.post(name: .mcOpenHubFromDesk, object: nil)
-                            } label: {
-                                Text("Manage")
-                                    .font(.system(size: 12, weight: .heavy, design: .rounded))
-                                    .foregroundColor(Color(fdHex: "0c1207"))
-                                    .padding(.horizontal, 14)
-                                    .padding(.vertical, 10)
-                                    .background(
-                                        Capsule()
-                                            .fill(Color(fdHex: "c4f547"))
-                                            .shadow(color: .black.opacity(0.18), radius: 8, y: 3)
-                                    )
-                            }
-                            .buttonStyle(.plain)
-                            .accessibilityIdentifier("fieldDeskManageButton")
-                            .accessibilityLabel("Manage · instances, tutors, workflows")
-                        } else {
-                            // Create — opens spatial studio board (next to Volume).
-                            Button {
-                                openCreateStudio()
-                            } label: {
-                                HStack(spacing: 6) {
-                                    Image(systemName: "plus")
-                                        .font(.system(size: 13, weight: .heavy))
-                                    Text("Create")
-                                        .font(.system(size: 12, weight: .heavy, design: .rounded))
-                                }
-                                .foregroundColor(Color(fdHex: "0c1207"))
-                                .padding(.horizontal, 14)
-                                .padding(.vertical, 10)
-                                .background(
-                                    Capsule()
-                                        .fill(Color(fdHex: "c4f547"))
-                                        .shadow(color: .black.opacity(0.18), radius: 8, y: 3)
-                                )
-                            }
-                            .buttonStyle(.plain)
-                            .accessibilityIdentifier("fieldDeskCreateButton")
-                            .accessibilityLabel("Create")
-
-                            Button {
-                                authService.signOut()
-                            } label: {
-                                Image(systemName: "rectangle.portrait.and.arrow.right")
-                                    .font(.system(size: 14, weight: .bold))
-                                    .foregroundColor(Color(fdHex: "143a2e"))
-                                    .frame(width: 40, height: 40)
-                                    .background(
-                                        Circle()
-                                            .fill(Color.white.opacity(0.94))
-                                            .shadow(color: .black.opacity(0.18), radius: 8, y: 3)
-                                    )
-                            }
-                            .buttonStyle(.plain)
-                            .accessibilityIdentifier("fieldDeskSignOutButton")
-                            .accessibilityLabel("Sign out")
-                        }
+                        .accessibilityIdentifier("fieldDeskSignOutButton")
+                        .accessibilityLabel("Sign out")
                     }
                     .padding(.top, 12)
                     .padding(.trailing, 16)
@@ -716,11 +709,13 @@ struct FieldDeskView: View {
                     }
             }
         }
-        .sheet(isPresented: $showWorkflowLibrary) {
+        .fullScreenCover(isPresented: $showWorkflowLibrary) {
             WorkflowLibraryView(market: workflowMarket) {
-                showApplyToday = true
+                showWorkflowLibrary = false
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    showApplyToday = true
+                }
             }
-            .presentationDetents([.medium, .large])
         }
         .sheet(isPresented: $showManage) {
             AccountManageView()
@@ -982,51 +977,185 @@ struct FieldDeskView: View {
         .position(x: x + boxW / 2, y: y + boxH / 2)
     }
 
-    /// Projects screen: shrine centered — tap it to open the work desk.
+    /// Projects screen: The Malevolent Shrine → Gen-Z lines → workspace starting → desk.
     private var projectsScreen: some View {
         ZStack(alignment: .topLeading) {
             MalevolentShrineStage(
-                showTitle: false,
-                onShrineTap: { enterWorkAreaFromProjects() },
+                showTitle: true,
+                title: "The Malevolent Shrine",
+                subtitle: shrineCaption,
+                onShrineTap: shrineBeatPhase == .idle ? { startShrineEntranceBeat() } : nil,
                 centerOnly: true
             )
 
-            Button {
-                closeProjectsScreen()
-            } label: {
-                HStack(spacing: 7) {
-                    Image(systemName: "chevron.left")
-                        .font(.system(size: 12, weight: .heavy))
-                    Text("Jesse's")
-                        .font(.system(size: 13, weight: .heavy, design: .rounded))
+            if shrineBeatPhase == .idle {
+                Button {
+                    closeProjectsScreen()
+                } label: {
+                    HStack(spacing: 7) {
+                        Image(systemName: "chevron.left")
+                            .font(.system(size: 12, weight: .heavy))
+                        Text("Jesse's")
+                            .font(.system(size: 13, weight: .heavy, design: .rounded))
+                    }
+                    .foregroundColor(Color(fdHex: "143a2e"))
+                    .padding(.horizontal, 14)
+                    .padding(.vertical, 9)
+                    .background(
+                        Capsule()
+                            .fill(Color.white.opacity(0.95))
+                            .shadow(color: .black.opacity(0.14), radius: 10, y: 4)
+                    )
+                    .overlay(Capsule().strokeBorder(Color(fdHex: "143a2e").opacity(0.14), lineWidth: 1))
                 }
-                .foregroundColor(Color(fdHex: "143a2e"))
-                .padding(.horizontal, 14)
-                .padding(.vertical, 9)
-                .background(
-                    Capsule()
-                        .fill(Color.white.opacity(0.95))
-                        .shadow(color: .black.opacity(0.14), radius: 10, y: 4)
-                )
-                .overlay(Capsule().strokeBorder(Color(fdHex: "143a2e").opacity(0.14), lineWidth: 1))
+                .buttonStyle(.plain)
+                .padding(.top, 14)
+                .padding(.leading, 16)
+                .accessibilityIdentifier("fieldDeskProjectsBack")
             }
-            .buttonStyle(.plain)
-            .padding(.top, 14)
-            .padding(.leading, 16)
-            .accessibilityIdentifier("fieldDeskProjectsBack")
         }
         .accessibilityIdentifier("fieldDeskProjectsScreen")
     }
 
+    private static let shrineBeatLines = [
+        "Where legends get made",
+        "Main character energy only",
+        "Build loud. Stay curious.",
+    ]
+
+    private func startShrineEntranceBeat() {
+        guard showProjectsScreen, shrineBeatPhase == .idle else { return }
+        shrineBeatPhase = .captions
+        var delay: TimeInterval = 0
+        for (index, line) in Self.shrineBeatLines.enumerated() {
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                guard showProjectsScreen else { return }
+                withAnimation(.easeInOut(duration: 0.35)) {
+                    shrineCaption = line
+                }
+            }
+            delay += 1.15
+            if index == Self.shrineBeatLines.count - 1 {
+                DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                    guard showProjectsScreen else { return }
+                    shrineBeatPhase = .starting
+                    withAnimation(.easeInOut(duration: 0.35)) {
+                        shrineCaption = "Your workspace is starting..."
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.35) {
+                        enterWorkAreaFromProjects()
+                    }
+                }
+            }
+        }
+    }
+
     private func enterWorkAreaFromProjects() {
         guard showProjectsScreen else { return }
-        withAnimation(.easeInOut(duration: 0.25)) { showProjectsScreen = false }
-        openStandaloneDesk()
+        withAnimation(.easeInOut(duration: 0.28)) {
+            showProjectsScreen = false
+            shrineBeatPhase = .idle
+            shrineCaption = ""
+        }
+        // Skip polka on Projects → desk; shrine beat already did the doorway.
+        showStandaloneDesk = true
     }
 
     private func closeProjectsScreen() {
+        shrineBeatPhase = .idle
+        shrineCaption = ""
         withAnimation(.easeInOut(duration: 0.25)) { showProjectsScreen = false }
         JesseKitchenBackgroundView.exitProjectsCamera()
+    }
+
+    private var modeToggleBar: some View {
+        HStack(spacing: 0) {
+            switch modeToggleKind {
+            case .createWork:
+                modePill("Create", lime: true, id: "fieldDeskCreateButton") {
+                    openCreateStudio()
+                }
+                modePill("Work", lime: false, id: "fieldDeskWorkButton") {
+                    openWorkFromJesse()
+                }
+            case .jessesCreate:
+                modePill("Jesse's", lime: false, id: "fieldDeskJessesButton") {
+                    closeStandaloneDesk()
+                }
+                modePill("Create", lime: true, id: "fieldDeskCreateButton") {
+                    switchDeskToCreate()
+                }
+            case .jessesWork:
+                modePill("Jesse's", lime: false, id: "fieldDeskJessesButton") {
+                    closeCreateStudio()
+                }
+                modePill("Work", lime: true, id: "fieldDeskWorkButton") {
+                    switchCreateToWork()
+                }
+            }
+        }
+        .padding(3)
+        .background(
+            Capsule()
+                .fill(Color.white.opacity(0.96))
+                .shadow(color: .black.opacity(0.16), radius: 8, y: 3)
+        )
+        .accessibilityIdentifier("fieldDeskModeToggle")
+    }
+
+    private func modePill(_ title: String, lime: Bool, id: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Text(title)
+                .font(.system(size: 12, weight: .heavy, design: .rounded))
+                .foregroundColor(lime ? Color(fdHex: "0c1207") : Color(fdHex: "143a2e"))
+                .padding(.horizontal, 14)
+                .padding(.vertical, 9)
+                .background(
+                    Capsule().fill(lime ? Color(fdHex: "c4f547") : Color.clear)
+                )
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier(id)
+        .accessibilityLabel(title)
+    }
+
+    private func openManageFromChrome() {
+        if showStandaloneDesk {
+            openManageHubFromDesk()
+        } else if showCreateStudio {
+            closeCreateStudio()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+                NotificationCenter.default.post(name: .mcOpenHubFromDesk, object: nil)
+            }
+        } else {
+            NotificationCenter.default.post(name: .mcOpenHubFromDesk, object: nil)
+        }
+    }
+
+    private func openWorkFromJesse() {
+        guard !showStandaloneDesk, !showCreateStudio else { return }
+        withAnimation(.easeInOut(duration: 0.25)) {
+            showProjectsScreen = true
+            shrineBeatPhase = .idle
+            shrineCaption = ""
+        }
+    }
+
+    private func switchDeskToCreate() {
+        guard showStandaloneDesk else { return }
+        showStandaloneDesk = false
+        JesseKitchenBackgroundView.exitProjectsCamera()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            openCreateStudio()
+        }
+    }
+
+    private func switchCreateToWork() {
+        guard showCreateStudio else { return }
+        closeCreateStudio()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+            showStandaloneDesk = true
+        }
     }
 
     /// Manage from the work area: land on the hub page (tutors map +

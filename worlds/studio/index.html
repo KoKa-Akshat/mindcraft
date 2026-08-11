@@ -184,21 +184,11 @@ html.from-jesse #editorView.create-on{
   background-position:0 0,0 0,18px 18px,0 0;
 }
 html.from-jesse #editorView.create-on .topbar{
-  background:rgba(248,250,247,.94);
-  border-bottom:1px solid rgba(20,58,46,.07);
-  padding:12px 16px;
-  backdrop-filter:blur(12px);
+  /* Native Field Desk chrome owns Jesse's / Work / logo */
+  display:none !important;
 }
-html.from-jesse #editorView.create-on #navBackBtn{
-  background:#0c1207; color:#f4f7f4;
-  border:0; border-radius:999px;
-  box-shadow:0 8px 22px rgba(8,20,14,.18);
-  padding:10px 16px; font:800 12px/1 'DM Sans',sans-serif;
-  letter-spacing:.01em; text-transform:none;
-}
-html.from-jesse #editorView.create-on #navBackBtn:hover{
-  background:#143a2e; transform:none; box-shadow:0 10px 26px rgba(8,20,14,.22);
-}
+html.from-jesse #editorView.create-on #navBackBtn{display:none !important;}
+html.from-jesse #floatCanvas{padding-top:8px;}
 html.from-jesse #editorView.create-on .btn.orange{
   border-radius:999px; border:0;
   box-shadow:0 8px 22px rgba(20,58,46,.14);
@@ -430,9 +420,15 @@ html.from-jesse .floatAsk{
 .tcard.open .tbody{display:block}
 .tcard.open .thead{padding-bottom:6px}
 .tcard:not(.open){
-  /* orbital chips — title + hint only until tapped */
-  height:auto !important;
-  min-height:0;
+  /* Work-style tiles: solid boxes you tap to zoom open */
+  min-height:88px;
+}
+.tcard:not(.open) .ttxt span{display:none;}
+.tcard .ttxt b{font-size:16px !important;}
+.tcard .tico{width:42px !important; height:42px !important; font-size:20px !important; border-radius:14px !important;}
+.tcard.open{
+  transform:scale(1.02);
+  z-index:24;
 }
 .tchip{
   display:inline-flex; align-items:center; justify-content:center; gap:6px;
@@ -1029,7 +1025,7 @@ html.from-jesse .floatAsk{
         <div class="floatStack" id="floatStack">
           <div class="cnode centerNode" id="centerNode" data-node="center">
             <button type="button" class="openMediaPill" id="openMediaPill">
-              Open Media → drop a photo or clip
+              Media
               <span class="go" aria-hidden="true">↗</span>
             </button>
             <div class="stageShell">
@@ -1037,7 +1033,7 @@ html.from-jesse .floatAsk{
                 <img id="jesseHeroImg" src="img/kitchen-warm.jpg" alt="Jesse’s Kitchen">
                 <div class="veil">
                   <b>Jesse’s Create</b>
-                  <span>Drop media into Media — tools float around you — I’ll dock by search once it’s on the timeline.</span>
+                  <span>Tap a tool tile to zoom in.</span>
                   <span class="useJesse">Use in story →</span>
                 </div>
               </button>
@@ -1341,27 +1337,27 @@ function renderChest() {
 
 /* ============ CREATE SPACE · A→Z RESIZABLE CANVAS ============ */
 const CREATE_TOOLS = [
-  { id: 'media',    label: 'Media',    hint: 'Photos & clips',     icon: '📷', tone: 'g' },
-  { id: 'text',     label: 'Text',     hint: 'Titles that stick',  icon: 'Aa', tone: 'i' },
-  { id: 'captions', label: 'Captions', hint: 'Mute-friendly',      icon: '💬', tone: 'g' },
-  { id: 'stickers', label: 'Stickers', hint: 'Slap-on energy',     icon: '✦',  tone: 'g' },
-  { id: 'music',    label: 'Music',    hint: 'Spotify like IG',    icon: '♪',  tone: 'i' },
-  { id: 'fx',       label: 'Looks',    hint: 'One-tap filters',    icon: '◎',  tone: 'i' },
+  { id: 'media',    label: 'Media',    hint: '', icon: '📷', tone: 'g' },
+  { id: 'text',     label: 'Text',     hint: '', icon: 'Aa', tone: 'i' },
+  { id: 'captions', label: 'Captions', hint: '', icon: '💬', tone: 'g' },
+  { id: 'stickers', label: 'Stickers', hint: '', icon: '✦',  tone: 'g' },
+  { id: 'music',    label: 'Music',    hint: '', icon: '♪',  tone: 'i' },
+  { id: 'fx',       label: 'Looks',    hint: '', icon: '◎',  tone: 'i' },
 ];
 
-/* Spatial Jesse’s Create — compact orbit chips · portrait stage · tight board */
+/* Bigger work-style tiles · tap to zoom open · captions carry the copy */
 const DEFAULT_LAYOUT = {
-  center:   { l: 33, t: 7,  w: 34, h: 52 },
-  media:    { l: 9,  t: 11, w: 15, h: 10 },
-  text:     { l: 6,  t: 28, w: 15, h: 10 },
-  captions: { l: 9,  t: 45, w: 15, h: 10 },
-  stickers: { l: 74, t: 11, w: 15, h: 10 },
-  music:    { l: 77, t: 28, w: 15, h: 10 },
-  fx:       { l: 74, t: 45, w: 15, h: 10 },
-  timeline: { l: 2.5, t: 64, w: 95, h: 32 },
+  center:   { l: 32, t: 6,  w: 36, h: 54 },
+  media:    { l: 5,  t: 8,  w: 22, h: 16 },
+  text:     { l: 4,  t: 28, w: 22, h: 14 },
+  captions: { l: 5,  t: 46, w: 22, h: 14 },
+  stickers: { l: 73, t: 8,  w: 22, h: 16 },
+  music:    { l: 74, t: 28, w: 22, h: 14 },
+  fx:       { l: 73, t: 46, w: 22, h: 14 },
+  timeline: { l: 2,  t: 66, w: 96, h: 30 },
 };
-const TOOL_EXPAND_H = { media: 28, text: 20, captions: 16, stickers: 18, music: 22, fx: 16 };
-const LAYOUT_KEY = 'mc_studio_create_layout_v8_orbit';
+const TOOL_EXPAND_H = { media: 36, text: 26, captions: 22, stickers: 28, music: 30, fx: 24 };
+const LAYOUT_KEY = 'mc_studio_create_layout_v9_worktiles';
 const HANDLES = ['nw','n','ne','e','se','s','sw','w'];
 
 function cloneLayout(src) {
@@ -1556,8 +1552,13 @@ function setCanvasZoom(z) {
 }
 
 function openTool(id) {
-  state.activeTool = state.activeTool === id ? null : id;
-  selectNode(id);
+  if (state.activeTool === id) {
+    state.activeTool = null;
+    if (state.selectedNode === id) state.selectedNode = null;
+  } else {
+    state.activeTool = id;
+    selectNode(id);
+  }
   renderToolCards();
 }
 
@@ -1685,18 +1686,20 @@ function bindNodeInteract(el, id) {
     e.preventDefault();
     e.stopPropagation();
     selectNode(id);
-    if (id !== 'center' && id !== 'timeline' && !handle) state.activeTool = id;
-
     const layout = ensureLayout();
     const box0 = { ...layout[id] };
     const stack = $('#floatStack').getBoundingClientRect();
     const z = state.canvasZoom || 1;
     const ox = e.clientX, oy = e.clientY;
     el.classList.add('dragging');
+    el.dataset.dragged = '0';
 
     const move = (ev) => {
       const dx = ((ev.clientX - ox) / z) / stack.width * 100;
       const dy = ((ev.clientY - oy) / z) / stack.height * 100;
+      if (Math.abs(ev.clientX - ox) > 6 || Math.abs(ev.clientY - oy) > 6) {
+        el.dataset.dragged = '1';
+      }
       let next = { ...box0 };
       if (!handle) {
         next.l = Math.max(0, Math.min(100 - box0.w, box0.l + dx));
@@ -1725,6 +1728,11 @@ function bindNodeInteract(el, id) {
       saveLayout();
       window.removeEventListener('pointermove', move);
       window.removeEventListener('pointerup', up);
+      // Tap (no drag) toggles tool zoom open/closed like Work tiles.
+      if (!handle && id !== 'center' && id !== 'timeline' && el.dataset.dragged !== '1') {
+        openTool(id);
+        return;
+      }
       if (id !== 'center') renderToolCards();
     };
     window.addEventListener('pointermove', move);
@@ -1769,7 +1777,7 @@ function renderToolCards() {
   ensureLayout();
   [...stack.querySelectorAll('.tcard')].forEach(el => el.remove());
   CREATE_TOOLS.forEach((t) => {
-    const open = state.activeTool === t.id || state.selectedNode === t.id;
+    const open = state.activeTool === t.id;
     const card = document.createElement('article');
     card.className = 'cnode tcard' + (open ? ' open' : '') + (state.selectedNode === t.id ? ' selected' : '');
     card.dataset.node = t.id;
@@ -1780,7 +1788,7 @@ function renderToolCards() {
     card.innerHTML = `
       <div class="thead">
         <div class="tico ${t.tone}">${t.icon}</div>
-        <div class="ttxt"><b>${t.label}</b><span>${t.hint}</span></div>
+        <div class="ttxt"><b>${t.label}</b>${t.hint ? `<span>${t.hint}</span>` : ''}</div>
       </div>
       <div class="tbody">${open ? toolBodyHTML(t.id) : ''}</div>`;
     attachHandles(card);
