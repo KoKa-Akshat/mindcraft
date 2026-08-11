@@ -588,36 +588,29 @@ struct FieldDeskView: View {
                     .animation(.easeInOut(duration: 0.22), value: showTopChrome)
                 }
             }
-            // Top-left MindCraft mark → Manage (replaces Manage pill).
+            // Top-left product mark → Manage (text only: The Desk).
             .overlay(alignment: .topLeading) {
                 if !deskOverlayChromeBlocked {
                     Button {
                         openManageFromChrome()
                     } label: {
-                        HStack(spacing: 8) {
-                            Image("MindCraftLogo")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 28, height: 28)
-                                .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-                            Text("MindCraft")
-                                .font(.system(size: 13, weight: .heavy, design: .rounded))
-                                .foregroundColor(Color(fdHex: "143a2e"))
-                        }
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 8)
-                        .background(
-                            Capsule()
-                                .fill(Color.white.opacity(0.96))
-                                .shadow(color: .black.opacity(0.16), radius: 8, y: 3)
-                        )
+                        Text("The Desk")
+                            .font(.system(size: 13, weight: .heavy, design: .rounded))
+                            .foregroundColor(Color(fdHex: "143a2e"))
+                            .padding(.horizontal, 14)
+                            .padding(.vertical, 10)
+                            .background(
+                                Capsule()
+                                    .fill(Color.white.opacity(0.96))
+                                    .shadow(color: .black.opacity(0.16), radius: 8, y: 3)
+                            )
                     }
                     .buttonStyle(.plain)
                     .padding(.top, 12)
                     .padding(.leading, 16)
                     .zIndex(80)
                     .accessibilityIdentifier("fieldDeskLogoManage")
-                    .accessibilityLabel("MindCraft · Manage")
+                    .accessibilityLabel("The Desk · Manage")
                 }
             }
             // Top-right: mode toggle (Create/Work or Jesse's pair) · Sign out.
