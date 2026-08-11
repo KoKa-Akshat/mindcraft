@@ -23,26 +23,6 @@ class IngredientGraph:
     Provides fast lookup for ingredients, dependencies, bridges, and cards.
     """
 
-    CONCEPT_ID_ALIASES: dict[str, str] = {
-        "sequences_series": "sequences_patterns",
-        "ratios_proportions": "rates_proportion",
-        "linear_inequalities": "inequalities",
-        "descriptive_statistics": "statistics_averages",
-        "functions_basics": "functions_evaluation",
-        "basic_equations": "linear_equations",
-        "order_of_operations": "expression_forms",
-        "exponent_rules": "expression_forms",
-        "polynomials": "expression_forms",
-        "quadratic_equations": "expression_forms",
-        "right_triangle_geometry": "squares_area_right_triangles",
-        "triangles_congruence": "similar_triangles",
-        "lines_angles": "coordinate_slope",
-        "area_volume": "squares_area_right_triangles",
-        "trigonometry_basics": "right_triangle_trig",
-        "trigonometric_identities": "right_triangle_trig",
-        "systems_of_linear_equations": "linear_equations",
-    }
-
     def __init__(self, ontology: IngredientOntology):
         self.ingredients: dict[str, Ingredient] = {
             ingredient.id: ingredient for ingredient in ontology.ingredients
@@ -67,28 +47,9 @@ class IngredientGraph:
             for ingredient_id in combination.ingredients:
                 self.combinations_by_ingredient.setdefault(ingredient_id, []).append(combination)
 
-    def alias_concept_id(self, concept_id: str) -> str:
-        """Map a concept ID from the main ontology into the ingredient namespace.
-
-        Only redirects when the concept has no ingredients of its own but the
-        alias target does. Under the standardized ontology the concept and
-        ingredient layers share canonical IDs, so every real concept resolves to
-        itself and is never misrouted into a stale pilot bucket (e.g. the legacy
-        polynomials -> expression_forms alias). The legacy aliases below still
-        apply for the old pilot ingredient_ontology.json, whose ingredient
-        concept_ids lived in a different namespace.
-        """
-        if concept_id in self.by_concept:
-            return concept_id
-        aliased = self.CONCEPT_ID_ALIASES.get(concept_id, concept_id)
-        if aliased in self.by_concept:
-            return aliased
-        return concept_id
-
     def get_concept_ingredients(self, concept_id: str) -> list[Ingredient]:
-        """Return all ingredients belonging to a concept."""
-        aliased = self.alias_concept_id(concept_id)
-        return self.by_concept.get(aliased, [])
+        """Return all ingredients belonging to a concept ([] if it has none)."""
+        return self.by_concept.get(concept_id, [])
 
     def get_ingredient(self, ingredient_id: str) -> Ingredient | None:
         """Return a single ingredient by ID, or None if not found."""
