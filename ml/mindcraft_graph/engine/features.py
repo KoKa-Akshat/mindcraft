@@ -57,11 +57,6 @@ class ConceptProfile:
             # Negative: multiplication rewards conviction (confirmed weakness)
             # Bad outcome, high effort = genuine struggle
             return self.avg_outcome * investment
-    @property
-    def adjusted_strength(self) -> float:
-        """Strength normalized by concept difficulty."""
-        return self.strength_score * self.difficulty
-
 def apply_affective_modifier(
     profiles: dict[str, ConceptProfile],
     affective_state: AffectiveState,

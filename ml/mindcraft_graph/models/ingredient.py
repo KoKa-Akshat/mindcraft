@@ -67,6 +67,10 @@ class Combination(BaseModel):
     id: str
     ingredients: list[str] = Field(default_factory=list)
     apply_order: list[str] = Field(default_factory=list)
+    # Parsed and preserved, not read at runtime. spans_concepts is maintained by
+    # scripts/canonicalize_concept_ids.py + reconcile_ontology.py;
+    # captured_by_dependency_or_bridge flags combos redundant with existing edges
+    # (a candidate firing filter — see ENGINE_MECHANISM.md issue #3).
     spans_concepts: list[str] = Field(default_factory=list)
     example_problem: str = ""
     captured_by_dependency_or_bridge: bool = False
