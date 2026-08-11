@@ -3,8 +3,8 @@ import SwiftUI
 /// Floating shrine on a white void — soft-feathered image, no hard rectangle.
 struct MalevolentShrineStage: View {
     var showTitle: Bool = false
-    var title: String = "The Malevoscient Shrine"
-    var subtitle: String = "Where wild work happens…"
+    var title: String = "The Malevolent Shrine"
+    var subtitle: String = ""
 
     @State private var floating = false
 

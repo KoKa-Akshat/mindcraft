@@ -904,57 +904,14 @@ struct FieldDeskView: View {
         .frame(width: viewport.width, height: viewport.height, alignment: .topLeading)
     }
 
-    /// Blank Gdoc page card — placeable writing surface stub.
+    /// Whiteboard Gdoc — scribble / type on the kitchen placeable.
     private var gdocCardBody: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("Gdoc · blank page")
-                .font(.system(size: 12, weight: .heavy, design: .rounded))
-                .foregroundColor(Color(fdHex: "1c1a17").opacity(0.55))
-            VStack(alignment: .leading, spacing: 9) {
-                ForEach(0..<6, id: \.self) { i in
-                    RoundedRectangle(cornerRadius: 1.5)
-                        .fill(Color(fdHex: "143a2e").opacity(0.14))
-                        .frame(width: i % 2 == 1 ? 150 : 190, height: 2)
-                }
-            }
-            Spacer(minLength: 0)
-        }
-        .padding(14)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        .background(RoundedRectangle(cornerRadius: 12).fill(Color.white))
+        DeskWhiteboardCard()
     }
 
-    /// 16:9 Presentation card — placeable deck stub.
+    /// Real presentation placeable — title + body + slide paging.
     private var slidesCardBody: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            RoundedRectangle(cornerRadius: 9)
-                .strokeBorder(Color.white.opacity(0.18), lineWidth: 1)
-                .background(
-                    RoundedRectangle(cornerRadius: 9)
-                        .fill(LinearGradient(
-                            colors: [Color(fdHex: "16222c"), Color(fdHex: "0d141b")],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        ))
-                )
-                .overlay(alignment: .topLeading) {
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text("Untitled deck")
-                            .font(.system(size: 15, weight: .bold, design: .rounded))
-                            .foregroundColor(Color(fdHex: "f4f7f2"))
-                        RoundedRectangle(cornerRadius: 1.5)
-                            .fill(Color.white.opacity(0.22))
-                            .frame(width: 130, height: 2)
-                        RoundedRectangle(cornerRadius: 1.5)
-                            .fill(Color.white.opacity(0.22))
-                            .frame(width: 90, height: 2)
-                    }
-                    .padding(16)
-                }
-        }
-        .padding(10)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(RoundedRectangle(cornerRadius: 12).fill(Color(fdHex: "101820")))
+        DeskPresentationCard()
     }
 
     private func pageBoxLauncher(
@@ -1003,13 +960,13 @@ struct FieldDeskView: View {
         .position(x: x + boxW / 2, y: y + boxH / 2)
     }
 
-    /// Projects screen: the student's one project today, shown neatly.
+    /// Projects screen: hold on The Malevolent Shrine, then enter the dash.
     private var projectsScreen: some View {
         ZStack(alignment: .topLeading) {
             MalevolentShrineStage(
                 showTitle: true,
-                title: "Malevolent Shrine",
-                subtitle: "Your work area · tap the shrine to enter"
+                title: "The Malevolent Shrine",
+                subtitle: ""
             )
             .contentShape(Rectangle())
             .onTapGesture { enterWorkAreaFromProjects() }
@@ -1037,29 +994,19 @@ struct FieldDeskView: View {
             .padding(.top, 14)
             .padding(.leading, 16)
             .accessibilityIdentifier("fieldDeskProjectsBack")
-
-            VStack {
-                Spacer()
-                HStack {
-                    Spacer()
-                    Text("OPEN")
-                        .font(.system(size: 12, weight: .heavy, design: .rounded))
-                        .tracking(1.2)
-                        .foregroundColor(Color(fdHex: "0c1207"))
-                        .padding(.horizontal, 22)
-                        .padding(.vertical, 11)
-                        .background(Capsule().fill(Color(fdHex: "c4f547")))
-                        .shadow(color: .black.opacity(0.12), radius: 10, y: 4)
-                    Spacer()
-                }
-                .padding(.bottom, 96)
-            }
-            .allowsHitTesting(false)
         }
         .accessibilityIdentifier("fieldDeskProjectsScreen")
+        .onAppear {
+            // Beat: show the shrine, then land on the work-area dash.
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                guard showProjectsScreen else { return }
+                enterWorkAreaFromProjects()
+            }
+        }
     }
 
     private func enterWorkAreaFromProjects() {
+        guard showProjectsScreen else { return }
         withAnimation(.easeInOut(duration: 0.25)) { showProjectsScreen = false }
         openStandaloneDesk()
     }

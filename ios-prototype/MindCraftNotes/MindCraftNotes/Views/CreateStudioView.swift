@@ -40,8 +40,14 @@ private struct CreateStudioWebView: UIViewRepresentable {
            let url = URL(string: override) {
             return url
         }
-        // Bundled spatial board + Jesse embed chrome (`from=jesse`).
-        return URL(string: "\(KitchenSchemeHandler.scheme)://studio/index.html?v=spatial2&from=jesse")!
+        // Prefer bundled worlds/studio; fall back to live if the copy is missing.
+        if let root = Bundle.main.resourceURL {
+            let bundled = root.appendingPathComponent("studio/index.html")
+            if FileManager.default.fileExists(atPath: bundled.path) {
+                return URL(string: "\(KitchenSchemeHandler.scheme)://studio/index.html?v=spatial2&from=jesse")!
+            }
+        }
+        return URL(string: "https://mindcraft-93858.web.app/desk-os/studio/?v=spatial2&from=jesse")!
     }
 
     func makeCoordinator() -> Coordinator {
