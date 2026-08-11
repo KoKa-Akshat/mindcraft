@@ -1,5 +1,4 @@
 import SwiftUI
-import UIKit
 import UniformTypeIdentifiers
 import PhotosUI
 
@@ -596,20 +595,11 @@ struct FieldDeskView: View {
                         openManageFromChrome()
                     } label: {
                         HStack(spacing: 8) {
-                            if let item = StickerCatalog.item(id: "raccoon"),
-                               let raccoon = StickerCatalog.image(for: item) {
-                                Image(uiImage: raccoon)
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: 28, height: 28)
-                                    .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-                            } else {
-                                Text("MC")
-                                    .font(.system(size: 11, weight: .black, design: .rounded))
-                                    .foregroundColor(Color(fdHex: "0c1207"))
-                                    .frame(width: 28, height: 28)
-                                    .background(RoundedRectangle(cornerRadius: 8).fill(Color(fdHex: "c4f547")))
-                            }
+                            Image("MindCraftLogo")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 28, height: 28)
+                                .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                             Text("MindCraft")
                                 .font(.system(size: 13, weight: .heavy, design: .rounded))
                                 .foregroundColor(Color(fdHex: "143a2e"))
