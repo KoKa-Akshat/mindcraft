@@ -1,0 +1,127 @@
+{
+  "id": "writing_essays",
+  "subject": "Writing",
+  "course": "Essay Writing Foundations",
+  "metaphor": "Argument Studio",
+  "audience": "Middle and high school students learning to write clearer essays",
+  "units": [
+    {
+      "id": "idea_forge",
+      "name": "Idea Forge",
+      "metaphor": "Turning raw opinions into precise claims",
+      "description": "Students learn to name what they mean before they defend it."
+    },
+    {
+      "id": "evidence_workbench",
+      "name": "Evidence Workbench",
+      "metaphor": "Choosing proof that actually carries the argument",
+      "description": "Students connect evidence to claims with interpretation."
+    },
+    {
+      "id": "revision_loop",
+      "name": "Revision Loop",
+      "metaphor": "Making the draft stronger each time it breaks",
+      "description": "Students learn that better writing is built through retries."
+    }
+  ],
+  "concepts": [
+    {
+      "id": "clear_thesis",
+      "name": "Clear Thesis",
+      "unit_id": "idea_forge",
+      "level": "foundational",
+      "description": "A specific, arguable main claim that gives the essay direction.",
+      "story": "A thesis is the compass for the whole essay. If it points vaguely, every paragraph wanders.",
+      "grit_prompt": "A fuzzy thesis is not failure. It is the first signal that your argument wants sharper edges.",
+      "visual_metaphor": "A bright compass needle locking onto one destination.",
+      "ingredients": [
+        {
+          "id": "clear_thesis__arguable_claim",
+          "label": "Arguable claim",
+          "description": "The thesis takes a position someone could reasonably challenge.",
+          "failure_mode": "The student writes a fact or broad topic instead of a claim.",
+          "practice_prompt": "Rewrite a broad topic as a claim that can be defended.",
+          "visual_metaphor": "A statement turning from mist into a carved signpost."
+        },
+        {
+          "id": "clear_thesis__scope_control",
+          "label": "Scope control",
+          "description": "The claim is narrow enough to prove in the essay length.",
+          "failure_mode": "The student tries to prove too much at once.",
+          "practice_prompt": "Shrink an oversized thesis until it fits three body paragraphs.",
+          "visual_metaphor": "A camera lens zooming from a skyline to one building."
+        }
+      ],
+      "tags": ["argument", "planning"]
+    },
+    {
+      "id": "evidence_selection",
+      "name": "Evidence Selection",
+      "unit_id": "evidence_workbench",
+      "level": "core",
+      "description": "Choosing quotes, examples, or facts that directly support the thesis.",
+      "story": "Evidence is not decoration. It is the load-bearing beam in the paragraph.",
+      "grit_prompt": "When evidence does not fit, you are learning what your argument truly needs.",
+      "visual_metaphor": "A bridge beam clicking into place between claim and reader.",
+      "ingredients": [
+        {
+          "id": "evidence_selection__relevance_check",
+          "label": "Relevance check",
+          "description": "The evidence answers the exact claim, not a nearby idea.",
+          "failure_mode": "The evidence is interesting but not useful.",
+          "practice_prompt": "Sort evidence into supports, distracts, or needs explanation.",
+          "visual_metaphor": "Magnets snapping only to matching pieces."
+        }
+      ],
+      "tags": ["evidence", "analysis"]
+    },
+    {
+      "id": "commentary_bridge",
+      "name": "Commentary Bridge",
+      "unit_id": "evidence_workbench",
+      "level": "core",
+      "description": "Explaining how evidence proves the claim.",
+      "story": "Commentary is where the student becomes the thinker, not just the collector of quotes.",
+      "grit_prompt": "If your explanation feels hard, that is the workout. Stay with the connection.",
+      "visual_metaphor": "A lit path from a quote to the thesis.",
+      "ingredients": [
+        {
+          "id": "commentary_bridge__because_chain",
+          "label": "Because chain",
+          "description": "The student uses because-reasoning to connect evidence to meaning.",
+          "failure_mode": "The paragraph drops evidence and moves on.",
+          "practice_prompt": "Add two because-statements after a quote.",
+          "visual_metaphor": "Stepping stones crossing a river."
+        }
+      ],
+      "tags": ["analysis", "reasoning"]
+    },
+    {
+      "id": "revision_from_feedback",
+      "name": "Revision from Feedback",
+      "unit_id": "revision_loop",
+      "level": "advanced",
+      "description": "Using critique to make a specific next draft stronger.",
+      "story": "Feedback is not a verdict. It is a map of where the essay can grow next.",
+      "grit_prompt": "A returned draft is not the end of the work. It is the moment the work gets smarter.",
+      "visual_metaphor": "A draft page gaining new routes and stronger foundations.",
+      "ingredients": [
+        {
+          "id": "revision_from_feedback__targeted_change",
+          "label": "Targeted change",
+          "description": "The student turns feedback into one concrete edit.",
+          "failure_mode": "The student rereads feedback but does not change the draft.",
+          "practice_prompt": "Convert a teacher comment into one exact sentence-level revision.",
+          "visual_metaphor": "A repair tool tightening one loose bolt."
+        }
+      ],
+      "tags": ["revision", "growth mindset"]
+    }
+  ],
+  "edges": [
+    { "from": "clear_thesis", "to": "evidence_selection", "relation": "prerequisite", "strength": 0.85 },
+    { "from": "evidence_selection", "to": "commentary_bridge", "relation": "prerequisite", "strength": 0.9 },
+    { "from": "commentary_bridge", "to": "revision_from_feedback", "relation": "unlocks", "strength": 0.7 },
+    { "from": "clear_thesis", "to": "revision_from_feedback", "relation": "bridge", "strength": 0.45 }
+  ]
+}

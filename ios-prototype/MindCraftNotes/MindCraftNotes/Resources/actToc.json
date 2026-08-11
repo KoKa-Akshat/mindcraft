@@ -1,0 +1,185 @@
+{
+  "sections": [
+    {
+      "id": "warmups",
+      "title": "Warm-ups",
+      "blurb": "The fluency you lean on when everything else gets noisy.",
+      "washTop": "3e3121",
+      "washBottom": "221c13",
+      "accent": "e8a06c",
+      "ink": "f4efe2",
+      "conceptIds": [
+        "fractions_decimals",
+        "ratios_proportions",
+        "order_of_operations",
+        "basic_equations",
+        "number_properties",
+        "measurement_units",
+        "algebraic_manipulation"
+      ]
+    },
+    {
+      "id": "algebra",
+      "title": "Algebra",
+      "blurb": "Equations, functions, and the moves that unlock most ACT items.",
+      "washTop": "1f4d36",
+      "washBottom": "10271c",
+      "accent": "b9e86f",
+      "ink": "f4efe2",
+      "conceptIds": [
+        "linear_equations",
+        "functions_basics",
+        "linear_inequalities",
+        "systems_of_linear_equations",
+        "exponent_rules",
+        "polynomials",
+        "factoring_polynomials",
+        "radical_expressions",
+        "quadratic_equations",
+        "exponential_functions",
+        "sequences_series"
+      ]
+    },
+    {
+      "id": "geometry",
+      "title": "Geometry",
+      "blurb": "Shapes, angles, and space: draw it, then name it.",
+      "washTop": "244f51",
+      "washBottom": "10252a",
+      "accent": "7ec8e3",
+      "ink": "f4efe2",
+      "conceptIds": [
+        "right_triangle_geometry",
+        "trigonometry_basics",
+        "lines_angles",
+        "triangles_congruence",
+        "circles_geometry",
+        "area_volume",
+        "geometric_transformations"
+      ]
+    },
+    {
+      "id": "data",
+      "title": "Data & chance",
+      "blurb": "Read the story in a table, then weigh what could happen next.",
+      "washTop": "4f531d",
+      "washBottom": "222210",
+      "accent": "f5d348",
+      "ink": "f4efe2",
+      "conceptIds": [
+        "descriptive_statistics",
+        "basic_probability"
+      ]
+    }
+  ],
+  "concepts": {
+    "fractions_decimals": {
+      "label": "Fractions and Decimals",
+      "blurb": "Parts of a whole, switch freely between fractions and decimals."
+    },
+    "ratios_proportions": {
+      "label": "Ratios and Proportions",
+      "blurb": "A ratio is a fraction, so set up two equal fractions and cross-multiply."
+    },
+    "order_of_operations": {
+      "label": "Order of Operations",
+      "blurb": "Parentheses first, then powers, then multiply/divide, then add/subtract."
+    },
+    "basic_equations": {
+      "label": "Basic One-Variable Equations",
+      "blurb": "Balance both sides until the unknown stands alone."
+    },
+    "number_properties": {
+      "label": "Number Properties, Factors, and Divisibility",
+      "blurb": "Odd/even, primes, factors, multiples, and divisibility patterns."
+    },
+    "measurement_units": {
+      "label": "Units, Measurement, and Dimensional Reasoning",
+      "blurb": "Unit conversion is always multiplication or division: set up the fraction so units cancel."
+    },
+    "algebraic_manipulation": {
+      "label": "Algebraic Structure and Symbolic Manipulation",
+      "blurb": "Every algebra step is one of three moves: add/subtract, multiply/divide, or substitute."
+    },
+    "linear_equations": {
+      "label": "Linear Equations",
+      "blurb": "Variables to the first power only. Goal: isolate the variable."
+    },
+    "functions_basics": {
+      "label": "Basics of Functions",
+      "blurb": "f(x) is a machine: put x in, get output out. Composition = chain the machines."
+    },
+    "linear_inequalities": {
+      "label": "Linear Inequalities",
+      "blurb": "Same as equations, with one critical exception: flip the sign when multiplying or dividing by a negative."
+    },
+    "systems_of_linear_equations": {
+      "label": "Systems of Linear Equations",
+      "blurb": "Substitution or elimination. Elimination is almost always faster on ACT."
+    },
+    "exponent_rules": {
+      "label": "Exponent Rules",
+      "blurb": "Six rules. Memorize all six. They appear constantly."
+    },
+    "polynomials": {
+      "label": "Polynomial Operations",
+      "blurb": "FOIL to expand, factor to simplify. Remainder theorem shortcuts long division."
+    },
+    "factoring_polynomials": {
+      "label": "Factoring Polynomials",
+      "blurb": "Factor out GCF first. Then recognize the pattern."
+    },
+    "radical_expressions": {
+      "label": "Radical Expressions",
+      "blurb": "Simplify roots the way you simplify fractions, clean the inside first."
+    },
+    "quadratic_equations": {
+      "label": "Quadratic Equations",
+      "blurb": "Three methods: factor, quadratic formula, completing the square. Know all three."
+    },
+    "exponential_functions": {
+      "label": "Exponential Functions",
+      "blurb": "Growth and decay curves that multiply, not add."
+    },
+    "sequences_series": {
+      "label": "Sequences and Series",
+      "blurb": "Find the pattern, then the next term, or the sum."
+    },
+    "right_triangle_geometry": {
+      "label": "Right Triangle Geometry",
+      "blurb": "Pythagorean theorem + special triangles solve almost every right triangle question."
+    },
+    "trigonometry_basics": {
+      "label": "Trigonometry Basics",
+      "blurb": "SOH-CAH-TOA is your best friend, so memorize it cold."
+    },
+    "lines_angles": {
+      "label": "Lines and Angles",
+      "blurb": "Parallel lines cut by a transversal create eight angles, but only two distinct measures."
+    },
+    "triangles_congruence": {
+      "label": "Triangles and Congruence",
+      "blurb": "Same shape and size: matching sides and angles tell the story."
+    },
+    "circles_geometry": {
+      "label": "Geometry of Circles",
+      "blurb": "All circle questions come back to the radius and the central angle."
+    },
+    "area_volume": {
+      "label": "Area and Volume",
+      "blurb": "Know your formulas cold. The ACT provides none of them."
+    },
+    "geometric_transformations": {
+      "label": "Geometric Transformations",
+      "blurb": "Slide, flip, and turn: the figure moves, the measures stay."
+    },
+    "descriptive_statistics": {
+      "label": "Descriptive Statistics",
+      "blurb": "Mean, median, range, and standard deviation tell different stories about the same data."
+    },
+    "basic_probability": {
+      "label": "Basic Probability",
+      "blurb": "P = favorable / total. Know addition rule, multiplication rule, and complements."
+    }
+  }
+}

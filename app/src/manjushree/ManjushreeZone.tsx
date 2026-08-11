@@ -47,7 +47,7 @@ const STRIKE_HOLD_MS = 1300
 /** Cut plays, then we jump straight into the story slideshow. */
 const CINEMATIC_MS = 3000
 
-const MARKETING_DEMO = 'https://mindcraft-marketing-site.web.app/#demo'
+const MARKETING_DEMO = 'https://joinmindcraft.com/#demo'
 
 function storyLoopPath(preview: boolean): string {
   return preview

@@ -17,22 +17,54 @@
 
 body {
     overflow: hidden;
-    background:
-        linear-gradient(90deg, rgba(251, 250, 246, 0.86), rgba(251, 250, 246, 0.10)),
-        radial-gradient(circle at 18% 12%, rgba(196, 245, 71, 0.16), transparent 34%),
-        radial-gradient(circle at 82% 12%, rgba(0, 180, 170, 0.12), transparent 30%),
-        linear-gradient(135deg, #fbfaf6 0%, #dbe8dc 45%, #08130f 100%);
+    /* Match Field Desk void / MindCraft desk background */
+    background: #050a08;
     /* min-height: 100vh;
     min-height: -webkit-fill-available; */
 }
 
+/* Desk / embed: kitchen is a silent background space — no Enter World, no chrome */
+html.mc-desk-bg #mc-badge,
+html.mc-desk-bg #mc-booking-link,
+html.mc-desk-bg .mc-cue,
+html.mc-desk-bg .mc-top-actions,
+html.mc-desk-bg .mc-booking-btn,
+html.mc-desk-bg #cooking,
+html.mc-desk-bg #cooking h1,
+html.mc-desk-bg body > h1,
+body.mc-desk-bg #mc-badge,
+body.mc-desk-bg #mc-booking-link,
+body.mc-desk-bg .mc-cue,
+body.mc-desk-bg .mc-top-actions,
+body.mc-desk-bg .mc-booking-btn,
+body.mc-desk-bg #cooking,
+body.mc-desk-bg #cooking h1 {
+    display: none !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+html.mc-desk-bg .start,
+body.mc-desk-bg .start,
+html.mc-desk-bg .start.fadeIn,
+body.mc-desk-bg .start.fadeIn {
+    opacity: 0 !important;
+    color: transparent !important;
+    text-shadow: none !important;
+    pointer-events: none !important;
+    /* Keep in DOM so the engine can wire + we can auto-click it, but never steal taps */
+}
+
+html.mc-desk-bg canvas.webgl,
+body.mc-desk-bg canvas.webgl {
+    width: 100% !important;
+    height: 100% !important;
+    display: block !important;
+}
+
 .overlay{
     opacity:1;
-    background:
-        linear-gradient(90deg, rgba(251, 250, 246, 0.88), rgba(251, 250, 246, 0.14)),
-        radial-gradient(circle at 18% 18%, rgba(196, 245, 71, 0.24), transparent 32%),
-        radial-gradient(circle at 76% 30%, rgba(9, 91, 63, 0.22), transparent 34%),
-        linear-gradient(135deg, #fbfaf6 0%, #ecf4ea 46%, #06120e 100%);
+    background: #050a08;
     position:fixed;
     width:100%;
     height:100%;
@@ -662,3 +694,5 @@ h1 {
 }
 
 /*# sourceMappingURL=main.css.map*/
+
+/* desk-bg 1786335802 */

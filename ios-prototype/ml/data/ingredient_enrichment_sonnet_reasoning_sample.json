@@ -1,0 +1,2019 @@
+{
+  "_meta": {
+    "purpose": "Full set (85/85) of misconceptions Sonnet reasoned through directly (no LLM/human) for the ingredient enrichment build, for Opus's independent stratified spot-check per C-6. Provenance in the main map is tagged 'human' for these ids -- that is the script's file-injection tag, not an actual human reviewer or Groq.",
+    "total": 85,
+    "assigned_count": 24,
+    "none_count": 61,
+    "concepts_covered": [
+      "ratios_proportions",
+      "right_triangle_geometry",
+      "sequences_series",
+      "systems_of_linear_equations",
+      "triangles_congruence",
+      "trigonometry_basics"
+    ]
+  },
+  "items": [
+    {
+      "misconception_id": "mis_ratios_proportions__repeated_percentage_change_believes_second",
+      "concept_id": "ratios_proportions",
+      "misconception_label": "In repeated percentage change, believes the second change is only a percentage of the f...",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "ratios_proportions__cross_multiply_meaning",
+          "label": "Cross multiplication derives from fraction equality"
+        },
+        {
+          "ingredient_id": "ratios_proportions__proportion_setup",
+          "label": "Proportion sets two equal ratios"
+        },
+        {
+          "ingredient_id": "ratios_proportions__ratio_as_comparison",
+          "label": "Ratio is multiplicative not additive"
+        },
+        {
+          "ingredient_id": "ratios_proportions__unit_rate",
+          "label": "Unit rate expresses ratio per one unit"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "About compounding on a running total across repeated percentage changes -- none of the 4 candidates (cross_multiply_meaning, proportion_setup, ratio_as_comparison, unit_rate) address repeated/compound percentage change specifically."
+    },
+    {
+      "misconception_id": "mis_ratios_proportions__thinks_faster_you_travel_longer",
+      "concept_id": "ratios_proportions",
+      "misconception_label": "Thinks the faster you travel the longer the time it will take",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "ratios_proportions__cross_multiply_meaning",
+          "label": "Cross multiplication derives from fraction equality"
+        },
+        {
+          "ingredient_id": "ratios_proportions__proportion_setup",
+          "label": "Proportion sets two equal ratios"
+        },
+        {
+          "ingredient_id": "ratios_proportions__ratio_as_comparison",
+          "label": "Ratio is multiplicative not additive"
+        },
+        {
+          "ingredient_id": "ratios_proportions__unit_rate",
+          "label": "Unit rate expresses ratio per one unit"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Confuses direct vs inverse proportion (speed/time). None of the 4 candidates mention inverse proportion; proportion_setup only covers direct-proportion numerator/denominator mix-ups."
+    },
+    {
+      "misconception_id": "mis_ratios_proportions__thinks_finding_percentage_you_divide",
+      "concept_id": "ratios_proportions",
+      "misconception_label": "Thinks when finding a percentage you divide by the percentage being asked",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "ratios_proportions__cross_multiply_meaning",
+          "label": "Cross multiplication derives from fraction equality"
+        },
+        {
+          "ingredient_id": "ratios_proportions__proportion_setup",
+          "label": "Proportion sets two equal ratios"
+        },
+        {
+          "ingredient_id": "ratios_proportions__ratio_as_comparison",
+          "label": "Ratio is multiplicative not additive"
+        },
+        {
+          "ingredient_id": "ratios_proportions__unit_rate",
+          "label": "Unit rate expresses ratio per one unit"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Percent-of-a-number computation error (divides instead of multiplies by the percent). Not covered by cross-multiply, proportion-setup, ratio-as-comparison, or unit-rate."
+    },
+    {
+      "misconception_id": "mis_ratios_proportions__thinks_shape_graph_does_not",
+      "concept_id": "ratios_proportions",
+      "misconception_label": "Thinks the shape of the graph does not affect the area calculation",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "ratios_proportions__cross_multiply_meaning",
+          "label": "Cross multiplication derives from fraction equality"
+        },
+        {
+          "ingredient_id": "ratios_proportions__proportion_setup",
+          "label": "Proportion sets two equal ratios"
+        },
+        {
+          "ingredient_id": "ratios_proportions__ratio_as_comparison",
+          "label": "Ratio is multiplicative not additive"
+        },
+        {
+          "ingredient_id": "ratios_proportions__unit_rate",
+          "label": "Unit rate expresses ratio per one unit"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "This is actually an area-under-a-curve (integral_apps/integrals) misconception mis-tagged under ratios_proportions in Eedi -- same cross-concept pattern already identified for its sibling anchor family. None of ratios_proportions' own 4 ingredients fit; correctly excluded per C-1."
+    },
+    {
+      "misconception_id": "mis_ratios_proportions__thinks_they_double_numerator_turn",
+      "concept_id": "ratios_proportions",
+      "misconception_label": "Thinks they double the numerator to turn a fraction into a percentage",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "ratios_proportions__cross_multiply_meaning",
+          "label": "Cross multiplication derives from fraction equality"
+        },
+        {
+          "ingredient_id": "ratios_proportions__proportion_setup",
+          "label": "Proportion sets two equal ratios"
+        },
+        {
+          "ingredient_id": "ratios_proportions__ratio_as_comparison",
+          "label": "Ratio is multiplicative not additive"
+        },
+        {
+          "ingredient_id": "ratios_proportions__unit_rate",
+          "label": "Unit rate expresses ratio per one unit"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Fraction-to-percentage conversion error. Not covered by any of the 4 ratio/proportion candidates."
+    },
+    {
+      "misconception_id": "mis_ratios_proportions__thinks_you_just_add_sign",
+      "concept_id": "ratios_proportions",
+      "misconception_label": "Thinks you just add a % sign to the numerator to make a fraction into a percentage",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "ratios_proportions__cross_multiply_meaning",
+          "label": "Cross multiplication derives from fraction equality"
+        },
+        {
+          "ingredient_id": "ratios_proportions__proportion_setup",
+          "label": "Proportion sets two equal ratios"
+        },
+        {
+          "ingredient_id": "ratios_proportions__ratio_as_comparison",
+          "label": "Ratio is multiplicative not additive"
+        },
+        {
+          "ingredient_id": "ratios_proportions__unit_rate",
+          "label": "Unit rate expresses ratio per one unit"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Fraction-to-percentage conversion error (same family as above). Not covered by the 4 candidates."
+    },
+    {
+      "misconception_id": "mis_ratios_proportions__thinks_you_need_include_total",
+      "concept_id": "ratios_proportions",
+      "misconception_label": "Thinks you need to include the total as well as the individual parts when asked to writ...",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "ratios_proportions__cross_multiply_meaning",
+          "label": "Cross multiplication derives from fraction equality"
+        },
+        {
+          "ingredient_id": "ratios_proportions__proportion_setup",
+          "label": "Proportion sets two equal ratios"
+        },
+        {
+          "ingredient_id": "ratios_proportions__ratio_as_comparison",
+          "label": "Ratio is multiplicative not additive"
+        },
+        {
+          "ingredient_id": "ratios_proportions__unit_rate",
+          "label": "Unit rate expresses ratio per one unit"
+        }
+      ],
+      "sonnet_choice": "ratios_proportions__ratio_as_comparison",
+      "sonnet_reasoning": "Believes a written ratio must also list the total as a third term -- a misunderstanding of what a ratio expresses (comparison between parts, not parts-plus-total). Closest fit among the 4: ratio_as_comparison."
+    },
+    {
+      "misconception_id": "mis_ratios_proportions__writing_number_percentage_another_number",
+      "concept_id": "ratios_proportions",
+      "misconception_label": "When writing a number as a percentage of another number gets them the wrong way around",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "ratios_proportions__cross_multiply_meaning",
+          "label": "Cross multiplication derives from fraction equality"
+        },
+        {
+          "ingredient_id": "ratios_proportions__proportion_setup",
+          "label": "Proportion sets two equal ratios"
+        },
+        {
+          "ingredient_id": "ratios_proportions__ratio_as_comparison",
+          "label": "Ratio is multiplicative not additive"
+        },
+        {
+          "ingredient_id": "ratios_proportions__unit_rate",
+          "label": "Unit rate expresses ratio per one unit"
+        }
+      ],
+      "sonnet_choice": "ratios_proportions__proportion_setup",
+      "sonnet_reasoning": "Gets numerator/denominator backwards when writing one number as a percentage of another -- a direct match to proportion_setup's stated failure mode ('mix which values go in numerator vs denominator when translating a word problem into a proportion equation')."
+    },
+    {
+      "misconception_id": "mis_right_triangle_geometry__does_not_realise_two_letters",
+      "concept_id": "right_triangle_geometry",
+      "misconception_label": "Does not realise that two letters together, or a number and letter together, are multip...",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "right_triangle__coordinate_distance_formula",
+          "label": "Distance between coordinate points uses a right triangle"
+        },
+        {
+          "ingredient_id": "right_triangle__pythagorean_theorem",
+          "label": "a squared plus b squared equals c squared"
+        },
+        {
+          "ingredient_id": "right_triangle__side_naming",
+          "label": "Side names depend on the reference angle"
+        },
+        {
+          "ingredient_id": "right_triangle__sohcahtoa_setup",
+          "label": "Trig ratios are specific side ratios"
+        },
+        {
+          "ingredient_id": "right_triangle__special_triangles",
+          "label": "Special triangles have known exact side ratios"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Pure algebraic-notation misconception (implicit multiplication of two letters/number+letter) -- unrelated to any right-triangle content ingredient."
+    },
+    {
+      "misconception_id": "mis_right_triangle_geometry__makes_assumption_about_line_segments",
+      "concept_id": "right_triangle_geometry",
+      "misconception_label": "Makes an assumption about line segments being equal within a shape",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "right_triangle__coordinate_distance_formula",
+          "label": "Distance between coordinate points uses a right triangle"
+        },
+        {
+          "ingredient_id": "right_triangle__pythagorean_theorem",
+          "label": "a squared plus b squared equals c squared"
+        },
+        {
+          "ingredient_id": "right_triangle__side_naming",
+          "label": "Side names depend on the reference angle"
+        },
+        {
+          "ingredient_id": "right_triangle__sohcahtoa_setup",
+          "label": "Trig ratios are specific side ratios"
+        },
+        {
+          "ingredient_id": "right_triangle__special_triangles",
+          "label": "Special triangles have known exact side ratios"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Generic geometry error (assumes segments equal without justification), not specific to distance formula, Pythagorean theorem, side naming, SOHCAHTOA, or special triangles."
+    },
+    {
+      "misconception_id": "mis_right_triangle_geometry__thinks_square_root_expression_square",
+      "concept_id": "right_triangle_geometry",
+      "misconception_label": "Thinks that the square root of an expression square roots each term in the expression,...",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "right_triangle__coordinate_distance_formula",
+          "label": "Distance between coordinate points uses a right triangle"
+        },
+        {
+          "ingredient_id": "right_triangle__pythagorean_theorem",
+          "label": "a squared plus b squared equals c squared"
+        },
+        {
+          "ingredient_id": "right_triangle__side_naming",
+          "label": "Side names depend on the reference angle"
+        },
+        {
+          "ingredient_id": "right_triangle__sohcahtoa_setup",
+          "label": "Trig ratios are specific side ratios"
+        },
+        {
+          "ingredient_id": "right_triangle__special_triangles",
+          "label": "Special triangles have known exact side ratios"
+        }
+      ],
+      "sonnet_choice": "right_triangle__pythagorean_theorem",
+      "sonnet_reasoning": "Thinks sqrt(a+b) distributes to sqrt(a)+sqrt(b) -- this is exactly the algebra error that surfaces when solving c = sqrt(a^2+b^2) for the Pythagorean theorem. Closest of the 5 candidates given the theorem's own failure mode covers mishandling the squaring/combining step."
+    },
+    {
+      "misconception_id": "mis_sequences_series__asked_for_specific_term_sequence",
+      "concept_id": "sequences_series",
+      "misconception_label": "When asked for a specific term in a sequence just gives the next term",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "sequences__arithmetic_identification",
+          "label": "Arithmetic sequences have constant difference"
+        },
+        {
+          "ingredient_id": "sequences__geometric_identification",
+          "label": "Geometric sequences have constant ratio"
+        },
+        {
+          "ingredient_id": "sequences__geometric_series_sum",
+          "label": "Geometric series sum uses closed form formula"
+        },
+        {
+          "ingredient_id": "sequences__nth_term_formula",
+          "label": "nth term formulas give any term without listing all"
+        }
+      ],
+      "sonnet_choice": "sequences__nth_term_formula",
+      "sonnet_reasoning": "Answers 'next term' when asked for a specific term n -- exactly the failure the nth-term formula (get any term without listing all) is meant to prevent."
+    },
+    {
+      "misconception_id": "mis_sequences_series__believes_difference_between_triangle_numbers",
+      "concept_id": "sequences_series",
+      "misconception_label": "Believes the difference between triangle numbers decreases by 1 each time",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "sequences__arithmetic_identification",
+          "label": "Arithmetic sequences have constant difference"
+        },
+        {
+          "ingredient_id": "sequences__geometric_identification",
+          "label": "Geometric sequences have constant ratio"
+        },
+        {
+          "ingredient_id": "sequences__geometric_series_sum",
+          "label": "Geometric series sum uses closed form formula"
+        },
+        {
+          "ingredient_id": "sequences__nth_term_formula",
+          "label": "nth term formulas give any term without listing all"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Triangle numbers are a quadratic sequence (differences increase by 1); none of the 4 candidates (arithmetic/geometric identification, geometric series sum, nth-term formula) cover triangle-number/quadratic sequences."
+    },
+    {
+      "misconception_id": "mis_sequences_series__believes_find_next_traingle_number",
+      "concept_id": "sequences_series",
+      "misconception_label": "Believes to find the next traingle number you add the previous two numbers together i.e...",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "sequences__arithmetic_identification",
+          "label": "Arithmetic sequences have constant difference"
+        },
+        {
+          "ingredient_id": "sequences__geometric_identification",
+          "label": "Geometric sequences have constant ratio"
+        },
+        {
+          "ingredient_id": "sequences__geometric_series_sum",
+          "label": "Geometric series sum uses closed form formula"
+        },
+        {
+          "ingredient_id": "sequences__nth_term_formula",
+          "label": "nth term formulas give any term without listing all"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "About the (incorrect, Fibonacci-style) generation rule for triangle numbers -- not covered by any of the 4 candidates."
+    },
+    {
+      "misconception_id": "mis_sequences_series__believes_square_numbers_are_triangle",
+      "concept_id": "sequences_series",
+      "misconception_label": "Believes square numbers are triangle numbers",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "sequences__arithmetic_identification",
+          "label": "Arithmetic sequences have constant difference"
+        },
+        {
+          "ingredient_id": "sequences__geometric_identification",
+          "label": "Geometric sequences have constant ratio"
+        },
+        {
+          "ingredient_id": "sequences__geometric_series_sum",
+          "label": "Geometric series sum uses closed form formula"
+        },
+        {
+          "ingredient_id": "sequences__nth_term_formula",
+          "label": "nth term formulas give any term without listing all"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Named-sequence vocabulary confusion (square vs triangle numbers) -- not covered by arithmetic/geometric identification or the two formula ingredients."
+    },
+    {
+      "misconception_id": "mis_sequences_series__believes_there_multiplicative_relationship_between",
+      "concept_id": "sequences_series",
+      "misconception_label": "Believes there is a multiplicative relationship between values of terms in a linear seq...",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "sequences__arithmetic_identification",
+          "label": "Arithmetic sequences have constant difference"
+        },
+        {
+          "ingredient_id": "sequences__geometric_identification",
+          "label": "Geometric sequences have constant ratio"
+        },
+        {
+          "ingredient_id": "sequences__geometric_series_sum",
+          "label": "Geometric series sum uses closed form formula"
+        },
+        {
+          "ingredient_id": "sequences__nth_term_formula",
+          "label": "nth term formulas give any term without listing all"
+        }
+      ],
+      "sonnet_choice": "sequences__arithmetic_identification",
+      "sonnet_reasoning": "Believes a linear (constant-difference) sequence actually grows multiplicatively -- directly the arithmetic-vs-geometric confusion arithmetic_identification's failure mode describes."
+    },
+    {
+      "misconception_id": "mis_sequences_series__believes_triangle_numbers_are_formed",
+      "concept_id": "sequences_series",
+      "misconception_label": "Believes triangle numbers are formed differently to the correct way",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "sequences__arithmetic_identification",
+          "label": "Arithmetic sequences have constant difference"
+        },
+        {
+          "ingredient_id": "sequences__geometric_identification",
+          "label": "Geometric sequences have constant ratio"
+        },
+        {
+          "ingredient_id": "sequences__geometric_series_sum",
+          "label": "Geometric series sum uses closed form formula"
+        },
+        {
+          "ingredient_id": "sequences__nth_term_formula",
+          "label": "nth term formulas give any term without listing all"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Vague triangle-number formation misconception, not covered by the 4 candidates."
+    },
+    {
+      "misconception_id": "mis_sequences_series__does_not_know_definition_term",
+      "concept_id": "sequences_series",
+      "misconception_label": "Does not know the definition of term or term-to-term rule",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "sequences__arithmetic_identification",
+          "label": "Arithmetic sequences have constant difference"
+        },
+        {
+          "ingredient_id": "sequences__geometric_identification",
+          "label": "Geometric sequences have constant ratio"
+        },
+        {
+          "ingredient_id": "sequences__geometric_series_sum",
+          "label": "Geometric series sum uses closed form formula"
+        },
+        {
+          "ingredient_id": "sequences__nth_term_formula",
+          "label": "nth term formulas give any term without listing all"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Basic vocabulary gap ('term', 'term-to-term rule') that is prerequisite to all 4 candidates rather than specific to any one of them."
+    },
+    {
+      "misconception_id": "mis_sequences_series__does_not_know_what_square",
+      "concept_id": "sequences_series",
+      "misconception_label": "Does not know what a square number is",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "sequences__arithmetic_identification",
+          "label": "Arithmetic sequences have constant difference"
+        },
+        {
+          "ingredient_id": "sequences__geometric_identification",
+          "label": "Geometric sequences have constant ratio"
+        },
+        {
+          "ingredient_id": "sequences__geometric_series_sum",
+          "label": "Geometric series sum uses closed form formula"
+        },
+        {
+          "ingredient_id": "sequences__nth_term_formula",
+          "label": "nth term formulas give any term without listing all"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Pure vocabulary ('square number'), unrelated to the 4 candidates."
+    },
+    {
+      "misconception_id": "mis_sequences_series__does_not_notice_all_changes",
+      "concept_id": "sequences_series",
+      "misconception_label": "Does not notice all changes in a sequence of visual patterns",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "sequences__arithmetic_identification",
+          "label": "Arithmetic sequences have constant difference"
+        },
+        {
+          "ingredient_id": "sequences__geometric_identification",
+          "label": "Geometric sequences have constant ratio"
+        },
+        {
+          "ingredient_id": "sequences__geometric_series_sum",
+          "label": "Geometric series sum uses closed form formula"
+        },
+        {
+          "ingredient_id": "sequences__nth_term_formula",
+          "label": "nth term formulas give any term without listing all"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Visual-pattern pattern-spotting skill, too generic to map to arithmetic vs geometric identification or either formula specifically."
+    },
+    {
+      "misconception_id": "mis_sequences_series__does_not_understand_term_quadratic",
+      "concept_id": "sequences_series",
+      "misconception_label": "Does not understand the term quadratic",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "sequences__arithmetic_identification",
+          "label": "Arithmetic sequences have constant difference"
+        },
+        {
+          "ingredient_id": "sequences__geometric_identification",
+          "label": "Geometric sequences have constant ratio"
+        },
+        {
+          "ingredient_id": "sequences__geometric_series_sum",
+          "label": "Geometric series sum uses closed form formula"
+        },
+        {
+          "ingredient_id": "sequences__nth_term_formula",
+          "label": "nth term formulas give any term without listing all"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Quadratic-sequence vocabulary, not covered -- none of the 4 candidates address quadratic sequences."
+    },
+    {
+      "misconception_id": "mis_sequences_series__finding_differences_between_terms_sequence",
+      "concept_id": "sequences_series",
+      "misconception_label": "When finding the differences between terms in a sequence, believes they can do so from...",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "sequences__arithmetic_identification",
+          "label": "Arithmetic sequences have constant difference"
+        },
+        {
+          "ingredient_id": "sequences__geometric_identification",
+          "label": "Geometric sequences have constant ratio"
+        },
+        {
+          "ingredient_id": "sequences__geometric_series_sum",
+          "label": "Geometric series sum uses closed form formula"
+        },
+        {
+          "ingredient_id": "sequences__nth_term_formula",
+          "label": "nth term formulas give any term without listing all"
+        }
+      ],
+      "sonnet_choice": "sequences__arithmetic_identification",
+      "sonnet_reasoning": "Direction/ordering error while computing the common difference used to test for an arithmetic sequence -- part of arithmetic_identification's own diagnostic process."
+    },
+    {
+      "misconception_id": "mis_sequences_series__given_term_term_sequence_with",
+      "concept_id": "sequences_series",
+      "misconception_label": "When given a term to term sequence with multiple steps, applies one step per term",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "sequences__arithmetic_identification",
+          "label": "Arithmetic sequences have constant difference"
+        },
+        {
+          "ingredient_id": "sequences__geometric_identification",
+          "label": "Geometric sequences have constant ratio"
+        },
+        {
+          "ingredient_id": "sequences__geometric_series_sum",
+          "label": "Geometric series sum uses closed form formula"
+        },
+        {
+          "ingredient_id": "sequences__nth_term_formula",
+          "label": "nth term formulas give any term without listing all"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Misapplies a multi-step term-to-term rule (does one step instead of all steps) -- a term-to-term-rule-specific gap not covered by nth-term formula or arithmetic/geometric identification."
+    },
+    {
+      "misconception_id": "mis_sequences_series__goes_wrong_direction_sequence_identifying",
+      "concept_id": "sequences_series",
+      "misconception_label": "Goes the wrong direction in the sequence when identifying term-to-term rule",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "sequences__arithmetic_identification",
+          "label": "Arithmetic sequences have constant difference"
+        },
+        {
+          "ingredient_id": "sequences__geometric_identification",
+          "label": "Geometric sequences have constant ratio"
+        },
+        {
+          "ingredient_id": "sequences__geometric_series_sum",
+          "label": "Geometric series sum uses closed form formula"
+        },
+        {
+          "ingredient_id": "sequences__nth_term_formula",
+          "label": "nth term formulas give any term without listing all"
+        }
+      ],
+      "sonnet_choice": "sequences__arithmetic_identification",
+      "sonnet_reasoning": "Subtracts terms in the wrong order/direction when identifying the term-to-term rule -- a direct execution error within arithmetic_identification's difference-checking process."
+    },
+    {
+      "misconception_id": "mis_sequences_series__has_multiplied_value_first_term",
+      "concept_id": "sequences_series",
+      "misconception_label": "Has multiplied the value of the first term by the the term being asked",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "sequences__arithmetic_identification",
+          "label": "Arithmetic sequences have constant difference"
+        },
+        {
+          "ingredient_id": "sequences__geometric_identification",
+          "label": "Geometric sequences have constant ratio"
+        },
+        {
+          "ingredient_id": "sequences__geometric_series_sum",
+          "label": "Geometric series sum uses closed form formula"
+        },
+        {
+          "ingredient_id": "sequences__nth_term_formula",
+          "label": "nth term formulas give any term without listing all"
+        }
+      ],
+      "sonnet_choice": "sequences__nth_term_formula",
+      "sonnet_reasoning": "Computes term n as a1*n instead of the correct nth-term formula -- a direct misapplication of nth_term_formula, same failure family as 'uses n instead of (n-1)'."
+    },
+    {
+      "misconception_id": "mis_sequences_series__identifies_termtoterm_rule_rather_than",
+      "concept_id": "sequences_series",
+      "misconception_label": "Identifies the term-to-term rule rather than the next term in a sequence",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "sequences__arithmetic_identification",
+          "label": "Arithmetic sequences have constant difference"
+        },
+        {
+          "ingredient_id": "sequences__geometric_identification",
+          "label": "Geometric sequences have constant ratio"
+        },
+        {
+          "ingredient_id": "sequences__geometric_series_sum",
+          "label": "Geometric series sum uses closed form formula"
+        },
+        {
+          "ingredient_id": "sequences__nth_term_formula",
+          "label": "nth term formulas give any term without listing all"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Answers with the rule itself (e.g. '+3') instead of the requested next term -- a response-format confusion not covered by any of the 4 candidates."
+    },
+    {
+      "misconception_id": "mis_sequences_series__miscounts_subtracting_over_zero",
+      "concept_id": "sequences_series",
+      "misconception_label": "Miscounts when subtracting over zero",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "sequences__arithmetic_identification",
+          "label": "Arithmetic sequences have constant difference"
+        },
+        {
+          "ingredient_id": "sequences__geometric_identification",
+          "label": "Geometric sequences have constant ratio"
+        },
+        {
+          "ingredient_id": "sequences__geometric_series_sum",
+          "label": "Geometric series sum uses closed form formula"
+        },
+        {
+          "ingredient_id": "sequences__nth_term_formula",
+          "label": "nth term formulas give any term without listing all"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Pure integer-arithmetic sign error, not sequence-specific."
+    },
+    {
+      "misconception_id": "mis_sequences_series__mixes_up_squaring_and_multiplying",
+      "concept_id": "sequences_series",
+      "misconception_label": "Mixes up squaring and multiplying by 2 or doubling",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "sequences__arithmetic_identification",
+          "label": "Arithmetic sequences have constant difference"
+        },
+        {
+          "ingredient_id": "sequences__geometric_identification",
+          "label": "Geometric sequences have constant ratio"
+        },
+        {
+          "ingredient_id": "sequences__geometric_series_sum",
+          "label": "Geometric series sum uses closed form formula"
+        },
+        {
+          "ingredient_id": "sequences__nth_term_formula",
+          "label": "nth term formulas give any term without listing all"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "General algebra-operation confusion (x^2 vs 2x), not specific to any of the 4 sequence ingredients."
+    },
+    {
+      "misconception_id": "mis_sequences_series__mixes_up_term_sequence_and",
+      "concept_id": "sequences_series",
+      "misconception_label": "Mixes up term in a sequence and position of a term",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "sequences__arithmetic_identification",
+          "label": "Arithmetic sequences have constant difference"
+        },
+        {
+          "ingredient_id": "sequences__geometric_identification",
+          "label": "Geometric sequences have constant ratio"
+        },
+        {
+          "ingredient_id": "sequences__geometric_series_sum",
+          "label": "Geometric series sum uses closed form formula"
+        },
+        {
+          "ingredient_id": "sequences__nth_term_formula",
+          "label": "nth term formulas give any term without listing all"
+        }
+      ],
+      "sonnet_choice": "sequences__nth_term_formula",
+      "sonnet_reasoning": "Confuses the VALUE of a term with its POSITION n -- exactly the distinction the nth-term formula (a_n vs n) requires to use correctly."
+    },
+    {
+      "misconception_id": "mis_sequences_series__only_looks_difference_between_one",
+      "concept_id": "sequences_series",
+      "misconception_label": "Only looks at the difference between one pair of terms when discerning the pattern",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "sequences__arithmetic_identification",
+          "label": "Arithmetic sequences have constant difference"
+        },
+        {
+          "ingredient_id": "sequences__geometric_identification",
+          "label": "Geometric sequences have constant ratio"
+        },
+        {
+          "ingredient_id": "sequences__geometric_series_sum",
+          "label": "Geometric series sum uses closed form formula"
+        },
+        {
+          "ingredient_id": "sequences__nth_term_formula",
+          "label": "nth term formulas give any term without listing all"
+        }
+      ],
+      "sonnet_choice": "sequences__arithmetic_identification",
+      "sonnet_reasoning": "Checks only one pair of terms instead of verifying constant difference across the sequence -- directly part of correctly applying arithmetic_identification."
+    },
+    {
+      "misconception_id": "mis_sequences_series__solving_equation_uses_same_operation",
+      "concept_id": "sequences_series",
+      "misconception_label": "When solving an equation, uses the same operation rather than the inverse",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "sequences__arithmetic_identification",
+          "label": "Arithmetic sequences have constant difference"
+        },
+        {
+          "ingredient_id": "sequences__geometric_identification",
+          "label": "Geometric sequences have constant ratio"
+        },
+        {
+          "ingredient_id": "sequences__geometric_series_sum",
+          "label": "Geometric series sum uses closed form formula"
+        },
+        {
+          "ingredient_id": "sequences__nth_term_formula",
+          "label": "nth term formulas give any term without listing all"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Generic equation-solving misconception (uses same operation instead of inverse) -- not sequences-specific, none of the 4 candidates apply."
+    },
+    {
+      "misconception_id": "mis_sequences_series__squaring_variable_believes_they_also",
+      "concept_id": "sequences_series",
+      "misconception_label": "When squaring a variable, believes they also need to square the coefficient",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "sequences__arithmetic_identification",
+          "label": "Arithmetic sequences have constant difference"
+        },
+        {
+          "ingredient_id": "sequences__geometric_identification",
+          "label": "Geometric sequences have constant ratio"
+        },
+        {
+          "ingredient_id": "sequences__geometric_series_sum",
+          "label": "Geometric series sum uses closed form formula"
+        },
+        {
+          "ingredient_id": "sequences__nth_term_formula",
+          "label": "nth term formulas give any term without listing all"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Algebra-of-exponents error (coefficient squaring), unrelated to sequence identification or formulas."
+    },
+    {
+      "misconception_id": "mis_sequences_series__subtracting_fractions_subtracts_numerators_and",
+      "concept_id": "sequences_series",
+      "misconception_label": "When subtracting fractions, subtracts the numerators and denominators",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "sequences__arithmetic_identification",
+          "label": "Arithmetic sequences have constant difference"
+        },
+        {
+          "ingredient_id": "sequences__geometric_identification",
+          "label": "Geometric sequences have constant ratio"
+        },
+        {
+          "ingredient_id": "sequences__geometric_series_sum",
+          "label": "Geometric series sum uses closed form formula"
+        },
+        {
+          "ingredient_id": "sequences__nth_term_formula",
+          "label": "nth term formulas give any term without listing all"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Pure fraction-arithmetic misconception, unrelated to sequences content."
+    },
+    {
+      "misconception_id": "mis_sequences_series__subtracting_past_zero_adds_absolute",
+      "concept_id": "sequences_series",
+      "misconception_label": "When subtracting past zero, adds the absolute values and then writes the answer with a...",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "sequences__arithmetic_identification",
+          "label": "Arithmetic sequences have constant difference"
+        },
+        {
+          "ingredient_id": "sequences__geometric_identification",
+          "label": "Geometric sequences have constant ratio"
+        },
+        {
+          "ingredient_id": "sequences__geometric_series_sum",
+          "label": "Geometric series sum uses closed form formula"
+        },
+        {
+          "ingredient_id": "sequences__nth_term_formula",
+          "label": "nth term formulas give any term without listing all"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Pure integer-arithmetic misconception, unrelated to sequences content."
+    },
+    {
+      "misconception_id": "mis_sequences_series__thinks_cube_numbers_are_triangular",
+      "concept_id": "sequences_series",
+      "misconception_label": "Thinks cube numbers are triangular numbers",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "sequences__arithmetic_identification",
+          "label": "Arithmetic sequences have constant difference"
+        },
+        {
+          "ingredient_id": "sequences__geometric_identification",
+          "label": "Geometric sequences have constant ratio"
+        },
+        {
+          "ingredient_id": "sequences__geometric_series_sum",
+          "label": "Geometric series sum uses closed form formula"
+        },
+        {
+          "ingredient_id": "sequences__nth_term_formula",
+          "label": "nth term formulas give any term without listing all"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Named-sequence vocabulary confusion (cube vs triangular numbers), not covered by the 4 candidates."
+    },
+    {
+      "misconception_id": "mis_sequences_series__thinks_fibonacci_sequence_must_start",
+      "concept_id": "sequences_series",
+      "misconception_label": "Thinks a Fibonacci sequence must start with 1, 1",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "sequences__arithmetic_identification",
+          "label": "Arithmetic sequences have constant difference"
+        },
+        {
+          "ingredient_id": "sequences__geometric_identification",
+          "label": "Geometric sequences have constant ratio"
+        },
+        {
+          "ingredient_id": "sequences__geometric_series_sum",
+          "label": "Geometric series sum uses closed form formula"
+        },
+        {
+          "ingredient_id": "sequences__nth_term_formula",
+          "label": "nth term formulas give any term without listing all"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Fibonacci-specific misconception; none of the 4 candidates (arithmetic/geometric sequences, geometric series sum, nth-term formula) apply to Fibonacci sequences."
+    },
+    {
+      "misconception_id": "mis_sequences_series__thinks_first_term_sequence_must",
+      "concept_id": "sequences_series",
+      "misconception_label": "Thinks the first term of a sequence must be 1",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "sequences__arithmetic_identification",
+          "label": "Arithmetic sequences have constant difference"
+        },
+        {
+          "ingredient_id": "sequences__geometric_identification",
+          "label": "Geometric sequences have constant ratio"
+        },
+        {
+          "ingredient_id": "sequences__geometric_series_sum",
+          "label": "Geometric series sum uses closed form formula"
+        },
+        {
+          "ingredient_id": "sequences__nth_term_formula",
+          "label": "nth term formulas give any term without listing all"
+        }
+      ],
+      "sonnet_choice": "sequences__nth_term_formula",
+      "sonnet_reasoning": "Confuses the symbol/position 'first term' with the literal numeric value 1 -- an a1-in-the-formula misunderstanding within nth_term_formula's domain."
+    },
+    {
+      "misconception_id": "mis_sequences_series__thinks_first_term_sequence_term",
+      "concept_id": "sequences_series",
+      "misconception_label": "Thinks the first term in a sequence is the term before the sequence begins (0th term)",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "sequences__arithmetic_identification",
+          "label": "Arithmetic sequences have constant difference"
+        },
+        {
+          "ingredient_id": "sequences__geometric_identification",
+          "label": "Geometric sequences have constant ratio"
+        },
+        {
+          "ingredient_id": "sequences__geometric_series_sum",
+          "label": "Geometric series sum uses closed form formula"
+        },
+        {
+          "ingredient_id": "sequences__nth_term_formula",
+          "label": "nth term formulas give any term without listing all"
+        }
+      ],
+      "sonnet_choice": "sequences__nth_term_formula",
+      "sonnet_reasoning": "Treats the sequence as 0-indexed (a 'before the sequence begins' term) -- exactly the off-by-one error nth_term_formula's failure mode describes ('every term off by one position')."
+    },
+    {
+      "misconception_id": "mis_sequences_series__uses_only_first_two_terms",
+      "concept_id": "sequences_series",
+      "misconception_label": "Uses only the first two terms of a sequence to work out a term-to-term rule",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "sequences__arithmetic_identification",
+          "label": "Arithmetic sequences have constant difference"
+        },
+        {
+          "ingredient_id": "sequences__geometric_identification",
+          "label": "Geometric sequences have constant ratio"
+        },
+        {
+          "ingredient_id": "sequences__geometric_series_sum",
+          "label": "Geometric series sum uses closed form formula"
+        },
+        {
+          "ingredient_id": "sequences__nth_term_formula",
+          "label": "nth term formulas give any term without listing all"
+        }
+      ],
+      "sonnet_choice": "sequences__arithmetic_identification",
+      "sonnet_reasoning": "Determines the term-to-term rule from only the first two terms without checking the rest -- the same insufficient-verification pattern as 'only looks at difference between one pair', part of arithmetic_identification's process."
+    },
+    {
+      "misconception_id": "mis_systems_of_linear_equations__believes_dividing_negative_positive_gives",
+      "concept_id": "systems_of_linear_equations",
+      "misconception_label": "Believes dividing a negative by a positive gives a positive answer",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "systems__elimination_method",
+          "label": "Elimination cancels one variable by adding equations"
+        },
+        {
+          "ingredient_id": "systems__no_solution_infinite",
+          "label": "Parallel lines have no solution, identical lines have infinite"
+        },
+        {
+          "ingredient_id": "systems__solution_as_intersection",
+          "label": "Solution is where both lines cross"
+        },
+        {
+          "ingredient_id": "systems__substitution_method",
+          "label": "Substitution replaces one variable with an expression"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Pure sign-arithmetic misconception (negative/positive division), unrelated to any of the 4 systems-method ingredients."
+    },
+    {
+      "misconception_id": "mis_systems_of_linear_equations__believes_solution_mx_c_0",
+      "concept_id": "systems_of_linear_equations",
+      "misconception_label": "Believes the solution of mx + c = 0 is x =0",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "systems__elimination_method",
+          "label": "Elimination cancels one variable by adding equations"
+        },
+        {
+          "ingredient_id": "systems__no_solution_infinite",
+          "label": "Parallel lines have no solution, identical lines have infinite"
+        },
+        {
+          "ingredient_id": "systems__solution_as_intersection",
+          "label": "Solution is where both lines cross"
+        },
+        {
+          "ingredient_id": "systems__substitution_method",
+          "label": "Substitution replaces one variable with an expression"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "About solving a single linear equation for its root/x-intercept, not about systems methods (elimination/substitution/intersection/no-solution-infinite)."
+    },
+    {
+      "misconception_id": "mis_systems_of_linear_equations__believes_solution_mx_c_x",
+      "concept_id": "systems_of_linear_equations",
+      "misconception_label": "Believes the solution to mx + c = a is the x intercept of y = mx +c",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "systems__elimination_method",
+          "label": "Elimination cancels one variable by adding equations"
+        },
+        {
+          "ingredient_id": "systems__no_solution_infinite",
+          "label": "Parallel lines have no solution, identical lines have infinite"
+        },
+        {
+          "ingredient_id": "systems__solution_as_intersection",
+          "label": "Solution is where both lines cross"
+        },
+        {
+          "ingredient_id": "systems__substitution_method",
+          "label": "Substitution replaces one variable with an expression"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Single-equation x-intercept misconception, not a systems-of-equations method error."
+    },
+    {
+      "misconception_id": "mis_systems_of_linear_equations__reading_value_from_graph_reads",
+      "concept_id": "systems_of_linear_equations",
+      "misconception_label": "When reading value from graph, reads from the wrong axes",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "systems__elimination_method",
+          "label": "Elimination cancels one variable by adding equations"
+        },
+        {
+          "ingredient_id": "systems__no_solution_infinite",
+          "label": "Parallel lines have no solution, identical lines have infinite"
+        },
+        {
+          "ingredient_id": "systems__solution_as_intersection",
+          "label": "Solution is where both lines cross"
+        },
+        {
+          "ingredient_id": "systems__substitution_method",
+          "label": "Substitution replaces one variable with an expression"
+        }
+      ],
+      "sonnet_choice": "systems__solution_as_intersection",
+      "sonnet_reasoning": "Misreads axes while reading a value off a graph -- plausibly while locating the graphical intersection point, which is solution_as_intersection's domain."
+    },
+    {
+      "misconception_id": "mis_systems_of_linear_equations__solving_equation_where_there_negative",
+      "concept_id": "systems_of_linear_equations",
+      "misconception_label": "When solving an equation where there is a negative sign in front of the variable at the...",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "systems__elimination_method",
+          "label": "Elimination cancels one variable by adding equations"
+        },
+        {
+          "ingredient_id": "systems__no_solution_infinite",
+          "label": "Parallel lines have no solution, identical lines have infinite"
+        },
+        {
+          "ingredient_id": "systems__solution_as_intersection",
+          "label": "Solution is where both lines cross"
+        },
+        {
+          "ingredient_id": "systems__substitution_method",
+          "label": "Substitution replaces one variable with an expression"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "General single-equation sign-handling mechanics, not specific to any systems method."
+    },
+    {
+      "misconception_id": "mis_systems_of_linear_equations__subtracting_negative_number_subtracts_absolute",
+      "concept_id": "systems_of_linear_equations",
+      "misconception_label": "When subtracting a negative number, subtracts the absolute value rather than adding it",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "systems__elimination_method",
+          "label": "Elimination cancels one variable by adding equations"
+        },
+        {
+          "ingredient_id": "systems__no_solution_infinite",
+          "label": "Parallel lines have no solution, identical lines have infinite"
+        },
+        {
+          "ingredient_id": "systems__solution_as_intersection",
+          "label": "Solution is where both lines cross"
+        },
+        {
+          "ingredient_id": "systems__substitution_method",
+          "label": "Substitution replaces one variable with an expression"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "General integer-arithmetic sign error; could occur during elimination but is not distinctively about the elimination method itself, so left unassigned rather than force-fit."
+    },
+    {
+      "misconception_id": "mis_triangles_congruence__assumes_angle_size_looks_not",
+      "concept_id": "triangles_congruence",
+      "misconception_label": "Assumes an angle is the size that it looks in the (not to scale) diagram",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "triangles__angle_sum",
+          "label": "Angles in any triangle sum to 180 degrees"
+        },
+        {
+          "ingredient_id": "triangles__congruence_criteria",
+          "label": "Congruence is proven with minimal side and angle information"
+        },
+        {
+          "ingredient_id": "triangles__similarity_ratios",
+          "label": "Similar triangles have proportional corresponding sides"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Diagram-literalism (trusting a not-to-scale drawing) is a general test-taking skill, not specific to angle_sum, congruence_criteria, or similarity_ratios."
+    },
+    {
+      "misconception_id": "mis_triangles_congruence__believes_adjacent_sides_rhombus_are",
+      "concept_id": "triangles_congruence",
+      "misconception_label": "Believes adjacent sides of a rhombus are always perpendicular",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "triangles__angle_sum",
+          "label": "Angles in any triangle sum to 180 degrees"
+        },
+        {
+          "ingredient_id": "triangles__congruence_criteria",
+          "label": "Congruence is proven with minimal side and angle information"
+        },
+        {
+          "ingredient_id": "triangles__similarity_ratios",
+          "label": "Similar triangles have proportional corresponding sides"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Rhombus (quadrilateral) property, unrelated to the 3 triangle-specific candidates."
+    },
+    {
+      "misconception_id": "mis_triangles_congruence__believes_all_triangles_have_right",
+      "concept_id": "triangles_congruence",
+      "misconception_label": "Believes all triangles have a right angle",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "triangles__angle_sum",
+          "label": "Angles in any triangle sum to 180 degrees"
+        },
+        {
+          "ingredient_id": "triangles__congruence_criteria",
+          "label": "Congruence is proven with minimal side and angle information"
+        },
+        {
+          "ingredient_id": "triangles__similarity_ratios",
+          "label": "Similar triangles have proportional corresponding sides"
+        }
+      ],
+      "sonnet_choice": "triangles__angle_sum",
+      "sonnet_reasoning": "Reflects a shallow grasp of general triangle angle properties (not every triangle has a right angle) -- angle_sum's own framing is 'regardless of the triangle's shape', the closest of the 3 candidates."
+    },
+    {
+      "misconception_id": "mis_triangles_congruence__believes_arrowhead_has_four_equal",
+      "concept_id": "triangles_congruence",
+      "misconception_label": "Believes an arrowhead has four equal sides",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "triangles__angle_sum",
+          "label": "Angles in any triangle sum to 180 degrees"
+        },
+        {
+          "ingredient_id": "triangles__congruence_criteria",
+          "label": "Congruence is proven with minimal side and angle information"
+        },
+        {
+          "ingredient_id": "triangles__similarity_ratios",
+          "label": "Similar triangles have proportional corresponding sides"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Kite/arrowhead (quadrilateral) property, unrelated to the 3 candidates."
+    },
+    {
+      "misconception_id": "mis_triangles_congruence__believes_arrows_for_parallel_lines",
+      "concept_id": "triangles_congruence",
+      "misconception_label": "Believes the arrows for parallel lines mean equal length",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "triangles__angle_sum",
+          "label": "Angles in any triangle sum to 180 degrees"
+        },
+        {
+          "ingredient_id": "triangles__congruence_criteria",
+          "label": "Congruence is proven with minimal side and angle information"
+        },
+        {
+          "ingredient_id": "triangles__similarity_ratios",
+          "label": "Similar triangles have proportional corresponding sides"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Diagram-notation convention (parallel-line arrows), not covered by angle_sum, congruence_criteria, or similarity_ratios."
+    },
+    {
+      "misconception_id": "mis_triangles_congruence__believes_if_shapes_have_rotational",
+      "concept_id": "triangles_congruence",
+      "misconception_label": "Believes if shapes have rotational symmetry they must have line symmetry",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "triangles__angle_sum",
+          "label": "Angles in any triangle sum to 180 degrees"
+        },
+        {
+          "ingredient_id": "triangles__congruence_criteria",
+          "label": "Congruence is proven with minimal side and angle information"
+        },
+        {
+          "ingredient_id": "triangles__similarity_ratios",
+          "label": "Similar triangles have proportional corresponding sides"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Symmetry property, unrelated to the 3 candidates."
+    },
+    {
+      "misconception_id": "mis_triangles_congruence__believes_interior_angle_regular_polygon",
+      "concept_id": "triangles_congruence",
+      "misconception_label": "Believes an interior angle in a regular polygon can be found using 180(n+2)/n",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "triangles__angle_sum",
+          "label": "Angles in any triangle sum to 180 degrees"
+        },
+        {
+          "ingredient_id": "triangles__congruence_criteria",
+          "label": "Congruence is proven with minimal side and angle information"
+        },
+        {
+          "ingredient_id": "triangles__similarity_ratios",
+          "label": "Similar triangles have proportional corresponding sides"
+        }
+      ],
+      "sonnet_choice": "triangles__angle_sum",
+      "sonnet_reasoning": "Wrong polygon interior-angle formula -- angle_sum's failure mode explicitly names 'applying the 180 degree rule to non-triangular polygons' as the exact error pattern."
+    },
+    {
+      "misconception_id": "mis_triangles_congruence__believes_isosceles_triangles_cannot_have",
+      "concept_id": "triangles_congruence",
+      "misconception_label": "Believes isosceles triangles cannot have right angles",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "triangles__angle_sum",
+          "label": "Angles in any triangle sum to 180 degrees"
+        },
+        {
+          "ingredient_id": "triangles__congruence_criteria",
+          "label": "Congruence is proven with minimal side and angle information"
+        },
+        {
+          "ingredient_id": "triangles__similarity_ratios",
+          "label": "Similar triangles have proportional corresponding sides"
+        }
+      ],
+      "sonnet_choice": "triangles__angle_sum",
+      "sonnet_reasoning": "Believes isosceles and right-angled are incompatible triangle categories -- reflects not seeing that many angle combinations (e.g. 45-45-90) can satisfy the 180-degree sum while also being isosceles. Marginal but closest of the 3."
+    },
+    {
+      "misconception_id": "mis_triangles_congruence__believes_number_sides_gives_order",
+      "concept_id": "triangles_congruence",
+      "misconception_label": "Believes the number of sides gives the order of rotational symmetry",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "triangles__angle_sum",
+          "label": "Angles in any triangle sum to 180 degrees"
+        },
+        {
+          "ingredient_id": "triangles__congruence_criteria",
+          "label": "Congruence is proven with minimal side and angle information"
+        },
+        {
+          "ingredient_id": "triangles__similarity_ratios",
+          "label": "Similar triangles have proportional corresponding sides"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Rotational-symmetry property, unrelated to the 3 candidates."
+    },
+    {
+      "misconception_id": "mis_triangles_congruence__believes_rectangle_has_four_equal",
+      "concept_id": "triangles_congruence",
+      "misconception_label": "Believes a rectangle has four equal sides",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "triangles__angle_sum",
+          "label": "Angles in any triangle sum to 180 degrees"
+        },
+        {
+          "ingredient_id": "triangles__congruence_criteria",
+          "label": "Congruence is proven with minimal side and angle information"
+        },
+        {
+          "ingredient_id": "triangles__similarity_ratios",
+          "label": "Similar triangles have proportional corresponding sides"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Rectangle (quadrilateral) property, unrelated to the 3 candidates."
+    },
+    {
+      "misconception_id": "mis_triangles_congruence__believes_there_are_100_degrees",
+      "concept_id": "triangles_congruence",
+      "misconception_label": "Believes there are 100 degrees in a full turn",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "triangles__angle_sum",
+          "label": "Angles in any triangle sum to 180 degrees"
+        },
+        {
+          "ingredient_id": "triangles__congruence_criteria",
+          "label": "Congruence is proven with minimal side and angle information"
+        },
+        {
+          "ingredient_id": "triangles__similarity_ratios",
+          "label": "Similar triangles have proportional corresponding sides"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Full-turn/rotation unit misconception (should be 360), not the triangle-interior-angle-sum (180) ingredient specifically."
+    },
+    {
+      "misconception_id": "mis_triangles_congruence__believes_there_only_one_orientation",
+      "concept_id": "triangles_congruence",
+      "misconception_label": "Believes there is only one orientation for the isosceles triangle base angles",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "triangles__angle_sum",
+          "label": "Angles in any triangle sum to 180 degrees"
+        },
+        {
+          "ingredient_id": "triangles__congruence_criteria",
+          "label": "Congruence is proven with minimal side and angle information"
+        },
+        {
+          "ingredient_id": "triangles__similarity_ratios",
+          "label": "Similar triangles have proportional corresponding sides"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Isosceles base-angle orientation specifics, not clearly matching angle_sum, congruence_criteria, or similarity_ratios."
+    },
+    {
+      "misconception_id": "mis_triangles_congruence__confuses_isosceles_and_equilateral_triangles",
+      "concept_id": "triangles_congruence",
+      "misconception_label": "Confuses isosceles and equilateral triangles",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "triangles__angle_sum",
+          "label": "Angles in any triangle sum to 180 degrees"
+        },
+        {
+          "ingredient_id": "triangles__congruence_criteria",
+          "label": "Congruence is proven with minimal side and angle information"
+        },
+        {
+          "ingredient_id": "triangles__similarity_ratios",
+          "label": "Similar triangles have proportional corresponding sides"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Triangle-type vocabulary/classification confusion, not an angle-sum, congruence-proof, or similarity-ratio error specifically."
+    },
+    {
+      "misconception_id": "mis_triangles_congruence__confuses_isosceles_and_right_angle",
+      "concept_id": "triangles_congruence",
+      "misconception_label": "Confuses isosceles and right angle triangles",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "triangles__angle_sum",
+          "label": "Angles in any triangle sum to 180 degrees"
+        },
+        {
+          "ingredient_id": "triangles__congruence_criteria",
+          "label": "Congruence is proven with minimal side and angle information"
+        },
+        {
+          "ingredient_id": "triangles__similarity_ratios",
+          "label": "Similar triangles have proportional corresponding sides"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Triangle-type vocabulary confusion, not covered by the 3 candidates."
+    },
+    {
+      "misconception_id": "mis_triangles_congruence__confuses_isosceles_and_scalene_triangles",
+      "concept_id": "triangles_congruence",
+      "misconception_label": "Confuses isosceles and scalene triangles",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "triangles__angle_sum",
+          "label": "Angles in any triangle sum to 180 degrees"
+        },
+        {
+          "ingredient_id": "triangles__congruence_criteria",
+          "label": "Congruence is proven with minimal side and angle information"
+        },
+        {
+          "ingredient_id": "triangles__similarity_ratios",
+          "label": "Similar triangles have proportional corresponding sides"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Triangle-type vocabulary confusion, not covered by the 3 candidates."
+    },
+    {
+      "misconception_id": "mis_triangles_congruence__confuses_octagon_and_pentagon",
+      "concept_id": "triangles_congruence",
+      "misconception_label": "Confuses octagon and pentagon",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "triangles__angle_sum",
+          "label": "Angles in any triangle sum to 180 degrees"
+        },
+        {
+          "ingredient_id": "triangles__congruence_criteria",
+          "label": "Congruence is proven with minimal side and angle information"
+        },
+        {
+          "ingredient_id": "triangles__similarity_ratios",
+          "label": "Similar triangles have proportional corresponding sides"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Polygon-name vocabulary, not even triangle-specific."
+    },
+    {
+      "misconception_id": "mis_triangles_congruence__confuses_pentagon_and_hexagon",
+      "concept_id": "triangles_congruence",
+      "misconception_label": "Confuses pentagon and hexagon",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "triangles__angle_sum",
+          "label": "Angles in any triangle sum to 180 degrees"
+        },
+        {
+          "ingredient_id": "triangles__congruence_criteria",
+          "label": "Congruence is proven with minimal side and angle information"
+        },
+        {
+          "ingredient_id": "triangles__similarity_ratios",
+          "label": "Similar triangles have proportional corresponding sides"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Polygon-name vocabulary, not triangle-specific."
+    },
+    {
+      "misconception_id": "mis_triangles_congruence__confuses_scalene_and_right_angle",
+      "concept_id": "triangles_congruence",
+      "misconception_label": "Confuses scalene and right angle triangles",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "triangles__angle_sum",
+          "label": "Angles in any triangle sum to 180 degrees"
+        },
+        {
+          "ingredient_id": "triangles__congruence_criteria",
+          "label": "Congruence is proven with minimal side and angle information"
+        },
+        {
+          "ingredient_id": "triangles__similarity_ratios",
+          "label": "Similar triangles have proportional corresponding sides"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Triangle-type vocabulary confusion, not covered by the 3 candidates."
+    },
+    {
+      "misconception_id": "mis_triangles_congruence__does_know_know_equilateral_means",
+      "concept_id": "triangles_congruence",
+      "misconception_label": "Does know know equilateral means the same as regular",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "triangles__angle_sum",
+          "label": "Angles in any triangle sum to 180 degrees"
+        },
+        {
+          "ingredient_id": "triangles__congruence_criteria",
+          "label": "Congruence is proven with minimal side and angle information"
+        },
+        {
+          "ingredient_id": "triangles__similarity_ratios",
+          "label": "Similar triangles have proportional corresponding sides"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Vocabulary (equilateral = regular for triangles), not covered by the 3 candidates."
+    },
+    {
+      "misconception_id": "mis_triangles_congruence__does_not_know_how_calculate",
+      "concept_id": "triangles_congruence",
+      "misconception_label": "Does not know how to calculate the sum of interior angles",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "triangles__angle_sum",
+          "label": "Angles in any triangle sum to 180 degrees"
+        },
+        {
+          "ingredient_id": "triangles__congruence_criteria",
+          "label": "Congruence is proven with minimal side and angle information"
+        },
+        {
+          "ingredient_id": "triangles__similarity_ratios",
+          "label": "Similar triangles have proportional corresponding sides"
+        }
+      ],
+      "sonnet_choice": "triangles__angle_sum",
+      "sonnet_reasoning": "Directly 'does not know how to calculate the sum of interior angles' -- the core content of angle_sum."
+    },
+    {
+      "misconception_id": "mis_triangles_congruence__does_not_know_how_find",
+      "concept_id": "triangles_congruence",
+      "misconception_label": "Does not know how to find order of rotational symmetry",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "triangles__angle_sum",
+          "label": "Angles in any triangle sum to 180 degrees"
+        },
+        {
+          "ingredient_id": "triangles__congruence_criteria",
+          "label": "Congruence is proven with minimal side and angle information"
+        },
+        {
+          "ingredient_id": "triangles__similarity_ratios",
+          "label": "Similar triangles have proportional corresponding sides"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Rotational-symmetry order, unrelated to the 3 candidates."
+    },
+    {
+      "misconception_id": "mis_triangles_congruence__does_not_know_meaning_equilateral",
+      "concept_id": "triangles_congruence",
+      "misconception_label": "Does not know the meaning of equilateral",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "triangles__angle_sum",
+          "label": "Angles in any triangle sum to 180 degrees"
+        },
+        {
+          "ingredient_id": "triangles__congruence_criteria",
+          "label": "Congruence is proven with minimal side and angle information"
+        },
+        {
+          "ingredient_id": "triangles__similarity_ratios",
+          "label": "Similar triangles have proportional corresponding sides"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Vocabulary, not covered by the 3 candidates."
+    },
+    {
+      "misconception_id": "mis_triangles_congruence__does_not_know_meaning_word",
+      "concept_id": "triangles_congruence",
+      "misconception_label": "Does not know the meaning of the word parallel",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "triangles__angle_sum",
+          "label": "Angles in any triangle sum to 180 degrees"
+        },
+        {
+          "ingredient_id": "triangles__congruence_criteria",
+          "label": "Congruence is proven with minimal side and angle information"
+        },
+        {
+          "ingredient_id": "triangles__similarity_ratios",
+          "label": "Similar triangles have proportional corresponding sides"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "'Parallel' vocabulary and parallel-line angle relationships belong to the lines_angles concept, not triangles_congruence's own 3 ingredients (angle_sum/congruence_criteria/similarity_ratios) -- cross-concept, correctly excluded."
+    },
+    {
+      "misconception_id": "mis_triangles_congruence__does_not_know_rectangle_type",
+      "concept_id": "triangles_congruence",
+      "misconception_label": "Does not know a rectangle is a type of parallelogram",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "triangles__angle_sum",
+          "label": "Angles in any triangle sum to 180 degrees"
+        },
+        {
+          "ingredient_id": "triangles__congruence_criteria",
+          "label": "Congruence is proven with minimal side and angle information"
+        },
+        {
+          "ingredient_id": "triangles__similarity_ratios",
+          "label": "Similar triangles have proportional corresponding sides"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Quadrilateral taxonomy (rectangle is a parallelogram), unrelated to the 3 candidates."
+    },
+    {
+      "misconception_id": "mis_triangles_congruence__does_not_recognise_interior_and",
+      "concept_id": "triangles_congruence",
+      "misconception_label": "Does not recognise that interior and exterior angles are supplementary",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "triangles__angle_sum",
+          "label": "Angles in any triangle sum to 180 degrees"
+        },
+        {
+          "ingredient_id": "triangles__congruence_criteria",
+          "label": "Congruence is proven with minimal side and angle information"
+        },
+        {
+          "ingredient_id": "triangles__similarity_ratios",
+          "label": "Similar triangles have proportional corresponding sides"
+        }
+      ],
+      "sonnet_choice": "triangles__angle_sum",
+      "sonnet_reasoning": "Interior/exterior angle supplementary relationship derives directly from the 180-degree interior angle sum -- closest of the 3 candidates."
+    },
+    {
+      "misconception_id": "mis_triangles_congruence__does_not_recognise_parallelogram",
+      "concept_id": "triangles_congruence",
+      "misconception_label": "Does not recognise a parallelogram",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "triangles__angle_sum",
+          "label": "Angles in any triangle sum to 180 degrees"
+        },
+        {
+          "ingredient_id": "triangles__congruence_criteria",
+          "label": "Congruence is proven with minimal side and angle information"
+        },
+        {
+          "ingredient_id": "triangles__similarity_ratios",
+          "label": "Similar triangles have proportional corresponding sides"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Quadrilateral vocabulary, unrelated to the 3 candidates."
+    },
+    {
+      "misconception_id": "mis_triangles_congruence__does_not_recognise_properties_kite",
+      "concept_id": "triangles_congruence",
+      "misconception_label": "Does not recognise the properties of a kite",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "triangles__angle_sum",
+          "label": "Angles in any triangle sum to 180 degrees"
+        },
+        {
+          "ingredient_id": "triangles__congruence_criteria",
+          "label": "Congruence is proven with minimal side and angle information"
+        },
+        {
+          "ingredient_id": "triangles__similarity_ratios",
+          "label": "Similar triangles have proportional corresponding sides"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Kite (quadrilateral) properties, unrelated to the 3 candidates."
+    },
+    {
+      "misconception_id": "mis_triangles_congruence__does_not_remember_rhombus_has",
+      "concept_id": "triangles_congruence",
+      "misconception_label": "Does not remember that a rhombus has equal sides",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "triangles__angle_sum",
+          "label": "Angles in any triangle sum to 180 degrees"
+        },
+        {
+          "ingredient_id": "triangles__congruence_criteria",
+          "label": "Congruence is proven with minimal side and angle information"
+        },
+        {
+          "ingredient_id": "triangles__similarity_ratios",
+          "label": "Similar triangles have proportional corresponding sides"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Rhombus (quadrilateral) property, unrelated to the 3 candidates."
+    },
+    {
+      "misconception_id": "mis_triangles_congruence__does_not_think_variable_with",
+      "concept_id": "triangles_congruence",
+      "misconception_label": "Does not think that a variable with no coefficient has a coefficient of 1",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "triangles__angle_sum",
+          "label": "Angles in any triangle sum to 180 degrees"
+        },
+        {
+          "ingredient_id": "triangles__congruence_criteria",
+          "label": "Congruence is proven with minimal side and angle information"
+        },
+        {
+          "ingredient_id": "triangles__similarity_ratios",
+          "label": "Similar triangles have proportional corresponding sides"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Pure algebra notation (implicit coefficient of 1), unrelated to triangle content entirely."
+    },
+    {
+      "misconception_id": "mis_triangles_congruence__does_not_understand_acute_angle",
+      "concept_id": "triangles_congruence",
+      "misconception_label": "Does not understand that an acute angle is between 0 and 90 degrees",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "triangles__angle_sum",
+          "label": "Angles in any triangle sum to 180 degrees"
+        },
+        {
+          "ingredient_id": "triangles__congruence_criteria",
+          "label": "Congruence is proven with minimal side and angle information"
+        },
+        {
+          "ingredient_id": "triangles__similarity_ratios",
+          "label": "Similar triangles have proportional corresponding sides"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Angle-type classification by size (0-90 degrees), not the angle-SUM=180 property that angle_sum covers."
+    },
+    {
+      "misconception_id": "mis_triangles_congruence__does_not_understand_base_angles",
+      "concept_id": "triangles_congruence",
+      "misconception_label": "Does not understand that base angles in an isosceles are equal",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "triangles__angle_sum",
+          "label": "Angles in any triangle sum to 180 degrees"
+        },
+        {
+          "ingredient_id": "triangles__congruence_criteria",
+          "label": "Congruence is proven with minimal side and angle information"
+        },
+        {
+          "ingredient_id": "triangles__similarity_ratios",
+          "label": "Similar triangles have proportional corresponding sides"
+        }
+      ],
+      "sonnet_choice": "triangles__congruence_criteria",
+      "sonnet_reasoning": "The isosceles base-angles-equal theorem is standardly proven by splitting the triangle and showing the two halves congruent (SAS/RHS) -- ties to congruence_criteria as the mechanism, closer than angle_sum or similarity_ratios."
+    },
+    {
+      "misconception_id": "mis_triangles_congruence__does_not_understand_naming_structure",
+      "concept_id": "triangles_congruence",
+      "misconception_label": "Does not understand the naming structure of polygons",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "triangles__angle_sum",
+          "label": "Angles in any triangle sum to 180 degrees"
+        },
+        {
+          "ingredient_id": "triangles__congruence_criteria",
+          "label": "Congruence is proven with minimal side and angle information"
+        },
+        {
+          "ingredient_id": "triangles__similarity_ratios",
+          "label": "Similar triangles have proportional corresponding sides"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Polygon-naming nomenclature, unrelated to the 3 candidates."
+    },
+    {
+      "misconception_id": "mis_triangles_congruence__does_not_understand_obtuse_angle",
+      "concept_id": "triangles_congruence",
+      "misconception_label": "Does not understand that an obtuse angle is between 90 and 180 degrees",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "triangles__angle_sum",
+          "label": "Angles in any triangle sum to 180 degrees"
+        },
+        {
+          "ingredient_id": "triangles__congruence_criteria",
+          "label": "Congruence is proven with minimal side and angle information"
+        },
+        {
+          "ingredient_id": "triangles__similarity_ratios",
+          "label": "Similar triangles have proportional corresponding sides"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Angle-type classification by size, not the angle-SUM property."
+    },
+    {
+      "misconception_id": "mis_triangles_congruence__does_not_understand_volume_enlarged",
+      "concept_id": "triangles_congruence",
+      "misconception_label": "Does not understand that the volume of an enlarged shape is the volume of the original...",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "triangles__angle_sum",
+          "label": "Angles in any triangle sum to 180 degrees"
+        },
+        {
+          "ingredient_id": "triangles__congruence_criteria",
+          "label": "Congruence is proven with minimal side and angle information"
+        },
+        {
+          "ingredient_id": "triangles__similarity_ratios",
+          "label": "Similar triangles have proportional corresponding sides"
+        }
+      ],
+      "sonnet_choice": "triangles__similarity_ratios",
+      "sonnet_reasoning": "Volume scaling under enlargement (scale factor cubed) is a direct extension of similarity_ratios' proportional-scaling content -- the clearest fit of the 3."
+    },
+    {
+      "misconception_id": "mis_triangles_congruence__thinks_cointerior_angles_are_equal",
+      "concept_id": "triangles_congruence",
+      "misconception_label": "Thinks co-interior angles are equal",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "triangles__angle_sum",
+          "label": "Angles in any triangle sum to 180 degrees"
+        },
+        {
+          "ingredient_id": "triangles__congruence_criteria",
+          "label": "Congruence is proven with minimal side and angle information"
+        },
+        {
+          "ingredient_id": "triangles__similarity_ratios",
+          "label": "Similar triangles have proportional corresponding sides"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Co-interior/parallel-line angle-pair misconception belongs to the lines_angles concept, not triangles_congruence's 3 ingredients -- cross-concept, correctly excluded."
+    },
+    {
+      "misconception_id": "mis_triangles_congruence__thinks_interior_angle_regular_polygon",
+      "concept_id": "triangles_congruence",
+      "misconception_label": "Thinks the interior angle of a regular polygon is 10n",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "triangles__angle_sum",
+          "label": "Angles in any triangle sum to 180 degrees"
+        },
+        {
+          "ingredient_id": "triangles__congruence_criteria",
+          "label": "Congruence is proven with minimal side and angle information"
+        },
+        {
+          "ingredient_id": "triangles__similarity_ratios",
+          "label": "Similar triangles have proportional corresponding sides"
+        }
+      ],
+      "sonnet_choice": "triangles__angle_sum",
+      "sonnet_reasoning": "Wrong memorized polygon-angle formula variant -- same family as the other polygon-angle-formula misses, matches angle_sum's failure mode about misapplying the 180-degree rule to polygons."
+    },
+    {
+      "misconception_id": "mis_triangles_congruence__thinks_interior_angles_any_polygon",
+      "concept_id": "triangles_congruence",
+      "misconception_label": "Thinks the interior angles of any polygon add up to 360",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "triangles__angle_sum",
+          "label": "Angles in any triangle sum to 180 degrees"
+        },
+        {
+          "ingredient_id": "triangles__congruence_criteria",
+          "label": "Congruence is proven with minimal side and angle information"
+        },
+        {
+          "ingredient_id": "triangles__similarity_ratios",
+          "label": "Similar triangles have proportional corresponding sides"
+        }
+      ],
+      "sonnet_choice": "triangles__angle_sum",
+      "sonnet_reasoning": "Thinks all polygon interior angles sum to 360 (confusing with the exterior-angle-sum constant) -- directly the 'applies the 180 degree rule [or its generalization] incorrectly to non-triangular polygons' failure mode."
+    },
+    {
+      "misconception_id": "mis_triangles_congruence__thinks_rectangles_have_rotational_symmetry",
+      "concept_id": "triangles_congruence",
+      "misconception_label": "Thinks rectangles have rotational symmetry or order 4",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "triangles__angle_sum",
+          "label": "Angles in any triangle sum to 180 degrees"
+        },
+        {
+          "ingredient_id": "triangles__congruence_criteria",
+          "label": "Congruence is proven with minimal side and angle information"
+        },
+        {
+          "ingredient_id": "triangles__similarity_ratios",
+          "label": "Similar triangles have proportional corresponding sides"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "Rotational symmetry of quadrilaterals, unrelated to the 3 candidates."
+    },
+    {
+      "misconception_id": "mis_trigonometry_basics__confuses_order_sides_trigonometric_ratio",
+      "concept_id": "trigonometry_basics",
+      "misconception_label": "Confuses order of sides in a trigonometric ratio",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "trig_basics__angle_as_rotation",
+          "label": "Angle measures an amount of rotation"
+        },
+        {
+          "ingredient_id": "trig_basics__cos_as_horizontal_component",
+          "label": "cos(theta) is the horizontal projection of the radius"
+        },
+        {
+          "ingredient_id": "trig_basics__pythagorean_trig_identity",
+          "label": "sin squared plus cos squared always equals one"
+        },
+        {
+          "ingredient_id": "trig_basics__reference_angle",
+          "label": "Reference angle maps any angle to first quadrant"
+        },
+        {
+          "ingredient_id": "trig_basics__sin_as_vertical_component",
+          "label": "sin(theta) is the vertical projection of the radius"
+        },
+        {
+          "ingredient_id": "trig_basics__unit_circle_coordinates",
+          "label": "Unit circle point is (cos theta, sin theta)"
+        }
+      ],
+      "sonnet_choice": null,
+      "sonnet_reasoning": "This is a right-triangle SOHCAHTOA side-order misconception (its true home is right_triangle__sohcahtoa_setup, a DIFFERENT concept) -- none of trigonometry_basics' own 6 unit-circle-framed candidates (angle_as_rotation, cos/sin as components, pythagorean_trig_identity, reference_angle, unit_circle_coordinates) cover opposite/adjacent/hypotenuse ratio setup. Same cross-concept pattern already identified as an anchor-family mismatch; correctly excluded per C-1."
+    },
+    {
+      "misconception_id": "mis_trigonometry_basics__misremembers_exact_values_trigonometric_functions",
+      "concept_id": "trigonometry_basics",
+      "misconception_label": "Misremembers the exact values of trigonometric functions at standard angles",
+      "candidate_ingredients": [
+        {
+          "ingredient_id": "trig_basics__angle_as_rotation",
+          "label": "Angle measures an amount of rotation"
+        },
+        {
+          "ingredient_id": "trig_basics__cos_as_horizontal_component",
+          "label": "cos(theta) is the horizontal projection of the radius"
+        },
+        {
+          "ingredient_id": "trig_basics__pythagorean_trig_identity",
+          "label": "sin squared plus cos squared always equals one"
+        },
+        {
+          "ingredient_id": "trig_basics__reference_angle",
+          "label": "Reference angle maps any angle to first quadrant"
+        },
+        {
+          "ingredient_id": "trig_basics__sin_as_vertical_component",
+          "label": "sin(theta) is the vertical projection of the radius"
+        },
+        {
+          "ingredient_id": "trig_basics__unit_circle_coordinates",
+          "label": "Unit circle point is (cos theta, sin theta)"
+        }
+      ],
+      "sonnet_choice": "trig_basics__unit_circle_coordinates",
+      "sonnet_reasoning": "Recovering exact trig values at standard angles is standardly taught via the unit-circle point (cos theta, sin theta) rather than rote memorization -- the clearest conceptual anchor among the 6 candidates."
+    }
+  ]
+}

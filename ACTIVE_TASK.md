@@ -4,16 +4,77 @@
 
 ---
 
+## iOS prototype · The Desk naming (2026-08-11)
+
+Pull **main**, Clean Build, Cmd+R on Mac/iPad. Student-facing chrome now says **The Desk** (no MindCraft wordmark/logo in app chrome). Login/Cover/Welcome: The Desk + by MindCraft. Hub card, Ask, Drive folder, desk.html work area titles aligned.
+
+## Canon pack for agents (2026-08-11)
+
+Entry: `docs/canon/README.md` · Pedagogy: `docs/canon/PEDAGOGY.md` · Brand Book v1.1 + `BRAND_BOOK.pdf` · Research Constitution v1.16 under `agent_work/research/`. Product: **The Desk by MindCraft** (web) / **The Desk** (app).
+
+## Primary marketing domain — joinmindcraft.com (2026-08-11)
+
+Repo + CI now treat **https://joinmindcraft.com** as the public marketing URL.
+DNS cutover still needed at Namecheap → Firebase Hosting site
+`mindcraft-marketing-site` (see `DOMAIN_SETUP.md`). Until Connected, the
+hostname may still show Namecheap parking.
+
+## Field Desk — ship to main (2026-08-11)
+
+Pull **main**, Clean Build, Cmd+R. Changes were stuck on an agent branch before.
+
+- Projects: centered Malevolent Shrine only (no polka) → tap → work desk
+- Jesse's: Volume · **Create** (lime) · Sign out — Create opens studio board
+- Dash: pinch card / whole desk; Gdoc whiteboard scribble; Presentation deck
+- Studio: desk-matched cream space + clear +/- zoom
+
+## Studio Create pass — LOCKED (2026-08-10)
+
+`agent_work/product/studio_prototype_2026-08-10/` · note `STUDIO_PASS_LOCKED.md`  
+Jesse center · timeline Media→Looks · no Classic · Ask dock scroll hide/show.
+
+## Studio Create board — LOCKED create10 (2026-08-10)
+
+User signed off (“perfect job”). Do not regress.  
+**Link:** https://mindcraft-93858.web.app/desk-os/studio/?v=create10 · also `/studio`
+
+---
+
+## LinkedIn launch workflow — DEFERRED (after platform done)
+
+Plan saved: `agent_work/product/LINKEDIN_LAUNCH_WORKFLOW_LATER.md`  
+Generate invite links + ask for posting workflow recommendations only after full functional app ships.
+
+---
+
+## Marketing — reverted to OS story design (2026-08-10)
+
+Akshat call: the "gym membership for learning" OS story (state at `a4cb545b`) is the final marketing design. Reverted `index.html` over the Aug-10 hero redesign + personalized-learning refocus. Browser-verified: hero, chapters, tutors map, no broken assets. Second-slide text nudge cancelled.
+
+---
+
 ## Marketing landing v3 — SHIPPED to main (2026-08-07)
 
 Promoted `agent_work/product/marketing_mockups/` → root `index.html` + `img/` assets.
 Firebase marketing target. App/login CTAs retargeted to `#start` (join beta) while app work continues.
-Live: https://mindcraft-marketing-site.web.app — confirm CI green after push.
+Live: https://joinmindcraft.com — confirm CI green after push (DNS cutover: `DOMAIN_SETUP.md`).
 
 ---
-## Desk OS · hive land-in + note slate (local, 2026-08-07)
+## iOS Field Desk · Projects → Malevolent Shrine → work area (2026-08-10, code-level)
 
-`agent_work/product/desk_os/` · Owl stays glossy; tool orbs matte. Hivemind land-in (owl center, logos linked, FLIP settle). Notes chip opens one-line floating slate (☐ • ✓ ✕). Spotify/Google gated. `:5180`. Local only — no deploy.
+Jesse's top-right: Create (stub) + Sign out + volume. Projects → shrine project screen → tap → work area. `worlds/deskweb/desk.html`: top bar (Malevolent Shrine · Manage) + bottom dock (+ tray Note/Memo/Doc/Record · Record toggle · Binder · Calendar · zoom); Binder cover replaces kitchen tile; transcription draggable, no remove. Manage → hub (map + workflows) via `deskAction` bridge. Web side browser-verified 9/9; **Swift NOT device-built yet — build on Mac first** (`ios-prototype/NATIVE_APP_BUILD_PLAN.md` 2026-08-10 entry).
+
+---
+
+## Desk OS · Piano + ACT interactive books (LIVE on app hosting, 2026-08-08)
+
+Modular extract→tag→generate in `agent_work/product/desk_os/`. Synced into `app/public/desk-os` at build.  
+**Live:** https://mindcraft-93858.web.app/desk-os/?v=r9b  
+Notes: `PROTOTYPE_BOOKS.md`. Source stays under `agent_work/`; edit there, push `main` for CI.
+
+## Desk OS · intel + ACT Book (local, 2026-08-07)
+
+Paper sheets + charcoal/lime. **Intel** front (from connected tools). Small **Connect** nest. **ACT Book** cover → fullscreen MindCraft iframe (exit − / outside pad). **Binder** book cover. Inbox after Gmail. − becomes +. `:5180/?v=r5m` · no Firebase.
 
 ---
 

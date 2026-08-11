@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#080e14" />
+  <title>MindCraft · The World of Wonders</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <link rel="stylesheet" href="styles.css?v=r9b" />
+</head>
+<body>
+  <div class="app" id="appShell" data-mode="gate" data-surface="gate">
+    <div class="sky" aria-hidden="true"></div>
+
+    <!-- Opening · art still + enter -->
+    <section class="gate" id="gate" aria-label="Enter MindCraft">
+      <div class="gate-video-wrap" aria-hidden="true">
+        <img class="gate-video" src="img/aaaaa.jpg" alt="" />
+        <div class="gate-video-veil"></div>
+      </div>
+
+      <header class="gate-chrome">
+        <p class="wordmark" aria-label="MindCraft">Mind<span>Craft</span></p>
+      </header>
+
+      <div class="gate-stage" id="gateStage">
+        <article class="journal-page journal-page-slim gate-enter" id="journalPage">
+          <h1 class="page-ask">The World of Wonders</h1>
+          <div class="auth-block" id="authBlock">
+            <button type="button" class="auth-provider auth-google" id="authGoogle" data-enter="google">
+              <svg class="auth-ico" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+              </svg>
+              <span>Continue with Google</span>
+            </button>
+            <button type="button" class="auth-provider auth-apple" id="authApple" data-enter="apple">
+              <svg class="auth-ico" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.53 4.08zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+              </svg>
+              <span>Continue with Apple</span>
+            </button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Boot · workspace starting + desk diagram -->
+    <section class="boot-stage hidden" id="bootStage" aria-label="Starting workspace" hidden>
+      <header class="boot-chrome">
+        <p class="wordmark" aria-label="MindCraft">Mind<span>Craft</span></p>
+      </header>
+      <div class="boot-center">
+        <h1 class="boot-title" data-boot-title>Your workspace is starting up…</h1>
+        <div class="boot-dots" data-boot-dots aria-hidden="true"><i></i><i></i><i></i></div>
+        <p class="boot-soft">Keep horizontal for the best experience</p>
+      </div>
+      <div class="boot-diagram" data-boot-diagram aria-hidden="true">
+        <div class="boot-flow">
+          <div class="boot-node">
+            <span class="boot-node-ico"><img src="img/orbs/mail.png" alt="" /></span>
+            <span class="boot-node-label">Gmail</span>
+          </div>
+          <span class="boot-arrow" aria-hidden="true"></span>
+          <div class="boot-node">
+            <span class="boot-node-ico"><img src="img/orbs/calendar.png" alt="" /></span>
+            <span class="boot-node-label">Calendar</span>
+          </div>
+          <span class="boot-arrow" aria-hidden="true"></span>
+          <div class="boot-node">
+            <span class="boot-node-ico"><img src="img/orbs/drop.png" alt="" /></span>
+            <span class="boot-node-label">Moodle</span>
+          </div>
+          <span class="boot-arrow" aria-hidden="true"></span>
+          <div class="boot-node is-accent">
+            <span class="boot-node-ico"><img src="img/orbs/mascot-ivory.png" alt="" /></span>
+            <span class="boot-node-label">Intel</span>
+          </div>
+          <span class="boot-arrow" aria-hidden="true"></span>
+          <div class="boot-node">
+            <span class="boot-node-ico"><img src="img/orbs/binder.png" alt="" /></span>
+            <span class="boot-node-label">Binder</span>
+          </div>
+          <span class="boot-arrow" aria-hidden="true"></span>
+          <div class="boot-node">
+            <span class="boot-node-ico"><img src="img/orbs/record.png" alt="" /></span>
+            <span class="boot-node-label">ACT</span>
+          </div>
+        </div>
+        <p class="boot-caption">School tools → Intel → Binder · ACT as its own instance</p>
+      </div>
+    </section>
+
+    <!-- Instance hub · clean cloud dashboard -->
+    <section class="hub-stage hidden" id="hubStage" aria-label="MindCraft dashboard" hidden>
+      <header class="hub-nav">
+        <div class="hub-nav-left">
+          <button type="button" class="hub-logo" id="hubHome" aria-label="MindCraft home">Mind<span>Craft</span></button>
+          <nav class="hub-tabs" aria-label="Hub">
+            <button type="button" class="is-active" data-hub-tab="dashboard">Dashboard</button>
+          </nav>
+        </div>
+        <div class="hub-nav-right">
+          <div class="hub-user">
+            <span data-hub-name>Akshat Koirala</span>
+            <span data-hub-email>akoirala@macalester.edu</span>
+          </div>
+          <button type="button" class="hub-signout" data-hub-signout>Sign out</button>
+        </div>
+      </header>
+
+      <main class="hub-main" data-hub-panel="dashboard">
+        <section class="hub-mastery" data-hub-mastery aria-label="Mastery">
+          <div class="hub-mastery-head">
+            <div>
+              <p class="hub-greet"><span data-hub-greet-word>good afternoon</span>, <span data-hub-first>Akshat</span>.</p>
+              <div class="hub-goal" data-hub-goal>
+                <label class="hub-goal-label" for="hubGoalInstance">Set goal</label>
+                <div class="hub-goal-row">
+                  <select id="hubGoalInstance" data-hub-goal-instance aria-label="Instance for goal"></select>
+                  <select id="hubGoalType" data-hub-goal-type aria-label="Goal type"></select>
+                </div>
+                <p class="hub-goal-echo" data-hub-goal-echo>Pick an instance, then a target for today.</p>
+              </div>
+            </div>
+            <button type="button" class="hub-call" data-hub-call aria-label="Start mastery check-in" title="Mastery check-in">
+              <span class="hub-call-bubble">Start your mastery check-in</span>
+              <span class="hub-call-phone" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+                  <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.2 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1l-2.2 2.2Z"/>
+                </svg>
+              </span>
+            </button>
+          </div>
+
+          <div class="hub-orb-row">
+            <div class="hub-orb-stage" aria-hidden="true">
+              <div class="hub-orb-glow"></div>
+              <div class="hub-orb">
+                <div class="hub-cube">
+                  <span class="hub-cube-face f-front"></span>
+                  <span class="hub-cube-face f-back"></span>
+                  <span class="hub-cube-face f-right"></span>
+                  <span class="hub-cube-face f-left"></span>
+                  <span class="hub-cube-face f-top"></span>
+                  <span class="hub-cube-face f-bottom"></span>
+                  <span class="hub-cube-cross c-xy"></span>
+                  <span class="hub-cube-cross c-xz"></span>
+                  <span class="hub-cube-cross c-yz"></span>
+                </div>
+              </div>
+            </div>
+            <div class="hub-orb-copy">
+              <h2 class="hub-orb-title">Mastery</h2>
+              <p class="hub-orb-pct" data-hub-mastery-pct aria-label="Mastery estimate">—</p>
+            </div>
+          </div>
+        </section>
+
+        <h1 class="hub-heading hub-heading-instances">Your instances</h1>
+        <div class="hub-grid" data-hub-list></div>
+
+        <section class="hub-tutors" id="hubTutorMap" aria-label="Tutors nearby">
+          <div class="hub-tutors-head">
+            <h2 class="hub-tutors-title">Tutors nearby</h2>
+            <p class="hub-tutors-soft">Map on the left · profiles on the right. Search a city or zip.</p>
+          </div>
+          <div class="hub-tutor-duo">
+            <div class="hub-tutor-pane map">
+              <form class="tm-search" data-tm-search autocomplete="off">
+                <input data-tm-query type="search" placeholder="We'll meet you where you are" aria-label="Search a city or zip" />
+                <button type="submit">Search</button>
+              </form>
+              <div class="tm-map" data-tm-map role="img" aria-label="Map of MindCraft tutors"></div>
+            </div>
+            <div class="hub-tutor-pane book">
+              <div class="tm-list-head">Available tutors · <em data-tm-near>three near you</em></div>
+              <div class="tm-chips">
+                <button type="button" class="is-active" data-tm-chip="all">All</button>
+                <button type="button" data-tm-chip="nearby">Nearby</button>
+                <button type="button" data-tm-chip="math">Math</button>
+                <button type="button" data-tm-chip="act">ACT</button>
+                <button type="button" data-tm-chip="college">College</button>
+              </div>
+              <div class="tm-list" data-tm-list></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="hub-market" id="workflowMarket" aria-label="Workflow market">
+          <div class="hub-market-head">
+            <h2 class="hub-market-title">Workflow market</h2>
+            <p class="hub-market-count" data-wf-count>3 workflows</p>
+          </div>
+          <form class="hub-market-search" data-wf-search-form autocomplete="off">
+            <input type="search" data-wf-search placeholder="Apps, roles, study loops…" aria-label="Search workflows" />
+            <button type="submit" aria-label="Search">
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="11" cy="11" r="6" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M15.5 15.5 20 20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+            </button>
+          </form>
+          <div class="hub-market-grid" data-wf-grid></div>
+        </section>
+      </main>
+
+      <footer class="hub-foot">
+        <span>MindCraft · Field Desk</span>
+        <span>Local prototype</span>
+      </footer>
+    </section>
+
+    <!-- Create instance · hawk cooks a Field Book -->
+    <section class="studio-stage hidden" id="studioStage" aria-label="Create Field Book" hidden></section>
+
+    <!-- Kitchen cook · Jesse-energy · drop owl + typewriter → ACT FieldBook -->
+    <section class="cook-stage hidden" id="cookStage" aria-label="Cook your ACT FieldBook" hidden>
+      <div class="cook-sky" aria-hidden="true"></div>
+      <div class="cook-frame">
+        <img class="cook-art" src="img/kitchen-warm.jpg" alt="" />
+        <div class="cook-veil" aria-hidden="true"></div>
+        <div class="cook-panel">
+          <p class="page-kicker">field kitchen</p>
+          <h1 class="cook-title">Let the owl cook</h1>
+          <p class="cook-soft">Drop the mascot on your note. We type it out, then fire the ACT FieldBook.</p>
+
+          <button type="button" class="cook-owl" id="cookOwl" data-cook-owl draggable="true" title="Drag onto the note" aria-label="Owl mascot">
+            <img src="img/orbs/mascot-ivory.png" alt="" draggable="false" />
+          </button>
+
+          <div class="cook-drop" data-cook-drop>
+            <label class="cook-label" for="fieldNote">ACT Prep note</label>
+            <textarea id="fieldNote" rows="3" maxlength="160" placeholder="What do you want the FieldBook to hold? e.g. quadratics feel shaky before April…"></textarea>
+            <p class="cook-type" data-typewriter aria-live="polite"></p>
+            <p class="cook-status" data-cook-status>Drag the owl here, or tap it.</p>
+          </div>
+
+          <button type="button" class="auth-primary" data-cook-go>
+            <span class="hl">Cook ACT FieldBook</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Desk · left rail + right canvas -->
+    <div class="desk-shell hidden" id="deskShell">
+      <div class="desk-wallpaper" aria-hidden="true">
+        <img src="img/aaaaa.jpg" alt="" />
+        <div class="desk-wallpaper-veil"></div>
+      </div>
+
+      <!-- Shared chrome · same rail for every instance (desk, ACT, cooked books) -->
+      <aside class="desk-rail" aria-label="Workspace tools · shared across instances">
+        <button class="brand-home rail-home" id="brandHome" type="button" title="Home · Dashboard" aria-label="MindCraft home">
+          <span class="wordmark sm">Mind<span>Craft</span></span>
+        </button>
+        <p class="rail-instance" data-rail-instance title="Active instance">field-desk</p>
+        <div class="rail-add-wrap">
+          <button type="button" class="rail-add" id="toolAdd" title="Add to this instance" aria-pressed="false" aria-expanded="false">
+            <span class="rail-add-plus" aria-hidden="true">+</span>
+            <span>Add</span>
+          </button>
+        </div>
+        <nav class="desk-index" aria-label="Shared tools">
+          <button type="button" id="toolRecord" data-orb="record" title="Record · any instance">
+            <svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7" fill="none" stroke="currentColor" stroke-width="1.75"/><circle cx="12" cy="12" r="3" fill="currentColor"/></svg>
+            <span data-label>Record</span>
+          </button>
+          <button type="button" id="toolMail" data-surface="mail" title="Mail · any instance">
+            <svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="6" width="17" height="12" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M4 7.5 12 13l8-5.5" fill="none" stroke="currentColor" stroke-width="1.75"/></svg>
+            <span>Mail</span>
+          </button>
+          <button type="button" id="toolCalendar" data-surface="calendar" title="Calendar · any instance">
+            <svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M8 3.5v3M16 3.5v3M4 10h16" fill="none" stroke="currentColor" stroke-width="1.75"/></svg>
+            <span>Calendar</span>
+          </button>
+          <button type="button" id="toolGoogle" data-surface="google" title="Search · any instance">
+            <svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M15.5 15.5 20 20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+            <span>Search</span>
+          </button>
+        </nav>
+        <button type="button" id="toolFieldBook" class="binder-nav rail-binder" title="Repository · any instance">
+          <svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4.5h10.5A1.5 1.5 0 0 1 18 6v13.5H7.5A1.5 1.5 0 0 1 6 18V4.5Z" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M6 18a1.5 1.5 0 0 1 1.5-1.5H18" fill="none" stroke="currentColor" stroke-width="1.75"/></svg>
+          <span>Repository</span>
+        </button>
+        <select id="semesterSelect" class="hidden" aria-hidden="true" tabindex="-1"></select>
+      </aside>
+
+      <div class="desk-canvas">
+        <div class="desk-viewport" id="deskViewport">
+          <div class="desk-plane" id="deskPlane">
+            <svg class="link-layer" id="linkLayer" aria-hidden="true"></svg>
+
+            <button type="button" class="owl-logo is-perched" id="owlSheet" title="Ask MindCraft · or click a sheet to connect" aria-label="Owl · ask MindCraft or connect a sheet" style="left:0.667%; top:1%">
+              <img src="img/orbs/mascot.png" alt="" draggable="false" />
+              <span class="owl-port" aria-hidden="true"></span>
+            </button>
+            <p class="owl-hint" id="owlHint" hidden>Click a page to connect</p>
+
+            <aside class="paper-sheet note-sheet desk-art-memo" id="notePad" data-sheet="notes" aria-label="Memo" style="left:16.667%; top:14%; width:7.667%; height:8%; z-index:15">
+              <div class="page-grain" aria-hidden="true"></div>
+              <div class="margin-rule slim" aria-hidden="true"></div>
+              <p class="page-kicker sheet-chrome">memo</p>
+              <ol class="note-lines" id="noteLines"></ol>
+              <input id="noteInput" class="note-input" type="text" maxlength="140" placeholder="…" autocomplete="off" />
+            </aside>
+
+            <div class="hub hidden" id="hub" aria-hidden="true"></div>
+
+            <main class="stage desk-stage-quiet" id="stage">
+              <button class="cue" id="cue" type="button" hidden>
+                <span class="cue-dot"></span>
+                <span id="cueText">Tonight</span>
+              </button>
+              <div class="canvas-scroll" id="canvasScroll">
+                <div class="canvas" id="canvas"></div>
+              </div>
+            </main>
+          </div>
+        </div>
+
+        <aside class="owl-prompt" id="owlPrompt" hidden aria-label="Ask this instance">
+          <form class="owl-prompt-form" id="owlPromptForm" autocomplete="off">
+            <input
+              class="owl-prompt-input"
+              id="owlPromptInput"
+              type="search"
+              maxlength="160"
+              placeholder="Ask this instance…"
+              aria-label="Ask this instance"
+            />
+            <button type="submit" class="owl-prompt-run" title="Ask" aria-label="Ask">
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 12h12M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button type="button" class="owl-prompt-close" data-owl-prompt-close aria-label="Close">−</button>
+          </form>
+        </aside>
+
+        <form class="desk-ask" id="deskAsk" autocomplete="off">
+          <button type="button" class="desk-ask-plus" id="deskAskPlus" title="Add" aria-label="Add">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+          </button>
+          <input class="desk-ask-input" id="deskAskInput" type="text" maxlength="160" placeholder="Ask MindCraft" aria-label="Ask MindCraft" />
+          <button type="button" class="desk-ask-mode" id="deskAskMode" title="Focus">High
+            <svg viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+          <button type="button" class="desk-ask-mic" id="deskAskMic" title="Voice · soon" aria-label="Voice">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 3a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3Z" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M7 11a5 5 0 0 0 10 0M12 16v4" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+          </button>
+          <button type="submit" class="desk-ask-go" title="Ask" aria-label="Ask">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M6 14v-2M10 16V8M14 15v-6M18 13v-2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Floating cards · hover edges to resize · − / × -->
+    <section class="float-card float-google" id="surfaceGoogle" data-surface-pane="google" hidden aria-label="Search">
+      <div class="float-chrome">
+        <span class="float-title">Search</span>
+      </div>
+      <div class="float-body g-shell scan-shell">
+        <p class="g-mark soft-line">Scan this device for documents relevant to this instance</p>
+        <form class="g-search scan-search" id="googleSearchForm">
+          <input id="googleQuery" type="search" placeholder="Keywords · e.g. quadratics, ACT, syllabus" autocomplete="off" />
+          <button type="submit" class="btn lime">Scan device</button>
+        </form>
+        <button type="button" class="btn ghost scan-browse" id="deviceScanBrowse">Browse files</button>
+        <input id="deviceScanInput" type="file" multiple accept=".pdf,.doc,.docx,.txt,.md,.png,.jpg,.jpeg,.csv,.ppt,.pptx" hidden />
+        <p class="g-hint" id="googleHint">Rank by keywords, then tag into Repository, act-fieldbook, Intel, or Memo.</p>
+        <div class="g-results scan-results" id="googleResults" hidden></div>
+      </div>
+    </section>
+
+    <section class="float-card float-mail" id="surfaceMail" data-surface-pane="mail" hidden aria-label="Mail">
+      <div class="float-chrome">
+        <span class="float-title">Mail</span>
+      </div>
+      <div class="float-body mc-panel">
+        <p class="soft-line" id="mailPrioritySummary">Nothing waiting.</p>
+        <div class="mail-tabs" role="tablist">
+          <button class="mail-tab active" type="button" data-mail-tab="inbox">Inbox</button>
+          <button class="mail-tab" type="button" data-mail-tab="compose">Write</button>
+        </div>
+        <div id="mailInboxPane">
+          <ul class="mail-list" id="mailList"></ul>
+          <button class="btn ghost" id="mailLoadSample" type="button">Sample</button>
+        </div>
+        <div id="mailComposePane" class="hidden">
+          <div class="compose-grid">
+            <label>To<input id="draftTo" type="text" autocomplete="off" /></label>
+            <label>Subject<input id="draftSubject" type="text" autocomplete="off" /></label>
+            <label>Course<select id="draftCourse"></select></label>
+            <label class="full">Message<textarea id="draftBody" rows="4"></textarea></label>
+          </div>
+          <div class="row">
+            <button class="btn lime" id="draftSaveBtn" type="button">Save to Desk</button>
+            <button class="btn ghost" id="draftClearBtn" type="button">Clear</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="float-card float-calendar" id="surfaceCalendar" data-surface-pane="calendar" hidden aria-label="Calendar">
+      <div class="float-chrome">
+        <span class="float-title">Calendar</span>
+      </div>
+      <div class="float-body mc-panel">
+        <div class="cal-week" id="calWeek"></div>
+        <textarea id="icsInput" class="hidden" aria-hidden="true"></textarea>
+        <div class="row">
+          <button class="btn lime" id="icsSampleBtn" type="button">Load sample week</button>
+          <button class="btn ghost" id="icsClearBtn" type="button">Clear</button>
+          <button class="btn ghost hidden" id="icsLoadBtn" type="button">Add</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="live-squeeze hidden" id="liveBar" data-squeezed="false">
+      <button class="live-mini" id="liveMini" type="button" aria-label="Toggle transcript">Rec</button>
+      <div class="live-body">
+        <span class="pulse"></span>
+        <p id="liveText">Listening…</p>
+      </div>
+    </div>
+
+    <input id="fileInput" type="file" accept="image/*,.pdf,.txt,.md" hidden />
+
+    <!-- Legacy hooks -->
+    <button class="hidden" id="toolDesk" type="button" data-mode="desk"></button>
+    <button class="hidden" id="toolDrop" type="button" data-mode="drop"></button>
+    <button class="hidden" id="toolSpotify" type="button"></button>
+    <button class="hidden" id="toolBinder" type="button" data-mode="binder"></button>
+    <button class="hidden" id="toolCleanup" type="button" data-mode="cleanup"></button>
+    <button class="hidden" id="toolGraph" type="button" data-mode="graph"></button>
+    <button class="hidden" id="toolNotes" type="button"></button>
+    <button class="hidden" id="toolDone" type="button"></button>
+    <button class="hidden" id="unitCaseBtn" type="button">Demo</button>
+    <button class="hidden" id="mascot" type="button"></button>
+    <img class="hidden" id="recordPlay" alt="" />
+    <span class="hidden" id="recordLabel"></span>
+    <span class="hidden" id="railHint"></span>
+    <div class="hidden" id="hud"></div>
+    <div class="hidden" id="workspace"></div>
+    <div class="hidden" id="toolView" hidden></div>
+    <div class="hidden" id="hiveMail"></div>
+    <div class="hidden" id="hiveBinder"><div id="binderHiveList"></div><input id="binderSearch" /></div>
+    <div class="hidden" id="hiveCleanup"><div id="cleanupList"></div><button id="cleanupApply"></button><button id="cleanupRescan"></button></div>
+    <div class="hidden" id="hiveCalendar"></div>
+    <div class="hidden" id="hiveGraph"><div id="graphView"></div></div>
+    <div class="hidden" id="hiveLinks"></div>
+    <p class="hidden" id="toolKicker"></p>
+    <h1 class="hidden" id="toolTitle"></h1>
+    <img class="hidden" id="sheetOrb" alt="" />
+    <img class="hidden" id="brandLogo" alt="" />
+    <ol id="priorityList" class="hidden" hidden></ol>
+    <p id="briefingTitle" class="hidden" hidden></p>
+    <p id="briefingSummary" class="hidden" hidden></p>
+    <p id="briefingClock" class="hidden" hidden></p>
+    <div class="hidden" id="surfaceDrop"></div>
+    <div class="hidden" id="surfaceSpotify"></div>
+    <div class="hidden" id="dropWell"></div>
+    <div class="hidden" id="orbs"></div>
+
+    <aside class="inspector hidden" id="inspector" aria-label="Details">
+      <div class="inspector-head">
+        <h2 id="inspectorTitle">Details</h2>
+        <button class="icon-btn" id="inspectorClose" type="button" aria-label="Close">close</button>
+      </div>
+      <div id="inspectorBody"></div>
+    </aside>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script type="module" src="js/app.js?v=r9c"></script>
+</body>
+</html>

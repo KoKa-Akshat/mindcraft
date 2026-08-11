@@ -4,6 +4,678 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-11 — Researcher tick: Part CXXVI Tutor micro-debrief fidelity under time caps (SAFE-MICRODEB)
+
+**Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch126 never written → prefer Researcher per rotation; researcher count since synthesizer v1.16 = 0 → Researcher)  
+**Chapter written:** `chapters/126_tutor_micro_debrief_fidelity_under_time_caps.md` (Part CXXVI)  
+**Claim examined:** Whether MindCraft should protect a **capped, student-first, trace-backed micro-debrief** under session clocks and SAFE-LOADSHED crunch — vs skip-as-default, lecture-as-debrief, vibes-only closes, or Microdebrief Score™ theater.
+
+**Doctrine proposed (provisional):** **SAFE-MICRODEB** — densifies SAFE-AAR × SAFE-LOADSHED × SAFE-HITL × SAFE-TALK × SAFE-FBLIT: four-beat / SHARP-class close under hard time box; student speaks first; objective media preferred; micro-close on LOADSHED protect list; no Microdebrief Score™. Experiment family **MICRODEB-*** (distinct from AAR-*/LOADSHED-*/HITL-*/TALK-*).
+
+**Evidence spine (verified citations):** Tannenbaum & Cerasoli (2013); Keiser & Arthur (2021); Villado & Arthur (2013); Arora et al. (2012 OSAD); Ahmed et al. (2013 SHARP); Rudolph, Simon, Dufresne, & Raemer (2006).
+
+**Claim killed (this tick):** “No time for debrief” default / lecture-as-micro-debrief / Microdebrief Score™·Debrief Minutes·Reflection Streak NS / +25% ACT from borrowed debrief metas / military-cosplay micro-AAR / vibes-only close without traces / therapy-length mandate under crunch / ACT guarantees from micro-debrief packaging (provisional kill #80 until synthesizer).
+
+**Experiments:** MICRODEB-1…5 + MICRODEB-QUAL.
+
+**Next researcher id:** **127** (parent crunch-week message tests). Researcher count since v1.16 synthesizer: **1**. Unfinished queue restored to ≥3 (127–129; promoted stub 129 session-open brief fidelity). 
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-11 — Synthesizer tick v1.16: merge Parts CXVII–CXXV
+
+**Tick type:** Synthesizer (UTC hour 15; hour%6≠0; ≥8 researcher entries since synthesizer v1.15 → Synthesizer)  
+**Chapter written:** none (merge pass only)  
+**Files revised:** `MINDCRAFT_RESEARCH_CONSTITUTION_v1.md` (edition/header / I.2 / I.4 / III / IX / XIV / XX / XXI / XXII glossary / Appendix F / closing); `NEXT_LAB.md`; this log; PDF regen.
+
+**Doctrine promoted to I.4 company law (provisional tags removed):**
+- SAFE-FADEX (CXVII) — protect-then-fade under HMA; no forever-E0 / flood / Calm Score™ fade gates
+- SAFE-SOFTMSG (CXVIII) — grain+failure-enhancing+one CTA; no Miss Streak / shame-push
+- SAFE-MAPORCH (CXIX) — brief→grain-slice→adjust; no always-on Map / mid-attempt full-graph
+- SAFE-BURNWARN (CXX) — fidelity/load early-warn→org redesign; no Burnout Score™ / wellness-primary
+- SAFE-EXPLAINQA (CXXI) — principle-short wrap QA gates; no fluency≡pedagogy / LLM-judge-alone
+- SAFE-TAXON (CXXII) — typed soft-wrong marks; no Partial Credit Score™ / all-wrongs-equal
+- SAFE-LOADSHED (CXXIII) — exam-week acuity shed; no hours-booked crunch / pour≡exam support
+- SAFE-DISTRACTOR (CXXIV) — misconception-mapped distractors; no Distractor Score™ / beauty traps
+- SAFE-CONFMISS (CXXV) — confidence×type recovery; no Identity Score™ / equal-weight recovery
+
+**Red Team kills promoted:** #71–#79 (from provisional chapter kills → v1.16 company dossier).
+
+**Experiment families confirmed in Part IX:** FADEX / SOFTMSG / MAPORCH / BURNWARN / EXPLAINQA / TAXON / LOADSHED / DISTRACTOR / CONFMISS.
+
+**Claim killed (synthesis):** Treating CXVII–CXXV as orphan provisional deep-dives or independent North Stars (Fade Score™ / Miss Streak / Map Score™ / Burnout Score™ / Rubric Score™ / Partial Credit Score™ / Load Shed Score™ / Distractor Score™ / Identity Score™·Confidence Personality™ and their costume variants) — demoted under FEI + SAFE-* method-not-costume rule.
+
+**Next researcher id:** **126** (tutor micro-debrief fidelity under time caps). Researcher count since v1.16 synthesizer: **0**. Unfinished queue still ≥3 (126–128); no QUEUE_EXTENDED promote this tick.
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-11 — Researcher tick: Part CXXV Confidence-tagged misses in gap-scan recovery (SAFE-CONFMISS)
+
+**Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch125 never written → prefer Researcher per rotation; researcher count since synthesizer v1.15 = 8 → Researcher)  
+**Chapter written:** `chapters/125_confidence_tagged_misses_gap_scan_recovery.md` (Part CXXV)  
+**Claim examined:** Whether MindCraft should treat gap-scan / diagnostic recovery as **confidence × mark-type class routing** (CRI fork + hypercorrection priority) — vs Identity Score™ / Confidence Personality™ theater, equal-weight red-X decks, or inflate-confidence recovery.
+
+**Doctrine proposed (provisional):** **SAFE-CONFMISS** — densifies SAFE-TAXON × SAFE-CALIB × SAFE-MONITOR × SAFE-COLD: tag misses with confidence grain; fork recovery dose (high-conf bug vs low-conf lack); prioritize attended destaked springboards for sure misses; no Identity Score™. Experiment family **CONFMISS-*** (distinct from CAL-*/MONITOR-*/TAXON-*/COLD-*).
+
+**Evidence spine (verified citations):** Hasan, Bagayoko, & Kelley (1999); Butterfield & Metcalfe (2001; 2006); Metcalfe & Finn (2011; 2012); Dunlosky & Rawson (2012); Foster, Woodhead, Barton, & Clark-Wilson (2022).
+
+**Claim killed (this tick):** Identity Score™·Confidence Personality™ from hard/kinda/easy / equal-weight recovery / easy≡mastered / inflate-confidence recovery NS / Belief Score™ / CA-without-route / ACT guarantees from confidence-tagged recovery packaging (provisional kill #79 until synthesizer).
+
+**Experiments:** CONFMISS-1…5 + CONFMISS-QUAL.
+
+**Next researcher id:** **126** (tutor micro-debrief fidelity under time caps). Researcher count since v1.15 synthesizer: **9** → Synthesizer eligible on next hour%6≠0 tick (Red Team still on hour%6==0 if newest chapter written). Unfinished queue still ≥3 (126–128); no QUEUE_EXTENDED promote this tick.
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-11 — Researcher tick: Part CXXIV Distractor design for diagnostic soft-wrong MC (SAFE-DISTRACTOR)
+
+**Tick type:** Researcher (UTC hour 09; hour%6≠0; researcher count since synthesizer v1.15 = 7 → Researcher)  
+**Chapter written:** `chapters/124_distractor_design_diagnostic_soft_wrong_mc.md` (Part CXXIV)  
+**Claim examined:** Whether MindCraft should treat MC craft as **misconception-mapped functioning distractors** that feed typed soft-wrong + Map route — vs four-option costume, beauty traps, unmapped “diagnostic” MC, or Distractor Score™ / option-count theater.
+
+**Doctrine proposed (provisional):** **SAFE-DISTRACTOR** — densifies SAFE-TAXON × SAFE-MISCON × SAFE-GENQ: error-family→options; function over fashion (~3 options when that is the functioning set); soft-wrong wraps chosen theory; no Distractor Score™ / beauty traps / unsealed GENQ distractors. Experiment family **DISTRACTOR-*** (distinct from TAXON-*/MISCON-*/GENQ-*).
+
+**Evidence spine (verified citations):** Haladyna, Downing, & Rodriguez (2002); Tarrant, Ware, & Mohammed (2009); Rodriguez (2005); Gierl, Bulut, Guo, & Zhang (2017); Wang et al. (2020, arXiv:2007.12061); Briggs, Alonzo, Schwab, & Wilson (2006).
+
+**Claim killed (this tick):** Distractor Score™·Option Minutes / always-four≡better / beauty traps·absurd fillers·NOTA-AOTA default / unmapped wrongs≡diagnostic / LLM distractors without mis_ seal / option-count NS / ACT guarantees from distractor packaging (provisional kill #78 until synthesizer).
+
+**Experiments:** DISTRACTOR-1…5 + DISTRACTOR-QUAL.
+
+**Next researcher id:** **125** (confidence-tagged misses in gap-scan recovery). Researcher count since v1.15 synthesizer: **8** → next eligible Synthesizer when hour%6≠0 (or Red Team on hour%6==0). Queue extended with id **128** (<3 unfinished rule after promoting 125 to NEXT).
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-11 — Researcher tick: Part CXXIII Exam-week tutor load shedding playbooks (SAFE-LOADSHED)
+
+**Tick type:** Researcher (UTC hour 06 ≡ Red Team slot, but ch123 never written → prefer Researcher per rotation; researcher count since synthesizer v1.15 = 6 → Researcher)  
+**Chapter written:** `chapters/123_exam_week_tutor_load_shedding_playbooks.md` (Part CXXIII)  
+**Claim examined:** Whether MindCraft should publish an **exam-week load-shedding playbook** (acuity queue + named pause list + caseload redesign) that protects FEI fidelity under ACT crunch — vs hours-booked theater, wellness-as-fix, hire-surge without coaches, or pour-mode “exam support.”
+
+**Doctrine proposed (provisional):** **SAFE-LOADSHED** — densifies SAFE-BURNWARN × SAFE-DDSCHED × SAFE-WORKFORCE × SAFE-EXAM × SAFE-ROI: shed low-acuity demand; protect thinking minutes; org redesign first; no Load Shed Score™ / infinite-availability brand. Experiment family **LOADSHED-*** (distinct from BURNWARN-*/DDSCHED-*/WORK-*/EXAM-*/ROI-*).
+
+**Evidence spine (verified citations):** von der Embse et al. (2016a; 2016b); Creagh et al. (2023); Kelen et al. (2009; 2017); De Bondt, Sabbe, & Pollaris (2023); Panagioti et al. (2017); Bakker & Demerouti (2017); Tims, Bakker, & Derks (2013).
+
+**Claim killed (this tick):** Hours-booked/session-volume crunch NS / Load Shed Score™·Crunch Minutes / infinite-availability exam brand / wellness-primary under caseload spike / hire-surge without coach bandwidth / pour≡exam support / hospital-cosplay ads / soft standards for crunch personas / ACT guarantees from crunch playbooks (provisional kill #77 until synthesizer).
+
+**Experiments:** LOADSHED-1…5 + LOADSHED-QUAL.
+
+**Next researcher id:** **124** (distractor design for diagnostic soft-wrong MC). Researcher count since v1.15 synthesizer: **7**. Queue extended with ids **126–127** (<3 unfinished rule).
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-11 — Researcher tick: Part CXXII Partial-credit & soft-wrong taxonomy productization (SAFE-TAXON)
+
+**Tick type:** Researcher (UTC hour 03; hour%6≠0; researcher count since synthesizer v1.15 = 5 → Researcher)  
+**Chapter written:** `chapters/122_partial_credit_soft_wrong_taxonomy.md` (Part CXXII)  
+**Claim examined:** Whether MindCraft should productize soft-wrong as a **mark-type taxonomy** (slip vs bug vs lack vs blank vs assist) that drives routing and type-conditioned graph updates — vs gradebook partial-credit theater, binary red-X equality, or soft tone without semantics.
+
+**Doctrine proposed (provisional):** **SAFE-TAXON** — densifies SAFE-MISCON × SAFE-FBLIT × SAFE-FBTIME: type before points; soft-wrong wraps type; no Partial Credit Score™ / gradebook cosplay. Experiment family **TAXON-*** (distinct from MISCON-* / FBLIT-* / FB-*).
+
+**Evidence spine (verified citations):** Masters (1982); May, Koskey, Bostic et al. (2023); Ashton, Beevers, Korabinski & Youngson (2006); Arieli-Attali & Liu (2016); Ketterlin-Geller & Yovanoff (2009); Radatz (1979).
+
+**Claim killed (this tick):** Soft-wrong≡half-credit / Partial Credit Score™·Mark Minutes / all-wrongs-equal mastery / gradebook cosplay / PCM steps≡identity / empty celebrate-mistakes without mark→route / ACT guarantees from partial-credit packaging (provisional kill #76 until synthesizer).
+
+**Experiments:** TAXON-1…5 + TAXON-QUAL.
+
+**Next researcher id:** **123** (exam-week tutor load shedding playbooks). Researcher count since v1.15 synthesizer: **6**. Queue extended with ids **124–125** (<3 unfinished rule).
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-11 — Researcher tick: Part CXXI Explanation quality rubrics for AI coach wraps (SAFE-EXPLAINQA)
+
+**Tick type:** Researcher (UTC hour 00 ≡ Red Team slot, but ch121 never written → prefer Researcher per rotation; researcher count since synthesizer v1.15 = 4 → Researcher)  
+**Chapter written:** `chapters/121_explanation_quality_rubrics_ai_coach_wraps.md` (Part CXXI)  
+**Claim examined:** Whether MindCraft should gate AI coach/Solver wraps with principle-short pedagogical rubrics (correctness hard-fail, non-reveal, actionability, SE-preserve) — vs fluency theater, Explanation Score™ products, or soft-pass “helpful” wrong math.
+
+**Doctrine proposed (provisional):** **SAFE-EXPLAINQA** — densifies SAFE-EXPLAIN × SAFE-GENQ × SAFE-REPAIR: rubric gates before ship; correctness hard-fail; non-reveal + actionable; no Explanation Score™ / LLM-judge-alone. Experiment family **EXPLAINQA-*** (distinct from EXPLAIN-* / GENQ-*).
+
+**Evidence spine (verified citations):** Wittwer & Renkl (2008; 2010); Schworm & Renkl (2006); Ring & Brahm (2023); Kulgemeyer (2018); Maurya et al. (2025); Bastani et al. (2024); Nakamoto et al. (2023).
+
+**Claim killed (this tick):** Fluency/human-likeness≡pedagogy / thumbs-up thoroughness NS / Explanation Score™·Rubric Score™ / LLM-judge-alone ship authority / soft-pass wrong math / reveal-default as guidance / auto-wrap-QA replacing GENQ key verify / ACT guarantees from rubric-scored AI coach (provisional kill #75 until synthesizer).
+
+**Experiments:** EXPLAINQA-1…5 + EXPLAINQA-QUAL.
+
+**Next researcher id:** **122** (partial-credit & soft-wrong taxonomy productization). Researcher count since v1.15 synthesizer: **5**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-10 — Researcher tick: Part CXX Tutor burnout early-warning without wellness theater (SAFE-BURNWARN)
+
+**Tick type:** Researcher (UTC hour 21; hour%6≠0; researcher count since synthesizer v1.15 = 3 → Researcher)  
+**Chapter written:** `chapters/120_tutor_burnout_early_warning_without_wellness_theater.md` (Part CXX)  
+**Claim examined:** Whether MindCraft should detect tutor burnout risk via fidelity dips + JD-R load redesign — vs Burnout Score™ products, mandatory mood gates, emotion-AI “care,” or wellness-module theater that leaves caseload unchanged.
+
+**Doctrine proposed (provisional):** **SAFE-BURNWARN** — densifies SAFE-WORKFORCE × SAFE-PRIVACY × SAFE-HITL: fidelity/load early warn; org redesign first; optional coach-private check-ins; no Burnout Score™ / Wellness Minutes / tutor ERT. Experiment family **BURNWARN-*** (distinct from WORK-* / PRIV-*).
+
+**Evidence spine (verified citations):** Demerouti et al. (2001); Bakker & Demerouti (2017); Madigan & Kim (2021); Klusmann et al. (2022); Panagioti et al. (2017); Bes et al. (2023).
+
+**Claim killed (this tick):** Burnout Score™ / Wellness Minutes NS / mandatory mood gate / tutor emotion-AI / wellness-module-as-primary under demand spike / retention-% without fidelity / sell tutor-affect dashboards / ACT guarantees from wellness packaging (provisional kill #74 until synthesizer).
+
+**Experiments:** BURNWARN-1…5 + BURNWARN-QUAL.
+
+**Next researcher id:** **121** (explanation quality rubrics for AI coach wraps). Researcher count since v1.15 synthesizer: **4**. Queue extended with id **123** (<3 unfinished rule).
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-10 — Researcher tick: Part CXIX Classroom orchestration of Map during live tutoring (SAFE-MAPORCH)
+
+**Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch119 never written → prefer Researcher per rotation; researcher count since synthesizer v1.15 = 2 → Researcher)  
+**Chapter written:** `chapters/119_classroom_orchestration_map_live_tutoring.md` (Part CXIX)  
+**Claim examined:** Whether MindCraft should open Knowledge Map mid-session as a grain-slice diagnosis that changes the next attempt — vs always-on student Map, mid-attempt full-graph dumps, or Map Minutes as a North Star.
+
+**Doctrine proposed (provisional):** **SAFE-MAPORCH** — densifies SAFE-HITL × SAFE-FA × SAFE-ATTN × SAFE-BRIDGE: brief before pour; attempt before student Map; grain-slice not ontology tour; open to adjust (contingency); tutor-private pane OK; no Map Minutes NS. Experiment family **MAPORCH-*** (distinct from HITL-* / FA-*).
+
+**Evidence spine (verified citations):** van de Pol, Volman, & Beishuizen (2010); Blankenship & Dansereau (2000); Amadieu et al. (2009); Dönmez & Akbulut (2021); Leroy (2009); van Es & Sherin (2021).
+
+**Claim killed (this tick):** Always-on student Map / Map Minutes·Map Score™ NS / mid-attempt full-graph dump / Map-open≡cycle-closed / dual-screen Map+problem default / ontology tour≡tutoring / ACT guarantees from Map airtime (provisional kill #73 until synthesizer).
+
+**Experiments:** MAPORCH-1…5 + MAPORCH-QUAL.
+
+**Next researcher id:** **120** (tutor burnout early-warning without wellness theater). Researcher count since v1.15 synthesizer: **3**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-10 — Researcher tick: Part CXVIII Parent message framing after soft-wrong streaks (SAFE-SOFTMSG)
+
+**Tick type:** Researcher (UTC hour 15; hour%6≠0; researcher count since synthesizer v1.15 = 1 → Researcher)  
+**Chapter written:** `chapters/118_parent_message_framing_after_soft_wrong_streaks.md` (Part CXVIII)  
+**Claim examined:** Whether MindCraft parent digests after soft-wrong runs should be grain-named + failure-enhancing + one autonomy-supportive CTA — vs Miss Streak shame, live wrong-answer stalk, empty mindset posters, or controlling “sit until correct” scripts.
+
+**Doctrine proposed (provisional):** **SAFE-SOFTMSG** — densifies SAFE-PDASH × SAFE-FBLIT × SAFE-ERRCLIMATE: name the grain; failure-is-enhancing not ability verdict; one return CTA; autonomy>control; do not recruit math-anxious parents into more intrusive help; no Miss Streak / live stalk / Parent Correctness Score™; belief posters ≠ product. Experiment family **SOFTMSG-*** (distinct from PDASH-* / FBLIT-*).
+
+**Evidence spine (verified citations):** Jiang et al. (2023); Wu, Barger, Oh, & Pomerantz (2022); Maloney et al. (2015); Retanal et al. (2021); Park et al. (2023); Haimovitz & Dweck (2016); MacDonald et al. (2024).
+
+**Claim killed (this tick):** Miss Streak / soft-wrong shame push / live wrong-answer stalk / Parent Correctness Score™ / empty “mistakes are good!” without grain+CTA / controlling “sit until correct” default / growth-mindset parent letter≡FEI / ACT guarantees from parent messaging (provisional kill #72 until synthesizer).
+
+**Experiments:** SOFTMSG-1…5 + SOFTMSG-QUAL.
+
+**Next researcher id:** **119** (classroom orchestration of Map during live tutoring). Researcher count since v1.15 synthesizer: **2**. Queue extended with ids 120–122 (<3 unfinished rule).
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-10 — Researcher tick: Part CXVII Worked-example fading under high math anxiety (SAFE-FADEX)
+
+**Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch117 never written → prefer Researcher per rotation; researcher count since synthesizer v1.15 = 0)  
+**Chapter written:** `chapters/117_worked_example_fading_under_high_math_anxiety.md` (Part CXVII)  
+**Claim examined:** Whether MindCraft should protect HMA learners with worked examples then still fade — vs forever-E0 “anxious track,” day-one aggressive fade flood, or Anxiety/Calm Score™ fade gates.
+
+**Doctrine proposed (provisional):** **SAFE-FADEX** — densifies SAFE-FADE × SAFE-EXPOSE × SAFE-DD: protective WE under anxiety WM load (Mesghina; Ashcraft); longer E0/E1 hold without soft track; gate on grain not meters (Miller-Cotto WM null); peek binge = safety behavior; proof = solo transfer + approach; no forever dump / flood / Calm Score™. Experiment family **FADEX-*** (distinct from FADE-* / EXP-O-*).
+
+**Evidence spine (verified citations):** Ashcraft & Kirk (2001); Ashcraft & Krause (2007); Hembree (1990); Mesghina, Vollman, Trezise, & Richland (2023); Renkl et al. (2002); Renkl & Atkinson (2003); Atkinson, Renkl, & Merrill (2003); Miller-Cotto et al. (2025/2026 BJEP); Barbieri & Booth (2016); Craske et al. (2014).
+
+**Claim killed (this tick):** Forever-E0 anxious track / day-one aggressive fade flood for HMA / Anxiety Score™ or Calm Score™ fade gate / Fade Score™ NS / permanent peek “support” / soft standards for anxious personas / protect-without-fade ChatGPT dump / ACT guarantees from anxiety-aware scaffolding (provisional kill #71 until synthesizer).
+
+**Experiments:** FADEX-1…5 + FADEX-QUAL.
+
+**Next researcher id:** **118** (parent message framing after soft-wrong streaks). Researcher count since v1.15 synthesizer: **1**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-10 — Synthesizer tick v1.15: merge Parts CVIII–CXVI
+
+**Tick type:** Synthesizer (UTC hour 9; hour%6≠0; ≥8 researcher entries since synthesizer v1.14 → Synthesizer)  
+**Chapter written:** none (merge pass only)  
+**Files revised:** `MINDCRAFT_RESEARCH_CONSTITUTION_v1.md` (edition/header / I.2 / I.4 / III / IX / XIV / XX / XXI / XXII glossary / Appendix F / closing); `NEXT_LAB.md`; this log; PDF regen.
+
+**Doctrine promoted to I.4 company law (provisional tags removed):**
+- SAFE-ANALOG (CVIII) — structure-map joins; co-present compare; no Analogy Score™
+- SAFE-WRITE (CIX) — short prompted WTL; no Writing Score™ / Journal Minutes
+- SAFE-SPATIAL (CX) — FormatId-embedded spatial hops; no Spatial Score™ / rotation gym
+- SAFE-FA (CXI) — evidence→adjust formative cycles; no Formative Score™ / 0.4–0.7 AfL ads
+- SAFE-FBLIT (CXII) — sense+use uptake loops; no Feedback Literacy Score™ / delivery≡uptake
+- SAFE-COLLAB (CXIII) — structured collab + solo FEI gate; no Collaboration Score™ / Discord≡CSCL
+- SAFE-DDSCHED (CXIV) — horizon-matched DD hold/ease; stakes≠DD; no always-ease/max / cram≡ready
+- SAFE-ROLEMODEL (CXV) — fidelity-first competence-visible near-peers; no Representation Score™
+- SAFE-OFFLINE (CXVI) — attempt→capture→confirm; no Capture Score™ / OCR≡mastery / Photomath pipe
+
+**Red Team kills promoted:** #62–#70 (from provisional chapter kills → v1.15 company dossier).
+
+**Experiment families confirmed in Part IX:** ANALOG / WRITE / SPATIAL / FA / FBLIT / COLLAB / DDSCHED / ROLEMODEL / OFFLINE.
+
+**Claim killed (synthesis):** Treating CVIII–CXVI as orphan provisional deep-dives or independent North Stars (Analogy Score™ / Writing Score™ / Spatial Score™ / Formative Score™ / Feedback Literacy Score™ / Collaboration Score™ / Desirable Difficulty Score™ / Representation Score™ / Capture Score™ and their costume variants) — demoted under FEI + SAFE-* method-not-costume rule.
+
+**Next researcher id:** **117** (worked-example fading under high math anxiety). Researcher count since v1.15 synthesizer: **0**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-10 — Researcher tick: Part CXVI Offline practice fidelity / paper-whiteboard capture (SAFE-OFFLINE)
+
+**Tick type:** Researcher (UTC hour 06 ≡ Red Team slot, but ch116 never written → prefer Researcher per rotation; researcher count since synthesizer v1.14 = 8 → Researcher override)  
+**Chapter written:** `chapters/116_offline_practice_fidelity_paper_whiteboard_capture.md` (Part CXVI)  
+**Claim examined:** Whether MindCraft should operationalize paper/whiteboard as first-class practice with post-attempt photo→Map capture — vs Capture Score™ / Photo Minutes / OCR≡mastery / Photomath-style photo→answer / always-on camera theater.
+
+**Doctrine proposed (provisional):** **SAFE-OFFLINE** — offline-first attempt grain; capture after commit; residue-aware brief ritual (SAFE-ATTN); verify OCR before graph write (SAFE-GENQ/PROOF); no photo→answer dump (SAFE-HELP/HWHELP); fluency≠learning (Anthony; de Morais & Jaques); photo-app speed pathology (Sloan-Lynch); longhand caution not religion (Mueller; Morehead); densify ATTN/HELP/HWHELP/GESTURE/PROOF/GENQ; no Capture Score™ / Photo Minutes / OCR≡mastery / always-camera / photo→answer hero / Capture ACT guarantees. Experiment family **OFFLINE-*** (distinct from ATTN-*, HELP-*, HWHELP-*).
+
+**Evidence spine (verified citations):** Anthony, Yang, & Koedinger (2012); de Morais & Jaques (2022); Mueller & Oppenheimer (2014); Morehead, Dunlosky, & Rawson (2019); Webel & Otten (2015); Sloan-Lynch, Gay, & Watkins (2022); Leroy (2009); Ward et al. (2017).
+
+**Claim killed (this tick):** Capture Score™ / Photo Minutes NS / OCR≡mastery / always-on camera / photo→answer Practice hero / Capture ACT guarantees / phone-companion focus theater (provisional kill #70 until synthesizer).
+
+**Experiments:** OFFLINE-1…5 + OFFLINE-QUAL.
+
+**Next researcher id:** **117** (worked-example fading under high math anxiety). Researcher count since v1.14 synthesizer: **9** → Synthesizer eligible on next non-RT hour (hour%6≠0).
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-10 — Researcher tick: Part CXV Tutor identity & belonging / near-peer role models (SAFE-ROLEMODEL)
+
+**Tick type:** Researcher (UTC hour 03; hour%6≠0; researcher count since synthesizer v1.14 = 7 → Researcher)  
+**Chapter written:** `chapters/115_tutor_identity_belonging_near_peer_role_models.md` (Part CXV)  
+**Claim examined:** Whether MindCraft should operationalize tutor identity/near-peer role models as belonging inoculants with fidelity-first hire + competence-visible attainable bios + optional preference match — vs Representation Score™ / Diversity Minutes / costume-only matching / match≡quality theater.
+
+**Doctrine proposed (provisional):** **SAFE-ROLEMODEL** — fidelity before likeness (SAFE-TUTORGRAIN); competence perceptible (Marx & Roman); attainable near-peers (Lockwood & Kunda); ingroup expert inoculation (Stout; Dasgupta & Stout); structured peer mentoring densifier (Dennehy & Dasgupta); belonging via growth/common-adversity + cue hygiene (Good et al.; Walton & Cohen; Cheryan et al.); recognition = practice evidence; densify GENDER/ELL/TUTORGRAIN/HITL/EXPECTANCY/CoP/IDMEASURE; no Representation Score™ / Diversity Minutes / costume≡belonging / match≡quality / empty likeness praise / Belonging Score™ / matching ACT guarantees. Experiment family **ROLEMODEL-*** (distinct from GENDER-*, ELL-*, GRAIN-*).
+
+**Evidence spine (verified citations):** Stout et al. (2011); Dasgupta & Stout (2014); Marx & Roman (2002); Lockwood & Kunda (1997); Dennehy & Dasgupta (2017); Good, Rattan, & Dweck (2012); Walton & Cohen (2011); Cheryan, Master, & Meltzoff (2015).
+
+**Claim killed (this tick):** Representation Score™ / Diversity Minutes NS / token STEM costume≡belonging / demographic match≡quality / empty likeness praise≡recognition / Belonging Score™ / matching ACT guarantees / soft standards for matched pairs (provisional kill #69 until synthesizer).
+
+**Experiments:** ROLEMODEL-1…5 + ROLEMODEL-QUAL.
+
+**Next researcher id:** **116** (offline practice fidelity / paper-whiteboard capture). Researcher count since v1.14 synthesizer: **8** → next eligible Synthesizer when rotation allows (hour%6≠0 and ≥8).
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-10 — Researcher tick: Part CXIV DD scheduling under exam deadlines (SAFE-DDSCHED)
+
+**Tick type:** Researcher (UTC hour 00 ≡ Red Team slot, but ch114 never written → prefer Researcher per rotation; researcher count since synthesizer v1.14 = 6 → Researcher)  
+**Chapter written:** `chapters/114_desirable_difficulty_scheduling_under_exam_deadlines.md` (Part CXIV)  
+**Claim examined:** Whether MindCraft should operationalize pre-ACT calendars as horizon-matched hold/ease of desirable difficulties (Build/Join/Protect+probe) with stakes separate from DD — vs Desirable Difficulty Score™ / Challenge Minutes / always-ease-before-ACT / always-max-DD-until-bell / cram-week≡ready theater.
+
+**Doctrine proposed (provisional):** **SAFE-DDSCHED** — equipped clause never expires (Bjork); ISI matched to remaining RI (Cepeda; Kornell spacing>cram); hold mix while equipped (Rohrer); stakes≠DD (Hinze & Rapp); ease load not readiness standards in final ~72h; densify SAFE-DD/EXAM/SCHED/DURABLE/CRAM; no Desirable Difficulty Score™ / Challenge Minutes / always-ease / always-max / cram≡ready / schedule ACT guarantees. Experiment family **DDSCHED-*** (distinct from DD-*, EXAM-*, SCHED-*, CRAM-*).
+
+**Evidence spine (verified citations):** Bjork (1994); Bjork & Bjork (2011); Cepeda et al. (2006; 2008); Kornell (2009); Rohrer/Dedrick/Stershic (2015); Rohrer et al. (2020); Hinze & Rapp (2014); Yang et al. (2023); Ashcraft & Kirk (2001); Ashcraft & Krause (2007).
+
+**Claim killed (this tick):** Desirable Difficulty Score™ / Challenge Minutes NS / always-ease-before-ACT / blocked-comfort≡ready / always-max-DD-until-bell / last-48h scored flood-as-DD / cram-week≡ready / schedule ACT-point guarantees (provisional kill #68 until synthesizer).
+
+**Experiments:** DDSCHED-1…5 + DDSCHED-QUAL.
+
+**Next researcher id:** **115** (tutor identity & belonging / near-peer role models). Researcher count since v1.14 synthesizer: **7**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-09 — Researcher tick: Part CXIII Collaborative PS vs solo FEI (SAFE-COLLAB)
+
+**Tick type:** Researcher (UTC hour 21; hour%6≠0; researcher count since synthesizer v1.14 = 5 → Researcher)  
+**Chapter written:** `chapters/113_collaborative_problem_solving_vs_solo_fei.md` (Part CXIII)  
+**Claim examined:** Whether MindCraft should operationalize collaborative/CSCL problem-solving as structured scaffold with individual accountability and mandatory solo FEI gates vs Collaboration Score™ / Group Minutes / Discord≡learning / group-correct≡ready theater.
+
+**Doctrine proposed (provisional):** **SAFE-COLLAB** — conditional collab (Jeong/Chen/Capar metas); Slavin hinge (group goals + individual accountability); Yager structured discussion → group-to-individual transfer; Webb group≠individual competence + constructive use; Kerr & Bruun free-ride as design failure; solo FEI gate; densify PEERX/CoP/PROOF/HELP/INSTRUMENT/ERRCLIMATE; no Collaboration Score™ / Group Minutes / Discord≡CSCL / group-correct≡ready / free-rider-blind unlocks / always-collab / collab ACT guarantees. Experiment family **COLLAB-*** (distinct from PEERX-* and CoP-*).
+
+**Evidence spine (verified citations):** Jeong/Hmelo-Silver/Jo (2019); Chen/Wang/Kirschner/Tsai (2018); Capar & Tarim (2015); Slavin & Lake (2007 ERIC ED527642); Yager/Johnson/Johnson (1985); Webb (1993); Webb/Troper/Fall (1995); Kerr & Bruun (1983).
+
+**Claim killed (this tick):** Collaboration Score™ / Group Minutes NS / Discord≡CSCL learning / group-correct≡ready / free-rider-blind unlocks / always-collab dogma / collab ACT guarantees (provisional kill #67 until synthesizer).
+
+**Experiments:** COLLAB-1…5 + COLLAB-QUAL.
+
+**Queue hygiene:** Invented stubs 117–119 into NEXT_LAB (unfinished would otherwise drop below 3 after completing 113).
+
+**Next researcher id:** **114** (desirable difficulty scheduling under exam deadlines). Researcher count since v1.14 synthesizer: **6**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-09 — Researcher tick: Part CXII Feedback literacy / coach uptake (SAFE-FBLIT)
+
+**Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch112 never written → prefer Researcher per rotation; researcher count since synthesizer v1.14 = 4 → Researcher)  
+**Chapter written:** `chapters/112_feedback_literacy_coach_uptake.md` (Part CXII)  
+**Claim examined:** Whether MindCraft should operationalize student feedback literacy as decode→affect-gate→one-move→forced-action uptake loops vs Feedback Literacy Score™ / Feedback Minutes / delivery≡uptake / thumbs-up theater / longer≡literate essays.
+
+**Doctrine proposed (provisional):** **SAFE-FBLIT** — literacy = sense + use (Carless & Boud); knowing/being/acting (Sutton); proactive recipience + barrier taxonomy (Winstone et al.); Molloy competencies as design/HITL checklist not Score™; FIT/Hattie level discipline; uptake loop UX; densify FBTIME/FA/EXPLAIN/HINT/HELP/SRL/MONITOR/ERRCLIMATE; no Feedback Literacy Score™ / Feedback Minutes / delivery≡uptake / thumbs≡used / longer≡literate / illiteracy-shame / always-more-feedback / feedback-literacy ACT guarantees. Experiment family **FBLIT-*** (distinct from FBTIME-* and FA-*).
+
+**Evidence spine (verified citations):** Carless & Boud (2018); Sutton (2012); Molloy/Boud/Henderson (2020); Winstone et al. (2017 Educational Psychologist; 2017 Studies in HE); Kluger & DeNisi (1996); Hattie & Timperley (2007); Wisniewski/Zierer/Hattie (2020).
+
+**Claim killed (this tick):** Feedback Literacy Score™ / Feedback Minutes NS / delivery≡uptake / thumbs-up≡used / longer≡more literate / illiteracy-shame without design fix / always-more-feedback dogma / feedback-literacy ACT guarantees (provisional kill #66 until synthesizer).
+
+**Experiments:** FBLIT-1…5 + FBLIT-QUAL.
+
+**Next researcher id:** **113** (collaborative problem-solving vs solo FEI). Researcher count since v1.14 synthesizer: **5**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-09 — Researcher tick: Part CXI Formative assessment cycles in tutor sessions (SAFE-FA)
+
+**Tick type:** Researcher (UTC hour 15; hour%6≠0; researcher count since synthesizer v1.14 = 3 → Researcher)  
+**Chapter written:** `chapters/111_formative_assessment_cycles_tutor_sessions.md` (Part CXI)  
+**Claim examined:** Whether MindCraft should operationalize formative assessment as evidence→adjust→close-gap cycles in tutor sessions / Practice wraps vs Formative Score™ / exit-ticket theater / Black–Wiliam 0.4–0.7 legend ads.
+
+**Doctrine proposed (provisional):** **SAFE-FA** — process not badge; no legend σ; Sadler completeness (standard+compare+act); domain-specific cycles; feedback that moves; exit tickets only if wired; FEI over Formative Score™; HITL fidelity; no Formative Score™ / Assessment Minutes / ticket≡learning / 0.4–0.7 ads / quiz-volume≡formative / gradebook cosplay / AfL ACT guarantees. Experiment family **FA-*** (distinct from MONITOR-* and FBTIME-*).
+
+**Evidence spine (verified citations):** Black & Wiliam (1998a Assessment in Education; 1998b PDK); Wiliam (2011 Embedded Formative Assessment); Sadler (1989); Kingston & Nash (2011); Briggs et al. (2012); Bennett (2011); Hattie & Timperley (2007); Wisniewski/Zierer/Hattie (2020).
+
+**Claim killed (this tick):** Formative Score™ / Assessment Minutes NS / exit-ticket≡learning / Black–Wiliam 0.4–0.7 product ads / more-quizzes≡formative / gradebook cosplay / “got it?”≡closed cycle / AfL ACT guarantees (provisional kill #65 until synthesizer).
+
+**Experiments:** FA-1…5 + FA-QUAL.
+
+**Queue hygiene:** Invented stubs 114–116 into NEXT_LAB (unfinished would otherwise drop below 3 after completing 111).
+
+**Next researcher id:** **112** (feedback literacy). Researcher count since v1.14 synthesizer: **4**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-09 — Researcher tick: Part CX Spatial skills & math identity (SAFE-SPATIAL)
+
+**Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch110 never written → prefer Researcher per rotation; researcher count since synthesizer v1.14 = 2 → Researcher)  
+**Chapter written:** `chapters/110_spatial_skills_math_identity.md` (Part CX)  
+**Claim examined:** Whether MindCraft should treat spatial skill/anxiety via FormatId hops (diagram/graph/number_line) + conditional transfer evidence vs Spatial Score™ / Mental Rotation Minutes / isolated brain-training / innate boys-better spatial costume.
+
+**Doctrine proposed (provisional):** **SAFE-SPATIAL** — correlate≠costume; malleable not magical; transfer conditional (meta g≈.28 + nulls); embed over isolate; spatial anxiety destake; FormatId is the surface; figures must encode; equity without softening; no Spatial Score™ / Mental Rotation Minutes / brain-training≡identity / boys-better / always-3D / Spatial Personality™ / spatial ACT ads. Experiment family **SPATIAL-*** (distinct from company-law FORMAT-* and DUAL-*).
+
+**Evidence spine (verified citations):** Atit et al. (2022); Wai/Lubinski/Benbow (2009); Uttal et al. (2013); Hawes/Gilligan-Lee/Mix (2022 meta + npj); Gilligan/Thomas/Farran (2020); Mix et al. (2021); Hawes/Moss/Caswell/Poliszczuk (2015 null); Lyons et al. (2018); Sokolowski/Hawes/Lyons (2019).
+
+**Claim killed (this tick):** Spatial Score™ / Mental Rotation Minutes NS / isolated brain-training≡math identity / innate or boys-better spatial costume / always-add-3D / Spatial Personality™ / unscaffolded diagram flood / spatial ACT guarantees (provisional kill #64 until synthesizer).
+
+**Experiments:** SPATIAL-1…5 + SPATIAL-QUAL.
+
+**Next researcher id:** **111** (formative assessment cycles in tutor sessions). Researcher count since v1.14 synthesizer: **3**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-09 — Researcher tick: Part CIX Writing-to-learn in math practice (SAFE-WRITE)
+
+**Tick type:** Researcher (UTC hour 9; hour%6≠0; researcher count since synthesizer v1.14 = 1 → Researcher)  
+**Chapter written:** `chapters/109_writing_to_learn_math_practice.md` (Part CIX)  
+**Claim examined:** Whether MindCraft should ship Notes/Field Journal as prompted short cognitive+metacognitive writing-to-learn tied to FEI vs Writing Score™ / Journal Minutes / freewrite diary / long-essay depth theater / AI-polished Notes as learning.
+
+**Doctrine proposed (provisional):** **SAFE-WRITE** — conditional WTL (not magical); short + metacognitive + sustained; process over presence; cognitive+metacognitive pairing; math-authored language; Notes dual-rail with Practice; AI may cue not author; densifies GENERATE/SE/EXPLAIN/SRL/PEERX/PROOF; no Writing Score™ / Journal Minutes / freewrite≡learning / longer≡deeper / AI≡WTL / always-journal / writing ACT ads. Experiment family **WRITE-*** (distinct from GENACT-* and SE-*).
+
+**Evidence spine (verified citations):** Emig (1977); Ackerman (1993); Bangert-Drowns/Hurley/Wilkinson (2004); Klein (1999); Berthold/Nückles/Renkl (2007); Nückles/Hübner/Renkl (2009); Glogger et al. (2012) math journals; Pugalee (2001, 2004).
+
+**Claim killed (this tick):** Writing Score™ / Journal Minutes NS / freewrite diary≡learning / longer-essay≡deeper / AI rewrite≡WTL / Notes scrapbook without FEI / always-journal dogma / writing ACT guarantees (provisional kill #63 until synthesizer).
+
+**Experiments:** WRITE-1…5 + WRITE-QUAL.
+
+**Queue hygiene:** Promoted invented stubs 111–113 into NEXT_LAB (unfinished would otherwise drop below 3; QUEUE_EXTENDED dry past 110).
+
+**Next researcher id:** **110** (spatial skills & math identity). Researcher count since v1.14 synthesizer: **2**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-09 — Researcher tick: Part CVIII Analogical reasoning & bridge teaching (SAFE-ANALOG)
+
+**Tick type:** Researcher (UTC hour 6 ≡ Red Team slot, but ch108 never written → prefer Researcher per rotation; researcher count since synthesizer v1.14 = 0 → Researcher)  
+**Chapter written:** `chapters/108_analogical_reasoning_bridge_teaching.md` (Part CVIII)  
+**Claim examined:** Whether MindCraft should remediate diagnosed bridges via supported structure-mapping (co-present compare, student alignment, cognitive supports) vs Analogy Score™ / analogy-mention≡pedagogy / surface-story cosplay / AI “this is like…” dumps.
+
+**Doctrine proposed (provisional):** **SAFE-ANALOG** — relations over attributes; notice the join; encode by compare; supports required; name the break; mode gates; densifies SAFE-BRIDGE / TRANSFER / DUAL / GESTURE / PREDICT; no Analogy Score™ / mention≡pedagogy / surface-story≡structure / AI likeness dump / always-analogy / analogy ACT ads. Experiment family **ANALOG-*** (distinct from company-law BRIDGE-* diagnosis/narrative).
+
+**Evidence spine (verified citations):** Gentner (1983) structure-mapping; Gentner & Markman (1997) alignment; Gick & Holyoak (1980) spontaneous transfer failure; Gentner/Loewenstein/Thompson (2003) + Loewenstein et al. (1999) analogical encoding; Richland/Zur/Holyoak (2007) TIMSS supports gap; Richland & McDonough (2010) cuing→discrimination; Richland/Stigler/Holyoak (2012); Richland & Simms (2015) relational HOT.
+
+**Claim killed (this tick):** Analogy Score™ / Mapping Minutes NS / analogy-mention≡pedagogy / surface-story≡structure / AI likeness dump without student mapping / always-analogy dogma / HOT Score™ / Discord≡supported compare / analogy ACT guarantees (provisional kill #62 until synthesizer).
+
+**Experiments:** ANALOG-1…5 + ANALOG-QUAL.
+
+**Next researcher id:** **109** (writing-to-learn in math practice). Researcher count since v1.14 synthesizer: **1**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-09 — Synthesizer tick v1.14: merge Parts C–CVII
+
+**Tick type:** Synthesizer (UTC hour 3; hour%6≠0; ≥8 researcher entries since synthesizer v1.13 → Synthesizer)  
+**Chapter written:** none (merge pass only)  
+**Files revised:** `MINDCRAFT_RESEARCH_CONSTITUTION_v1.md` (edition/header / I.2 / I.4 / III / IX / XIV / XX / XXI / XXII glossary / Appendix F / closing); `NEXT_LAB.md`; this log; PDF regen.
+
+**Doctrine promoted to I.4 company law (provisional tags removed):**
+- SAFE-EXPTIME (C) — grain-local example↔solve timing; adaptive>fixed; no Example Timing Score™
+- SAFE-SRL (CI) — phase→control Zimmerman cycles; microanalysis>surveys; no SRL Score™ / streak≡SRL
+- SAFE-GENERATE (CII) — SOI-forcing sparse GLAs; student produces; no Generative Learning Score™ / AI≡generation
+- SAFE-ERRCLIMATE (CIII) — stay-diagnose error climate under FEI; no Safety Score™ / Bermuda-triangle
+- SAFE-HWHELP (CIV) — dual-rail Help vs Practice; assisted≠solo; no Completion Score™ / Chegg-dump
+- SAFE-GESTURE (CV) — strategy-tied optional gesture/draw; no Embodiment Score™ / pose-camera
+- SAFE-PEERX (CVI) — building-gated teach-back + solo proof; no Peer Explanation Score™ / Discord≡building
+- SAFE-PREDICT (CVII) — commit→surprise→encode; no Curiosity Score™ / cliffhanger-without-commit
+
+**Red Team kills promoted:** #54–#61 (from provisional chapter kills → v1.14 company dossier).
+
+**Experiment families confirmed in Part IX:** EXPTIME / SRL / GENACT / ERRCLIM / HWHELP / GESTURE / PEERX / PREDICT.
+
+**Claim killed (synthesis):** Treating C–CVII as orphan provisional deep-dives or independent North Stars (Example Timing Score™ / universal E0→E3, SRL Score™ / reflection-streak, Generative Learning Score™ / AI≡generation, Psychological Safety Score™ / Bermuda-triangle, Homework Completion Score™ / Chegg-dump, Embodiment Score™ / pose-camera, Peer Explanation Score™ / Discord≡building, Curiosity Score™ / cliffhanger-without-commit) — demoted under FEI + SAFE-* method-not-costume rule.
+
+**Next researcher id:** **108** (analogical reasoning & bridge teaching). Researcher count since v1.14 synthesizer: **0**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-09 — Researcher tick: Part CVII Curiosity & prediction before reveal (SAFE-PREDICT)
+
+**Tick type:** Researcher (UTC hour 0 ≡ Red Team slot, but ch107 never written → prefer Researcher per rotation; researcher count since synthesizer v1.13 = 7 → Researcher)  
+**Chapter written:** `chapters/107_curiosity_prediction_before_reveal.md` (Part CVII)  
+**Claim examined:** Whether MindCraft should ship prediction-commit → soft-wrong/feedback encode (curiosity + surprise for expectancy-violating joins) vs Curiosity Score™ / cliffhanger-without-commit / instant-reveal entertainment / postdiction theater.
+
+**Doctrine proposed (provisional):** **SAFE-PREDICT** — gap before reveal; commit is the wick; encode the repair; demo/figure predict; mode gates; destake the miss; densifies SAFE-FBTIME / SAFE-MONITOR / SAFE-RETRIEVE / SAFE-MISCON / SAFE-PF; no Curiosity Score™ / cliffhanger-without-commit / postdiction / guess-for-XP / curiosity ACT ads.
+
+**Evidence spine (verified citations):** Loewenstein (1994) information-gap curiosity; Kang et al. (2009) curiosity→memory for surprising answers; Brod & Breitwieser (2019) prediction stimulates curiosity; Brod et al. (2018) surprise requires prior prediction; Theobald & Brod (2022) explicit prediction aids expectancy-violating learning; Brod (2021) review nuance; Crouch et al. (2004) predict-before-demo > passive watch.
+
+**Claim killed (this tick):** Curiosity Score™ / Engagement-from-curiosity NS / cliffhanger-without-commit / postdiction theater / instant-reveal entertainment / guess-for-XP / always-predict dogma / curiosity ACT guarantees (provisional kill #61 until synthesizer).
+
+**Experiments:** PREDICT-1…5 + PREDICT-QUAL.
+
+**Next researcher id:** **108** (analogical reasoning & bridge teaching). Researcher count since v1.13 synthesizer: **8** → next eligible tick should prefer **Synthesizer** (unless unfinished-never-written override forces Researcher).
+
+**PDF:** Regenerate after this tick.
+
+---
+## 2026-08-08 — Researcher tick: Part CVI Peer explanation quality (SAFE-PEERX)
+
+**Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch106 never written → prefer Researcher per rotation; researcher count since synthesizer v1.13 = 6 → Researcher)  
+**Chapter written:** `chapters/106_peer_explanation_quality_knowledge_building.md` (Part CVI)  
+**Claim examined:** Whether MindCraft should ship knowledge-building–gated teach-back / HITL explanation QA (inferential prompts → apply → solo proof) vs Peer Explanation Score™ / teach-for-XP / Discord≡building / AI monologue≡peer teaching.
+
+**Doctrine proposed (provisional):** **SAFE-PEERX** — building over telling; inferential prompts; apply after explain; capture student explanation act; grain+QA for near-peer; load-honest length; solo proof closes loop; densifies SAFE-GENERATE / SAFE-EXPLAIN / SAFE-HELP / SAFE-TUTORGRAIN / SAFE-APPRENTICE; no Peer Explanation Score™ / teach-for-XP / Discord≡pedagogy / AI-dump teach-back.
+
+**Evidence spine (verified citations):** Roscoe & Chi (2007) knowledge-building vs telling bias; Roscoe & Chi (2008) inferential questions elicit building; Webb et al. (1995) constructive activity; Webb (1991) elaboration of help; Fuchs et al. (1996) tutor ability × explanation quality; Fiorella & Mayer (2013) teaching > expectancy for delayed retention.
+
+**Claim killed (this tick):** Peer Explanation Score™ / Teach Minutes NS / teach-for-XP / knowledge-telling≡quality / Discord≡knowledge-building / AI monologue≡peer teaching / unlock-without-solo after explain / peer-tutoring ACT guarantees (provisional kill #60 until synthesizer).
+
+**Experiments:** PEERX-1…5 + PEERX-QUAL.
+
+**Next researcher id:** **107** (curiosity & prediction before reveal). Researcher count since v1.13 synthesizer: **7**.
+
+**PDF:** Regenerate after this tick.
+
+---
+## 2026-08-08 — Researcher tick: Part CV Gesture & embodiment in math practice (SAFE-GESTURE)
+
+**Tick type:** Researcher (UTC hour 15; hour%6≠0; researcher count since synthesizer v1.13 = 5 → Researcher)  
+**Chapter written:** `chapters/105_gesture_embodiment_math_practice.md` (Part CV)  
+**Claim examined:** Whether MindCraft should ship strategy-specific optional gesture/finger-trace/draw scaffolds (FormatId + HITL model→fade) vs Embodiment Score™ / kinesthetic-style meshing / always-gesture / pose-camera “embodied AI.”
+
+**Doctrine proposed (provisional):** **SAFE-GESTURE** — strategy-tied motion only; gesture ≠ object-action for transfer; retention via sparse encode-time gesture; respect non-gesturers (observe/produce/draw choice); gesture+language close the loop; FormatId-triggered load-honest; apprentice model→fade; densifies SAFE-DUAL / SAFE-GENERATE / SAFE-FORMAT / SAFE-APPRENTICE; no Embodiment Score™ / styles meshing / camera pose / AR body hero.
+
+**Evidence spine (verified citations):** Goldin-Meadow, Cook & Mitchell (2009) gesture→new ideas; Cook, Mitchell & Goldin-Meadow (2008) retention; Novack et al. (2014) gesture>action for transfer; Congdon et al. (2024) spontaneous gesture predicts see vs do efficacy / harm to non-gesturers; Alibali & Nathan (2012) embodiment in math teaching; Nathan & Walkington (2017) GEMC; Nathan et al. (2021) dynamic gestures × geometry proof.
+
+**Claim killed (this tick):** Embodiment Score™ / Gesture Score™ / Motion Minutes NS / kinesthetic-style meshing / always-add-gesture / manipulative≡gesture≡abstraction / forced produce-only / pose-camera embodiment AI / AR body immersion≡FEI / ACT guarantees from gesture kits (provisional kill #59 until synthesizer).
+
+**Experiments:** GESTURE-1…5 + GESTURE-QUAL.
+
+**Next researcher id:** **106** (peer explanation quality). Researcher count since v1.13 synthesizer: **6**. Promoted queue stubs 108–110 (analogical bridges / writing-to-learn / spatial skills) because unfinished <3.
+
+**PDF:** Regenerate after this tick.
+
+---
+## 2026-08-08 — Researcher tick: Part CIV Homework help vs practice identity conflict (SAFE-HWHELP)
+
+**Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch104 never written → prefer Researcher per rotation; researcher count since synthesizer v1.13 = 4 → Researcher)  
+**Chapter written:** `chapters/104_homework_help_vs_practice_identity.md` (Part CIV)  
+**Claim examined:** Whether MindCraft should ship dual-rail Solver (instrumental homework help) + Practice FEI gym vs Homework Completion Score™ / Chegg-clone dump / purity ban on deadline help.
+
+**Doctrine proposed (provisional):** **SAFE-HWHELP** — two rails (help-to-unstuck vs practice-to-prove); executive completion ≠ learning; assisted ≠ unassisted; default instrumental / costly dump; help recruits solo proof; parent honesty without shame; densifies SAFE-HELP / SAFE-FADE / SAFE-ROI / SAFE-DURABLE / SAFE-PROOF; no Completion Score™ / Chegg-clone / Bastani Base hero / purity theater.
+
+**Evidence spine (verified citations):** Cooper, Robinson & Patall (2006) homework–achievement synthesis; DeGoede (2020) Chegg-era HW–exam decoupling; Pickering & Schuller (2024) Chegg audit / fast answers; Roshak (AEA 2023 working paper) Chegg temptation; Bastani et al. (2025 PNAS) generative crutch; Nelson-Le Gall (1981) executive vs instrumental; Roll/Aleven help-seeking line.
+
+**Claim killed (this tick):** Homework Completion Score™ / tonight-% NS / “we finish your worksheet” / assisted≡ready / Chegg-clone dump hero / Bastani Base Solver ads / purity ban on all homework help / parent homework stalk / grade guarantees from Solver (provisional kill #58 until synthesizer).
+
+**Experiments:** HWHELP-1…5 + HWHELP-QUAL.
+
+**Next researcher id:** **105** (gesture & embodiment in math practice). Researcher count since v1.13 synthesizer: **5**.
+
+**PDF:** Regenerate after this tick.
+
+---
+## 2026-08-08 — Researcher tick: Part CIII Error climate & psychological safety in tutoring (SAFE-ERRCLIMATE)
+
+**Tick type:** Researcher (UTC hour 9; hour%6≠0; researcher count since synthesizer v1.13 = 3 → Researcher)  
+**Chapter written:** `chapters/103_error_climate_psychological_safety_tutoring.md` (Part CIII)  
+**Claim examined:** Whether MindCraft should ship observable error-climate behaviors (stay-diagnose-scaffold-reattempt; destake learning / keep FEI standards) vs Psychological Safety Score™ / poster “safe space” / Bermuda-triangle redirect / praise-fog AI.
+
+**Doctrine proposed (provisional):** **SAFE-ERRCLIMATE** — error climate > safety slogan; stay with the erring student; destake learning episodes without deleting standards; adaptive action metrics over comfort surveys; corrective diagnosis required; tutor QA on error episodes; private repair (no shame reel); densifies SAFE-MISCON / SAFE-HELP / SAFE-TALK / SAFE-AAR / SAFE-EXAM / SAFE-PDASH; no Safety Score™ / safe-space ACT ads.
+
+**Evidence spine (verified citations):** Edmondson (1999) team psychological safety; Steuer, Rosentritt-Brunn & Dresel (2013) math error climate facets; Dresel et al. (2024) 2-year buffering longitudinal; Tulis (2013) teacher error management; Soncini, Matteucci & Butera (2021) experimental handling→climate; Soncini et al. (2022) climate→grades via adaptive reactions; Metcalfe (2017) errorful+feedback review.
+
+**Claim killed (this tick):** Psychological Safety Score™ / Comfort % / poster-only safe space / Bermuda-triangle redirect / shame reel / praise-fog≡climate / destake≡no-standards / climate-branded ACT guarantees (provisional kill #57 until synthesizer).
+
+**Experiments:** ERRCLIM-1…5 + ERRCLIM-QUAL.
+
+**Next researcher id:** **104** (homework help vs practice identity conflict). Researcher count since v1.13 synthesizer: **4**.
+
+**PDF:** Regenerate after this tick.
+
+---
+## 2026-08-08 — Researcher tick: Part CII Generative learning activities in Practice (SAFE-GENERATE)
+
+**Tick type:** Researcher (UTC hour 6 ≡ Red Team slot, but ch102 never written → prefer Researcher per rotation; researcher count since synthesizer v1.13 = 2 → Researcher)  
+**Chapter written:** `chapters/102_generative_learning_activities_practice.md` (Part CII)  
+**Claim examined:** Whether Practice should ship Fiorella/Mayer generative learning activities as sparse SOI-forcing micro-asks (teach-back, guided draw, one-sentence summarize) vs Generative Learning Score™ / eight-strategy checklist / AI monologue sold as generation.
+
+**Doctrine proposed (provisional):** **SAFE-GENERATE** — generation = select–organize–integrate; student produces (coach does not substitute); sparse grain-triggered GLAs; teach-back requires the explanation act; draw/map need FormatId guidance; protect attempt windows; proof = transfer/format-hop; densifies SAFE-EXPLAIN / SAFE-DUAL / SAFE-SRL / SAFE-SE; no Generative Learning Score™ / AI≡generation / eight-menu ACT ads.
+
+**Evidence spine (verified citations):** Wittrock (1974, 1989); Mayer (1996) SOI; Fiorella & Mayer (2013, 2014, 2015 book, 2016 EPR eight ways); Fiorella & Zhang (2018) drawing boundaries; Chi & Wylie (2014) ICAP; Brod (2021) age/support GLA review.
+
+**Claim killed (this tick):** Generative Learning Score™ / AI monologue≡generation / verbatim summary theater / unguided doodle≡dual-coding / teach-for-XP / eight-strategy menu bomb / GLA-branded ACT guarantees (provisional kill #56 until synthesizer).
+
+**Experiments:** GENACT-1…5 + GENACT-QUAL.
+
+**Next researcher id:** **103** (error climate / psychological safety in tutoring). Researcher count since v1.13 synthesizer: **3**.
+
+**PDF:** Regenerate after this tick.
+
+---
+## 2026-08-08 — Researcher tick: Part CI Self-regulated learning cycles in Practice UX (SAFE-SRL)
+
+**Tick type:** Researcher (UTC hour 3; hour%6≠0; researcher count since synthesizer v1.13 = 1 → Researcher)  
+**Chapter written:** `chapters/101_self_regulated_learning_cycles_practice_ux.md` (Part CI)  
+**Claim examined:** Whether Practice should ship Zimmerman cyclical SRL as phase→control micro-prompts (forethought / performance / reflection writeback) vs SRL Score™ / journal theater / streak-as-self-regulation costume.
+
+**Doctrine proposed (provisional):** **SAFE-SRL** — cycle around real attempts; phase→control or costume; specific process goals; protect performance windows; controllable attributions → adaptive inference writeback; microanalysis > inventories; proof = FEI + strategy change; densifies SAFE-MONITOR / SAFE-AAR / SAFE-ATTN / SAFE-HELP; no SRL Score™ / streak≡SRL / metacognition-module ACT ads.
+
+**Evidence spine (verified citations):** Zimmerman (2000 handbook; 2002 TiP); Zimmerman & Moylan (2009); Panadero (2017) review; Cleary & Zimmerman (2001) microanalysis; Cleary, Zimmerman & Keating (2006) multi-phase training; Cleary, Callan & Zimmerman (2012) microanalytic protocols; Dignath & Büttner (2008) + Dignath, Büttner & Langfeldt (2008) meta-analyses.
+
+**Claim killed (this tick):** SRL Score™ / reflection-streak NS / survey≡event / streak≡SRL / forethought-without-control / ability-shame reflection / metacognition-module ACT guarantees (provisional kill #55 until synthesizer).
+
+**Experiments:** SRL-1…5 + SRL-QUAL.
+
+**Next researcher id:** **102** (generative learning / Fiorella–Mayer). Researcher count since v1.13 synthesizer: **2**.
+
+**PDF:** Regenerate after this tick.
+
+---
+## 2026-08-08 — Researcher tick: Part C Worked-example vs problem-solving timing across expertise (SAFE-EXPTIME)
+
+**Tick type:** Researcher (UTC hour 0 ≡ Red Team slot, but ch100 never written → prefer Researcher per rotation; researcher count since synthesizer v1.13 = 0 → Researcher)  
+**Chapter written:** `chapters/100_worked_example_vs_problem_solving_timing.md` (Part C)  
+**Claim examined:** When MindCraft’s fixed E0→E3 fade ladder collides with partial / format-specific / misdiagnosed prior knowledge — universal schedule destiny vs grain-local adaptive example↔solve timing.
+
+**Doctrine proposed (provisional):** **SAFE-EXPTIME** — timing tracks concept×format×bridge grain; examples early / solving late on that grain; completion bridge; adaptive > fixed when evidence exists; rapid rechecks beat Likert destiny; densifies SAFE-FADE; proof = solo / delayed mixed; no Example Timing Score™ / always-struggle-first / black-box perfect-fade hero.
+
+**Evidence spine (verified citations):** Sweller & Cooper (1985) + Sweller (1988) worked-example/CLT; Kalyuga et al. (2001, 2003) + Kalyuga (2007) expertise reversal; Renkl & Atkinson (2003) + Renkl et al. (2002, 2004) fading/completion; Salden et al. (2010) adaptive > fixed fade in Cognitive Tutor; Kalyuga & Sweller (2004, 2005) rapid dynamic assessment.
+
+**Claim killed (this tick):** Universal fixed E0→E3 as science destiny / fixed fade ≡ adaptive / gap-scan confidence ≡ fade stage / Example Timing Score™ / always-example or always-struggle-first brand (provisional kill #54 until synthesizer).
+
+**Experiments:** EXPTIME-1…5 + EXPTIME-QUAL.
+
+**Next researcher id:** **101** (SRL cycles / Zimmerman in Practice UX). Researcher count since v1.13 synthesizer: **1**.
+
+**PDF:** Regenerate after this tick.
+
+---
+## 2026-08-07 — Synthesizer tick v1.13: merge Parts XCII–XCIX
+
+**Tick type:** Synthesizer (UTC hour 21; hour%6≠0; ≥8 researcher entries since synthesizer v1.12 → Synthesizer)  
+**Chapter written:** none (merge pass only)  
+**Files revised:** `MINDCRAFT_RESEARCH_CONSTITUTION_v1.md` (edition/header / I.2 / I.4 / III / IX / XIV / XX / XXI / XXII glossary / Appendix F / closing); `NEXT_LAB.md`; this log; PDF regen.
+
+**Doctrine promoted to I.4 company law (provisional tags removed):**
+- SAFE-EXPLAIN (XCII) — short principle-first; SE before wrap; length fades; no Explanation Score™
+- SAFE-RETRIEVE (XCIII) — mode-contingent stalls; TOT→cue; freeze→soft bound; no Struggle Score™
+- SAFE-PF (XCIV) — fidelity-gated generate→consolidate on student RSMs; guided default when thin/exam/freeze
+- SAFE-APPRENTICE (XCV) — model→coach→scaffold→fade + articulate; shared ca_phase; no guild cosplay
+- SAFE-ATTN (XCVI) — protect attempt windows; residue park/resume; opt-in focus; no Focus Score™
+- SAFE-DUAL (XCVII) — structural dual coding; contiguous labels; static annotated default; no styles meshing
+- SAFE-MONITOR (XCVIII) — named judgments → miss-class control; densifies CALIB/COLD; no Monitoring Score™
+- SAFE-ROI (XCIX) — Map minute budgets; constrained AI for reps; humans for joins; FEI per tutor-minute
+
+**Red Team kills promoted:** #46–#53 (from provisional chapter kills → v1.13 company dossier).
+
+**Experiment families confirmed in Part IX:** EXPLAIN / RETRIEVE / PF / APPRENTICE / ATTN / DUAL / MONITOR / ROI.
+
+**Claim killed (synthesis):** Treating XCII–XCIX as orphan provisional deep-dives or independent North Stars (Explanation Score™ / monologue≡SE, Struggle Score™ / blank-time theater, fail-first / PF Score™, guild apprenticeship costume, Focus Score™ / mid-attempt DAU pushes, Dual Coding Score™ / always-add-picture, Monitoring Score™ / one-scan calibration, AI-replaces-tutors / Session ROI Score™ / hours NS) — demoted under FEI + SAFE-* method-not-costume rule.
+
+**Next researcher id:** **100** (worked-example vs problem-solving timing across expertise). Researcher count since v1.13 synthesizer: **0**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-07 — Researcher tick: Part XCIX Opportunity cost of tutor minutes vs AI scaffold (SAFE-ROI)
+
+**Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch99 never written → prefer Researcher per rotation; researcher count since synthesizer v1.12 = 7 → Researcher)  
+**Chapter written:** `chapters/99_opportunity_cost_tutor_minutes_vs_ai.md` (Part XCIX)  
+**Claim examined:** How MindCraft should allocate scarce human tutor minutes versus AI coach/Solver scaffolds — AI-replaces-tutors / unlimited-human entitlement vs Map-briefed complementarity with FEI-per-minute honesty.
+
+**Doctrine proposed (provisional until next synthesizer):** **SAFE-ROI** — tutor minutes as scarce inventory; constrained AI for reps; humans for joins/destake/repair/witness; no Session ROI Score™ / tutoring-is-free / hours NS; proof = FEI per tutor-minute + escalate precision; ROI-* before AI-replaces-tutors campaigns.
+
+**Evidence spine:** Nickow/Oreopoulos/Quan (2020); Guryan et al. (2023); Kraft & Falken (2021); Kraft/List/Livingston/Sadoff (2022); VanLehn (2011); Bastani et al. (2025 PNAS).
+
+**Claim killed (this tick):** AI-replaces-tutors / tutoring-is-free / unlimited-human entitlement / hours-booked NS / Session ROI Score™ / VanLehn-as-ChatGPT license / Bastani practice≡learning / school pooled ES as thin-session ACT guarantee — demoted under tutoring meta + Saga dosage + scale-cost + thin-volunteer wound + ITS≠LLM + Bastani crutch; Map minute budgets + complementarity survive behind ROI-*.
+
+**Experiments mounted:** ROI-1…5 + ROI-QUAL. Promoted stubs 102–104 into NEXT_LAB (keep unfinished ≥3).
+
+**Next researcher id:** **100** (worked-example vs problem-solving timing across expertise). Researcher count since v1.12 synthesizer: **8** → next non-RT hour with count≥8 is Synthesizer-eligible (v1.13).
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-07 — Researcher tick: Part XCVIII Metacognitive monitoring in gap-scan (SAFE-MONITOR)
 
 **Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch98 never written → prefer Researcher per rotation; researcher count since synthesizer v1.12 = 6 → Researcher)  

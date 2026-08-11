@@ -1,0 +1,30 @@
+name: Marketing follow-up cron
+
+# Hobby Vercel only allows daily crons — this GitHub Action hits the
+# follow-up endpoint every 20 minutes so ~1 hour emails actually send.
+on:
+  schedule:
+    - cron: '*/20 * * * *'
+  workflow_dispatch:
+
+jobs:
+  send-due:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping follow-up endpoint
+        env:
+          MARKETING_CRON_SECRET: ${{ secrets.MARKETING_CRON_SECRET }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          SECRET="${MARKETING_CRON_SECRET}"
+          if [ -z "$SECRET" ] && [ -n "$ANTHROPIC_API_KEY" ]; then
+            SECRET="${ANTHROPIC_API_KEY: -8}"
+          fi
+          if [ -z "$SECRET" ]; then
+            echo "No MARKETING_CRON_SECRET or ANTHROPIC_API_KEY — skip"
+            exit 0
+          fi
+          curl -fsS -X POST \
+            "https://mindcraft-webhook.vercel.app/api/cron-marketing-followup?secret=${SECRET}" \
+            -H "Content-Type: application/json" \
+            -d '{}'

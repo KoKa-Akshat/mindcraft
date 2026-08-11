@@ -1,0 +1,84 @@
+Application, 0x10df1ee40, pid: 603, label: 'MindCraftNotes' <App element pid: 603>
+  Window (Main), 0x10df1f200, {{0.0, 0.0}, {1180.0, 820.0}} <AX element pid: 603, elementOrHash.elementID: 4345299216.4>
+    Other, 0x10df1df40, {{0.0, 0.0}, {1180.0, 820.0}} <AX element pid: 603, elementOrHash.elementID: 4371824640.6>
+      Other, 0x10df1f5c0, {{0.0, 0.0}, {1180.0, 820.0}} <AX element pid: 603, elementOrHash.elementID: 4345204080.8>
+        Other, 0x10df1fd40, {{0.0, 0.0}, {1180.0, 820.0}} <AX element pid: 603, elementOrHash.elementID: 4371580224.10>
+          Other, 0x10df1fc00, {{0.0, 0.0}, {1180.0, 820.0}} <AX element pid: 603, elementOrHash.elementID: 4345295504.11>
+            Other, 0x10df1c000, {{0.0, 0.0}, {1180.0, 820.0}} <AX element pid: 603, elementOrHash.elementID: 4719729216.12>
+              ScrollView, 0x10df1da40, {{0.0, 0.0}, {1180.0, 820.0}} <AX element pid: 603, elementOrHash.elementID: 4718739456.13>
+                Other, 0x10df1d2c0, {{0.0, 32.0}, {1180.0, 655.0}} <AX element pid: 603, elementOrHash.elementID: 4529737216.14>
+                  StaticText, 0x10df1c280, {{24.0, 58.0}, {51.5, 26.5}}, label: 'Mind' <AX element pid: 603, elementOrHash.elementID: 4371594560.16>
+                  StaticText, 0x10df1ebc0, {{75.5, 58.0}, {53.0, 26.5}}, label: 'Craft' <AX element pid: 603, elementOrHash.elementID: 4719656960.17>
+                  StaticText, 0x10df1ed00, {{156.5, 63.2}, {70.0, 16.0}}, label: 'Dashboard' <AX element pid: 603, elementOrHash.elementID: 4719657408.18>
+                  StaticText, 0x10df1e940, {{1018.0, 56.0}, {56.5, 16.0}}, label: 'Shreeyut' <AX element pid: 603, elementOrHash.elementID: 4719657856.19>
+                  StaticText, 0x10df1ea80, {{940.0, 73.0}, {134.5, 13.5}}, label: 'akshatkoirala@gmail.com' <AX element pid: 603, elementOrHash.elementID: 4719658304.20>
+                  Button, 0x10df1c640, {{1082.0, 57.5}, {74.5, 27.5}}, identifier: 'deskShellSignOut', label: 'Sign out' <AX element pid: 603, elementOrHash.elementID: 4719658752.21>
+                  StaticText, 0x10df1c780, {{24.0, 106.5}, {277.5, 31.5}}, label: 'good afternoon, Shreeyut.' <AX element pid: 603, elementOrHash.elementID: 4719659200.22>
+                  Button, 0x10df1c8c0, {{916.0, 106.5}, {240.0, 48.0}}, identifier: 'deskHubCallButton', label: 'Start your mastery check-in' <AX element pid: 603, elementOrHash.elementID: 4719665024.23>
+                    StaticText, 0x10df1ca00, {{928.5, 123.2}, {157.5, 14.5}}, label: 'Start your mastery check-in' <AX element pid: 603, elementOrHash.elementID: 4719664128.33>
+                    Image, 0x10df1cb40, {{1122.5, 121.0}, {19.0, 19.0}}, identifier: 'phone.fill', label: 'Call' <AX element pid: 603, elementOrHash.elementID: 4719664576.34>
+                  StaticText, 0x10df1cc80, {{40.0, 160.0}, {62.5, 13.5}}, label: 'SET GOAL' <AX element pid: 603, elementOrHash.elementID: 4719659648.24>
+                  Button, 0x10df1cdc0, {{40.0, 182.5}, {98.5, 34.0}}, identifier: 'deskGoalInstance', label: 'field-desk' <AX element pid: 603, elementOrHash.elementID: 4719661440.25>
+                    Button, 0x10df1cf00, {{40.0, 182.5}, {98.5, 34.0}} <AX element pid: 603, elementOrHash.elementID: 4373071616.35>
+                      StaticText, 0x10df1d040, {{51.0, 191.5}, {62.0, 16.0}}, label: 'field-desk' <AX element pid: 603, elementOrHash.elementID: 4719660096.64>
+                      Image, 0x10df1d180, {{120.0, 195.0}, {6.5, 9.5}}, identifier: 'chevron.up.chevron.down', label: 'Up And Down Chevrons' <AX element pid: 603, elementOrHash.elementID: 4719660544.65>
+                  Button, 0x10df1db80, {{146.5, 182.5}, {128.5, 34.0}}, identifier: 'deskGoalType', label: 'Tasks for today' <AX element pid: 603, elementOrHash.elementID: 4719663232.26>
+                    Button, 0x10df1f980, {{146.5, 182.5}, {128.5, 34.0}} <AX element pid: 603, elementOrHash.elementID: 4373072512.36>
+                      StaticText, 0x10df1fac0, {{157.5, 191.5}, {92.0, 16.0}}, label: 'Tasks for today' <AX element pid: 603, elementOrHash.elementID: 4719661888.67>
+                      Image, 0x10df1e1c0, {{256.5, 195.0}, {6.5, 9.5}}, identifier: 'chevron.up.chevron.down', label: 'Up And Down Chevrons' <AX element pid: 603, elementOrHash.elementID: 4719662336.68>
+                  StaticText, 0x10df1de00, {{40.0, 225.5}, {156.5, 14.5}}, identifier: 'deskGoalEcho', label: 'field-desk → Tasks for today' <AX element pid: 603, elementOrHash.elementID: 4719663680.27>
+                  StaticText, 0x10df1f700, {{172.0, 304.0}, {82.0, 26.5}}, label: 'Mastery' <AX element pid: 603, elementOrHash.elementID: 4719665920.28>
+                  StaticText, 0x10df1f840, {{172.0, 334.5}, {28.5, 33.5}}, identifier: 'deskMasteryPct', label: '—' <AX element pid: 603, elementOrHash.elementID: 4719666368.29>
+                  StaticText, 0x10df1dcc0, {{24.0, 426.0}, {132.5, 23.0}}, label: 'Your instances' <AX element pid: 603, elementOrHash.elementID: 4719666816.30>
+                  Other, 0x10df1e080, {{40.0, 481.5}, {1038.5, 165.5}} <AX element pid: 603, elementOrHash.elementID: 4719728320.31>
+                    Image, 0x10df1f480, {{41.0, 483.0}, {13.5, 13.5}}, identifier: 'deskInstance_fieldDesk', label: 'gearshape.fill' <AX element pid: 603, elementOrHash.elementID: 4719667264.37>
+                    StaticText, 0x10df1f340, {{245.5, 483.5}, {25.5, 12.0}}, identifier: 'deskInstance_fieldDesk', label: 'Desk' <AX element pid: 603, elementOrHash.elementID: 4719667712.38>
+                    Image, 0x10ad7fac0, {{42.5, 512.0}, {18.5, 18.5}}, identifier: 'deskInstance_fieldDesk', label: 'Grid 2x2' <AX element pid: 603, elementOrHash.elementID: 4719668160.39>
+                    StaticText, 0x10ad7dcc0, {{73.5, 511.5}, {78.5, 19.5}}, identifier: 'deskInstance_fieldDesk', label: 'field-desk' <AX element pid: 603, elementOrHash.elementID: 4719668608.40>
+                    Button, 0x10ad7fe80, {{52.0, 550.0}, {86.0, 14.5}}, identifier: 'deskInstance_fieldDesk', label: 'Open instance' <AX element pid: 603, elementOrHash.elementID: 4719669056.41>
+                    StaticText, 0x10ad7f840, {{40.0, 582.5}, {43.5, 13.5}}, identifier: 'deskInstance_fieldDesk', label: 'Running' <AX element pid: 603, elementOrHash.elementID: 4719669504.42>
+                    StaticText, 0x10ad7f980, {{40.0, 608.0}, {54.5, 13.5}}, identifier: 'deskInstance_fieldDesk', label: '12 / 1,000' <AX element pid: 603, elementOrHash.elementID: 4719669952.43>
+                    StaticText, 0x10ad7fc00, {{40.0, 633.5}, {77.0, 12.0}}, identifier: 'deskInstance_fieldDesk', label: 'Execution steps' <AX element pid: 603, elementOrHash.elementID: 4719670400.44>
+                    Image, 0x10ad7fd40, {{328.0, 481.5}, {13.5, 13.5}}, identifier: 'deskInstance_actFieldBook', label: 'gearshape.fill' <AX element pid: 603, elementOrHash.elementID: 4719670848.45>
+                    StaticText, 0x10df78000, {{536.5, 482.0}, {21.5, 12.0}}, identifier: 'deskInstance_actFieldBook', label: 'ACT' <AX element pid: 603, elementOrHash.elementID: 4719671296.46>
+                    Image, 0x10df78140, {{329.5, 510.5}, {17.0, 21.5}}, identifier: 'deskInstance_actFieldBook', label: 'book.closed.fill' <AX element pid: 603, elementOrHash.elementID: 4719671744.47>
+                    StaticText, 0x10df78280, {{359.0, 511.5}, {104.0, 19.5}}, identifier: 'deskInstance_actFieldBook', label: 'act-fieldbook' <AX element pid: 603, elementOrHash.elementID: 4719672192.48>
+                    Button, 0x10df783c0, {{339.0, 551.5}, {86.0, 14.5}}, identifier: 'deskInstance_actFieldBook', label: 'Open instance' <AX element pid: 603, elementOrHash.elementID: 4719672640.49>
+                    StaticText, 0x10df78500, {{327.0, 584.0}, {43.5, 13.5}}, identifier: 'deskInstance_actFieldBook', label: 'Running' <AX element pid: 603, elementOrHash.elementID: 4719722496.50>
+                    StaticText, 0x10df78640, {{327.0, 609.5}, {49.5, 13.5}}, identifier: 'deskInstance_actFieldBook', label: '0 / 1,000' <AX element pid: 603, elementOrHash.elementID: 4719722944.51>
+                    StaticText, 0x10df78780, {{327.0, 635.0}, {77.0, 12.0}}, identifier: 'deskInstance_actFieldBook', label: 'Execution steps' <AX element pid: 603, elementOrHash.elementID: 4719723392.52>
+                    Image, 0x10df788c0, {{615.0, 483.0}, {13.5, 13.5}}, identifier: 'deskInstance_pianoBook', label: 'gearshape.fill' <AX element pid: 603, elementOrHash.elementID: 4719723840.53>
+                    StaticText, 0x10df78a00, {{816.5, 483.5}, {28.5, 12.0}}, identifier: 'deskInstance_pianoBook', label: 'Piano' <AX element pid: 603, elementOrHash.elementID: 4719724288.54>
+                    Image, 0x10df78b40, {{616.5, 512.0}, {23.5, 18.5}}, identifier: 'deskInstance_pianoBook', label: 'Piano' <AX element pid: 603, elementOrHash.elementID: 4719724736.55>
+                    StaticText, 0x10df78c80, {{652.5, 511.5}, {88.5, 19.5}}, identifier: 'deskInstance_pianoBook', label: 'piano-book' <AX element pid: 603, elementOrHash.elementID: 4719725184.56>
+                    Button, 0x10df78dc0, {{626.0, 550.0}, {86.0, 14.5}}, identifier: 'deskInstance_pianoBook', label: 'Open instance' <AX element pid: 603, elementOrHash.elementID: 4719725632.57>
+                    StaticText, 0x10df78f00, {{614.0, 582.5}, {43.5, 13.5}}, identifier: 'deskInstance_pianoBook', label: 'Running' <AX element pid: 603, elementOrHash.elementID: 4719726080.58>
+                    StaticText, 0x10df79040, {{614.0, 608.0}, {49.5, 13.5}}, identifier: 'deskInstance_pianoBook', label: '0 / 1,000' <AX element pid: 603, elementOrHash.elementID: 4719726528.59>
+                    StaticText, 0x10df79180, {{614.0, 633.5}, {77.0, 12.0}}, identifier: 'deskInstance_pianoBook', label: 'Execution steps' <AX element pid: 603, elementOrHash.elementID: 4719726976.60>
+                    StaticText, 0x10df792c0, {{1011.8, 534.2}, {17.5, 33.5}}, label: '+' <AX element pid: 603, elementOrHash.elementID: 4719727424.61>
+                    StaticText, 0x10df79400, {{962.5, 575.8}, {116.0, 16.0}}, label: 'Create an instance' <AX element pid: 603, elementOrHash.elementID: 4719727872.62>
+                Other, 0x10df79540, {{1147.0, 18.0}, {30.0, 784.0}}, label: 'Vertical scroll bar, 1 page', value: 0% <AX element pid: 603, elementOrHash.elementID: 4529739264.15>
+                  Other, 0x10df79680, {{1174.0, 134.0}, {3.0, 665.0}} <AX element pid: 603, elementOrHash.elementID: 4371589632.32>
+                Other, 0x10df797c0, {{1147.0, 18.0}, {30.0, 784.0}}, label: 'Vertical scroll bar, 1 page', value: 0% <AX element pid: 603, elementOrHash.elementID: 4529739264.15>
+                  Other, 0x10df79900, {{1174.0, 134.0}, {3.0, 665.0}} <AX element pid: 603, elementOrHash.elementID: 4371589632.32>
+    Other, 0x10df79a40, {{0.0, 0.0}, {1180.0, 820.0}} <AX element pid: 603, elementOrHash.elementID: 4529742848.71>
+      Other, 0x10df79b80, {{0.0, 0.0}, {1180.0, 820.0}} <AX element pid: 603, elementOrHash.elementID: 4526347264.72>
+        Other, 0x10df79cc0, {{0.0, 0.0}, {1180.0, 820.0}} <AX element pid: 603, elementOrHash.elementID: 4719737728.73>
+          StaticText, 0x10df79e00, {{20.0, 52.0}, {217.5, 21.5}}, label: 'First Lessons at the Piano' <AX element pid: 603, elementOrHash.elementID: 4719729664.74>
+          StaticText, 0x10df79f40, {{20.0, 75.5}, {69.0, 14.5}}, identifier: 'pianoPageLabel', label: 'Page 1 of 10' <AX element pid: 603, elementOrHash.elementID: 4719733696.75>
+          Button, 0x10df7a080, {{1095.0, 54.5}, {65.5, 33.0}}, identifier: 'pianoBookClose', label: 'Close' <AX element pid: 603, elementOrHash.elementID: 4719734144.76>
+          ScrollView, 0x10df7a1c0, {{20.0, 106.0}, {1140.0, 623.0}} <AX element pid: 603, elementOrHash.elementID: 4718745600.77>
+            Other, 0x10df7a300, {{20.0, 106.0}, {1140.0, 170.0}} <AX element pid: 603, elementOrHash.elementID: 4529746432.80>
+              StaticText, 0x10df7a440, {{250.0, 126.0}, {123.5, 13.5}}, identifier: 'pianoCoverPage', label: 'PIANO FIELD BOOK' <AX element pid: 603, elementOrHash.elementID: 4719734592.82>
+              StaticText, 0x10df7a580, {{250.0, 151.5}, {398.0, 38.5}}, identifier: 'pianoCoverPage', label: 'First Lessons at the Piano' <AX element pid: 603, elementOrHash.elementID: 4719735040.83>
+              StaticText, 0x10df7a6c0, {{250.0, 202.0}, {231.5, 19.5}}, identifier: 'pianoCoverPage', label: 'Interactive Field Book · prototype' <AX element pid: 603, elementOrHash.elementID: 4719735488.84>
+              StaticText, 0x10df7a800, {{250.0, 241.5}, {587.5, 14.5}}, identifier: 'pianoCoverPage', label: 'Purpose-built assets · public-domain pedagogy spirit. Direct PDF conversion not required for this demo.' <AX element pid: 603, elementOrHash.elementID: 4719735936.85>
+            Other, 0x10df7a940, {{1127.0, 106.0}, {30.0, 623.0}}, label: 'Vertical scroll bar, 1 page', value: 0% <AX element pid: 603, elementOrHash.elementID: 4529748480.81>
+              Other, 0x10df7aa80, {{1154.0, 719.0}, {3.0, 7.0}} <AX element pid: 603, elementOrHash.elementID: 4719731008.86>
+            Other, 0x10df7abc0, {{1127.0, 106.0}, {30.0, 623.0}}, label: 'Vertical scroll bar, 1 page', value: 0% <AX element pid: 603, elementOrHash.elementID: 4529748480.81>
+              Other, 0x10df7ad00, {{1154.0, 719.0}, {3.0, 7.0}} <AX element pid: 603, elementOrHash.elementID: 4719731008.86>
+          Button, 0x10df7ae40, {{20.0, 753.0}, {34.0, 17.0}}, identifier: 'pianoPrev', label: 'Back', Disabled <AX element pid: 603, elementOrHash.elementID: 4719736832.78>
+          Button, 0x10df7af80, {{1092.0, 743.0}, {68.0, 37.0}}, identifier: 'pianoNext', label: 'Next' <AX element pid: 603, elementOrHash.elementID: 4719737280.79>
+  Window, 0x10df7b0c0, {{0.0, 0.0}, {1180.0, 820.0}} <AX element pid: 603, elementOrHash.elementID: 4371694848.5>
+    Other, 0x10df7b200, {{0.0, 0.0}, {1180.0, 820.0}} <AX element pid: 603, elementOrHash.elementID: 4371582016.7>
+      Other, 0x10df7b340, {{0.0, 0.0}, {1180.0, 820.0}} <AX element pid: 603, elementOrHash.elementID: 4371583360.9>

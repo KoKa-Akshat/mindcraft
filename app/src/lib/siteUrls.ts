@@ -1,5 +1,5 @@
 /** Public site URLs — marketing is the landing; app host is login + product only. */
-export const MARKETING_BASE = 'https://mindcraft-marketing-site.web.app'
+export const MARKETING_BASE = 'https://joinmindcraft.com'
 export const APP_BASE = 'https://mindcraft-93858.web.app'
 export const APP_LOGIN = `${APP_BASE}/login`
 

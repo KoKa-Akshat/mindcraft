@@ -1,0 +1,50 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "A735EB58-9FF1-4985-A750-F212A011BD9E.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "field_desk_after_file_0_5FAC1B55-DFA8-4012-8063-DEBACE4C3ED6.png",
+        "timestamp" : 1786224260.538
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "69CFD3AE-E6B6-4598-BA28-B77BC086762E.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "field_desk_opened_0_ECDD318F-688E-4EB6-97F1-787077C05A4D.png",
+        "timestamp" : 1786224252.797
+      }
+    ],
+    "testIdentifier" : "MindCraftNotesUITests/testFieldDeskFilesNoteIntoBinder()",
+    "testIdentifierURL" : "test://com.apple.xcode/MindCraftNotes/MindCraftNotesUITests/MindCraftNotesUITests/testFieldDeskFilesNoteIntoBinder"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "1CE44AFC-2F40-4571-8168-FCE0F51236EC.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "piano_book_drill_0_88092BCB-67EC-47EC-AE2E-16991C46F74C.png",
+        "timestamp" : 1786224277.378
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "BD0BB6E0-D625-4C61-99F2-7FBB36EF04A7.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "piano_book_cover_0_03B790C9-8798-4098-9176-1EA57F1D797A.png",
+        "timestamp" : 1786224268.826
+      }
+    ],
+    "testIdentifier" : "MindCraftNotesUITests/testPianoFieldBookOpensSeedAndShowsKeyboard()",
+    "testIdentifierURL" : "test://com.apple.xcode/MindCraftNotes/MindCraftNotesUITests/MindCraftNotesUITests/testPianoFieldBookOpensSeedAndShowsKeyboard"
+  }
+]

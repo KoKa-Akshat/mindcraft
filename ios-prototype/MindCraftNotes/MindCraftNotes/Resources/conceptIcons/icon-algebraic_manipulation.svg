@@ -1,0 +1,11 @@
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+    <circle cx="32" cy="32" r="30" fill="#fbf3e2" stroke="#33230f" stroke-width="2.5"/>
+    <circle cx="32" cy="32" r="30" fill="none" stroke="#eddab3" stroke-width="1" opacity="0.6"/>
+    <g transform="translate(32 32)">
+    <!-- x → y rearrange -->
+    <text x="-12" y="5" text-anchor="middle" font-family="Georgia, serif" font-size="18" font-weight="700" fill="#1d3a8a">x</text>
+    <path d="M-4 0 h10" stroke="#33230f" stroke-width="2.2" stroke-linecap="round"/>
+    <path d="M4 -4 L10 0 L4 4 Z" fill="#c99a3a"/>
+    <text x="16" y="5" text-anchor="middle" font-family="Georgia, serif" font-size="18" font-weight="700" fill="#33230f">y</text>
+  </g>
+  </svg>

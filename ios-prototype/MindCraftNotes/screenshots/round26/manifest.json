@@ -1,0 +1,59 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "5C9350C9-A21A-476C-A284-901243D400EE.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "field_desk_home_to_dash_0_BF43EA80-3E22-4544-BA51-3CA6CE86FA95.png",
+        "timestamp" : 1786236229.527
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "3607A748-16D7-4E1F-99CF-D79E5D82EB97.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "field_desk_after_file_0_A9E4AA7A-5D73-44D4-B774-C6E8C3B679E3.png",
+        "timestamp" : 1786236228.249
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "FFF9081C-C8FB-46BD-9B50-FC459A3F618B.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "field_desk_opened_0_7365B404-2BF7-47F8-826A-EB700E6E476F.png",
+        "timestamp" : 1786236212.051
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "5C8BE61B-CAFD-408C-8DA9-4121D6AF6D66.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "field_desk_connect_gmail_0_EB410C0C-3145-4C51-B425-A859DD2B3AD0.png",
+        "timestamp" : 1786236205.888
+      }
+    ],
+    "testIdentifier" : "MindCraftNotesUITests/testFieldDeskFilesNoteIntoBinder()",
+    "testIdentifierURL" : "test://com.apple.xcode/MindCraftNotes/MindCraftNotesUITests/MindCraftNotesUITests/testFieldDeskFilesNoteIntoBinder"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "658AE5C1-F1C1-4ABA-B605-8CC18202B909.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "field_desk_after_pan_0_A524325F-6666-40EF-A851-24906F6BA59E.png",
+        "timestamp" : 1786236241.501
+      }
+    ],
+    "testIdentifier" : "MindCraftNotesUITests/testFieldDeskPanDoesNotDismiss()",
+    "testIdentifierURL" : "test://com.apple.xcode/MindCraftNotes/MindCraftNotesUITests/MindCraftNotesUITests/testFieldDeskPanDoesNotDismiss"
+  }
+]

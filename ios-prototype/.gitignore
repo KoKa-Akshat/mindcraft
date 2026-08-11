@@ -1,0 +1,25 @@
+# Xcode build artifacts — huge, regenerable, never worth versioning.
+DerivedData/
+build/
+*.xcuserstate
+xcuserdata/
+.build/
+*.moved-aside
+*.xccheckout
+*.xcscmblueprint
+
+# Swift Package Manager local checkouts (regenerable via Xcode's package
+# resolution) — mirrors the same convention as build/DerivedData above.
+.swiftpm/
+Package.resolved
+
+# Real MyScript Cloud API credentials hardcoded in source (see the main
+# repo's own .gitignore comment for why ios-prototype/ was excluded from
+# the parent repo entirely) — kept out of THIS repo's history too, even
+# though everything else here is now tracked for real durability.
+MindCraftNotes/MindCraftNotes/Networking/MyScriptRecognizer.swift
+
+# Real-device test screenshot dumps — large binaries, regenerable via
+# xcresulttool, not meaningful to diff.
+screenshots_realdevice_*/
+*.xcresult/

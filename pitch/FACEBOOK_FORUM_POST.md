@@ -12,7 +12,7 @@ We’re MindCraft, a Twin Cities ACT Math studio. We map the real gap first, the
 
 Free to apply. Short gap scan to begin.
 
-https://mindcraft-marketing-site.web.app/#intake  
+https://joinmindcraft.com/#intake  
 joinmindcraft@gmail.com
 
 Happy to answer questions in the comments.
@@ -25,4 +25,4 @@ Twin Cities parents: we help ACT Math kids who feel stuck.
 
 We find the real gap. Then a college tutor starts there.
 
-Apply free → https://mindcraft-marketing-site.web.app/#intake
+Apply free → https://joinmindcraft.com/#intake

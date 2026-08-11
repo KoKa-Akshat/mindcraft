@@ -1,16 +1,33 @@
 # MindCraft Brand Book
 
-**Version 1.0. The definitive edition.**
+**Version 1.1 · 2026-08-11**  
+Product name on the web: **The Desk by MindCraft**. App chrome / home screen: **The Desk**.  
+Pedagogy translation of research: [`docs/canon/PEDAGOGY.md`](docs/canon/PEDAGOGY.md) · Research OS: [`agent_work/research/`](agent_work/research/) (Constitution v1.16).  
+Shareable PDF: regenerate with `python3 docs/canon/generate_brand_book.py` → `BRAND_BOOK.pdf`.
 
-This document governs every design, copy, product, and marketing decision at MindCraft. When two options conflict, this book breaks the tie. When the book itself is unclear, the Brand Essence breaks the tie. Read it before you write a headline, pick a color, name a feature, or ship a screen.
+This document governs every design, copy, product, and marketing decision at MindCraft. When two options conflict, this book breaks the tie. When the book itself is unclear, the Brand Essence breaks the tie. Read it before you write a headline, pick a color, name a feature, or ship a screen. Agents: start at [`docs/canon/README.md`](docs/canon/README.md).
+
+---
+
+## 0. Naming (binding)
+
+| Surface | Say |
+|---------|-----|
+| Company / publisher | **MindCraft** |
+| Marketing product | **The Desk by MindCraft** |
+| App home screen + in-app chrome | **The Desk** (text only — no MindCraft / raccoon logo mark in chrome) |
+| Narrative layer | **Katha** |
+| Student sections | **Notes · Solver · Map** |
+
+Never call the student app “MindCraftNotes” in user-facing copy. Internal Xcode target names may lag; display name is **The Desk**.
 
 ---
 
 ## 1. Brand Essence
 
-**MindCraft gives the student who gave up on math the click: the felt experience of being good, inside a story where being good matters.**
+**The Desk by MindCraft gives the student who gave up on math the click: the felt experience of being good, inside a story where being good matters.**
 
-Every decision either serves the click or gets out of its way. Math is the mechanism. The story is the point.
+Every decision either serves the click or gets out of its way. Math is the mechanism. The story is the point. The Desk is the place she works; MindCraft is the company that built it.
 
 ---
 
@@ -40,7 +57,7 @@ Turn every student who gave up on math into someone who has felt what it is like
 
 ## 4. Vision
 
-A living game world where the student is the character, every math problem is a mission, and mastery visibly and permanently changes the world.
+A living world (and a daily OS — **The Desk**) where the student is the character, every math problem is a mission, mastery visibly changes the map, and a human tutor walks in already knowing the gap. Full horizon map: `WORLD_VISION.md`. Research thesis under audit: identity transformation, not mathematics delivery (`agent_work/research/`).
 
 ---
 
@@ -149,12 +166,23 @@ Understated and electric. The click needs no cheerleading; it needs acknowledgme
 - Never: confetti language, "Awesome!", "You're a rockstar," streak-guilt framing.
 
 ### Marketing headlines
-Big claims stated flatly, aimed at the verdict Maya carries. Every headline should make the kid who gave up stop scrolling.
+Big claims stated flatly, aimed at the verdict Maya carries. Every headline should make the kid who gave up stop scrolling. Product line when naming the app: **The Desk by MindCraft**.
 
 - **You were never bad at math.**
 - **Feel what it's like to be good.**
 - **Math didn't lose you. The story did.**
 - **The kids in the front row aren't smarter. They just clicked earlier.**
+- **The Desk by MindCraft — learning that learns you.**
+
+### Claims we will not make (research-aligned)
+
+Defendable claims only — see Pedagogy Canon + Constitution kills:
+
+- No ACT / score **point guarantees**.
+- No streak / XP / leaderboard as proof of mastery.
+- No “AI replaces tutors” or “tutoring is free.”
+- No item-count or “complete ACT bank” hero without coverage honesty.
+- No Identity / Belief / Anxiety Score™ theater in parent or student copy.
 
 ### Email subject lines
 Sentence case, specific, story-forward. No fake urgency, no "Don't miss out," no discount energy.
@@ -179,26 +207,29 @@ Sentence case, specific, story-forward. No fake urgency, no "Don't miss out," no
 
 ## 9. Visual Identity
 
-The reference points are Buttermax and StringTune: dark grounds, enormous cinematic typography, high-contrast accents, bold graphic statements. MindCraft looks like a film title sequence that happens to be software. It never looks like an education product.
+Two stages, one brand:
+
+1. **Story / marketing / Katha** — film title sequence energy: Deep Field, enormous type, high contrast. Never looks like a school LMS.
+2. **The Desk OS** (Jesse’s Kitchen, Work, Create) — cream paper workspace, soft ink (`#143a2e`), lime accents. Feels like a real desk she owns, not a dark theater. Do not force Deep Field onto The Desk surfaces.
 
 ### Color system
 
 | Color | Hex | Name | Role |
 |---|---|---|---|
-| Near-black | `#080e14` | Deep Field | The canvas. Everywhere, always. |
-| White | `#f5f5f5` | Chalk | Primary text and headline color. |
-| Lime | `#c4f547` | The Click | The signal. Mastery, progress, primary CTAs. |
-| Red | `#c1121f` | Stakes | Narrative tension, gaps, Katha's flame. |
-| Navy | `#1d3a8a` | Depth | System structure, graph edges, secondary surfaces. |
+| Near-black | `#080e14` | Deep Field | Marketing, story, Katha, cinematic moments. |
+| Desk paper | `#f7f5f0` / `#f8faf7` | Field Desk cream | The Desk OS canvas (Work / Create / kitchen chrome). |
+| Ink green | `#143a2e` | Desk ink | Primary text on cream Desk surfaces. |
+| White / chalk | `#f5f5f5` | Chalk | Primary text on Deep Field. |
+| Lime | `#c4f547` | The Click | Mastery, primary CTAs, earned signal. |
+| Red | `#c1121f` | Stakes | Narrative tension, gap severity, Katha's flame — never student shame. |
+| Navy | `#1d3a8a` | Depth | Graph edges / secondary structure on dark stages. |
 
 **Usage rules:**
 
-- **Deep Field is non-negotiable.** Every screen starts dark. The dark is the theater before the film; it makes the click visible. White-background screens do not exist in this brand.
-- **Chalk carries the words.** Headlines, body, UI labels. Typography on Deep Field does most of the brand's visual work; color is punctuation, not paragraph.
-- **The Click is earned.** Lime means something just happened or is about to: a mastery event, a map change, the one primary action on a screen. Never decorative, never for borders and dividers, never two lime elements competing on one screen. If lime appears everywhere, the click means nothing.
-- **Stakes belongs to the story, never to the student.** Red marks narrative crisis, gap severity on the map, and the Katha flame. Red never marks a student's answer, never flashes at a miss, never plays the role of "you failed." A red X on a student's work is the single fastest way to reinstall the verdict this brand exists to remove. Banned.
-- **Depth is the system's hum.** Navy builds the quiet layer: graph edges, cards, structural chrome, the engine made visible. Navy recedes so lime and red can strike.
-- **Contrast discipline:** Chalk on Deep Field for reading. Lime and red only on Deep Field or navy, never on each other, never on white.
+- **Stage-appropriate canvas.** Deep Field for story and marketing. Cream for The Desk OS. Do not mix randomly on one screen.
+- **The Click is earned.** Lime means something just happened or is about to. Never two competing lime CTAs.
+- **Stakes belongs to the story, never to the student.** Red never marks a miss as “you failed.” A red X on student work is banned.
+- **Desk chrome stays calm.** Top-left product mark is the words **The Desk** — no raccoon / MindCraft logo in app chrome (logo stays for marketing site / company mark).
 
 ### Typography direction
 
@@ -345,13 +376,26 @@ Six real contexts, final copy quality. This is what the brand sounds like in the
 
 **Marketing site hero headline:**
 > You were never bad at math.
-> *Subhead:* Somebody told you that, and you built a life around it. MindCraft finds the exact moment math lost you, then tells the story that brings you back.
+> *Subhead:* Somebody told you that, and you built a life around it. The Desk by MindCraft finds the exact moment math lost you, then tells the story that brings you back.
 
 **App Store description, opening lines:**
-> MindCraft is the story where you find out you were never bad at math.
+> The Desk by MindCraft is where you find out you were never bad at math.
 >
 > A learning engine maps exactly where math lost you: not the chapter, the concept, the precise gap. Then a story world gives you a reason to go back for it. Every concept is a scene. Every problem is a mission. And somewhere in your first week, it happens: the pattern surfaces, the fog burns off, and you feel the click the front-row kids have been feeling all along.
 
 ---
 
-*End of Brand Book v1.0. When in doubt, reread the essence: math is the mechanism, the story is the point, and everything serves the click.*
+## 15. Research handshake
+
+Brand copy must stay inside what pedagogy can defend. When research kills a Score™ or packaging claim, Brand Book follows — we do not keep the pretty lie.
+
+| Topic | Look first |
+|-------|------------|
+| What to build / measure | `docs/canon/PEDAGOGY.md` |
+| Evidence + Red Team | `agent_work/research/MINDCRAFT_RESEARCH_CONSTITUTION_v1.md` |
+| Why / horizons | `WORLD_VISION.md` |
+| Agent index | `docs/canon/README.md` |
+
+---
+
+*End of Brand Book v1.1. When in doubt, reread the essence: math is the mechanism, the story is the point, The Desk is the place, and everything serves the click.*

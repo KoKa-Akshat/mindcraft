@@ -72,6 +72,23 @@ Promote 3 at a time into `NEXT_LAB.md`. Do not write all at once.
 | 96 | Attention residue & device distraction in practice | Phone/task-switch tax on FEI attempts | promoted → NEXT_LAB |
 | 97 | Dual coding & diagram FormatId load | Multimedia principles × format axis; when figures help | promoted → NEXT_LAB **DONE** Part XCVII |
 | 98 | Metacognitive monitoring in gap-scan | Confidence vs accuracy; calibration loop with SAFE-CALIB | promoted → NEXT_LAB |
-| 99 | Opportunity cost of tutor minutes vs AI scaffold | When HITL time beats coach; session ROI honesty | promoted → NEXT_LAB |
-| 100 | Worked-example vs problem-solving timing across expertise | When E0→E3 schedule collides with prior knowledge | promoted → NEXT_LAB |
+| 99 | Opportunity cost of tutor minutes vs AI scaffold | When HITL time beats coach; session ROI honesty | **DONE** → Part XCIX / SAFE-ROI |
+| 100 | Worked-example vs problem-solving timing across expertise | When E0→E3 schedule collides with prior knowledge | promoted → NEXT_LAB **NEXT** |
 | 101 | Self-regulated learning cycles (Zimmerman) in Practice UX | Forethought/performance/reflection; no SRL Score™ | promoted → NEXT_LAB |
+| 102 | Generative learning activities (Fiorella/Mayer) in Practice | Summarize/teach-back/draw; germane load without fluff | promoted → NEXT_LAB |
+| 103 | Error climate & psychological safety in tutoring | Destake mistakes without lowering standards | promoted → NEXT_LAB **NEXT** |
+| 104 | Homework help vs practice identity conflict | Solver as crutch vs FEI gym; parent messaging | promoted → NEXT_LAB |
+| 105 | Gesture & embodiment in math practice | Goldin-Meadow; enact GLA; when motion helps FormatId | promoted → NEXT_LAB |
+| 106 | Peer explanation quality (knowledge-building vs telling) | Roscoe/Chi; teach-back rubric; HITL QA | promoted → NEXT_LAB |
+| 107 | Curiosity & prediction before reveal | Epistemic emotions; soft-wrong predict→feedback | promoted → NEXT_LAB |
+| 108 | Analogical reasoning & bridge teaching | Gentner structure-mapping; Map bridge UX | promoted → NEXT_LAB |
+| 109 | Writing-to-learn in math practice | Explanation writing; journal vs FEI; Notes rail | promoted → NEXT_LAB |
+| 110 | Spatial skills & math identity | Spatial anxiety; FormatId hops; no Spatial Score™ | promoted → NEXT_LAB |
+| 111 | Formative assessment cycles in tutor sessions | Black/Wiliam grain; exit tickets vs FEI; no Formative Score™ | promoted → NEXT_LAB |
+| 112 | Feedback literacy — how students use coach feedback | Hattie/Timperley; uptake vs dismiss; soft-wrong action | promoted → NEXT_LAB |
+| 113 | Collaborative problem-solving vs solo FEI | CSCL tradeoffs; group work without solo-transfer washout | promoted → NEXT_LAB |
+| 114 | Desirable difficulty scheduling under exam deadlines | Bjork×SAFE-EXAM; when to ease vs hold challenge pre-ACT | promoted → NEXT_LAB |
+| 115 | Tutor identity & belonging (near-peer role models) | Representation without tokenism; hire briefs × SAFE-GENDER/ELL | promoted → NEXT_LAB |
+| 116 | Offline practice fidelity (paper/whiteboard capture) | Photo-to-Map; attempt grain without phone distraction | promoted → NEXT_LAB |
+| 124 | Distractor design for diagnostic soft-wrong MC | SAFE-TAXON × SAFE-MISCON; Eedi-style options | promoted → NEXT_LAB |
+| 125 | Confidence-tagged misses in gap-scan recovery | SAFE-TAXON × SAFE-CALIB; hard/kinda/easy × mark type | promoted → NEXT_LAB |

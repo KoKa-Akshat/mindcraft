@@ -3,18 +3,49 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>MindCraft · The student desk before the ACT</title>
-<meta name="description" content="MindCraft is the student desk before the ACT. Drop your worksheets, plug in your calendar, practice inside story worlds, and work with real college tutors.">
+<title>The Desk by MindCraft · A gym membership for learning</title>
+<meta name="description" content="The Desk by MindCraft learns how you learn, builds personal lessons across subjects, and brings in human care with context.">
+<meta name="keywords" content="The Desk, MindCraft, ACT math, student desk, knowledge graph, tutoring, math gaps, high school math, college tutors, learning OS">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://joinmindcraft.com/">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://mindcraft-marketing-site.web.app/">
-<meta property="og:title" content="MindCraft · School is scattered. You don't have to be.">
-<meta property="og:description" content="Drop your worksheets, plug in your calendar, practice inside story worlds. Real college tutors, briefed by your map.">
-<meta property="og:image" content="https://mindcraft-marketing-site.web.app/img/new-dash-home.jpg">
-<link rel="icon" type="image/png" href="img/mindcraft-logo.png">
+<meta property="og:site_name" content="MindCraft">
+<meta property="og:url" content="https://joinmindcraft.com/">
+<meta property="og:title" content="The Desk by MindCraft · A gym membership for learning">
+<meta property="og:description" content="The Desk by MindCraft: a personal learning system that grows with you, across subjects, with real human care.">
+<meta property="og:image" content="https://joinmindcraft.com/img/app/desk-ipad-live.png?v=jesse-desk-1">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Desk by MindCraft · A gym membership for learning">
+<meta name="twitter:description" content="The Desk by MindCraft: a personal learning system that grows with you, across subjects, with real human care.">
+<meta name="twitter:image" content="https://joinmindcraft.com/img/app/desk-ipad-live.png?v=jesse-desk-1">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "The Desk by MindCraft",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Web, iPadOS",
+  "url": "https://joinmindcraft.com/",
+  "description": "The Desk by MindCraft learns how each student learns, builds dynamic lessons across subjects, and brings in human tutors with context.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD",
+    "description": "Free while in beta"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "MindCraft",
+    "email": "joinmindcraft@gmail.com",
+    "url": "https://joinmindcraft.com/"
+  }
+}
+</script>
+<link rel="icon" type="image/png" href="img/favicon-raccoon.png">
+<link rel="apple-touch-icon" href="img/favicon-raccoon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito+Sans:wght@600;700;800;900;1000&family=DM+Serif+Display:ital@0;1&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 <style>
   :root{
     --ink:#143a2e; --leaf:#247a4d; --leaf2:#5fb779; --sprout:#b9e86f;
@@ -90,7 +121,18 @@
   @media (prefers-reduced-motion: reduce){
     .nav{transition:none;}
   }
-  .brand{font-family:"Fredoka",sans-serif; font-size:20px; font-weight:700; letter-spacing:-.04em;}
+  .brand{
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:"Fredoka",sans-serif; font-size:18px; font-weight:700; letter-spacing:-.04em;
+  }
+  .brand img{
+    width:34px; height:34px; object-fit:contain; display:block;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,.18));
+  }
+  .brand .visually-hidden{
+    position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+  }
   .brand span{color:var(--gold-deep);}
   .nav-links{display:flex; align-items:center; gap:6px;}
   .nav-links a{
@@ -111,62 +153,68 @@
 
   /* ---------- Hero ---------- */
   .hero{
-    min-height:min(94svh,900px); display:flex; flex-direction:column; justify-content:center; padding:0;
+    min-height:min(96svh,920px); display:flex; flex-direction:column; justify-content:center; padding:0;
     background:
       radial-gradient(ellipse 70% 55% at 74% 36%, rgba(36,122,77,.30), transparent 58%),
       radial-gradient(ellipse 45% 40% at 14% 74%, rgba(196,245,71,.09), transparent 55%),
       linear-gradient(160deg, #0a1612 0%, #07110e 48%, #040a08 100%);
-    color:var(--paper); overflow:hidden;
+    color:#f7f7f2; overflow:hidden;
   }
-  .hero-map{position:absolute; inset:0; width:100%; height:100%; opacity:.35; pointer-events:none;}
+  .hero::before{
+    content:none;
+  }
+  .hero-map{position:absolute; inset:0; width:100%; height:100%; opacity:.32; pointer-events:none;}
   .hero-map line{stroke:rgba(196,245,71,.2); stroke-width:1.1;}
   .hero-map .n{fill:rgba(255,253,247,.28);}
   .hero-map .n-lit{fill:var(--lime);}
   .hero-map .pulse{transform-box:fill-box; transform-origin:center; animation:nodePulse 3.8s var(--ease) infinite;}
-  @keyframes nodePulse{0%,100%{opacity:.55; transform:scale(1);} 50%{opacity:1; transform:scale(1.4);}}
+  @keyframes nodePulse{0%,100%{opacity:.55; transform:scale(1);}50%{opacity:1; transform:scale(1.4);}}
   .hero-stage{
     position:relative; z-index:2; width:100%; max-width:1240px; margin:0 auto;
-    padding:clamp(112px,13vh,150px) clamp(20px,4vw,48px) clamp(30px,4vh,44px);
-    display:grid; grid-template-columns:.94fr 1.06fr; gap:clamp(36px,5vw,72px); align-items:center;
+    padding:clamp(112px,12vh,136px) clamp(20px,4vw,48px) clamp(20px,4vh,34px);
+    display:grid; grid-template-columns:.82fr 1.18fr; gap:clamp(34px,5vw,70px); align-items:center;
   }
+  .hero-stage > *{min-width:0;}
   .hero-announce{
     display:inline-flex; align-items:center; gap:10px; margin-bottom:26px;
-    padding:7px 15px 7px 8px; border-radius:999px; border:1px solid rgba(245,211,72,.38);
-    background:rgba(245,211,72,.08); color:var(--gold); font-size:11.5px; font-weight:1000;
+    padding:7px 15px 7px 8px; border-radius:999px; border:1px solid rgba(255,255,255,.18);
+    background:rgba(8,12,10,.7); color:rgba(255,255,255,.7); font-size:11.5px; font-weight:1000;
     letter-spacing:.12em; text-transform:uppercase; animation:rise .8s var(--ease) both;
     transition:background .2s var(--ease), transform .2s var(--ease);
+    box-shadow:0 14px 40px rgba(0,0,0,.24);
+    -webkit-backdrop-filter:blur(16px); backdrop-filter:blur(16px);
   }
-  .hero-announce:hover{background:rgba(245,211,72,.18); transform:translateY(-1px);}
-  .hero-announce i{font-style:normal; background:var(--lime); color:var(--ink); border-radius:999px; padding:3px 9px; font-size:10px; letter-spacing:.08em;}
+  .hero-announce:hover{background:rgba(255,255,255,.12); transform:translateY(-1px);}
+  .hero-announce i{font-style:normal; background:var(--lime); color:#07110e; border-radius:999px; padding:3px 9px; font-size:10px; letter-spacing:.08em;}
   .hero h1{
-    font-size:clamp(40px,5vw,66px); color:var(--paper); max-width:15ch;
+    font-size:clamp(46px,5.6vw,76px); color:#f8f8f3; max-width:12ch;
     animation:rise .8s .06s var(--ease) both;
   }
   .hero h1 em{font-style:normal; color:var(--lime); display:block;}
   .hero .lead{
-    margin-top:20px; max-width:46ch; font-size:clamp(16px,1.7vw,19px); font-weight:700;
-    line-height:1.45; color:rgba(255,253,247,.78); animation:rise .8s .12s var(--ease) both;
+    margin-top:20px; max-width:42ch; font-size:clamp(17px,1.7vw,20px); font-weight:800;
+    line-height:1.48; color:rgba(255,255,255,.62); animation:rise .8s .12s var(--ease) both;
   }
-  .hero .lead b{color:var(--gold);}
+  .hero .lead b{color:#fff;}
   .hero-actions{display:flex; flex-wrap:wrap; gap:12px; margin-top:32px; animation:rise .8s .18s var(--ease) both;}
-  .hero .btn.primary{background:var(--lime); color:var(--ink); border-color:var(--lime); box-shadow:0 18px 40px rgba(196,245,71,.22);}
-  .hero .btn.primary:hover{background:#d4ff6a;}
-  .hero .btn.soft{background:transparent; color:var(--paper); border-color:rgba(255,253,247,.4);}
-  .hero .btn.soft:hover{background:rgba(255,253,247,.08);}
+  .hero .btn.primary{background:var(--lime); color:#07110e; border-color:var(--lime); box-shadow:0 18px 40px rgba(0,0,0,.35);}
+  .hero .btn.primary:hover{background:#dcff7e; border-color:#dcff7e;}
+  .hero .btn.soft{background:rgba(255,255,255,.06); color:#fff; border-color:rgba(255,255,255,.22);}
+  .hero .btn.soft:hover{background:rgba(255,255,255,.12);}
   .hero-below{
     position:relative; z-index:2; width:100%; max-width:1240px; margin:0 auto;
-    padding:0 clamp(20px,4vw,48px) clamp(26px,4vh,40px);
+    padding:0 clamp(20px,4vw,48px) clamp(18px,3vh,28px);
   }
   .hero-trust{
     display:flex; flex-wrap:wrap; justify-content:center; gap:12px clamp(20px,4vw,56px);
-    padding-top:20px; border-top:1px solid rgba(255,253,247,.14); animation:rise .8s .3s var(--ease) both;
+    padding-top:18px; border-top:1px solid rgba(255,255,255,.12); animation:rise .8s .3s var(--ease) both;
   }
   .trust{display:flex; align-items:baseline; gap:8px;}
-  .trust b{font-family:"Fredoka",sans-serif; font-size:15px; color:var(--lime); letter-spacing:.02em; white-space:nowrap;}
-  .trust span{font-size:12px; font-weight:800; line-height:1.3; color:rgba(255,253,247,.62);}
+  .trust b{font-family:"Fredoka",sans-serif; font-size:15px; color:#fff; letter-spacing:.02em; white-space:nowrap;}
+  .trust span{font-size:12px; font-weight:900; line-height:1.3; color:rgba(255,255,255,.42);}
   .scroll-cue{
     display:flex; justify-content:center; align-items:center; gap:10px; margin-top:26px;
-    font-family:"Caveat",cursive; font-size:23px; color:var(--gold); animation:rise .8s .4s var(--ease) both;
+    font-family:"Caveat",cursive; font-size:23px; color:var(--leaf); animation:rise .8s .4s var(--ease) both;
   }
   .scroll-cue i{font-style:normal; display:inline-block; animation:cueBob 2.2s var(--ease) infinite;}
   @keyframes cueBob{0%,100%{transform:translateY(-2px); opacity:.65;} 50%{transform:translateY(5px); opacity:1;}}
@@ -174,28 +222,220 @@
   .turn i{font-style:normal; display:inline-block; animation:cueBob 2.2s var(--ease) infinite;}
   @keyframes rise{from{opacity:0; transform:translateY(22px);} to{opacity:1; transform:none;}}
 
-  .hero-shot{position:relative; animation:rise .9s .2s var(--ease) both;}
-  .hero-frame{
-    position:relative; border-radius:26px; overflow:hidden; transform:rotate(-2.2deg);
-    border:1px solid rgba(255,253,247,.2);
-    box-shadow:0 50px 120px rgba(0,0,0,.5), 0 0 0 10px rgba(255,253,247,.04);
+  .hero-shot{position:relative; min-height:560px; animation:rise .9s .2s var(--ease) both;}
+  .workspace-board{
+    position:relative; height:560px; border:1px solid rgba(255,255,255,.16); border-radius:34px;
+    background:
+      radial-gradient(circle, rgba(255,255,255,.42) 2.2px, transparent 2.7px),
+      linear-gradient(180deg, rgba(9,12,10,.82), rgba(8,10,9,.7));
+    background-size:54px 54px, auto; background-position:18px 18px, 0 0;
+    box-shadow:0 34px 95px rgba(0,0,0,.38), inset 0 1px 0 rgba(255,255,255,.1);
+    overflow:hidden;
+    cursor:grab;
+    --pan-x:0px; --pan-y:0px;
   }
-  .hero-frame img{width:100%;}
+  .workspace-board:active{cursor:grabbing;}
+  .workspace-board::after{
+    content:none;
+  }
+  .workspace-cluster{
+    position:absolute; inset:26px 24px 34px;
+    transform:translate3d(var(--pan-x), var(--pan-y), 0) scale(var(--desk-zoom,1));
+    transform-origin:center center;
+    transition:transform .55s var(--ease);
+  }
+  .paper-card{
+    position:absolute; background:#fff; border:1px solid rgba(20,58,46,.10); border-radius:15px;
+    padding:7px; box-shadow:0 18px 46px rgba(20,58,46,.12), inset 0 1px 0 rgba(255,255,255,.96);
+    transform:translate3d(var(--drag-x,0px), var(--drag-y,0px), 0) rotate(var(--r,0deg));
+    transition:transform .28s var(--ease), box-shadow .28s var(--ease);
+  }
+  .paper-card:hover{transform:translate3d(var(--drag-x,0px), calc(var(--drag-y,0px) - 5px), 0) rotate(var(--r,0deg)); box-shadow:0 28px 70px rgba(20,58,46,.16);}
+  .paper-card.is-dragging,.portal-card.is-dragging{transition:none; cursor:grabbing; z-index:20;}
+  .workspace-item{cursor:grab; touch-action:none;}
+  .paper-card img{width:100%; height:100%; object-fit:cover; border-radius:10px;}
+  .paper-card .paper-grid{display:grid; grid-template-columns:1fr 1fr; gap:6px; height:100%;}
+  .paper-label{
+    position:absolute; left:0; top:-23px; color:rgba(255,255,255,.62);
+    font-size:12px; font-weight:900; letter-spacing:-.01em;
+  }
+  .paper-main{left:29%; top:24px; width:42%; height:350px; z-index:4; --r:-.4deg;}
+  .paper-main img{object-position:center top;}
+  .paper-left-a{left:2%; top:90px; width:30%; height:132px; z-index:3; --r:-1.2deg;}
+  .paper-left-b{left:6%; top:300px; width:28%; height:124px; z-index:3; --r:1.1deg;}
+  .paper-right-a{right:3%; top:104px; width:26%; height:124px; z-index:3; --r:.8deg;}
+  .paper-right-b{right:7%; top:292px; width:24%; height:130px; z-index:3; --r:-.7deg;}
+  .portal-card{
+    position:absolute; right:2%; bottom:-6px; width:27%; z-index:6; border-radius:18px; overflow:hidden;
+    background:#fff; border:1px solid rgba(20,58,46,.10); padding:7px;
+    box-shadow:0 24px 72px rgba(20,58,46,.18);
+    transform:translate3d(var(--drag-x,0px), var(--drag-y,0px), 0) rotate(1.3deg);
+  }
+  .portal-card img{width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:13px;}
+  .transcribe-card{
+    position:absolute; left:34%; top:266px; z-index:15; width:32%;
+    padding:12px 14px; border-radius:18px; background:rgba(7,17,14,.86); color:#fff;
+    box-shadow:0 18px 52px rgba(0,0,0,.24);
+    -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px);
+  }
+  .transcribe-top{display:flex; align-items:center; justify-content:space-between; gap:10px;}
+  .transcribe-top b{
+    font-size:10px; font-weight:1000; letter-spacing:.14em; text-transform:uppercase;
+    color:rgba(255,255,255,.7);
+  }
+  .transcribe-live{display:flex; align-items:end; gap:3px; height:16px;}
+  .transcribe-live i{
+    width:3px; border-radius:999px; background:var(--lime); opacity:.8;
+    animation:voiceBar 1s var(--ease) infinite;
+  }
+  .transcribe-live i:nth-child(1){height:8px;}
+  .transcribe-live i:nth-child(2){height:14px; animation-delay:.15s;}
+  .transcribe-live i:nth-child(3){height:10px; animation-delay:.3s;}
+  .transcribe-live i:nth-child(4){height:16px; animation-delay:.45s;}
+  @keyframes voiceBar{0%,100%{transform:scaleY(.6); opacity:.55;} 50%{transform:scaleY(1); opacity:1;}}
+  .transcribe-card p{margin-top:8px; font-size:13px; line-height:1.28; font-weight:900; color:rgba(255,255,255,.9);}
+  .transcribe-card span{display:block; margin-top:5px; font-size:11px; font-weight:800; color:rgba(255,255,255,.58);}
+  .add-note{
+    position:absolute; right:24px; top:24px; z-index:18; width:48px; height:48px;
+    display:grid; place-items:center; border:0; border-radius:50%;
+    background:#f7f7f2; color:#07110e; font-size:28px; line-height:1; cursor:pointer;
+    box-shadow:0 16px 40px rgba(0,0,0,.36);
+  }
+  .note-composer{
+    position:absolute; right:24px; top:82px; z-index:19; width:270px;
+    padding:12px; border-radius:18px; background:rgba(255,255,255,.95);
+    border:1px solid rgba(20,58,46,.12); box-shadow:0 22px 58px rgba(20,58,46,.16);
+    opacity:0; transform:translateY(-8px) scale(.98); pointer-events:none;
+    transition:opacity .22s var(--ease), transform .22s var(--ease);
+  }
+  .note-composer.is-open{opacity:1; transform:none; pointer-events:auto;}
+  .note-composer label{
+    display:block; margin-bottom:8px; font-size:10px; font-weight:1000; letter-spacing:.14em;
+    text-transform:uppercase; color:rgba(20,58,46,.48);
+  }
+  .note-composer textarea{
+    width:100%; min-height:92px; resize:none; border:1px solid rgba(20,58,46,.12);
+    border-radius:14px; padding:11px 12px; outline:0; font:inherit; font-size:13px;
+    font-weight:800; color:var(--ink); background:#fffdf9;
+  }
+  .note-composer button{
+    margin-top:9px; width:100%; min-height:40px; border:0; border-radius:13px;
+    background:#07110e; color:#fff; font-size:11px; font-weight:1000;
+    letter-spacing:.08em; text-transform:uppercase; cursor:pointer;
+  }
+  .note-status{margin-top:7px; font-size:11px; font-weight:900; color:rgba(20,58,46,.54);}
+  .hub-hit{
+    position:absolute; z-index:12; border:0; background:transparent; border-radius:18px; cursor:pointer;
+    color:var(--ink); font:inherit; padding:0; -webkit-tap-highlight-color:transparent;
+  }
+  .hub-hit::before{
+    content:""; position:absolute; inset:-5px; border-radius:inherit;
+    border:1.5px solid rgba(36,122,77,.0); background:rgba(255,255,255,0);
+    transition:background .2s var(--ease), border-color .2s var(--ease), box-shadow .2s var(--ease);
+  }
+  .hub-hit::after{
+    content:attr(data-label); position:absolute; left:50%; top:-28px; transform:translateX(-50%) translateY(4px);
+    opacity:0; pointer-events:none; white-space:nowrap;
+    padding:5px 9px; border-radius:999px; background:#07110e; color:#fff;
+    font-size:10px; font-weight:1000; letter-spacing:.08em; text-transform:uppercase;
+    transition:opacity .2s var(--ease), transform .2s var(--ease);
+  }
+  .hub-hit:hover::before,.hub-hit.is-active::before{
+    background:rgba(196,245,71,.13); border-color:rgba(36,122,77,.34);
+    box-shadow:0 0 0 6px rgba(196,245,71,.10);
+  }
+  .hub-hit:hover::after,.hub-hit.is-active::after{opacity:1; transform:translateX(-50%) translateY(0);}
+  .hub-search{left:30%; top:22px; width:41%; height:356px;}
+  .hub-memo{left:2%; top:86px; width:30%; height:140px;}
+  .hub-binder{right:0; top:92px; width:30%; height:140px;}
+  .hub-connect{right:0; bottom:-8px; width:30%; height:150px;}
+  .hub-panel{
+    position:absolute; right:36px; bottom:138px; z-index:14;
+    width:min(390px, calc(100% - 72px));
+    display:grid; gap:14px; align-items:center;
+    min-height:0; padding:16px; border-radius:20px;
+    background:rgba(255,255,255,.94); border:1px solid rgba(20,58,46,.11);
+    box-shadow:0 22px 58px rgba(20,58,46,.14);
+    -webkit-backdrop-filter:blur(16px); backdrop-filter:blur(16px);
+    opacity:0; transform:translateY(12px) scale(.98); pointer-events:none;
+    transition:opacity .24s var(--ease), transform .24s var(--ease);
+  }
+  .hub-panel.is-open{opacity:1; transform:none; pointer-events:auto;}
+  .hub-panel[data-mode="memo"]{left:36px; right:auto;}
+  .hub-panel[data-mode="binder"]{right:28px; bottom:170px;}
+  .hub-panel[data-mode="connectors"]{right:30px; bottom:140px;}
+  .hub-panel-kicker{
+    font-size:10px; font-weight:1000; letter-spacing:.14em; text-transform:uppercase;
+    color:rgba(20,58,46,.48); margin-bottom:5px;
+  }
+  .hub-panel-title{font-size:20px; line-height:1.08; font-weight:1000; letter-spacing:-.035em; color:#07110e;}
+  .hub-panel-copy{margin-top:5px; font-size:12px; line-height:1.35; font-weight:800; color:rgba(20,58,46,.58);}
+  .hub-panel-actions{display:flex; gap:8px; align-items:center;}
+  .hub-panel-actions button,.hub-panel-actions a{
+    border:1px solid rgba(20,58,46,.12); background:#fff; color:var(--ink);
+    min-height:42px; padding:0 14px; border-radius:14px; font-size:11px; font-weight:1000;
+    letter-spacing:.08em; text-transform:uppercase; cursor:pointer; white-space:nowrap;
+  }
+  .hub-panel-actions .primary{background:#07110e; color:#fff; border-color:#07110e;}
+  .pinned-note{
+    position:absolute; left:7%; top:252px; z-index:13; width:220px;
+    padding:13px 14px 12px; border-radius:16px; background:#fffdf0;
+    border:1px solid rgba(211,169,0,.22); box-shadow:0 18px 46px rgba(20,58,46,.13);
+    opacity:0; transform:translateY(10px) rotate(-1.2deg); pointer-events:none;
+    transition:opacity .24s var(--ease), transform .24s var(--ease);
+  }
+  .pinned-note.is-on{opacity:1; transform:translateY(0) rotate(-1.2deg);}
+  .pinned-note b{
+    display:block; margin-bottom:5px; font-size:10px; font-weight:1000;
+    letter-spacing:.14em; text-transform:uppercase; color:var(--gold-deep);
+  }
+  .pinned-note span{display:block; font-size:13px; line-height:1.25; font-weight:900; color:var(--ink);}
+  .hub-searchbar{
+    position:absolute; left:12%; right:12%; bottom:136px; z-index:15;
+    display:grid; grid-template-columns:auto 1fr auto; gap:10px; align-items:center;
+    min-height:56px; padding:8px 9px 8px 15px; border-radius:18px;
+    background:#fff; border:1px solid rgba(20,58,46,.12);
+    box-shadow:0 22px 58px rgba(20,58,46,.15);
+    opacity:0; transform:translateY(10px); pointer-events:none;
+    transition:opacity .24s var(--ease), transform .24s var(--ease);
+  }
+  .hub-searchbar.is-open{opacity:1; transform:none; pointer-events:auto;}
+  .hub-searchbar span{font-size:18px;}
+  .hub-searchbar input{
+    width:100%; border:0; outline:0; background:transparent; color:var(--ink);
+    font:inherit; font-size:14px; font-weight:800;
+  }
+  .hub-searchbar button{
+    border:0; background:#07110e; color:#fff; border-radius:13px; min-height:40px;
+    padding:0 14px; font-size:11px; font-weight:1000; letter-spacing:.08em; text-transform:uppercase;
+  }
+  .workspace-input{
+    position:absolute; left:7%; right:7%; bottom:22px; z-index:7;
+    min-height:108px; display:grid; grid-template-columns:1fr auto; align-items:end; gap:18px;
+    padding:25px 28px; border-radius:30px;
+    background:
+      radial-gradient(circle, rgba(255,255,255,.16) 1.7px, transparent 2.2px),
+      #050505;
+    background-size:34px 34px, auto; background-position:12px 10px, 0 0;
+    color:#fff;
+    box-shadow:0 22px 65px rgba(0,0,0,.22);
+    transition:opacity .24s var(--ease), transform .24s var(--ease);
+  }
+  .workspace-board[data-mode] .workspace-input{opacity:.92; transform:translateY(4px);}
+  .workspace-input p{
+    font-size:clamp(22px,2.7vw,35px); line-height:1.06; font-weight:1000; letter-spacing:-.04em; color:rgba(255,255,255,.72);
+  }
+  .workspace-input p::before{content:""; display:inline-block; width:3px; height:.92em; margin-right:14px; border-radius:4px; background:#fff; vertical-align:-.12em;}
+  .workspace-input .try{display:inline-flex; align-items:center; justify-content:center; min-height:58px; padding:0 26px; border-radius:18px; background:#fff; color:#0b0f0d; font-size:16px; font-weight:1000; white-space:nowrap;}
+  .motion-hint{
+    position:absolute; left:18px; bottom:18px; display:none; align-items:center; gap:7px; z-index:5;
+    font-size:11px; font-weight:1000; letter-spacing:.08em; text-transform:uppercase; color:rgba(20,58,46,.42);
+  }
+  .motion-hint span{width:34px; height:34px; display:grid; place-items:center; border-radius:999px; background:rgba(255,255,255,.72); border:1px solid rgba(20,58,46,.11);}
   .crop-demo{display:block; margin-top:-5.5%;} /* trims the app header + demo-mode banner off captures */
-  .hero-chip{
-    position:absolute; left:-14px; bottom:-20px; display:flex; align-items:center; gap:10px;
-    background:var(--paper); border:1.5px solid var(--gold-deep); border-radius:16px;
-    padding:13px 16px; box-shadow:0 22px 60px rgba(0,0,0,.45); transform:rotate(1.6deg);
-  }
-  .hero-chip .raw{font-family:ui-monospace,Menlo,monospace; font-size:12px; color:#9a9482; text-decoration:line-through; white-space:nowrap;}
-  .hero-chip .arrow{color:var(--leaf); font-weight:900;}
-  .hero-chip .filed{font-size:13px; font-weight:900; color:var(--ink); white-space:nowrap;}
-  .hero-chip .filed small{display:block; font-weight:800; color:var(--leaf); font-size:11px; margin-top:1px;}
-  .hero-chip.swap{animation:chipIn .5s var(--ease);}
-  @keyframes chipIn{from{opacity:0; transform:rotate(1.6deg) translateY(12px);} to{opacity:1; transform:rotate(1.6deg) translateY(0);}}
   .hero-note{
     margin:0 0 12px 4px; font-family:"Caveat",cursive; font-size:24px;
-    color:var(--gold); transform:rotate(-1.5deg); display:inline-block;
+    color:rgba(255,255,255,.58); transform:rotate(-1.5deg); display:inline-block;
   }
 
   /* ---------- Problem ---------- */
@@ -419,7 +659,11 @@
   /* Tutors — one split stage, equal panes, no awkward overlap */
   .tutors{background:linear-gradient(180deg, var(--blue), var(--cream));}
   .tutor-head{margin-bottom:36px;}
-  .tutor-head .h2{max-width:18ch;}
+  .tutor-head .h2{max-width:22ch;}
+  .tutor-lede{
+    margin:14px 0 0; max-width:54ch; font-size:17px; font-weight:700;
+    line-height:1.5; color:var(--muted);
+  }
   .tutor-head-row{
     margin-top:22px; display:grid;
     grid-template-columns:minmax(0,1fr) minmax(0,1fr);
@@ -566,6 +810,19 @@
 
   /* Responsive */
   /* ---------- Drop demo ---------- */
+  .dd-live{
+    display:flex; flex-direction:column; gap:4px; align-items:flex-start;
+    margin:0 0 14px; padding:16px 16px; border-radius:18px; cursor:pointer;
+    border:1.5px dashed rgba(36,122,77,.35); background:rgba(196,245,71,.12);
+    transition:background .2s var(--ease), border-color .2s var(--ease);
+  }
+  .dd-live:hover,.dd-live.is-drag{
+    background:rgba(196,245,71,.22); border-color:var(--leaf);
+  }
+  .dd-live strong{font-size:14px; font-weight:900; color:var(--ink);}
+  .dd-live span{font-size:12px; font-weight:700; color:var(--muted);}
+  .dd-live.is-busy{opacity:.7; pointer-events:none;}
+  #ddLiveBadge{color:var(--leaf); font-weight:900;}
   .dropdemo{
     margin-top:56px; display:grid; grid-template-columns:1.15fr .85fr;
     gap:0; border-radius:32px; border:1px solid var(--line); background:var(--paper);
@@ -669,7 +926,7 @@
   }
   .makers-schools{
     list-style:none; display:flex; flex-wrap:wrap; align-items:center; justify-content:center;
-    gap:22px 36px; margin:0 auto; padding:0; max-width:860px;
+    gap:28px 56px; margin:0 auto; padding:0; max-width:960px;
   }
   .makers-schools li{
     display:flex; align-items:center; justify-content:center;
@@ -690,9 +947,9 @@
   }
   .makers-schools img{display:block; height:44px; width:auto; max-width:160px; object-fit:contain;}
   .makers-schools .mac img{height:32px; max-width:180px;}
-  .makers-schools .unc img{height:52px; max-width:56px;}
-  .makers-schools .oxf img{height:54px; max-width:56px;}
-  .makers-schools .ken img{height:54px; max-width:52px;}
+  .makers-schools .unc img{height:48px; max-width:140px;}
+  .makers-schools .oxf img{height:58px; max-width:200px;}
+  .makers-schools .ken img{height:50px; max-width:52px;}
   .makers-schools .uwc img{height:48px; max-width:72px;}
   .maker-note .btn{margin-top:20px;}
   .note-schools{display:none;}
@@ -705,16 +962,16 @@
   }
   .intro-schools span{
     font-size:10px; font-weight:1000; letter-spacing:.14em; text-transform:uppercase;
-    color:rgba(255,253,247,.45); width:100%; text-align:center;
+    color:rgba(20,58,46,.42); width:100%; text-align:center;
   }
   .intro-schools ul{
     list-style:none; display:flex; flex-wrap:wrap; align-items:center; justify-content:center;
-    gap:22px 34px; margin:0; padding:8px 0 0;
+    gap:28px 56px; margin:0; padding:8px 0 0;
   }
   .intro-schools li{
     display:flex; align-items:center; justify-content:center;
     background:none; border:0; padding:0; box-shadow:none; border-radius:0;
-    filter:drop-shadow(0 10px 18px rgba(0,0,0,.35));
+    filter:drop-shadow(0 10px 18px rgba(20,58,46,.12));
     animation:logoFloat 3.8s var(--ease) infinite;
     transition:transform .28s var(--ease), filter .28s var(--ease);
     cursor:default;
@@ -726,18 +983,18 @@
   .intro-schools li:nth-child(5){--tilt:-2deg; animation-delay:.8s;}
   .intro-schools li:hover{
     transform:translateY(-8px) rotate(var(--tilt,0deg)) scale(1.16);
-    filter:drop-shadow(0 18px 28px rgba(196,245,71,.28)) drop-shadow(0 10px 20px rgba(0,0,0,.4));
+    filter:drop-shadow(0 18px 28px rgba(36,122,77,.16));
     animation:none;
   }
   .intro-schools ul img{
     display:block; height:42px; width:auto; max-width:160px; object-fit:contain;
-    filter:brightness(0) invert(1) opacity(.96); opacity:1;
+    filter:none; opacity:.98;
   }
-  .intro-schools .mac img{height:30px; max-width:180px;}
-  .intro-schools .unc img{height:50px; max-width:54px;}
-  .intro-schools .oxf img{height:52px; max-width:54px;}
-  .intro-schools .ken img{height:52px; max-width:50px;}
-  .intro-schools .uwc img{height:46px; max-width:70px; filter:none; opacity:.98;}
+  .intro-schools .mac img{height:30px; max-width:180px; filter:none;}
+  .intro-schools .unc img{height:48px; max-width:140px;}
+  .intro-schools .oxf img{height:58px; max-width:200px;}
+  .intro-schools .ken img{height:48px; max-width:52px;}
+  .intro-schools .uwc img{height:46px; max-width:70px;}
 
   /* 3D social dock — big, glowing, shuffled */
   .intro-social{
@@ -797,6 +1054,51 @@
   }
   .cta .cta-row .btn[aria-selected="false"]{opacity:.65;}
 
+  /* Memorable landscape product shots (no portrait crops on the landing) */
+  .shot-rail{
+    margin-top:36px; display:grid; gap:22px;
+  }
+  .shot-wide{
+    position:relative; border-radius:28px; overflow:hidden;
+    border:1px solid var(--line); background:#0a1612;
+    box-shadow:0 28px 70px rgba(20,58,46,.14);
+  }
+  .shot-wide img{display:block; width:100%; height:auto; aspect-ratio:16/10; object-fit:cover; object-position:center top;}
+  .shot-wide .call{
+    position:absolute; left:14px; bottom:14px; right:14px;
+    display:flex; flex-wrap:wrap; gap:8px; pointer-events:none;
+  }
+  .shot-wide .call span{
+    background:rgba(255,253,247,.94); color:var(--ink); border:1px solid rgba(196,245,71,.55);
+    border-radius:999px; padding:7px 12px; font-size:12px; font-weight:900;
+    box-shadow:0 10px 28px rgba(0,0,0,.18);
+  }
+  .learn-one{
+    margin-top:28px; display:grid; grid-template-columns:1.15fr .85fr; gap:18px; align-items:stretch;
+  }
+  .learn-one .panel{
+    border-radius:28px; border:1px solid var(--line); padding:26px 24px;
+    background:linear-gradient(160deg, var(--mint), var(--sand));
+    box-shadow:0 18px 46px rgba(20,58,46,.08);
+  }
+  .learn-one .panel h3{font-size:28px; letter-spacing:-.03em; margin:0 0 8px;}
+  .learn-one .panel p{font-size:15.5px; font-weight:700; color:var(--muted); line-height:1.45; margin:0 0 14px;}
+  .learn-one .rails{display:grid; gap:10px; margin:0; padding:0; list-style:none;}
+  .learn-one .rails li{
+    background:rgba(255,253,247,.78); border:1px solid var(--line); border-radius:16px;
+    padding:12px 14px; font-weight:800; color:var(--ink);
+  }
+  .learn-one .rails li strong{display:block; font-size:14px; margin-bottom:2px;}
+  .learn-one .rails li span{display:block; font-size:12.5px; font-weight:700; color:var(--muted);}
+  .learn-one .shot{
+    border-radius:28px; overflow:hidden; border:1px solid var(--line); background:#0a1612;
+    box-shadow:0 22px 56px rgba(20,58,46,.12);
+  }
+  .learn-one .shot img{display:block; width:100%; height:100%; min-height:280px; object-fit:cover; object-position:center top;}
+  @media(max-width:900px){
+    .learn-one{grid-template-columns:1fr;}
+  }
+
   /* iPad / tablet (portrait + landscape, Mini through Pro) */
   @media(max-width:1180px) and (min-width:641px){
     .wrap{padding:0 clamp(28px,3.8vw,44px);}
@@ -816,7 +1118,7 @@
     .stepcard{min-height:270px; padding:16px 14px 12px;}
     .stepcard h3{font-size:22px;}
     .step-art{min-height:170px;}
-    .tutor-head .h2{max-width:16ch;}
+    .tutor-head .h2{max-width:20ch;}
     .tutor-head-row{gap:18px;}
     .tutor-quote{padding:18px 20px 16px; max-width:100%; justify-self:stretch;}
     .tutor-quote p{font-size:clamp(17px,1.9vw,21px);}
@@ -834,8 +1136,10 @@
   }
   @media(max-width:1020px){
     .hero-stage{grid-template-columns:1fr; padding-top:120px; gap:36px;}
-    .hero-shot{max-width:720px; margin:0 auto;}
+    .hero-shot{max-width:760px; width:100%; margin:0 auto;}
     .hero h1{max-width:16ch;}
+    .workspace-board{height:540px;}
+    .workspace-cluster{transform:translate3d(var(--pan-x), var(--pan-y), 0) scale(1.04);}
     .dropdemo{grid-template-columns:1fr;}
     .dd-left{border-right:none; border-bottom:1px solid var(--line);}
     .dd-pdfs{grid-template-columns:repeat(4,1fr);}
@@ -866,10 +1170,12 @@
     .nav{
       top:max(8px, env(safe-area-inset-top, 0px));
       left:max(8px, env(safe-area-inset-left, 0px));
-      right:max(8px, env(safe-area-inset-right, 0px));
+      right:auto;
+      width:calc(100vw - 16px);
       padding:10px 10px 10px 16px;
+      display:flex; justify-content:flex-start;
     }
-    .nav-links a:not(.join){display:none;}
+    .nav-links{display:none;}
     .brand{font-size:18px;}
     .chaos-grid,.steps,.caps-grid{grid-template-columns:1fr;}
     .cap.featured{grid-column:span 1; grid-template-columns:1fr;}
@@ -883,21 +1189,68 @@
     .tm-search{flex-wrap:wrap;}
     .tm-search button{width:100%; min-height:44px;}
     .tm-book{min-height:44px; display:flex; align-items:center; justify-content:center;}
-    .hero-chip{left:0; transform:scale(.92) rotate(1.6deg);}
+    .hero{min-height:auto;}
+    .hero-stage{padding:104px 20px 18px; gap:24px; overflow:hidden;}
+    .hero h1{font-size:clamp(40px,11vw,50px); max-width:9ch; overflow-wrap:normal;}
+    .hero .lead{font-size:16px; max-width:31ch;}
+    .hero-actions{gap:10px;}
+    .hero-actions .btn{min-height:50px; padding:0 18px; font-size:11px; border-radius:18px;}
+    .hero-shot{min-height:430px; width:100%; max-width:100%;}
+    .hero-note{font-size:21px; margin-left:2px;}
+  .workspace-board{height:430px; border-radius:28px; background-size:42px 42px, auto; background-position:12px 12px, 0 0;}
+    .workspace-board::after{left:18px; right:18px; bottom:-72px; border-radius:28px 28px 0 0;}
+    .workspace-cluster{inset:22px 16px 100px; transform:translate3d(var(--pan-x), var(--pan-y), 0) scale(1.18);}
+    .paper-label{font-size:10px; top:-19px;}
+    .paper-card{padding:5px; border-radius:12px;}
+    .paper-card img{border-radius:8px;}
+    .paper-main{left:20%; top:26px; width:58%; height:242px;}
+    .paper-left-a{left:-9%; top:96px; width:38%; height:94px;}
+    .paper-left-b{left:-2%; top:254px; width:36%; height:86px;}
+    .paper-right-a{right:-8%; top:102px; width:35%; height:92px;}
+    .paper-right-b{right:-3%; top:250px; width:32%; height:92px;}
+    .portal-card{right:0; bottom:2px; width:31%; padding:5px; border-radius:14px;}
+    .hub-search{left:20%; top:24px; width:58%; height:248px;}
+    .hub-memo{left:-9%; top:94px; width:39%; height:100px;}
+    .hub-binder{right:-9%; top:98px; width:38%; height:100px;}
+    .hub-connect{right:-2%; bottom:0; width:34%; height:104px;}
+    .hub-hit::after{display:none;}
+    .hub-panel{
+      left:16px !important; right:16px !important; bottom:118px; width:auto;
+      grid-template-columns:1fr; gap:12px; min-height:0; padding:15px 16px; border-radius:20px;
+    }
+    .hub-panel-title{font-size:19px;}
+    .hub-panel-copy{font-size:12px;}
+    .hub-panel-actions{overflow:auto; padding-bottom:2px;}
+    .hub-panel-actions button,.hub-panel-actions a{min-height:38px; padding:0 12px;}
+    .hub-searchbar{
+      left:16px; right:16px; bottom:126px; min-height:52px;
+      grid-template-columns:auto 1fr; padding:8px 10px 8px 14px;
+    }
+    .hub-searchbar button{grid-column:1 / -1; min-height:36px;}
+    .pinned-note{left:8%; top:226px; width:178px; padding:11px 12px;}
+    .pinned-note span{font-size:12px;}
+    .workspace-input{left:5%; right:5%; bottom:18px; min-height:90px; grid-template-columns:1fr; align-items:start; gap:12px; padding:19px 20px; border-radius:24px;}
+    .workspace-input p{font-size:clamp(21px,7vw,28px);}
+    .workspace-input .try{min-height:48px; width:max-content; padding:0 20px; border-radius:15px;}
+    .motion-hint{display:none;}
     .story-polaroid{left:-8px; width:140px;}
     .h2{font-size:34px;}
     .scan-point{padding:12px 14px;}
     .scan-point p{font-size:14px;}
-    .intro-schools ul{gap:16px 22px;}
+    .intro-schools ul{gap:22px 40px;}
     .intro-schools ul img{height:34px;}
     .intro-schools .mac img{height:24px;}
-    .intro-schools .unc img,.intro-schools .oxf img,.intro-schools .ken img{height:40px;}
+    .intro-schools .unc img{height:40px; max-width:120px;}
+    .intro-schools .oxf img{height:48px; max-width:180px;}
+    .intro-schools .ken img{height:40px;}
     .intro-schools .uwc img{height:36px;}
     .intro-social a,.intro-social img{width:64px; height:64px;}
-    .makers-schools{gap:16px 22px;}
+    .makers-schools{gap:22px 40px;}
     .makers-schools img{height:36px;}
     .makers-schools .mac img{height:26px;}
-    .makers-schools .unc img,.makers-schools .oxf img,.makers-schools .ken img{height:42px;}
+    .makers-schools .unc img{height:40px; max-width:120px;}
+    .makers-schools .oxf img{height:48px; max-width:180px;}
+    .makers-schools .ken img{height:42px;}
     .makers-schools .uwc img{height:38px;}
   }
   /* Touch devices (iPad + iPhone): kill sticky-hover lifts */
@@ -911,20 +1264,352 @@
     .cap:hover{box-shadow:none;}
     .tm-card:hover{border-color:rgba(20,58,46,.1);}
   }
+
+  /* ---------- Story-led marketing experience ---------- */
+  .story-led .problem,
+  .story-led .caps,
+  .story-led .how,
+  .story-led .story,
+  .story-led .tutors,
+  .story-led .act,
+  .story-led .vision,
+  .story-led .makers,
+  .story-led .faq{display:none;}
+
+  .story-led .hero{min-height:min(90svh,840px);}
+  .story-led .hero-stage{grid-template-columns:1fr 1.15fr; gap:clamp(32px,4vw,52px);}
+  .story-led .hero h1{font-size:clamp(46px,3.5vw,50px); max-width:none; letter-spacing:0; line-height:.98;}
+  .story-led .hero-first-line{display:block; white-space:nowrap;}
+  .story-led .hero .lead{max-width:34ch; margin-top:16px;}
+  .story-led .workspace-board{
+    height:540px; border-color:rgba(20,58,46,.13);
+    background:
+      radial-gradient(circle,rgba(20,58,46,.2) 2px,transparent 2.6px),
+      linear-gradient(180deg,rgba(255,255,255,.98),rgba(247,249,245,.96)),
+      #fbfcf9;
+    background-size:54px 54px,auto,auto;
+    background-position:18px 18px,center,center;
+    box-shadow:0 34px 95px rgba(0,0,0,.22),inset 0 1px 0 #fff;
+  }
+  .story-led .workspace-cluster{inset:30px 26px 34px; transform-origin:50% 48%;}
+  .story-led .paper-main{
+    appearance:none; left:27.5%; top:34px; width:45%; height:354px; z-index:7; --r:-.25deg;
+  }
+  .story-led .paper-main img{object-position:center;}
+  .story-led .memo-preview{
+    left:2%; top:168px; width:27%; min-height:146px; z-index:5; padding:18px 17px;
+    background:#fffdf0; --r:-1.2deg;
+  }
+  .story-led .memo-preview::before{
+    content:""; position:absolute; top:13px; left:50%; width:46px; height:8px;
+    transform:translateX(-50%) rotate(-2deg); background:rgba(196,245,71,.56);
+  }
+  .story-led .memo-preview b{
+    display:block; margin-top:14px; color:rgba(20,58,46,.48); font-size:10px;
+    font-weight:1000; letter-spacing:.14em; text-transform:uppercase;
+  }
+  .story-led .memo-preview [data-note-copy]{
+    display:block; margin-top:9px; color:#143a2e; font-family:"Fredoka",sans-serif;
+    font-size:17px; line-height:1.25; font-weight:600;
+  }
+  .story-led .act-preview{
+    right:1%; top:156px; width:30%; height:184px; z-index:5; --r:.8deg; padding:7px;
+  }
+  .story-led .act-preview-grid{display:grid; grid-template-columns:1.35fr .65fr; gap:5px; height:138px; overflow:hidden; border-radius:10px; background:#0b2119;}
+  .story-led .act-preview-grid img{border-radius:0; object-fit:cover; object-position:left top;}
+  .story-led .act-preview > span{
+    display:block; padding:7px 3px 1px; color:#143a2e; font-size:10px; font-weight:1000;
+    letter-spacing:.06em; text-transform:uppercase;
+  }
+  .story-led .paper-label{color:rgba(20,58,46,.58); text-shadow:0 1px 0 #fff;}
+  .desk-tools{
+    position:absolute; z-index:24; right:20px; top:20px; display:flex; align-items:center; gap:9px;
+  }
+  .desk-tools .add-note{position:static; width:46px; height:46px; box-shadow:0 14px 34px rgba(0,0,0,.38);}
+  .desk-zoom{
+    display:grid; grid-template-columns:1fr 1fr; overflow:hidden; border:1px solid rgba(20,58,46,.14);
+    border-radius:14px; background:rgba(255,255,255,.9); -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px);
+    box-shadow:0 12px 28px rgba(20,58,46,.1);
+  }
+  .desk-zoom button{
+    width:38px; height:38px; border:0; border-right:1px solid rgba(20,58,46,.12);
+    background:transparent; color:#143a2e; font-size:19px; font-weight:900; cursor:pointer;
+  }
+  .desk-zoom button:last-child{border-right:0;}
+  .desk-zoom button:hover{background:rgba(20,58,46,.07);}
+  .desk-zoom button:disabled{opacity:.3; cursor:default; background:transparent;}
+  .desk-tools .add-note{background:#07110e; color:#fff;}
+  .desk-prompt{
+    position:absolute; z-index:22; left:50%; bottom:18px; width:min(460px,calc(100% - 40px));
+    min-height:58px; padding:7px 7px 7px 17px; display:grid; grid-template-columns:1fr auto; gap:8px;
+    align-items:center; border:1px solid rgba(255,255,255,.16); border-radius:18px;
+    background:rgba(5,10,7,.9); box-shadow:0 24px 68px rgba(0,0,0,.44);
+    -webkit-backdrop-filter:blur(18px); backdrop-filter:blur(18px);
+    opacity:0; transform:translate(-50%,10px); pointer-events:none;
+    transition:opacity .22s var(--ease),transform .22s var(--ease);
+  }
+  .desk-prompt.is-open{opacity:1; transform:translate(-50%,0); pointer-events:auto;}
+  .desk-prompt input{min-width:0; border:0; outline:0; background:transparent; color:#fff; font-size:14px; font-weight:900;}
+  .desk-prompt input::placeholder{color:rgba(255,255,255,.44);}
+  .desk-prompt button{width:44px; height:44px; border:0; border-radius:13px; background:var(--lime); color:#07110e; font-size:19px; cursor:pointer;}
+  .story-led .note-composer{top:74px; right:20px;}
+  .story-led .user-note{
+    position:absolute; width:190px; min-height:112px; z-index:16; padding:17px 16px;
+    border:1px solid rgba(211,169,0,.2); border-radius:15px; background:#fffdf0;
+    box-shadow:0 18px 46px rgba(20,58,46,.14); cursor:grab;
+  }
+  .story-led .user-note b{display:block; color:rgba(20,58,46,.45); font-size:9px; font-weight:1000; letter-spacing:.14em; text-transform:uppercase;}
+  .story-led .user-note span{display:block; margin-top:8px; color:#143a2e; font-family:"Fredoka",sans-serif; font-size:15px; line-height:1.2; overflow-wrap:anywhere;}
+
+  .credibility{
+    padding:42px 0 64px; background:#07110e; color:#fff;
+    border-top:1px solid rgba(255,255,255,.1);
+  }
+  .cred-stats{display:grid; grid-template-columns:repeat(3,1fr); gap:34px; text-align:center;}
+  .cred-stats > div{min-width:0;}
+  .cred-stats strong{display:block; color:var(--lime); font-family:"Fredoka",sans-serif; font-size:22px; letter-spacing:0;}
+  .cred-stats span{display:block; margin-top:5px; color:rgba(255,255,255,.5); font-size:11px; font-weight:900;}
+  .credibility .intro-schools{margin-top:36px; padding-top:28px; border-color:rgba(255,255,255,.1);}
+  .credibility .intro-schools > span{color:rgba(255,255,255,.48);}
+  .credibility .intro-schools li{filter:drop-shadow(0 10px 18px rgba(0,0,0,.24));}
+  .credibility .intro-schools .mac img{filter:brightness(0) invert(1);}
+
+  .story-beat{min-height:min(92svh,900px); display:flex; align-items:center; overflow:hidden;}
+  .story-beat .kicker,.mission-story .kicker{margin-bottom:18px;}
+  .story-beat h2,.mission-story h2{
+    max-width:940px; font-family:"Fredoka",sans-serif; font-size:68px; line-height:1.02;
+    letter-spacing:0; color:#102f27;
+  }
+  .story-beat h2 span,.mission-story h2 span{color:var(--leaf);}
+  .story-intro{text-align:center;}
+  .story-intro .kicker{justify-content:center;}
+  .story-intro h2{margin:0 auto;}
+  .story-intro p{margin-top:18px; color:rgba(20,58,46,.58); font-size:20px; line-height:1.4; font-weight:900;}
+
+  .learns-you{min-height:auto; padding:clamp(92px,8vw,124px) 0; background:#fffdf8;}
+  .learns-you .story-intro h2{max-width:1120px;}
+  .learning-trace{position:relative; height:310px; margin-top:52px; overflow:visible;}
+  .trace-route{position:absolute; inset:0; width:100%; height:100%; overflow:visible;}
+  .trace-guide,.trace-progress{fill:none; stroke-linecap:round; vector-effect:non-scaling-stroke;}
+  .trace-guide{stroke:rgba(20,58,46,.09); stroke-width:8;}
+  .trace-progress{stroke:url(#traceGradient); stroke-width:3; stroke-dasharray:1; stroke-dashoffset:1;}
+  .learning-trace.in .trace-progress{animation:traceDraw 1.3s .18s var(--ease) forwards;}
+  @keyframes traceDraw{to{stroke-dashoffset:0;}}
+  .trace-point{position:absolute; width:230px; padding-top:28px;}
+  .trace-point:nth-of-type(1){left:4%; top:66%; text-align:left;}
+  .trace-point:nth-of-type(2){left:34%; top:26%; transform:translateX(-50%); text-align:center;}
+  .trace-point:nth-of-type(3){left:62.5%; top:66%; transform:translateX(-50%); text-align:center;}
+  .trace-point:nth-of-type(4){right:4%; top:24%; text-align:right;}
+  .trace-point i{
+    position:absolute; z-index:2; top:-8px; left:50%; width:16px; height:16px; transform:translateX(-50%);
+    border:4px solid #fffdf8; border-radius:50%; background:#87ad9f;
+    box-shadow:0 0 0 1px rgba(20,58,46,.16),0 8px 22px rgba(20,58,46,.12);
+  }
+  .trace-point:nth-of-type(1) i{left:0; transform:none;}
+  .trace-point:nth-of-type(4) i{left:auto; right:0; transform:none;}
+  .trace-point.is-learned i{
+    width:24px; height:24px; top:-12px; background:var(--lime);
+    box-shadow:0 0 0 1px rgba(36,122,77,.15),0 0 0 10px rgba(196,245,71,.15),0 16px 32px rgba(95,183,121,.2);
+  }
+  .trace-point small{display:block; color:rgba(20,58,46,.42); font-size:9px; font-weight:1000; letter-spacing:.15em;}
+  .trace-point b{display:block; margin-top:7px; color:#143a2e; font-size:16px; line-height:1.28;}
+  .trace-point.is-learned small{color:var(--leaf);}
+  .privacy-line{margin-top:2px; text-align:center; color:rgba(20,58,46,.4); font-size:11px; font-weight:900;}
+
+  .across{background:#eef5f6;}
+  .across-grid{display:grid; grid-template-columns:.85fr 1.15fr; align-items:center; gap:70px;}
+  .across-copy h2{font-size:64px; max-width:9ch;}
+  .across-copy p{margin-top:22px; max-width:42ch; color:rgba(20,58,46,.64); font-size:18px; line-height:1.55; font-weight:800;}
+  .across-copy .engine-note{font-family:"DM Serif Display",Georgia,serif; color:var(--leaf); font-size:20px; font-style:italic;}
+  .domain-map{position:relative; min-height:550px;}
+  .domain-map svg{position:absolute; inset:0; width:100%; height:100%; overflow:visible;}
+  .domain-map path{fill:none; stroke:rgba(36,122,77,.24); stroke-width:2; stroke-dasharray:4 8;}
+  .domain-core{
+    position:absolute; z-index:2; left:50%; top:50%; width:210px; height:210px; transform:translate(-50%,-50%);
+    display:grid; place-content:center; text-align:center; border:1px solid rgba(20,58,46,.12); border-radius:50%;
+    background:#fff; box-shadow:0 28px 80px rgba(20,58,46,.12);
+  }
+  .domain-core small{color:rgba(20,58,46,.42); font-size:9px; font-weight:1000; letter-spacing:.16em;}
+  .domain-core b{display:block; margin-top:9px; color:#143a2e; font-family:"Fredoka",sans-serif; font-size:20px; line-height:1.2;}
+  .domain{
+    position:absolute; z-index:3; min-width:106px; padding:12px 15px; text-align:center;
+    border:1px solid rgba(20,58,46,.12); border-radius:8px; background:#fff;
+    color:#143a2e; font-size:12px; font-weight:1000; box-shadow:0 16px 42px rgba(20,58,46,.1);
+  }
+  .subject-math{left:0; top:9%; background:#fff5df;}
+  .subject-physics{right:0; top:8%; background:#e7f3fb;}
+  .subject-code{left:-2%; bottom:15%; background:#eaf6e5;}
+  .subject-econ{right:-1%; bottom:14%; background:#f6e8ec;}
+  .subject-any{left:50%; bottom:0; transform:translateX(-50%); background:var(--lime);}
+
+  .lesson-world{background:#fff8e9;}
+  .lesson-heading{max-width:850px;}
+  .lesson-heading p{margin-top:22px; max-width:55ch; color:rgba(20,58,46,.62); font-size:18px; line-height:1.5; font-weight:800;}
+  .lesson-canvas{position:relative; height:520px; margin-top:52px;}
+  .lesson-canvas figure{position:absolute; overflow:hidden; border:7px solid #fff; border-radius:8px; box-shadow:0 24px 68px rgba(20,58,46,.17);}
+  .lesson-canvas img{width:100%; height:100%; object-fit:cover;}
+  .detail-two img{object-fit:contain; background:#07110e;}
+  .lesson-main{left:15%; top:0; width:50%; height:440px; z-index:3; transform:rotate(-1deg);}
+  .lesson-main figcaption{position:absolute; left:14px; bottom:13px; padding:7px 10px; border-radius:6px; background:rgba(6,15,12,.84); color:#fff; font-size:10px; font-weight:1000; letter-spacing:.06em;}
+  .lesson-detail{width:27%; height:230px;}
+  .detail-one{right:6%; top:38px; z-index:2; transform:rotate(1.4deg);}
+  .detail-two{right:12%; bottom:6px; z-index:4; transform:rotate(-.8deg);}
+  .lesson-words{position:absolute; left:0; bottom:20px; display:flex; flex-direction:column; gap:9px;}
+  .lesson-words span{font-family:"Caveat",cursive; color:rgba(20,58,46,.54); font-size:22px; transform:rotate(-2deg);}
+
+  .care-story{background:#101512; color:#fff;}
+  .care-grid{display:grid; grid-template-columns:1fr 1fr; gap:76px; align-items:center;}
+  .care-story .kicker{color:rgba(196,245,71,.7);}
+  .care-story h2{color:#fff; font-size:62px;}
+  .care-story h2 span{display:block; color:var(--lime);}
+  .care-copy p{margin-top:24px; max-width:42ch; color:rgba(255,255,255,.64); font-size:18px; line-height:1.55; font-weight:800;}
+  .care-handoff{position:relative; min-height:440px; display:grid; align-content:center;}
+  .jesse-care{max-width:16ch; color:#fff; font-family:"DM Serif Display",Georgia,serif; font-size:35px; line-height:1.24;}
+  .jesse-care::before{content:"“"; color:var(--lime);}
+  .jesse-care::after{content:"”"; color:var(--lime);}
+  .care-people{position:static; display:flex; gap:24px; align-items:flex-start; margin-top:42px;}
+  .care-people figure{width:132px;}
+  .care-people figure:nth-child(2){transform:translateY(24px);}
+  .care-people figure:nth-child(3){transform:translateY(-14px);}
+  .care-people img{width:112px; height:112px; object-fit:cover; border:5px solid #fff; border-radius:50%; box-shadow:0 20px 50px rgba(0,0,0,.42);}
+  .care-people figure:nth-child(3) img{object-position:50% 18%;}
+  .care-people figcaption{margin-top:10px; color:#fff; font-size:12px; font-weight:1000; line-height:1.25;}
+  .care-people figcaption span{color:rgba(255,255,255,.42); font-size:10px;}
+
+  .act-proof{background:#e8f2ed;}
+  .act-proof-grid{display:grid; grid-template-columns:1.12fr .88fr; gap:72px; align-items:center;}
+  .act-proof-visual{position:relative; min-height:540px;}
+  .act-proof-visual figure{position:absolute; overflow:hidden; border:7px solid #fff; border-radius:8px; box-shadow:0 26px 78px rgba(20,58,46,.18);}
+  .act-proof-visual img{width:100%; height:100%; object-fit:cover; object-position:left top;}
+  .act-dash{left:0; top:64px; width:88%; height:340px; transform:rotate(-1.1deg); background:#07110e;}
+  .act-dash img{object-fit:contain; background:#07110e;}
+  .act-practice{right:0; bottom:26px; width:36%; height:300px; transform:rotate(1.4deg);}
+  .act-proof-copy h2{font-size:62px;}
+  .act-proof-copy h2 span{display:block;}
+  .act-proof-copy > p{margin-top:22px; color:rgba(20,58,46,.62); font-size:18px; line-height:1.55; font-weight:800;}
+  .act-proof-steps{margin:28px 0; display:flex; align-items:center; flex-wrap:wrap; gap:10px;}
+  .act-proof-steps span{padding:8px 10px; border-radius:6px; background:#fff; color:#143a2e; font-size:10px; font-weight:1000; letter-spacing:.09em; text-transform:uppercase;}
+  .act-proof-steps i{color:var(--leaf); font-style:normal; font-weight:1000;}
+
+  .mission-story{position:relative; min-height:100svh; display:flex; align-items:center; overflow:hidden; color:#fff; background:#07110e;}
+  .mission-art{position:absolute; inset:0; background:url('img/mindcraft-luxury-map-20260706.jpg') center/cover no-repeat; opacity:.44; transform:scale(1.03);}
+  .mission-shade{position:absolute; inset:0; background:linear-gradient(90deg,rgba(4,10,8,.96) 10%,rgba(4,10,8,.72) 58%,rgba(4,10,8,.48));}
+  .mission-inner{position:relative; z-index:2; padding-top:120px; padding-bottom:120px;}
+  .mission-story .kicker{color:rgba(196,245,71,.76);}
+  .mission-story h2{max-width:900px; color:#fff; font-size:78px;}
+  .mission-story h2 span{display:block; color:var(--lime);}
+  .mission-story p{margin-top:28px; max-width:700px; color:rgba(255,255,255,.72); font-family:"DM Serif Display",Georgia,serif; font-size:25px; line-height:1.45;}
+  .mission-story .btn{margin-top:34px; background:var(--lime); color:#07110e; border-color:var(--lime);}
+  .story-led .cta{background:#fff8e9;}
+
+  @media(max-width:1100px){
+    .story-led .hero h1{font-size:50px;}
+    .story-led .hero-stage{grid-template-columns:1fr;}
+    .story-led .hero-shot{max-width:760px;}
+    .story-beat h2,.mission-story h2{font-size:58px;}
+    .across-grid,.care-grid,.act-proof-grid{gap:44px;}
+    .across-copy h2,.care-story h2,.act-proof-copy h2{font-size:54px;}
+  }
+  @media(max-width:820px){
+    .story-beat{min-height:auto; padding:100px 0;}
+    .across-grid,.care-grid,.act-proof-grid{grid-template-columns:1fr;}
+    .domain-map{min-height:500px; margin-top:10px;}
+    .care-handoff{min-height:430px;}
+    .act-proof-visual{min-height:500px; order:2;}
+    .act-proof-copy{order:1;}
+    .lesson-main{left:8%; width:58%;}
+    .lesson-detail{width:31%;}
+    .detail-one{right:2%;}
+    .detail-two{right:7%;}
+    .lesson-words{display:none;}
+  }
+  @media(max-width:640px){
+    .story-led .hero h1{font-size:43px; max-width:none;}
+    .story-led .hero-first-line{font-size:32px; white-space:nowrap;}
+    .story-led .hero-stage{padding-top:100px;}
+    .story-led .hero .lead{font-size:16px;}
+    .story-led .workspace-board{height:440px; background-size:42px 42px,auto,auto; background-position:12px 12px,center,center;}
+    .story-led .workspace-cluster{inset:22px 14px 50px; transform-origin:50% 44%;}
+    .story-led .paper-main{left:16%; top:26px; width:68%; height:274px;}
+    .story-led .memo-preview{left:1%; top:196px; width:32%; min-height:105px; padding:12px 10px;}
+    .story-led .memo-preview b,.story-led .memo-preview [data-note-copy]{display:none;}
+    .story-led .act-preview{right:1%; top:198px; width:33%; height:108px; padding:5px;}
+    .story-led .memo-preview .paper-label,.story-led .act-preview .paper-label{display:none;}
+    .story-led .act-preview-grid{height:82px; gap:3px;}
+    .story-led .act-preview > span{font-size:8px; padding-top:5px;}
+    .desk-tools{right:12px; top:12px; gap:7px;}
+    .desk-tools .add-note{width:42px; height:42px;}
+    .desk-zoom button{width:34px; height:34px;}
+    .story-led .note-composer{top:62px; right:12px; width:260px;}
+    .story-led .user-note{width:136px; min-height:92px; padding:13px 12px;}
+    .story-led .user-note span{font-size:12px;}
+    .desk-prompt{bottom:12px; min-height:52px;}
+    .desk-prompt button{width:38px; height:38px;}
+    .story-led .hero-below{padding-top:6px;}
+    .story-led .hero-trust{justify-content:flex-start; gap:10px 18px;}
+    .story-led .trust span{display:none;}
+    .story-led .trust b{font-size:12px;}
+    .credibility{padding:38px 0 52px;}
+    .cred-stats{grid-template-columns:1fr; gap:18px;}
+    .credibility .intro-schools{margin-top:28px; padding-top:24px;}
+    .story-beat{padding:82px 0;}
+    .story-beat h2,.mission-story h2,.across-copy h2,.care-story h2,.act-proof-copy h2{font-size:40px;}
+    .story-intro p,.across-copy p,.lesson-heading p,.care-copy p,.act-proof-copy > p{font-size:16px;}
+    .learns-you{padding:82px 0;}
+    .learning-trace{height:auto; margin-top:44px; padding-left:28px;}
+    .learning-trace::before{
+      content:""; position:absolute; left:10px; top:16px; bottom:76px; width:3px; border-radius:3px;
+      background:linear-gradient(180deg,#b9d6cb,var(--leaf),var(--lime));
+    }
+    .trace-route{display:none;}
+    .trace-point:nth-of-type(n){
+      position:relative; left:auto; right:auto; top:auto; width:auto; min-height:92px;
+      padding:10px 0 22px 34px; transform:none; text-align:left;
+    }
+    .trace-point i,.trace-point.is-learned i{left:-18px; right:auto; top:16px; transform:translate(-50%,-50%);}
+    .trace-point.is-learned i{top:15px;}
+    .privacy-line{margin-top:4px; text-align:left; padding-left:62px;}
+    .domain-map{min-height:390px; transform:scale(.92);}
+    .domain-core{width:160px; height:160px;}
+    .domain-core b{font-size:16px;}
+    .domain{min-width:82px; padding:9px; font-size:10px;}
+    .lesson-canvas{height:400px; margin-top:40px;}
+    .lesson-main{left:0; width:72%; height:330px;}
+    .lesson-detail{width:38%; height:170px;}
+    .detail-one{right:-4%; top:22px;}
+    .detail-two{right:1%; bottom:0;}
+    .care-handoff{min-height:auto; margin-top:44px;}
+    .jesse-care{font-size:28px;}
+    .care-people{justify-content:space-between; gap:10px; margin-top:28px;}
+    .care-people figure{width:92px;}
+    .care-people img{width:82px; height:82px; border-width:4px;}
+    .care-people figure:nth-child(n){transform:none;}
+    .act-proof-visual{min-height:390px;}
+    .act-dash{top:28px; width:88%; height:250px;}
+    .act-practice{width:42%; height:235px;}
+    .mission-story{min-height:92svh;}
+    .mission-inner{padding-top:100px; padding-bottom:100px;}
+    .mission-story p{font-size:20px;}
+    .foot-row{align-items:flex-start; flex-direction:column;}
+    .foot-links{max-width:100%; margin-left:0; flex-wrap:wrap; gap:12px 16px;}
+  }
 </style>
 </head>
-<body>
+<body class="story-led">
 <div class="grain"></div>
 <div class="progress" id="progress"></div>
 
 <nav class="nav">
-  <a class="brand" href="#">Mind<span>Craft</span></a>
+  <a class="brand" href="#" aria-label="MindCraft home">
+    <img src="img/raccoon-logo.png" alt="" width="34" height="34">
+    <span class="visually-hidden">MindCraft</span>
+  </a>
   <div class="nav-links">
-    <a href="#how">The desk</a>
-    <a href="#tutors">Tutors</a>
-    <a href="#act">ACT summer</a>
-    <a href="#faq">FAQ</a>
-    <a class="join" href="#start">Join the beta</a>
+    <a href="#learns">How it learns</a>
+    <a href="#anything">Any subject</a>
+    <a href="#care">Care</a>
+    <a href="#mission">Mission</a>
+    <a class="join" href="#start">Join free beta</a>
   </div>
 </nav>
 
@@ -948,49 +1633,226 @@
     <circle class="n-lit" cx="560" cy="260" r="6" opacity=".7"/>
     <circle class="n-lit pulse" cx="950" cy="290" r="7" style="animation-delay:1.4s;"/>
   </svg>
-
   <div class="hero-stage">
     <div>
-      <a class="hero-announce" href="#act"><i>LIVE</i> Summer ACT package →</a>
-      <h1>School is scattered. <em>You don't have to&nbsp;be.</em></h1>
+      <a class="hero-announce" href="#learns"><i>NEW</i> The Desk by MindCraft →</a>
+      <h1><span class="hero-first-line">Like a gym membership</span><em>for learning.</em></h1>
+      <p class="lead">Personalized. We make sure you get care and support when you need it.</p>
       <div class="hero-actions">
-        <a class="btn primary" href="#start">Set up my desk</a>
-        <a class="btn soft" href="#problem">See how it works</a>
+        <a class="btn primary" href="#start">Build my learning map</a>
+        <a class="btn soft" href="#learns">See how it learns</a>
       </div>
     </div>
 
     <div class="hero-shot">
-      <div class="hero-note">your actual desk ↓</div>
-      <div class="hero-frame"><img class="crop-demo" src="img/new-dash-home.jpg" alt="The MindCraft desk: the Contents view with watercolor concept tiles for warm-ups and algebra"></div>
-      <div class="hero-chip" id="herochip">
-        <span class="raw" id="hc-raw">IMG_4127.jpg</span>
-        <span class="arrow">→</span>
-        <span class="filed" id="hc-filed">Stoichiometry practice<small>AP Chem · Unit 3 · filed Oct 12</small></span>
+      <div class="hero-note">Move it. Make it yours. ↓</div>
+      <div class="workspace-board" id="heroDesk" aria-label="Interactive The Desk by MindCraft workspace with Jesse's Kitchen, a memo, and an ACT learning map">
+        <div class="workspace-cluster" id="workspaceCluster">
+          <button class="paper-card paper-main workspace-item" type="button" id="jesseCard" data-draggable aria-label="Open Jesse's Kitchen prompt" aria-expanded="false">
+            <span class="paper-label">Jesse's Kitchen</span>
+            <img src="img/app/desk-ipad-live.png?v=jesse-desk-1" alt="The Desk by MindCraft with calendar and project signs">
+          </button>
+          <article class="paper-card memo-preview workspace-item" id="pinnedNote" data-draggable>
+            <span class="paper-label">Memo</span>
+            <b>Remember this</b>
+            <span data-note-copy>Visual examples made the graphing step click.</span>
+          </article>
+          <figure class="paper-card act-preview workspace-item" data-draggable>
+            <figcaption class="paper-label">ACT · personal route</figcaption>
+            <div class="act-preview-grid">
+              <img src="img/new-dash-home.jpg" alt="Current MindCraft ACT learning dashboard">
+              <img src="img/app/practice.png" alt="MindCraft personalized practice screen">
+            </div>
+            <span>Exact gap → next lesson</span>
+          </figure>
+        </div>
+        <div class="desk-tools">
+          <div class="desk-zoom" aria-label="Desk zoom controls">
+            <button type="button" id="heroZoomOut" aria-label="Zoom desk out">−</button>
+            <button type="button" id="heroZoomIn" aria-label="Zoom desk in">+</button>
+          </div>
+          <button class="add-note" type="button" id="addNoteBtn" aria-label="Add a note">+</button>
+        </div>
+        <form class="note-composer" id="noteComposer">
+          <label for="noteText">Add note</label>
+          <textarea id="noteText" maxlength="180" placeholder="Something worth remembering..."></textarea>
+          <button type="submit">Pin note</button>
+          <div class="note-status" id="noteStatus">Organizes onto the desk.</div>
+        </form>
+        <form class="desk-prompt" id="deskPrompt">
+          <input id="deskPromptInput" maxlength="140" autocomplete="off" placeholder="Ask Jesse's Kitchen...">
+          <button type="submit" aria-label="Send prompt">→</button>
+        </form>
       </div>
     </div>
   </div>
 
   <div class="hero-below">
     <div class="hero-trust">
-      <div class="trust"><b>42 concepts</b><span>one living map of ACT math</span></div>
-      <div class="trust"><b>~1,500</b><span>real questions behind the practice</span></div>
-      <div class="trust"><b>Real tutors</b><span>college tutors, briefed by your map</span></div>
-      <div class="trust"><b>Free</b><span>while we are in beta</span></div>
+      <div class="trust"><b>Learns your patterns</b><span>beyond right or wrong</span></div>
+      <div class="trust"><b>Builds the next lesson</b><span>for the way you learn</span></div>
+      <div class="trust"><b>Brings in a person</b><span>with context, not a cold start</span></div>
     </div>
-    <div class="intro-schools" aria-label="Schools behind the desk">
+    <a class="scroll-cue" href="#learns"><span>see what the desk remembers</span><i>↓</i></a>
+  </div>
+</header>
+
+<section class="credibility" id="proof" aria-label="MindCraft proof and university community">
+  <div class="wrap">
+    <div class="intro-schools" aria-label="Universities represented in the MindCraft community">
       <span>From rooms at</span>
       <ul>
         <li class="mac"><img src="img/logos/macalester.png" alt="Macalester College"></li>
-        <li class="unc"><img src="img/logos/unc.png" alt="UNC Chapel Hill"></li>
+        <li class="unc"><img src="img/logos/unc.svg" alt="UNC Chapel Hill"></li>
         <li class="oxf"><img src="img/logos/oxford.svg" alt="University of Oxford"></li>
         <li class="ken"><img src="img/logos/kenyon.svg" alt="Kenyon College"></li>
-        <li class="uwc"><img src="img/logos/uwc.png" alt="UWC"></li>
+        <li class="uwc"><img src="img/logos/uwc.png" alt="United World Colleges"></li>
       </ul>
+      <!-- JS fills Instagram / LinkedIn / Spotify / X icons (see #introSocial). -->
       <nav class="intro-social" id="introSocial" aria-label="Find MindCraft out there"></nav>
     </div>
-    <a class="scroll-cue" href="#problem"><span>the whole story is one scroll</span><i>↓</i></a>
   </div>
-</header>
+</section>
+
+<!-- ================= PERSONALIZATION STORY ================= -->
+<section class="story-beat learns-you" id="learns">
+  <div class="wrap">
+    <div class="story-intro reveal">
+      <div class="kicker">01 · It notices</div>
+      <h2>The Desk learns <span>how you learn.</span></h2>
+      <p>Not only what you missed. What made it click — then a human tutor walks in with the map already drawn.</p>
+    </div>
+    <div class="learning-trace reveal" aria-label="An example of signals added to a private learning map">
+      <svg class="trace-route" viewBox="0 0 1000 300" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="traceGradient" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#b9d6cb"/>
+            <stop offset=".58" stop-color="#247a4d"/>
+            <stop offset="1" stop-color="#c4f547"/>
+          </linearGradient>
+        </defs>
+        <path class="trace-guide" d="M40 198 C170 198 205 80 340 80 S505 198 625 198 S805 74 960 74"/>
+        <path class="trace-progress" pathLength="1" d="M40 198 C170 198 205 80 340 80 S505 198 625 198 S805 74 960 74"/>
+      </svg>
+      <article class="trace-point is-first">
+        <i></i><small>8:14 PM</small><b>Paused at graph setup</b>
+      </article>
+      <article class="trace-point">
+        <i></i><small>8:19 PM</small><b>Diagram made it click</b>
+      </article>
+      <article class="trace-point">
+        <i></i><small>8:26 PM</small><b>Solved without a hint</b>
+      </article>
+      <article class="trace-point is-learned">
+        <i></i><small>LEARNED</small><b>Teach visually first</b>
+      </article>
+    </div>
+    <p class="privacy-line reveal">Private by default. Used to teach, never to sell.</p>
+  </div>
+</section>
+
+<!-- ================= CROSS-DOMAIN ================= -->
+<section class="story-beat across" id="anything">
+  <div class="wrap across-grid">
+    <div class="across-copy">
+      <div class="kicker reveal">02 · It carries</div>
+      <h2 class="reveal">One learner. <span>Every subject.</span></h2>
+      <p class="reveal">When a visual analogy unlocks algebra, MindCraft carries that insight into physics, economics, coding, and whatever comes next.</p>
+      <p class="engine-note reveal">One learning model that grows with you.</p>
+    </div>
+    <div class="domain-map reveal" aria-label="A learning preference traveling across subjects">
+      <div class="domain-core"><small>JESSE'S MAP</small><b>Show the idea.<br>Then name it.</b></div>
+      <span class="domain subject-math">Math</span>
+      <span class="domain subject-physics">Physics</span>
+      <span class="domain subject-code">Coding</span>
+      <span class="domain subject-econ">Economics</span>
+      <span class="domain subject-any">Anything</span>
+      <svg viewBox="0 0 600 520" aria-hidden="true">
+        <path d="M300 260 C190 180 150 110 84 82"/>
+        <path d="M300 260 C410 170 470 120 530 80"/>
+        <path d="M300 260 C175 290 108 324 60 385"/>
+        <path d="M300 260 C420 292 480 330 544 392"/>
+        <path d="M300 260 C305 360 310 405 300 476"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LESSON ENGINE ================= -->
+<section class="story-beat lesson-world" id="worlds">
+  <div class="wrap">
+    <div class="lesson-heading">
+      <div class="kicker reveal">03 · It creates</div>
+      <h2 class="reveal">Anything can become a lesson <span>worth entering.</span></h2>
+      <p class="reveal">Our lesson engine can turn a concept into a world, a story, a challenge, or a guided conversation. The course catalog has no edge.</p>
+    </div>
+    <div class="lesson-canvas reveal">
+      <figure class="lesson-main">
+        <img src="img/new-story-card.jpg" alt="MindCraft story lesson built from a linear equations concept">
+        <figcaption>Linear equations · built as an expedition</figcaption>
+      </figure>
+      <figure class="lesson-detail detail-one">
+        <img src="img/story-linear-equations.jpg" alt="A story-rich visual lesson about equations and navigation">
+      </figure>
+      <figure class="lesson-detail detail-two">
+        <img src="img/new-dash-home.jpg" alt="The current MindCraft dashboard with personalized learning paths">
+      </figure>
+      <div class="lesson-words" aria-hidden="true">
+        <span>algebra</span><span>climate</span><span>history</span><span>music</span><span>anything</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HUMAN CARE ================= -->
+<section class="story-beat care-story" id="care">
+  <div class="wrap care-grid">
+    <div class="care-copy">
+      <div class="kicker reveal">04 · It cares</div>
+      <h2 class="reveal">Software can notice the pattern. <span>A person can notice you.</span></h2>
+      <p class="reveal">When you need help, your tutor opens the same map: where you paused, what worked, and what to try next.</p>
+    </div>
+    <div class="care-handoff reveal">
+      <p class="jesse-care">Jesse gets a tutor who already knows where to begin.</p>
+      <div class="care-people">
+        <figure><img src="img/akshat-koirala.jpg" alt="Akshat, a MindCraft tutor"><figcaption>Akshat<br><span>ready with context</span></figcaption></figure>
+        <figure><img src="img/abhigya-koirala.jpeg" alt="Abhigya, a MindCraft math tutor"><figcaption>Abhigya<br><span>ready with context</span></figcaption></figure>
+        <figure><img src="img/blake-kell.jpg" alt="Blake, a MindCraft tutor"><figcaption>Blake<br><span>ready with context</span></figcaption></figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ACT PROOF ================= -->
+<section class="story-beat act-proof" id="act-proof">
+  <div class="wrap act-proof-grid">
+    <div class="act-proof-visual reveal">
+      <figure class="act-dash"><img src="img/new-dash-home.jpg" alt="Current MindCraft ACT learning dashboard"></figure>
+      <figure class="act-practice"><img src="img/app/practice.png" alt="MindCraft personalized ACT practice"></figure>
+    </div>
+    <div class="act-proof-copy">
+      <div class="kicker reveal">05 · The proof today</div>
+      <h2 class="reveal">ACT is the proving ground. <span>Not the ceiling.</span></h2>
+      <p class="reveal">Find the exact gap. Build the lesson they will remember. Bring in the right human. Prove the learning transfers.</p>
+      <div class="act-proof-steps reveal" aria-label="The MindCraft ACT learning loop">
+        <span>Scan</span><i>→</i><span>Build</span><i>→</i><span>Care</span><i>→</i><span>Grow</span>
+      </div>
+      <a class="btn primary reveal" href="#start">Start with ACT</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MISSION ================= -->
+<section class="mission-story" id="mission">
+  <div class="mission-art" aria-hidden="true"></div>
+  <div class="mission-shade" aria-hidden="true"></div>
+  <div class="wrap mission-inner">
+    <div class="kicker reveal">Our mission</div>
+    <h2 class="reveal">Make exceptional learning <span>accessible to everyone.</span></h2>
+    <p class="reveal">Make math feel possible. Make curiosity feel limitless. Make every learner feel worth understanding.</p>
+    <a class="btn primary reveal" href="#start">Build the future with us</a>
+  </div>
+</section>
 
 <!-- ================= PROBLEM ================= -->
 <section class="problem" id="problem">
@@ -1015,138 +1877,15 @@
         <h3>Flashcards for the wrong chapter</h3>
       </div>
     </div>
-    <p class="punchline reveal">Right now the only thing connecting it all is you. The night before a test, that is a terrible job to have.</p>
+    <p class="punchline reveal">The root problem is not the student. It is that their knowledge has no operating system. Right now the only thing connecting it all is you.</p>
     <p class="turn reveal">Good news: the desk wants that job<i>!</i></p>
   </div>
 </section>
 
-<!-- ================= HOW ================= -->
-<section class="how" id="how">
-  <div class="wrap">
-    <div class="kicker reveal">Chapter 02 · The desk</div>
-    <h2 class="h2 reveal">Drop it. <span class="script">It finds its place.</span></h2>
-    <p class="lede reveal">The desk does the organizing so your energy goes to the learning.</p>
-
-    <div class="steps">
-      <div class="stepcard peach reveal">
-        <h3>Drop it</h3>
-        <div class="step-art">
-          <div class="art-drop"><span class="minichip">IMG_4127.jpg</span></div>
-        </div>
-      </div>
-      <div class="stepcard sand reveal">
-        <h3>Filed for you</h3>
-        <div class="step-art">
-          <div class="art-rows">
-            <div class="art-row"><span class="dot" style="background:var(--teal);"></span>Stoichiometry practice · AP Chem</div>
-            <div class="art-row"><span class="dot" style="background:var(--rose);"></span>Circle theorems notes · Geometry</div>
-            <div class="art-row"><span class="dot" style="background:var(--violet);"></span>Functions worksheet · Algebra II</div>
-          </div>
-        </div>
-      </div>
-      <div class="stepcard mint reveal">
-        <h3>Planned for you</h3>
-        <div class="step-art">
-          <div class="art-list">
-            <div class="art-li done"><span class="box"></span>Chem set 4.2</div>
-            <div class="art-li"><span class="box"></span>Systems worksheet<span class="when">TONIGHT</span></div>
-            <div class="art-li"><span class="box"></span>Gatsby annotations<span class="when">FRI</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="stepcard blue reveal">
-        <h3>Learned for you</h3>
-        <div class="step-art">
-          <svg class="art-map" viewBox="0 0 220 104" preserveAspectRatio="xMidYMid slice">
-            <line x1="30" y1="70" x2="80" y2="34"/><line x1="80" y1="34" x2="140" y2="56"/>
-            <line x1="140" y1="56" x2="192" y2="28"/><line x1="80" y1="34" x2="120" y2="88"/>
-            <line x1="140" y1="56" x2="120" y2="88"/>
-            <circle cx="30" cy="70" r="5"/><circle cx="80" cy="34" r="5"/>
-            <circle cx="192" cy="28" r="5"/><circle cx="120" cy="88" r="5"/>
-            <circle class="lit glow" cx="140" cy="56" r="8"/>
-          </svg>
-        </div>
-      </div>
-    </div>
-
-    <div class="dropdemo reveal" id="dropdemo">
-      <div class="dd-left">
-        <div class="dd-head">
-          DROP SOMETHING
-          <span class="dd-arrow" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12"/><path d="m7 11 5 5 5-5"/></svg>
-          </span>
-        </div>
-        <div class="dd-toss">Toss one of these</div>
-        <div class="dd-pdfs" id="ddPdfs">
-          <button class="dd-pdf is-on" type="button" data-id="systems" aria-pressed="true">
-            <img src="img/sample-systems.pdf.png" alt="Systems of Equations worksheet PDF">
-          </button>
-          <button class="dd-pdf" type="button" data-id="gatsby" aria-pressed="false">
-            <img src="img/sample-gatsby.pdf.png" alt="Gatsby annotations PDF">
-          </button>
-          <button class="dd-pdf" type="button" data-id="chem" aria-pressed="false">
-            <img src="img/sample-chem.pdf.png" alt="Stoichiometry set PDF">
-          </button>
-          <button class="dd-pdf" type="button" data-id="circles" aria-pressed="false">
-            <img src="img/sample-circles.pdf.png" alt="Circle theorems PDF">
-          </button>
-        </div>
-      </div>
-      <div class="dd-right">
-        <div class="dd-note-label">Filed as a note</div>
-        <div class="dd-note" id="ddNote">
-          <h4 id="ddNoteTitle">Systems of Equations</h4>
-          <div class="dd-meta" id="ddNoteMeta">Algebra II · Unit 5 · due Thursday</div>
-          <ul class="dd-bullets" id="ddNoteBody">
-            <li>Named and dated for you</li>
-            <li>Graph + word problem on one page</li>
-            <li>Ready for tonight's study</li>
-          </ul>
-          <div class="dd-whisper" id="ddNoteWhisper">named, dated, waiting in your binder</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="proof reveal">
-      <div class="proof-frame">
-        <div class="proof-bar"><i></i><i></i><i></i><span>mindcraft · your desk</span></div>
-        <img class="crop-demo" src="img/new-dash-home.jpg" alt="The real MindCraft desk: Contents view with watercolor tiles for every concept, and this week's review">
-      </div>
-      <div class="proof-cap">the real thing, not a mockup</div>
-    </div>
-    <p class="turn reveal">Filing is the chore. Turn the page for the fun part<i>!</i></p>
-  </div>
-</section>
-
-<!-- ================= STORY ================= -->
-<section class="story" id="story">
-  <div class="wrap">
-    <div class="story-grid">
-      <div class="story-copy">
-        <div class="kicker reveal">Chapter 03 · The adventure</div>
-        <h2 class="h2 reveal">Your notes turn into <span class="script">story adventures.</span></h2>
-        <p class="story-excerpt reveal"><span class="lead-in">Drop a linear equations worksheet</span> and the desk already knows what you're working on. Practice isn't a drill sheet. It's a ship leaving England in 1761.</p>
-        <div class="hero-actions reveal" style="margin-top:22px;">
-          <a class="btn primary ext" href="https://mindcraft-93858.web.app/try/story/linear_equations" target="_blank" rel="noopener">Read a chapter</a>
-        </div>
-      </div>
-      <div class="story-shot reveal">
-        <div class="story-frame"><img src="img/new-story-card.jpg" alt="A MindCraft story card: Linear Equations, William Harrison at sea, bound for Jamaica, 1761"></div>
-        <figure class="story-polaroid">
-          <img src="img/story-linear-equations.jpg" alt="Watercolor of a marine chronometer and compass">
-          <figcaption>the watch that started it</figcaption>
-        </figure>
-      </div>
-    </div>
-    <p class="turn reveal">Stories are one superpower. The desk keeps more in the drawer<i>!</i></p>
-  </div>
-</section>
-
-<!-- ================= CAPABILITIES ================= -->
+<!-- ================= QUIET SUPERPOWER (after problem, before desk shot) ================= -->
 <section class="caps" id="build">
   <div class="wrap">
-    <div class="kicker reveal">Chapter 04 · The powers</div>
+    <div class="kicker reveal">Chapter 01.5 · The powers</div>
     <h2 class="h2 reveal">A quiet superpower for every part of school.</h2>
     <div class="caps-grid">
       <div class="cap featured reveal">
@@ -1205,31 +1944,107 @@
   </div>
 </section>
 
-<!-- ================= GAP SCAN ================= -->
-<section class="scan">
+<!-- ================= OS / GYM + live desk ================= -->
+<section class="how" id="os" style="padding-top:0;">
   <div class="wrap">
-    <div class="scan-grid">
-      <div class="scan-frame reveal">
-        <img src="img/gap_scan.png" alt="The MindCraft gap scan: how confident are you with each of these?">
-      </div>
-      <div class="scan-copy">
-        <div class="kicker reveal">Chapter 05 · The map</div>
-        <h2 class="h2 reveal">Built for the weeks <span class="script">before a test.</span></h2>
-        <div class="scan-points">
-          <div class="scan-point reveal">
-            <span class="pip">1</span>
-            <p>Four minutes. Tap what you actually know.</p>
-          </div>
-          <div class="scan-point reveal">
-            <span class="pip">2</span>
-            <p>See the gaps before the exam finds them.</p>
-          </div>
-          <div class="scan-point reveal">
-            <span class="pip">3</span>
-            <p>Walk into test week with a clear tonight list.</p>
-          </div>
+    <div class="kicker reveal">Chapter 02 · The membership</div>
+    <h2 class="h2 reveal">A gym for knowledge. <span class="script">Not another chat box.</span></h2>
+    <p class="lede reveal">You show up. The desk holds the plan. Care and support when you need it.</p>
+
+    <div class="shot-rail reveal">
+      <figure class="shot-wide">
+        <img src="img/app/desk-ipad-live.png?v=jesse-desk-1" alt="The Desk by MindCraft on iPad in landscape: Jesse’s Kitchen live desk with calendar and project signs">
+        <div class="call" aria-hidden="true">
+          <span>The Desk by MindCraft</span>
+          <span>Learn · binder</span>
+          <span>Connect · Google</span>
+        </div>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HOW / DROP (live API) ================= -->
+<section class="how" id="how">
+  <div class="wrap">
+    <div class="kicker reveal">Chapter 03 · The desk</div>
+    <h2 class="h2 reveal">Drop it. <span class="script">It finds its place.</span></h2>
+    <p class="lede reveal">Toss a real file or a sample. The desk names it, dates it, and files it. Live.</p>
+
+    <div class="dropdemo reveal" id="dropdemo">
+      <div class="dd-left">
+        <div class="dd-head">
+          DROP SOMETHING
+          <span class="dd-arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12"/><path d="m7 11 5 5 5-5"/></svg>
+          </span>
+        </div>
+        <label class="dd-live" id="ddLiveZone">
+          <input type="file" id="ddLiveFile" accept="image/*,.pdf,text/plain" hidden>
+          <strong>Drop your own file here</strong>
+          <span>PDF, photo, or notes · filed by live API</span>
+        </label>
+        <div class="dd-toss">Or toss a sample</div>
+        <div class="dd-pdfs" id="ddPdfs">
+          <button class="dd-pdf is-on" type="button" data-id="systems" data-file="systems_of_equations.pdf" aria-pressed="true">
+            <img src="img/sample-systems.pdf.png" alt="Systems of Equations worksheet PDF">
+          </button>
+          <button class="dd-pdf" type="button" data-id="gatsby" data-file="gatsby_annotations.pdf" aria-pressed="false">
+            <img src="img/sample-gatsby.pdf.png" alt="Gatsby annotations PDF">
+          </button>
+          <button class="dd-pdf" type="button" data-id="chem" data-file="stoichiometry_set.pdf" aria-pressed="false">
+            <img src="img/sample-chem.pdf.png" alt="Stoichiometry set PDF">
+          </button>
+          <button class="dd-pdf" type="button" data-id="circles" data-file="circle_theorems.pdf" aria-pressed="false">
+            <img src="img/sample-circles.pdf.png" alt="Circle theorems PDF">
+          </button>
         </div>
       </div>
+      <div class="dd-right">
+        <div class="dd-note-label">Filed as a note <span id="ddLiveBadge" hidden>· live</span></div>
+        <div class="dd-note" id="ddNote">
+          <h4 id="ddNoteTitle">Systems of Equations</h4>
+          <div class="dd-meta" id="ddNoteMeta">Algebra II · Unit 5 · due Thursday</div>
+          <ul class="dd-bullets" id="ddNoteBody">
+            <li>Named and dated for you</li>
+            <li>Graph + word problem on one page</li>
+            <li>Ready for tonight's study</li>
+          </ul>
+          <div class="dd-whisper" id="ddNoteWhisper">named, dated, waiting in your binder</div>
+        </div>
+      </div>
+    </div>
+    <p class="turn reveal">Filing is the chore. Turn the page for the fun part<i>!</i></p>
+  </div>
+</section>
+
+<!-- ================= STORY + dash ================= -->
+<section class="story" id="story">
+  <div class="wrap">
+    <div class="story-grid">
+      <div class="story-copy">
+        <div class="kicker reveal">Chapter 04 · The adventure</div>
+        <h2 class="h2 reveal">Your notes turn into <span class="script">story adventures.</span></h2>
+        <p class="story-excerpt reveal"><span class="lead-in">Drop a linear equations worksheet</span> and the desk already knows what you're working on. Practice isn't a drill sheet. It's a ship leaving England in 1761.</p>
+        <div class="hero-actions reveal" style="margin-top:22px;">
+          <a class="btn primary ext" href="https://mindcraft-93858.web.app/try/story/linear_equations" target="_blank" rel="noopener">Read a chapter</a>
+        </div>
+      </div>
+      <div class="story-shot reveal">
+        <div class="story-frame"><img src="img/new-story-card.jpg" alt="A MindCraft story card: Linear Equations, William Harrison at sea, bound for Jamaica, 1761"></div>
+        <figure class="story-polaroid">
+          <img src="img/story-linear-equations.jpg" alt="Watercolor of a marine chronometer and compass">
+          <figcaption>the watch that started it</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="proof reveal" style="margin-top:36px;">
+      <div class="proof-frame">
+        <div class="proof-bar"><i></i><i></i><i></i><span>mindcraft · Learn dash</span></div>
+        <img class="crop-demo" src="img/app/dash-landscape.jpg" alt="MindCraft Learn dash in landscape after story practice">
+      </div>
+      <div class="proof-cap">your Learn home after the adventure</div>
     </div>
   </div>
 </section>
@@ -1238,21 +2053,22 @@
 <section class="tutors" id="tutors">
   <div class="wrap">
     <div class="tutor-head">
-      <div class="kicker reveal">Chapter 06 · The allies</div>
-      <h2 class="h2 reveal">A college tutor in your corner.</h2>
+      <div class="kicker reveal">Chapter 05 · The allies</div>
+      <h2 class="h2 reveal">Find a tutor near you <span class="script">to help with anything.</span></h2>
+      <p class="tutor-lede reveal">High-achieving students from some of the top U.S. colleges. They open your map before hello, so the hour goes to teaching, not catching up. First session free.</p>
       <div class="tutor-head-row">
         <div class="scan-points">
           <div class="scan-point reveal">
             <span class="pip">1</span>
-            <p>They open your map before hello.</p>
+            <p>Homework, tests, confidence, whatever is stuck.</p>
           </div>
           <div class="scan-point reveal">
             <span class="pip">2</span>
-            <p>The hour goes to teaching, not catching up.</p>
+            <p>Real college tutors who still remember junior year.</p>
           </div>
           <div class="scan-point reveal">
             <span class="pip">3</span>
-            <p>First session free. Real college tutors.</p>
+            <p>Search near you. Book in minutes.</p>
           </div>
         </div>
         <blockquote class="tutor-quote reveal">
@@ -1286,7 +2102,7 @@
     <div class="act-grid">
       <div>
         <div class="kicker reveal">Chapter 07 · The mission · Live now</div>
-        <h2 class="h2 reveal">The Summer ACT package.</h2>
+        <h2 class="h2 reveal">Summer ACT prep, ready now.</h2>
         <p class="act-lede reveal">One summer. One route back from your test date.</p>
         <div class="act-includes">
           <div class="act-inc reveal"><span class="tick">✓</span><p>Gap scan + your route</p></div>
@@ -1311,9 +2127,9 @@
   <div class="wrap">
     <div class="kicker reveal">Epilogue · Why we build</div>
     <h2 class="h2 reveal">You were never bad at math.</h2>
-    <p class="reveal">Math didn't lose you. The story did. Most tools treat math like a list of chores. We treat it like a place: stories with stakes, questions that belong to them, and a map that remembers every step you take.</p>
-    <p class="reveal">MindCraft pairs you with real college tutors, learns how you learn, and turns scattered school chaos into progress you can see.</p>
-    <p class="reveal">And the bank behind the desk holds about 1,500 real ACT questions. Imagine each one living inside a world: a scene you walk into, a sim you can touch, a story that needs your answer. That is where this is going. <span class="craft">Not magic. Craft.</span></p>
+    <p class="reveal">Math didn't lose you. The story did. Somebody decided you were not a math person. They described a moment. You heard a verdict. MindCraft rebuilds the narrative: every gap has a shape, every concept is a scene you have not played yet.</p>
+    <p class="reveal">From street conversations with parents, students, and tutors, the same ask keeps showing up: exact gaps, practice that transfers when the question looks different, and an honest note home. Not another streak. Not unlimited AI homework chat.</p>
+    <p class="reveal">The bank behind the desk holds about 1,500 real ACT questions. Imagine each one living inside a world. That is where this is going. <span class="craft">Not magic. Craft.</span></p>
   </div>
 </section>
 
@@ -1326,7 +2142,7 @@
       <span>From rooms at</span>
       <ul class="makers-schools" aria-label="From rooms at">
         <li class="mac" title="Macalester College"><img src="img/logos/macalester.png" alt="Macalester College"></li>
-        <li class="unc" title="UNC Chapel Hill"><img src="img/logos/unc.png" alt="UNC Chapel Hill"></li>
+        <li class="unc" title="UNC Chapel Hill"><img src="img/logos/unc.svg" alt="UNC Chapel Hill"></li>
         <li class="oxf" title="University of Oxford"><img src="img/logos/oxford.svg" alt="University of Oxford"></li>
         <li class="ken" title="Kenyon College"><img src="img/logos/kenyon.svg" alt="Kenyon College"></li>
         <li class="uwc" title="UWC · United World Colleges"><img src="img/logos/uwc.png" alt="UWC, United World Colleges"></li>
@@ -1366,8 +2182,12 @@
     <h2 class="h2 reveal">The stuff everyone asks first.</h2>
     <div class="faq-list reveal">
       <details>
-        <summary>Is this just another planner?</summary>
-        <p>No. Planners hold what you type. The desk acts on what you drop. It files your stuff, plans your night, and turns practice into a map that moves.</p>
+        <summary>Is this just another planner or AI homework bot?</summary>
+        <p>No. Planners hold what you type. Chat bots answer tonight and forget tomorrow. MindCraft is an operating system for knowledge: file, map, train, prove transfer, brief a human tutor.</p>
+      </details>
+      <details>
+        <summary>What does “gym membership for math” mean?</summary>
+        <p>You still do the reps. The desk is the floor and the trainer: it points at the exact weak lift, tracks what transferred, and keeps the next session honest.</p>
       </details>
       <details>
         <summary>What can I drop on the desk?</summary>
@@ -1391,7 +2211,7 @@
       </details>
       <details>
         <summary>What does it cost?</summary>
-        <p>The desk is free while we are in beta. Tutoring and the Summer ACT package are paid, and your first tutor session is free so you can decide after you meet.</p>
+        <p>The desk is free while we are in beta. Tutoring and Summer ACT prep are paid, and your first tutor session is free so you can decide after you meet.</p>
       </details>
     </div>
   </div>
@@ -1404,8 +2224,8 @@
       <div class="cta-bg"></div>
       <div class="cta-veil"></div>
       <div class="inner">
-        <h2>Feel what it's like <em>to be good.</em></h2>
-        <p>Set up your desk in four minutes. Drop three files, take the gap scan, run your first mission tonight.</p>
+        <h2>Let MindCraft learn with you. <em>Start with one goal.</em></h2>
+        <p>Join the free beta. We will build your first learning map, find the right starting point, and stay close enough to notice when you need a person.</p>
         <p class="apply-done" id="applyDone" hidden>Got it. A real human replies within 48 hours.</p>
         <div class="cta-row" role="tablist" aria-label="Choose an application type">
           <button class="btn primary" type="button" id="applyTabStudent" role="tab" aria-selected="true">Sign up as a student</button>
@@ -1416,7 +2236,7 @@
             <input type="hidden" name="_subject" value="MindCraft student application">
             <input type="hidden" name="_template" value="table">
             <input type="hidden" name="_captcha" value="false">
-            <input type="hidden" name="_next" value="https://mindcraft-marketing-site.web.app/?applied=student#start">
+            <input type="hidden" name="_next" value="https://joinmindcraft.com/?applied=student#start">
             <input type="text" name="_honey" class="honey" tabindex="-1" autocomplete="off" aria-hidden="true">
             <div class="form-grid">
               <div class="field"><label for="parentName">Parent name</label><input id="parentName" name="parentName" autocomplete="name" required></div>
@@ -1425,14 +2245,14 @@
               <div class="field"><label for="grade">Grade</label><select id="grade" name="grade" required><option value="">Select grade</option><option>6th</option><option>7th</option><option>8th</option><option>9th</option><option>10th</option><option>11th</option><option>12th</option><option>ACT prep</option></select></div>
               <div class="field full"><label for="goal">What should feel easier?</label><textarea id="goal" name="goal" placeholder="Confidence, ACT math, algebra, study skills..." required></textarea></div>
             </div>
-            <button class="btn primary apply-submit" type="submit">Claim my desk</button>
+            <button class="btn primary apply-submit" type="submit">Build my learning map</button>
             <p class="apply-note">Sends to joinmindcraft@gmail.com. We reply within 48 hours.</p>
           </form>
           <form class="apply-form" id="applyFormTutor" action="https://formsubmit.co/joinmindcraft@gmail.com" method="POST">
             <input type="hidden" name="_subject" value="MindCraft tutor application">
             <input type="hidden" name="_template" value="table">
             <input type="hidden" name="_captcha" value="false">
-            <input type="hidden" name="_next" value="https://mindcraft-marketing-site.web.app/?applied=tutor#start">
+            <input type="hidden" name="_next" value="https://joinmindcraft.com/?applied=tutor#start">
             <input type="text" name="_honey" class="honey" tabindex="-1" autocomplete="off" aria-hidden="true">
             <div class="form-grid">
               <div class="field"><label for="tutorName">Name</label><input id="tutorName" name="name" autocomplete="name" required></div>
@@ -1446,7 +2266,7 @@
             <p class="apply-note">Sends to joinmindcraft@gmail.com. We reply within 48 hours.</p>
           </form>
         </div>
-        <p style="margin:20px 0 0; font-size:13.5px; text-align:center; color:rgba(255,253,247,.72); font-weight:800;">Desk access opens with your beta seat. Claim one above.</p>
+        <p style="margin:20px 0 0; font-size:13.5px; text-align:center; color:rgba(255,253,247,.72); font-weight:800;">A real person reads every application.</p>
       </div>
     </div>
   </div>
@@ -1455,13 +2275,16 @@
 <footer>
   <div class="wrap">
     <div class="foot-row">
-      <a class="brand" href="#">Mind<span style="color:var(--gold-deep);">Craft</span></a>
+      <a class="brand" href="#" aria-label="MindCraft home">
+        <img src="img/raccoon-logo.png" alt="" width="34" height="34">
+        <span class="visually-hidden">MindCraft</span>
+      </a>
       <div class="foot-links">
-        <a href="#how">The Desk</a>
-        <a class="ext" href="https://mindcraft-93858.web.app/find-a-tutor" target="_blank" rel="noopener">Find a tutor</a>
-        <a href="#start">Apply</a>
-        <a href="#start">Join the beta</a>
-        <a href="#faq">FAQ</a>
+        <a href="#learns">How it learns</a>
+        <a href="#anything">Any subject</a>
+        <a href="#care">Human care</a>
+        <a href="#mission">Mission</a>
+        <a href="desk.html">Open The Desk</a>
       </div>
       <div class="foot-links foot-social">
         <a href="mailto:joinmindcraft@gmail.com">Email</a>
@@ -1478,7 +2301,6 @@
   </div>
 </footer>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script>
   // ---------- Live tutor map (3 demo tutors, searchable) ----------
   (function(){
@@ -1663,23 +2485,219 @@
     ).join('');
   })();
 
-  // Filing chip demo cycle
-  const demos = [
-    { raw:"IMG_4127.jpg",             name:"Stoichiometry practice",   meta:"AP Chem · Unit 3 · filed Oct 12" },
-    { raw:"moodle_dl_final_v2.pdf",   name:"Systems of equations set", meta:"Algebra II · due Thu · tonight" },
-    { raw:"notes photo (blurry).png", name:"Photosynthesis notes",     meta:"AP Bio · summary + diagram ready" },
-  ];
-  let di = 0;
-  const chip = document.getElementById('herochip');
-  setInterval(() => {
-    di = (di + 1) % demos.length;
-    const d = demos[di];
-    chip.classList.remove('swap');
-    void chip.offsetWidth;
-    document.getElementById('hc-raw').textContent = d.raw;
-    document.getElementById('hc-filed').innerHTML = d.name + '<small>' + d.meta + '</small>';
-    chip.classList.add('swap');
-  }, 3400);
+  // Calm pan/drag on the dotted workspace board
+  (function(){
+    const board = document.querySelector('.workspace-board');
+    if (!board) return;
+    let deskZoom = 1;
+    let dragging = false;
+    let startX = 0, startY = 0, baseX = 0, baseY = 0, panX = 0, panY = 0;
+    const limit = () => {
+      const base = window.matchMedia('(max-width: 640px)').matches ? 26 : 34;
+      return base + Math.max(0,deskZoom - 1) * Math.min(board.clientWidth,board.clientHeight) * .42;
+    };
+    const clamp = (v) => Math.max(-limit(), Math.min(limit(), v));
+    const setPan = (x, y) => {
+      panX = clamp(x); panY = clamp(y);
+      board.style.setProperty('--pan-x', panX.toFixed(1) + 'px');
+      board.style.setProperty('--pan-y', panY.toFixed(1) + 'px');
+    };
+    board.addEventListener('pointerdown', (e) => {
+      dragging = true;
+      board.setPointerCapture?.(e.pointerId);
+      startX = e.clientX; startY = e.clientY; baseX = panX; baseY = panY;
+    });
+    board.addEventListener('pointermove', (e) => {
+      const rect = board.getBoundingClientRect();
+      if (dragging){
+        setPan(baseX + (e.clientX - startX) * .26, baseY + (e.clientY - startY) * .26);
+      } else if (e.pointerType === 'mouse'){
+        const x = ((e.clientX - rect.left) / rect.width - .5) * 20;
+        const y = ((e.clientY - rect.top) / rect.height - .5) * 16;
+        setPan(x, y);
+      }
+    });
+    board.addEventListener('pointerup', () => { dragging = false; });
+    board.addEventListener('pointercancel', () => { dragging = false; });
+    board.addEventListener('pointerleave', () => { if (!dragging) setPan(0, 0); });
+
+    const bindWorkspaceDrag = item => {
+      let itemDragging = false;
+      let itemMoved = false;
+      let sx = 0, sy = 0, bx = 0, by = 0, dx = 0, dy = 0;
+      const itemLimit = () => window.matchMedia('(max-width: 640px)').matches ? 42 : 58;
+      const itemClamp = v => Math.max(-itemLimit(), Math.min(itemLimit(), v));
+      const setItem = (x, y) => {
+        dx = itemClamp(x); dy = itemClamp(y);
+        item.style.setProperty('--drag-x', dx.toFixed(1) + 'px');
+        item.style.setProperty('--drag-y', dy.toFixed(1) + 'px');
+      };
+      item.addEventListener('pointerdown', e => {
+        itemDragging = true;
+        itemMoved = false;
+        item.classList.add('is-dragging');
+        item.setPointerCapture?.(e.pointerId);
+        sx = e.clientX; sy = e.clientY; bx = dx; by = dy;
+        e.stopPropagation();
+      });
+      item.addEventListener('pointermove', e => {
+        if (!itemDragging) return;
+        if (Math.abs(e.clientX - sx) + Math.abs(e.clientY - sy) > 5) itemMoved = true;
+        setItem(bx + (e.clientX - sx) / deskZoom, by + (e.clientY - sy) / deskZoom);
+        e.stopPropagation();
+      });
+      ['pointerup','pointercancel'].forEach(type => item.addEventListener(type, () => {
+        itemDragging = false;
+        item.dataset.justDragged = itemMoved ? '1' : '0';
+        item.classList.remove('is-dragging');
+      }));
+    };
+    board.querySelectorAll('[data-draggable]').forEach(bindWorkspaceDrag);
+
+    const composer = document.getElementById('noteComposer');
+    const addNoteBtn = document.getElementById('addNoteBtn');
+    const noteText = document.getElementById('noteText');
+    const noteStatus = document.getElementById('noteStatus');
+    const workspaceCluster = document.getElementById('workspaceCluster');
+    const zoomOut = document.getElementById('heroZoomOut');
+    const zoomIn = document.getElementById('heroZoomIn');
+    const jesseCard = document.getElementById('jesseCard');
+    const deskPrompt = document.getElementById('deskPrompt');
+    const deskPromptInput = document.getElementById('deskPromptInput');
+    let createdNoteCount = 0;
+    const setZoom = value => {
+      deskZoom = Math.max(.33, Math.min(3, value));
+      board.style.setProperty('--desk-zoom', deskZoom.toFixed(2));
+      zoomOut.disabled = deskZoom <= .34;
+      zoomIn.disabled = deskZoom >= 2.99;
+    };
+    [zoomOut, zoomIn].forEach(button => button?.addEventListener('pointerdown', e => e.stopPropagation()));
+    zoomOut?.addEventListener('click', () => setZoom(deskZoom / 1.35));
+    zoomIn?.addEventListener('click', () => setZoom(deskZoom * 1.35));
+    setZoom(1);
+    addNoteBtn?.addEventListener('pointerdown', e => e.stopPropagation());
+    addNoteBtn?.addEventListener('click', () => {
+      composer?.classList.toggle('is-open');
+      setTimeout(() => noteText?.focus({ preventScroll:true }), 80);
+    });
+    composer?.addEventListener('pointerdown', e => e.stopPropagation());
+    deskPrompt?.addEventListener('pointerdown', e => e.stopPropagation());
+    jesseCard?.addEventListener('click', () => {
+      if (jesseCard.dataset.justDragged === '1') {
+        jesseCard.dataset.justDragged = '0';
+        return;
+      }
+      const opening = !deskPrompt?.classList.contains('is-open');
+      deskPrompt?.classList.toggle('is-open', opening);
+      jesseCard.setAttribute('aria-expanded', String(opening));
+      if (opening) setTimeout(() => deskPromptInput?.focus({ preventScroll:true }), 80);
+    });
+    deskPrompt?.addEventListener('submit', e => {
+      e.preventDefault();
+      const prompt = (deskPromptInput?.value || '').trim().slice(0, 140);
+      if (!prompt) return;
+      const line = document.getElementById('transcribeLine');
+      if (line) line.textContent = prompt;
+      deskPromptInput.value = '';
+      deskPrompt.classList.remove('is-open');
+      jesseCard?.setAttribute('aria-expanded','false');
+    });
+    const appendWorkspaceNote = text => {
+      if (!workspaceCluster) return;
+      const index = createdNoteCount++;
+      const note = document.createElement('article');
+      note.className = 'paper-card user-note workspace-item';
+      note.dataset.draggable = '';
+      const mobile = window.matchMedia('(max-width:640px)').matches;
+      const positions = mobile
+        ? [
+            { left:'2px', top:'270px', rotate:'-1deg' },
+            { right:'2px', top:'276px', rotate:'1deg' },
+            { left:'30%', top:'8px', rotate:'.5deg' }
+          ]
+        : [
+            { left:'4%', top:'330px', rotate:'-1deg' },
+            { right:'4%', top:'332px', rotate:'1deg' },
+            { left:'36%', top:'8px', rotate:'.5deg' },
+            { right:'5%', top:'24px', rotate:'-1deg' }
+          ];
+      const position = positions[index % positions.length];
+      Object.entries(position).forEach(([key,value]) => {
+        if (key === 'rotate') note.style.setProperty('--r',value);
+        else note.style[key] = value;
+      });
+      const cycle = Math.floor(index / positions.length);
+      note.style.setProperty('--drag-x',(cycle * 12) + 'px');
+      note.style.setProperty('--drag-y',(cycle * 10) + 'px');
+      const label = document.createElement('b');
+      label.textContent = 'New memo';
+      const copy = document.createElement('span');
+      copy.textContent = text;
+      note.append(label,copy);
+      workspaceCluster.appendChild(note);
+      bindWorkspaceDrag(note);
+    };
+    composer?.addEventListener('submit', async e => {
+      e.preventDefault();
+      const text = (noteText?.value || '').trim().slice(0, 180);
+      if (!text) return;
+      appendWorkspaceNote(text);
+      noteText.value = '';
+      composer.classList.remove('is-open');
+      noteStatus.textContent = 'Saving...';
+      const payload = {
+        note: text,
+        source: 'marketing_field_desk',
+        context: 'Jesse Kitchen worksheet',
+        createdAt: new Date().toISOString()
+      };
+      let saved = false;
+      try {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 3500);
+        const res = await fetch('/api/marketing-note', {
+          method:'POST',
+          credentials:'same-origin',
+          signal:controller.signal,
+          headers:{
+            'Content-Type':'application/json',
+            'Accept':'application/json',
+            'X-MindCraft-Intent':'pin-note'
+          },
+          body:JSON.stringify(payload)
+        });
+        clearTimeout(timeout);
+        saved = res.ok;
+      } catch (_) {
+        saved = false;
+      }
+      noteStatus.textContent = saved ? 'Pinned securely.' : 'Pinned locally for preview.';
+    });
+
+    const lines = [
+      'Noticed: visual examples help Jesse move from setup to solution.',
+      'Carrying that preference into the next ACT lesson.',
+      'Tutor context ready: show the picture before naming the formula.'
+    ];
+    const transcribeLine = document.getElementById('transcribeLine');
+    let lineIndex = 0;
+    if (transcribeLine){
+      setInterval(() => {
+        lineIndex = (lineIndex + 1) % lines.length;
+        transcribeLine.animate(
+          [{ opacity:1, transform:'translateY(0)' }, { opacity:0, transform:'translateY(5px)' }],
+          { duration:160, easing:'ease-out' }
+        ).onfinish = () => {
+          transcribeLine.textContent = lines[lineIndex];
+          transcribeLine.animate(
+            [{ opacity:0, transform:'translateY(-5px)' }, { opacity:1, transform:'translateY(0)' }],
+            { duration:230, easing:'cubic-bezier(.16,1,.3,1)' }
+          );
+        };
+      }, 5200);
+    }
+
+  })();
 
   // Scroll reveal
   const io = new IntersectionObserver(entries => {
@@ -1690,7 +2708,7 @@
   // Scroll progress + section-aware nav + hide-on-scroll-down
   const bar = document.getElementById('progress');
   const nav = document.querySelector('.nav');
-  const darkSections = [document.querySelector('.hero'), document.querySelector('.vision'), document.querySelector('.act')];
+  const darkSections = [document.querySelector('.hero'), document.querySelector('.care-story'), document.querySelector('.mission-story')];
   let lastScrollY = window.scrollY || 0;
   let navTicking = false;
   function updateNav(){
@@ -1724,28 +2742,29 @@
   nav.addEventListener('focusin', () => nav.classList.remove('is-hidden'));
   updateNav();
 
-  // ---------- Drop demo: toss a PDF → note summary ----------
-  const DD_NOTES = {
+  // ---------- Drop demo: live marketing-drop API + samples ----------
+  const DROP_API = 'https://mindcraft-webhook.vercel.app/api/marketing-drop';
+  const DD_FALLBACK = {
     systems: {
-      title: 'Systems of Equations',
+      title: 'Systems of Equations', course: 'Algebra II',
       meta: 'Algebra II · Unit 5 · due Thursday',
       bullets: ['Named and dated for you', 'Graph + word problem on one page', "Ready for tonight's study"],
       whisper: 'named, dated, waiting in your binder'
     },
     gatsby: {
-      title: 'Gatsby Annotations',
+      title: 'Gatsby Annotations', course: 'English 11',
       meta: 'English 11 · Ch. 4-6 · due Friday',
       bullets: ['Quotes you can reopen fast', 'No more hunting the PDF', 'Filed with the chapter'],
       whisper: 'the desk kept the quotes that matter'
     },
     chem: {
-      title: 'Stoichiometry Set',
+      title: 'Stoichiometry Set', course: 'AP Chem',
       meta: 'AP Chem · Unit 3 · quiz Monday',
       bullets: ['Four problems, one unit', 'Queued before the quiz', 'Unit 3, not IMG_whatever'],
       whisper: 'unit 3, not "IMG_whatever"'
     },
     circles: {
-      title: 'Circle Theorems',
+      title: 'Circle Theorems', course: 'Geometry',
       meta: 'Geometry · Unit 6 · practice',
       bullets: ['Theorems titled for search', 'Practice when you need it', 'Geometry finally has a home'],
       whisper: 'geometry finally has a home'
@@ -1756,33 +2775,95 @@
   const ddMeta = document.getElementById('ddNoteMeta');
   const ddBody = document.getElementById('ddNoteBody');
   const ddWhisper = document.getElementById('ddNoteWhisper');
-  function fillDdNote(n){
+  const ddBadge = document.getElementById('ddLiveBadge');
+  const ddZone = document.getElementById('ddLiveZone');
+  const ddFile = document.getElementById('ddLiveFile');
+  function fillDdNote(n, live){
     ddTitle.textContent = n.title;
-    ddMeta.textContent = n.meta;
-    ddBody.replaceChildren(...n.bullets.map(t => {
+    ddMeta.textContent = n.meta || ((n.course || 'Binder') + ' · filed just now');
+    const bullets = Array.isArray(n.bullets) ? n.bullets : [];
+    ddBody.replaceChildren(...bullets.map(t => {
       const li = document.createElement('li');
       li.textContent = t;
       return li;
     }));
-    ddWhisper.textContent = n.whisper;
+    ddWhisper.textContent = n.whisper || 'named, dated, waiting in your binder';
+    if (ddBadge) ddBadge.hidden = !live;
+    ddNote.style.animation = 'none';
+    void ddNote.offsetWidth;
+    ddNote.style.animation = '';
+  }
+  async function fileViaApi(payload, fallback){
+    if (ddZone) ddZone.classList.add('is-busy');
+    try {
+      const res = await fetch(DROP_API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        mode: 'cors',
+      });
+      if (!res.ok) throw new Error('drop failed');
+      const data = await res.json();
+      fillDdNote(data, data.source === 'live' || Boolean(data.title));
+      return data;
+    } catch (_) {
+      if (fallback) fillDdNote(fallback, false);
+      return fallback;
+    } finally {
+      if (ddZone) ddZone.classList.remove('is-busy');
+    }
   }
   document.querySelectorAll('.dd-pdf').forEach(btn => {
     btn.addEventListener('click', () => {
       const id = btn.dataset.id;
-      const n = DD_NOTES[id];
-      if (!n) return;
+      const fallback = DD_FALLBACK[id];
       document.querySelectorAll('.dd-pdf').forEach(b => {
         const on = b === btn;
         b.classList.toggle('is-on', on);
         b.classList.toggle('is-dim', !on);
         b.setAttribute('aria-pressed', on ? 'true' : 'false');
       });
-      ddNote.style.animation = 'none';
-      void ddNote.offsetWidth;
-      ddNote.style.animation = '';
-      fillDdNote(n);
+      void fileViaApi({ filename: btn.dataset.file || (id + '.pdf') }, fallback);
     });
   });
+  function readFileAsDataUrl(file){
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(String(reader.result || ''));
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+  async function handleLiveFile(file){
+    if (!file) return;
+    const fallback = {
+      title: file.name.replace(/\.[^.]+$/, '') || 'School drop',
+      course: 'Binder',
+      meta: 'Binder · filed just now',
+      bullets: ['Named from what you dropped', 'Ready on The Desk', 'Ask can find it later'],
+      whisper: 'dropped, named, waiting in your binder',
+    };
+    let imageBase64;
+    if (file.type.startsWith('image/') && file.size < 900000) {
+      imageBase64 = await readFileAsDataUrl(file);
+    }
+    await fileViaApi({ filename: file.name, imageBase64 }, fallback);
+  }
+  if (ddFile) {
+    ddFile.addEventListener('change', () => handleLiveFile(ddFile.files && ddFile.files[0]));
+  }
+  if (ddZone) {
+    ;['dragenter','dragover'].forEach(ev => ddZone.addEventListener(ev, e => {
+      e.preventDefault(); ddZone.classList.add('is-drag');
+    }));
+    ;['dragleave','drop'].forEach(ev => ddZone.addEventListener(ev, e => {
+      e.preventDefault(); ddZone.classList.remove('is-drag');
+    }));
+    ddZone.addEventListener('drop', e => {
+      const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+      handleLiveFile(f);
+    });
+  }
 
   // ---------- Apply tabs (student / tutor) ----------
   const applyStage = document.getElementById('applyStage');
@@ -1810,6 +2891,50 @@
     done.hidden = false;
     document.getElementById('start').scrollIntoView();
   }
+
+  // ---------- Website lead capture → webhook → Admin Leads + 1hr email ----------
+  const LEAD_API = 'https://mindcraft-webhook.vercel.app/api/marketing-lead';
+  async function captureLead(payload){
+    try {
+      await fetch(LEAD_API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        mode: 'cors',
+        keepalive: true,
+      });
+      try { localStorage.setItem('mc_lead_email', payload.email || ''); } catch (_) {}
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  // Apply forms → marketing_leads (FormSubmit still emails inbox; follow-up email is automatic)
+  document.getElementById('applyFormStudent')?.addEventListener('submit', () => {
+    const email = document.getElementById('applyEmail')?.value;
+    const name = document.getElementById('parentName')?.value || document.getElementById('studentName')?.value || '';
+    const note = document.getElementById('goal')?.value || '';
+    if (email) {
+      void captureLead({
+        email, name, role: 'student_apply', source: 'apply_student', note,
+        page: '#start',
+        _honey: document.querySelector('#applyFormStudent [name="_honey"]')?.value || '',
+      });
+    }
+  });
+  document.getElementById('applyFormTutor')?.addEventListener('submit', () => {
+    const email = document.getElementById('tutorEmail')?.value;
+    const name = document.getElementById('tutorName')?.value || '';
+    const note = document.getElementById('tutorBio')?.value || '';
+    if (email) {
+      void captureLead({
+        email, name, role: 'tutor_apply', source: 'apply_tutor', note,
+        page: '#start',
+        _honey: document.querySelector('#applyFormTutor [name="_honey"]')?.value || '',
+      });
+    }
+  });
 </script>
 </body>
 </html>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!--
+	Sign in with Apple is fully implemented (AuthService.signInWithApple()
+	+ LoginView's appleButton) but the capability CANNOT be granted yet:
+	re-verified 2026-08-08 evening - xcodebuild -allowProvisioningUpdates
+	still fails ("Provisioning profile … doesn't include the Sign In with
+	Apple capability" / "No Accounts"). Paid Apple Developer Program
+	membership + Apple ID signed into Xcode Accounts is required.
+
+	When that lands, flip it on:
+	  1. Add here:
+	     <key>com.apple.developer.applesignin</key>
+	     <array><string>Default</string></array>
+	  2. Set LoginView.appleSignInEnabled = true
+	  3. Enable the Apple provider in Firebase console → Authentication
+	-->
+</dict>
+</plist>

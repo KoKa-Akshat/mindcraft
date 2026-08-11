@@ -87,9 +87,41 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 96 | Attention residue & device distraction in practice | Phone/task-switch tax on FEI attempts | **DONE** (2026-08-07) — Part XCVI / SAFE-ATTN |
 | 97 | Dual coding & diagram FormatId load | Multimedia principles × format axis; when figures help | **DONE** (2026-08-07) — Part XCVII / SAFE-DUAL |
 | 98 | Metacognitive monitoring in gap-scan | Confidence vs accuracy; calibration loop with SAFE-CALIB | **DONE** (2026-08-07) — Part XCVIII / SAFE-MONITOR |
-| 99 | Opportunity cost of tutor minutes vs AI scaffold | When HITL time beats coach; session ROI honesty | **NEXT** |
-| 100 | Worked-example vs problem-solving timing across expertise | When E0→E3 schedule collides with prior knowledge | queued |
-| 101 | Self-regulated learning cycles (Zimmerman) in Practice UX | Forethought/performance/reflection loops; no SRL Score™ | queued |
+| 99 | Opportunity cost of tutor minutes vs AI scaffold | When HITL time beats coach; session ROI honesty | **DONE** (2026-08-07) — Part XCIX / SAFE-ROI |
+| — | **Synthesizer v1.13** | Merge XCII–XCIX SAFE-* into core OS I.4 / XIV / IX / XXI | **DONE** (2026-08-07 UTC 21) |
+| 100 | Worked-example vs problem-solving timing across expertise | When E0→E3 schedule collides with prior knowledge | **DONE** (2026-08-08) — Part C / SAFE-EXPTIME |
+| 101 | Self-regulated learning cycles (Zimmerman) in Practice UX | Forethought/performance/reflection loops; no SRL Score™ | **DONE** (2026-08-08) — Part CI / SAFE-SRL |
+| 102 | Generative learning activities (Fiorella/Mayer) in Practice | Summarize/teach-back/draw; germane load without fluff | **DONE** (2026-08-08) — Part CII / SAFE-GENERATE |
+| 103 | Error climate & psychological safety in tutoring | Destake mistakes without lowering standards | **DONE** (2026-08-08) — Part CIII / SAFE-ERRCLIMATE |
+| 104 | Homework help vs practice identity conflict | Solver as crutch vs FEI gym; parent messaging | **DONE** (2026-08-08) — Part CIV / SAFE-HWHELP |
+| 105 | Gesture & embodiment in math practice | Goldin-Meadow; enact GLA; when motion helps FormatId | **DONE** (2026-08-08) — Part CV / SAFE-GESTURE |
+| 106 | Peer explanation quality (knowledge-building vs telling) | Roscoe/Chi; teach-back rubric; HITL QA | **DONE** (2026-08-08) — Part CVI / SAFE-PEERX |
+| 107 | Curiosity & prediction before reveal | Epistemic emotions; soft-wrong predict→feedback | **DONE** (2026-08-09) — Part CVII / SAFE-PREDICT |
+| — | **Synthesizer v1.14** | Merge C–CVII SAFE-* into core OS I.4 / XIV / IX / XXI | **DONE** (2026-08-09 UTC 03) |
+| 108 | Analogical reasoning & bridge teaching | Gentner structure-mapping; Map bridge UX | **DONE** (2026-08-09) — Part CVIII / SAFE-ANALOG |
+| 109 | Writing-to-learn in math practice | Explanation writing; journal vs FEI; Notes rail | **DONE** (2026-08-09) — Part CIX / SAFE-WRITE |
+| 110 | Spatial skills & math identity | Spatial anxiety; FormatId hops; no Spatial Score™ | **DONE** (2026-08-09) — Part CX / SAFE-SPATIAL |
+| 111 | Formative assessment cycles in tutor sessions | Black/Wiliam grain; exit tickets vs FEI; no Formative Score™ | **DONE** (2026-08-09) — Part CXI / SAFE-FA |
+| 112 | Feedback literacy — how students use coach feedback | Hattie/Timperley; uptake vs dismiss; soft-wrong action | **DONE** (2026-08-09) — Part CXII / SAFE-FBLIT |
+| 113 | Collaborative problem-solving vs solo FEI | CSCL tradeoffs; group work without solo-transfer washout | **DONE** (2026-08-09) — Part CXIII / SAFE-COLLAB |
+| 114 | Desirable difficulty scheduling under exam deadlines | Bjork×SAFE-EXAM; when to ease vs hold challenge pre-ACT | **DONE** (2026-08-10) — Part CXIV / SAFE-DDSCHED |
+| 115 | Tutor identity & belonging (near-peer role models) | Representation without tokenism; hire briefs × SAFE-GENDER/ELL | **DONE** (2026-08-10) — Part CXV / SAFE-ROLEMODEL |
+| 116 | Offline practice fidelity (paper/whiteboard capture) | Photo-to-Map; attempt grain without phone distraction | **DONE** (2026-08-10) — Part CXVI / SAFE-OFFLINE |
+| — | **Synthesizer v1.15** | Merge CVIII–CXVI SAFE-* into core OS I.4 / XIV / IX / XXI | **DONE** (2026-08-10 UTC 09) |
+| 117 | Worked-example fading under high math anxiety | SAFE-FADE × SAFE-EXPOSE; when full examples protect vs trap | **DONE** (2026-08-10) — Part CXVII / SAFE-FADEX |
+| 118 | Parent message framing after soft-wrong streaks | SAFE-PDASH × SAFE-FBLIT; honesty without nag/shame loops | **DONE** (2026-08-10) — Part CXVIII / SAFE-SOFTMSG |
+| 119 | Classroom orchestration of Map during live tutoring | HITL + SAFE-FA; when to open Map mid-session vs after | **DONE** (2026-08-10) — Part CXIX / SAFE-MAPORCH |
+| 120 | Tutor burnout early-warning without wellness theater | SAFE-WORKFORCE × affect privacy; fidelity dips before exit | **DONE** (2026-08-10) — Part CXX / SAFE-BURNWARN |
+| 121 | Explanation quality rubrics for AI coach wraps | SAFE-EXPLAIN × SAFE-GENQ; principle-short QA gates | **DONE** (2026-08-11) — Part CXXI / SAFE-EXPLAINQA |
+| 122 | Partial-credit & soft-wrong taxonomy productization | SAFE-MISCON × SAFE-FBLIT; mark types without gradebook cosplay | **DONE** (2026-08-11) — Part CXXII / SAFE-TAXON |
+| 123 | Exam-week tutor load shedding playbooks | SAFE-BURNWARN × SAFE-DDSCHED; protect FEI fidelity under ACT crunch | **DONE** (2026-08-11) — Part CXXIII / SAFE-LOADSHED |
+| 124 | Distractor design for diagnostic soft-wrong MC | SAFE-TAXON × SAFE-MISCON; Eedi-style options without beauty traps | **DONE** (2026-08-11) — Part CXXIV / SAFE-DISTRACTOR |
+| 125 | Confidence-tagged misses in gap-scan recovery | SAFE-TAXON × SAFE-CALIB; hard/kinda/easy × mark type without Identity Score™ | **DONE** (2026-08-11) — Part CXXV / SAFE-CONFMISS |
+| — | **Synthesizer v1.16** | Merge CXVII–CXXV SAFE-* into core OS I.4 / XIV / IX / XXI | **DONE** (2026-08-11 UTC 15) |
+| 126 | Tutor micro-debrief fidelity under time caps | SAFE-AAR × SAFE-LOADSHED; 90-second after-action without lecture cosplay | **DONE** (2026-08-11) — Part CXXVI / SAFE-MICRODEB |
+| 127 | Parent crunch-week message tests (availability vs thinking minutes) | SAFE-LOADSHED × SAFE-WTP; CBC on shed honesty vs 24/7 brand | **NEXT** |
+| 128 | Format-trap distractors on diagram/graph items | SAFE-DISTRACTOR × SAFE-FORMAT/DUAL; visual distractors without decoration theater | queued |
+| 129 | Session-open brief fidelity under late joins | SAFE-AAR × SAFE-MICRODEB; 30-second brief when clock already burned | queued |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 
@@ -142,10 +174,38 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any unlimited-hints / help-NPS NS / avoidance-as-grit / Help Score™ / parent hint-stalk / metacognition≡ACT points / “never stuck” answer-dump hero (Part LXXXIX)
 - Any DAU/streak/XP/blocked-accuracy as learning NS / FEI Score™ / single-KPI tutor pay on one FEI event / thumbs-up≡learning / science-backed identity ads without IUA / celebrate retry without binge gates (Part XC)
 - Any unlimited free hard peeks / Hint Score™ / XP-for-hints / shame-timer peek cost / black-box perfect-hint AI / fade costume with free bottom-out menu (Part XCI)
-- Any longer≡better / token-count quality / Explanation Score™ / AI monologue≡SE / unlimited thorough AI essays / fixed long wrap across expertise / seductive coach fluff as pedagogy (Part XCII)
-- Any all-struggle≡productive / Struggle Score™ / blank-time NS / always-wait silence theater / instant hard dump on first stall / never-stuck answer hero / errors-always-scar fear / dwell-XP grit (Part XCIII)
-- Any every-miss≡PF / fail-first-always / generation-without-consolidation / PF Score™ / discovery-as-identity / anxiety-forced stew≡PF / guaranteed ACT points from invent-first (Part XCIV)
-- Any guild/master cosplay / modeling≡lecture / never-fade permanent coach / talk-%≡CA / Apprenticeship Score™ / Discord≡apprenticeship / reciprocal costume without turns / CA ads without phase logs (Part XCV)
-- Any Focus Score™ / phone-shame pedagogy / multitasking-as-talent / mid-attempt DAU pushes / presence≡modern learning / guaranteed ACT from focus kits / covert attention surveillance (Part XCVI)
-- Any Dual Coding Score™ / always-add-picture / decoration≡dual-coding / visual-learner meshing / animation-default≡science / redundancy stack as thoroughness / split-legend density / unverified figure diagnostics / guaranteed ACT from multimedia (Part XCVII)
-- Any Monitoring Score™ / metacognition ads without control wiring / easy-only≡calibration / immediate-surety≡delayed-JOL / equal wrong updates / one-scan calibration / raise-metacognition identity / guaranteed ACT from monitoring packaging (Part XCVIII)
+- Any longer≡better / token-count quality / Explanation Score™ / AI monologue≡SE / unlimited thorough AI essays / fixed long wrap across expertise / seductive coach fluff as pedagogy (Part XCII / v1.13 company law)
+- Any all-struggle≡productive / Struggle Score™ / blank-time NS / always-wait silence theater / instant hard dump on first stall / never-stuck answer hero / errors-always-scar fear / dwell-XP grit (Part XCIII / v1.13 company law)
+- Any every-miss≡PF / fail-first-always / generation-without-consolidation / PF Score™ / discovery-as-identity / anxiety-forced stew≡PF / guaranteed ACT points from invent-first (Part XCIV / v1.13 company law)
+- Any guild/master cosplay / modeling≡lecture / never-fade permanent coach / talk-%≡CA / Apprenticeship Score™ / Discord≡apprenticeship / reciprocal costume without turns / CA ads without phase logs (Part XCV / v1.13 company law)
+- Any Focus Score™ / phone-shame pedagogy / multitasking-as-talent / mid-attempt DAU pushes / presence≡modern learning / guaranteed ACT from focus kits / covert attention surveillance (Part XCVI / v1.13 company law)
+- Any Dual Coding Score™ / always-add-picture / decoration≡dual-coding / visual-learner meshing / animation-default≡science / redundancy stack as thoroughness / split-legend density / unverified figure diagnostics / guaranteed ACT from multimedia (Part XCVII / v1.13 company law)
+- Any Monitoring Score™ / metacognition ads without control wiring / easy-only≡calibration / immediate-surety≡delayed-JOL / equal wrong updates / one-scan calibration / raise-metacognition identity / guaranteed ACT from monitoring packaging (Part XCVIII / v1.13 company law)
+- Any AI-replaces-tutors / tutoring-is-free / unlimited-human entitlement / hours-booked NS / Session ROI Score™ / VanLehn-as-ChatGPT license / Bastani practice scores≡learning / school 0.37σ as ACT guarantee from thin sessions (Part XCIX / v1.13 company law)
+- Any universal E0→E3 destiny / fixed≡adaptive fade / gap-scan confidence≡fade stage / Example Timing Score™ / always-example or always-struggle-first brand / black-box perfect-fade AI (Part C / SAFE-EXPTIME / v1.14 company law)
+- Any SRL Score™ / reflection-streak NS / survey-SRL≡event / streak≡self-regulation / forethought-without-control / ability-shame reflection / “metacognition module” ACT guarantees (Part CI / SAFE-SRL / v1.14 company law)
+- Any Generative Learning Score™ / AI monologue≡generation / verbatim summary theater / unguided doodle≡dual-coding / teach-for-XP / eight-strategy menu bomb / ACT guarantees from GLA branding (Part CII / SAFE-GENERATE / v1.14 company law)
+- Any Psychological Safety Score™ / Comfort % / poster-only safe space / Bermuda-triangle redirect / shame reel / praise-fog AI≡climate / destake≡no-standards / ACT guarantees from climate branding (Part CIII / SAFE-ERRCLIMATE / v1.14 company law)
+- Any Homework Completion Score™ / tonight-% NS / “we finish your worksheet” / assisted≡ready / Chegg-clone dump hero / Bastani Base Solver ads / purity ban on all homework help / parent homework stalk / grade guarantees from Solver (Part CIV / SAFE-HWHELP / v1.14 company law)
+- Any Embodiment Score™ / Gesture Score™ / Motion Minutes NS / kinesthetic-style meshing / always-add-gesture / manipulative≡gesture≡abstraction / forced produce-only / pose-camera embodiment AI / AR body immersion≡FEI / ACT guarantees from gesture kits (Part CV / SAFE-GESTURE / v1.14 company law)
+- Any Peer Explanation Score™ / Teach Minutes NS / teach-for-XP / knowledge-telling≡quality / Discord≡knowledge-building / AI monologue≡peer teaching / unlock-without-solo after explain / peer-tutoring ACT guarantees (Part CVI / SAFE-PEERX / v1.14 company law)
+- Any Curiosity Score™ / Engagement-from-curiosity NS / cliffhanger-without-commit / postdiction theater / instant-reveal entertainment / guess-for-XP / always-predict dogma / curiosity ACT guarantees (Part CVII / SAFE-PREDICT / v1.14 company law)
+- Any Analogy Score™ / Mapping Minutes NS / analogy-mention≡pedagogy / surface-story≡structure / AI likeness dump without student mapping / always-analogy dogma / HOT Score™ / Discord≡supported compare / analogy ACT guarantees (Part CVIII / SAFE-ANALOG)
+- Any Writing Score™ / Journal Minutes NS / freewrite diary≡learning / longer-essay≡deeper / AI rewrite≡WTL / Notes scrapbook without FEI / always-journal dogma / writing ACT guarantees (Part CIX / SAFE-WRITE)
+- Any Spatial Score™ / Mental Rotation Minutes NS / isolated brain-training≡math identity / innate or boys-better spatial costume / always-add-3D / Spatial Personality™ / unscaffolded diagram flood / spatial ACT guarantees (Part CX / SAFE-SPATIAL)
+- Any Formative Score™ / Assessment Minutes NS / exit-ticket≡learning / Black–Wiliam 0.4–0.7 product ads / more-quizzes≡formative / gradebook cosplay / “got it?”≡closed cycle / AfL ACT guarantees (Part CXI / SAFE-FA)
+- Any Feedback Literacy Score™ / Feedback Minutes NS / delivery≡uptake / thumbs-up≡used / longer≡more literate / illiteracy-shame without design fix / always-more-feedback dogma / feedback-literacy ACT guarantees (Part CXII / SAFE-FBLIT)
+- Any Collaboration Score™ / Group Minutes NS / Discord≡CSCL learning / group-correct≡ready / free-rider-blind unlocks / always-collab dogma / collab ACT guarantees (Part CXIII / SAFE-COLLAB)
+- Any Desirable Difficulty Score™ / Challenge Minutes NS / always-ease-before-ACT / blocked-comfort≡ready / always-max-DD-until-bell / last-48h scored flood-as-DD / cram-week≡ready / schedule ACT-point guarantees (Part CXIV / SAFE-DDSCHED)
+- Any Representation Score™ / Diversity Minutes NS / token STEM costume≡belonging / demographic match≡quality / empty likeness praise≡recognition / Belonging Score™ / matching ACT guarantees / soft standards for matched pairs (Part CXV / SAFE-ROLEMODEL)
+- Any Capture Score™ / Photo Minutes NS / OCR≡mastery / always-on camera / photo→answer Practice hero / Capture ACT guarantees / phone-companion focus theater (Part CXVI / SAFE-OFFLINE)
+- Any forever-E0 anxious track / day-one aggressive fade flood for HMA / Anxiety Score™ or Calm Score™ fade gate / Fade Score™ NS / permanent peek “support” / soft standards for anxious personas / protect-without-fade ChatGPT dump / ACT guarantees from anxiety-aware scaffolding (Part CXVII / SAFE-FADEX / v1.16 company law)
+- Any Miss Streak / soft-wrong shame push / live wrong-answer stalk / Parent Correctness Score™ / empty “mistakes are good!” without grain+CTA / controlling “sit until correct” default / growth-mindset parent letter≡FEI / ACT guarantees from parent messaging (Part CXVIII / SAFE-SOFTMSG / v1.16 company law)
+- Any always-on student Map / Map Minutes or Map Score™ NS / mid-attempt full-graph dump / Map-open≡cycle-closed / dual-screen Map+problem default / ontology tour≡tutoring / ACT guarantees from Map airtime (Part CXIX / SAFE-MAPORCH / v1.16 company law)
+- Any Burnout Score™ / Wellness Minutes NS / mandatory mood gate / tutor emotion-AI / wellness-module-as-primary when caseload is the demand / retention-% without fidelity / sell tutor-affect dashboards / ACT guarantees from wellness packaging (Part CXX / SAFE-BURNWARN / v1.16 company law)
+- Any fluency/human-likeness≡pedagogy / thumbs-up thoroughness NS / Explanation Score™ or Rubric Score™ / LLM-judge-alone ship authority / soft-pass wrong math because prose “helped” / reveal-answer default as guidance / auto-wrap-QA replacing GENQ key verify / ACT guarantees from rubric-scored AI coach (Part CXXI / SAFE-EXPLAINQA / v1.16 company law)
+- Any soft-wrong≡half-credit / Partial Credit Score™ or Mark Minutes NS / all-wrongs-equal mastery deltas / gradebook cosplay (% banners, letter grades, live point stalk) / ordered PCM steps≡identity / empty celebrate-mistakes without mark→route / ACT guarantees from partial-credit packaging (Part CXXII / SAFE-TAXON / v1.16 company law)
+- Any hours-booked / session-volume crunch NS / Load Shed Score™ or Crunch Minutes / infinite-availability exam brand / wellness-primary under caseload spike / hire-surge without coach bandwidth / pour-mode≡exam support / hospital-cosplay ads / soft standards for crunch personas / ACT guarantees from crunch playbooks (Part CXXIII / SAFE-LOADSHED / v1.16 company law)
+- Any Distractor Score™ / Option Minutes / always-four≡better / beauty traps·absurd fillers·NOTA-AOTA default / unmapped wrongs≡diagnostic / LLM distractors without mis_ seal / option-count or item-count NS / ACT guarantees from distractor packaging (Part CXXIV / SAFE-DISTRACTOR / v1.16 company law)
+- Any Identity Score™ / Confidence Personality™ from hard/kinda/easy / equal-weight recovery for all misses / easy≡mastered / inflate-confidence as recovery NS / Belief Score™ / CA-without-route / ACT guarantees from confidence-tagged recovery packaging (Part CXXV / SAFE-CONFMISS / v1.16 company law)
+- Any “no time for debrief” default / lecture-as-micro-debrief / Microdebrief Score™·Debrief Minutes·Reflection Streak NS / +25% ACT from borrowed debrief metas / military-cosplay micro-AAR / vibes-only close without traces / therapy-length mandate under crunch / ACT guarantees from micro-debrief packaging (Part CXXVI / SAFE-MICRODEB)

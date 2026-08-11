@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b2e24" />
+  <title>MindCraft | Namaste</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet" />
+  <style>
+    :root { --deep:#0b2e24; --mint:#2ec4a6; --paper:#f7fbf9; --ink:#eaf5f0; --ease:cubic-bezier(.22,.9,.24,1); }
+    * { box-sizing:border-box; }
+    html,body { width:100%; height:100%; margin:0; overflow:hidden; background:var(--deep); }
+    body { color:var(--ink); font-family:"DM Sans",system-ui,sans-serif; }
+    .welcome {
+      position:relative; isolation:isolate; width:100%; height:100%; overflow:hidden;
+      background:
+        radial-gradient(ellipse 44% 42% at 50% 45%,rgba(46,196,166,.16),transparent 72%),
+        radial-gradient(ellipse 60% 55% at 12% 0%,rgba(52,151,112,.28),transparent 70%),
+        linear-gradient(160deg,#145a45 0%,#0b2e24 58%,#071f18 100%);
+    }
+    .welcome::before {
+      content:""; position:absolute; inset:0; pointer-events:none; opacity:.34;
+      background-image:radial-gradient(rgba(234,245,240,.48) .65px,transparent .7px);
+      background-size:28px 28px; mask-image:linear-gradient(to bottom,black,transparent 72%);
+    }
+    .wordmark { position:absolute; top:24px; left:28px; z-index:4; margin:0; font-size:17px; font-weight:700; letter-spacing:-.04em; }
+    .wordmark span { color:var(--mint); }
+    .counter { position:absolute; top:27px; right:28px; z-index:4; color:rgba(234,245,240,.58); font:500 10px/1 "IBM Plex Mono",monospace; letter-spacing:.13em; text-transform:uppercase; }
+    .stage { position:absolute; inset:0; display:grid; place-items:center; padding:80px 24px 48px; }
+    .arrival { position:relative; width:min(500px,88vw); height:min(500px,68vh); }
+    .orbit { position:absolute; inset:13% 5% 8%; border:1px solid rgba(46,196,166,.18); border-radius:50%; transform:rotate(-17deg); }
+    .orbit::after { content:""; position:absolute; width:7px; height:7px; border-radius:50%; background:var(--mint); box-shadow:0 0 16px rgba(46,196,166,.75); top:5%; right:13%; }
+    .perch { position:absolute; left:50%; bottom:15%; width:156px; height:14px; transform:translateX(-50%); border-radius:50%; background:radial-gradient(ellipse,rgba(0,0,0,.52),transparent 70%); filter:blur(3px); animation:shadowLand 4.8s var(--ease) both; }
+    .owl-flight { position:absolute; left:50%; top:50%; width:154px; height:154px; transform:translate(-50%,-50%); animation:arrive 4.8s var(--ease) both; }
+    .wing { position:absolute; top:38px; width:92px; height:88px; opacity:0; border-top:3px solid rgba(234,245,240,.72); border-radius:80% 18% 0 0; filter:drop-shadow(0 0 8px rgba(46,196,166,.25)); }
+    .wing.left { right:99px; transform-origin:100% 78%; animation:wingLeft 4.8s var(--ease) both; }
+    .wing.right { left:99px; transform-origin:0 78%; animation:wingRight 4.8s var(--ease) both; }
+    .wing::after { content:""; position:absolute; top:13px; width:68px; height:62px; border-top:1px solid rgba(46,196,166,.78); border-radius:80% 18% 0 0; }
+    .wing.left::after { right:0; transform:rotate(-10deg); }
+    .wing.right::after { left:0; transform:scaleX(-1) rotate(-10deg); }
+    .seal { position:absolute; inset:16px; border-radius:50%; padding:6px; background:radial-gradient(circle at 36% 28%,#fff,#edf6f2 65%,#bfdbd0); box-shadow:0 20px 42px rgba(0,0,0,.37),0 0 0 1px rgba(255,255,255,.25); }
+    .seal::after { content:""; position:absolute; inset:-7px; border:1px solid rgba(46,196,166,.52); border-radius:50%; opacity:0; animation:aura 4.8s ease-out both; }
+    .seal img { display:block; width:100%; height:100%; border-radius:50%; object-fit:cover; transform:scale(1.1); }
+    .letters { position:absolute; inset:0; pointer-events:none; }
+    .letter { --x:0px; --y:0px; position:absolute; left:50%; top:46%; color:var(--mint); font:600 18px/1 "IBM Plex Mono",monospace; text-shadow:0 0 16px rgba(46,196,166,.45); opacity:0; transform:translate(-50%,-50%); animation:letterFall 4.8s var(--ease) both; animation-delay:var(--delay); }
+    .letter:nth-child(1){--x:-128px;--y:116px;--delay:.72s}.letter:nth-child(2){--x:-84px;--y:146px;--delay:.82s}.letter:nth-child(3){--x:-44px;--y:112px;--delay:.92s}.letter:nth-child(4){--x:0px;--y:156px;--delay:1.02s}.letter:nth-child(5){--x:47px;--y:116px;--delay:1.12s}.letter:nth-child(6){--x:88px;--y:145px;--delay:1.22s}.letter:nth-child(7){--x:128px;--y:112px;--delay:1.32s}
+    .copy { position:absolute; left:50%; bottom:4%; width:min(440px,100%); transform:translateX(-50%); text-align:center; }
+    .eyebrow { margin:0 0 12px; color:var(--mint); font:500 10px/1 "IBM Plex Mono",monospace; letter-spacing:.16em; text-transform:uppercase; opacity:0; animation:copyIn 4.8s var(--ease) both; animation-delay:2.26s; }
+    h1 { margin:0; font:italic clamp(54px,11vw,84px)/.86 "Instrument Serif",Georgia,serif; font-weight:400; letter-spacing:-.045em; opacity:0; transform:translateY(10px); animation:copyIn 4.8s var(--ease) both; animation-delay:2.42s; }
+    .sub { margin:16px auto 0; max-width:270px; color:rgba(234,245,240,.66); font-size:14px; line-height:1.5; opacity:0; animation:copyIn 4.8s var(--ease) both; animation-delay:2.62s; }
+    .enter { position:absolute; left:50%; bottom:clamp(20px,4vh,42px); z-index:4; transform:translateX(-50%); border:1px solid rgba(46,196,166,.42); border-radius:999px; background:rgba(7,31,24,.42); color:var(--ink); padding:10px 16px; font:600 11px/1 "DM Sans",sans-serif; letter-spacing:.06em; cursor:pointer; opacity:0; animation:copyIn 4.8s var(--ease) both; animation-delay:3.05s; }
+    .enter:hover { border-color:var(--mint); background:rgba(46,196,166,.12); }
+    @keyframes arrive { 0%{opacity:0;transform:translate(44vw,-39vh) scale(.56) rotate(-16deg)} 12%{opacity:1} 46%{transform:translate(-50%,-54%) scale(1.05) rotate(4deg)} 56%{transform:translate(-50%,-47%) scale(.98) rotate(-1deg)} 66%,100%{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(0)} }
+    @keyframes wingLeft { 0%,10%{opacity:0;transform:rotate(-70deg) scale(.5)} 15%,42%{opacity:1;transform:rotate(-10deg) scale(1)} 50%{opacity:.25;transform:rotate(8deg) scale(.92)} 60%,100%{opacity:0;transform:rotate(22deg) scale(.7)} }
+    @keyframes wingRight { 0%,10%{opacity:0;transform:rotate(70deg) scale(.5)} 15%,42%{opacity:1;transform:rotate(10deg) scale(1)} 50%{opacity:.25;transform:rotate(-8deg) scale(.92)} 60%,100%{opacity:0;transform:rotate(-22deg) scale(.7)} }
+    @keyframes letterFall { 0%,20%{opacity:0;transform:translate(-50%,-50%) scale(.5)} 30%{opacity:1} 56%{opacity:.95;transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) rotate(10deg)} 67%,100%{opacity:0;transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y) + 25px)) rotate(16deg)} }
+    @keyframes aura { 0%,45%{opacity:0;transform:scale(.82)} 58%{opacity:.8;transform:scale(1.13)} 72%,100%{opacity:.18;transform:scale(1.04)} }
+    @keyframes shadowLand { 0%,37%{opacity:0;transform:translateX(-50%) scale(.28)} 55%,100%{opacity:1;transform:translateX(-50%) scale(1)} }
+    @keyframes copyIn { 0%,56%{opacity:0;transform:translateY(10px)} 69%,100%{opacity:1;transform:translateY(0)} }
+    @media (prefers-reduced-motion:reduce) { .owl-flight,.wing,.seal::after,.perch,.letter,.eyebrow,h1,.sub,.enter { animation:none; } .owl-flight{opacity:1;transform:translate(-50%,-50%)} .perch{opacity:1}.eyebrow,h1,.sub,.enter{opacity:1;transform:none}.letter{display:none} }
+  </style>
+</head>
+<body>
+  <main class="welcome" aria-label="MindCraft welcome">
+    <p class="wordmark">Mind<span>Craft</span></p>
+    <p class="counter">Welcome sequence · 00:05</p>
+    <div class="stage">
+      <div class="arrival" aria-hidden="true">
+        <div class="orbit"></div>
+        <div class="perch"></div>
+        <div class="owl-flight">
+          <div class="wing left"></div><div class="wing right"></div>
+          <div class="seal"><img src="img/orbs/mascot-ivory.png" alt="" /></div>
+        </div>
+        <div class="letters"><span class="letter">N</span><span class="letter">A</span><span class="letter">M</span><span class="letter">A</span><span class="letter">S</span><span class="letter">T</span><span class="letter">E</span></div>
+        <div class="copy"><p class="eyebrow">Your field desk is ready</p><h1>Namaste.</h1><p class="sub">Start where you are. We will keep the record.</p></div>
+      </div>
+    </div>
+    <button class="enter" type="button" onclick="location.reload()">Replay welcome</button>
+  </main>
+</body>
+</html>

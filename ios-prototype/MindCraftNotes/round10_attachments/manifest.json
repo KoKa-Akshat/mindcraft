@@ -1,0 +1,2117 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "1C719464-9F84-427C-B553-13B86304406F",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Screen Recording 2026-08-08 at 01.08.13 PM",
+        "timestamp" : 1786212493.905
+      }
+    ],
+    "testIdentifier" : "MindCraftNotesUITests/testAnyInputModeAcceptsSimulatedTouch()",
+    "testIdentifierURL" : "test://com.apple.xcode/MindCraftNotes/MindCraftNotesUITests/MindCraftNotesUITests/testAnyInputModeAcceptsSimulatedTouch"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "018D703A-C598-4338-B399-69EA44BC715B.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "App UI hierarchy for com.mindcraft_0_F0F4D314-1030-4D01-80D5-002E446EDB0A.notes-prototype",
+        "timestamp" : 1786212546.912
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "DCC1E3CB-57F4-4B00-B7A0-DF0BD15FAE2A",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-08-08 at 01.09.06 PM",
+        "timestamp" : 1786212546.913
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "314E420A-0934-4BAD-BC40-F96F4E6935A7.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_5833DB3B-ECEF-4B92-9244-13FCA7F8113E.txt",
+        "timestamp" : 1786212546.779
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "EECE74C6-9EDF-4286-90BB-6E6471F4FD6F.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_4A7C6FC6-D957-4D49-BBE6-1EEE47ABDF42.txt",
+        "timestamp" : 1786212545.791
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "EA222001-36E8-49B2-BB79-CDC5BFD28837.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_64637A80-5478-4AB6-8C73-D323B15357AF.txt",
+        "timestamp" : 1786212544.785
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "53A7DFFE-AE6C-46AE-A127-034D736DBE68.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_0F9959C3-9753-414D-B5C5-A1488FC8F160.txt",
+        "timestamp" : 1786212543.78
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "53442E06-34A3-476F-948F-2C5F59A93F31.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_006A0FCE-BBE4-4F66-B5E9-33B8B1A0199F.txt",
+        "timestamp" : 1786212542.778
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "2B8DE7FF-CEE5-43C7-80D8-B13D8F422F3F.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_8F58E881-EC95-4F07-9A69-BA52E89C08EC.txt",
+        "timestamp" : 1786212541.774
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "5CE934B5-3989-46D5-B8A8-2F87390C2793.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_ABF1304E-B3D3-46EE-9E87-AADDF9A5FD70.txt",
+        "timestamp" : 1786212540.771
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "D9358073-F5C6-4BBE-9183-568DCBB565FC.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_DB58E5FF-4C7A-4030-81A2-456B7A994AD3.txt",
+        "timestamp" : 1786212539.827
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "33B18B5C-CAEC-495A-A268-F9A0A4DDEA59.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_80B6C5E8-2ED1-4076-A0DB-7A827D7678FB.txt",
+        "timestamp" : 1786212538.817
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "B3EF3850-750F-4DB3-8920-4F0C6BB6A115.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_1E0B152E-0A7C-4874-9ECC-96634208B79F.txt",
+        "timestamp" : 1786212537.804
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "1CA9795E-25E1-4469-9921-6481CACFCC45",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Screen Recording 2026-08-08 at 01.08.54 PM",
+        "timestamp" : 1786212534.296
+      }
+    ],
+    "testIdentifier" : "MindCraftNotesUITests/testChapterDrillDownShowsRealStoryAndOpensPractice()",
+    "testIdentifierURL" : "test://com.apple.xcode/MindCraftNotes/MindCraftNotesUITests/MindCraftNotesUITests/testChapterDrillDownShowsRealStoryAndOpensPractice"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "EB9A5D2C-5C44-44B3-AD59-50AB5A67806F.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "App UI hierarchy for com.mindcraft_0_CD8D2BC5-D40A-4984-9B37-A041A4655DBC.notes-prototype",
+        "timestamp" : 1786212589.128
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "873BDEA3-00C8-464B-81AA-05A8786A1079",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-08-08 at 01.09.49 PM",
+        "timestamp" : 1786212589.129
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "F252B18E-8DE4-4BFF-B582-94900F0CA234.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_8D69FFE4-EF88-44B8-B5F6-34EB761B1728.txt",
+        "timestamp" : 1786212589.003
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "46634F42-7163-4087-B315-02ACA3118A3F.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_F18F9510-62A0-4E39-8D06-03BFA316E3BD.txt",
+        "timestamp" : 1786212588.036
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "058D1F33-C425-4134-A471-649F7EACB199.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_09868984-5F6E-400B-AA76-D45F354781E7.txt",
+        "timestamp" : 1786212587.021
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "4E7BBB4A-A6F5-4027-A6B3-E16993454DC2.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_7F63CCE2-AE39-4ADB-A829-97B271738E11.txt",
+        "timestamp" : 1786212586.021
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "CC7EE6AE-EB78-45FA-B5A6-B7C4FB13E6A4.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_5D2B9BF4-14F5-4F8B-A717-B55A31328226.txt",
+        "timestamp" : 1786212585.014
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "CF3F6013-4154-442D-97D2-48C76CDBE0F0.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_3D448B46-491E-4BDA-A82E-98027C62C8EA.txt",
+        "timestamp" : 1786212584.009
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "42C9CF35-6A6E-4E05-918B-A877584B16FA.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_BB5CFBBB-5731-45EA-84AC-39E0763D8AF9.txt",
+        "timestamp" : 1786212583.095
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "F230DFF9-3007-41A8-BCB6-ED59E276C89D.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_02CF283A-DBF8-4A76-A962-ED42F7C6064B.txt",
+        "timestamp" : 1786212582.069
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "2F05B5C8-4C8B-4306-9B09-D7055270C148.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_CC486BF9-ADF0-4EA9-986E-50875BE4C622.txt",
+        "timestamp" : 1786212581.051
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "DCB17C99-F111-48E9-93EC-7A58704ABAEB.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_E6E55ED8-DF57-4431-91BC-3160B851245A.txt",
+        "timestamp" : 1786212580.034
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "42869AAF-AC8E-4669-89E8-C95D8D0B2EAA",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Screen Recording 2026-08-08 at 01.09.36 PM",
+        "timestamp" : 1786212576.53
+      }
+    ],
+    "testIdentifier" : "MindCraftNotesUITests/testChapterViewLandscapeHasNoTextImageOverlap()",
+    "testIdentifierURL" : "test://com.apple.xcode/MindCraftNotes/MindCraftNotesUITests/MindCraftNotesUITests/testChapterViewLandscapeHasNoTextImageOverlap"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "0ABECCDB-A8DE-43AE-BC50-D68084737D62.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "App UI hierarchy for com.mindcraft_0_66F01280-FB7B-4192-A653-BDC493F4B1C9.notes-prototype",
+        "timestamp" : 1786213427.988
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "8A31B607-D620-4A4A-8C4E-8225D42B5B14",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-08-08 at 01.23.47 PM",
+        "timestamp" : 1786213427.988
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "8D6B67B4-726C-4636-AF53-275B5D1F0828.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"conceptNode_geometric_transformations\" Button`_0_199D2E20-FC09-4524-8D8A-66A331332B9B.txt",
+        "timestamp" : 1786213427.842
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "A8D0EF82-6917-4BE1-9C15-BCBE457ED8FE.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"conceptNode_geometric_transformations\" Button`_0_2C973FBF-58CB-4F45-BCF9-14D3B3219B63.txt",
+        "timestamp" : 1786213426.841
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "5A4A3E01-8B52-4AF2-91D7-176C094922E8.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"conceptNode_geometric_transformations\" Button`_0_1C897F55-3291-46F0-8E27-1C034381DF4F.txt",
+        "timestamp" : 1786213425.842
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "496DFC01-E50B-46AC-A0A6-742899FF22EB.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"conceptNode_geometric_transformations\" Button`_0_1160C3BD-8371-484B-BDD7-6CB9ED18B372.txt",
+        "timestamp" : 1786213424.839
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "DE65750E-E457-4D86-8627-71E93953A757.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"conceptNode_geometric_transformations\" Button`_0_F0F555FA-D392-41EB-8CE3-62565B794C67.txt",
+        "timestamp" : 1786213423.84
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "3EFA3EEC-EC8F-4CCD-A836-9E0B349C92F2",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-08-08 at 01.23.42 PM",
+        "timestamp" : 1786213422.284
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "974E4711-3909-4D02-B84B-F08A7483E5CD",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-08-08 at 01.23.42 PM",
+        "timestamp" : 1786213422.723
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "56A7002D-424D-48D9-90DB-502D373640B5",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-08-08 at 01.22.41 PM",
+        "timestamp" : 1786213361.454
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "EC205F47-0B69-46E0-A0B1-345D5D1930A6",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-08-08 at 01.22.41 PM",
+        "timestamp" : 1786213361.891
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "2CC1E484-678F-40DC-9DCF-829B8932FB3D",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-08-08 at 01.21.40 PM",
+        "timestamp" : 1786213300.664
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "3AE3BD8C-2A62-4538-996B-71DC4E099B22",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-08-08 at 01.21.41 PM",
+        "timestamp" : 1786213301.105
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "EAB8A78D-91AC-410D-846B-B6CC8334A7FE",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-08-08 at 01.20.39 PM",
+        "timestamp" : 1786213239.848
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "B9663C4F-CCA6-43E0-A40C-FD0B3A2043E6",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-08-08 at 01.20.40 PM",
+        "timestamp" : 1786213240.279
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "BCB46F95-7D3D-448F-8E55-61126889C875",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-08-08 at 01.19.39 PM",
+        "timestamp" : 1786213179.016
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "2CA0076F-6FA9-4A32-9F25-2365C1DE2367",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-08-08 at 01.19.39 PM",
+        "timestamp" : 1786213179.449
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "59B759A7-D646-4D2E-9DAE-93DA68AA9110",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-08-08 at 01.18.38 PM",
+        "timestamp" : 1786213118.184
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "9A58DF4A-CBCE-43CF-A3FB-7DCC93773977",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-08-08 at 01.18.38 PM",
+        "timestamp" : 1786213118.614
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "67A0598B-D46B-42E8-AE6C-F097B75016C6",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-08-08 at 01.17.37 PM",
+        "timestamp" : 1786213057.395
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "661C9C15-0F71-4CE1-ADD5-75CD140733CC",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-08-08 at 01.17.37 PM",
+        "timestamp" : 1786213057.814
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "6DF9A1E5-4446-49AD-A2A3-DDB65951946D",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-08-08 at 01.16.36 PM",
+        "timestamp" : 1786212996.41
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "84D47BA9-EF5A-4833-BC41-D6CDA0E38DA2",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-08-08 at 01.16.36 PM",
+        "timestamp" : 1786212996.849
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "F12280BA-87D7-45D6-ABD4-2EED88EC8A0E",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-08-08 at 01.15.35 PM",
+        "timestamp" : 1786212935.576
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "B5E884FD-31FB-43F2-AE51-7A38E7AAFC9E",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-08-08 at 01.15.36 PM",
+        "timestamp" : 1786212936.018
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "865CF33F-5B61-4B6A-9598-6C2B4967CF69",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-08-08 at 01.14.34 PM",
+        "timestamp" : 1786212874.745
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "25098603-41D9-426C-9B89-ED169720709B",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-08-08 at 01.14.35 PM",
+        "timestamp" : 1786212875.183
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "38EC2703-4134-4234-A218-EEB491441BA5",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-08-08 at 01.13.33 PM",
+        "timestamp" : 1786212813.756
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "D41E3C36-0E24-4854-9232-A01A7D4693E3",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-08-08 at 01.13.34 PM",
+        "timestamp" : 1786212814.193
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "4378CFE8-A13C-4302-A70D-35CF9A6A17DC",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-08-08 at 01.12.32 PM",
+        "timestamp" : 1786212752.906
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "39E52C64-F849-4404-AD44-30133135248F",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-08-08 at 01.12.33 PM",
+        "timestamp" : 1786212753.345
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "5B49FB8A-ACFA-4A16-955A-D9897F4BD566",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-08-08 at 01.11.31 PM",
+        "timestamp" : 1786212691.84
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "03B3CF84-4B72-4800-B59A-8975F8E0588D",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-08-08 at 01.11.32 PM",
+        "timestamp" : 1786212692.159
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "77E1FC0F-D997-43A5-8A43-CFBB061DDDCE.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "App UI hierarchy for com.mindcraft_0_6BBD1BC2-C1D9-44C7-A3C4-7F6E4ADA1D06.notes-prototype",
+        "timestamp" : 1786212630.425
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "EF6143C5-C88D-4F53-A4E7-0E0F2D54EE7E",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-08-08 at 01.10.30 PM",
+        "timestamp" : 1786212630.425
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "80CBE1A2-7A68-42E2-9216-E3C2AF583800.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_BFB13735-6B9E-4CA3-9317-26957C927C57.txt",
+        "timestamp" : 1786212630.288
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "41740FCB-94A9-448A-92BC-B58453D47C7B.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_9892F974-BB82-44D9-A872-8FFAFC7F1F4B.txt",
+        "timestamp" : 1786212629.291
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "C122452F-AD3D-4899-A577-4D9F4D68DB4D.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_778A729A-9EC3-4D8E-BA1A-1E795751719B.txt",
+        "timestamp" : 1786212628.281
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "1CA10D72-E010-430A-AA78-A012A342885B.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_1036B291-3168-41A9-BB25-A4C3060256DD.txt",
+        "timestamp" : 1786212627.28
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "965785B2-106B-451D-89C2-DFA4D9D27395.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_3B7D8B98-583E-41D8-B074-360E5E1946D7.txt",
+        "timestamp" : 1786212626.362
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "3C812184-DB35-43AE-8EB5-11EB1620E712.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_2FB47951-BAD4-490E-8130-5C2C68ABB694.txt",
+        "timestamp" : 1786212625.352
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "BA479888-0A97-4EAF-B7D2-15FBB9C44CBD.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_8BDF6F33-046F-43DC-8ECF-F889BEAA4709.txt",
+        "timestamp" : 1786212624.34
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "8FB74BB9-BF00-4B06-A645-5BBDF9464BD3.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_6951B730-CB10-44B0-89E0-53640FE27F7A.txt",
+        "timestamp" : 1786212623.324
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "857972F2-355B-456F-B446-B9C29B881E76.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_7BC1F919-85EB-4766-B517-A51CBB82B931.txt",
+        "timestamp" : 1786212622.325
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "686B2A2A-224A-4FBD-BFA9-33C3FEB7B139.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_DA8B7F21-F990-44A7-8B56-D7203B53A419.txt",
+        "timestamp" : 1786212621.315
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "83003D92-FE17-4266-9BED-1A533FBEBBF2.mp4",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Screen Recording 2026-08-08 at 01.10.18 PM.mp4",
+        "timestamp" : 1786212618.775
+      }
+    ],
+    "testIdentifier" : "MindCraftNotesUITests/testContentsScrollReachesGeometricTransformations()",
+    "testIdentifierURL" : "test://com.apple.xcode/MindCraftNotes/MindCraftNotesUITests/MindCraftNotesUITests/testContentsScrollReachesGeometricTransformations"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "B3ACD4F7-87CD-4AAD-9E25-5573A45201BD.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "App UI hierarchy for com.mindcraft_0_DE0C0B37-053B-42F5-B626-0AAA44B6DD39.notes-prototype",
+        "timestamp" : 1786213518.436
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "F6A833CF-422F-4B7F-9A1E-8784B21339D3",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-08-08 at 01.25.18 PM",
+        "timestamp" : 1786213518.437
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "A5FC6E03-56FD-4784-8195-EFFD928F5CA2.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Warm-ups\" StaticText`_0_7A043828-F2D4-4EF0-85B5-2CFDD22C71EB.txt",
+        "timestamp" : 1786213518.307
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "BA9330C8-FD7D-457E-9F24-4B1FD7055922.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Warm-ups\" StaticText`_0_61D2C144-A8C8-4AF1-949E-513A850F8282.txt",
+        "timestamp" : 1786213517.341
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "2150F4FA-377C-4DEC-9BD7-9CFACBAE6244.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Warm-ups\" StaticText`_0_1F6B3056-BCD9-47D0-A681-9C664913A742.txt",
+        "timestamp" : 1786213516.309
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "1C70AD79-6621-44BA-9F8F-CA95D9965F3F.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Warm-ups\" StaticText`_0_8BDB4FF6-22BA-42E0-8465-6EE5146A849E.txt",
+        "timestamp" : 1786213515.308
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "1D27CDA5-11F6-439E-B28D-3D9864A8A357.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Warm-ups\" StaticText`_0_0CB3CB96-758E-47AF-B1E9-B3915AA60641.txt",
+        "timestamp" : 1786213514.302
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "F593E154-382E-4F92-9691-5733080B846B.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Warm-ups\" StaticText`_0_82135E79-CA5F-4780-8F57-8C8A6BCC4949.txt",
+        "timestamp" : 1786213513.283
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "FF695DA0-310A-465B-AF25-CF2D18B1CE15.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Warm-ups\" StaticText`_0_0CC471AF-39FD-4A87-B397-93EFDEDA1787.txt",
+        "timestamp" : 1786213512.306
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "EC2CE126-AB54-402F-A9C4-293016A0DECD.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Warm-ups\" StaticText`_0_B7BADF9A-9A84-4857-AD06-2D1E5608690A.txt",
+        "timestamp" : 1786213511.294
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "AEE2AFB5-E545-4281-8503-C4A8BB3462E1.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Warm-ups\" StaticText`_0_7E243FCA-0C51-4A49-841D-6AA8905288C0.txt",
+        "timestamp" : 1786213510.315
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "B527EDB9-6E3B-4DA0-9504-CA51FD634255.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Warm-ups\" StaticText`_0_5A425C6C-172B-40EC-BC73-34CAB17BCE9F.txt",
+        "timestamp" : 1786213509.348
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "B0A4CE39-85A0-4C26-AAD9-575B29B77C93.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Warm-ups\" StaticText`_0_D2ED1AC7-208C-4EB1-838E-AB95AB39AA53.txt",
+        "timestamp" : 1786213508.354
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "764666B4-9A3B-4633-ADD1-95AF81E48CF0.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Warm-ups\" StaticText`_0_6E9A61F0-5D8A-45C6-AA05-D8678BFD3DA5.txt",
+        "timestamp" : 1786213507.342
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "EE362165-610F-4BC7-B4B8-92D47835B4C7.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Warm-ups\" StaticText`_0_30BB473B-4271-4F5E-853D-48CE094813FC.txt",
+        "timestamp" : 1786213506.345
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "2FADE70E-F76D-4AEB-AAF4-8EFB2170E586.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Warm-ups\" StaticText`_0_4F33F534-11DF-4E9A-A25C-0A1B93B27BEC.txt",
+        "timestamp" : 1786213505.331
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "C69E19F3-57E5-4A03-A4BE-A7DD5BD40A42.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Warm-ups\" StaticText`_0_A37CB3BC-27B7-49C2-94ED-B3B591FCD830.txt",
+        "timestamp" : 1786213504.333
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "B2F52FBF-8D48-46FC-9E19-D096A0FEAEEF",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-08-08 at 01.25.02 PM",
+        "timestamp" : 1786213502.47
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "515073EB-FF57-4E1D-BCA0-7F7ABE3777C4",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-08-08 at 01.25.02 PM",
+        "timestamp" : 1786213502.791
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "EBFA6E3F-26D7-4F9E-821A-14649085917D.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "App UI hierarchy for com.mindcraft_0_053767E5-095D-4B5F-B3EE-8D8FE097778B.notes-prototype",
+        "timestamp" : 1786213441.032
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "2D39E0AC-4046-40EA-A77F-3150CEE9460E",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-08-08 at 01.24.01 PM",
+        "timestamp" : 1786213441.032
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "35083576-2A8D-4143-B743-F472E23DDA8C.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_925805A2-413E-492E-AFD9-400EFF4F585D.txt",
+        "timestamp" : 1786213440.898
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "723CD349-628B-4653-9570-DA659F423BE1.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_36748338-D10D-4717-94A8-822358568A40.txt",
+        "timestamp" : 1786213439.919
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "65B6D990-09C3-4F17-B522-0499B01BFD8E.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_A96882AA-E658-4CEE-BCBA-0E445291ADC7.txt",
+        "timestamp" : 1786213438.902
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "51DD2F11-3F8A-4D52-ACD1-624303277F51.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_F4AD0560-6F57-4987-B5A8-5B2FADC135C9.txt",
+        "timestamp" : 1786213437.908
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "3F5A3736-709E-416F-BD2E-2DEFB251B108.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_47F1189A-B23E-43B6-A332-14AFDF9D52DF.txt",
+        "timestamp" : 1786213436.906
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "1A48DEA0-7E85-4C2D-8822-2E87716661F8.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_14D3E0F8-EB65-4BA4-9E9B-4090491B034C.txt",
+        "timestamp" : 1786213435.911
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "B1957417-0B1F-4883-869E-ABF0B6AF9893.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_509F6C6B-4A45-4C60-AEEE-3EB0839D2559.txt",
+        "timestamp" : 1786213434.908
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "31E48B09-3255-446E-948F-C9852073C72F.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_55F63E50-20CC-41C0-86F1-7E146EEC0200.txt",
+        "timestamp" : 1786213433.908
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "491C6E64-F1DF-400B-8091-C885D9E0FEFC.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_53610621-DF8D-4FAA-8280-FA53E3250964.txt",
+        "timestamp" : 1786213432.953
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "254ABDDD-0526-4DCC-8855-59A2FE00DBE3.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_401C37D1-AE93-4B9B-BAE5-B76D2CFEC4F7.txt",
+        "timestamp" : 1786213431.936
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "D2960CD3-FA3D-4FAD-933E-0BCD26F9A194.mp4",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Screen Recording 2026-08-08 at 01.23.48 PM.mp4",
+        "timestamp" : 1786213428.359
+      }
+    ],
+    "testIdentifier" : "MindCraftNotesUITests/testDashboardRendersRealContentsLanes()",
+    "testIdentifierURL" : "test://com.apple.xcode/MindCraftNotes/MindCraftNotesUITests/MindCraftNotesUITests/testDashboardRendersRealContentsLanes"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "048BF28D-07E4-4AB1-856D-56C998843498.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "desk_hub_mastery_after_checkin_0_34ECD780-83B3-46B9-B07F-FEF8B08CE92F.png",
+        "timestamp" : 1786213660.917
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "83F52C43-8F69-42BA-8285-C15ED5C0BD1C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "desk_hub_checkin_sheet_0_E49197A6-AE87-4D61-9E6C-C208B73A38AC.png",
+        "timestamp" : 1786213597.433
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "C44FDBDC-9C80-434B-A124-23A71D337E95.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "desk_hub_mastery_head_0_C3E01722-54FF-4B0F-94CE-07A168410139.png",
+        "timestamp" : 1786213535.045
+      }
+    ],
+    "testIdentifier" : "MindCraftNotesUITests/testDeskHubMasteryGoalAndCheckIn()",
+    "testIdentifierURL" : "test://com.apple.xcode/MindCraftNotes/MindCraftNotesUITests/MindCraftNotesUITests/testDeskHubMasteryGoalAndCheckIn"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "49301BAB-9EE5-46E2-A07F-A44147A8E750.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "App UI hierarchy for com.mindcraft_0_5A792C21-A436-4DE3-AB90-A9A208EF0FBA.notes-prototype",
+        "timestamp" : 1786213766.58
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "633A8200-89A5-4259-8A51-410F3A3CE132",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-08-08 at 01.29.26 PM",
+        "timestamp" : 1786213766.58
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "48289577-EC1E-4D57-B42D-310E6F25264C.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Contents\" StaticText`_0_D55F7AF6-3CC0-47E2-8D46-46F9BA19877F.txt",
+        "timestamp" : 1786213766.436
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "B65723E1-E677-4835-8247-EBF8AF1F8610.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Contents\" StaticText`_0_A36AEB53-FFB7-44EC-BFF8-8CCED4A80E0D.txt",
+        "timestamp" : 1786213765.414
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "79FBF611-560A-4A35-9589-1DF559211DCF.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Contents\" StaticText`_0_F7AFDD32-3850-47F1-82DB-A892EADBF49E.txt",
+        "timestamp" : 1786213764.441
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "FD67D2C2-41F7-4085-97F4-41189CFF28A8.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Contents\" StaticText`_0_50A68CD0-4CA2-48D2-8321-C6F0140DD0B2.txt",
+        "timestamp" : 1786213763.416
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "B7D37433-1A84-49E6-B734-56B4A8201AA5.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Contents\" StaticText`_0_EA2A7C5A-010B-40F0-8FCA-E3E043B08B37.txt",
+        "timestamp" : 1786213762.521
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "76A673F6-8C3D-41D8-BC40-1934D32556D7.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Contents\" StaticText`_0_12ED8C64-6EDA-436C-9956-DE4246D4F7FE.txt",
+        "timestamp" : 1786213761.5
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "D4066EEF-FBE3-4604-B05A-087FAF7DD13F.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Contents\" StaticText`_0_0A3D7A33-21E6-4F0F-885F-628B140AAD9E.txt",
+        "timestamp" : 1786213760.476
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "DF2A276D-FE98-4D6B-9310-CA49C4D833C0.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Contents\" StaticText`_0_3F8E197D-7FFF-461E-93B9-1959C27F75C3.txt",
+        "timestamp" : 1786213759.463
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "C4C1E02F-5DFD-42FD-BB06-1F0C3CC717B6.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Contents\" StaticText`_0_B74BE9D0-FE22-4FFD-B68E-A64F3024F42D.txt",
+        "timestamp" : 1786213758.456
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "33ADCA90-95CE-4ECA-AE44-BEC841FEF45C.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Contents\" StaticText`_0_2176F54A-BF39-4DCE-A13E-F06034C0E7B3.txt",
+        "timestamp" : 1786213757.462
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "F2194BD2-1C97-43A9-A0AD-31393E7A730D.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Contents\" StaticText`_0_D3DEA231-CAE1-47CE-9562-CBCBCC6DAD77.txt",
+        "timestamp" : 1786213756.455
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "29E06B8D-7AF5-467C-BB06-99DAA47E294A.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Contents\" StaticText`_0_24783EC7-D044-41D7-8803-827F14BF9737.txt",
+        "timestamp" : 1786213755.457
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "4959C117-3E02-41D9-B82A-C18C1E0AE26B.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Contents\" StaticText`_0_5C7140A5-8E17-4ED0-A185-03938EFA65AC.txt",
+        "timestamp" : 1786213754.44
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "29B6541F-8384-4BE0-8FD0-31234E7A33A9.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Contents\" StaticText`_0_82DA8997-C83E-4484-83AD-5720ADED24B4.txt",
+        "timestamp" : 1786213753.512
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "DBCAB87C-E2A0-480D-A41F-D3C01E358E99.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Contents\" StaticText`_0_A86E2F20-1970-4CFC-BA74-D48CD63BE6D7.txt",
+        "timestamp" : 1786213752.497
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "249CF756-C4DE-4E70-86BE-999EFD61223A.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Contents\" StaticText`_0_3D6280EA-4C23-43E9-8820-9CBF9431D807.txt",
+        "timestamp" : 1786213751.473
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "6027DAEA-4894-4B47-9642-7E03482D6866.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Contents\" StaticText`_0_EFB003BE-72E2-4087-9985-417E3325EF19.txt",
+        "timestamp" : 1786213750.446
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "2C0F5E12-90C4-4E8D-8384-6195D301FBC1.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Contents\" StaticText`_0_E42C6446-70DB-415F-9FC5-A7587A6EC2FA.txt",
+        "timestamp" : 1786213749.445
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "C38D9755-AA9B-49F6-B665-7C824097B175.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Contents\" StaticText`_0_FAFDA4EA-625F-426D-A80B-7BE7AD50212E.txt",
+        "timestamp" : 1786213748.454
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "07C2E5C8-4544-4D7B-ABB8-82DAF8E89F3F.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Contents\" StaticText`_0_06B47270-2412-4874-BDF9-067F578BD67D.txt",
+        "timestamp" : 1786213747.441
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "863784B1-5B73-44D8-85F5-A66C02B3E500.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Contents\" StaticText`_0_3AB7C2F7-3BDD-4577-A944-5DE197256459.txt",
+        "timestamp" : 1786213746.441
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "482F6C07-1ED6-4155-8155-0407A43529E9.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Contents\" StaticText`_0_711C7EC7-BBB8-4803-8D63-AA7CEBF977CC.txt",
+        "timestamp" : 1786213745.509
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "672849F5-5322-4D34-BF29-C4EAA8F65A2A.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Contents\" StaticText`_0_212CF394-3790-496B-ADBC-05CD41B8E1FC.txt",
+        "timestamp" : 1786213744.479
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "FE703B73-CCC6-4973-97E4-B1CDB322C241.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Contents\" StaticText`_0_3776BA07-82DC-4835-9A90-76024E0A46AD.txt",
+        "timestamp" : 1786213743.467
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "86F694FE-8D49-4E9F-8578-B65BCAE2478F.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Contents\" StaticText`_0_53BEDD14-2611-4BF3-A8D3-6AF77519FAD0.txt",
+        "timestamp" : 1786213742.44
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "F13F50AA-3454-467F-BFB6-46F6A2BC9B1D.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Contents\" StaticText`_0_D50A2475-73FB-45CB-A035-0CA5E815D270.txt",
+        "timestamp" : 1786213741.509
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "0406134C-8C4B-4E74-AD06-0ACD6F90A2AB.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Contents\" StaticText`_0_B86B13A8-F0AA-48B1-B846-BAC10CAA37EE.txt",
+        "timestamp" : 1786213740.484
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "7EC46E4A-C080-48EF-A670-B21C2C1B6DCA.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Contents\" StaticText`_0_E5F27131-7535-48D5-873B-2BABCBDDE3C2.txt",
+        "timestamp" : 1786213739.46
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "F3B9A0E9-0652-494B-8408-D4F9A3B62F05.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Contents\" StaticText`_0_B45F9DCE-90A5-491E-9FC5-AA1230E08A62.txt",
+        "timestamp" : 1786213738.454
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "9BBCA95E-52EA-47E1-B1A5-717D1AEE0838.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Contents\" StaticText`_0_E8C6FF4F-5632-4515-9742-47FA74CC218D.txt",
+        "timestamp" : 1786213737.442
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "483A97EA-F827-4D8D-B0E1-C5671437264B",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-08-08 at 01.28.55 PM",
+        "timestamp" : 1786213735.624
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "0AB126B3-917C-4FEE-98B3-66E8AF68C67A",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-08-08 at 01.28.55 PM",
+        "timestamp" : 1786213735.943
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "5FD84689-0F16-4DDE-94AA-8DFD800A9535.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "desk_shell_before_tap_0_A18E2552-7BF3-4772-91AE-FD05666AA4F2.png",
+        "timestamp" : 1786213675.327
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "4AFAF041-387C-4ECD-8371-ADA5659F5DA9.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "App UI hierarchy for com.mindcraft_0_0194650C-6C06-427B-8DAD-9F8F04F93FDE.notes-prototype",
+        "timestamp" : 1786213673.883
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "E27EA150-5C9D-4428-A6F6-B10177E933F2",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-08-08 at 01.27.53 PM",
+        "timestamp" : 1786213673.883
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "BEA28F5B-72FD-487A-9A3B-A226AF2C9ED3.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_29AB5F4D-591A-454D-A75B-6818B8E3E866.txt",
+        "timestamp" : 1786213673.745
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "F5C5B894-6FD7-46BB-BF5C-0C612EF0062A.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_3CBF2FF2-3A56-40A0-8307-F4AEA18A6226.txt",
+        "timestamp" : 1786213672.751
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "E63B3FB4-3549-401C-9F62-FEC34B4F5B4B.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_397CBC75-D11F-4E28-9772-97D8515D2DAB.txt",
+        "timestamp" : 1786213671.749
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "2CDAC15B-923E-47E8-A767-7C08DA79B2F5.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_F9688EE2-80CE-4465-B7CD-F7A7441CDF65.txt",
+        "timestamp" : 1786213670.74
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "6D78F650-524C-4C32-9A2B-F1BBD4117E45.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_41C9ADE6-F6E6-4908-882E-CFEBBCD4417A.txt",
+        "timestamp" : 1786213669.737
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "A6656383-3228-429A-ADBB-740330EF4F32.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_36548966-4FAD-47E1-A3AD-A58BEA85923A.txt",
+        "timestamp" : 1786213668.731
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "984EF171-80B9-4C5D-86B3-78FD40AEE198.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_032BCFD4-5F5D-49A7-BF5B-A64156B7484C.txt",
+        "timestamp" : 1786213667.742
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "9385FDF6-AF6E-49E3-BDC3-4233D9CC626C.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_CCE29265-8B2E-43CD-AD0D-8A1578A6E4D2.txt",
+        "timestamp" : 1786213666.75
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "B9CC64C5-ECA8-4761-AFFB-FAE58621F870.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_91BFED7F-20D5-4F03-9779-B634E7349FB4.txt",
+        "timestamp" : 1786213665.755
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "D6803DD7-821C-4145-B060-16D222267088.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_60842514-52F3-4A2B-A4B0-1668113CB97B.txt",
+        "timestamp" : 1786213664.787
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "0451EBD7-3396-4E4F-AE12-C2AFB3196844.mp4",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Screen Recording 2026-08-08 at 01.27.41 PM.mp4",
+        "timestamp" : 1786213661.208
+      }
+    ],
+    "testIdentifier" : "MindCraftNotesUITests/testDeskShellShowsAndOpensActFieldBook()",
+    "testIdentifierURL" : "test://com.apple.xcode/MindCraftNotes/MindCraftNotesUITests/MindCraftNotesUITests/testDeskShellShowsAndOpensActFieldBook"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "9456C3F2-F76F-492C-B51A-21FCFFA1FB15.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "App UI hierarchy for com.mindcraft_0_721529EB-6367-41E6-B934-2E18E02EC040.notes-prototype",
+        "timestamp" : 1786213856.978
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "54BDB460-556B-4058-B442-AADC74B31945",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-08-08 at 01.30.56 PM",
+        "timestamp" : 1786213856.978
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "D833F03B-819E-494B-9CDC-1516CD083436.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"conceptNode_linear_equations\" Button`_0_B8EEFD3E-12F4-4C34-8162-F97F77703FE3.txt",
+        "timestamp" : 1786213856.85
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "D36474EF-42BA-4AA2-AEC2-B8E99573B241.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"conceptNode_linear_equations\" Button`_0_1EE9B352-FF85-4FC9-AE7B-3C069AA3E785.txt",
+        "timestamp" : 1786213855.856
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "D621CDEA-99F9-4418-BDBC-DF58E4F51D68.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"conceptNode_linear_equations\" Button`_0_0E08BBBF-0826-4472-93FE-EDE3DAA74CC7.txt",
+        "timestamp" : 1786213854.851
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "0A4CBF33-3C34-4222-B074-69580CECD32C.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"conceptNode_linear_equations\" Button`_0_A5107716-16FD-4ECE-A9DD-EEF10B1C3D64.txt",
+        "timestamp" : 1786213853.865
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "869B0C1F-B8D0-4468-992F-88E054F9D6DD.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"conceptNode_linear_equations\" Button`_0_36922D14-07E3-45BC-B3AF-A0CBBD5FEF59.txt",
+        "timestamp" : 1786213852.862
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "8638E1EE-BFBA-48C6-BACB-F3EBA3A2B73E.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"conceptNode_linear_equations\" Button`_0_2BFFB9C4-6217-42CC-91AD-8AB06D777448.txt",
+        "timestamp" : 1786213851.937
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "7DC81269-DE7C-4A49-B8B5-2BF3BCF1E76A.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"conceptNode_linear_equations\" Button`_0_88D58FD8-F48A-4707-9DC7-3836FAA92BEB.txt",
+        "timestamp" : 1786213850.909
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "C0BF5AD1-5C5C-43E2-887E-D2B5F0EA5DF7.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"conceptNode_linear_equations\" Button`_0_E6638B4F-9822-4112-9246-999696F5814D.txt",
+        "timestamp" : 1786213849.896
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "51ED9EF1-759B-40BC-A248-326303A90FFA.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"conceptNode_linear_equations\" Button`_0_07899565-3CD5-4CD1-ACE3-FED03C0D366D.txt",
+        "timestamp" : 1786213848.873
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "5E5F8DFF-989A-496A-920B-AA204CBC99ED.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"conceptNode_linear_equations\" Button`_0_D9AB52EF-BDDD-4CC1-B1F1-D2EABD9CEF42.txt",
+        "timestamp" : 1786213847.865
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "1E081CDA-D86F-45B3-83CE-99254BAEFC56.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"conceptNode_linear_equations\" Button`_0_3B89F648-5124-49C7-BDE4-A9B765C81317.txt",
+        "timestamp" : 1786213846.859
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "8D7F17CC-FCDC-48C9-A75D-4696562EBC3D.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"conceptNode_linear_equations\" Button`_0_DEC0858F-56BB-4AA3-937D-0010FB5B3386.txt",
+        "timestamp" : 1786213845.856
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "9CE070A8-FFE9-4D61-873C-9A0C2ABC47DA.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"conceptNode_linear_equations\" Button`_0_D31222B1-8837-4288-AD69-C57EB4C321F8.txt",
+        "timestamp" : 1786213844.866
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "E373573B-0E70-405C-BC43-D84A167C05D2.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"conceptNode_linear_equations\" Button`_0_6C769428-5A86-4D54-8165-F175D03B8272.txt",
+        "timestamp" : 1786213843.865
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "572EAA61-67A6-4E01-9D81-5430888F7E40.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"conceptNode_linear_equations\" Button`_0_D1AD3244-BD25-41EB-9BAB-2DAE49A179F8.txt",
+        "timestamp" : 1786213842.86
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "5F8D315F-F1A2-4D49-B1DF-4DBACE78C473",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-08-08 at 01.30.41 PM",
+        "timestamp" : 1786213841.057
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "4935ECE8-DB08-428D-80B2-6245D5E20809",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-08-08 at 01.30.41 PM",
+        "timestamp" : 1786213841.375
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "D0757BD8-1AD6-462C-9C7B-F92E65FA0A97.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "App UI hierarchy for com.mindcraft_0_EEBBFF1E-4958-4C12-B605-FE6A1FE926A6.notes-prototype",
+        "timestamp" : 1786213779.485
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "C41F14C5-E301-42E5-8B31-739052506D18",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-08-08 at 01.29.39 PM",
+        "timestamp" : 1786213779.485
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "5AC08AA1-885C-4F45-A77D-411981A73C67.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_24E2E75A-CF6C-4BBD-B64C-632BE76DEBB6.txt",
+        "timestamp" : 1786213779.362
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "B8251AE1-FE95-43A5-B0BE-7026991B5077.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_AF8A3301-B8F2-43EB-AE93-D599ED5D163F.txt",
+        "timestamp" : 1786213778.369
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "62E4B25E-687F-4359-ADF5-E9C7CCA246B0.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_B0C87BBF-2981-4635-A452-00FF5BC78E5C.txt",
+        "timestamp" : 1786213777.38
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "00027A62-4AB4-41F2-89EE-FFBD580A3E0C.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_E23884AA-6237-4DDC-A73A-739974FDE393.txt",
+        "timestamp" : 1786213776.413
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "0FD04916-9EAF-4EFB-8737-F6FE2A085B45.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_4410106B-C74D-4213-BA29-518B15046A6D.txt",
+        "timestamp" : 1786213775.349
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "2AA1ECC4-3F78-4404-AB4D-69C6A390DA26.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_7880BEAA-1158-4293-8F26-E4766F5D27E7.txt",
+        "timestamp" : 1786213774.361
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "5D9C6F22-0CB7-437C-BC6C-8B25B39A50E2.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_047787AB-A9BD-42D4-92EE-EC9E8E42A61A.txt",
+        "timestamp" : 1786213773.375
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "8C90FDEE-E984-4B4B-A371-9D8DAECFB369.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_6AC4638B-319A-46E4-A8DD-63948D1AE933.txt",
+        "timestamp" : 1786213772.392
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "23799429-57C0-46E7-931B-19C1F8D24359.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_34D540AA-0121-4E47-98CA-8F5BE690B449.txt",
+        "timestamp" : 1786213771.398
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "5BEEDA63-663D-4737-B727-7819A75BBDD8.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_AB1556DA-1AC0-4EF4-BB7A-8F815EA40D99.txt",
+        "timestamp" : 1786213770.403
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "7158E194-EAED-4108-98DD-02B131857345.mp4",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Screen Recording 2026-08-08 at 01.29.26 PM.mp4",
+        "timestamp" : 1786213766.901
+      }
+    ],
+    "testIdentifier" : "MindCraftNotesUITests/testDiagramQuestionRendersRealBundledImage()",
+    "testIdentifierURL" : "test://com.apple.xcode/MindCraftNotes/MindCraftNotesUITests/MindCraftNotesUITests/testDiagramQuestionRendersRealBundledImage"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "0EB326FA-0551-4DD0-8142-2C97B58A2107.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "graph_latex_fraction_coefficient_0_B001C648-DBFA-4E56-A43E-17426DA83085.png",
+        "timestamp" : 1786214126.711
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "ABCE7C1A-B372-4231-ABDD-8633E4FCEACD.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "graph_latex_braced_exponent_0_AE6219D3-4152-401C-A290-B26E7E9DA746.png",
+        "timestamp" : 1786214121.714
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "33F03FD7-962F-4636-8931-AC28F565A5D7.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "graph_default_bare_caret_0_67A7A9B0-D063-4560-A01F-582C7A55F3C3.png",
+        "timestamp" : 1786214116.734
+      }
+    ],
+    "testIdentifier" : "MindCraftNotesUITests/testGraphBoxAcceptsLaTeXAndScreenshots()",
+    "testIdentifierURL" : "test://com.apple.xcode/MindCraftNotes/MindCraftNotesUITests/MindCraftNotesUITests/testGraphBoxAcceptsLaTeXAndScreenshots"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "9FEAA8BB-3158-4CB2-A7C9-8C96A173D386.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "layout_landscape_q3_0_2F7BCB8E-0528-46EB-AEC4-1ACA2C4F64FF.png",
+        "timestamp" : 1786214254.999
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "B57E1586-1EBE-4986-84CE-5CBA491F9A11.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "layout_portrait_q3_0_44F4A48A-E10A-4DCB-8EA2-A51C100E6E71.png",
+        "timestamp" : 1786214193.687
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "94A8FBE3-648A-45A5-BB76-9FD3531D54C5.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "layout_portrait_q1_0_0EA96266-BB13-4151-852E-C9FAFA632BFC.png",
+        "timestamp" : 1786214130.933
+      }
+    ],
+    "testIdentifier" : "MindCraftNotesUITests/testLayoutScreenshotsPortraitAndLandscape()",
+    "testIdentifierURL" : "test://com.apple.xcode/MindCraftNotes/MindCraftNotesUITests/MindCraftNotesUITests/testLayoutScreenshotsPortraitAndLandscape"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "80A9271E-EB29-4FF6-9FD9-0D67107DFF2C.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "App UI hierarchy for com.mindcraft_0_2AFF442C-1FD2-426E-AF70-E8CC300CD32E.notes-prototype",
+        "timestamp" : 1786214474.728
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "9EA4F3D1-64C7-49AC-BD63-00DF2EE85DEC",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-08-08 at 01.41.14 PM",
+        "timestamp" : 1786214474.728
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "A146DD8F-19B2-4E7F-BA7B-D662FE43D555.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"conceptNode_fractions_decimals\" Button`_0_AC150E75-8192-4A80-9FB4-2CAC815EAEB1.txt",
+        "timestamp" : 1786214474.607
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "21828E64-D86C-4FE0-9056-5639BA81B0EF.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"conceptNode_fractions_decimals\" Button`_0_C4AE4A77-6B62-408F-94AB-0E9ECCF55398.txt",
+        "timestamp" : 1786214473.606
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "C42E7410-DE14-424C-9BED-4406976A2469.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"conceptNode_fractions_decimals\" Button`_0_C6EAEF6A-39E7-4AB7-8B8D-0C62C9CD5AB0.txt",
+        "timestamp" : 1786214472.613
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "5ABF026E-A045-4A40-B932-207892EB0B3E.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"conceptNode_fractions_decimals\" Button`_0_485B51A8-33DA-4404-903F-88668BB79683.txt",
+        "timestamp" : 1786214471.627
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "4F943158-E56A-467A-B36F-C94EEDAB750F.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"conceptNode_fractions_decimals\" Button`_0_EA043D5B-90EA-4256-8942-2061955CF191.txt",
+        "timestamp" : 1786214470.635
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "9355C306-0D86-44AD-9987-D62C78EFF7A4.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"conceptNode_fractions_decimals\" Button`_0_623682C9-75B4-499E-BBA3-2DB77D786BB2.txt",
+        "timestamp" : 1786214469.635
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "201283E5-7E1B-485B-9C60-786248C53C2A.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"conceptNode_fractions_decimals\" Button`_0_AD669303-6954-4865-B83C-627DDE931C21.txt",
+        "timestamp" : 1786214468.648
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "546918A4-B3D2-488F-AE9C-82D913DCF4C2.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"conceptNode_fractions_decimals\" Button`_0_83BD3ABE-6744-4811-9883-7E7F0481312F.txt",
+        "timestamp" : 1786214467.648
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "56A90640-E924-45B0-93A5-BB724D72924D.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"conceptNode_fractions_decimals\" Button`_0_4D42370C-7F22-4772-B1F8-23D6D4F3A88A.txt",
+        "timestamp" : 1786214466.656
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "5C8B7019-115C-46A3-9726-B6220390BDEF.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"conceptNode_fractions_decimals\" Button`_0_146D1373-F9D7-40EB-8C9E-87799CE8A3E1.txt",
+        "timestamp" : 1786214465.653
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "3E6B417A-C1A4-4503-994B-25FF9E2BB9E8.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"conceptNode_fractions_decimals\" Button`_0_124A81E9-B326-4B4D-9F28-0F7438DE6B25.txt",
+        "timestamp" : 1786214464.621
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "80FCC43A-F0DD-4EC2-917F-DD57DF3250D2.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"conceptNode_fractions_decimals\" Button`_0_A0D23996-A7D9-40D3-A963-13AFF7D49E5F.txt",
+        "timestamp" : 1786214463.617
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "13440271-B7C4-4E7B-8E2B-5F856BCDF1D7.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"conceptNode_fractions_decimals\" Button`_0_8A7B9919-F0B5-45EE-BDF4-DFA4DE78028D.txt",
+        "timestamp" : 1786214462.618
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "6CC6ABAC-D9BE-4517-8997-9F18A6142447.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"conceptNode_fractions_decimals\" Button`_0_F48937A1-B023-4402-943C-9E2A0338E59C.txt",
+        "timestamp" : 1786214461.62
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "D432666C-E008-4280-A2B1-15A11F4CF6B3.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"conceptNode_fractions_decimals\" Button`_0_23B47A7A-096F-4C58-A25D-2805C8F86DCB.txt",
+        "timestamp" : 1786214460.635
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "3C0B4F83-4680-418C-81A8-DBA7049E926B",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-08-08 at 01.40.58 PM",
+        "timestamp" : 1786214458.808
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "98C4A5DE-8733-4D04-9FF9-6D01CDB3714F",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-08-08 at 01.40.59 PM",
+        "timestamp" : 1786214459.127
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "92592D6A-2F26-469E-9CAE-77A97BF9B055.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "App UI hierarchy for com.mindcraft_0_78B1D949-BB20-4EE7-9466-ED647E1418B1.notes-prototype",
+        "timestamp" : 1786214397.368
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "7891A2E3-E434-4664-9DE2-A9C45A83A7CD",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-08-08 at 01.39.57 PM",
+        "timestamp" : 1786214397.368
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "2A2B67F2-AD94-4670-9607-7F72E21AAFA7.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_08A425D0-8F01-4853-B207-80CDF7DB7A8F.txt",
+        "timestamp" : 1786214397.24
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "2E366505-3044-4C83-9BB8-A38EC9A78ED9.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_3180B485-9CDC-4F0B-BA9C-09BE5B4D19D7.txt",
+        "timestamp" : 1786214396.292
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "944FBAA0-2B67-4FB1-8458-232D7659D7FB.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_F4275AF8-2373-4124-9F1F-7CAA12F66EE0.txt",
+        "timestamp" : 1786214395.276
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "18949CA5-5536-4C74-B6D9-F3A72523E67E.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_82410819-5430-4CF7-9966-C0315A5F3F3E.txt",
+        "timestamp" : 1786214394.252
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "F536212E-6699-4325-A507-52A244AB5D57.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_6EC736F6-2B8A-441C-87B0-7329B8EC2BC1.txt",
+        "timestamp" : 1786214393.254
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "32BF8F9D-5959-4519-A194-6375778E962E.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_91E0626B-85CF-44D6-8D44-37704AC84A35.txt",
+        "timestamp" : 1786214392.237
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "71206457-5647-4232-8D96-8660E1385B1E.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_CE911B21-4C97-41E6-85E6-D75E51534914.txt",
+        "timestamp" : 1786214391.245
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "A9D2D212-642D-4B8E-8E29-4F85AA931010.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_0196E0F5-C062-412F-9B09-48F81B089C6C.txt",
+        "timestamp" : 1786214390.247
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "E9A5C13D-C8CF-4642-9C01-814CF4CBE564.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_9C72ED89-55C7-4B98-BC29-0CE6609B1E8B.txt",
+        "timestamp" : 1786214389.251
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "C9B1BAD0-6A27-40F1-A0B9-4E77957E0E4A.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"coverOpenArrow\" Button`_0_DC1CB497-6E45-48A0-B96E-4D9C3BC09A17.txt",
+        "timestamp" : 1786214388.276
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "EBA1E08C-B52F-4AE0-8AFD-87ACFA3CE69B.mp4",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Screen Recording 2026-08-08 at 01.39.44 PM.mp4",
+        "timestamp" : 1786214384.802
+      }
+    ],
+    "testIdentifier" : "MindCraftNotesUITests/testPracticeSessionChecksAnswerAndAttemptsToSaveOutcome()",
+    "testIdentifierURL" : "test://com.apple.xcode/MindCraftNotes/MindCraftNotesUITests/MindCraftNotesUITests/testPracticeSessionChecksAnswerAndAttemptsToSaveOutcome"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008103-0012296E01D0C01E",
+        "deviceName" : "iPad",
+        "exportedFileName" : "2886DE95-59B3-4118-9990-45108527FB3A.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "welcome_screen_forced_0_9AB621AF-0B74-49A1-9820-FD62FA129BB9.png",
+        "timestamp" : 1786214598.8
+      }
+    ],
+    "testIdentifier" : "MindCraftNotesUITests/testWelcomeScreenShowsOnForcedLaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/MindCraftNotes/MindCraftNotesUITests/MindCraftNotesUITests/testWelcomeScreenShowsOnForcedLaunch"
+  }
+]

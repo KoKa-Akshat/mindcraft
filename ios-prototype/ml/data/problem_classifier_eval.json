@@ -1,0 +1,145 @@
+{
+  "bank_count": 1943,
+  "train_count": 1565,
+  "test_count": 378,
+  "concept_top1_accuracy": 0.7671957671957672,
+  "concept_top3_accuracy": 0.9259259259259259,
+  "format_accuracy": 0.8492063492063492,
+  "error_correlation": {
+    "concept_error_rate": 0.2328042328042328,
+    "format_error_rate": 0.15079365079365079,
+    "both_error_rate": 0.06349206349206349
+  },
+  "concept_confusion_top": [
+    [
+      "ratios_proportions -> fractions_decimals",
+      4
+    ],
+    [
+      "fractions_decimals -> number_properties",
+      4
+    ],
+    [
+      "number_properties -> fractions_decimals",
+      3
+    ],
+    [
+      "algebraic_manipulation -> linear_equations",
+      3
+    ],
+    [
+      "triangles_congruence -> lines_angles",
+      3
+    ],
+    [
+      "circles_geometry -> linear_equations",
+      2
+    ],
+    [
+      "area_volume -> measurement_units",
+      2
+    ],
+    [
+      "order_of_operations -> algebraic_manipulation",
+      2
+    ],
+    [
+      "lines_angles -> linear_equations",
+      2
+    ],
+    [
+      "quadratic_equations -> fractions_decimals",
+      2
+    ],
+    [
+      "systems_of_linear_equations -> linear_equations",
+      2
+    ],
+    [
+      "basic_probability -> number_properties",
+      2
+    ],
+    [
+      "trigonometry_basics -> fractions_decimals",
+      2
+    ],
+    [
+      "order_of_operations -> number_properties",
+      2
+    ],
+    [
+      "functions_basics -> linear_equations",
+      2
+    ],
+    [
+      "linear_equations -> number_properties",
+      2
+    ],
+    [
+      "linear_equations -> measurement_units",
+      2
+    ],
+    [
+      "ratios_proportions -> functions_basics",
+      1
+    ],
+    [
+      "number_properties -> ratios_proportions",
+      1
+    ],
+    [
+      "linear_equations -> lines_angles",
+      1
+    ]
+  ],
+  "format_confusion_top": [
+    [
+      "word_problem -> symbolic_expression",
+      20
+    ],
+    [
+      "diagram -> symbolic_expression",
+      9
+    ],
+    [
+      "symbolic_expression -> diagram",
+      8
+    ],
+    [
+      "symbolic_expression -> word_problem",
+      6
+    ],
+    [
+      "coordinate_graph -> diagram",
+      3
+    ],
+    [
+      "symbolic_expression -> coordinate_graph",
+      3
+    ],
+    [
+      "diagram -> coordinate_graph",
+      2
+    ],
+    [
+      "coordinate_graph -> symbolic_expression",
+      2
+    ],
+    [
+      "diagram -> number_line",
+      1
+    ],
+    [
+      "number_line -> symbolic_expression",
+      1
+    ],
+    [
+      "diagram -> word_problem",
+      1
+    ],
+    [
+      "word_problem -> diagram",
+      1
+    ]
+  ]
+}

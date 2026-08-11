@@ -121,11 +121,15 @@
 
 .wordmark {
   width: fit-content;
-  color: #e8f5e0;
-  font-size: clamp(2.4rem, 4.5vw, 4.2rem);
-  font-weight: 1000;
-  line-height: 0.9;
-  letter-spacing: -0.075em;
+  display: flex;
+  align-items: center;
+}
+
+.logoMark {
+  width: clamp(48px, 7vw, 72px);
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.35));
 }
 
 .wmMind { color: #e8f5e0; }

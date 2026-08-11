@@ -4,7 +4,7 @@
  * Root of the React app. Handles:
  *   - Auth state listening (Firebase onAuthStateChanged)
  *   - Route protection via AuthGuard
- *   - Public routes; landing site is mindcraft-marketing-site.web.app
+ *   - Public routes; landing site is joinmindcraft.com
  *
  * Adding a new page:
  *   1. Create the component in pages/
@@ -48,6 +48,7 @@ import QAToolbar       from './components/QAToolbar'
 import { MARKETING_BASE } from './lib/siteUrls'
 import { fetchKnowledgeGraph } from './lib/graphCache'
 import { isTestProfileEmail, resetStudentProfile } from './lib/testProfile'
+import { installDeskAskAuthBridge } from './lib/deskAsk'
 import { clearAuthHandoff, isAuthHandoffActive } from './lib/postLogin'
 
 
@@ -164,6 +165,8 @@ function AuthGuard({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, setUser)
     void auth.authStateReady().then(() => setAuthReady(true))
+    // Bridge Firebase auth into web Desk OS Ask (`window.__MC_DESK_AUTH__`).
+    installDeskAskAuthBridge()
     return unsub
   }, [])
 
@@ -246,6 +249,28 @@ function AuthGuard({ children }: { children: React.ReactNode }) {
 function MarketingRedirect() {
   useEffect(() => {
     window.location.replace(MARKETING_BASE)
+  }, [])
+  return null
+}
+
+/** Full-page jump into the Desk OS static prototype (Piano + ACT books). */
+function DeskOsRedirect() {
+  useEffect(() => {
+    window.location.replace('/desk-os/?v=r9b')
+  }, [])
+  return null
+}
+
+function DeskStudioRedirect() {
+  useEffect(() => {
+    window.location.replace('/desk-os/studio/?v=spatial2')
+  }, [])
+  return null
+}
+
+function DeskWorkflowsRedirect() {
+  useEffect(() => {
+    window.location.replace('/desk-os/workflows/?v=f5')
   }, [])
   return null
 }
@@ -348,7 +373,16 @@ export default function App() {
           } />
         )}
 
-        {/* Root of app host → marketing site (landing lives on mindcraft-marketing-site.web.app) */}
+        {/* Desk OS prototype shell (static under /desk-os/, synced at build).
+            Short in-app aliases so the live preview is easy to open. */}
+        <Route path="/desk" element={<DeskOsRedirect />} />
+        <Route path="/try/desk" element={<DeskOsRedirect />} />
+        <Route path="/studio" element={<DeskStudioRedirect />} />
+        <Route path="/try/studio" element={<DeskStudioRedirect />} />
+        <Route path="/workflows" element={<DeskWorkflowsRedirect />} />
+        <Route path="/try/workflows" element={<DeskWorkflowsRedirect />} />
+
+        {/* Root of app host → marketing site (landing lives on joinmindcraft.com) */}
         <Route path="/" element={<MarketingRedirect />} />
 
         {/* Fallback */}

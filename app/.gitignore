@@ -3,3 +3,5 @@ dist
 .env
 .env.local
 .vercel
+# Built copy of Desk OS prototype (synced from agent_work/product/desk_os)
+public/desk-os

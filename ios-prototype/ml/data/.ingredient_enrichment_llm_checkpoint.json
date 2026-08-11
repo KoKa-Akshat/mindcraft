@@ -1,0 +1,2874 @@
+{
+  "archetype::act_math_t01_q01::sequences_series": {
+    "confidence": 1.0,
+    "ingredient_id": "sequences__geometric_identification"
+  },
+  "archetype::act_math_t01_q02::measurement_units": {
+    "confidence": 1.0,
+    "ingredient_id": "measurement_units__unit_rate_per_one"
+  },
+  "archetype::act_math_t01_q02::ratios_proportions": {
+    "confidence": 1.0,
+    "ingredient_id": "ratios_proportions__unit_rate"
+  },
+  "archetype::act_math_t01_q03::algebraic_manipulation": {
+    "confidence": 0.8,
+    "ingredient_id": "algebraic_manipulation__like_terms"
+  },
+  "archetype::act_math_t01_q03::basic_equations": {
+    "confidence": 1.0,
+    "ingredient_id": "basic_equations__isolate_variable"
+  },
+  "archetype::act_math_t01_q04::number_properties": {
+    "confidence": 1.0,
+    "ingredient_id": "number_properties__prime_composite"
+  },
+  "archetype::act_math_t01_q05::descriptive_statistics": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "archetype::act_math_t01_q05::measurement_units": {
+    "confidence": 0.8,
+    "ingredient_id": "measurement_units__unit_rate_per_one"
+  },
+  "archetype::act_math_t01_q06::basic_equations": {
+    "confidence": 0.8,
+    "ingredient_id": "basic_equations__isolate_variable"
+  },
+  "archetype::act_math_t01_q06::representation_translation": {
+    "confidence": 1.0,
+    "ingredient_id": "representation_translation__words_to_equation"
+  },
+  "archetype::act_math_t01_q07::linear_inequalities": {
+    "confidence": 0.8,
+    "ingredient_id": "linear_inequalities__open_closed_circles"
+  },
+  "archetype::act_math_t01_q07::representation_translation": {
+    "confidence": 1.0,
+    "ingredient_id": "representation_translation__number_line_to_inequality"
+  },
+  "archetype::act_math_t01_q08::ratios_proportions": {
+    "confidence": 1.0,
+    "ingredient_id": "ratios_proportions__proportion_setup"
+  },
+  "archetype::act_math_t01_q08::representation_translation": {
+    "confidence": 1.0,
+    "ingredient_id": "representation_translation__diagram_to_ratio"
+  },
+  "archetype::act_math_t01_q08::triangles_congruence": {
+    "confidence": 1.0,
+    "ingredient_id": "triangles__similarity_ratios"
+  },
+  "archetype::act_math_t01_q09::algebraic_manipulation": {
+    "confidence": 1.0,
+    "ingredient_id": "algebraic_manipulation__symbolic_substitution"
+  },
+  "archetype::act_math_t01_q09::order_of_operations": {
+    "confidence": 1.0,
+    "ingredient_id": "order_of_operations__exponent_before_multiply"
+  },
+  "archetype::act_math_t01_q10::act_strategy": {
+    "confidence": 1.0,
+    "ingredient_id": "act_strategy__draw_auxiliary_diagram"
+  },
+  "archetype::act_math_t01_q10::area_volume": {
+    "confidence": 1.0,
+    "ingredient_id": "area_volume__square_side_from_area"
+  },
+  "archetype::act_math_t01_q10::representation_translation": {
+    "confidence": 1.0,
+    "ingredient_id": "representation_translation__implicit_structure_detection"
+  },
+  "archetype::act_math_t01_q10::right_triangle_geometry": {
+    "confidence": 1.0,
+    "ingredient_id": "right_triangle__pythagorean_theorem"
+  },
+  "archetype::act_math_t01_q11::linear_equations": {
+    "confidence": 1.0,
+    "ingredient_id": "linear_equations__slope_meaning"
+  },
+  "archetype::act_math_t01_q11::representation_translation": {
+    "confidence": 1.0,
+    "ingredient_id": "representation_translation__graph_to_rate"
+  },
+  "archetype::act_math_t01_q12::area_volume": {
+    "confidence": 0.8,
+    "ingredient_id": "area_volume__composite_figures"
+  },
+  "archetype::act_math_t01_q12::measurement_units": {
+    "confidence": 1.0,
+    "ingredient_id": "measurement_units__linear_vs_square_units"
+  },
+  "archetype::act_math_t01_q13::right_triangle_geometry": {
+    "confidence": 1.0,
+    "ingredient_id": "right_triangle__sohcahtoa_setup"
+  },
+  "archetype::act_math_t01_q14::algebraic_manipulation": {
+    "confidence": 1.0,
+    "ingredient_id": "algebraic_manipulation__literal_equation_rearrangement"
+  },
+  "archetype::act_math_t01_q14::basic_equations": {
+    "confidence": 1.0,
+    "ingredient_id": "basic_equations__isolate_variable"
+  },
+  "archetype::act_math_t01_q15::algebraic_manipulation": {
+    "confidence": 1.0,
+    "ingredient_id": "algebraic_manipulation__symbolic_substitution"
+  },
+  "archetype::act_math_t01_q15::functions_basics": {
+    "confidence": 1.0,
+    "ingredient_id": "functions_basics__function_notation_meaning"
+  },
+  "archetype::act_math_t01_q15::order_of_operations": {
+    "confidence": 1.0,
+    "ingredient_id": "order_of_operations__exponent_before_multiply"
+  },
+  "archetype::act_math_t02_q01::basic_equations": {
+    "confidence": 0.8,
+    "ingredient_id": "basic_equations__isolate_variable"
+  },
+  "archetype::act_math_t02_q01::number_properties": {
+    "confidence": 1.0,
+    "ingredient_id": "number_properties__factor_pair_sum_search"
+  },
+  "archetype::act_math_t02_q01::representation_translation": {
+    "confidence": 1.0,
+    "ingredient_id": "representation_translation__words_to_equation"
+  },
+  "archetype::act_math_t02_q02::lines_angles": {
+    "confidence": 1.0,
+    "ingredient_id": "lines_angles__transversal_angles"
+  },
+  "archetype::act_math_t02_q03::basic_equations": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "archetype::act_math_t02_q03::quadratic_equations": {
+    "confidence": 0.8,
+    "ingredient_id": "quadratics__solutions_as_x_intercepts"
+  },
+  "archetype::act_math_t02_q04::area_volume": {
+    "confidence": 1.0,
+    "ingredient_id": "area_volume__rectangular_prism_face_areas"
+  },
+  "archetype::act_math_t02_q04::measurement_units": {
+    "confidence": 0.8,
+    "ingredient_id": "measurement_units__linear_vs_square_units"
+  },
+  "archetype::act_math_t02_q05::linear_equations": {
+    "confidence": 0.8,
+    "ingredient_id": "linear_equations__slope_intercept_form"
+  },
+  "archetype::act_math_t02_q05::systems_of_linear_equations": {
+    "confidence": 1.0,
+    "ingredient_id": "systems__solution_as_intersection"
+  },
+  "archetype::act_math_t02_q06::algebraic_manipulation": {
+    "confidence": 1.0,
+    "ingredient_id": "algebraic_manipulation__equivalent_forms"
+  },
+  "archetype::act_math_t02_q06::exponent_rules": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "archetype::act_math_t02_q06::polynomials": {
+    "confidence": 1.0,
+    "ingredient_id": "polynomials__greatest_common_factor_factoring"
+  },
+  "archetype::act_math_t02_q07::area_volume": {
+    "confidence": 1.0,
+    "ingredient_id": "area_volume__square_side_from_area"
+  },
+  "archetype::act_math_t02_q07::circles_geometry": {
+    "confidence": 1.0,
+    "ingredient_id": "circles__semicircle_area_from_diameter"
+  },
+  "archetype::act_math_t02_q08::functions_basics": {
+    "confidence": 1.0,
+    "ingredient_id": "functions_basics__piecewise_context_threshold"
+  },
+  "archetype::act_math_t02_q08::linear_equations": {
+    "confidence": 0.8,
+    "ingredient_id": "linear_equations__slope_meaning"
+  },
+  "archetype::act_math_t02_q08::representation_translation": {
+    "confidence": 0.8,
+    "ingredient_id": "representation_translation__graph_to_rate"
+  },
+  "archetype::act_math_t02_q09::linear_equations": {
+    "confidence": 0.9,
+    "ingredient_id": "linear_equations__slope_intercept_form"
+  },
+  "archetype::act_math_t02_q10::descriptive_statistics": {
+    "confidence": 1.0,
+    "ingredient_id": "descriptive_statistics__categorical_chart_reading"
+  },
+  "archetype::act_math_t02_q10::fractions_decimals": {
+    "confidence": 0.8,
+    "ingredient_id": "fractions_decimals__part_whole_meaning"
+  },
+  "archetype::act_math_t02_q11::descriptive_statistics": {
+    "confidence": 0.8,
+    "ingredient_id": "descriptive_statistics__categorical_chart_reading"
+  },
+  "archetype::act_math_t02_q11::fractions_decimals": {
+    "confidence": 0.8,
+    "ingredient_id": "fractions_decimals__fraction_decimal_conversion"
+  },
+  "archetype::act_math_t02_q11::ratios_proportions": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "archetype::act_math_t02_q12::basic_equations": {
+    "confidence": 0.8,
+    "ingredient_id": "basic_equations__do_same_to_both_sides"
+  },
+  "archetype::act_math_t02_q12::representation_translation": {
+    "confidence": 0.8,
+    "ingredient_id": "representation_translation__words_to_equation"
+  },
+  "archetype::act_math_t02_q12::systems_of_linear_equations": {
+    "confidence": 0.2,
+    "ingredient_id": "systems__substitution_method"
+  },
+  "archetype::act_math_t02_q13::basic_equations": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "archetype::act_math_t02_q13::linear_inequalities": {
+    "confidence": 1.0,
+    "ingredient_id": "linear_inequalities__absolute_value_split_greater_than"
+  },
+  "archetype::act_math_t02_q14::linear_equations": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "archetype::act_math_t02_q14::right_triangle_geometry": {
+    "confidence": 1.0,
+    "ingredient_id": "right_triangle__coordinate_distance_formula"
+  },
+  "archetype::act_math_t02_q15::exponential_functions": {
+    "confidence": 0.8,
+    "ingredient_id": "exponential_functions__base_and_exponent"
+  },
+  "archetype::act_math_t02_q15::logarithmic_functions": {
+    "confidence": 0.9,
+    "ingredient_id": "logarithmic_functions__basic_log_equation_conversion"
+  },
+  "l3::act_math_t02_q01": {
+    "confidence": 0.8,
+    "ingredient_id": "number_properties__parity_even_odd_product_sum"
+  },
+  "l3::act_math_t02_q03": {
+    "confidence": 1.0,
+    "ingredient_id": "quadratics__solutions_as_x_intercepts"
+  },
+  "l3::act_math_t02_q04": {
+    "confidence": 1.0,
+    "ingredient_id": "area_volume__volume_as_base_times_height"
+  },
+  "l3::act_math_t02_q05": {
+    "confidence": 1.0,
+    "ingredient_id": "systems__solution_as_intersection"
+  },
+  "l3::act_math_t02_q06": {
+    "confidence": 1.0,
+    "ingredient_id": "polynomials__greatest_common_factor_factoring"
+  },
+  "l3::act_math_t02_q07": {
+    "confidence": 1.0,
+    "ingredient_id": "circles__semicircle_area_from_diameter"
+  },
+  "l3::act_math_t02_q08": {
+    "confidence": 1.0,
+    "ingredient_id": "functions_basics__piecewise_context_threshold"
+  },
+  "l3::act_math_t02_q09": {
+    "confidence": 1.0,
+    "ingredient_id": "linear_equations__slope_intercept_form"
+  },
+  "l3::act_math_t02_q10": {
+    "confidence": 1.0,
+    "ingredient_id": "descriptive_statistics__categorical_chart_reading"
+  },
+  "l3::act_math_t02_q11": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "l3::act_math_t02_q12": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "l3::act_math_t02_q13": {
+    "confidence": 1.0,
+    "ingredient_id": "linear_inequalities__absolute_value_split_greater_than"
+  },
+  "l3::act_math_t02_q14": {
+    "confidence": 0.8,
+    "ingredient_id": "right_triangle__pythagorean_theorem"
+  },
+  "l3::act_math_t02_q15": {
+    "confidence": 0.8,
+    "ingredient_id": "logarithmic_functions__basic_log_equation_conversion"
+  },
+  "mis_algebraic_manipulation__adding_just_writes_digit_right": {
+    "confidence": 1.0,
+    "ingredient_id": "algebraic_manipulation__like_terms"
+  },
+  "mis_algebraic_manipulation__adds_instead_multiplies": {
+    "confidence": 1.0,
+    "ingredient_id": "algebraic_manipulation__like_terms"
+  },
+  "mis_algebraic_manipulation__adds_instead_multiplying_expanding_bracket": {
+    "confidence": 0.8,
+    "ingredient_id": "algebraic_manipulation__like_terms"
+  },
+  "mis_algebraic_manipulation__algebra_thinks_its_ok_write": {
+    "confidence": 0.8,
+    "ingredient_id": "algebraic_manipulation__like_terms"
+  },
+  "mis_algebraic_manipulation__assumes_addition_pyramid_works_different": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__assumes_fact_without_considering_enough": {
+    "confidence": 0.8,
+    "ingredient_id": "algebraic_manipulation__clearing_fractions"
+  },
+  "mis_algebraic_manipulation__believes_adding_two_negatives_gives": {
+    "confidence": 0.8,
+    "ingredient_id": "algebraic_manipulation__like_terms"
+  },
+  "mis_algebraic_manipulation__believes_always_smaller_than_ignoring": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__believes_constant_expanded_quadratic_comes": {
+    "confidence": 0.8,
+    "ingredient_id": "algebraic_manipulation__like_terms"
+  },
+  "mis_algebraic_manipulation__believes_cubic_expression_should_have": {
+    "confidence": 0.8,
+    "ingredient_id": "algebraic_manipulation__like_terms"
+  },
+  "mis_algebraic_manipulation__believes_difference_2_squares_method": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__believes_division_commutative": {
+    "confidence": 1.0,
+    "ingredient_id": "algebraic_manipulation__literal_equation_rearrangement"
+  },
+  "mis_algebraic_manipulation__believes_expanding_squared_expression_means": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__believes_factorising_quadratic_they_can": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__believes_multiplying_positive_negative_gives": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__believes_multiplying_two_negatives_gives": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__believes_negative_power_results_negative": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__believes_only_first_term_needs": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__believes_speed_distance_multiplied_time": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__believes_they_can_change_subject": {
+    "confidence": 1.0,
+    "ingredient_id": "algebraic_manipulation__literal_equation_rearrangement"
+  },
+  "mis_algebraic_manipulation__believes_they_can_ignore_coefficient": {
+    "confidence": 1.0,
+    "ingredient_id": "algebraic_manipulation__like_terms"
+  },
+  "mis_algebraic_manipulation__believes_they_only_need_multiply": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__believes_you_can_add_or": {
+    "confidence": 1.0,
+    "ingredient_id": "algebraic_manipulation__like_terms"
+  },
+  "mis_algebraic_manipulation__carries_out_operations_from_left": {
+    "confidence": 0.8,
+    "ingredient_id": "algebraic_manipulation__like_terms"
+  },
+  "mis_algebraic_manipulation__collecting_like_terms_assigns_positivity": {
+    "confidence": 1.0,
+    "ingredient_id": "algebraic_manipulation__like_terms"
+  },
+  "mis_algebraic_manipulation__collecting_like_terms_only_simplifies": {
+    "confidence": 1.0,
+    "ingredient_id": "algebraic_manipulation__like_terms"
+  },
+  "mis_algebraic_manipulation__collecting_like_terms_treats_subtractions": {
+    "confidence": 1.0,
+    "ingredient_id": "algebraic_manipulation__like_terms"
+  },
+  "mis_algebraic_manipulation__combines_variables_with_constants_writing": {
+    "confidence": 1.0,
+    "ingredient_id": "algebraic_manipulation__like_terms"
+  },
+  "mis_algebraic_manipulation__confuses_adding_3_with_cubing": {
+    "confidence": 0.8,
+    "ingredient_id": "algebraic_manipulation__like_terms"
+  },
+  "mis_algebraic_manipulation__confuses_collecting_like_terms_with": {
+    "confidence": 1.0,
+    "ingredient_id": "algebraic_manipulation__like_terms"
+  },
+  "mis_algebraic_manipulation__confuses_inverse_operations_addition_and": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__does_not_account_for_grammar": {
+    "confidence": 0.8,
+    "ingredient_id": "algebraic_manipulation__like_terms"
+  },
+  "mis_algebraic_manipulation__does_not_add_on_constant": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__does_not_correctly_apply_distributive": {
+    "confidence": 0.8,
+    "ingredient_id": "algebraic_manipulation__clearing_fractions"
+  },
+  "mis_algebraic_manipulation__does_not_divide_2_calculating": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__does_not_follow_arrows_through": {
+    "confidence": 0.8,
+    "ingredient_id": "algebraic_manipulation__clearing_fractions"
+  },
+  "mis_algebraic_manipulation__does_not_know_factorise_quadratic": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__does_not_know_properties_rectangle": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__does_not_realise_multiplying_variable": {
+    "confidence": 1.0,
+    "ingredient_id": "algebraic_manipulation__like_terms"
+  },
+  "mis_algebraic_manipulation__does_not_realise_subtracting_negative": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__does_not_realise_two_letters": {
+    "confidence": 1.0,
+    "ingredient_id": "algebraic_manipulation__like_terms"
+  },
+  "mis_algebraic_manipulation__does_not_realize_we_can": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__does_not_recognise_difference_two": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__does_not_recognise_factorising_quadratic": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__does_not_think_factorised_expression": {
+    "confidence": 1.0,
+    "ingredient_id": "algebraic_manipulation__equivalent_forms"
+  },
+  "mis_algebraic_manipulation__does_not_understand_bar_modelling": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__does_not_understand_equivalent_fractions": {
+    "confidence": 1.0,
+    "ingredient_id": "algebraic_manipulation__clearing_fractions"
+  },
+  "mis_algebraic_manipulation__does_not_understand_how_multiply": {
+    "confidence": 1.0,
+    "ingredient_id": "algebraic_manipulation__like_terms"
+  },
+  "mis_algebraic_manipulation__does_not_understand_like_terms": {
+    "confidence": 1.0,
+    "ingredient_id": "algebraic_manipulation__like_terms"
+  },
+  "mis_algebraic_manipulation__does_not_understand_multiplying_both": {
+    "confidence": 1.0,
+    "ingredient_id": "algebraic_manipulation__clearing_fractions"
+  },
+  "mis_algebraic_manipulation__expanding_brackets_multiplies_out_first": {
+    "confidence": 0.8,
+    "ingredient_id": "algebraic_manipulation__like_terms"
+  },
+  "mis_algebraic_manipulation__expands_asked_simplify": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__factorises_difference_two_squares_with": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__gets_their_constants_and_coefficients": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__has_multiplied_base_number_and": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__has_not_realised_answer_may": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__ignores_negative_sign_expanding_bracket": {
+    "confidence": 0.8,
+    "ingredient_id": "algebraic_manipulation__symbolic_substitution"
+  },
+  "mis_algebraic_manipulation__incorrectly_cancels_what_they_believe": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__incorrectly_factorises_quadratic": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__misunderstands_concept_common_factors_algebra": {
+    "confidence": 0.8,
+    "ingredient_id": "algebraic_manipulation__clearing_fractions"
+  },
+  "mis_algebraic_manipulation__misunderstands_order_operations_algebraic_expressions": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__mixes_up_greater_than_and": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__mixes_up_squaring_and_multiplying": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__multiplies_index": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__multiplying_decimals_ignores_place_value": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__multiplying_fractions_multiplies_reciprocal_2nd": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__multiplying_just_writes_numbers_next": {
+    "confidence": 0.8,
+    "ingredient_id": "algebraic_manipulation__clearing_fractions"
+  },
+  "mis_algebraic_manipulation__only_applies_division_one_multiple": {
+    "confidence": 0.8,
+    "ingredient_id": "algebraic_manipulation__literal_equation_rearrangement"
+  },
+  "mis_algebraic_manipulation__only_multiplies_first_term_expansion": {
+    "confidence": 1.0,
+    "ingredient_id": "algebraic_manipulation__clearing_fractions"
+  },
+  "mis_algebraic_manipulation__only_multiplies_numerical_terms_expanding": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__simplifying_algebraic_fraction_only_looks": {
+    "confidence": 0.8,
+    "ingredient_id": "algebraic_manipulation__like_terms"
+  },
+  "mis_algebraic_manipulation__simplifying_thinks_they_write_0": {
+    "confidence": 0.8,
+    "ingredient_id": "algebraic_manipulation__symbolic_substitution"
+  },
+  "mis_algebraic_manipulation__solving_equation_forgets_eliminate_coefficient": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__solving_equation_subtracts_instead_dividing": {
+    "confidence": 0.8,
+    "ingredient_id": "algebraic_manipulation__literal_equation_rearrangement"
+  },
+  "mis_algebraic_manipulation__solving_equation_uses_same_operation": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__squaring_variable_believes_they_also": {
+    "confidence": 0.8,
+    "ingredient_id": "algebraic_manipulation__like_terms"
+  },
+  "mis_algebraic_manipulation__subtracts_from_left_right_ignoring": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__subtracts_instead_divides": {
+    "confidence": 1.0,
+    "ingredient_id": "algebraic_manipulation__literal_equation_rearrangement"
+  },
+  "mis_algebraic_manipulation__thinks_fraction_bar_means_subtract": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__thinks_measures_area_must_end": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__thinks_only_labelled_dimensions_need": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__thinks_raising_variable_with_coefficient": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__thinks_square_root_expression_square": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__thinks_two_letters_next_each": {
+    "confidence": 1.0,
+    "ingredient_id": "algebraic_manipulation__literal_equation_rearrangement"
+  },
+  "mis_algebraic_manipulation__thinks_two_variables_next_each": {
+    "confidence": 1.0,
+    "ingredient_id": "algebraic_manipulation__like_terms"
+  },
+  "mis_algebraic_manipulation__thinks_you_add_all_bricks": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__thinks_you_can_divide_terms": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__thinks_you_can_divide_variables": {
+    "confidence": 1.0,
+    "ingredient_id": "algebraic_manipulation__literal_equation_rearrangement"
+  },
+  "mis_algebraic_manipulation__thinks_you_cancel_identical_terms": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_algebraic_manipulation__variable_expression_has_power_thinks": {
+    "confidence": 1.0,
+    "ingredient_id": "algebraic_manipulation__like_terms"
+  },
+  "mis_algebraic_manipulation__writes_variable_before_coefficient_algebraic": {
+    "confidence": 0.8,
+    "ingredient_id": "algebraic_manipulation__like_terms"
+  },
+  "mis_algebraic_manipulation__writes_variable_power_n_nx": {
+    "confidence": 1.0,
+    "ingredient_id": "algebraic_manipulation__like_terms"
+  },
+  "mis_area_volume__adds_calculating_area_instead_multiplying": {
+    "confidence": 1.0,
+    "ingredient_id": "area_volume__standard_formulas"
+  },
+  "mis_area_volume__adds_calculating_volume_instead_multiplying": {
+    "confidence": 1.0,
+    "ingredient_id": "area_volume__volume_as_base_times_height"
+  },
+  "mis_area_volume__believes_h_formula_for_area": {
+    "confidence": 1.0,
+    "ingredient_id": "area_volume__standard_formulas"
+  },
+  "mis_area_volume__believes_lines_inside_shape_are": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_area_volume__calculates_area_asked_for_perimeter": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_area_volume__calculates_circumference_asked_for_area": {
+    "confidence": 0.8,
+    "ingredient_id": "area_volume__standard_formulas"
+  },
+  "mis_area_volume__calculates_perimeter_asked_for_area": {
+    "confidence": 1.0,
+    "ingredient_id": "area_volume__square_side_from_area"
+  },
+  "mis_area_volume__calculating_perimeter_multiplies_instead_adds": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_area_volume__calculating_perimeter_only_adds_marked": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_area_volume__calculating_surface_area_only_includes": {
+    "confidence": 1.0,
+    "ingredient_id": "area_volume__rectangular_prism_face_areas"
+  },
+  "mis_area_volume__cannot_estimate_relative_volume_order": {
+    "confidence": 1.0,
+    "ingredient_id": "area_volume__volume_as_base_times_height"
+  },
+  "mis_area_volume__cannot_identify_correct_side_lengths": {
+    "confidence": 1.0,
+    "ingredient_id": "area_volume__rectangular_prism_face_areas"
+  },
+  "mis_area_volume__confuses_formulae_for_area_triangle": {
+    "confidence": 1.0,
+    "ingredient_id": "area_volume__standard_formulas"
+  },
+  "mis_area_volume__confuses_perimeter_and_area": {
+    "confidence": 1.0,
+    "ingredient_id": "area_volume__square_side_from_area"
+  },
+  "mis_area_volume__confuses_square_rooting_and_halving": {
+    "confidence": 1.0,
+    "ingredient_id": "area_volume__square_side_from_area"
+  },
+  "mis_area_volume__confuses_triangular_prism_with_pyramid": {
+    "confidence": 0.8,
+    "ingredient_id": "area_volume__standard_formulas"
+  },
+  "mis_area_volume__counts_halfsquares_full_squares_calculating": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_area_volume__does_not_account_for_scale": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_area_volume__does_not_convert_measurements_have": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_area_volume__does_not_divide_2_calculating": {
+    "confidence": 1.0,
+    "ingredient_id": "area_volume__standard_formulas"
+  },
+  "mis_area_volume__does_not_know_cubic_means": {
+    "confidence": 1.0,
+    "ingredient_id": "area_volume__volume_as_base_times_height"
+  },
+  "mis_area_volume__does_not_know_how_find": {
+    "confidence": 1.0,
+    "ingredient_id": "area_volume__composite_figures"
+  },
+  "mis_area_volume__does_not_realise_area_triangle": {
+    "confidence": 1.0,
+    "ingredient_id": "area_volume__standard_formulas"
+  },
+  "mis_area_volume__does_not_rearrange_pythagoras_theorem": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_area_volume__does_not_recognise_height_trapezium": {
+    "confidence": 1.0,
+    "ingredient_id": "area_volume__standard_formulas"
+  },
+  "mis_area_volume__doesnt_know_area_triangle_formula": {
+    "confidence": 1.0,
+    "ingredient_id": "area_volume__standard_formulas"
+  },
+  "mis_area_volume__finding_area_parallelogram_does_not": {
+    "confidence": 1.0,
+    "ingredient_id": "area_volume__standard_formulas"
+  },
+  "mis_area_volume__finding_area_parallelogram_finds_base": {
+    "confidence": 1.0,
+    "ingredient_id": "area_volume__standard_formulas"
+  },
+  "mis_area_volume__finding_missing_side_parallelogram_given": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_area_volume__finds_volume_asked_for_surface": {
+    "confidence": 1.0,
+    "ingredient_id": "area_volume__volume_as_base_times_height"
+  },
+  "mis_area_volume__has_used_slant_height_and": {
+    "confidence": 1.0,
+    "ingredient_id": "area_volume__standard_formulas"
+  },
+  "mis_area_volume__makes_assumption_about_line_segments": {
+    "confidence": 0.8,
+    "ingredient_id": "area_volume__standard_formulas"
+  },
+  "mis_area_volume__multiplies_all_given_dimensions_calculating": {
+    "confidence": 1.0,
+    "ingredient_id": "area_volume__rectangular_prism_face_areas"
+  },
+  "mis_area_volume__solving_equation_uses_same_operation": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_area_volume__thinks_square_root_found_dividing": {
+    "confidence": 1.0,
+    "ingredient_id": "area_volume__square_side_from_area"
+  },
+  "mis_area_volume__thinks_they_double_rather_than": {
+    "confidence": 1.0,
+    "ingredient_id": "area_volume__standard_formulas"
+  },
+  "mis_area_volume__underestimates_area_shapes_counting_squares": {
+    "confidence": 0.8,
+    "ingredient_id": "area_volume__composite_figures"
+  },
+  "mis_area_volume__uses_formula_for_area_parallelogram": {
+    "confidence": 1.0,
+    "ingredient_id": "area_volume__standard_formulas"
+  },
+  "mis_area_volume__uses_only_base_and_perpendicular": {
+    "confidence": 1.0,
+    "ingredient_id": "area_volume__standard_formulas"
+  },
+  "mis_area_volume__uses_slant_height_instead_perpendicular": {
+    "confidence": 1.0,
+    "ingredient_id": "area_volume__standard_formulas"
+  },
+  "mis_area_volume__uses_slant_heights_instead_parallel": {
+    "confidence": 1.0,
+    "ingredient_id": "area_volume__standard_formulas"
+  },
+  "mis_basic_probability__adds_rather_than_multiplies_for": {
+    "confidence": 1.0,
+    "ingredient_id": "basic_probability__and_or_distinction"
+  },
+  "mis_basic_probability__adds_rather_than_multiplies_using": {
+    "confidence": 1.0,
+    "ingredient_id": "basic_probability__and_or_distinction"
+  },
+  "mis_basic_probability__assumes_item_has_not_been": {
+    "confidence": 1.0,
+    "ingredient_id": "basic_probability__conditional_probability"
+  },
+  "mis_basic_probability__believes_all_possible_outcomes_must": {
+    "confidence": 1.0,
+    "ingredient_id": "basic_probability__probability_as_ratio"
+  },
+  "mis_basic_probability__believes_intersection_on_venn_diagram": {
+    "confidence": 1.0,
+    "ingredient_id": "basic_probability__and_or_distinction"
+  },
+  "mis_basic_probability__believes_sample_space_should_show": {
+    "confidence": 1.0,
+    "ingredient_id": "basic_probability__probability_as_ratio"
+  },
+  "mis_basic_probability__cannot_identify_mutually_exclusive_events": {
+    "confidence": 1.0,
+    "ingredient_id": "basic_probability__and_or_distinction"
+  },
+  "mis_basic_probability__confuses_all_possible_outcomes_with": {
+    "confidence": 1.0,
+    "ingredient_id": "basic_probability__probability_as_ratio"
+  },
+  "mis_basic_probability__confuses_number_regions_venn_diagram": {
+    "confidence": 1.0,
+    "ingredient_id": "basic_probability__probability_as_ratio"
+  },
+  "mis_basic_probability__converts_fraction_decimal_using_denominator": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_basic_probability__converts_fraction_percentage_multiplying_denominator": {
+    "confidence": 1.0,
+    "ingredient_id": "basic_probability__probability_as_ratio"
+  },
+  "mis_basic_probability__does_not_know_what_square": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_basic_probability__does_not_reduce_denominator_item": {
+    "confidence": 1.0,
+    "ingredient_id": "basic_probability__probability_as_ratio"
+  },
+  "mis_basic_probability__does_not_understand_probability_0": {
+    "confidence": 1.0,
+    "ingredient_id": "basic_probability__complement_rule"
+  },
+  "mis_basic_probability__does_not_understand_probability_1": {
+    "confidence": 1.0,
+    "ingredient_id": "basic_probability__complement_rule"
+  },
+  "mis_basic_probability__does_not_understand_set_notation": {
+    "confidence": 1.0,
+    "ingredient_id": "basic_probability__complement_rule"
+  },
+  "mis_basic_probability__does_not_work_out_all": {
+    "confidence": 1.0,
+    "ingredient_id": "basic_probability__and_or_distinction"
+  },
+  "mis_basic_probability__forgets_denominator_probability": {
+    "confidence": 1.0,
+    "ingredient_id": "basic_probability__probability_as_ratio"
+  },
+  "mis_basic_probability__forgets_include_intersection_value_asked": {
+    "confidence": 1.0,
+    "ingredient_id": "basic_probability__and_or_distinction"
+  },
+  "mis_basic_probability__gives_probability_out_number_nonsuccesses": {
+    "confidence": 1.0,
+    "ingredient_id": "basic_probability__probability_as_ratio"
+  },
+  "mis_basic_probability__mixes_up_odd_and_even": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_basic_probability__multiplying_fractions_multiplies_numerator_and": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_basic_probability__thinks_probabilities_event_occurring_or": {
+    "confidence": 1.0,
+    "ingredient_id": "basic_probability__complement_rule"
+  },
+  "mis_circles_geometry__believes_squaring_negative_number_just": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_circles_geometry__confuses_chord_and_radius": {
+    "confidence": 0.8,
+    "ingredient_id": "circles__semicircle_area_from_diameter"
+  },
+  "mis_circles_geometry__confuses_circumference_and_radius": {
+    "confidence": 0.8,
+    "ingredient_id": "circles__semicircle_area_from_diameter"
+  },
+  "mis_circles_geometry__confuses_diameter_and_radius": {
+    "confidence": 1.0,
+    "ingredient_id": "circles__arc_length_sector"
+  },
+  "mis_circles_geometry__confuses_square_root_radius_with": {
+    "confidence": 1.0,
+    "ingredient_id": "circles__semicircle_area_from_diameter"
+  },
+  "mis_circles_geometry__doubles_diameter_finding_radius": {
+    "confidence": 1.0,
+    "ingredient_id": "circles__semicircle_area_from_diameter"
+  },
+  "mis_descriptive_statistics__believes_every_number_mode_you": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_descriptive_statistics__believes_extreme_values_can_affect": {
+    "confidence": 1.0,
+    "ingredient_id": "descriptive_statistics__median_as_middle"
+  },
+  "mis_descriptive_statistics__believes_if_you_changed_all": {
+    "confidence": 1.0,
+    "ingredient_id": "descriptive_statistics__spread_measures"
+  },
+  "mis_descriptive_statistics__believes_mean_middle_number": {
+    "confidence": 1.0,
+    "ingredient_id": "descriptive_statistics__median_as_middle"
+  },
+  "mis_descriptive_statistics__believes_range_does_not_need": {
+    "confidence": 1.0,
+    "ingredient_id": "descriptive_statistics__spread_measures"
+  },
+  "mis_descriptive_statistics__believes_you_can_only_have": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_descriptive_statistics__believes_you_divide_1_number": {
+    "confidence": 1.0,
+    "ingredient_id": "descriptive_statistics__mean_as_balance"
+  },
+  "mis_descriptive_statistics__believes_you_dont_need_numerically": {
+    "confidence": 1.0,
+    "ingredient_id": "descriptive_statistics__median_as_middle"
+  },
+  "mis_descriptive_statistics__calculating_mean_from_list_data": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_descriptive_statistics__calculating_range_does_not_reorder": {
+    "confidence": 1.0,
+    "ingredient_id": "descriptive_statistics__spread_measures"
+  },
+  "mis_descriptive_statistics__carries_out_operations_from_left": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_descriptive_statistics__converts_fraction_percentage_placing_decimal": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_descriptive_statistics__does_not_divide_2_finding": {
+    "confidence": 1.0,
+    "ingredient_id": "descriptive_statistics__median_as_middle"
+  },
+  "mis_descriptive_statistics__does_not_include_brackets_required": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_descriptive_statistics__does_not_know_you_can": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_descriptive_statistics__finds_mean_instead_median": {
+    "confidence": 1.0,
+    "ingredient_id": "descriptive_statistics__mean_vs_median"
+  },
+  "mis_descriptive_statistics__finds_median_instead_mean": {
+    "confidence": 1.0,
+    "ingredient_id": "descriptive_statistics__mean_vs_median"
+  },
+  "mis_descriptive_statistics__finds_median_instead_range": {
+    "confidence": 1.0,
+    "ingredient_id": "descriptive_statistics__spread_measures"
+  },
+  "mis_descriptive_statistics__finds_mode_rather_than_range": {
+    "confidence": 1.0,
+    "ingredient_id": "descriptive_statistics__spread_measures"
+  },
+  "mis_descriptive_statistics__identifies_biggest_value_for_range": {
+    "confidence": 1.0,
+    "ingredient_id": "descriptive_statistics__spread_measures"
+  },
+  "mis_descriptive_statistics__ignores_negative_sign": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_descriptive_statistics__interpreting_pictogram_thinks_each_symbol": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_descriptive_statistics__mixes_up_quantitative_and_qualitative": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_exponent_rules__adds_instead_multiplies_multiplying_algebraic": {
+    "confidence": 1.0,
+    "ingredient_id": "exponent_rules__product_rule"
+  },
+  "mis_exponent_rules__assumes_fact_without_considering_enough": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_exponent_rules__assumes_they_multiply_numerator_fractional": {
+    "confidence": 1.0,
+    "ingredient_id": "exponent_rules__zero_and_rational"
+  },
+  "mis_exponent_rules__believes_dividing_numbers_with_same": {
+    "confidence": 1.0,
+    "ingredient_id": "exponent_rules__quotient_rule"
+  },
+  "mis_exponent_rules__believes_negative_power_results_negative": {
+    "confidence": 1.0,
+    "ingredient_id": "exponent_rules__negative_exponents"
+  },
+  "mis_exponent_rules__believes_you_multiply_matching_bases": {
+    "confidence": 1.0,
+    "ingredient_id": "exponent_rules__product_rule"
+  },
+  "mis_exponent_rules__calculates_perimeter_asked_for_area": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_exponent_rules__can_not_square_root_negative": {
+    "confidence": 1.0,
+    "ingredient_id": "exponent_rules__zero_and_rational"
+  },
+  "mis_exponent_rules__changing_number_standard_form_omits": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_exponent_rules__confuses_powers_and_multiples": {
+    "confidence": 1.0,
+    "ingredient_id": "exponent_rules__power_rule"
+  },
+  "mis_exponent_rules__confuses_square_rooting_and_halving": {
+    "confidence": 1.0,
+    "ingredient_id": "exponent_rules__zero_and_rational"
+  },
+  "mis_exponent_rules__correctly_finds_reciprocal_number_but": {
+    "confidence": 1.0,
+    "ingredient_id": "exponent_rules__negative_exponents"
+  },
+  "mis_exponent_rules__divides_index": {
+    "confidence": 1.0,
+    "ingredient_id": "exponent_rules__quotient_rule"
+  },
+  "mis_exponent_rules__divides_order_root": {
+    "confidence": 1.0,
+    "ingredient_id": "exponent_rules__zero_and_rational"
+  },
+  "mis_exponent_rules__does_not_know_what_cube": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_exponent_rules__does_not_think_we_can": {
+    "confidence": 1.0,
+    "ingredient_id": "exponent_rules__negative_exponents"
+  },
+  "mis_exponent_rules__halves_asked_find_square_root": {
+    "confidence": 1.0,
+    "ingredient_id": "exponent_rules__zero_and_rational"
+  },
+  "mis_exponent_rules__has_confused_cube_numbers_with": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_exponent_rules__has_incorrect_assumption_about_definition": {
+    "confidence": 1.0,
+    "ingredient_id": "exponent_rules__negative_exponents"
+  },
+  "mis_exponent_rules__has_multiplied_root_power": {
+    "confidence": 0.8,
+    "ingredient_id": "exponent_rules__zero_and_rational"
+  },
+  "mis_exponent_rules__mixes_up_cubing_and_multiplying": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_exponent_rules__mixes_up_odd_and_even": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_exponent_rules__mixes_up_square_numbers_and": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_exponent_rules__mixes_up_square_rooting_and": {
+    "confidence": 1.0,
+    "ingredient_id": "exponent_rules__zero_and_rational"
+  },
+  "mis_exponent_rules__mixes_up_squaring_and_addition": {
+    "confidence": 1.0,
+    "ingredient_id": "exponent_rules__power_rule"
+  },
+  "mis_exponent_rules__mixes_up_squaring_and_multiplying": {
+    "confidence": 1.0,
+    "ingredient_id": "exponent_rules__product_rule"
+  },
+  "mis_exponent_rules__mixes_up_squaring_with_dividing": {
+    "confidence": 0.8,
+    "ingredient_id": "exponent_rules__zero_and_rational"
+  },
+  "mis_exponent_rules__multiplies_index": {
+    "confidence": 1.0,
+    "ingredient_id": "exponent_rules__product_rule"
+  },
+  "mis_exponent_rules__ordering_numbers_standard_form_just": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_exponent_rules__thinks_numbers_are_multiple_their": {
+    "confidence": 1.0,
+    "ingredient_id": "exponent_rules__product_rule"
+  },
+  "mis_exponent_rules__thinks_power_raised_power_leads": {
+    "confidence": 1.0,
+    "ingredient_id": "exponent_rules__power_rule"
+  },
+  "mis_exponential_functions__believes_negative_power_results_negative": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_exponential_functions__confuses_reciprocal_and_exponential_graphs": {
+    "confidence": 1.0,
+    "ingredient_id": "exponential_functions__base_and_exponent"
+  },
+  "mis_factoring_polynomials__asked_for_factors_algebraic_expression": {
+    "confidence": 1.0,
+    "ingredient_id": "factoring_polynomials__factor_pairs"
+  },
+  "mis_factoring_polynomials__believes_coefficent_x_expanded_quadratic": {
+    "confidence": 1.0,
+    "ingredient_id": "factoring_polynomials__factor_pairs"
+  },
+  "mis_factoring_polynomials__believes_completed_square_form_they": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_factoring_polynomials__believes_constant_expanded_quadratic_comes": {
+    "confidence": 1.0,
+    "ingredient_id": "factoring_polynomials__factor_pairs"
+  },
+  "mis_factoring_polynomials__believes_factorising_quadratic_they_can": {
+    "confidence": 1.0,
+    "ingredient_id": "factoring_polynomials__factor_pairs"
+  },
+  "mis_factoring_polynomials__believes_multiplying_two_negatives_gives": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_factoring_polynomials__believes_only_first_term_needs": {
+    "confidence": 1.0,
+    "ingredient_id": "factoring_polynomials__ac_method"
+  },
+  "mis_factoring_polynomials__completing_square_believes_constant_bracket": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_factoring_polynomials__completing_square_form_x_a2": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_factoring_polynomials__does_not_know_factorise_quadratic": {
+    "confidence": 1.0,
+    "ingredient_id": "factoring_polynomials__factor_pairs"
+  },
+  "mis_factoring_polynomials__factorising_into_double_brackets_believes": {
+    "confidence": 1.0,
+    "ingredient_id": "factoring_polynomials__factor_pairs"
+  },
+  "mis_factoring_polynomials__factorising_into_double_brackets_finds": {
+    "confidence": 1.0,
+    "ingredient_id": "factoring_polynomials__factor_pairs"
+  },
+  "mis_factoring_polynomials__factorising_into_single_brackets_only": {
+    "confidence": 1.0,
+    "ingredient_id": "factoring_polynomials__ac_method"
+  },
+  "mis_factoring_polynomials__factorising_quadratic_with_coefficient_x": {
+    "confidence": 1.0,
+    "ingredient_id": "factoring_polynomials__ac_method"
+  },
+  "mis_factoring_polynomials__factorising_quadratic_with_nonunit_coefficient": {
+    "confidence": 1.0,
+    "ingredient_id": "factoring_polynomials__ac_method"
+  },
+  "mis_factoring_polynomials__factorising_quadratic_without_non_variable": {
+    "confidence": 1.0,
+    "ingredient_id": "factoring_polynomials__factor_pairs"
+  },
+  "mis_factoring_polynomials__multiplying_out_2_or_more": {
+    "confidence": 1.0,
+    "ingredient_id": "factoring_polynomials__factor_pairs"
+  },
+  "mis_factoring_polynomials__only_multiplies_first_term_expansion": {
+    "confidence": 1.0,
+    "ingredient_id": "factoring_polynomials__factor_pairs"
+  },
+  "mis_fractions_decimals__adding_decimals_just_adds_digits": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__decimal_place_value"
+  },
+  "mis_fractions_decimals__adding_decimals_with_different_number": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__decimal_place_value"
+  },
+  "mis_fractions_decimals__adds_instead_multiplies": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__equivalent_fractions"
+  },
+  "mis_fractions_decimals__adds_instead_subtracts": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__fraction_arithmetic"
+  },
+  "mis_fractions_decimals__assumed_each_part_fraction_diagram": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__part_whole_meaning"
+  },
+  "mis_fractions_decimals__assumes_converting_decimal_percentage_fraction": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__fraction_decimal_conversion"
+  },
+  "mis_fractions_decimals__assumes_fractions_with_prime_numerators": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__equivalent_fractions"
+  },
+  "mis_fractions_decimals__believes_changing_improper_fraction_mixed": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_fractions_decimals__believes_common_denominator_can_only": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__fraction_arithmetic"
+  },
+  "mis_fractions_decimals__believes_division_commutative": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__fraction_decimal_conversion"
+  },
+  "mis_fractions_decimals__believes_equivalent_fractions_are_formed": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__equivalent_fractions"
+  },
+  "mis_fractions_decimals__believes_fraction_means_dividing_denominator": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__fraction_decimal_conversion"
+  },
+  "mis_fractions_decimals__believes_fraction_out_number_other": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_fractions_decimals__believes_fractions_with_larger_denominators": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__part_whole_meaning"
+  },
+  "mis_fractions_decimals__believes_mixed_number_can_contain": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_fractions_decimals__believes_simplifying_fraction_you_can": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__equivalent_fractions"
+  },
+  "mis_fractions_decimals__believes_subtraction_commutative": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__fraction_arithmetic"
+  },
+  "mis_fractions_decimals__believes_unit_fractions_with_difference": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_fractions_decimals__borrowing_during_subtraction_problem_does": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_fractions_decimals__can_identify_multiplier_used_form": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__equivalent_fractions"
+  },
+  "mis_fractions_decimals__cannot_identify_fraction_on_number": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_fractions_decimals__confused_mixed_numbers_with_improper": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_fractions_decimals__confuses_part_and_whole_fraction": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__part_whole_meaning"
+  },
+  "mis_fractions_decimals__converting_from_improper_fraction_mixed": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__fraction_decimal_conversion"
+  },
+  "mis_fractions_decimals__converting_percentage_decimal_just_writes": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__fraction_decimal_conversion"
+  },
+  "mis_fractions_decimals__converts_fraction_percentage_writing_numerator": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__fraction_decimal_conversion"
+  },
+  "mis_fractions_decimals__denominator_used_for_other_parts": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__part_whole_meaning"
+  },
+  "mis_fractions_decimals__divided_100_rather_than_10": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__fraction_decimal_conversion"
+  },
+  "mis_fractions_decimals__divided_10_rather_than_100": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__fraction_decimal_conversion"
+  },
+  "mis_fractions_decimals__dividend_mixed_number_and_divisor": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_fractions_decimals__divides_1000_instead_100_converting": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__fraction_decimal_conversion"
+  },
+  "mis_fractions_decimals__divides_10_instead_100_converting": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__fraction_decimal_conversion"
+  },
+  "mis_fractions_decimals__dividing_decimals_does_not_realize": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__decimal_place_value"
+  },
+  "mis_fractions_decimals__dividing_decimals_with_same_number": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__decimal_place_value"
+  },
+  "mis_fractions_decimals__dividing_fraction_integer_divides_both": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__equivalent_fractions"
+  },
+  "mis_fractions_decimals__dividing_fraction_integer_divides_denominator": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_fractions_decimals__dividing_fraction_integer_multiplies_numerator": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_fractions_decimals__dividing_fractions_does_reciprocal_first": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__fraction_arithmetic"
+  },
+  "mis_fractions_decimals__dividing_ignores_any_remainders": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__fraction_decimal_conversion"
+  },
+  "mis_fractions_decimals__dividing_integer_fraction_thinks_they": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_fractions_decimals__does_not_correctly_apply_commutative": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_fractions_decimals__does_not_fully_simplify_fraction": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_fractions_decimals__does_not_know_how_compare": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__decimal_place_value"
+  },
+  "mis_fractions_decimals__does_not_know_how_interpret": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__part_whole_meaning"
+  },
+  "mis_fractions_decimals__does_not_know_how_write": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__fraction_decimal_conversion"
+  },
+  "mis_fractions_decimals__does_not_know_multiplying_unit": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__equivalent_fractions"
+  },
+  "mis_fractions_decimals__does_not_know_units_column": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__decimal_place_value"
+  },
+  "mis_fractions_decimals__does_not_know_you_can": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_fractions_decimals__does_not_realise_you_can": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__equivalent_fractions"
+  },
+  "mis_fractions_decimals__does_not_see_fraction_diagrams": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__part_whole_meaning"
+  },
+  "mis_fractions_decimals__does_not_understand_denominator_represents": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__part_whole_meaning"
+  },
+  "mis_fractions_decimals__does_not_understand_equivalent_fractions": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__equivalent_fractions"
+  },
+  "mis_fractions_decimals__does_not_understand_inequality_notation": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_fractions_decimals__does_not_understand_parts_must": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__part_whole_meaning"
+  },
+  "mis_fractions_decimals__does_not_understand_percentage_out": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_fractions_decimals__does_not_understand_place_value": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__decimal_place_value"
+  },
+  "mis_fractions_decimals__does_not_understand_value_zeros": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__decimal_place_value"
+  },
+  "mis_fractions_decimals__finds_unit_fraction_asked_find": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__part_whole_meaning"
+  },
+  "mis_fractions_decimals__forgets_change_numerators_finding_equivalent": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__equivalent_fractions"
+  },
+  "mis_fractions_decimals__forgot_simplify_fraction": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__equivalent_fractions"
+  },
+  "mis_fractions_decimals__gives_rounded_whole_number_instead": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__fraction_decimal_conversion"
+  },
+  "mis_fractions_decimals__has_used_decimal_point_separate": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__fraction_decimal_conversion"
+  },
+  "mis_fractions_decimals__hasnt_lined_up_place_value": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__decimal_place_value"
+  },
+  "mis_fractions_decimals__identifies_wrong_part_fraction_model": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__part_whole_meaning"
+  },
+  "mis_fractions_decimals__ignores_negative_sign": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_fractions_decimals__mixes_up_greater_than_and": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__decimal_place_value"
+  },
+  "mis_fractions_decimals__multiplied_1000_instead_100": {
+    "confidence": 0.8,
+    "ingredient_id": "fractions_decimals__fraction_decimal_conversion"
+  },
+  "mis_fractions_decimals__multiplies_10_instead_100_converting": {
+    "confidence": 0.8,
+    "ingredient_id": "fractions_decimals__fraction_decimal_conversion"
+  },
+  "mis_fractions_decimals__multiplies_number_whole_units_numerator": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_fractions_decimals__multiplies_numerators_adding_fractions_with": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__fraction_arithmetic"
+  },
+  "mis_fractions_decimals__multiplies_rather_than_divides": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__fraction_decimal_conversion"
+  },
+  "mis_fractions_decimals__multiplies_up_without_finding_unit": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_fractions_decimals__multiplying_decimal_less_than_1": {
+    "confidence": 0.8,
+    "ingredient_id": "fractions_decimals__decimal_place_value"
+  },
+  "mis_fractions_decimals__multiplying_decimals_divides_wrong_power": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_fractions_decimals__multiplying_decimals_ignores_place_value": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__decimal_place_value"
+  },
+  "mis_fractions_decimals__multiplying_fraction_integer_multiplies_both": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__equivalent_fractions"
+  },
+  "mis_fractions_decimals__multiplying_fractions_adds_numerators_and": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__fraction_arithmetic"
+  },
+  "mis_fractions_decimals__multiplying_just_writes_numbers_next": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__fraction_arithmetic"
+  },
+  "mis_fractions_decimals__multiplying_mixed_numbers_forgets_multiply": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__fraction_arithmetic"
+  },
+  "mis_fractions_decimals__only_reads_percentage_symbol_applying": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_fractions_decimals__ordering_integers_orders_from_digits": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__decimal_place_value"
+  },
+  "mis_fractions_decimals__reading_dash_on_number_line": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_fractions_decimals__solving_equation_multiplies_instead_dividing": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__fraction_decimal_conversion"
+  },
+  "mis_fractions_decimals__solving_equation_thinks_they_divide": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__equivalent_fractions"
+  },
+  "mis_fractions_decimals__solving_problem_requires_inverse_operation": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_fractions_decimals__subtracts_instead_adds": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__fraction_arithmetic"
+  },
+  "mis_fractions_decimals__subtracts_instead_divides": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__fraction_decimal_conversion"
+  },
+  "mis_fractions_decimals__thinks_fraction_1n_can_express": {
+    "confidence": 1.0,
+    "ingredient_id": "fractions_decimals__part_whole_meaning"
+  },
+  "mis_fractions_decimals__two_digits_multiply_10_or": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_fractions_decimals__two_digits_sum_10_or": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_functions_basics__answers_order_operations_questions_with": {
+    "confidence": 1.0,
+    "ingredient_id": "functions_basics__function_notation_meaning"
+  },
+  "mis_functions_basics__assumes_graph_always_starts_origin": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_functions_basics__believes_change_y_for_gradient": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_functions_basics__believes_curve_can_show_constant": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_functions_basics__believes_distance_area_under_graph": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_functions_basics__believes_dividing_positive_negative_gives": {
+    "confidence": 0.8,
+    "ingredient_id": "functions_basics__function_notation_meaning"
+  },
+  "mis_functions_basics__believes_downward_slope_on_distancetime": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_functions_basics__believes_gradient_distancetime_graph_acceleration": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_functions_basics__believes_gradient_speedtime_graph_speed": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_functions_basics__believes_infinite_gradient_not_possible": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_functions_basics__believes_inverse_square_rooting_doubling": {
+    "confidence": 1.0,
+    "ingredient_id": "functions_basics__one_to_one_invertibility"
+  },
+  "mis_functions_basics__believes_less_steep_gradient_corresponds": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_functions_basics__believes_scales_on_graphs_must": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_functions_basics__believes_steeper_downwards_line_on": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_functions_basics__believes_subtraction_commutative": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_functions_basics__confuses_reciprocal_and_exponential_graphs": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_functions_basics__confuses_rest_and_movement_on": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_functions_basics__does_not_interpret_sloping_gradient": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_functions_basics__does_not_realise_gradient_represents": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_functions_basics__does_not_realise_two_letters": {
+    "confidence": 1.0,
+    "ingredient_id": "functions_basics__function_notation_meaning"
+  },
+  "mis_functions_basics__has_not_noticed_difference_between": {
+    "confidence": 0.8,
+    "ingredient_id": "functions_basics__function_notation_meaning"
+  },
+  "mis_functions_basics__mixes_up_squaring_and_multiplying": {
+    "confidence": 1.0,
+    "ingredient_id": "functions_basics__function_notation_meaning"
+  },
+  "mis_functions_basics__only_multiplies_first_term_expansion": {
+    "confidence": 1.0,
+    "ingredient_id": "functions_basics__function_notation_meaning"
+  },
+  "mis_functions_basics__only_multiplies_second_term_expansion": {
+    "confidence": 1.0,
+    "ingredient_id": "functions_basics__function_notation_meaning"
+  },
+  "mis_functions_basics__reading_value_from_graph_reads": {
+    "confidence": 0.8,
+    "ingredient_id": "functions_basics__domain_range"
+  },
+  "mis_functions_basics__solving_problem_requires_inverse_operation": {
+    "confidence": 1.0,
+    "ingredient_id": "functions_basics__one_to_one_invertibility"
+  },
+  "mis_functions_basics__thinks_inverse_subtraction_multiplication": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_functions_basics__thinks_terms_linear_sequence_are": {
+    "confidence": 0.8,
+    "ingredient_id": "functions_basics__function_composition"
+  },
+  "mis_functions_basics__thinks_you_apply_one_inverse": {
+    "confidence": 1.0,
+    "ingredient_id": "functions_basics__one_to_one_invertibility"
+  },
+  "mis_geometric_transformations__added_rather_than_multiplied_scale": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_geometric_transformations__believes_lines_symmetry_must_be": {
+    "confidence": 1.0,
+    "ingredient_id": "transformations__reflection_rules"
+  },
+  "mis_geometric_transformations__cannot_identify_line_symmetry_simple": {
+    "confidence": 1.0,
+    "ingredient_id": "transformations__reflection_rules"
+  },
+  "mis_geometric_transformations__confuses_left_and_right": {
+    "confidence": 1.0,
+    "ingredient_id": "transformations__rotation_rules"
+  },
+  "mis_geometric_transformations__confuses_negative_and_positive_coordinates": {
+    "confidence": 1.0,
+    "ingredient_id": "transformations__reflection_rules"
+  },
+  "mis_geometric_transformations__divides_length_original_length_image": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_geometric_transformations__estimates_length_diagonal_lines_rather": {
+    "confidence": 0.2,
+    "ingredient_id": "transformations__reflection_rules"
+  },
+  "mis_geometric_transformations__thinks_x_0_x_axis": {
+    "confidence": 1.0,
+    "ingredient_id": "transformations__reflection_rules"
+  },
+  "mis_geometric_transformations__thinks_x_horizontal_line_through": {
+    "confidence": 1.0,
+    "ingredient_id": "transformations__reflection_rules"
+  },
+  "mis_geometric_transformations__thinks_x_y_axis": {
+    "confidence": 1.0,
+    "ingredient_id": "transformations__reflection_rules"
+  },
+  "mis_linear_equations__adding_integer_fraction_thinks_you": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_linear_equations__adds_or_subtracts_from_numerator": {
+    "confidence": 1.0,
+    "ingredient_id": "linear_equations__slope_intercept_form"
+  },
+  "mis_linear_equations__assumes_every_dash_on_scale": {
+    "confidence": 1.0,
+    "ingredient_id": "linear_equations__slope_meaning"
+  },
+  "mis_linear_equations__assumes_ratio_part_part_instead": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_linear_equations__believes_angles_triangle_sum_360": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_linear_equations__believes_coordinate_cannot_be_placed": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_linear_equations__believes_division_commutative": {
+    "confidence": 1.0,
+    "ingredient_id": "linear_equations__parallel_perpendicular"
+  },
+  "mis_linear_equations__believes_line_segment_can_be": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_linear_equations__believes_linear_graphs_can_be": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_linear_equations__believes_midpoint_calculation_just_half": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_linear_equations__believes_multiplying_two_negatives_gives": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_linear_equations__believes_number_divided_itself_equals": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_linear_equations__believes_sides_rectangle_must_be": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_linear_equations__believes_sides_square_must_be": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_linear_equations__believes_solution_equation_with_matching": {
+    "confidence": 1.0,
+    "ingredient_id": "linear_equations__slope_intercept_form"
+  },
+  "mis_linear_equations__believes_subtracting_positive_number_from": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_linear_equations__believes_sum_change_x_and": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_linear_equations__believes_there_more_than_one": {
+    "confidence": 1.0,
+    "ingredient_id": "linear_equations__two_points_determine_line"
+  },
+  "mis_linear_equations__believes_you_can_subtract_from": {
+    "confidence": 1.0,
+    "ingredient_id": "linear_equations__slope_intercept_form"
+  },
+  "mis_linear_equations__believes_you_write_carried_value": {
+    "confidence": 1.0,
+    "ingredient_id": "linear_equations__slope_intercept_form"
+  },
+  "mis_linear_equations__carries_out_operations_from_left": {
+    "confidence": 1.0,
+    "ingredient_id": "linear_equations__slope_intercept_form"
+  },
+  "mis_linear_equations__counts_squares_instead_correct_scale": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_linear_equations__does_not_divide_2_finding": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_linear_equations__does_not_know_how_find": {
+    "confidence": 1.0,
+    "ingredient_id": "linear_equations__two_points_determine_line"
+  },
+  "mis_linear_equations__does_not_know_properties_linear": {
+    "confidence": 0.8,
+    "ingredient_id": "linear_equations__parallel_perpendicular"
+  },
+  "mis_linear_equations__does_not_realise_maintain_balance": {
+    "confidence": 1.0,
+    "ingredient_id": "linear_equations__slope_intercept_form"
+  },
+  "mis_linear_equations__does_not_remember_rhombus_has": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_linear_equations__does_not_understand_bar_modelling": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_linear_equations__does_not_understand_multiplying_both": {
+    "confidence": 1.0,
+    "ingredient_id": "linear_equations__slope_intercept_form"
+  },
+  "mis_linear_equations__finds_difference_coordinate_pair_rather": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_linear_equations__given_line_segment_with_midpoint": {
+    "confidence": 1.0,
+    "ingredient_id": "linear_equations__two_points_determine_line"
+  },
+  "mis_linear_equations__heads_towards_zero_subtracting_from": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_linear_equations__ignores_negative_signs_adding_positive": {
+    "confidence": 1.0,
+    "ingredient_id": "linear_equations__parallel_perpendicular"
+  },
+  "mis_linear_equations__mixes_up_value_two_terms": {
+    "confidence": 1.0,
+    "ingredient_id": "linear_equations__slope_intercept_form"
+  },
+  "mis_linear_equations__multiplying_fraction_integer_multiplies_denominator": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_linear_equations__only_multiplies_first_term_expansion": {
+    "confidence": 1.0,
+    "ingredient_id": "linear_equations__slope_intercept_form"
+  },
+  "mis_linear_equations__reading_graph_chooses_nearest_marked": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_linear_equations__solving_equation_adds_instead_dividing": {
+    "confidence": 1.0,
+    "ingredient_id": "linear_equations__slope_intercept_form"
+  },
+  "mis_linear_equations__solving_equation_forgets_eliminate_coefficient": {
+    "confidence": 1.0,
+    "ingredient_id": "linear_equations__slope_intercept_form"
+  },
+  "mis_linear_equations__solving_equation_subtracts_instead_dividing": {
+    "confidence": 1.0,
+    "ingredient_id": "linear_equations__slope_intercept_form"
+  },
+  "mis_linear_equations__solving_equation_uses_same_operation": {
+    "confidence": 0.8,
+    "ingredient_id": "linear_equations__slope_intercept_form"
+  },
+  "mis_linear_equations__solving_equation_where_there_negative": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_linear_equations__solving_equation_with_fraction_thinks": {
+    "confidence": 1.0,
+    "ingredient_id": "linear_equations__slope_intercept_form"
+  },
+  "mis_linear_equations__solving_equation_with_x_denominator": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_linear_equations__solving_problem_requires_inverse_operation": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_linear_equations__subtracting_negative_number_from_positive": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_linear_equations__subtracts_instead_adds_using_inverse": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_linear_equations__subtracts_smallest_digit_from_largest": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_linear_equations__swaps_dividend_and_divisor_order": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_linear_equations__thinks_if_two_lines_do": {
+    "confidence": 0.8,
+    "ingredient_id": "linear_equations__parallel_perpendicular"
+  },
+  "mis_linear_equations__thinks_inverse_subtraction_multiplication": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_linear_equations__thinks_they_solve_mx_c": {
+    "confidence": 1.0,
+    "ingredient_id": "linear_equations__slope_intercept_form"
+  },
+  "mis_linear_equations__thinks_x_1_x_axis": {
+    "confidence": 1.0,
+    "ingredient_id": "linear_equations__y_intercept_meaning"
+  },
+  "mis_linear_equations__thinks_x_horizontal_line_through": {
+    "confidence": 1.0,
+    "ingredient_id": "linear_equations__slope_intercept_form"
+  },
+  "mis_linear_equations__thinks_y_1_y_axis": {
+    "confidence": 1.0,
+    "ingredient_id": "linear_equations__y_intercept_meaning"
+  },
+  "mis_linear_equations__using_function_machine_confuses_input": {
+    "confidence": 0.8,
+    "ingredient_id": "linear_equations__slope_intercept_form"
+  },
+  "mis_linear_inequalities__believes_greater_thanless_than_symbols": {
+    "confidence": 1.0,
+    "ingredient_id": "linear_inequalities__open_closed_circles"
+  },
+  "mis_linear_inequalities__mixes_up_greater_than_and": {
+    "confidence": 1.0,
+    "ingredient_id": "linear_inequalities__flip_rule"
+  },
+  "mis_linear_inequalities__mixes_up_squaring_and_multiplying": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_linear_inequalities__solving_equation_uses_same_operation": {
+    "confidence": 1.0,
+    "ingredient_id": "linear_inequalities__flip_rule"
+  },
+  "mis_linear_inequalities__thinks_subtracting_negative_makes_your": {
+    "confidence": 1.0,
+    "ingredient_id": "linear_inequalities__flip_rule"
+  },
+  "mis_lines_angles__assumes_14_whole_25": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_lines_angles__believes_angles_on_straight_line": {
+    "confidence": 1.0,
+    "ingredient_id": "lines_angles__supplementary_complementary"
+  },
+  "mis_lines_angles__believes_any_lines_cross_are": {
+    "confidence": 1.0,
+    "ingredient_id": "lines_angles__transversal_angles"
+  },
+  "mis_lines_angles__borrowing_during_subtraction_problem_does": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_lines_angles__chooses_correct_scale_measuring_angles": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_lines_angles__does_not_know_meaning_word": {
+    "confidence": 1.0,
+    "ingredient_id": "lines_angles__parallel_line_angle_chasing"
+  },
+  "mis_lines_angles__does_not_know_right_angle": {
+    "confidence": 1.0,
+    "ingredient_id": "lines_angles__supplementary_complementary"
+  },
+  "mis_lines_angles__does_not_recall_steps_required": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_lines_angles__does_not_think_variable_with": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_lines_angles__ignores_numerical_terms_setting_up": {
+    "confidence": 1.0,
+    "ingredient_id": "lines_angles__supplementary_complementary"
+  },
+  "mis_lines_angles__incorrectly_identifies_angles_vertically_opposite": {
+    "confidence": 1.0,
+    "ingredient_id": "lines_angles__vertical_angles"
+  },
+  "mis_lines_angles__mistakes_lines_parallel": {
+    "confidence": 1.0,
+    "ingredient_id": "lines_angles__transversal_angles"
+  },
+  "mis_lines_angles__mixes_up_clockwise_and_anticlockwise": {
+    "confidence": 1.0,
+    "ingredient_id": "lines_angles__transversal_angles"
+  },
+  "mis_lines_angles__reads_wrong_scale_on_protractor": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_lines_angles__thinks_angles_which_look_same": {
+    "confidence": 0.8,
+    "ingredient_id": "lines_angles__transversal_angles"
+  },
+  "mis_measurement_units__added_rather_than_multiplied_scale": {
+    "confidence": 1.0,
+    "ingredient_id": "measurement_units__linear_vs_square_units"
+  },
+  "mis_measurement_units__calculating_perimeter_only_adds_marked": {
+    "confidence": 0.8,
+    "ingredient_id": "measurement_units__linear_vs_square_units"
+  },
+  "mis_measurement_units__confuses_cl_and_ml": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_measurement_units__given_perimeter_regular_polygon_multiplies": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_measurement_units__given_perimeter_regular_polygon_subtracts": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_measurement_units__mixes_up_shortest_and_longest": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_measurement_units__thinks_1_cubic_metre_1000": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_measurement_units__thinks_1l_10_000_cubic": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_measurement_units__thinks_1l_1_cubic_centimetre": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_measurement_units__thinks_1l_1_cubic_metre": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_measurement_units__thinks_there_are_10000mm_metre": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_measurement_units__thinks_there_are_100kg_tonne": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_measurement_units__thinks_there_are_100mm_centimetre": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_measurement_units__thinks_there_are_12_hours": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_measurement_units__thinks_there_are_50_weeks": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_measurement_units__thinks_there_are_5_days": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_measurement_units__thinks_there_are_7_hours": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_measurement_units__writes_times_afternoon_if_they": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__adding_powers_10_adds_onto": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__adds_instead_multiples": {
+    "confidence": 0.8,
+    "ingredient_id": "number_properties__factor_pair_sum_search"
+  },
+  "mis_number_properties__adds_instead_subtracts_using_area": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__adds_rather_than_subtracts_answering": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__asked_for_value_digit_gives": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__assumes_arrow_on_number_line": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__assumes_fact_without_considering_enough": {
+    "confidence": 1.0,
+    "ingredient_id": "number_properties__factor_count_exactly_three"
+  },
+  "mis_number_properties__assumes_they_add_all_values": {
+    "confidence": 0.8,
+    "ingredient_id": "number_properties__factor_definition"
+  },
+  "mis_number_properties__believes_adding_negative_will_increase": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__believes_adding_two_negatives_gives": {
+    "confidence": 1.0,
+    "ingredient_id": "number_properties__parity_even_odd_product_sum"
+  },
+  "mis_number_properties__believes_compensation_strategy_for_multiplication": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__believes_dividing_decimal_same_dividing": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__believes_dividing_negative_negative_gives": {
+    "confidence": 0.8,
+    "ingredient_id": "number_properties__parity_even_odd_product_sum"
+  },
+  "mis_number_properties__believes_dividing_negative_positive_gives": {
+    "confidence": 0.8,
+    "ingredient_id": "number_properties__parity_even_odd_product_sum"
+  },
+  "mis_number_properties__believes_dividing_positive_negative_gives": {
+    "confidence": 0.8,
+    "ingredient_id": "number_properties__parity_even_odd_product_sum"
+  },
+  "mis_number_properties__believes_division_commutative": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__believes_first_multiple_2a": {
+    "confidence": 1.0,
+    "ingredient_id": "number_properties__factor_definition"
+  },
+  "mis_number_properties__believes_larger_divisor_larger_answer": {
+    "confidence": 1.0,
+    "ingredient_id": "number_properties__factor_pairs"
+  },
+  "mis_number_properties__believes_multiplying_positive_negative_gives": {
+    "confidence": 1.0,
+    "ingredient_id": "number_properties__parity_even_odd_product_sum"
+  },
+  "mis_number_properties__believes_multiplying_two_negatives_gives": {
+    "confidence": 1.0,
+    "ingredient_id": "number_properties__parity_even_odd_product_sum"
+  },
+  "mis_number_properties__believes_negative_number_can_be": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__believes_negative_numbers_with_larger": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__believes_rounding_numbers_down_would": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__believes_smaller_divisor_smaller_answer": {
+    "confidence": 1.0,
+    "ingredient_id": "number_properties__factor_pairs"
+  },
+  "mis_number_properties__believes_smaller_number_always_subtracted": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__believes_subtraction_commutative": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__believes_they_only_need_write": {
+    "confidence": 0.8,
+    "ingredient_id": "number_properties__factor_definition"
+  },
+  "mis_number_properties__believes_we_move_down_number": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__believes_you_can_go_above": {
+    "confidence": 0.8,
+    "ingredient_id": "number_properties__factor_definition"
+  },
+  "mis_number_properties__borrowing_during_subtraction_problem_does": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__carries_out_operations_from_left": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__chooses_example_asked_for_counterexample": {
+    "confidence": 1.0,
+    "ingredient_id": "number_properties__factor_count_exactly_three"
+  },
+  "mis_number_properties__confuses_calculations_for_hcf_and": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__confuses_ten_thousands_and_thousands": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__counts_leading_zero_significant_figure": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__counts_on_1_asked_count": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__counts_on_wrong_direction_on": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__counts_starting_number_counting_backwards": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__counts_wrong_direction_on_number": {
+    "confidence": 1.0,
+    "ingredient_id": "number_properties__factor_pairs"
+  },
+  "mis_number_properties__difficulty_with_translating_mathematical_answer": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__divided_100_rather_than_1000": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__divides_rather_than_adds_answering": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__divides_rather_than_multiplies_answering": {
+    "confidence": 0.8,
+    "ingredient_id": "number_properties__factor_definition"
+  },
+  "mis_number_properties__divides_rather_than_subtracts_given": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__dividing_decimal_whole_number_ignores": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__dividing_ignores_any_remainders": {
+    "confidence": 1.0,
+    "ingredient_id": "number_properties__factor_definition"
+  },
+  "mis_number_properties__dividing_involving_power_10_gives": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__does_not_copy_given_method": {
+    "confidence": 1.0,
+    "ingredient_id": "number_properties__factor_count_exactly_three"
+  },
+  "mis_number_properties__does_not_correctly_apply_commutative": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__does_not_correctly_apply_distributive": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__does_not_equate_value_number": {
+    "confidence": 1.0,
+    "ingredient_id": "number_properties__perfect_square_odd_factors"
+  },
+  "mis_number_properties__does_not_know_7_and": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__does_not_know_9_timestable": {
+    "confidence": 0.8,
+    "ingredient_id": "number_properties__factor_count_exactly_three"
+  },
+  "mis_number_properties__does_not_know_definition_rational": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__does_not_know_how_compare": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__does_not_know_how_use": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__does_not_know_meaning_word": {
+    "confidence": 1.0,
+    "ingredient_id": "number_properties__factor_definition"
+  },
+  "mis_number_properties__does_not_realise_adding_larger": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__does_not_realise_subtracting_larger": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__does_not_recognise_addition_inverse": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__does_not_recognise_distributive_property": {
+    "confidence": 0.8,
+    "ingredient_id": "number_properties__factor_pair_sum_search"
+  },
+  "mis_number_properties__does_not_recognise_find_multiple": {
+    "confidence": 0.8,
+    "ingredient_id": "number_properties__factor_definition"
+  },
+  "mis_number_properties__does_not_think_compensation_strategy": {
+    "confidence": 0.8,
+    "ingredient_id": "number_properties__factor_pairs"
+  },
+  "mis_number_properties__does_not_understand_effect_consecutive": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__does_not_understand_first_significant": {
+    "confidence": 1.0,
+    "ingredient_id": "number_properties__perfect_square_odd_factors"
+  },
+  "mis_number_properties__does_not_understand_meaning_value": {
+    "confidence": 1.0,
+    "ingredient_id": "number_properties__factor_definition"
+  },
+  "mis_number_properties__does_not_understand_place_value": {
+    "confidence": 0.8,
+    "ingredient_id": "number_properties__factor_pairs"
+  },
+  "mis_number_properties__does_not_understand_remainder_can": {
+    "confidence": 1.0,
+    "ingredient_id": "number_properties__factor_definition"
+  },
+  "mis_number_properties__does_not_understand_surd_rational": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__does_not_understand_value_zeros": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__estimated_not_appropriate": {
+    "confidence": 1.0,
+    "ingredient_id": "number_properties__factor_count_exactly_three"
+  },
+  "mis_number_properties__finding_value_number_given_roman": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__gives_rounded_whole_number_instead": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__hasnt_lined_up_place_value": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__ignores_negative_sign": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__ignores_negative_signs_adding_positive": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__ignores_numbers_written_words_worded": {
+    "confidence": 0.8,
+    "ingredient_id": "number_properties__factor_definition"
+  },
+  "mis_number_properties__mistakes_place_value_column_hundred": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__mixes_up_greater_than_and": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__multiplies_rather_than_adds_given": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__multiplies_rather_than_divides": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__multiplying_decimal_integer_ignores_decimal": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__multiplying_fraction_integer_multiplies_denominator": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__multiplying_just_writes_numbers_next": {
+    "confidence": 0.8,
+    "ingredient_id": "number_properties__factor_definition"
+  },
+  "mis_number_properties__multiplying_multiples_ten_and_answer": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__multiplying_treats_digits_other_columns": {
+    "confidence": 0.8,
+    "ingredient_id": "number_properties__factor_pair_sum_search"
+  },
+  "mis_number_properties__multiplying_with_negative_numbers_assumes": {
+    "confidence": 1.0,
+    "ingredient_id": "number_properties__parity_even_odd_product_sum"
+  },
+  "mis_number_properties__ordering_integers_orders_from_digits": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__performs_subtraction_wrong_order": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__placing_negative_number_on_number": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__reading_integers_on_number_line": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__reads_10000_1000": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__reads_position_number_from_space": {
+    "confidence": 1.0,
+    "ingredient_id": "number_properties__factor_definition"
+  },
+  "mis_number_properties__rounded_wrong_degree_accuracy_2sf": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__rounding_decimal_places_and_only": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__rounding_up_from_9_does": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__rounds_down_instead_up": {
+    "confidence": 1.0,
+    "ingredient_id": "number_properties__perfect_square_odd_factors"
+  },
+  "mis_number_properties__rounds_down_instead_up_next": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__rounds_every_number_up_estimating": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__rounds_incorrectly_changing_multiple_place": {
+    "confidence": 1.0,
+    "ingredient_id": "number_properties__perfect_square_odd_factors"
+  },
+  "mis_number_properties__rounds_incorrectly_nearest_10_multiple": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__rounds_nearest_50_not_20": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__rounds_nearest_integer_rather_than": {
+    "confidence": 1.0,
+    "ingredient_id": "number_properties__perfect_square_odd_factors"
+  },
+  "mis_number_properties__rounds_too_little_estimating": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__rounds_up_instead_down": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__rounds_wrong_degree_accuracy_decimal": {
+    "confidence": 1.0,
+    "ingredient_id": "number_properties__perfect_square_odd_factors"
+  },
+  "mis_number_properties__rounds_wrong_degree_accuracy_rounds": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__rounds_wrong_degree_accuracy_significant": {
+    "confidence": 1.0,
+    "ingredient_id": "number_properties__perfect_square_odd_factors"
+  },
+  "mis_number_properties__solving_problem_requires_inverse_operation": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__starts_wrong_end_dividend_dividing": {
+    "confidence": 1.0,
+    "ingredient_id": "number_properties__factor_pairs"
+  },
+  "mis_number_properties__student_does_not_understand_place": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__student_thinks_negative_decimals_behave": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__subtracting_negative_number_subtracts_absolute": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__subtracting_negative_thinks_answer_must": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__subtracting_power_10_subtracts_from": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__subtracts_instead_adds": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__subtracts_instead_adds_answering_worded": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__subtracts_instead_divides": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__subtracts_smallest_digit_from_largest": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__thinks_fraction_bar_means_subtract": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__thinks_more_digits_number_has": {
+    "confidence": 0.8,
+    "ingredient_id": "number_properties__factor_pairs"
+  },
+  "mis_number_properties__thinks_positive_or_negative_sign": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__thinks_remainder_difference_between_dividend": {
+    "confidence": 1.0,
+    "ingredient_id": "number_properties__factor_definition"
+  },
+  "mis_number_properties__two_digits_multiply_10_or": {
+    "confidence": 0.8,
+    "ingredient_id": "number_properties__parity_even_odd_product_sum"
+  },
+  "mis_number_properties__two_digits_sum_10_or": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__uses_dividing_fractions_method_for": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__worded_problem_does_not_complete": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__writes_digits_order_pictorial_representation": {
+    "confidence": 1.0,
+    "ingredient_id": "number_properties__factor_pairs"
+  },
+  "mis_number_properties__writes_four_symbols_after_rather": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_number_properties__writes_remainder_digit_after_decimal": {
+    "confidence": 1.0,
+    "ingredient_id": "number_properties__factor_definition"
+  },
+  "mis_order_of_operations__adding_roots_adds_numbers_under": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_order_of_operations__adds_rather_than_subtracts_answering": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_order_of_operations__believes_squaring_fraction_requires_you": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_order_of_operations__believes_subtraction_commutative": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_order_of_operations__does_not_find_common_denominator": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_order_of_operations__does_not_follow_arrows_through": {
+    "confidence": 1.0,
+    "ingredient_id": "order_of_operations__precedence_hierarchy"
+  },
+  "mis_order_of_operations__does_not_realise_subtracting_negative": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_order_of_operations__does_not_realize_we_can": {
+    "confidence": 1.0,
+    "ingredient_id": "order_of_operations__left_to_right_rule"
+  },
+  "mis_order_of_operations__forgets_multiply_up_for_correct": {
+    "confidence": 0.8,
+    "ingredient_id": "order_of_operations__precedence_hierarchy"
+  },
+  "mis_order_of_operations__has_completed_only_one_two": {
+    "confidence": 1.0,
+    "ingredient_id": "order_of_operations__precedence_hierarchy"
+  },
+  "mis_order_of_operations__mixes_up_greater_than_and": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_order_of_operations__mixes_up_squaring_and_multiplying": {
+    "confidence": 1.0,
+    "ingredient_id": "order_of_operations__exponent_before_multiply"
+  },
+  "mis_order_of_operations__performs_addition_ahead_multiplication": {
+    "confidence": 1.0,
+    "ingredient_id": "order_of_operations__precedence_hierarchy"
+  },
+  "mis_quadratic_equations__assumes_fact_without_considering_enough": {
+    "confidence": 0.8,
+    "ingredient_id": "quadratics__discriminant_meaning"
+  },
+  "mis_quadratic_equations__believes_0_has_no_square": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_quadratic_equations__believes_0_not_real_solution": {
+    "confidence": 1.0,
+    "ingredient_id": "quadratics__solutions_as_x_intercepts"
+  },
+  "mis_quadratic_equations__believes_all_quadratic_equations_have": {
+    "confidence": 0.8,
+    "ingredient_id": "quadratics__solutions_as_x_intercepts"
+  },
+  "mis_quadratic_equations__believes_inverse_square_rooting_halving": {
+    "confidence": 1.0,
+    "ingredient_id": "quadratics__quadratic_formula"
+  },
+  "mis_quadratic_equations__believes_multiplying_two_negatives_gives": {
+    "confidence": 1.0,
+    "ingredient_id": "quadratics__quadratic_formula"
+  },
+  "mis_quadratic_equations__believes_number_raised_power_will": {
+    "confidence": 1.0,
+    "ingredient_id": "quadratics__quadratic_formula"
+  },
+  "mis_quadratic_equations__believes_they_can_divide_variable": {
+    "confidence": 1.0,
+    "ingredient_id": "quadratics__quadratic_formula"
+  },
+  "mis_quadratic_equations__believes_we_can_only_take": {
+    "confidence": 1.0,
+    "ingredient_id": "quadratics__quadratic_formula"
+  },
+  "mis_quadratic_equations__believes_you_can_square_root": {
+    "confidence": 1.0,
+    "ingredient_id": "quadratics__quadratic_formula"
+  },
+  "mis_quadratic_equations__does_not_think_square_root": {
+    "confidence": 1.0,
+    "ingredient_id": "quadratics__quadratic_formula"
+  },
+  "mis_quadratic_equations__finds_y_intercept_asked_read": {
+    "confidence": 1.0,
+    "ingredient_id": "quadratics__solutions_as_x_intercepts"
+  },
+  "mis_quadratic_equations__mixes_up_squaring_and_multiplying": {
+    "confidence": 1.0,
+    "ingredient_id": "quadratics__quadratic_formula"
+  },
+  "mis_quadratic_equations__only_considers_positive_solution_calculating": {
+    "confidence": 1.0,
+    "ingredient_id": "quadratics__quadratic_formula"
+  },
+  "mis_quadratic_equations__only_recognises_positive_form_quadratic": {
+    "confidence": 1.0,
+    "ingredient_id": "quadratics__solutions_as_x_intercepts"
+  },
+  "mis_quadratic_equations__solves_for_y0_instead_given": {
+    "confidence": 1.0,
+    "ingredient_id": "quadratics__solutions_as_x_intercepts"
+  },
+  "mis_quadratic_equations__thinks_sign_solutions_quadratic_equation": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_quadratic_equations__thinks_x2_a2x_valid_form": {
+    "confidence": 1.0,
+    "ingredient_id": "quadratics__factoring_method"
+  },
+  "mis_quadratic_equations__using_formula_solve_quadratic_equation": {
+    "confidence": 1.0,
+    "ingredient_id": "quadratics__quadratic_formula"
+  },
+  "mis_ratios_proportions__added_values_together_instead_finding": {
+    "confidence": 1.0,
+    "ingredient_id": "ratios_proportions__ratio_as_comparison"
+  },
+  "mis_ratios_proportions__assumed_each_part_fraction_diagram": {
+    "confidence": 1.0,
+    "ingredient_id": "ratios_proportions__ratio_as_comparison"
+  },
+  "mis_ratios_proportions__believes_dividing_100_gives_10": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_ratios_proportions__believes_finding_area_under_graph": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_ratios_proportions__believes_speed_distance_multiplied_time": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_ratios_proportions__confuses_reciprocal_and_quadratic_graphs": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_ratios_proportions__converts_fraction_percentage_writing_numerator": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_ratios_proportions__does_not_realise_all_circles": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_ratios_proportions__does_not_understand_how_find": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_ratios_proportions__does_not_understand_percentage_can": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_ratios_proportions__does_not_understand_percentage_out": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_ratios_proportions__does_not_understand_you_can": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_ratios_proportions__estimated_not_appropriate": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_ratios_proportions__finds_10_amount_rather_than": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_ratios_proportions__found_percentage_but_forgot_add": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  },
+  "mis_ratios_proportions__has_found_total_percentage_amount": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_ratios_proportions__has_taken_percentage_from_original": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_ratios_proportions__identifies_wrong_part_fraction_model": {
+    "confidence": 0.0,
+    "ingredient_id": null
+  },
+  "mis_ratios_proportions__reading_value_from_graph_reads": {
+    "confidence": 1.0,
+    "ingredient_id": null
+  }
+}

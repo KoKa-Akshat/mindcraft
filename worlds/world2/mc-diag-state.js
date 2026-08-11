@@ -45,6 +45,8 @@
   }
 
   window.MC_persistDiagDone = persistDiagDone
-  window.MC_isDiagDone = resolveDiagDone
+  // Diagnostic questions removed — treat as done so world chrome never opens them.
+  window.MC_isDiagDone = function () { return true }
+  persistDiagDone()
   resolveDiagDone()
 })()

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MindCraft · Workflows</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,500;9..40,600;9..40,700;9..40,800&family=Fredoka:wght@600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="workflows.css">
+</head>
+<body>
+<header class="top">
+  <a class="back" href="/desk-os/?v=r9b">◀ Desk</a>
+  <h1 id="headTitle">Select your workflow</h1>
+  <span class="chip">Gmail · Calendar ready</span>
+  <a class="link" href="/desk-os/studio/?v=f5">Studio →</a>
+</header>
+
+<main class="shell" id="shell"></main>
+
+<form class="deskAsk" id="deskAsk" autocomplete="off">
+  <button type="button" class="askPlus" id="askPlus" title="New workflow">+</button>
+  <input id="askInput" type="search" placeholder="Search workflows · poll · signup · 1:1 · booking · slides…" aria-label="Search workflows">
+  <button type="submit" class="askGo" title="Go">↑</button>
+</form>
+
+<div id="toast" hidden></div>
+<script src="workflows.js"></script>
+</body>
+</html>

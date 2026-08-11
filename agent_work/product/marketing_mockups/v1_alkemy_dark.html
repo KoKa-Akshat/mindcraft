@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MindCraft · The student desk before the ACT</title>
+<style>
+  :root{
+    --deep:#080e14; --deep2:#0c1720; --board:#14261c;
+    --cream:#fffdf7; --paper:#fff8e9; --chalk:#f4efe2;
+    --ink:#143a2e; --ink-soft:#2a5244; --leaf:#247a4d;
+    --lime:#c4f547; --gold:#d3a900; --stakes:#c1121f;
+    --line:#d7e3db; --muted:#5f7a6d; --hero-text:var(--chalk);
+    --hero-sub:#aebfb4; --hero-line:#2b4a3c; --hero-node:#6fa387;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--cream); color:var(--ink);
+    font:16px/1.6 -apple-system, "Segoe UI", Arial, sans-serif;
+  }
+  .serif{font-family:Georgia, "Times New Roman", serif;}
+  h1,h2,h3{font-family:Georgia, "Times New Roman", serif; font-weight:700; letter-spacing:-.3px;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+
+  /* ---------- Nav ---------- */
+  nav{
+    position:sticky; top:0; z-index:60; background:rgba(8,14,20,.9);
+    backdrop-filter:blur(10px); border-bottom:1px solid rgba(244,239,226,.08);
+  }
+  .nav-inner{
+    max-width:1120px; margin:0 auto; padding:15px 24px;
+    display:flex; align-items:center; gap:26px;
+  }
+  .wordmark{font-family:Georgia, serif; font-weight:700; font-size:20px; color:var(--chalk); text-decoration:none;}
+  .wordmark span{color:var(--gold);}
+  .nav-links{display:flex; gap:22px; margin-left:auto; align-items:center;}
+  .nav-links a{color:#aebfb4; text-decoration:none; font-size:14px; font-weight:600;}
+  .nav-links a:hover{color:var(--chalk);}
+  .btn{
+    display:inline-block; border:0; cursor:pointer; border-radius:999px;
+    padding:12px 24px; font-weight:800; font-size:15px; text-decoration:none;
+    transition:transform .1s ease, box-shadow .2s ease;
+  }
+  .btn:active{transform:scale(.97);}
+  .btn-lime{background:var(--lime); color:var(--board); box-shadow:0 0 0 0 rgba(196,245,71,.4);}
+  .btn-lime:hover{box-shadow:0 6px 24px rgba(196,245,71,.35);}
+  .btn-ghost-dark{background:transparent; color:var(--chalk); border:1.5px solid rgba(244,239,226,.4);}
+  .btn-ghost-dark:hover{border-color:var(--chalk);}
+  .btn-sm{padding:9px 18px; font-size:13.5px;}
+  .beta-pill{
+    font-size:10.5px; font-weight:800; letter-spacing:.1em; color:var(--lime);
+    border:1px solid rgba(196,245,71,.4); border-radius:999px; padding:3px 9px;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative; overflow:hidden; background:
+      radial-gradient(1100px 600px at 75% 20%, #0f2018 0%, transparent 55%),
+      radial-gradient(700px 500px at 15% 85%, #0d1a24 0%, transparent 60%),
+      var(--deep);
+    color:var(--hero-text);
+  }
+  body.day .hero{
+    background:
+      radial-gradient(1100px 600px at 75% 15%, #fdf3d0 0%, transparent 55%),
+      radial-gradient(800px 500px at 10% 90%, #eef6e4 0%, transparent 60%),
+      var(--paper);
+    --hero-text:var(--ink); --hero-sub:#51695d;
+    --hero-line:#d9cfa6; --hero-node:#b9a44c;
+  }
+  .hero-inner{
+    max-width:1120px; margin:0 auto; padding:84px 24px 96px;
+    display:grid; grid-template-columns:1.05fr .95fr; gap:48px; align-items:center;
+  }
+  .eyebrow{
+    font-size:12px; font-weight:800; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--gold); margin-bottom:18px;
+  }
+  .hero h1{font-size:54px; line-height:1.06; color:var(--hero-text);}
+  .hero h1 .glow{color:var(--lime);}
+  .hero .sub{
+    margin-top:20px; font-size:18px; color:var(--hero-sub); max-width:520px;
+  }
+  .hero .cta-row{margin-top:30px; display:flex; gap:14px; flex-wrap:wrap;}
+  .hero .micro{margin-top:16px; font-size:13px; color:var(--hero-sub);}
+  .hero .micro b{color:var(--gold);}
+
+  /* Constellation */
+  .skybox{position:relative; min-height:420px;}
+  .sky{width:100%; height:auto; display:block;}
+  .sky line{stroke:var(--hero-line); stroke-width:1.2;}
+  .sky circle{fill:var(--hero-node);}
+  .sky .lit{fill:var(--lime);}
+  .sky .ring{
+    fill:none; stroke:var(--lime); stroke-width:1.5; opacity:0;
+    transform-box:fill-box; transform-origin:center;
+    animation:ringpulse 3.2s ease-out infinite;
+  }
+  @keyframes ringpulse{
+    0%{opacity:.8; transform:scale(.4);}
+    70%{opacity:0; transform:scale(2.4);}
+    100%{opacity:0; transform:scale(2.4);}
+  }
+  .drift-a{animation:drift 14s ease-in-out infinite alternate;}
+  .drift-b{animation:drift 18s ease-in-out infinite alternate-reverse;}
+  @keyframes drift{from{transform:translate(0,0);} to{transform:translate(7px,-9px);}}
+
+  /* Filing demo chip */
+  .filedemo{
+    position:absolute; left:0; bottom:6px; display:flex; align-items:center; gap:10px;
+    background:rgba(255,253,247,.97); border:1.5px solid var(--gold); border-radius:14px;
+    padding:12px 16px; box-shadow:0 14px 40px rgba(0,0,0,.35); max-width:100%;
+  }
+  body.day .filedemo{box-shadow:0 14px 40px rgba(20,58,46,.15);}
+  body.day .hero .btn-ghost-dark{color:var(--ink); border-color:rgba(20,58,46,.45);}
+  body.day .hero .btn-ghost-dark:hover{border-color:var(--ink);}
+  .hero .hl{color:var(--lime); font-weight:700;}
+  body.day .hero .hl{color:var(--leaf);}
+  .filedemo .raw{
+    font-family:ui-monospace, Menlo, monospace; font-size:12.5px; color:#8c8672;
+    text-decoration:line-through; white-space:nowrap;
+  }
+  .filedemo .arrow{color:var(--leaf); font-weight:800;}
+  .filedemo .filed{font-size:13px; font-weight:700; color:var(--ink); white-space:nowrap;}
+  .filedemo .filed small{display:block; font-weight:600; color:var(--leaf); font-size:11px;}
+  .filedemo.swap{animation:chipswap .5s ease;}
+  @keyframes chipswap{
+    0%{opacity:0; transform:translateY(10px);}
+    100%{opacity:1; transform:translateY(0);}
+  }
+
+  /* ---------- Sections ---------- */
+  section{padding:88px 0;}
+  .kicker{
+    font-size:12px; font-weight:800; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--leaf); margin-bottom:14px;
+  }
+  .h2{font-size:38px; line-height:1.15; max-width:640px;}
+  .lede{margin-top:14px; font-size:17px; color:var(--muted); max-width:600px;}
+
+  /* Problem */
+  .problem{background:var(--cream);}
+  .chaos-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:40px;}
+  .chaos{
+    background:#fff; border:1.5px solid var(--line); border-radius:16px; padding:20px;
+    transform:rotate(var(--tilt,0deg));
+  }
+  .chaos h3{font-size:16px; margin-bottom:8px;}
+  .chaos p{font-size:13.5px; color:var(--muted);}
+  .chaos .tag{
+    display:inline-block; font-size:10.5px; font-weight:800; letter-spacing:.06em;
+    background:#fdecec; color:var(--stakes); border-radius:999px; padding:3px 9px; margin-bottom:10px;
+  }
+  .punchline{
+    margin-top:36px; font-family:Georgia, serif; font-size:22px; color:var(--ink);
+    border-left:4px solid var(--gold); padding-left:18px; max-width:640px;
+  }
+
+  /* How it works */
+  .how{background:var(--paper); border-top:1px solid #efe7d0; border-bottom:1px solid #efe7d0;}
+  .steps{display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-top:44px;}
+  .step{position:relative; padding-top:8px;}
+  .step .num{
+    width:40px; height:40px; border-radius:50%; background:var(--board); color:var(--lime);
+    font-weight:800; font-size:17px; display:grid; place-items:center; margin-bottom:14px;
+  }
+  .step h3{font-size:19px; margin-bottom:8px;}
+  .step p{font-size:14px; color:var(--muted);}
+  .step::after{
+    content:""; position:absolute; top:27px; left:52px; right:-6px;
+    border-top:2px dotted #d8cfae;
+  }
+  .step:last-child::after{display:none;}
+
+  /* Capabilities */
+  .caps-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:44px;}
+  .cap{
+    background:#fff; border:1.5px solid var(--line); border-radius:18px; padding:24px;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .cap:hover{transform:translateY(-4px); box-shadow:0 16px 36px rgba(20,58,46,.1);}
+  .cap .glyph{
+    width:42px; height:42px; border-radius:12px; display:grid; place-items:center;
+    font-size:19px; margin-bottom:14px; background:var(--board); color:var(--lime);
+  }
+  .cap h3{font-size:18px; margin-bottom:8px;}
+  .cap p{font-size:14px; color:var(--muted);}
+  .cap.feature{
+    grid-row:span 1; background:var(--board); border-color:var(--board); color:var(--chalk);
+  }
+  .cap.feature h3{color:var(--chalk);}
+  .cap.feature p{color:#a9c3b2;}
+  .cap.feature .glyph{background:var(--lime); color:var(--board);}
+
+  /* Use cases */
+  .personas{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:44px;}
+  .persona{
+    border-radius:18px; padding:26px; border:1.5px solid var(--line); background:#fff;
+  }
+  .persona .who{
+    font-size:11px; font-weight:800; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--gold); margin-bottom:10px;
+  }
+  .persona h3{font-size:20px; margin-bottom:10px;}
+  .persona p{font-size:14px; color:var(--muted);}
+
+  /* Vision */
+  .vision{
+    background:
+      radial-gradient(900px 400px at 80% 0%, #0f2018 0%, transparent 60%),
+      var(--deep);
+    color:var(--chalk);
+  }
+  .vision .kicker{color:var(--lime);}
+  .vision .h2{color:var(--chalk); max-width:700px;}
+  .vision p{color:#aebfb4; max-width:640px; margin-top:16px; font-size:16.5px;}
+  .vision .craft{color:var(--gold); font-family:Georgia, serif; font-style:italic;}
+
+  /* FAQ */
+  .faq-list{margin-top:40px; max-width:760px;}
+  details{
+    border:1.5px solid var(--line); border-radius:14px; background:#fff;
+    padding:0 20px; margin-bottom:12px;
+  }
+  details[open]{border-color:var(--leaf);}
+  summary{
+    cursor:pointer; list-style:none; font-weight:700; font-size:16px;
+    padding:17px 0; display:flex; justify-content:space-between; align-items:center;
+    font-family:Georgia, serif;
+  }
+  summary::-webkit-details-marker{display:none;}
+  summary::after{content:"+"; font-size:20px; color:var(--leaf); font-family:Arial;}
+  details[open] summary::after{content:"–";}
+  details p{padding:0 0 17px; color:var(--muted); font-size:14.5px; max-width:640px;}
+
+  /* CTA band */
+  .ctaband{
+    background:var(--board); color:var(--chalk); text-align:center;
+    border-radius:26px; padding:64px 32px; margin:0 24px;
+    position:relative; overflow:hidden;
+  }
+  .ctaband::before{
+    content:""; position:absolute; inset:0;
+    background:radial-gradient(500px 220px at 50% 0%, rgba(196,245,71,.14), transparent 70%);
+  }
+  .ctaband h2{font-size:36px; color:var(--chalk); position:relative;}
+  .ctaband p{color:#a9c3b2; margin:14px auto 28px; max-width:480px; position:relative;}
+  .ctaband .cta-row{display:flex; gap:14px; justify-content:center; flex-wrap:wrap; position:relative;}
+
+  /* Footer */
+  footer{padding:48px 0 60px; color:var(--muted); font-size:13.5px;}
+  .foot-inner{display:flex; gap:24px; align-items:center; flex-wrap:wrap;}
+  .foot-inner .wordmark{color:var(--ink);}
+  .foot-links{display:flex; gap:18px; margin-left:auto;}
+  .foot-links a{color:var(--muted); text-decoration:none;}
+  .foot-links a:hover{color:var(--ink);}
+  .mock-note{
+    margin-top:18px; font-size:12px; color:#a09a85;
+    border-top:1px dashed #e4ddc6; padding-top:14px;
+  }
+
+  /* Reveal on scroll */
+  .reveal{opacity:0; transform:translateY(22px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1; transform:none;}
+
+  /* Mockup controls */
+  .mock-controls{
+    position:fixed; left:16px; bottom:16px; z-index:80;
+    background:var(--deep); color:var(--chalk); border-radius:999px;
+    padding:8px 8px 8px 16px; display:flex; align-items:center; gap:10px;
+    font-size:12px; box-shadow:0 10px 30px rgba(0,0,0,.35);
+  }
+  .mock-controls b{color:var(--gold); letter-spacing:.06em;}
+  .mock-controls button{
+    border:0; cursor:pointer; border-radius:999px; padding:6px 13px;
+    font-weight:700; font-size:12px; background:#1c2a35; color:#aebfb4;
+  }
+  .mock-controls button.on{background:var(--lime); color:var(--board);}
+
+  /* Responsive */
+  @media(max-width:1020px){
+    .hero h1{font-size:44px;}
+    .chaos-grid{grid-template-columns:repeat(2,1fr);}
+    .steps{grid-template-columns:repeat(2,1fr);}
+    .step::after{display:none;}
+    .caps-grid{grid-template-columns:repeat(2,1fr);}
+    .personas{grid-template-columns:1fr;}
+  }
+  @media(max-width:760px){
+    .hero-inner{grid-template-columns:1fr; padding:56px 24px 72px;}
+    .hero h1{font-size:38px;}
+    .skybox{min-height:340px;}
+    .nav-links a:not(.btn){display:none;}
+    .chaos-grid{grid-template-columns:1fr;}
+    .caps-grid{grid-template-columns:1fr;}
+    .h2{font-size:30px;}
+    section{padding:64px 0;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="wordmark" href="#">Mind<span>Craft</span></a>
+    <span class="beta-pill">BETA</span>
+    <div class="nav-links">
+      <a href="#desk">The Desk</a>
+      <a href="#how">How it works</a>
+      <a href="#who">Who it is for</a>
+      <a href="#faq">FAQ</a>
+      <a class="btn btn-lime btn-sm" href="#start">Start free</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="eyebrow">MindCraft · The Student Desk</div>
+      <h1>School is scattered.<br>You don't have to be.</h1>
+      <p class="sub">One desk where everything lands. Drop your worksheets and photos, plug in your calendar, practice inside story worlds, and watch a living map of your math <span class="hl">light up</span> before the ACT.</p>
+      <div class="cta-row">
+        <a class="btn btn-lime" href="#start">Set up my desk</a>
+        <a class="btn btn-ghost-dark" href="#how">Watch the map move</a>
+      </div>
+      <p class="micro"><b>Free in beta.</b> Built with real college tutors.</p>
+    </div>
+
+    <div class="skybox">
+      <svg class="sky" viewBox="0 0 520 400" aria-label="A constellation map of math concepts">
+        <g class="drift-a">
+          <line x1="70" y1="80" x2="150" y2="130"/>
+          <line x1="150" y1="130" x2="240" y2="90"/>
+          <line x1="240" y1="90" x2="330" y2="140"/>
+          <line x1="150" y1="130" x2="180" y2="220"/>
+          <line x1="180" y1="220" x2="280" y2="250"/>
+          <line x1="280" y1="250" x2="330" y2="140"/>
+          <line x1="330" y1="140" x2="430" y2="110"/>
+          <circle cx="70" cy="80" r="5"/>
+          <circle cx="240" cy="90" r="6"/>
+          <circle cx="430" cy="110" r="5"/>
+          <circle cx="180" cy="220" r="5"/>
+        </g>
+        <g class="drift-b">
+          <line x1="280" y1="250" x2="230" y2="330"/>
+          <line x1="230" y1="330" x2="120" y2="300"/>
+          <line x1="120" y1="300" x2="180" y2="220"/>
+          <line x1="280" y1="250" x2="390" y2="300"/>
+          <line x1="390" y1="300" x2="450" y2="220"/>
+          <line x1="450" y1="220" x2="330" y2="140"/>
+          <circle cx="120" cy="300" r="5"/>
+          <circle cx="230" cy="330" r="6"/>
+          <circle cx="390" cy="300" r="5"/>
+          <circle cx="450" cy="220" r="5"/>
+          <circle cx="150" cy="130" r="6"/>
+        </g>
+        <circle class="lit" cx="280" cy="250" r="8"/>
+        <circle class="ring" cx="280" cy="250" r="12"/>
+        <circle class="lit" cx="330" cy="140" r="6" opacity=".75"/>
+      </svg>
+      <div class="filedemo" id="filedemo">
+        <span class="raw" id="fd-raw">IMG_4127.jpg</span>
+        <span class="arrow">→</span>
+        <span class="filed" id="fd-filed">Stoichiometry practice<small>AP Chem · Unit 3 · filed Oct 12</small></span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ PROBLEM ============ -->
+<section class="problem" id="desk">
+  <div class="wrap">
+    <div class="kicker reveal">The problem</div>
+    <h2 class="h2 reveal">Six apps. Forty-seven screenshots. Zero system.</h2>
+    <p class="lede reveal">Your school life is spread across a camera roll, a downloads folder, a portal, and a group chat. None of it talks to any of it.</p>
+    <div class="chaos-grid">
+      <div class="chaos reveal" style="--tilt:-1deg;">
+        <span class="tag">CAMERA ROLL</span>
+        <h3>Worksheet photos, page 3 of ??</h3>
+        <p>Somewhere between lunch pics and memes. Good luck in November.</p>
+      </div>
+      <div class="chaos reveal" style="--tilt:.8deg;">
+        <span class="tag">DOWNLOADS</span>
+        <h3>study_guide_final_v2_ACTUAL.pdf</h3>
+        <p>Which version is real? Nobody knows. Nobody has ever known.</p>
+      </div>
+      <div class="chaos reveal" style="--tilt:-.6deg;">
+        <span class="tag">THE PLANNER</span>
+        <h3>Started strong in September</h3>
+        <p>Last opened in September.</p>
+      </div>
+      <div class="chaos reveal" style="--tilt:1deg;">
+        <span class="tag">11:40 PM</span>
+        <h3>Flashcards for the wrong chapter</h3>
+        <p>Made the night before, from the wrong notes, for the wrong test.</p>
+      </div>
+    </div>
+    <p class="punchline reveal">Right now the only thing connecting it all is you. The night before a test, that is a terrible job to have.</p>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="how" id="how">
+  <div class="wrap">
+    <div class="kicker reveal">The desk</div>
+    <h2 class="h2 reveal">Drop it. It finds its place.</h2>
+    <p class="lede reveal">The desk does the organizing so your energy goes to the learning.</p>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="num">1</div>
+        <h3>Drop it</h3>
+        <p>Worksheets, photos, PDFs, screenshots, scans of handwritten work. If it is school, throw it on the desk.</p>
+      </div>
+      <div class="step reveal">
+        <div class="num">2</div>
+        <h3>Filed for you</h3>
+        <p>The desk reads it, names it, dates it, and files it in the right course binder. No folders to build, ever.</p>
+      </div>
+      <div class="step reveal">
+        <div class="num">3</div>
+        <h3>Planned for you</h3>
+        <p>Plug in your calendar once. Due dates, tests, and practice line up into one honest tonight list.</p>
+      </div>
+      <div class="step reveal">
+        <div class="num">4</div>
+        <h3>Learned for real</h3>
+        <p>Practice lives inside story worlds. Solve for the story, and your map moves the same night.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CAPABILITIES ============ -->
+<section>
+  <div class="wrap">
+    <div class="kicker reveal">What the desk can do</div>
+    <h2 class="h2 reveal">A quiet superpower for every part of school.</h2>
+    <div class="caps-grid">
+      <div class="cap reveal">
+        <div class="glyph">🗂</div>
+        <h3>The Binder</h3>
+        <p>Every upload named, dated, and filed by course and unit. Your November self finds October in one tap.</p>
+      </div>
+      <div class="cap feature reveal">
+        <div class="glyph">✦</div>
+        <h3>The Map</h3>
+        <p>A living map of 42 math concepts. Bright where you are strong, glowing where you are not, honest everywhere. It moves every time you practice.</p>
+      </div>
+      <div class="cap reveal">
+        <div class="glyph">📖</div>
+        <h3>Story chapters</h3>
+        <p>Questions live inside worlds with stakes and characters. The math is real. The boring is gone.</p>
+      </div>
+      <div class="cap reveal">
+        <div class="glyph">✏️</div>
+        <h3>Solver</h3>
+        <p>Stuck at 10 pm? Solver walks you through the problem step by step. It coaches, it does not just hand you answers.</p>
+      </div>
+      <div class="cap reveal">
+        <div class="glyph">🌀</div>
+        <h3>Weekly Review</h3>
+        <p>Six concepts, one mandala, every week. Small and steady beats heroic and never.</p>
+      </div>
+      <div class="cap reveal">
+        <div class="glyph">📝</div>
+        <h3>Notes that study back</h3>
+        <p>Messy lecture notes become clean summaries and diagrams you can actually revise from.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ USE CASES ============ -->
+<section class="how" id="who">
+  <div class="wrap">
+    <div class="kicker reveal">Who it is for</div>
+    <h2 class="h2 reveal">Built for the week you are actually having.</h2>
+    <div class="personas">
+      <div class="persona reveal">
+        <div class="who">THE JUNIOR</div>
+        <h3>Eight weeks to the ACT</h3>
+        <p>Gap scan on Monday. A route through the map by Tuesday. Story practice every night, weakness first, with about 1,500 real questions behind it. No wasted reps.</p>
+      </div>
+      <div class="persona reveal">
+        <div class="who">THE SOPHOMORE</div>
+        <h3>Buried in five classes</h3>
+        <p>Forty assignments, six group chats, one camera roll of chaos. The desk catches it all, dates it, files it, and tells you what tonight actually needs.</p>
+      </div>
+      <div class="persona reveal">
+        <div class="who">THE PARENT + TUTOR</div>
+        <h3>Clarity without the interrogation</h3>
+        <p>Open the map together and see what moved this week. Real college tutors arrive already briefed. Dinner stays dinner.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VISION ============ -->
+<section class="vision">
+  <div class="wrap">
+    <div class="kicker reveal">Why we build</div>
+    <h2 class="h2 reveal">Math is a world. We are building your door.</h2>
+    <p class="reveal">Most tools treat math like a list of chores. We treat it like a place. Stories with stakes, questions that belong to them, and a map that remembers every step you take.</p>
+    <p class="reveal">MindCraft pairs you with real college tutors, learns how you learn, and turns scattered school chaos into progress you can see. <span class="craft">Not magic. Craft.</span></p>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="kicker reveal">Questions, answered</div>
+    <h2 class="h2 reveal">The stuff everyone asks first.</h2>
+    <div class="faq-list reveal">
+      <details>
+        <summary>Is this just another planner?</summary>
+        <p>No. Planners hold what you type. The desk acts on what you drop. It files your stuff, plans your night, and turns practice into a map that moves.</p>
+      </details>
+      <details>
+        <summary>What can I drop on the desk?</summary>
+        <p>Photos, PDFs, docs, screenshots, scans of handwritten work. If it is school, it has a home here.</p>
+      </details>
+      <details>
+        <summary>Where do my files go?</summary>
+        <p>Into your private binder. Your files stay yours, we never sell your data, and you can delete anything anytime.</p>
+      </details>
+      <details>
+        <summary>Does it do my homework for me?</summary>
+        <p>No. Solver walks you through steps and asks you questions back. The desk makes you faster, not fake.</p>
+      </details>
+      <details>
+        <summary>Is it only for the ACT?</summary>
+        <p>It is built for the road to the ACT, but the binder, the planner, and story practice work all year for regular math class.</p>
+      </details>
+      <details>
+        <summary>What does it cost?</summary>
+        <p>Free while we are in beta. Early students help shape the desk.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section id="start" style="padding-top:0;">
+  <div class="ctaband reveal">
+    <h2>Set up your desk in four minutes.</h2>
+    <p>Drop three files, plug in your calendar, take the gap scan. Tonight gets easier.</p>
+    <div class="cta-row">
+      <a class="btn btn-lime" href="#">Start free</a>
+      <a class="btn btn-ghost-dark" href="#">I am a parent or tutor</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-inner">
+      <a class="wordmark serif" href="#">Mind<span style="color:var(--gold);">Craft</span></a>
+      <div class="foot-links">
+        <a href="#desk">The Desk</a>
+        <a href="#how">How it works</a>
+        <a href="#faq">FAQ</a>
+        <a href="#">Privacy</a>
+      </div>
+    </div>
+    <div class="mock-note">
+      Internal design mockup · Aug 2026 · not live marketing. Alkemy gave the skeleton, MindCraft owns the soul.
+      Build charter for the product itself: <b>agent_work/product/DESK_OS_AGENT_BRIEF.md</b>
+    </div>
+  </div>
+</footer>
+
+<div class="mock-controls">
+  <b>MOCKUP</b>
+  <button id="btnNight" class="on">Night hero</button>
+  <button id="btnDay">Day hero</button>
+</div>
+
+<script>
+  // Hero filing demo cycle
+  const demos = [
+    { raw:"IMG_4127.jpg",            name:"Stoichiometry practice",  meta:"AP Chem · Unit 3 · filed Oct 12" },
+    { raw:"moodle_dl_final_v2.pdf",  name:"Systems of equations set", meta:"Algebra II · due Thu · on tonight's list" },
+    { raw:"notes photo (blurry).png", name:"Photosynthesis notes",    meta:"AP Bio · summary + diagram ready" },
+  ];
+  let di = 0;
+  const chip = document.getElementById('filedemo');
+  const fdRaw = document.getElementById('fd-raw');
+  const fdFiled = document.getElementById('fd-filed');
+  setInterval(() => {
+    di = (di + 1) % demos.length;
+    const d = demos[di];
+    chip.classList.remove('swap');
+    void chip.offsetWidth;
+    fdRaw.textContent = d.raw;
+    fdFiled.innerHTML = d.name + '<small>' + d.meta + '</small>';
+    chip.classList.add('swap');
+  }, 3400);
+
+  // Scroll reveal
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold:.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Hero variant toggle (mockup control)
+  const bN = document.getElementById('btnNight'), bD = document.getElementById('btnDay');
+  bN.addEventListener('click', () => { document.body.classList.remove('day'); bN.classList.add('on'); bD.classList.remove('on'); });
+  bD.addEventListener('click', () => { document.body.classList.add('day');    bD.classList.add('on'); bN.classList.remove('on'); });
+</script>
+</body>
+</html>

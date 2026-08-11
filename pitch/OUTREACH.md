@@ -12,7 +12,7 @@ Use this for Dylan’s contact list. Customize the first name. Keep it short.
 
 ## Two sentences (body of the email)
 
-Most tutoring burns the hour hunting for where a student actually broke. MindCraft diagnoses the gap first, wraps practice in a living story world, and briefs a college tutor so session one starts on that spot, with a map parents can finally see.
+Somewhere in middle school the story lost them, and tutoring has been guessing ever since. MindCraft finds that break first, then puts a college tutor on it, inside a world where getting it right finally feels like being good at math.
 
 ---
 
@@ -24,7 +24,7 @@ Hi [First Name],
 
 I pitched at BETA Cohort Demo Night - Spring '26 and saw you left your contact information. I would really appreciate the chance to follow up.
 
-A little more context on what I am building: Most tutoring burns the hour hunting for where a student actually broke. MindCraft diagnoses the gap first, wraps practice in a living story world, and briefs a college tutor so session one starts on that spot, with a map parents can finally see.
+A little more context on what I am building: Somewhere in middle school the story lost them, and tutoring has been guessing ever since. MindCraft finds that break first, then puts a college tutor on it, inside a world where getting it right finally feels like being good at math.
 
 Whether you wanted to learn more yourself, or you have someone worth connecting me with, I would welcome it. If you want to forward this along or just reply, either works for me.
 

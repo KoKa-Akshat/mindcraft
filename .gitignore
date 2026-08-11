@@ -69,10 +69,11 @@ showcase-qr.html
 .local/
 .scratch-pdf-venv/
 
-# Separate native iPad prototype (PencilKit/Notability-style, unrelated to
-# the web app's deploy pipeline) — contains a real (free-tier) MyScript
-# Cloud application key + HMAC key in source, do not commit.
-ios-prototype/
+# Native iPad prototype now lives IN this repo (folded from the old
+# standalone mindcraft-ios-prototype repo). Its nested
+# ios-prototype/.gitignore keeps build junk AND the real MyScript
+# Cloud key (Networking/MyScriptRecognizer.swift) out of git.
+# Old standalone history: .local/ios-prototype-git-backup/
 
 # Marketing pipeline generated output — rerunnable, ~5MB per weekly run.
 # Batches are inspected in Drive (npm run marketing:publish), not in git.

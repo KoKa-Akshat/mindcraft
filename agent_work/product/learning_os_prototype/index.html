@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MindCraft Desk OS · prototype</title>
+<style>
+  :root{
+    --ink:#143a2e; --ink-soft:#2a5244; --leaf:#247a4d; --lime:#c4f547;
+    --cream:#fffdf7; --paper:#fff8e9; --deep:#080e14; --board:#14261c;
+    --chalk:#f4efe2; --gold:#d3a900; --stakes:#c1121f; --line:#d7e3db;
+    --muted:#5f7a6d; --shadow:0 1px 0 rgba(20,58,46,.08);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:
+      radial-gradient(1200px 500px at 85% -10%, #f2ecd9 0%, transparent 60%),
+      radial-gradient(900px 420px at -10% 20%, #eef6e4 0%, transparent 55%),
+      var(--paper);
+    color:var(--ink);
+    font:15px/1.5 -apple-system, "Segoe UI", Arial, sans-serif;
+    min-height:100vh;
+  }
+  .serif{font-family:Georgia, "Times New Roman", serif;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 22px 80px;}
+
+  /* Top bar */
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    background:rgba(255,253,247,.92); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar-inner{
+    max-width:1180px; margin:0 auto; padding:14px 22px;
+    display:flex; align-items:center; gap:16px;
+  }
+  .wordmark{font-weight:700; font-size:19px; letter-spacing:-.2px;}
+  .wordmark .craft{color:var(--gold);}
+  .os-pill{
+    font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+    background:var(--board); color:var(--lime); border-radius:999px; padding:4px 10px;
+  }
+  .top-date{color:var(--muted); font-size:13px;}
+  .search{
+    flex:1; max-width:430px; margin-left:auto; display:flex; align-items:center; gap:8px;
+    background:#fff; border:1.5px solid var(--line); border-radius:999px; padding:8px 16px;
+  }
+  .search input{border:0; outline:0; flex:1; font-size:14px; background:transparent; color:var(--ink);}
+  .search .spark{color:var(--gold); font-weight:700;}
+
+  /* Hero */
+  .hero{padding:38px 0 10px; display:flex; align-items:flex-end; justify-content:space-between; gap:20px; flex-wrap:wrap;}
+  .hero h1{font-size:34px; letter-spacing:-.4px;}
+  .hero .agentline{color:var(--muted); margin-top:6px; max-width:640px;}
+  .hero .agentline b{color:var(--ink);}
+  .cta-row{display:flex; gap:10px;}
+  .btn{
+    border:0; cursor:pointer; border-radius:999px; padding:10px 18px;
+    font-weight:700; font-size:14px; transition:transform .08s ease;
+  }
+  .btn:active{transform:scale(.97);}
+  .btn-lime{background:var(--lime); color:var(--board);}
+  .btn-ghost{background:transparent; color:var(--ink); border:1.5px solid var(--ink);}
+
+  /* Grid */
+  .grid{display:grid; grid-template-columns:1.02fr 1.18fr 1fr; gap:18px; margin-top:26px;}
+  @media(max-width:980px){ .grid{grid-template-columns:1fr;} }
+  .card{
+    background:var(--cream); border:1.5px solid var(--line); border-radius:18px;
+    padding:18px; box-shadow:var(--shadow);
+  }
+  .card h2{font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin-bottom:12px;}
+  .card h2 .accent{color:var(--leaf);}
+
+  /* Today timeline */
+  .tl{list-style:none;}
+  .tl li{display:flex; gap:12px; padding:9px 0; border-bottom:1px dashed #e8e2cf;}
+  .tl li:last-child{border-bottom:0;}
+  .tl .time{width:64px; flex:none; font-weight:700; font-size:13px; color:var(--ink-soft);}
+  .tl .what b{display:block; font-size:14px;}
+  .tl .what span{font-size:12px; color:var(--muted);}
+  .nowline{border-left:3px solid var(--lime); padding-left:9px; background:linear-gradient(90deg, rgba(196,245,71,.14), transparent 70%); border-radius:6px;}
+
+  /* Source chips */
+  .chip{
+    display:inline-block; font-size:10.5px; font-weight:700; letter-spacing:.04em;
+    border-radius:999px; padding:2px 8px; vertical-align:1px;
+  }
+  .chip.moodle{background:#fdeadd; color:#b45309;}
+  .chip.gcal{background:#e3edfd; color:#1d4ed8;}
+  .chip.apple{background:#ececec; color:#333;}
+  .chip.gmail{background:#fde3e0; color:#b91c1c;}
+  .chip.manual{background:#eef6e4; color:var(--leaf);}
+  .chip.act{background:var(--board); color:var(--lime);}
+  .chip.drive{background:#e6f4ea; color:#15803d;}
+  .chip.notion{background:#f1f1ef; color:#222;}
+
+  /* Planner */
+  .hw{list-style:none;}
+  .hw li{
+    display:flex; align-items:flex-start; gap:10px; padding:10px 8px;
+    border-radius:12px; transition:background .15s;
+  }
+  .hw li:hover{background:#fbf7ea;}
+  .hw input[type=checkbox]{
+    appearance:none; width:20px; height:20px; flex:none; margin-top:2px;
+    border:2px solid var(--leaf); border-radius:7px; cursor:pointer; position:relative;
+  }
+  .hw input[type=checkbox]:checked{background:var(--leaf);}
+  .hw input[type=checkbox]:checked::after{
+    content:"✓"; position:absolute; inset:0; display:grid; place-items:center;
+    color:#fff; font-size:13px; font-weight:800;
+  }
+  .hw .t{flex:1;}
+  .hw .t b{font-size:14px;}
+  .hw li.done .t b{text-decoration:line-through; color:var(--muted);}
+  .hw .t small{display:block; color:var(--muted); font-size:12px; margin-top:2px;}
+  .due{font-size:11px; font-weight:800; border-radius:8px; padding:3px 8px; flex:none;}
+  .due.today{background:#fdecec; color:var(--stakes);}
+  .due.tmrw{background:#fdf3d7; color:#92400e;}
+  .due.later{background:#eef2ee; color:var(--muted);}
+  .planner-foot{margin-top:10px; font-size:12.5px; color:var(--muted); border-top:1px dashed #e8e2cf; padding-top:10px;}
+  .planner-foot b{color:var(--leaf);}
+
+  /* Desk agent */
+  .queue{list-style:none; counter-reset:q;}
+  .queue li{
+    counter-increment:q; display:flex; gap:12px; padding:10px 8px;
+    border-radius:12px; align-items:flex-start;
+  }
+  .queue li::before{
+    content:counter(q); width:24px; height:24px; flex:none; border-radius:50%;
+    background:var(--board); color:var(--lime); font-weight:800; font-size:13px;
+    display:grid; place-items:center; margin-top:1px;
+  }
+  .queue b{font-size:14px; display:block;}
+  .queue small{color:var(--muted); font-size:12px;}
+  .queue .why{color:var(--leaf); font-style:italic;}
+
+  /* Notes card */
+  .notecard{border:1.5px solid var(--line); border-radius:14px; padding:14px; background:#fff;}
+  .notecard h3{font-size:15px; margin-bottom:2px;}
+  .notecard .meta{font-size:12px; color:var(--muted); margin-bottom:10px;}
+  .ai-tabs{display:flex; gap:8px; margin-bottom:12px;}
+  .ai-tab{
+    font-size:12px; font-weight:700; border:1.5px solid var(--line); background:#fff;
+    color:var(--muted); border-radius:999px; padding:5px 12px; cursor:pointer;
+  }
+  .ai-tab.active{background:var(--board); color:var(--lime); border-color:var(--board);}
+  .ai-pane{display:none;}
+  .ai-pane.active{display:block;}
+  .ai-pane ul{margin-left:18px; font-size:13.5px;}
+  .ai-pane ul li{margin-bottom:6px;}
+  .keyterm{background:rgba(196,245,71,.35); border-radius:4px; padding:0 3px; font-weight:600;}
+  .diagram-note{font-size:11.5px; color:var(--muted); margin-top:6px;}
+
+  /* ACT tile */
+  .act-tile{
+    background:var(--board); color:var(--chalk); border-radius:18px; padding:20px;
+    border:1.5px solid #0d1a13; margin-top:18px;
+  }
+  .act-tile h2{color:#9ab8a6; font-size:12px; letter-spacing:.12em; text-transform:uppercase; margin-bottom:10px;}
+  .act-tile .weak{font-family:Georgia, serif; font-size:19px; margin-bottom:4px;}
+  .act-tile .sub{color:#b8cfc0; font-size:13px; margin-bottom:14px;}
+  .act-tile .sub .click{color:var(--lime); font-weight:700;}
+  .btn-chalk{
+    background:transparent; color:var(--chalk); border:1.5px dashed var(--chalk);
+    border-radius:999px; padding:9px 16px; font-weight:700; font-size:13.5px; cursor:pointer;
+    text-decoration:none; display:inline-block;
+  }
+  .btn-chalk:hover{background:rgba(244,239,226,.08);}
+
+  /* Binder */
+  .binder{margin-top:18px;}
+  .tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px;}
+  .tab{
+    border:1.5px solid var(--line); background:#fff; color:var(--muted);
+    font-weight:700; font-size:13px; border-radius:999px; padding:7px 14px; cursor:pointer;
+  }
+  .tab.active{background:var(--ink); border-color:var(--ink); color:var(--cream);}
+  .seq{display:flex; align-items:center; gap:8px; font-size:12px; color:var(--muted); margin-bottom:12px;}
+  .seq .dot{width:8px; height:8px; border-radius:50%; background:var(--leaf); flex:none;}
+  .seq .dash{flex:1; border-top:2px dotted #cfdccf; min-width:24px;}
+  .seq b{color:var(--ink);}
+  .filelist{list-style:none;}
+  .filelist li{
+    display:flex; align-items:center; gap:12px; padding:10px 8px;
+    border-bottom:1px dashed #e8e2cf; font-size:13.5px;
+  }
+  .filelist li:last-child{border-bottom:0;}
+  .fico{
+    width:34px; height:34px; border-radius:10px; flex:none;
+    display:grid; place-items:center; font-weight:800; font-size:11px; color:#fff;
+  }
+  .filelist .fname{flex:1;}
+  .filelist .fname b{display:block; font-size:14px;}
+  .filelist .fname span{font-size:12px; color:var(--muted);}
+  .autofiled{font-size:11px; color:var(--leaf); font-weight:700;}
+  .binder-stats{margin-top:12px; font-size:12.5px; color:var(--muted);}
+  .binder-stats b{color:var(--ink);}
+
+  /* Connections halo */
+  .halo-section{margin-top:26px; text-align:center;}
+  .halo-section .lede{color:var(--muted); max-width:560px; margin:6px auto 0; font-size:14px;}
+  .halo{
+    position:relative; width:640px; max-width:100%; height:430px; margin:10px auto 0;
+  }
+  .halo svg{position:absolute; inset:0; width:100%; height:100%; pointer-events:none;}
+  .seal{
+    position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+    width:128px; height:128px; border-radius:50%;
+    background:var(--board); border:3px solid var(--gold);
+    display:grid; place-items:center; text-align:center;
+    box-shadow:0 0 0 12px rgba(211,169,0,.08), 0 0 0 26px rgba(211,169,0,.04);
+  }
+  .seal .mc{color:var(--cream); font-weight:800; font-size:15px; line-height:1.1;}
+  .seal .mc span{color:var(--lime);}
+  .seal small{display:block; color:#9ab8a6; font-size:9px; letter-spacing:.1em; margin-top:3px;}
+  .node{
+    position:absolute; transform:translate(-50%,-50%);
+    display:flex; flex-direction:column; align-items:center; gap:5px;
+    cursor:pointer; width:104px;
+  }
+  .node .ic{
+    width:52px; height:52px; border-radius:50%; background:#fff;
+    border:1.5px solid var(--line); display:grid; place-items:center;
+    font-weight:800; font-size:13px; box-shadow:var(--shadow);
+  }
+  .node .nm{font-size:12px; font-weight:700;}
+  .node .st{font-size:10.5px; font-weight:700;}
+  .node .st.on{color:var(--leaf);}
+  .node .st.off{color:#b0a88f;}
+  .node.off .ic{opacity:.55; border-style:dashed;}
+  .halo-foot{
+    display:inline-flex; align-items:center; gap:10px; margin-top:8px;
+    background:#fff; border:1.5px solid var(--gold); border-radius:14px; padding:12px 18px;
+    font-size:13.5px; text-align:left;
+  }
+  .halo-foot .ok{
+    width:22px; height:22px; border-radius:50%; background:var(--gold); color:#fff;
+    display:grid; place-items:center; font-weight:800; font-size:12px; flex:none;
+  }
+  .halo-foot small{display:block; color:var(--muted);}
+
+  /* Footer */
+  .protofoot{margin-top:34px; text-align:center; color:var(--muted); font-size:12.5px;}
+  .protofoot code{background:#f1ecd9; border-radius:6px; padding:2px 6px;}
+
+  /* Toast */
+  .toast{
+    position:fixed; bottom:24px; left:50%; transform:translate(-50%, 80px);
+    background:var(--board); color:var(--chalk); font-size:13.5px; font-weight:600;
+    border-radius:999px; padding:11px 20px; transition:transform .25s ease; z-index:99;
+  }
+  .toast.show{transform:translate(-50%, 0);}
+  .toast b{color:var(--lime);}
+  h1,h2,h3,.weak{font-family:Georgia, "Times New Roman", serif;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="wordmark serif">Mind<span class="craft">Craft</span></div>
+    <div class="os-pill">Desk OS · prototype</div>
+    <div class="top-date">Thu, Aug 6 · evening</div>
+    <div class="search">
+      <span class="spark">✦</span>
+      <input id="askbox" placeholder="Ask your desk: what is due Thursday?" />
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="hero">
+    <div>
+      <h1 class="serif">Evening, Maya.</h1>
+      <p class="agentline">While you were at robotics I filed <b>4 new things</b>, drafted <b>2 summaries</b>, and checked every due date. The chem set is the only scary thing tonight.</p>
+    </div>
+    <div class="cta-row">
+      <button class="btn btn-lime" id="planBtn">Plan my evening</button>
+      <button class="btn btn-ghost" id="changedBtn">What changed today</button>
+    </div>
+  </div>
+
+  <div class="grid">
+
+    <!-- COLUMN A: Today + Desk Agent -->
+    <div>
+      <div class="card">
+        <h2>Today <span class="accent">· from your calendars</span></h2>
+        <ul class="tl">
+          <li>
+            <div class="time">4:00</div>
+            <div class="what"><b>Robotics build session</b><span>Fieldhouse · <span class="chip apple">Apple Cal</span></span></div>
+          </li>
+          <li class="nowline">
+            <div class="time">7:05</div>
+            <div class="what"><b>You are here</b><span>Desk time. Agent queue is ready below.</span></div>
+          </li>
+          <li>
+            <div class="time">7:30</div>
+            <div class="what"><b>Practice mission: Systems of equations, L2</b><span>20 min · <span class="chip act">ACT Dash</span></span></div>
+          </li>
+          <li>
+            <div class="time">9:15</div>
+            <div class="what"><b>Pack chem lab notebook</b><span>Reminder · <span class="chip moodle">Moodle</span></span></div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="card" style="margin-top:18px;">
+        <h2>Desk Agent <span class="accent">· tonight, ranked</span></h2>
+        <ol class="queue" id="queue">
+          <li><div><b>Chem problem set 4.2</b><small>due 8:00 am · est 40 min · <span class="why">hard thing first, your brain is freshest now</span></small></div></li>
+          <li><div><b>ACT Weekly Review</b><small>20 min · <span class="why">keeps the streak, and your Map moves tonight</span></small></div></li>
+          <li><div><b>Gatsby chapter 6 annotations</b><small>est 25 min · <span class="why">light reading to land the night</span></small></div></li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- COLUMN B: Planner -->
+    <div>
+      <div class="card">
+        <h2>Planner <span class="accent">· pulled from Moodle, mail, and you</span></h2>
+        <ul class="hw" id="hwlist">
+          <li>
+            <input type="checkbox" data-hw>
+            <div class="t">
+              <b>Problem set 4.2, stoichiometry</b>
+              <small>AP Chem · <span class="chip moodle">Moodle</span> · est 40 min</small>
+            </div>
+            <span class="due today">TONIGHT</span>
+          </li>
+          <li>
+            <input type="checkbox" data-hw>
+            <div class="t">
+              <b>Systems of equations worksheet</b>
+              <small>Algebra II · <span class="chip moodle">Moodle</span> · feeds your Map</small>
+            </div>
+            <span class="due tmrw">TOMORROW</span>
+          </li>
+          <li>
+            <input type="checkbox" data-hw>
+            <div class="t">
+              <b>Reconstruction primary source response</b>
+              <small>US History · <span class="chip gmail">Gmail</span> · from Ms. Alvarez, auto-captured</small>
+            </div>
+            <span class="due later">THU</span>
+          </li>
+          <li>
+            <input type="checkbox" data-hw>
+            <div class="t">
+              <b>Gatsby chapter 6 annotations</b>
+              <small>English · <span class="chip manual">Added by you</span></small>
+            </div>
+            <span class="due later">FRI</span>
+          </li>
+          <li>
+            <input type="checkbox" data-hw>
+            <div class="t">
+              <b>Weekly Review, one mandala</b>
+              <small>ACT · <span class="chip act">ACT Dash</span> · 6 concepts</small>
+            </div>
+            <span class="due today">TONIGHT</span>
+          </li>
+        </ul>
+        <div class="planner-foot"><b id="donecount">0 of 5 done.</b> Check things off and the agent replans around what is left.</div>
+      </div>
+
+      <!-- Notes + AI -->
+      <div class="card" style="margin-top:18px;">
+        <h2>Notes <span class="accent">· AI reads, you remember</span></h2>
+        <div class="notecard">
+          <h3 class="serif">Photosynthesis lecture notes</h3>
+          <div class="meta">AP Bio · scanned Oct 12 · <span class="chip drive">Drive</span> <span class="autofiled">auto-filed → Unit 4</span></div>
+          <div class="ai-tabs">
+            <button class="ai-tab active" data-pane="raw">Your notes</button>
+            <button class="ai-tab" data-pane="sum">Summary</button>
+            <button class="ai-tab" data-pane="dia">Diagram</button>
+          </div>
+          <div class="ai-pane active" id="pane-raw">
+            <p style="font-size:13.5px; color:var(--ink-soft); font-style:italic;">"...light hits the leaf, chlorophyll absorbs it, water gets split somewhere in here?? ATP + that other one made, then the cycle thing uses CO2 to build sugar. ASK: why 6 CO2?"</p>
+          </div>
+          <div class="ai-pane" id="pane-sum">
+            <ul>
+              <li><span class="keyterm">Light reactions</span> run in the thylakoid: light + water in, <span class="keyterm">ATP</span> + <span class="keyterm">NADPH</span> + oxygen out.</li>
+              <li>The <span class="keyterm">Calvin cycle</span> runs in the stroma: it spends that ATP and NADPH to turn CO2 into glucose.</li>
+              <li>Your open question is answered: 6 CO2 because glucose has 6 carbons. One carbon fixed per turn.</li>
+            </ul>
+          </div>
+          <div class="ai-pane" id="pane-dia">
+            <svg viewBox="0 0 420 150" width="100%" height="150" role="img" aria-label="Photosynthesis flow diagram">
+              <defs>
+                <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M0,0 L10,5 L0,10 z" fill="#247a4d"/>
+                </marker>
+              </defs>
+              <rect x="8" y="52" rx="10" width="84" height="44" fill="#eef6e4" stroke="#247a4d" stroke-width="1.5"/>
+              <text x="50" y="72" text-anchor="middle" font-size="11" font-weight="700" fill="#143a2e">Light +</text>
+              <text x="50" y="86" text-anchor="middle" font-size="11" font-weight="700" fill="#143a2e">Water</text>
+              <rect x="128" y="52" rx="10" width="94" height="44" fill="#fff" stroke="#247a4d" stroke-width="1.5"/>
+              <text x="175" y="72" text-anchor="middle" font-size="11" font-weight="700" fill="#143a2e">Light</text>
+              <text x="175" y="86" text-anchor="middle" font-size="11" font-weight="700" fill="#143a2e">reactions</text>
+              <rect x="258" y="12" rx="8" width="70" height="30" fill="#c4f547"/>
+              <text x="293" y="31" text-anchor="middle" font-size="11" font-weight="800" fill="#14261c">ATP</text>
+              <rect x="258" y="58" rx="8" width="70" height="30" fill="#c4f547"/>
+              <text x="293" y="77" text-anchor="middle" font-size="11" font-weight="800" fill="#14261c">NADPH</text>
+              <rect x="258" y="104" rx="8" width="70" height="30" fill="#fff" stroke="#d7e3db"/>
+              <text x="293" y="123" text-anchor="middle" font-size="11" font-weight="700" fill="#5f7a6d">O2 out</text>
+              <rect x="352" y="52" rx="10" width="60" height="44" fill="#14261c"/>
+              <text x="382" y="72" text-anchor="middle" font-size="10.5" font-weight="800" fill="#f4efe2">Calvin</text>
+              <text x="382" y="86" text-anchor="middle" font-size="10.5" font-weight="800" fill="#c4f547">→ sugar</text>
+              <line x1="92" y1="74" x2="126" y2="74" stroke="#247a4d" stroke-width="1.6" marker-end="url(#arr)"/>
+              <line x1="222" y1="66" x2="256" y2="30" stroke="#247a4d" stroke-width="1.6" marker-end="url(#arr)"/>
+              <line x1="222" y1="74" x2="256" y2="73" stroke="#247a4d" stroke-width="1.6" marker-end="url(#arr)"/>
+              <line x1="222" y1="84" x2="256" y2="117" stroke="#247a4d" stroke-width="1.6" marker-end="url(#arr)"/>
+              <line x1="328" y1="30" x2="352" y2="60" stroke="#247a4d" stroke-width="1.6" marker-end="url(#arr)"/>
+              <line x1="328" y1="73" x2="350" y2="74" stroke="#247a4d" stroke-width="1.6" marker-end="url(#arr)"/>
+            </svg>
+            <div class="diagram-note">Drawn by the desk from your own notes. Tap any box in the real build to expand it.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COLUMN C: ACT Dash + Binder preview -->
+    <div>
+      <div class="act-tile">
+        <h2>ACT Dash · module</h2>
+        <div class="weak">Weak spot: Systems of equations</div>
+        <div class="sub">Weekly Review is ready. 6 concepts, one mandala. Your homework tonight overlaps it, so the Map will <span class="click">move twice</span>.</div>
+        <a class="btn-chalk" href="https://mindcraft-93858.web.app/dashboard" target="_blank" rel="noopener">Open ACT Dash</a>
+      </div>
+
+      <div class="card binder">
+        <h2>Binder <span class="accent">· auto-filed archive</span></h2>
+        <div class="tabs">
+          <button class="tab active" data-course="chem">AP Chem</button>
+          <button class="tab" data-course="alg">Algebra II</button>
+          <button class="tab" data-course="hist">US History</button>
+          <button class="tab" data-course="eng">English</button>
+        </div>
+
+        <div class="course-pane" id="course-chem">
+          <div class="seq"><span class="dot"></span><b>Unit 3 · Stoichiometry</b><span class="dash"></span>lecture → reading → lab → set → quiz</div>
+          <ul class="filelist">
+            <li>
+              <div class="fico" style="background:#b45309;">PDF</div>
+              <div class="fname"><b>Mole ratios slides</b><span><span class="chip moodle">Moodle</span> · Tue</span></div>
+              <span class="autofiled">auto-filed</span>
+            </li>
+            <li>
+              <div class="fico" style="background:#15803d;">DOC</div>
+              <div class="fname"><b>Lab 5 report draft</b><span><span class="chip drive">Drive</span> · yesterday · summary ready</span></div>
+              <span class="autofiled">auto-filed</span>
+            </li>
+            <li>
+              <div class="fico" style="background:#1d4ed8;">SCAN</div>
+              <div class="fname"><b>Practice set 4.1, your handwriting</b><span>photo → text · indexed · 2 mistakes flagged for the Map</span></div>
+              <span class="autofiled">auto-filed</span>
+            </li>
+          </ul>
+          <div class="binder-stats"><b>37 files indexed</b> for AP Chem · 12 summaries · 4 diagrams · ask the desk anything about them.</div>
+        </div>
+
+        <div class="course-pane" id="course-alg" style="display:none;">
+          <div class="seq"><span class="dot"></span><b>Unit 5 · Systems of equations</b><span class="dash"></span>overlaps your ACT weak spot</div>
+          <ul class="filelist">
+            <li>
+              <div class="fico" style="background:#b45309;">PDF</div>
+              <div class="fname"><b>Elimination method worksheet</b><span><span class="chip moodle">Moodle</span> · today</span></div>
+              <span class="autofiled">auto-filed</span>
+            </li>
+            <li>
+              <div class="fico" style="background:#14261c;">ACT</div>
+              <div class="fname"><b>Story chapter: The Two Merchants</b><span><span class="chip act">ACT Dash</span> · same concept, story world</span></div>
+              <span class="autofiled">linked</span>
+            </li>
+          </ul>
+          <div class="binder-stats"><b>21 files indexed</b> · homework and ACT prep share one concept graph here.</div>
+        </div>
+
+        <div class="course-pane" id="course-hist" style="display:none;">
+          <div class="seq"><span class="dot"></span><b>Unit 2 · Reconstruction</b><span class="dash"></span>reading → response → seminar</div>
+          <ul class="filelist">
+            <li>
+              <div class="fico" style="background:#b91c1c;">MAIL</div>
+              <div class="fname"><b>Assignment email from Ms. Alvarez</b><span><span class="chip gmail">Gmail</span> · attachment saved + due date extracted</span></div>
+              <span class="autofiled">auto-filed</span>
+            </li>
+          </ul>
+          <div class="binder-stats"><b>14 files indexed</b> · the desk watches your school label so nothing gets lost.</div>
+        </div>
+
+        <div class="course-pane" id="course-eng" style="display:none;">
+          <div class="seq"><span class="dot"></span><b>The Great Gatsby</b><span class="dash"></span>ch 1 → 6, annotations tracked</div>
+          <ul class="filelist">
+            <li>
+              <div class="fico" style="background:#222;">NOTE</div>
+              <div class="fname"><b>Symbols running list</b><span><span class="chip notion">Notion</span> · synced 2h ago</span></div>
+              <span class="autofiled">auto-filed</span>
+            </li>
+          </ul>
+          <div class="binder-stats"><b>9 files indexed</b> · green light count: 4 and rising.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Connections halo -->
+  <div class="halo-section">
+    <h2 class="serif" style="font-size:26px;">One desk. Every tool you already use.</h2>
+    <p class="lede">The desk reads due dates, events, files, and teacher emails, then files everything where it belongs. Click a tool to connect or disconnect it.</p>
+    <div class="halo" id="halo">
+      <svg id="haloSvg"></svg>
+      <div class="seal">
+        <div>
+          <div class="mc serif">Mind<span>Craft</span></div>
+          <small>DESK OS</small>
+        </div>
+      </div>
+    </div>
+    <div class="halo-foot">
+      <div class="ok">✓</div>
+      <div>
+        <b><span id="conncount">5</span> of 7 connected.</b> The desk works inside your tools.
+        <small>Read due dates. File documents. Draft summaries. Without switching tabs.</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="protofoot">
+    Prototype with sample data. No real accounts are connected.
+    Build plan lives at <code>agent_work/product/LEARNING_OS_PLAN.md</code>.
+  </div>
+</div>
+
+<div class="toast" id="toast"><b>Re-planned.</b> Chem first while your brain is fresh.</div>
+
+<script>
+  // Planner checkboxes
+  const boxes = document.querySelectorAll('[data-hw]');
+  const donecount = document.getElementById('donecount');
+  boxes.forEach(b => b.addEventListener('change', () => {
+    b.closest('li').classList.toggle('done', b.checked);
+    const n = document.querySelectorAll('[data-hw]:checked').length;
+    donecount.textContent = n + ' of 5 done.';
+    if (n === 5) toast('<b>Desk cleared.</b> Go live your life, Maya.');
+  }));
+
+  // Notes AI tabs
+  document.querySelectorAll('.ai-tab').forEach(t => t.addEventListener('click', () => {
+    document.querySelectorAll('.ai-tab').forEach(x => x.classList.remove('active'));
+    document.querySelectorAll('.ai-pane').forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById('pane-' + t.dataset.pane).classList.add('active');
+  }));
+
+  // Binder tabs
+  document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+    document.querySelectorAll('.course-pane').forEach(x => x.style.display = 'none');
+    t.classList.add('active');
+    document.getElementById('course-' + t.dataset.course).style.display = 'block';
+  }));
+
+  // Connections halo
+  const tools = [
+    { nm:'Moodle',          mono:'Mo', color:'#f98012', on:true  },
+    { nm:'Google Calendar', mono:'GC', color:'#4285f4', on:true  },
+    { nm:'Apple Calendar',  mono:'iC', color:'#111111', on:true  },
+    { nm:'Notion',          mono:'N',  color:'#111111', on:false },
+    { nm:'Google Drive',    mono:'Dr', color:'#34a853', on:true  },
+    { nm:'Gmail',           mono:'Gm', color:'#ea4335', on:false },
+    { nm:'ACT Dash',        mono:'ACT',color:'#14261c', on:true  },
+  ];
+  const halo = document.getElementById('halo');
+  const svg  = document.getElementById('haloSvg');
+  const conncount = document.getElementById('conncount');
+
+  function renderHalo(){
+    // clear old nodes
+    halo.querySelectorAll('.node').forEach(n => n.remove());
+    svg.innerHTML = '';
+    const W = halo.clientWidth, H = halo.clientHeight;
+    const cx = W/2, cy = H/2, rx = Math.min(255, W/2 - 62), ry = 158;
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    tools.forEach((t, i) => {
+      const a = -Math.PI/2 + i * (2*Math.PI/tools.length);
+      const x = cx + rx * Math.cos(a);
+      const y = cy + ry * Math.sin(a);
+      // spoke
+      const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+      const ex = cx + (rx-46) * Math.cos(a), ey = cy + (ry-40) * Math.sin(a);
+      const sx = cx + 74 * Math.cos(a),      sy = cy + 68 * Math.sin(a);
+      line.setAttribute('x1', sx); line.setAttribute('y1', sy);
+      line.setAttribute('x2', ex); line.setAttribute('y2', ey);
+      line.setAttribute('stroke', t.on ? '#d3a900' : '#d8d2bd');
+      line.setAttribute('stroke-width', '1.6');
+      line.setAttribute('stroke-dasharray', '2 6');
+      line.setAttribute('stroke-linecap', 'round');
+      svg.appendChild(line);
+      // node
+      const el = document.createElement('div');
+      el.className = 'node' + (t.on ? '' : ' off');
+      el.style.left = x + 'px';
+      el.style.top  = y + 'px';
+      const txtColor = (t.nm === 'Notion' || t.nm === 'Apple Calendar') ? '#111' : t.color;
+      el.innerHTML = `
+        <div class="ic" style="color:${t.nm==='ACT Dash' ? '#c4f547' : txtColor}; ${t.nm==='ACT Dash' ? 'background:#14261c;border-color:#14261c;' : ''}">${t.mono}</div>
+        <div class="nm">${t.nm}</div>
+        <div class="st ${t.on ? 'on' : 'off'}">${t.on ? 'Connected' : 'Connect'}</div>`;
+      el.addEventListener('click', () => {
+        t.on = !t.on;
+        renderHalo();
+        toast(t.on ? `<b>${t.nm} connected.</b> Syncing now.` : `<b>${t.nm} disconnected.</b>`);
+      });
+      halo.appendChild(el);
+    });
+    conncount.textContent = tools.filter(t => t.on).length;
+  }
+  renderHalo();
+  window.addEventListener('resize', renderHalo);
+
+  // Plan my evening
+  const queue = document.getElementById('queue');
+  document.getElementById('planBtn').addEventListener('click', () => {
+    queue.appendChild(queue.children[0]);
+    toast('<b>Re-planned.</b> Queue rebuilt around what is left.');
+  });
+  document.getElementById('changedBtn').addEventListener('click', () => {
+    toast('<b>Today:</b> 4 files filed, 1 due date found in Gmail, 2 summaries drafted.');
+  });
+
+  // Ask box
+  document.getElementById('askbox').addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.value.trim()) {
+      toast('<b>Thursday:</b> Reconstruction response for US History. Everything else is clear.');
+      e.target.value = '';
+    }
+  });
+
+  // Toast helper
+  let toastTimer;
+  function toast(html){
+    const t = document.getElementById('toast');
+    t.innerHTML = html;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 2600);
+  }
+</script>
+</body>
+</html>

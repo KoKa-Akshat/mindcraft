@@ -23,21 +23,28 @@ all of this — it lives in one workspace.
 
 ## Collaboration — canonical spec documents (READ BEFORE TOUCHING THESE AREAS)
 
+**Agent entrypoint:** [`docs/canon/README.md`](docs/canon/README.md) — indexed brand, vision, pedagogy, research.
+
 These files are the authoritative design + architecture contracts. Read them
 before working in their respective areas. Do not override their decisions
 without a team discussion first.
 
 | File | Owns |
 |------|------|
-| `WORLD_VISION.md` | **THE WHY — read first.** Math as a world: stories, proven questions, tutor support. Three-horizon roadmap. Every feature should move toward this. |
-| `BRAND_BOOK.md` | Voice, copy, student archetype (Maya), emotional framing, what NOT to say |
-| `AGENT_RULEBOOK.md` | Every LLM call contract: input/output schema, fallbacks, latency budgets, model selection, what agents CAN and CANNOT do |
-| `DASHBOARD_NOTEBOOK_SPEC.md` | Field Journal dashboard: paper system, layout, typography, motion, PawHub replacement spec |
-| `FABLE5_VISION.md` | Frontend product/design spec (Product lane): design tokens, cluster colors, area briefs |
+| `docs/canon/README.md` | **Index for agents** — naming, read order, PDF regen |
+| `WORLD_VISION.md` | **THE WHY — read first.** Math as a world; The Desk horizons |
+| `BRAND_BOOK.md` (+ `BRAND_BOOK.pdf`) | Voice, Maya/Jordan, vocabulary, visual stages, anti-claims |
+| `docs/canon/PEDAGOGY.md` | Research → product rules (SAFE-*, FEI, Desk surfaces) |
+| `agent_work/research/` | Research Constitution + chapters + Red Team (v1.16+) |
+| `AGENT_RULEBOOK.md` | Every LLM call contract: schemas, fallbacks, what agents cannot do |
+| `DASHBOARD_NOTEBOOK_SPEC.md` | Field Journal dashboard: paper system, layout, typography, motion |
+| `FABLE5_VISION.md` | Frontend product/design spec (Product lane): tokens, area briefs |
 | `CODEX_BRIEF.md` | Implementation briefs for AI coding agents (Codex/Cursor) |
 
 ### Shared product conventions (all agents)
 
+- **Product naming**: website **The Desk by MindCraft**; app chrome / home screen
+  **The Desk** (no MindCraft logo mark in chrome). Company = MindCraft.
 - **Naming**: the three student sections are **Notes**, **Solver**, **Map** —
  everywhere (nav, tabs, panel titles, buttons). Not "Session Notes" / "Problem
  Solver" / "Knowledge Map" / "GPS" in student-facing copy.
@@ -397,7 +404,7 @@ force-push `main`.
 |--------|--------|----------|
 | `app` | `app/dist` (built in CI) | https://mindcraft-93858.web.app |
 | `world1` | `worlds/world2/` (static) | https://mindcraft-world1.web.app |
-| `marketing` | repo root (curated static) | https://mindcraft-marketing-site.web.app |
+| `marketing` | repo root (curated static) | https://joinmindcraft.com |
 
 Key notes:
 - `--legacy-peer-deps` is REQUIRED for app install ( `@react-three` peer conflict).

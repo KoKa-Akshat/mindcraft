@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MindCraft Generated Story Scenes</title>
+  <style>
+    :root { color-scheme: dark; font-family: Avenir Next, Avenir, sans-serif; background: #080e14; color: #f5f5f5; }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 48px clamp(20px, 5vw, 80px) 80px; }
+    header { max-width: 1000px; margin: 0 auto 36px; }
+    h1 { margin: 0; font-size: clamp(36px, 6vw, 72px); letter-spacing: 0; line-height: .95; }
+    h1 span { color: #c4f547; }
+    p { color: rgba(245,245,245,.66); font-size: 16px; line-height: 1.5; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px; max-width: 1400px; margin: 0 auto; }
+    figure { margin: 0; border: 1px solid rgba(245,245,245,.13); background: #101b24; overflow: hidden; border-radius: 8px; }
+    img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; background: #1d3a8a; }
+    figcaption { padding: 12px 14px 14px; font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: capitalize; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>MindCraft <span>story scenes</span></h1>
+    <p>42 generated concept images. Click an image to inspect it at full size.</p>
+  </header>
+  <main class="grid" id="gallery"></main>
+  <script>
+    const concepts = [
+      'act_strategy', 'algebraic_manipulation', 'applications_of_derivatives', 'applications_of_integrals',
+      'area_volume', 'basic_equations', 'basic_probability', 'circles_geometry', 'complex_numbers',
+      'conic_sections', 'derivatives', 'descriptive_statistics', 'exponent_rules', 'exponential_functions',
+      'factoring_polynomials', 'fractions_decimals', 'functions_basics', 'geometric_transformations',
+      'inferential_statistics', 'integrals', 'limits_continuity', 'linear_equations', 'linear_inequalities',
+      'lines_angles', 'logarithmic_functions', 'matrices', 'measurement_units', 'number_properties',
+      'order_of_operations', 'polynomials', 'probability_distributions', 'quadratic_equations',
+      'radical_expressions', 'rational_expressions', 'ratios_proportions', 'representation_translation',
+      'right_triangle_geometry', 'sequences_series', 'systems_of_linear_equations', 'triangles_congruence',
+      'trigonometry_basics', 'vectors'
+    ];
+    const gallery = document.querySelector('#gallery');
+    gallery.innerHTML = concepts.map(concept => {
+      const source = `src/assets/canvas/generated/story-${concept}.jpg`;
+      const label = concept.replaceAll('_', ' ');
+      return `<figure><a href="${source}" target="_blank"><img src="${source}" alt="${label} generated story scene"></a><figcaption>${label}</figcaption></figure>`;
+    }).join('');
+  </script>
+</body>
+</html>
