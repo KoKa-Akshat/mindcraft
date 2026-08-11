@@ -304,12 +304,13 @@ enum SuggestedReplyEngine {
         body: String?,
         signer: String
     ) -> String {
-        let first = (from ?? "there")
-            .split(separator: "<").first
-            .map(String.init)?
-            .trimmingCharacters(in: .whitespacesAndNewlines)
-            .split(separator: " ").first
-            .map(String.init) ?? "there"
+        // Split into typed steps — the single chained expression made the
+        // type-checker time out on CI's x86 runner (same semantics).
+        let sender: String = from ?? "there"
+        let beforeAngle: Substring = sender.split(separator: "<").first ?? Substring(sender)
+        let trimmedName: String = String(beforeAngle).trimmingCharacters(in: .whitespacesAndNewlines)
+        let firstWord: Substring? = trimmedName.split(separator: " ").first
+        let first: String = firstWord.map(String.init) ?? "there"
         let blob = "\(subject ?? "") \(body ?? "")".lowercased()
 
         let core: String
