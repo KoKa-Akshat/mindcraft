@@ -34,6 +34,16 @@ SECONDARY_CONCEPT_MARGIN = 0.0  # compatibility-only; bank emission is ontology-
 INGREDIENT_SCORE_THRESHOLD = float(os.getenv("INGREDIENT_SCORE_THRESHOLD", "0.0"))
 
 
+def bridge_prior_confidence(bridge: Bridge) -> float:
+    """Per-student starting confidence for an unattempted bridge.
+
+    The ontology is the prior (same doctrine as edge_weights.initialize_edge_
+    from_ontology). Issue #9b will replace the additive update rule with a
+    Beta posterior — it should seed its prior from THIS function, not re-derive it.
+    """
+    return bridge.confidence
+
+
 @dataclass
 class DAGNode:
     """A node in the minimal dependency DAG."""
@@ -447,7 +457,11 @@ def build_minimal_dag(
 
         bridge_key = f"{bridge.from_ingredient}->{bridge.to_ingredient}"
         bridge_state = student_state.bridge_confidence.get(bridge_key)
-        confidence = bridge_state.confidence if bridge_state is not None else 0.0
+        confidence = (
+            bridge_state.confidence
+            if bridge_state is not None
+            else bridge_prior_confidence(bridge)
+        )
         edges.append(
             DAGEdge(
                 from_id=bridge.from_ingredient,
@@ -725,6 +739,7 @@ def update_ingredient_state(
     card: CardRecommendation,
     student_succeeded: bool,
     concept_level_strength: float = 0.0,
+    prior_confidence: float = 0.0,
 ) -> IngredientStudentState:
     """
     Update ingredient mastery and bridge confidence after a card interaction.
@@ -760,6 +775,7 @@ def update_ingredient_state(
                 bridge_id=bridge_key,
                 from_ingredient=parts[0] if len(parts) > 0 else "",
                 to_ingredient=parts[1] if len(parts) > 1 else "",
+                confidence=prior_confidence,
             )
 
         new_confidence = max(0.0, min(1.0, current.confidence + delta))

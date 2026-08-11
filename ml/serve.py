@@ -21,6 +21,7 @@ from mindcraft_graph.engine.ingredient_pipeline import recommend_cards
 from mindcraft_graph.engine.ingredient_runtime import (
     CardRecommendation,
     aggregate_to_concept_mastery,
+    bridge_prior_confidence,
     update_ingredient_state,
 )
 from mindcraft_graph.engine.student_graph import create_personal_graph, update_personal_graph
@@ -469,6 +470,23 @@ def _concepts_for_card_target(target_type: str, target_id: str) -> list[str]:
         return concept_ids
 
     return []
+
+
+def _bridge_prior_for_card(target_type: str, target_id: str) -> float:
+    if target_type != "bridge":
+        return 0.0
+    parts = target_id.split("->")
+    if len(parts) != 2:
+        return 0.0
+    bridge = next(
+        (
+            candidate
+            for candidate in ingredient_graph.get_bridges_from(parts[0])
+            if candidate.to_ingredient == parts[1]
+        ),
+        None,
+    )
+    return bridge_prior_confidence(bridge) if bridge is not None else 0.0
 
 
 # ── Endpoints ──
@@ -1003,6 +1021,7 @@ async def submit_answer_endpoint(req: SubmitIngredientAnswerRequest, auth: AuthC
         student_state,
         card,
         student_succeeded=req.student_succeeded,
+        prior_confidence=_bridge_prior_for_card(req.target_type, req.target_id),
     )
     save_ingredient_state(req.student_id, student_state)
 
