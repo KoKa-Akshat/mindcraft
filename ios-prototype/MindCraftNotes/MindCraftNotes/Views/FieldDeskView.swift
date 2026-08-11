@@ -558,21 +558,22 @@ struct FieldDeskView: View {
                     .animation(.easeInOut(duration: 0.22), value: showTopChrome)
                 }
             }
-            // Pinned top-right: volume first, then context buttons.
-            // Jesse's landing → Create + Sign out. Work desk → Jesse's + Manage.
+            // Pinned top-right: Volume · Create · Sign out (clear, separated).
             .overlay(alignment: .topTrailing) {
                 if !deskOverlayChromeBlocked {
-                    HStack(spacing: 8) {
+                    HStack(spacing: 12) {
                         Button {
                             kitchenSoundOn.toggle()
                             flash(kitchenSoundOn ? "Sound on" : "Sound off")
                         } label: {
                             Image(systemName: kitchenSoundOn ? "speaker.wave.2.fill" : "speaker.slash.fill")
-                                .font(.system(size: 13, weight: .bold))
-                                .foregroundColor(kitchenSoundOn ? Color(fdHex: "0c1207") : .white.opacity(0.9))
-                                .frame(width: 36, height: 36)
+                                .font(.system(size: 14, weight: .bold))
+                                .foregroundColor(kitchenSoundOn ? Color(fdHex: "0c1207") : Color(fdHex: "143a2e"))
+                                .frame(width: 40, height: 40)
                                 .background(
-                                    Circle().fill(kitchenSoundOn ? Color(fdHex: "c4f547") : Color.black.opacity(0.55))
+                                    Circle()
+                                        .fill(kitchenSoundOn ? Color(fdHex: "c4f547") : Color.white.opacity(0.94))
+                                        .shadow(color: .black.opacity(0.18), radius: 8, y: 3)
                                 )
                         }
                         .buttonStyle(.plain)
@@ -587,10 +588,14 @@ struct FieldDeskView: View {
                             } label: {
                                 Text("Jesse's")
                                     .font(.system(size: 12, weight: .heavy, design: .rounded))
-                                    .foregroundColor(.white.opacity(0.92))
-                                    .padding(.horizontal, 13)
-                                    .padding(.vertical, 9)
-                                    .background(Capsule().fill(Color.black.opacity(0.55)))
+                                    .foregroundColor(Color(fdHex: "143a2e"))
+                                    .padding(.horizontal, 14)
+                                    .padding(.vertical, 10)
+                                    .background(
+                                        Capsule()
+                                            .fill(Color.white.opacity(0.94))
+                                            .shadow(color: .black.opacity(0.18), radius: 8, y: 3)
+                                    )
                             }
                             .buttonStyle(.plain)
                             .accessibilityIdentifier("fieldDeskJessesButton")
@@ -602,23 +607,36 @@ struct FieldDeskView: View {
                                 Text("Manage")
                                     .font(.system(size: 12, weight: .heavy, design: .rounded))
                                     .foregroundColor(Color(fdHex: "0c1207"))
-                                    .padding(.horizontal, 13)
-                                    .padding(.vertical, 9)
-                                    .background(Capsule().fill(Color(fdHex: "c4f547")))
+                                    .padding(.horizontal, 14)
+                                    .padding(.vertical, 10)
+                                    .background(
+                                        Capsule()
+                                            .fill(Color(fdHex: "c4f547"))
+                                            .shadow(color: .black.opacity(0.18), radius: 8, y: 3)
+                                    )
                             }
                             .buttonStyle(.plain)
                             .accessibilityIdentifier("fieldDeskManageButton")
                             .accessibilityLabel("Manage · instances, tutors, workflows")
                         } else {
-                            // Create — polka bloom into the spatial studio board.
+                            // Create — opens spatial studio board (next to Volume).
                             Button {
                                 openCreateStudio()
                             } label: {
-                                Image(systemName: "plus.viewfinder")
-                                    .font(.system(size: 13, weight: .bold))
-                                    .foregroundColor(.white.opacity(0.9))
-                                    .frame(width: 36, height: 36)
-                                    .background(Circle().fill(Color.black.opacity(0.55)))
+                                HStack(spacing: 6) {
+                                    Image(systemName: "plus")
+                                        .font(.system(size: 13, weight: .heavy))
+                                    Text("Create")
+                                        .font(.system(size: 12, weight: .heavy, design: .rounded))
+                                }
+                                .foregroundColor(Color(fdHex: "0c1207"))
+                                .padding(.horizontal, 14)
+                                .padding(.vertical, 10)
+                                .background(
+                                    Capsule()
+                                        .fill(Color(fdHex: "c4f547"))
+                                        .shadow(color: .black.opacity(0.18), radius: 8, y: 3)
+                                )
                             }
                             .buttonStyle(.plain)
                             .accessibilityIdentifier("fieldDeskCreateButton")
@@ -628,18 +646,22 @@ struct FieldDeskView: View {
                                 authService.signOut()
                             } label: {
                                 Image(systemName: "rectangle.portrait.and.arrow.right")
-                                    .font(.system(size: 13, weight: .bold))
-                                    .foregroundColor(.white.opacity(0.9))
-                                    .frame(width: 36, height: 36)
-                                    .background(Circle().fill(Color.black.opacity(0.55)))
+                                    .font(.system(size: 14, weight: .bold))
+                                    .foregroundColor(Color(fdHex: "143a2e"))
+                                    .frame(width: 40, height: 40)
+                                    .background(
+                                        Circle()
+                                            .fill(Color.white.opacity(0.94))
+                                            .shadow(color: .black.opacity(0.18), radius: 8, y: 3)
+                                    )
                             }
                             .buttonStyle(.plain)
                             .accessibilityIdentifier("fieldDeskSignOutButton")
                             .accessibilityLabel("Sign out")
                         }
                     }
-                    .padding(.top, 10)
-                    .padding(.trailing, 14)
+                    .padding(.top, 12)
+                    .padding(.trailing, 16)
                     .zIndex(80)
                 }
             }
@@ -1036,21 +1058,17 @@ struct FieldDeskView: View {
         }
     }
 
-    /// Polka bloom → spatial Create board (desk-os/studio · spatial2).
+    /// Open spatial Create board (desk-os/studio · spatial2) over Jesse's.
     private func openCreateStudio() {
-        guard !showCreateStudio, !showStandaloneDesk else { return }
-        withAnimation(.easeInOut(duration: 0.85)) { polkaProgress = 1 }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
+        guard !showCreateStudio, !showStandaloneDesk, !showProjectsScreen else { return }
+        withAnimation(.easeInOut(duration: 0.28)) {
             showCreateStudio = true
-            withAnimation(.easeInOut(duration: 0.55)) { polkaProgress = 0 }
         }
     }
 
     private func closeCreateStudio() {
-        withAnimation(.easeInOut(duration: 0.6)) { polkaProgress = 1 }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.65) {
+        withAnimation(.easeInOut(duration: 0.28)) {
             showCreateStudio = false
-            withAnimation(.easeInOut(duration: 0.6)) { polkaProgress = 0 }
         }
     }
 
@@ -1058,12 +1076,9 @@ struct FieldDeskView: View {
         showBlankPage = false
         switch action {
         case .openDesk, .projects:
-            // Projects → white polka bloom → projects screen (Malevolent
-            // Shrine). Tapping the shrine enters the work area.
-            withAnimation(.easeInOut(duration: 0.7)) { polkaProgress = 1 }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+            // Straight to centered shrine — no polka sheet on this path.
+            withAnimation(.easeInOut(duration: 0.25)) {
                 showProjectsScreen = true
-                withAnimation(.easeInOut(duration: 0.5)) { polkaProgress = 0 }
             }
         case .wakeJesse:
             flash("Jesse’s Kitchen")

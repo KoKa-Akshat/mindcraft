@@ -4,12 +4,14 @@
 
 ---
 
-## Field Desk polish (2026-08-11)
+## Field Desk — ship to main (2026-08-11)
 
-- Create → polka → spatial studio (bundled `worlds/studio`).
-- Projects: title **The Malevolent Shrine** only → auto dash after 3s.
-- Dash: pinch card vs whole desk; Gdoc = whiteboard; Presentation = real deck.
-- If iPad app blank: pull branch, Clean Build Folder, confirm device trusted, Cmd+R.
+Pull **main**, Clean Build, Cmd+R. Changes were stuck on an agent branch before.
+
+- Projects: centered Malevolent Shrine only (no polka) → tap → work desk
+- Jesse's: Volume · **Create** (lime) · Sign out — Create opens studio board
+- Dash: pinch card / whole desk; Gdoc whiteboard scribble; Presentation deck
+- Studio: desk-matched cream space + clear +/- zoom
 
 ## Studio Create pass — LOCKED (2026-08-10)
 

@@ -75,6 +75,12 @@
     cursor:grab; touch-action:none; user-select:none;
   }
   .tile.is-pinching{z-index:32; transition:none;}
+  /* Interactive boards must accept typing + Pencil on iPad */
+  .tile.docpage,.tile.slidetile{user-select:text;}
+  .tile input,.tile textarea,.tile canvas,.tile button{
+    touch-action:auto; user-select:text; -webkit-user-select:text; pointer-events:auto;
+  }
+  .tile .interact{touch-action:auto; user-select:text;}
   .tile:hover{
     border-color:rgba(36,122,77,.34);
     box-shadow:0 30px 74px rgba(20,58,46,.22),0 0 0 5px rgba(196,245,71,.14);
@@ -771,7 +777,7 @@
 
       item.addEventListener('pointerdown', event => {
         if (event.button !== undefined && event.button !== 0) return;
-        if (event.target.closest('.resize-handle,textarea,input,button,canvas,.slide-nav,.board-tools')) return;
+        if (event.target.closest('.resize-handle,textarea,input,button,canvas,.slide-nav,.board-tools,.board-canvas-wrap,.board-head,.slide-frame,.slide-chrome,.interact')) return;
         active = true;
         moved = false;
         startX = event.clientX;
@@ -1060,15 +1066,15 @@
       doc.dataset.resizable = '';
       doc.innerHTML = [
         '<span class="tile-label">Gdoc</span>',
-        '<div class="board-head">',
+        '<div class="board-head interact">',
         '<input class="board-title" value="Untitled board" aria-label="Board title">',
         '<div class="board-tools" role="toolbar" aria-label="Board tools">',
         '<button type="button" class="on" data-mode="pen" title="Pen">✎</button>',
         '<button type="button" data-mode="marker" title="Marker">▮</button>',
         '<button type="button" data-mode="eraser" title="Eraser">⌫</button>',
         '</div></div>',
-        '<textarea class="board-note" placeholder="Type a note…"></textarea>',
-        '<div class="board-canvas-wrap"><canvas class="board-canvas" aria-label="Whiteboard"></canvas></div>'
+        '<textarea class="board-note interact" placeholder="Type or scribble below…"></textarea>',
+        '<div class="board-canvas-wrap interact"><canvas class="board-canvas" aria-label="Whiteboard"></canvas></div>'
       ].join('');
       placeTile(doc);
       wireWhiteboard(doc);
@@ -1147,12 +1153,12 @@
       slide.dataset.resizable = '';
       slide.innerHTML = [
         '<span class="tile-label">Presentation</span>',
-        '<div class="slide-chrome"><span>Deck</span><span class="slide-count">1 / 1</span></div>',
-        '<div class="slide-frame">',
+        '<div class="slide-chrome interact"><span>Deck</span><span class="slide-count">1 / 1</span></div>',
+        '<div class="slide-frame interact">',
         '<input class="slide-title" value="Untitled deck" aria-label="Slide title">',
         '<textarea class="slide-body" aria-label="Slide body">Your first point goes here.</textarea>',
         '</div>',
-        '<div class="slide-nav">',
+        '<div class="slide-nav interact">',
         '<button type="button" data-act="prev" aria-label="Previous slide">‹</button>',
         '<button type="button" class="add-slide" data-act="add">+ Slide</button>',
         '<button type="button" data-act="next" aria-label="Next slide">›</button>',

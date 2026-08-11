@@ -169,21 +169,25 @@ h1,h2,h3,.pix{font-family:'Press Start 2P',monospace; line-height:1.5}
 #editorView.create-on .btn.orange{background:#c4f547; color:#0c1207}
 #editorView.create-on #createModeBtn{display:none !important}
 
-/* Jesse → Create (polka doorway embed / native WKWebView) */
+/* Jesse → Create — match Field Desk cream dotted space + clear +/- zoom */
 html.from-jesse body{
-  background:#f7f5f0;
+  background:#f8faf7;
 }
 html.from-jesse #homeView{display:none !important}
 html.from-jesse #editorView.create-on{
   background:
-    radial-gradient(rgba(28,26,23,.09) 1.05px, transparent 1.15px) 0 0 / 22px 22px,
-    radial-gradient(900px 420px at 18% 8%, rgba(196,245,71,.12), transparent 58%),
-    #f7f5f0;
+    linear-gradient(rgba(20,58,46,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(20,58,46,.025) 1px,transparent 1px),
+    radial-gradient(circle,rgba(20,58,46,.22) 1.2px,transparent 1.7px),
+    linear-gradient(145deg,#fff 0%,#f7faf5 58%,#f2f7f1 100%);
+  background-size:72px 72px,72px 72px,52px 52px,auto;
+  background-position:0 0,0 0,18px 18px,0 0;
 }
 html.from-jesse #editorView.create-on .topbar{
-  background:rgba(247,243,238,.92);
+  background:rgba(248,250,247,.94);
   border-bottom:1px solid rgba(20,58,46,.07);
   padding:12px 16px;
+  backdrop-filter:blur(12px);
 }
 html.from-jesse #editorView.create-on #navBackBtn{
   background:#0c1207; color:#f4f7f4;
@@ -208,7 +212,24 @@ html.from-jesse .floatBg{
   background-image:none;
 }
 html.from-jesse .zoomHUD{
-  top:72px; right:18px;
+  top:auto; bottom:88px; right:18px;
+  background:rgba(255,255,255,.96);
+  border:1px solid rgba(20,58,46,.10);
+  box-shadow:0 14px 34px rgba(20,58,46,.12);
+  padding:6px;
+  gap:4px;
+}
+html.from-jesse .zoomHUD button{
+  width:40px; height:40px; border-radius:12px;
+  font:800 18px/1 'DM Sans',sans-serif; color:#143a2e;
+  background:#f3f0ea;
+}
+html.from-jesse .zoomHUD button:hover{background:#c4f547}
+html.from-jesse .zoomHUD .zlabel{
+  min-width:54px; font:800 12px/1 'DM Sans',sans-serif; color:#143a2e;
+}
+html.from-jesse .floatAsk{
+  bottom:18px;
 }
 #floatCanvas .openMediaPill{display:none}
 #editorView.create-on #floatCanvas .openMediaPill,
