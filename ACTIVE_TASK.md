@@ -4,6 +4,10 @@
 
 ---
 
+## Canon pack for agents (2026-08-11)
+
+Entry: `docs/canon/README.md` · Pedagogy: `docs/canon/PEDAGOGY.md` · Brand Book v1.1 + `BRAND_BOOK.pdf` · Research Constitution v1.16 under `agent_work/research/`. Product: **The Desk by MindCraft** (web) / **The Desk** (app).
+
 ## Primary marketing domain — joinmindcraft.com (2026-08-11)
 
 Repo + CI now treat **https://joinmindcraft.com** as the public marketing URL.

@@ -1,7 +1,9 @@
 # MindCraft — handoff for Cursor (and sibling agents)
 
 **Canonical live checkout:** `/Users/akoirala/Developer/mindcraft`  
-**Read this at the start of every session.** Full project brief: `CLAUDE.md`. Current shipped/open work log: `ACTIVE_TASK.md` (read the top). Manjushree landing-panel brief: `agent_work/manjushree-zone/LANDING_PANEL_HANDOFF.md`.
+**Read this at the start of every session.** Full project brief: `CLAUDE.md`. Current shipped/open work log: `ACTIVE_TASK.md` (read the top).  
+**Canon (brand / vision / pedagogy / research):** `docs/canon/README.md` — Brand Book PDF `BRAND_BOOK.pdf`; Research Constitution `agent_work/research/`.  
+Manjushree landing-panel brief: `agent_work/manjushree-zone/LANDING_PANEL_HANDOFF.md`.
 
 ---
 

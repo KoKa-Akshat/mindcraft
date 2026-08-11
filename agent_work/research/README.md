@@ -5,6 +5,9 @@ This folder is the company’s **research operating system**, not a marketing ar
 It is an ongoing multi-month evidence program. The Constitution is expected to grow
 toward 150–300 pages of densified truth — **never padded**.
 
+**Product translation for builders:** [`docs/canon/PEDAGOGY.md`](../../docs/canon/PEDAGOGY.md)  
+**Full agent index (brand · vision · pedagogy · research):** [`docs/canon/README.md`](../../docs/canon/README.md)
+
 ## Canonical artifacts
 
 | File | Role |

@@ -1,6 +1,7 @@
 # MindCraft: A World Written in Math
 
-*This is not a spec. This is the why. Read it before you touch anything.*
+*This is not a spec. This is the why. Read it before you touch anything.*  
+*Product name (2026-08): **The Desk by MindCraft** on the web; app chrome **The Desk**. Canon index: `docs/canon/README.md`. Pedagogy: `docs/canon/PEDAGOGY.md`. Research: `agent_work/research/` (Constitution v1.16).*
 
 ---
 
@@ -30,7 +31,7 @@ We already have the seed. There is a 3D world at `worlds/world2/` where students
 
 ## 4. The Roadmap: Three Horizons
 
-**Horizon 1 — Now (the seed).** Story frames above every question. The ConceptChapterPage as a storybook you flip through — cover, story, puzzles. The knowledge graph as a constellation. The gap scan as a mission briefing. The dashboard as a command center. All of this exists today: the narrative layer laid over the math layer, proving the two belong together.
+**Horizon 1 — Now (the seed).** **The Desk** as the student OS (Jesse’s Kitchen → Projects / Work / Create): Binder, Intel, Connect, Ask, workflows, gap scan, Map, story-framed practice. The knowledge graph as a constellation. Proven questions in the bank. Human tutors with Map briefings. Research lab densifying what we may claim (FEI metrics, SAFE-* law). The narrative layer and the engine layer are already welded — the job is fidelity, not a greenfield dream.
 
 **Horizon 2 — After first funding (the world).** Jesse's 3D world becomes the primary interface. The concept stories inhabit it: the House of Wisdom is a building you walk into, the Bologna tavern a lit doorway on the map. Your knowledge graph becomes literal terrain — mastered concepts are unlocked regions, gaps are fog. Tutors appear as characters you can ping. The boat navigation puzzle is a real puzzle in the world, not a metaphor for one.
 
