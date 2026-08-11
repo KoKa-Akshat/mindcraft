@@ -31,9 +31,9 @@ struct MalevolentShrineStage: View {
                         value: floating
                     )
                     .position(x: geo.size.width / 2, y: geo.size.height / 2)
-                    .accessibilityAddTraits(onShrineTap == nil ? [] : .isButton)
                     .accessibilityLabel("Malevolent Shrine")
                     .accessibilityIdentifier("malevolentShrineTap")
+                    .modifier(ShrineTapTraits(enabled: onShrineTap != nil))
                     .onTapGesture {
                         onShrineTap?()
                     }
@@ -60,5 +60,16 @@ struct MalevolentShrineStage: View {
         }
         .onAppear { floating = true }
         .accessibilityIdentifier("malevolentShrineStage")
+    }
+}
+
+private struct ShrineTapTraits: ViewModifier {
+    var enabled: Bool
+    func body(content: Content) -> some View {
+        if enabled {
+            content.accessibilityAddTraits(.isButton)
+        } else {
+            content
+        }
     }
 }

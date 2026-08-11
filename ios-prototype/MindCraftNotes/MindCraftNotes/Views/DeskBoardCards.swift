@@ -1,16 +1,22 @@
 import SwiftUI
-import PencilKit
 
-/// Whiteboard-style Gdoc card — type + Apple Pencil / finger scribble.
+/// Whiteboard-style Gdoc card — type + finger scribble.
 struct DeskWhiteboardCard: View {
-    @State private var title = "Untitled board"
-    @State private var note = ""
-    @State private var canvas = PKCanvasView()
-    @State private var tool: BoardTool = .pen
-
-    private enum BoardTool: String, CaseIterable {
+    private enum Tool: String, CaseIterable {
         case pen, marker, eraser
     }
+
+    private struct Stroke: Identifiable {
+        let id = UUID()
+        let tool: Tool
+        var points: [CGPoint]
+    }
+
+    @State private var title = "Untitled board"
+    @State private var note = ""
+    @State private var strokes: [Stroke] = []
+    @State private var live: Stroke?
+    @State private var tool: Tool = .pen
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -19,11 +25,8 @@ struct DeskWhiteboardCard: View {
                     .font(.system(size: 13, weight: .heavy, design: .rounded))
                     .foregroundColor(Color(boardHex: "143a2e"))
                 Spacer(minLength: 0)
-                ForEach(BoardTool.allCases, id: \.self) { t in
-                    Button {
-                        tool = t
-                        applyTool()
-                    } label: {
+                ForEach(Tool.allCases, id: \.self) { t in
+                    Button { tool = t } label: {
                         Image(systemName: icon(for: t))
                             .font(.system(size: 11, weight: .bold))
                             .foregroundColor(tool == t ? Color(boardHex: "0c1207") : Color(boardHex: "143a2e").opacity(0.55))
@@ -43,14 +46,47 @@ struct DeskWhiteboardCard: View {
                 .padding(8)
                 .background(RoundedRectangle(cornerRadius: 10).fill(Color(boardHex: "f7f5f0")))
 
-            BoardCanvasRepresentable(canvas: $canvas)
-                .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 12, style: .continuous)
-                        .strokeBorder(Color(boardHex: "143a2e").opacity(0.10), lineWidth: 1)
+            ZStack {
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .fill(Color(boardHex: "fbfaf7"))
+                Canvas { context, _ in
+                    for stroke in strokes { draw(stroke, in: &context) }
+                    if let live { draw(live, in: &context) }
+                }
+                .gesture(
+                    DragGesture(minimumDistance: 0)
+                        .onChanged { value in
+                            let point = value.location
+                            if live == nil {
+                                live = Stroke(tool: tool, points: [point])
+                            } else {
+                                live?.points.append(point)
+                            }
+                        }
+                        .onEnded { _ in
+                            if let finished = live {
+                                if tool == .eraser {
+                                    strokes.removeAll { stroke in
+                                        stroke.points.contains { p in
+                                            finished.points.contains {
+                                                abs($0.x - p.x) < 14 && abs($0.y - p.y) < 14
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    strokes.append(finished)
+                                }
+                            }
+                            live = nil
+                        }
                 )
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .onAppear { applyTool() }
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .strokeBorder(Color(boardHex: "143a2e").opacity(0.10), lineWidth: 1)
+            )
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .padding(12)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
@@ -58,7 +94,7 @@ struct DeskWhiteboardCard: View {
         .accessibilityIdentifier("deskWhiteboardCard")
     }
 
-    private func icon(for tool: BoardTool) -> String {
+    private func icon(for tool: Tool) -> String {
         switch tool {
         case .pen: return "pencil.tip"
         case .marker: return "highlighter"
@@ -66,71 +102,88 @@ struct DeskWhiteboardCard: View {
         }
     }
 
-    private func applyTool() {
-        canvas.drawingPolicy = .anyInput
-        canvas.backgroundColor = .clear
-        canvas.isOpaque = false
-        switch tool {
+    private func draw(_ stroke: Stroke, in context: inout GraphicsContext) {
+        guard stroke.points.count > 1 else { return }
+        var path = Path()
+        path.move(to: stroke.points[0])
+        for point in stroke.points.dropFirst() { path.addLine(to: point) }
+        switch stroke.tool {
         case .pen:
-            canvas.tool = PKInkingTool(.pen, color: UIColor(red: 0.08, green: 0.12, blue: 0.10, alpha: 1), width: 3.2)
+            context.stroke(
+                path,
+                with: .color(Color(boardHex: "143a2e")),
+                style: StrokeStyle(lineWidth: 2.6, lineCap: .round, lineJoin: .round)
+            )
         case .marker:
-            canvas.tool = PKInkingTool(.marker, color: UIColor(red: 0.77, green: 0.96, blue: 0.28, alpha: 0.85), width: 14)
+            context.stroke(
+                path,
+                with: .color(Color(boardHex: "c4f547").opacity(0.85)),
+                style: StrokeStyle(lineWidth: 12, lineCap: .round, lineJoin: .round)
+            )
         case .eraser:
-            canvas.tool = PKEraserTool(.vector)
+            break
         }
     }
 }
 
-private struct BoardCanvasRepresentable: UIViewRepresentable {
-    @Binding var canvas: PKCanvasView
-
-    func makeUIView(context: Context) -> PKCanvasView {
-        canvas.backgroundColor = UIColor(red: 0.99, green: 0.99, blue: 0.97, alpha: 1)
-        canvas.drawingPolicy = .anyInput
-        canvas.isOpaque = false
-        return canvas
-    }
-
-    func updateUIView(_ uiView: PKCanvasView, context: Context) {}
-}
-
 /// Presentation card — real deck with title/body and slide paging.
 struct DeskPresentationCard: View {
-    @State private var slides: [DeckSlide] = [
-        DeckSlide(title: "Untitled deck", body: "Your first point goes here."),
-        DeckSlide(title: "Next beat", body: "Add what you want the room to remember."),
+    private struct Slide: Identifiable {
+        let id: UUID
+        var title: String
+        var body: String
+
+        init(id: UUID = UUID(), title: String, body: String) {
+            self.id = id
+            self.title = title
+            self.body = body
+        }
+    }
+
+    @State private var slides: [Slide] = [
+        Slide(title: "Untitled deck", body: "Your first point goes here."),
+        Slide(title: "Next beat", body: "Add what you want the room to remember."),
     ]
     @State private var index = 0
 
-    private var slide: Binding<DeckSlide> {
-        Binding(
-            get: { slides[min(max(0, index), slides.count - 1)] },
-            set: { slides[min(max(0, index), slides.count - 1)] = $0 }
-        )
-    }
-
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        let safeIndex = min(max(0, index), max(0, slides.count - 1))
+
+        return VStack(alignment: .leading, spacing: 8) {
             HStack(spacing: 8) {
                 Text("Presentation")
                     .font(.system(size: 10, weight: .heavy, design: .rounded))
                     .tracking(1.0)
                     .foregroundColor(Color.white.opacity(0.45))
                 Spacer(minLength: 0)
-                Text("\(index + 1) / \(slides.count)")
+                Text("\(safeIndex + 1) / \(max(slides.count, 1))")
                     .font(.system(size: 11, weight: .bold, design: .rounded))
                     .foregroundColor(Color(boardHex: "c4f547"))
                     .monospacedDigit()
             }
 
             VStack(alignment: .leading, spacing: 10) {
-                TextField("Slide title", text: slide.title)
-                    .font(.system(size: 16, weight: .bold, design: .rounded))
-                    .foregroundColor(Color(boardHex: "f4f7f2"))
-                TextField("Talking point", text: slide.body, axis: .vertical)
-                    .font(.system(size: 12, weight: .semibold, design: .rounded))
-                    .foregroundColor(Color.white.opacity(0.78))
-                    .lineLimit(3...5)
+                TextField(
+                    "Slide title",
+                    text: Binding(
+                        get: { slides[safeIndex].title },
+                        set: { slides[safeIndex].title = $0 }
+                    )
+                )
+                .font(.system(size: 16, weight: .bold, design: .rounded))
+                .foregroundColor(Color(boardHex: "f4f7f2"))
+
+                TextField(
+                    "Talking point",
+                    text: Binding(
+                        get: { slides[safeIndex].body },
+                        set: { slides[safeIndex].body = $0 }
+                    ),
+                    axis: .vertical
+                )
+                .font(.system(size: 12, weight: .semibold, design: .rounded))
+                .foregroundColor(Color.white.opacity(0.78))
+                .lineLimit(3...5)
             }
             .padding(14)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
@@ -155,12 +208,13 @@ struct DeskPresentationCard: View {
                         .background(Capsule().fill(Color.white.opacity(0.10)))
                 }
                 .buttonStyle(.plain)
-                .disabled(index == 0)
-                .opacity(index == 0 ? 0.35 : 1)
+                .disabled(safeIndex == 0)
+                .opacity(safeIndex == 0 ? 0.35 : 1)
 
                 Button {
-                    slides.insert(DeckSlide(title: "New slide", body: "Say the next thing."), at: index + 1)
-                    index += 1
+                    let insertAt = min(safeIndex + 1, slides.count)
+                    slides.insert(Slide(title: "New slide", body: "Say the next thing."), at: insertAt)
+                    index = insertAt
                 } label: {
                     Text("+ Slide")
                         .font(.system(size: 11, weight: .heavy, design: .rounded))
@@ -180,8 +234,8 @@ struct DeskPresentationCard: View {
                         .background(Capsule().fill(Color.white.opacity(0.10)))
                 }
                 .buttonStyle(.plain)
-                .disabled(index >= slides.count - 1)
-                .opacity(index >= slides.count - 1 ? 0.35 : 1)
+                .disabled(safeIndex >= slides.count - 1)
+                .opacity(safeIndex >= slides.count - 1 ? 0.35 : 1)
             }
             .foregroundColor(.white)
         }
@@ -190,12 +244,6 @@ struct DeskPresentationCard: View {
         .background(RoundedRectangle(cornerRadius: 12).fill(Color(boardHex: "101820")))
         .accessibilityIdentifier("deskPresentationCard")
     }
-}
-
-private struct DeckSlide: Identifiable, Equatable {
-    let id = UUID()
-    var title: String
-    var body: String
 }
 
 private extension Color {
