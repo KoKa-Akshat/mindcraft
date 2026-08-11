@@ -6,9 +6,11 @@ name: iOS simulator build+test
 on:
   workflow_dispatch:
   push:
-    branches: [main]
+    branches: [main, 'cursor/**']
     paths:
       - 'ios-prototype/**'
+      - 'worlds/deskweb/**'
+      - 'worlds/studio/**'
       - '.github/workflows/ios-sim.yml'
 
 concurrency:

@@ -52,6 +52,7 @@
 		A48A1E9C157F4E7EA3822414 /* MindCraftNotes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FAAFB7B2FB6B48A2BA5C98FD /* MindCraftNotes.xcdatamodeld */; };
 		A49B04C4A6E7F8091B2C3D4E /* CreateInstanceStudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49B04C4A6E7F8091B2C3D4E /* CreateInstanceStudioView.swift */; };
 		A49BCREATESTUDIO01A2B3 /* CreateStudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49BCREATESTUDIO01A2B3 /* CreateStudioView.swift */; };
+		A49BDESKBOARD01A2B3 /* DeskBoardCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49BDESKBOARD01A2B3 /* DeskBoardCards.swift */; };
 		A49BSHRINE01A2B3C4D5 /* MalevolentShrineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49BSHRINE01A2B3C4D5 /* MalevolentShrineView.swift */; };
 		A59B05C5A6E7F8091B2C3D4E /* TestInstanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59B05C5A6E7F8091B2C3D4E /* TestInstanceView.swift */; };
 		A5D03DAF65CF41F7A92AAD08 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906A283899CF496999C6ED72 /* CanvasView.swift */; };
@@ -87,6 +88,7 @@
 		D3STANDDESK01A2B3C4D5E6 /* StandaloneDeskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3STANDDESK01A2B3C4D5E6 /* StandaloneDeskView.swift */; };
 		W2RESBUILD01A2B3C4D5E6F7 /* world2 in Resources */ = {isa = PBXBuildFile; fileRef = W2FOLDERREF01A2B3C4D5E6 /* world2 */; };
 		W3DESKWEBRES01A2B3C4D5E6 /* deskweb in Resources */ = {isa = PBXBuildFile; fileRef = W3DESKWEBREF01A2B3C4D5E6 /* deskweb */; };
+		W4STUDIORES01A2B3C4D5E6 /* studio in Resources */ = {isa = PBXBuildFile; fileRef = W4STUDIOREF01A2B3C4D5E6 /* studio */; };
 		D2MACSEED01A2B3C4D5E6F7 /* macalesterApplySeed.json in Resources */ = {isa = PBXBuildFile; fileRef = C2MACSEED01A2B3C4D5E6F7 /* macalesterApplySeed.json */; };
 		D3666FF9C139BB65FFB380A2 /* questionBank.json in Resources */ = {isa = PBXBuildFile; fileRef = A05918461089BFC725BB84F8 /* questionBank.json */; };
 		D3JOBOSMODEL01A2B3C4 /* JobOSModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3JOBOSMODEL01A2B3C4 /* JobOSModels.swift */; };
@@ -174,6 +176,7 @@
 		B39B03C3A6E7F8091B2C3D4E /* AccountManageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManageView.swift; sourceTree = "<group>"; };
 		B49B04C4A6E7F8091B2C3D4E /* CreateInstanceStudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateInstanceStudioView.swift; sourceTree = "<group>"; };
 		B49BCREATESTUDIO01A2B3 /* CreateStudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateStudioView.swift; sourceTree = "<group>"; };
+		B49BDESKBOARD01A2B3 /* DeskBoardCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskBoardCards.swift; sourceTree = "<group>"; };
 		B49BSHRINE01A2B3C4D5 /* MalevolentShrineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalevolentShrineView.swift; sourceTree = "<group>"; };
 		B5428A47D8655E6D13382E35 /* GraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
 		B59B05C5A6E7F8091B2C3D4E /* TestInstanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestInstanceView.swift; sourceTree = "<group>"; };
@@ -190,6 +193,7 @@
 		C3STANDDESK01A2B3C4D5E6 /* StandaloneDeskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandaloneDeskView.swift; sourceTree = "<group>"; };
 		W2FOLDERREF01A2B3C4D5E6 /* world2 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = world2; path = ../../worlds/world2; sourceTree = SOURCE_ROOT; };
 		W3DESKWEBREF01A2B3C4D5E6 /* deskweb */ = {isa = PBXFileReference; lastKnownFileType = folder; name = deskweb; path = ../../worlds/deskweb; sourceTree = SOURCE_ROOT; };
+		W4STUDIOREF01A2B3C4D5E6 /* studio */ = {isa = PBXFileReference; lastKnownFileType = folder; name = studio; path = ../../worlds/studio; sourceTree = SOURCE_ROOT; };
 		C2MACSEED01A2B3C4D5E6F7 /* macalesterApplySeed.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = macalesterApplySeed.json; sourceTree = "<group>"; };
 		C3JOBOSMODEL01A2B3C4 /* JobOSModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobOSModels.swift; sourceTree = "<group>"; };
 		C4JOBOSSTORE01A2B3C4 /* JobOSStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobOSStore.swift; sourceTree = "<group>"; };
@@ -367,6 +371,7 @@
 				B39B03C3A6E7F8091B2C3D4E /* AccountManageView.swift */,
 				B49B04C4A6E7F8091B2C3D4E /* CreateInstanceStudioView.swift */,
 				B49BCREATESTUDIO01A2B3 /* CreateStudioView.swift */,
+				B49BDESKBOARD01A2B3 /* DeskBoardCards.swift */,
 				B49BSHRINE01A2B3C4D5 /* MalevolentShrineView.swift */,
 				B59B05C5A6E7F8091B2C3D4E /* TestInstanceView.swift */,
 				B79B07C7A6E7F8091B2C3D4E /* DeskInstanceChrome.swift */,
@@ -396,6 +401,7 @@
 				F36436A531016328ECDE0C4D /* conceptIcons */,
 				W2FOLDERREF01A2B3C4D5E6 /* world2 */,
 				W3DESKWEBREF01A2B3C4D5E6 /* deskweb */,
+				W4STUDIOREF01A2B3C4D5E6 /* studio */,
 				3BB03A317B6A9CB5F0D8C128 /* wizard-doodle-cheer.png */,
 			);
 			path = Resources;
@@ -545,6 +551,7 @@
 				2F77E6F02BAEAA94951E8376 /* conceptIcons in Resources */,
 				W2RESBUILD01A2B3C4D5E6F7 /* world2 in Resources */,
 				W3DESKWEBRES01A2B3C4D5E6 /* deskweb in Resources */,
+				W4STUDIORES01A2B3C4D5E6 /* studio in Resources */,
 				044BEB21A5E2D8744455C7F2 /* wizard-doodle-cheer.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -637,6 +644,7 @@
 				A39B03C3A6E7F8091B2C3D4E /* AccountManageView.swift in Sources */,
 				A49B04C4A6E7F8091B2C3D4E /* CreateInstanceStudioView.swift in Sources */,
 				A49BCREATESTUDIO01A2B3 /* CreateStudioView.swift in Sources */,
+				A49BDESKBOARD01A2B3 /* DeskBoardCards.swift in Sources */,
 				A49BSHRINE01A2B3C4D5 /* MalevolentShrineView.swift in Sources */,
 				A59B05C5A6E7F8091B2C3D4E /* TestInstanceView.swift in Sources */,
 				A79B07C7A6E7F8091B2C3D4E /* DeskInstanceChrome.swift in Sources */,

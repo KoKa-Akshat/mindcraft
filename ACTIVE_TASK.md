@@ -4,6 +4,15 @@
 
 ---
 
+## Field Desk — ship to main (2026-08-11)
+
+Pull **main**, Clean Build, Cmd+R. Changes were stuck on an agent branch before.
+
+- Projects: centered Malevolent Shrine only (no polka) → tap → work desk
+- Jesse's: Volume · **Create** (lime) · Sign out — Create opens studio board
+- Dash: pinch card / whole desk; Gdoc whiteboard scribble; Presentation deck
+- Studio: desk-matched cream space + clear +/- zoom
+
 ## Studio Create pass — LOCKED (2026-08-10)
 
 `agent_work/product/studio_prototype_2026-08-10/` · note `STUDIO_PASS_LOCKED.md`  

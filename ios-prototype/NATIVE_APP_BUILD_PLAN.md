@@ -3886,6 +3886,18 @@ Monitor-waits): fresh launch → Create/Sign out/volume top-right → Projects �
 shrine screen → tap → work area with both toolbars → + tray → Manage → hub
 page → Back to desk. Screenshot each.
 
+### Create wired — polka → spatial studio (2026-08-11)
+
+Create on Jesse’s landing is live (no more “coming soon” toast):
+
+1. **Create** → white polka bloom → bundled `desk-os/studio` (`mcworld://studio/…?v=spatial2&from=jesse`).
+2. Studio gets `from-jesse` polka cream chrome: dotted void, capsule **Jesse's** back, Craft pill — orbital board unchanged (locked spatial2 layout).
+3. Back via web topbar → `webkit.messageHandlers.deskAction` `{action:'back'}` → polka close to kitchen.
+4. Xcode bundles `agent_work/product/desk_os/studio` as Resources/`studio`; `KitchenSchemeHandler` serves host `studio`.
+5. Canonical HTML still `agent_work/product/desk_os/studio/index.html` (sync via `npm run sync:desk-os` for web).
+
+**Mac verify:** Create → board → Jesse's → kitchen. Screenshot.
+
 ### Evening round (same day, cloud session) — dash rework
 
 Akshat's second pass, all code-level, browser-verified on the web side,

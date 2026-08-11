@@ -35,9 +35,10 @@ struct FieldDeskView: View {
     @State private var showProjectsScreen = false
     /// Standalone Desk (deskweb) — entered via the polka vending screen.
     @State private var showStandaloneDesk = false
+    /// Spatial Create studio (desk-os/studio) — entered via polka from Create.
+    @State private var showCreateStudio = false
     /// 0 = clear, 1 = solid white polka sheet covering the screen.
     @State private var polkaProgress: CGFloat = 0
-    @AppStorage("deskOs.createStudio.tokens") private var createTokens: Int = 120
     /// Widgets placed on the work desk via `+`.
     @State private var placedWidgets: Set<PlaceableWidget> = []
     /// Kitchen audio is off until the top-right volume control is tapped.
@@ -230,6 +231,9 @@ struct FieldDeskView: View {
             || (showActStage && actStageMaximized)
             || showManage
             || showProjectsPanel
+            || showProjectsScreen
+            || showStandaloneDesk
+            || showCreateStudio
     }
 
     /// Floating cards on Jesse’s (or minimized ACT chip).
@@ -442,6 +446,13 @@ struct FieldDeskView: View {
                     .zIndex(85)
                 }
 
+                // Spatial Create — same polka doorway, cream orbital board.
+                if showCreateStudio {
+                    CreateStudioView(onClose: { closeCreateStudio() })
+                        .zIndex(86)
+                        .transition(.opacity)
+                }
+
                 // Polka doorway sheet rides above both worlds while crossing.
                 if polkaProgress > 0.001 {
                     PolkaTransitionOverlay(progress: polkaProgress)
@@ -547,21 +558,22 @@ struct FieldDeskView: View {
                     .animation(.easeInOut(duration: 0.22), value: showTopChrome)
                 }
             }
-            // Pinned top-right: volume first, then context buttons.
-            // Jesse's landing → Create + Sign out. Work desk → Jesse's + Manage.
+            // Pinned top-right: Volume · Create · Sign out (clear, separated).
             .overlay(alignment: .topTrailing) {
                 if !deskOverlayChromeBlocked {
-                    HStack(spacing: 8) {
+                    HStack(spacing: 12) {
                         Button {
                             kitchenSoundOn.toggle()
                             flash(kitchenSoundOn ? "Sound on" : "Sound off")
                         } label: {
                             Image(systemName: kitchenSoundOn ? "speaker.wave.2.fill" : "speaker.slash.fill")
-                                .font(.system(size: 13, weight: .bold))
-                                .foregroundColor(kitchenSoundOn ? Color(fdHex: "0c1207") : .white.opacity(0.9))
-                                .frame(width: 36, height: 36)
+                                .font(.system(size: 14, weight: .bold))
+                                .foregroundColor(kitchenSoundOn ? Color(fdHex: "0c1207") : Color(fdHex: "143a2e"))
+                                .frame(width: 40, height: 40)
                                 .background(
-                                    Circle().fill(kitchenSoundOn ? Color(fdHex: "c4f547") : Color.black.opacity(0.55))
+                                    Circle()
+                                        .fill(kitchenSoundOn ? Color(fdHex: "c4f547") : Color.white.opacity(0.94))
+                                        .shadow(color: .black.opacity(0.18), radius: 8, y: 3)
                                 )
                         }
                         .buttonStyle(.plain)
@@ -576,10 +588,14 @@ struct FieldDeskView: View {
                             } label: {
                                 Text("Jesse's")
                                     .font(.system(size: 12, weight: .heavy, design: .rounded))
-                                    .foregroundColor(.white.opacity(0.92))
-                                    .padding(.horizontal, 13)
-                                    .padding(.vertical, 9)
-                                    .background(Capsule().fill(Color.black.opacity(0.55)))
+                                    .foregroundColor(Color(fdHex: "143a2e"))
+                                    .padding(.horizontal, 14)
+                                    .padding(.vertical, 10)
+                                    .background(
+                                        Capsule()
+                                            .fill(Color.white.opacity(0.94))
+                                            .shadow(color: .black.opacity(0.18), radius: 8, y: 3)
+                                    )
                             }
                             .buttonStyle(.plain)
                             .accessibilityIdentifier("fieldDeskJessesButton")
@@ -591,24 +607,36 @@ struct FieldDeskView: View {
                                 Text("Manage")
                                     .font(.system(size: 12, weight: .heavy, design: .rounded))
                                     .foregroundColor(Color(fdHex: "0c1207"))
-                                    .padding(.horizontal, 13)
-                                    .padding(.vertical, 9)
-                                    .background(Capsule().fill(Color(fdHex: "c4f547")))
+                                    .padding(.horizontal, 14)
+                                    .padding(.vertical, 10)
+                                    .background(
+                                        Capsule()
+                                            .fill(Color(fdHex: "c4f547"))
+                                            .shadow(color: .black.opacity(0.18), radius: 8, y: 3)
+                                    )
                             }
                             .buttonStyle(.plain)
                             .accessibilityIdentifier("fieldDeskManageButton")
                             .accessibilityLabel("Manage · instances, tutors, workflows")
                         } else {
-                            // Create — icon lands now; the full studio ships
-                            // with Akshat's Figma pass.
+                            // Create — opens spatial studio board (next to Volume).
                             Button {
-                                flash("Create · new studio coming soon")
+                                openCreateStudio()
                             } label: {
-                                Image(systemName: "plus.viewfinder")
-                                    .font(.system(size: 13, weight: .bold))
-                                    .foregroundColor(.white.opacity(0.9))
-                                    .frame(width: 36, height: 36)
-                                    .background(Circle().fill(Color.black.opacity(0.55)))
+                                HStack(spacing: 6) {
+                                    Image(systemName: "plus")
+                                        .font(.system(size: 13, weight: .heavy))
+                                    Text("Create")
+                                        .font(.system(size: 12, weight: .heavy, design: .rounded))
+                                }
+                                .foregroundColor(Color(fdHex: "0c1207"))
+                                .padding(.horizontal, 14)
+                                .padding(.vertical, 10)
+                                .background(
+                                    Capsule()
+                                        .fill(Color(fdHex: "c4f547"))
+                                        .shadow(color: .black.opacity(0.18), radius: 8, y: 3)
+                                )
                             }
                             .buttonStyle(.plain)
                             .accessibilityIdentifier("fieldDeskCreateButton")
@@ -618,18 +646,22 @@ struct FieldDeskView: View {
                                 authService.signOut()
                             } label: {
                                 Image(systemName: "rectangle.portrait.and.arrow.right")
-                                    .font(.system(size: 13, weight: .bold))
-                                    .foregroundColor(.white.opacity(0.9))
-                                    .frame(width: 36, height: 36)
-                                    .background(Circle().fill(Color.black.opacity(0.55)))
+                                    .font(.system(size: 14, weight: .bold))
+                                    .foregroundColor(Color(fdHex: "143a2e"))
+                                    .frame(width: 40, height: 40)
+                                    .background(
+                                        Circle()
+                                            .fill(Color.white.opacity(0.94))
+                                            .shadow(color: .black.opacity(0.18), radius: 8, y: 3)
+                                    )
                             }
                             .buttonStyle(.plain)
                             .accessibilityIdentifier("fieldDeskSignOutButton")
                             .accessibilityLabel("Sign out")
                         }
                     }
-                    .padding(.top, 10)
-                    .padding(.trailing, 14)
+                    .padding(.top, 12)
+                    .padding(.trailing, 16)
                     .zIndex(80)
                 }
             }
@@ -894,57 +926,14 @@ struct FieldDeskView: View {
         .frame(width: viewport.width, height: viewport.height, alignment: .topLeading)
     }
 
-    /// Blank Gdoc page card — placeable writing surface stub.
+    /// Whiteboard Gdoc — scribble / type on the kitchen placeable.
     private var gdocCardBody: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("Gdoc · blank page")
-                .font(.system(size: 12, weight: .heavy, design: .rounded))
-                .foregroundColor(Color(fdHex: "1c1a17").opacity(0.55))
-            VStack(alignment: .leading, spacing: 9) {
-                ForEach(0..<6, id: \.self) { i in
-                    RoundedRectangle(cornerRadius: 1.5)
-                        .fill(Color(fdHex: "143a2e").opacity(0.14))
-                        .frame(width: i % 2 == 1 ? 150 : 190, height: 2)
-                }
-            }
-            Spacer(minLength: 0)
-        }
-        .padding(14)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        .background(RoundedRectangle(cornerRadius: 12).fill(Color.white))
+        DeskWhiteboardCard()
     }
 
-    /// 16:9 Presentation card — placeable deck stub.
+    /// Real presentation placeable — title + body + slide paging.
     private var slidesCardBody: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            RoundedRectangle(cornerRadius: 9)
-                .strokeBorder(Color.white.opacity(0.18), lineWidth: 1)
-                .background(
-                    RoundedRectangle(cornerRadius: 9)
-                        .fill(LinearGradient(
-                            colors: [Color(fdHex: "16222c"), Color(fdHex: "0d141b")],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        ))
-                )
-                .overlay(alignment: .topLeading) {
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text("Untitled deck")
-                            .font(.system(size: 15, weight: .bold, design: .rounded))
-                            .foregroundColor(Color(fdHex: "f4f7f2"))
-                        RoundedRectangle(cornerRadius: 1.5)
-                            .fill(Color.white.opacity(0.22))
-                            .frame(width: 130, height: 2)
-                        RoundedRectangle(cornerRadius: 1.5)
-                            .fill(Color.white.opacity(0.22))
-                            .frame(width: 90, height: 2)
-                    }
-                    .padding(16)
-                }
-        }
-        .padding(10)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(RoundedRectangle(cornerRadius: 12).fill(Color(fdHex: "101820")))
+        DeskPresentationCard()
     }
 
     private func pageBoxLauncher(
@@ -993,16 +982,14 @@ struct FieldDeskView: View {
         .position(x: x + boxW / 2, y: y + boxH / 2)
     }
 
-    /// Projects screen: the student's one project today, shown neatly.
+    /// Projects screen: shrine centered — tap it to open the work desk.
     private var projectsScreen: some View {
         ZStack(alignment: .topLeading) {
             MalevolentShrineStage(
-                showTitle: true,
-                title: "Malevolent Shrine",
-                subtitle: "Your work area · tap the shrine to enter"
+                showTitle: false,
+                onShrineTap: { enterWorkAreaFromProjects() },
+                centerOnly: true
             )
-            .contentShape(Rectangle())
-            .onTapGesture { enterWorkAreaFromProjects() }
 
             Button {
                 closeProjectsScreen()
@@ -1027,29 +1014,12 @@ struct FieldDeskView: View {
             .padding(.top, 14)
             .padding(.leading, 16)
             .accessibilityIdentifier("fieldDeskProjectsBack")
-
-            VStack {
-                Spacer()
-                HStack {
-                    Spacer()
-                    Text("OPEN")
-                        .font(.system(size: 12, weight: .heavy, design: .rounded))
-                        .tracking(1.2)
-                        .foregroundColor(Color(fdHex: "0c1207"))
-                        .padding(.horizontal, 22)
-                        .padding(.vertical, 11)
-                        .background(Capsule().fill(Color(fdHex: "c4f547")))
-                        .shadow(color: .black.opacity(0.12), radius: 10, y: 4)
-                    Spacer()
-                }
-                .padding(.bottom, 96)
-            }
-            .allowsHitTesting(false)
         }
         .accessibilityIdentifier("fieldDeskProjectsScreen")
     }
 
     private func enterWorkAreaFromProjects() {
+        guard showProjectsScreen else { return }
         withAnimation(.easeInOut(duration: 0.25)) { showProjectsScreen = false }
         openStandaloneDesk()
     }
@@ -1070,7 +1040,7 @@ struct FieldDeskView: View {
 
     /// Polka dots bloom over the kitchen; the Desk waits underneath.
     private func openStandaloneDesk() {
-        guard !showStandaloneDesk else { return }
+        guard !showStandaloneDesk, !showCreateStudio else { return }
         withAnimation(.easeInOut(duration: 0.85)) { polkaProgress = 1 }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
             showStandaloneDesk = true
@@ -1088,16 +1058,27 @@ struct FieldDeskView: View {
         }
     }
 
+    /// Open spatial Create board (desk-os/studio · spatial2) over Jesse's.
+    private func openCreateStudio() {
+        guard !showCreateStudio, !showStandaloneDesk, !showProjectsScreen else { return }
+        withAnimation(.easeInOut(duration: 0.28)) {
+            showCreateStudio = true
+        }
+    }
+
+    private func closeCreateStudio() {
+        withAnimation(.easeInOut(duration: 0.28)) {
+            showCreateStudio = false
+        }
+    }
+
     private func handleKitchenAction(_ action: KitchenDeskAction) {
         showBlankPage = false
         switch action {
         case .openDesk, .projects:
-            // Projects → white polka bloom → projects screen (Malevolent
-            // Shrine). Tapping the shrine enters the work area.
-            withAnimation(.easeInOut(duration: 0.7)) { polkaProgress = 1 }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+            // Straight to centered shrine — no polka sheet on this path.
+            withAnimation(.easeInOut(duration: 0.25)) {
                 showProjectsScreen = true
-                withAnimation(.easeInOut(duration: 0.5)) { polkaProgress = 0 }
             }
         case .wakeJesse:
             flash("Jesse’s Kitchen")
@@ -2498,7 +2479,7 @@ struct FieldDeskView: View {
 
                 addMenuRow(
                     title: "Gdoc",
-                    subtitle: placedWidgets.contains(.gdoc) ? "Already on desk" : "Blank page card",
+                    subtitle: placedWidgets.contains(.gdoc) ? "Already on desk" : "Whiteboard · write & scribble",
                     system: "doc.text.fill",
                     enabled: true
                 ) {
@@ -2508,7 +2489,7 @@ struct FieldDeskView: View {
 
                 addMenuRow(
                     title: "Presentation",
-                    subtitle: placedWidgets.contains(.slides) ? "Already on desk" : "Deck card · 16:9",
+                    subtitle: placedWidgets.contains(.slides) ? "Already on desk" : "Presentation · slides",
                     system: "rectangle.on.rectangle.angled",
                     enabled: true
                 ) {

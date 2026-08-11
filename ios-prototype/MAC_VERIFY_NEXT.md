@@ -22,11 +22,13 @@ waits, foreground xcodebuild only).
 2. Fix any compile errors (cloud agent verified syntax only, not types).
    Commit fixes as scoped commits.
 3. Walk + screenshot each:
-   a. Jesse's landing: top-right = Volume, then Create (toast) + Sign out.
+   a. Jesse's landing: top-right = Volume, then Create + Sign out.
+      Create → polka bloom → spatial studio (cream orbital board).
+      Studio topbar Jesse's → polka back to kitchen.
    b. Ask bar + tool dock reveal at the BOTTOM (swipe up bottom edge).
    c. Top chrome = Call + name only (no raccoon logo / Home / desk pill).
-   d. Projects sign -> white polka bloom -> Malevolent Shrine screen ->
-      tap shrine -> work area (desk.html).
+   d. Projects sign -> white polka bloom -> centered Malevolent Shrine
+      (no copy) -> tap shrine -> work area (desk.html).
    e. Work area top bar: Volume / Jesse's / Manage. Jesse's returns to
       kitchen. Manage opens the hub page (instances + tutors map +
       workflow market) with Back to desk.
