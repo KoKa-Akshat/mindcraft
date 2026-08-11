@@ -4,7 +4,11 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from mindcraft_graph.models.ingredient import IngredientMastery, IngredientStudentState
+from mindcraft_graph.models.ingredient import (
+    IngredientMastery,
+    IngredientStudentState,
+    ensure_posterior,
+)
 
 
 @dataclass(frozen=True)
@@ -20,6 +24,7 @@ def apply_work_evidence(
     student_state: IngredientStudentState,
     steps: list[dict],
     concept_id: str,
+    prior_means: dict[str, float] | None = None,
 ) -> tuple[IngredientStudentState, list[WorkEvidenceEvent]]:
     valid_steps = [
         step for step in steps
@@ -55,13 +60,22 @@ def apply_work_evidence(
         for ingredient_id in ingredient_ids:
             current = student_state.ingredient_mastery.get(ingredient_id)
             if current is None:
-                current = IngredientMastery(ingredient_id=ingredient_id)
+                prior_mean = (prior_means or {}).get(ingredient_id, 0.5)
+                current = IngredientMastery(ingredient_id=ingredient_id, mastery=prior_mean)
+            prior_mean = (prior_means or {}).get(ingredient_id, current.mastery)
+            alpha, beta = ensure_posterior(current, prior_mean)
+            if weight >= 0:
+                alpha += weight
+            else:
+                beta += abs(weight)
             student_state.ingredient_mastery[ingredient_id] = IngredientMastery(
                 ingredient_id=ingredient_id,
-                mastery=max(0.0, min(1.0, current.mastery + weight)),
+                mastery=alpha / (alpha + beta),
                 attempts=current.attempts + 1,
                 last_outcome=weight,
                 cumulative_outcome=current.cumulative_outcome + weight,
+                alpha=alpha,
+                beta=beta,
             )
             events.append(WorkEvidenceEvent("ingredient", ingredient_id, weight, verdict, rule_id))
 

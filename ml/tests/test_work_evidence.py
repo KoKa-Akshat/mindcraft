@@ -23,12 +23,13 @@ def test_three_step_correct_problem_is_capped_below_two_one_step_problems():
     ], "basic_equations")
 
     assert len(events) == 3
-    assert state.ingredient_mastery[ingredient].mastery == 0.5
+    assert state.ingredient_mastery[ingredient].mastery == 0.6000000000000001
 
     two_problems = IngredientStudentState(student_id="s")
     two_problems, _ = apply_work_evidence(two_problems, [_step("a", [ingredient])], "basic_equations")
     two_problems, _ = apply_work_evidence(two_problems, [_step("b", [ingredient])], "basic_equations")
-    assert two_problems.ingredient_mastery[ingredient].mastery == 1.0
+    assert two_problems.ingredient_mastery[ingredient].mastery == 2.0 / 3.0
+    assert state.ingredient_mastery[ingredient].mastery < two_problems.ingredient_mastery[ingredient].mastery
 
 
 def test_only_first_wrong_step_records_negative_evidence():

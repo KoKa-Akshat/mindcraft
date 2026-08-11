@@ -10,6 +10,8 @@ from typing import Literal
 
 from pydantic import BaseModel, Field
 
+from mindcraft_graph.config import INGREDIENT_PRIOR_PSEUDO_COUNTS
+
 
 class Ingredient(BaseModel):
     """
@@ -102,6 +104,8 @@ class IngredientMastery(BaseModel):
     attempts: int = 0
     last_outcome: float = 0.0
     cumulative_outcome: float = 0.0
+    alpha: float | None = None
+    beta: float | None = None
 
 
 class BridgeConfidence(BaseModel):
@@ -113,6 +117,27 @@ class BridgeConfidence(BaseModel):
     confidence: float = Field(default=0.0, ge=0.0, le=1.0)
     attempts: int = 0
     successes: int = 0
+    alpha: float | None = None
+    beta: float | None = None
+
+
+def ensure_posterior(
+    state: IngredientMastery | BridgeConfidence,
+    prior_mean: float,
+) -> tuple[float, float]:
+    """Return α/β for a record that may predate the Beta migration."""
+    if state.alpha is not None and state.beta is not None:
+        return state.alpha, state.beta
+
+    if state.attempts > 0:
+        total = state.attempts + INGREDIENT_PRIOR_PSEUDO_COUNTS
+        scalar = state.mastery if isinstance(state, IngredientMastery) else state.confidence
+        return scalar * total, (1.0 - scalar) * total
+
+    return (
+        prior_mean * INGREDIENT_PRIOR_PSEUDO_COUNTS,
+        (1.0 - prior_mean) * INGREDIENT_PRIOR_PSEUDO_COUNTS,
+    )
 
 
 class IngredientStudentState(BaseModel):

@@ -5,6 +5,11 @@ Imported by the engine (update path), the API (gap detection), and serve.py.
 """
 from __future__ import annotations
 
+# Weak prior: the ontology's failure_prior / bridge difficulty sets the MEAN,
+# this sets how much evidence it's worth. 2.0 => the third real attempt already
+# outweighs the prior. Chosen deliberately over a strong (~8) prior.
+INGREDIENT_PRIOR_PSEUDO_COUNTS = 2.0
+
 # ── Canonical representation / format ("vessel") vocabulary ──────────────────
 # Pinned to Layer 4 student_state_schema.representation_profile (the student-side
 # of the representation axis; the question-side is

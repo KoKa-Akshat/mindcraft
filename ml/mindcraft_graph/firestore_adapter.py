@@ -9,6 +9,7 @@ from mindcraft_graph.models.ingredient import (
     BridgeConfidence,
     IngredientMastery,
     IngredientStudentState,
+    ensure_posterior,
 )
 from mindcraft_graph.models.affective_state import AffectiveState
 from mindcraft_graph.models.student_state import StudentState, ConceptMastery
@@ -398,28 +399,34 @@ def load_ingredient_state(student_id: str) -> IngredientStudentState:
 
     data = doc.to_dict() or {}
 
-    ingredient_mastery = {
-        ingredient_id: IngredientMastery(
+    ingredient_mastery = {}
+    for ingredient_id, payload in data.get("ingredient_mastery", {}).items():
+        state = IngredientMastery(
             ingredient_id=ingredient_id,
             mastery=float(payload.get("mastery", 0.0)),
             attempts=int(payload.get("attempts", 0)),
             last_outcome=float(payload.get("last_outcome", 0.0)),
             cumulative_outcome=float(payload.get("cumulative_outcome", 0.0)),
+            alpha=float(payload["alpha"]) if payload.get("alpha") is not None else None,
+            beta=float(payload["beta"]) if payload.get("beta") is not None else None,
         )
-        for ingredient_id, payload in data.get("ingredient_mastery", {}).items()
-    }
+        alpha, beta = ensure_posterior(state, state.mastery)
+        ingredient_mastery[ingredient_id] = state.model_copy(update={"alpha": alpha, "beta": beta})
 
-    bridge_confidence = {
-        bridge_id: BridgeConfidence(
+    bridge_confidence = {}
+    for bridge_id, payload in data.get("bridge_confidence", {}).items():
+        state = BridgeConfidence(
             bridge_id=bridge_id,
             from_ingredient=payload.get("from_ingredient", ""),
             to_ingredient=payload.get("to_ingredient", ""),
             confidence=float(payload.get("confidence", 0.0)),
             attempts=int(payload.get("attempts", 0)),
             successes=int(payload.get("successes", 0)),
+            alpha=float(payload["alpha"]) if payload.get("alpha") is not None else None,
+            beta=float(payload["beta"]) if payload.get("beta") is not None else None,
         )
-        for bridge_id, payload in data.get("bridge_confidence", {}).items()
-    }
+        alpha, beta = ensure_posterior(state, state.confidence)
+        bridge_confidence[bridge_id] = state.model_copy(update={"alpha": alpha, "beta": beta})
 
     return IngredientStudentState(
         student_id=student_id,

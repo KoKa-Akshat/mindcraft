@@ -4,7 +4,11 @@ from __future__ import annotations
 
 from typing import Literal
 
-from mindcraft_graph.models.ingredient import IngredientMastery, IngredientStudentState
+from mindcraft_graph.models.ingredient import (
+    IngredientMastery,
+    IngredientStudentState,
+    ensure_posterior,
+)
 
 Alignment = Literal["confirmed", "partial", "divergent", "ambiguous", "outcome_only"]
 
@@ -70,18 +74,26 @@ def apply_fusion_evidence(
     *,
     ingredient_id: str | None,
     alignment: Alignment,
+    prior_mean: float = 0.5,
 ) -> IngredientStudentState:
     if not ingredient_id:
         return student_state
     delta = fusion_outcome_weight(alignment)
     current = student_state.ingredient_mastery.get(ingredient_id)
     if current is None:
-        current = IngredientMastery(ingredient_id=ingredient_id)
+        current = IngredientMastery(ingredient_id=ingredient_id, mastery=prior_mean)
+    alpha, beta = ensure_posterior(current, prior_mean)
+    if delta >= 0:
+        alpha += delta
+    else:
+        beta += abs(delta)
     student_state.ingredient_mastery[ingredient_id] = IngredientMastery(
         ingredient_id=ingredient_id,
-        mastery=max(0.0, min(1.0, current.mastery + delta)),
+        mastery=alpha / (alpha + beta),
         attempts=current.attempts + 1,
         last_outcome=delta,
         cumulative_outcome=current.cumulative_outcome + delta,
+        alpha=alpha,
+        beta=beta,
     )
     return student_state

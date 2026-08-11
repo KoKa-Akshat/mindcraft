@@ -87,7 +87,7 @@ def test_default_update_keeps_legacy_first_attempt_values():
     )
 
     bridge_state = state.bridge_confidence["source->target"]
-    assert bridge_state.confidence == pytest.approx(0.15)
+    assert bridge_state.confidence == pytest.approx(2.0 / 3.0)
     assert bridge_state.attempts == 1
     assert bridge_state.successes == 1
 
@@ -97,7 +97,7 @@ def test_update_can_seed_first_bridge_record_from_prior():
         IngredientStudentState(student_id="s"),
         _card(),
         student_succeeded=True,
-        prior_confidence=0.6,
+        prior_mean=0.6,
     )
 
-    assert state.bridge_confidence["source->target"].confidence == pytest.approx(0.75)
+    assert state.bridge_confidence["source->target"].confidence == pytest.approx(2.2 / 3.0)

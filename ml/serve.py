@@ -472,12 +472,15 @@ def _concepts_for_card_target(target_type: str, target_id: str) -> list[str]:
     return []
 
 
-def _bridge_prior_for_card(target_type: str, target_id: str) -> float:
+def _prior_for_card(target_type: str, target_id: str) -> float | None:
+    if target_type == "ingredient":
+        ingredient = ingredient_graph.get_ingredient(target_id)
+        return 1.0 - ingredient.failure_prior if ingredient is not None else None
     if target_type != "bridge":
-        return 0.0
+        return None
     parts = target_id.split("->")
     if len(parts) != 2:
-        return 0.0
+        return None
     bridge = next(
         (
             candidate
@@ -486,7 +489,7 @@ def _bridge_prior_for_card(target_type: str, target_id: str) -> float:
         ),
         None,
     )
-    return bridge_prior_confidence(bridge) if bridge is not None else 0.0
+    return bridge_prior_confidence(bridge) if bridge is not None else None
 
 
 # ── Endpoints ──
@@ -924,7 +927,10 @@ async def record_outcomes_endpoint(req: RecordOutcomesRequest, auth: AuthContext
                     reason="distractor_misconception",
                 )
                 ing_state = update_ingredient_state(
-                    ing_state, card, student_succeeded=False
+                    ing_state,
+                    card,
+                    student_succeeded=False,
+                    prior_mean=_prior_for_card("ingredient", ing_id),
                 )
 
         save_ingredient_state(req.student_id, ing_state)
@@ -1021,7 +1027,7 @@ async def submit_answer_endpoint(req: SubmitIngredientAnswerRequest, auth: AuthC
         student_state,
         card,
         student_succeeded=req.student_succeeded,
-        prior_confidence=_bridge_prior_for_card(req.target_type, req.target_id),
+        prior_mean=_prior_for_card(req.target_type, req.target_id),
     )
     save_ingredient_state(req.student_id, student_state)
 
@@ -1098,6 +1104,10 @@ async def record_work_evidence_endpoint(req: RecordWorkEvidenceRequest, auth: Au
         student_state,
         normalized_steps,
         req.concept_id,
+        prior_means={
+            ingredient.id: 1.0 - ingredient.failure_prior
+            for ingredient in ingredient_graph.ingredients.values()
+        },
     )
 
     outcome = req.outcome
@@ -1122,6 +1132,7 @@ async def record_work_evidence_endpoint(req: RecordWorkEvidenceRequest, auth: Au
                 student_state,
                 ingredient_id=outcome_ingredient_id,
                 alignment=alignment,
+                prior_mean=_prior_for_card("ingredient", outcome_ingredient_id) or 0.5,
             )
         first_broken = next(
             (

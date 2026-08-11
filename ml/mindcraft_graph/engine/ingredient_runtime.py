@@ -24,6 +24,7 @@ from mindcraft_graph.models.ingredient import (
     IngredientMastery,
     IngredientStudentState,
     ProblemFeatures,
+    ensure_posterior,
 )
 from mindcraft_graph.representation.classification_index import ClassificationIndex
 
@@ -426,7 +427,11 @@ def build_minimal_dag(
             continue
 
         mastery_state = student_state.ingredient_mastery.get(ingredient_id)
-        mastery = mastery_state.mastery if mastery_state is not None else 0.0
+        mastery = (
+            mastery_state.mastery
+            if mastery_state is not None
+            else 1.0 - ingredient.failure_prior
+        )
         nodes[ingredient_id] = DAGNode(
             ingredient_id=ingredient_id,
             concept_id=ingredient.concept_id,
@@ -739,7 +744,7 @@ def update_ingredient_state(
     card: CardRecommendation,
     student_succeeded: bool,
     concept_level_strength: float = 0.0,
-    prior_confidence: float = 0.0,
+    prior_mean: float | None = None,
 ) -> IngredientStudentState:
     """
     Update ingredient mastery and bridge confidence after a card interaction.
@@ -747,15 +752,21 @@ def update_ingredient_state(
     The concept-level strength parameter is kept for future blending logic.
     """
     _ = concept_level_strength
-    delta = 0.15 if student_succeeded else -0.05
-
     if card.target_type == "ingredient":
         ingredient_id = card.target_id
         current = student_state.ingredient_mastery.get(ingredient_id)
         if current is None:
-            current = IngredientMastery(ingredient_id=ingredient_id)
+            current = IngredientMastery(
+                ingredient_id=ingredient_id,
+                mastery=prior_mean if prior_mean is not None else 0.5,
+            )
 
-        new_mastery = max(0.0, min(1.0, current.mastery + delta))
+        alpha, beta = ensure_posterior(current, prior_mean if prior_mean is not None else 0.5)
+        if student_succeeded:
+            alpha += 1.0
+        else:
+            beta += 1.0
+        new_mastery = alpha / (alpha + beta)
         new_outcome = 1.0 if student_succeeded else -0.5
         student_state.ingredient_mastery[ingredient_id] = IngredientMastery(
             ingredient_id=ingredient_id,
@@ -763,6 +774,8 @@ def update_ingredient_state(
             attempts=current.attempts + 1,
             last_outcome=new_outcome,
             cumulative_outcome=current.cumulative_outcome + new_outcome,
+            alpha=alpha,
+            beta=beta,
         )
 
     elif card.target_type == "bridge":
@@ -775,10 +788,15 @@ def update_ingredient_state(
                 bridge_id=bridge_key,
                 from_ingredient=parts[0] if len(parts) > 0 else "",
                 to_ingredient=parts[1] if len(parts) > 1 else "",
-                confidence=prior_confidence,
+                confidence=prior_mean if prior_mean is not None else 0.5,
             )
 
-        new_confidence = max(0.0, min(1.0, current.confidence + delta))
+        alpha, beta = ensure_posterior(current, prior_mean if prior_mean is not None else 0.5)
+        if student_succeeded:
+            alpha += 1.0
+        else:
+            beta += 1.0
+        new_confidence = alpha / (alpha + beta)
         new_successes = current.successes + (1 if student_succeeded else 0)
         student_state.bridge_confidence[bridge_key] = BridgeConfidence(
             bridge_id=bridge_key,
@@ -787,6 +805,8 @@ def update_ingredient_state(
             confidence=new_confidence,
             attempts=current.attempts + 1,
             successes=new_successes,
+            alpha=alpha,
+            beta=beta,
         )
 
     style = card.representation_key
