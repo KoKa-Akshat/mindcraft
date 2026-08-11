@@ -54,6 +54,9 @@ def _build_concept_ontology(data: dict[str, Any]) -> Ontology:
             aliases=list(c.get("aliases", [])),
             exam_frequency=float(act.get("frequency", 0.0)),
             exam_tested=bool(act.get("tested", False)),
+            population_failure_rate=float(
+                c.get("population_failure_prior", {}).get("overall", 0.5)
+            ),
         ))
 
     edges = _derive_concept_edges(data)
@@ -140,6 +143,7 @@ def _build_ingredient_ontology(data: dict[str, Any]) -> IngredientOntology:
                 description=raw_ing.get("description", ""),
                 tags=[concept_id, concept["level"]] + raw_ing.get("tags", []),
                 depends_on=_resolve_depends_on(raw_ing.get("comes_from", "new"), concept_id),
+                failure_prior=float(raw_ing.get("failure_prior", 0.5)),
             )
             ingredients.append(ing)
 

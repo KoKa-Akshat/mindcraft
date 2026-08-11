@@ -22,6 +22,7 @@ class Ingredient(BaseModel):
     description: str
     tags: list[str] = Field(default_factory=list)
     depends_on: list[str] = Field(default_factory=list)
+    failure_prior: float = 0.5
 
 
 class Bridge(BaseModel):

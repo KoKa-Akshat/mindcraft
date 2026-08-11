@@ -14,6 +14,7 @@ class Concept(BaseModel):
     # often the concept shows up on the exam; drives exam-mode prioritization.
     exam_frequency: float = 0.0
     exam_tested: bool = False
+    population_failure_rate: float = 0.5
 
 
 def estimate_difficulty(concept: Concept, max_order: int) -> float:
