@@ -22,6 +22,7 @@ class ConceptProfile:
     total_outcome: float       # sum of outcome (signed)
     event_count: int
     difficulty: float = 1.0
+    practice_event_count: int = 0
 
     @property
     def avg_outcome(self) -> float:
@@ -83,6 +84,7 @@ def apply_affective_modifier(
             total_outcome=-1.0 * n,
             event_count=n,
             difficulty=existing.difficulty if existing else 1.0,
+            practice_event_count=existing.practice_event_count if existing else 0,
         )
     return result
 
@@ -121,11 +123,14 @@ def compute_concept_profiles(
                 total_outcome=0.0,
                 event_count=0,
                 difficulty=difficulty_by_concept.get(cid, 1.0),
+                practice_event_count=0,
             )
         p = profiles[cid]
         p.total_time += event.duration_minutes
         p.total_effort += event.effort
         p.total_outcome += event.outcome
         p.event_count += 1
+        if event.event_type != "assessment":
+            p.practice_event_count += 1
 
     return profiles

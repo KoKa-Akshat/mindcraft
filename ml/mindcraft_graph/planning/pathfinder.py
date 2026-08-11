@@ -116,16 +116,17 @@ def trim_chain(
     for concept_id in chain:
         profile = profiles.get(concept_id)
         mastery = graph.state.mastery_by_concept.get(concept_id)
+        can_be_mastered = profile is not None and profile.practice_event_count >= 1
 
         if profile is not None and profile.event_count >= min_events:
             # Has direct evidence
             if profile.strength_score >= mastery_threshold:
-                status[concept_id] = MASTERED
+                status[concept_id] = MASTERED if can_be_mastered else UNKNOWN
             else:
                 status[concept_id] = STRUGGLING
         elif mastery is not None and mastery.mastery > 0.4:
             # Mastery engine says they know it even without strong profile
-            status[concept_id] = MASTERED
+            status[concept_id] = MASTERED if can_be_mastered else UNKNOWN
         else:
             status[concept_id] = UNKNOWN
 

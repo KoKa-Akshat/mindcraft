@@ -768,7 +768,8 @@ async def seed_assessment_endpoint(req: SeedAssessmentRequest, auth: AuthContext
             effort=effort,
             duration_minutes=5.0,
             timestamp=now,
-            exposure_weight=1.0,
+            # Self-report is secondary evidence on the SessionEvent evidence tier.
+            exposure_weight=0.4,
         ))
         seeded.append(concept_id)
 
