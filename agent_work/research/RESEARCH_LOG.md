@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-11 — Researcher tick: Part CXXI Explanation quality rubrics for AI coach wraps (SAFE-EXPLAINQA)
+
+**Tick type:** Researcher (UTC hour 00 ≡ Red Team slot, but ch121 never written → prefer Researcher per rotation; researcher count since synthesizer v1.15 = 4 → Researcher)  
+**Chapter written:** `chapters/121_explanation_quality_rubrics_ai_coach_wraps.md` (Part CXXI)  
+**Claim examined:** Whether MindCraft should gate AI coach/Solver wraps with principle-short pedagogical rubrics (correctness hard-fail, non-reveal, actionability, SE-preserve) — vs fluency theater, Explanation Score™ products, or soft-pass “helpful” wrong math.
+
+**Doctrine proposed (provisional):** **SAFE-EXPLAINQA** — densifies SAFE-EXPLAIN × SAFE-GENQ × SAFE-REPAIR: rubric gates before ship; correctness hard-fail; non-reveal + actionable; no Explanation Score™ / LLM-judge-alone. Experiment family **EXPLAINQA-*** (distinct from EXPLAIN-* / GENQ-*).
+
+**Evidence spine (verified citations):** Wittwer & Renkl (2008; 2010); Schworm & Renkl (2006); Ring & Brahm (2023); Kulgemeyer (2018); Maurya et al. (2025); Bastani et al. (2024); Nakamoto et al. (2023).
+
+**Claim killed (this tick):** Fluency/human-likeness≡pedagogy / thumbs-up thoroughness NS / Explanation Score™·Rubric Score™ / LLM-judge-alone ship authority / soft-pass wrong math / reveal-default as guidance / auto-wrap-QA replacing GENQ key verify / ACT guarantees from rubric-scored AI coach (provisional kill #75 until synthesizer).
+
+**Experiments:** EXPLAINQA-1…5 + EXPLAINQA-QUAL.
+
+**Next researcher id:** **122** (partial-credit & soft-wrong taxonomy productization). Researcher count since v1.15 synthesizer: **5**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-10 — Researcher tick: Part CXX Tutor burnout early-warning without wellness theater (SAFE-BURNWARN)
 
 **Tick type:** Researcher (UTC hour 21; hour%6≠0; researcher count since synthesizer v1.15 = 3 → Researcher)  
