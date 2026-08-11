@@ -19,7 +19,28 @@ to project `mindcraft-93858`. Live in ~2–3 minutes — confirm green in GitHub
 |--------|--------|-----|
 | `app` | `app/dist` | https://mindcraft-93858.web.app |
 | `world1` | `worlds/world2/` | https://mindcraft-world1.web.app |
-| `marketing` | repo root | https://mindcraft-marketing-site.web.app |
+| `marketing` | repo root | **https://joinmindcraft.com** (Firebase site `mindcraft-marketing-site`) |
+
+Primary public / marketing link: **https://joinmindcraft.com**  
+Legacy alias (same Firebase site until DNS cutover finishes): `https://mindcraft-marketing-site.web.app`
+
+### Custom domain (Namecheap → Firebase)
+
+Domain is owned at Namecheap. Connect it to Firebase Hosting target `marketing`
+(site id `mindcraft-marketing-site`) so joinmindcraft.com serves this repo’s
+root marketing files.
+
+1. Firebase Console → project `mindcraft-93858` → **Hosting** → site
+   **mindcraft-marketing-site** → **Add custom domain** → `joinmindcraft.com`
+   (also add `www.joinmindcraft.com` and choose redirect www → apex).
+2. Copy the DNS records Firebase shows (TXT verify + A / AAAA, and CNAME for www).
+3. Namecheap → Domain List → **joinmindcraft.com** → **Advanced DNS**:
+   - Delete Namecheap parking / Stopper records pointing at `198.54.117.x`
+   - Add Firebase’s records exactly (TTL Automatic or 5 min while testing)
+4. Wait for Firebase to show domain **Connected** (often 15 min–a few hours).
+5. Use **https://joinmindcraft.com** everywhere in marketing.
+
+Details: `DOMAIN_SETUP.md`.
 
 ### Hard rules
 

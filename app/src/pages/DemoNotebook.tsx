@@ -62,7 +62,7 @@ export default function DemoNotebook() {
           <Link className={s.primary} to="/try/diagnostic">
             {data ? 'Retake demo scan' : 'Start diagnostic demo'}
           </Link>
-          <a className={s.soft} href="https://mindcraft-marketing-site.web.app/#intake">
+          <a className={s.soft} href="https://joinmindcraft.com/#intake">
             Request a real seat
           </a>
         </div>

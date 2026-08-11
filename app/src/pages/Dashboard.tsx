@@ -321,7 +321,7 @@ export default function Dashboard({
   function launchSolver() {
     if (viewingAs) return
     if (preview) {
-      window.location.href = 'https://mindcraft-marketing-site.web.app/#intake'
+      window.location.href = 'https://joinmindcraft.com/#intake'
       return
     }
     const text = solverText.trim().slice(0, SOLVER_MAX_CHARS)
@@ -355,7 +355,7 @@ export default function Dashboard({
         sessionStorage.removeItem('mc-demo-mode')
         sessionStorage.removeItem('mc-demo-diagnostic')
       } catch { /* ignore */ }
-      window.location.href = 'https://mindcraft-marketing-site.web.app/'
+      window.location.href = 'https://joinmindcraft.com/'
       return
     }
     clearCoverSeen()

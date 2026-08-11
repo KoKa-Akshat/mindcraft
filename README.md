@@ -5,7 +5,7 @@ MindCraft is a math exam-prep platform built around grit and growth mindset. The
 Live links:
 
 - App: https://mindcraft-93858.web.app
-- Marketing site: https://mindcraft-marketing-site.web.app
+- Marketing site: https://joinmindcraft.com
 - Vercel webhook API: https://mindcraft-webhook.vercel.app
 
 ---

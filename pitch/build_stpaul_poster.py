@@ -149,7 +149,7 @@ def draw_poster(c: canvas.Canvas, W: float, H: float) -> None:
 
     c.setFont(SANS, 12)
     c.setFillColor(HexColor("#b7d0c2"))
-    c.drawString(m + 0.35 * inch, 0.55 * inch + band_h - 1.1 * inch, "mindcraft-marketing-site.web.app")
+    c.drawString(m + 0.35 * inch, 0.55 * inch + band_h - 1.1 * inch, "joinmindcraft.com")
     c.drawString(m + 0.35 * inch, 0.55 * inch + band_h - 1.35 * inch, "joinmindcraft@gmail.com")
 
     # QR

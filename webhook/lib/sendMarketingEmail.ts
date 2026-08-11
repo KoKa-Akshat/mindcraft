@@ -71,7 +71,7 @@ School scatters everything into screenshots, planners, and late-night tabs. Mind
 What we keep hearing from families and students: good help looks like an exact gap map, practice that transfers when the question looks different, and an honest note for parents. Not another green streak.
 
 While beta is free, you can claim a seat here:
-https://mindcraft-marketing-site.web.app/#start
+https://joinmindcraft.com/#start
 
 Or just reply with your grade (or your student's grade) and what should feel easier in two weeks. A real human reads every note.
 

@@ -4,6 +4,13 @@
 
 ---
 
+## Primary marketing domain — joinmindcraft.com (2026-08-11)
+
+Repo + CI now treat **https://joinmindcraft.com** as the public marketing URL.
+DNS cutover still needed at Namecheap → Firebase Hosting site
+`mindcraft-marketing-site` (see `DOMAIN_SETUP.md`). Until Connected, the
+hostname may still show Namecheap parking.
+
 ## Field Desk — ship to main (2026-08-11)
 
 Pull **main**, Clean Build, Cmd+R. Changes were stuck on an agent branch before.

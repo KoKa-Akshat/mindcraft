@@ -4,7 +4,7 @@
  * Root of the React app. Handles:
  *   - Auth state listening (Firebase onAuthStateChanged)
  *   - Route protection via AuthGuard
- *   - Public routes; landing site is mindcraft-marketing-site.web.app
+ *   - Public routes; landing site is joinmindcraft.com
  *
  * Adding a new page:
  *   1. Create the component in pages/
@@ -382,7 +382,7 @@ export default function App() {
         <Route path="/workflows" element={<DeskWorkflowsRedirect />} />
         <Route path="/try/workflows" element={<DeskWorkflowsRedirect />} />
 
-        {/* Root of app host → marketing site (landing lives on mindcraft-marketing-site.web.app) */}
+        {/* Root of app host → marketing site (landing lives on joinmindcraft.com) */}
         <Route path="/" element={<MarketingRedirect />} />
 
         {/* Fallback */}
