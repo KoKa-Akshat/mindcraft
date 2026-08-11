@@ -397,7 +397,7 @@ force-push `main`.
 |--------|--------|----------|
 | `app` | `app/dist` (built in CI) | https://mindcraft-93858.web.app |
 | `world1` | `worlds/world2/` (static) | https://mindcraft-world1.web.app |
-| `marketing` | repo root (curated static) | https://mindcraft-marketing-site.web.app |
+| `marketing` | repo root (curated static) | https://joinmindcraft.com |
 
 Key notes:
 - `--legacy-peer-deps` is REQUIRED for app install ( `@react-three` peer conflict).

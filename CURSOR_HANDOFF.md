@@ -46,7 +46,7 @@ If `pwd` shows `Desktop/Business Ideas`, **stop and switch** to `/Users/akoirala
 |--------|----------|--------|
 | `app` | https://mindcraft-93858.web.app | dashboard / student app (`app/dist`) |
 | `world1` | https://mindcraft-world1.web.app | 3D world static site |
-| `marketing` | https://mindcraft-marketing-site.web.app | root-level `index.html` / `blog.html` |
+| `marketing` | https://joinmindcraft.com | root-level `index.html` / `blog.html` |
 
 - **Never run `firebase deploy` locally.** It publishes whatever’s on disk and clobbers CI, overwriting other people’s in-flight work. Push to `main` and let CI do it.
 - After every push, confirm the Actions run went green before calling anything shipped:
