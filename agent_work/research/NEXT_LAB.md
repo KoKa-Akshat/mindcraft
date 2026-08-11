@@ -113,8 +113,10 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 119 | Classroom orchestration of Map during live tutoring | HITL + SAFE-FA; when to open Map mid-session vs after | **DONE** (2026-08-10) — Part CXIX / SAFE-MAPORCH |
 | 120 | Tutor burnout early-warning without wellness theater | SAFE-WORKFORCE × affect privacy; fidelity dips before exit | **DONE** (2026-08-10) — Part CXX / SAFE-BURNWARN |
 | 121 | Explanation quality rubrics for AI coach wraps | SAFE-EXPLAIN × SAFE-GENQ; principle-short QA gates | **DONE** (2026-08-11) — Part CXXI / SAFE-EXPLAINQA |
-| 122 | Partial-credit & soft-wrong taxonomy productization | SAFE-MISCON × SAFE-FBLIT; mark types without gradebook cosplay | **NEXT** |
-| 123 | Exam-week tutor load shedding playbooks | SAFE-BURNWARN × SAFE-DDSCHED; protect FEI fidelity under ACT crunch | queued |
+| 122 | Partial-credit & soft-wrong taxonomy productization | SAFE-MISCON × SAFE-FBLIT; mark types without gradebook cosplay | **DONE** (2026-08-11) — Part CXXII / SAFE-TAXON |
+| 123 | Exam-week tutor load shedding playbooks | SAFE-BURNWARN × SAFE-DDSCHED; protect FEI fidelity under ACT crunch | **NEXT** |
+| 124 | Distractor design for diagnostic soft-wrong MC | SAFE-TAXON × SAFE-MISCON; Eedi-style options without beauty traps | queued |
+| 125 | Confidence-tagged misses in gap-scan recovery | SAFE-TAXON × SAFE-CALIB; hard/kinda/easy × mark type without Identity Score™ | queued |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 
@@ -197,3 +199,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any always-on student Map / Map Minutes or Map Score™ NS / mid-attempt full-graph dump / Map-open≡cycle-closed / dual-screen Map+problem default / ontology tour≡tutoring / ACT guarantees from Map airtime (Part CXIX / SAFE-MAPORCH)
 - Any Burnout Score™ / Wellness Minutes NS / mandatory mood gate / tutor emotion-AI / wellness-module-as-primary when caseload is the demand / retention-% without fidelity / sell tutor-affect dashboards / ACT guarantees from wellness packaging (Part CXX / SAFE-BURNWARN)
 - Any fluency/human-likeness≡pedagogy / thumbs-up thoroughness NS / Explanation Score™ or Rubric Score™ / LLM-judge-alone ship authority / soft-pass wrong math because prose “helped” / reveal-answer default as guidance / auto-wrap-QA replacing GENQ key verify / ACT guarantees from rubric-scored AI coach (Part CXXI / SAFE-EXPLAINQA)
+- Any soft-wrong≡half-credit / Partial Credit Score™ or Mark Minutes NS / all-wrongs-equal mastery deltas / gradebook cosplay (% banners, letter grades, live point stalk) / ordered PCM steps≡identity / empty celebrate-mistakes without mark→route / ACT guarantees from partial-credit packaging (Part CXXII / SAFE-TAXON)

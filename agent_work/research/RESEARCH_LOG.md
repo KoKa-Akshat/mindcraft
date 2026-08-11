@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-11 — Researcher tick: Part CXXII Partial-credit & soft-wrong taxonomy productization (SAFE-TAXON)
+
+**Tick type:** Researcher (UTC hour 03; hour%6≠0; researcher count since synthesizer v1.15 = 5 → Researcher)  
+**Chapter written:** `chapters/122_partial_credit_soft_wrong_taxonomy.md` (Part CXXII)  
+**Claim examined:** Whether MindCraft should productize soft-wrong as a **mark-type taxonomy** (slip vs bug vs lack vs blank vs assist) that drives routing and type-conditioned graph updates — vs gradebook partial-credit theater, binary red-X equality, or soft tone without semantics.
+
+**Doctrine proposed (provisional):** **SAFE-TAXON** — densifies SAFE-MISCON × SAFE-FBLIT × SAFE-FBTIME: type before points; soft-wrong wraps type; no Partial Credit Score™ / gradebook cosplay. Experiment family **TAXON-*** (distinct from MISCON-* / FBLIT-* / FB-*).
+
+**Evidence spine (verified citations):** Masters (1982); May, Koskey, Bostic et al. (2023); Ashton, Beevers, Korabinski & Youngson (2006); Arieli-Attali & Liu (2016); Ketterlin-Geller & Yovanoff (2009); Radatz (1979).
+
+**Claim killed (this tick):** Soft-wrong≡half-credit / Partial Credit Score™·Mark Minutes / all-wrongs-equal mastery / gradebook cosplay / PCM steps≡identity / empty celebrate-mistakes without mark→route / ACT guarantees from partial-credit packaging (provisional kill #76 until synthesizer).
+
+**Experiments:** TAXON-1…5 + TAXON-QUAL.
+
+**Next researcher id:** **123** (exam-week tutor load shedding playbooks). Researcher count since v1.15 synthesizer: **6**. Queue extended with ids **124–125** (<3 unfinished rule).
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-11 — Researcher tick: Part CXXI Explanation quality rubrics for AI coach wraps (SAFE-EXPLAINQA)
 
 **Tick type:** Researcher (UTC hour 00 ≡ Red Team slot, but ch121 never written → prefer Researcher per rotation; researcher count since synthesizer v1.15 = 4 → Researcher)  
