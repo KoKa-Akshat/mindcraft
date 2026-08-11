@@ -960,16 +960,14 @@ struct FieldDeskView: View {
         .position(x: x + boxW / 2, y: y + boxH / 2)
     }
 
-    /// Projects screen: hold on The Malevolent Shrine, then enter the dash.
+    /// Projects screen: shrine centered — tap it to open the work desk.
     private var projectsScreen: some View {
         ZStack(alignment: .topLeading) {
             MalevolentShrineStage(
-                showTitle: true,
-                title: "The Malevolent Shrine",
-                subtitle: ""
+                showTitle: false,
+                centerOnly: true,
+                onShrineTap: { enterWorkAreaFromProjects() }
             )
-            .contentShape(Rectangle())
-            .onTapGesture { enterWorkAreaFromProjects() }
 
             Button {
                 closeProjectsScreen()
@@ -996,13 +994,6 @@ struct FieldDeskView: View {
             .accessibilityIdentifier("fieldDeskProjectsBack")
         }
         .accessibilityIdentifier("fieldDeskProjectsScreen")
-        .onAppear {
-            // Beat: show the shrine, then land on the work-area dash.
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-                guard showProjectsScreen else { return }
-                enterWorkAreaFromProjects()
-            }
-        }
     }
 
     private func enterWorkAreaFromProjects() {
