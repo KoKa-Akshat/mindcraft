@@ -115,10 +115,11 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 121 | Explanation quality rubrics for AI coach wraps | SAFE-EXPLAIN × SAFE-GENQ; principle-short QA gates | **DONE** (2026-08-11) — Part CXXI / SAFE-EXPLAINQA |
 | 122 | Partial-credit & soft-wrong taxonomy productization | SAFE-MISCON × SAFE-FBLIT; mark types without gradebook cosplay | **DONE** (2026-08-11) — Part CXXII / SAFE-TAXON |
 | 123 | Exam-week tutor load shedding playbooks | SAFE-BURNWARN × SAFE-DDSCHED; protect FEI fidelity under ACT crunch | **DONE** (2026-08-11) — Part CXXIII / SAFE-LOADSHED |
-| 124 | Distractor design for diagnostic soft-wrong MC | SAFE-TAXON × SAFE-MISCON; Eedi-style options without beauty traps | **NEXT** |
-| 125 | Confidence-tagged misses in gap-scan recovery | SAFE-TAXON × SAFE-CALIB; hard/kinda/easy × mark type without Identity Score™ | queued |
+| 124 | Distractor design for diagnostic soft-wrong MC | SAFE-TAXON × SAFE-MISCON; Eedi-style options without beauty traps | **DONE** (2026-08-11) — Part CXXIV / SAFE-DISTRACTOR |
+| 125 | Confidence-tagged misses in gap-scan recovery | SAFE-TAXON × SAFE-CALIB; hard/kinda/easy × mark type without Identity Score™ | **NEXT** |
 | 126 | Tutor micro-debrief fidelity under time caps | SAFE-AAR × SAFE-LOADSHED; 90-second after-action without lecture cosplay | queued |
 | 127 | Parent crunch-week message tests (availability vs thinking minutes) | SAFE-LOADSHED × SAFE-WTP; CBC on shed honesty vs 24/7 brand | queued |
+| 128 | Format-trap distractors on diagram/graph items | SAFE-DISTRACTOR × SAFE-FORMAT/DUAL; visual distractors without decoration theater | queued |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 
@@ -203,3 +204,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any fluency/human-likeness≡pedagogy / thumbs-up thoroughness NS / Explanation Score™ or Rubric Score™ / LLM-judge-alone ship authority / soft-pass wrong math because prose “helped” / reveal-answer default as guidance / auto-wrap-QA replacing GENQ key verify / ACT guarantees from rubric-scored AI coach (Part CXXI / SAFE-EXPLAINQA)
 - Any soft-wrong≡half-credit / Partial Credit Score™ or Mark Minutes NS / all-wrongs-equal mastery deltas / gradebook cosplay (% banners, letter grades, live point stalk) / ordered PCM steps≡identity / empty celebrate-mistakes without mark→route / ACT guarantees from partial-credit packaging (Part CXXII / SAFE-TAXON)
 - Any hours-booked / session-volume crunch NS / Load Shed Score™ or Crunch Minutes / infinite-availability exam brand / wellness-primary under caseload spike / hire-surge without coach bandwidth / pour-mode≡exam support / hospital-cosplay ads / soft standards for crunch personas / ACT guarantees from crunch playbooks (Part CXXIII / SAFE-LOADSHED)
+- Any Distractor Score™ / Option Minutes / always-four≡better / beauty traps·absurd fillers·NOTA-AOTA default / unmapped wrongs≡diagnostic / LLM distractors without mis_ seal / option-count or item-count NS / ACT guarantees from distractor packaging (Part CXXIV / SAFE-DISTRACTOR)

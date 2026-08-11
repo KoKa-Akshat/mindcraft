@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-11 — Researcher tick: Part CXXIV Distractor design for diagnostic soft-wrong MC (SAFE-DISTRACTOR)
+
+**Tick type:** Researcher (UTC hour 09; hour%6≠0; researcher count since synthesizer v1.15 = 7 → Researcher)  
+**Chapter written:** `chapters/124_distractor_design_diagnostic_soft_wrong_mc.md` (Part CXXIV)  
+**Claim examined:** Whether MindCraft should treat MC craft as **misconception-mapped functioning distractors** that feed typed soft-wrong + Map route — vs four-option costume, beauty traps, unmapped “diagnostic” MC, or Distractor Score™ / option-count theater.
+
+**Doctrine proposed (provisional):** **SAFE-DISTRACTOR** — densifies SAFE-TAXON × SAFE-MISCON × SAFE-GENQ: error-family→options; function over fashion (~3 options when that is the functioning set); soft-wrong wraps chosen theory; no Distractor Score™ / beauty traps / unsealed GENQ distractors. Experiment family **DISTRACTOR-*** (distinct from TAXON-*/MISCON-*/GENQ-*).
+
+**Evidence spine (verified citations):** Haladyna, Downing, & Rodriguez (2002); Tarrant, Ware, & Mohammed (2009); Rodriguez (2005); Gierl, Bulut, Guo, & Zhang (2017); Wang et al. (2020, arXiv:2007.12061); Briggs, Alonzo, Schwab, & Wilson (2006).
+
+**Claim killed (this tick):** Distractor Score™·Option Minutes / always-four≡better / beauty traps·absurd fillers·NOTA-AOTA default / unmapped wrongs≡diagnostic / LLM distractors without mis_ seal / option-count NS / ACT guarantees from distractor packaging (provisional kill #78 until synthesizer).
+
+**Experiments:** DISTRACTOR-1…5 + DISTRACTOR-QUAL.
+
+**Next researcher id:** **125** (confidence-tagged misses in gap-scan recovery). Researcher count since v1.15 synthesizer: **8** → next eligible Synthesizer when hour%6≠0 (or Red Team on hour%6==0). Queue extended with id **128** (<3 unfinished rule after promoting 125 to NEXT).
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-11 — Researcher tick: Part CXXIII Exam-week tutor load shedding playbooks (SAFE-LOADSHED)
 
 **Tick type:** Researcher (UTC hour 06 ≡ Red Team slot, but ch123 never written → prefer Researcher per rotation; researcher count since synthesizer v1.15 = 6 → Researcher)  
