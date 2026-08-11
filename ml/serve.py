@@ -1006,11 +1006,14 @@ async def recommend_ingredients_endpoint(req: IngredientRecommendRequest, auth: 
 async def submit_answer_endpoint(req: SubmitIngredientAnswerRequest, auth: AuthContext = Depends(require_auth)):
     authorize_student(auth, req.student_id)
     from mindcraft_graph.firestore_adapter import (
+        append_interactions,
         load_ingredient_state,
         load_student_events,
         save_ingredient_state,
         save_personal_graph,
     )
+    from mindcraft_graph.config import outcome_from
+    from mindcraft_graph.models.events import SessionEvent
 
     student_state = load_ingredient_state(req.student_id)
     card = CardRecommendation(
@@ -1032,43 +1035,42 @@ async def submit_answer_endpoint(req: SubmitIngredientAnswerRequest, auth: AuthC
     )
     save_ingredient_state(req.student_id, student_state)
 
+    now = datetime.now()
+    valid_concepts = {concept.id for concept in ontology.concepts}
+    affected_concepts = [
+        concept_id
+        for concept_id in dict.fromkeys(
+            _concepts_for_card_target(req.target_type, req.target_id)
+        )
+        if concept_id in valid_concepts
+    ]
+    card_events = [
+        SessionEvent(
+            student_id=req.student_id,
+            concept_id=concept_id,
+            event_type="flashcard",
+            outcome=outcome_from(1.0 if req.student_succeeded else 0.0),
+            effort=0.5,
+            duration_minutes=2.0,
+            timestamp=now,
+            exposure_weight=0.4,
+        )
+        for concept_id in affected_concepts
+    ]
+    if card_events:
+        append_interactions(req.student_id, card_events, source="card")
+
     events = load_student_events(req.student_id)
     graph = create_personal_graph(req.student_id, ontology)
     if events:
         graph = update_personal_graph(graph, events, ontology)
-
-    now = datetime.now()
-    updated_concepts = {}
-    valid_concepts = {concept.id for concept in ontology.concepts}
-    for concept_id in _concepts_for_card_target(req.target_type, req.target_id):
-        if concept_id not in valid_concepts:
-            continue
-
-        aggregated_mastery = aggregate_to_concept_mastery(
-            student_state,
-            concept_id,
-            ingredient_graph,
-        )
-        current = graph.state.mastery_by_concept.get(concept_id)
-        if current is None:
-            graph.state.mastery_by_concept[concept_id] = ConceptMastery(
-                concept_id=concept_id,
-                mastery=aggregated_mastery,
-                exposure_count=0,
-                last_interaction=now,
-                cumulative_outcome=0.0,
-                attempts=0,
-            )
-        else:
-            graph.state.mastery_by_concept[concept_id] = current.model_copy(update={
-                "mastery": aggregated_mastery,
-                "last_interaction": now,
-            })
-
-        updated_concepts[concept_id] = aggregated_mastery
-
-    graph.updated_at = now
     save_personal_graph(req.student_id, graph)
+
+    updated_concepts = {
+        concept_id: graph.state.mastery_by_concept[concept_id].mastery
+        for concept_id in affected_concepts
+        if concept_id in graph.state.mastery_by_concept
+    }
 
     return {
         "studentId": req.student_id,
