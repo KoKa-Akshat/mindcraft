@@ -6,7 +6,16 @@
 
 ## iOS prototype · The Desk naming (2026-08-11)
 
-Pull **main**, Clean Build, Cmd+R on Mac/iPad. Student-facing chrome now says **The Desk** (no MindCraft wordmark/logo in app chrome). Login/Cover/Welcome: The Desk + by MindCraft. Hub card, Ask, Drive folder, desk.html work area titles aligned.
+**CI already green** for naming tip `06e64284`: https://github.com/KoKa-Akshat/mindcraft/actions/runs/31518010669  
+Local Xcode “Missing Firebase*” = Mac disk full (SPM fetch failed). Free space:
+
+```bash
+bash ios-prototype/scripts/free-mac-space.sh
+cd ~/Developer/mindcraft && git pull origin main
+# Xcode → Packages → Reset/Resolve → Clean → Run
+```
+
+Expect: Welcome **The Desk / by MindCraft** · chrome **The Desk** (no logo) · Ask **Ask The Desk…** · work desk **The Desk · work area**.
 
 ## Canon pack for agents (2026-08-11)
 
