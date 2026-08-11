@@ -4,6 +4,12 @@
 
 ---
 
+## Create wired on Field Desk (2026-08-11)
+
+Jesse’s **Create** → polka → spatial studio (`desk-os/studio/?v=spatial2&from=jesse`).  
+Canonical: `agent_work/product/desk_os/studio/index.html`. iOS bundles that folder as `studio`.  
+Mac: pull branch / main → Cmd+R → Create → Jesse's back.
+
 ## Studio Create pass — LOCKED (2026-08-10)
 
 `agent_work/product/studio_prototype_2026-08-10/` · note `STUDIO_PASS_LOCKED.md`  

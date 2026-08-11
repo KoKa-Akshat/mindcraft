@@ -6,6 +6,7 @@ import WebKit
 ///
 /// `mcworld://kitchen/index.html?embed=1&desk=1` → `<bundle>/world2/index.html`
 /// `mcworld://desk/desk.html`                    → `<bundle>/deskweb/desk.html`
+/// `mcworld://studio/index.html?from=jesse`      → `<bundle>/studio/index.html`
 final class KitchenSchemeHandler: NSObject, WKURLSchemeHandler {
     static let scheme = "mcworld"
 
@@ -13,9 +14,25 @@ final class KitchenSchemeHandler: NSObject, WKURLSchemeHandler {
     private var stoppedTasks = Set<ObjectIdentifier>()
     private let lock = NSLock()
 
+    private static func bundleFolder(for host: String?) -> String {
+        switch host?.lowercased() {
+        case "desk": return "deskweb"
+        case "studio": return "studio"
+        default: return "world2"
+        }
+    }
+
+    private static func defaultPath(for host: String?) -> String {
+        switch host?.lowercased() {
+        case "desk": return "/desk.html"
+        case "studio": return "/index.html"
+        default: return "/index.html"
+        }
+    }
+
     func webView(_ webView: WKWebView, start urlSchemeTask: WKURLSchemeTask) {
-        let isDesk = urlSchemeTask.request.url?.host?.lowercased() == "desk"
-        let folder = isDesk ? "deskweb" : "world2"
+        let host = urlSchemeTask.request.url?.host
+        let folder = Self.bundleFolder(for: host)
         guard
             let url = urlSchemeTask.request.url,
             let root = Bundle.main.resourceURL?.appendingPathComponent(folder, isDirectory: true)
@@ -25,7 +42,7 @@ final class KitchenSchemeHandler: NSObject, WKURLSchemeHandler {
         }
 
         var relPath = url.path
-        if relPath.isEmpty || relPath == "/" { relPath = isDesk ? "/desk.html" : "/index.html" }
+        if relPath.isEmpty || relPath == "/" { relPath = Self.defaultPath(for: host) }
         // Resolve and confine to the bundled folder.
         let fileURL = root.appendingPathComponent(String(relPath.dropFirst())).standardizedFileURL
         guard fileURL.path.hasPrefix(root.standardizedFileURL.path) else {

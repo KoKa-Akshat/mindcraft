@@ -168,6 +168,48 @@ h1,h2,h3,.pix{font-family:'Press Start 2P',monospace; line-height:1.5}
 #editorView.create-on .btn.purple{background:#143a2e; color:#c4f547}
 #editorView.create-on .btn.orange{background:#c4f547; color:#0c1207}
 #editorView.create-on #createModeBtn{display:none !important}
+
+/* Jesse → Create (polka doorway embed / native WKWebView) */
+html.from-jesse body{
+  background:#f7f5f0;
+}
+html.from-jesse #homeView{display:none !important}
+html.from-jesse #editorView.create-on{
+  background:
+    radial-gradient(rgba(28,26,23,.09) 1.05px, transparent 1.15px) 0 0 / 22px 22px,
+    radial-gradient(900px 420px at 18% 8%, rgba(196,245,71,.12), transparent 58%),
+    #f7f5f0;
+}
+html.from-jesse #editorView.create-on .topbar{
+  background:rgba(247,243,238,.92);
+  border-bottom:1px solid rgba(20,58,46,.07);
+  padding:12px 16px;
+}
+html.from-jesse #editorView.create-on #navBackBtn{
+  background:#0c1207; color:#f4f7f4;
+  border:0; border-radius:999px;
+  box-shadow:0 8px 22px rgba(8,20,14,.18);
+  padding:10px 16px; font:800 12px/1 'DM Sans',sans-serif;
+  letter-spacing:.01em; text-transform:none;
+}
+html.from-jesse #editorView.create-on #navBackBtn:hover{
+  background:#143a2e; transform:none; box-shadow:0 10px 26px rgba(8,20,14,.22);
+}
+html.from-jesse #editorView.create-on .btn.orange{
+  border-radius:999px; border:0;
+  box-shadow:0 8px 22px rgba(20,58,46,.14);
+  font:800 12px/1 'DM Sans',sans-serif;
+}
+html.from-jesse #editorView.create-on .topbar .title{
+  border-radius:999px; min-width:160px;
+}
+html.from-jesse .floatBg{
+  background-color:transparent;
+  background-image:none;
+}
+html.from-jesse .zoomHUD{
+  top:72px; right:18px;
+}
 #floatCanvas .openMediaPill{display:none}
 #editorView.create-on #floatCanvas .openMediaPill,
 #editorView.create-on #centerNode .openMediaPill{display:flex}
@@ -1155,12 +1197,27 @@ function markDone(step) {
 
 /* ============ VIEWS ============ */
 const FROM_JESSE = /(?:^|[?&])from=jesse(?:&|$)/.test(location.search) || /(?:^|[?&])embed=1(?:&|$)/.test(location.search);
+if (FROM_JESSE) document.documentElement.classList.add('from-jesse');
+
+function notifyNative(action) {
+  try {
+    const bridge = window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.deskAction;
+    if (bridge) {
+      bridge.postMessage({ action: String(action || 'back') });
+      return true;
+    }
+  } catch (_) {}
+  return false;
+}
 
 function navBack() {
-  if (FROM_JESSE && window.parent && window.parent !== window) {
+  if (FROM_JESSE) {
     pause();
-    window.parent.postMessage({ type: 'mc-studio-put-back' }, '*');
-    return;
+    if (notifyNative('back')) return;
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({ type: 'mc-studio-put-back' }, '*');
+      return;
+    }
   }
   goHome();
 }
@@ -2541,6 +2598,7 @@ function bindKeys() {
     if ((e.code === 'Backspace' || e.code === 'Delete') && state.selClip) delClip(state.selClip);
     if (e.code === 'Escape') {
       if (state.fsStage) toggleFullscreenStage(false);
+      else if (FROM_JESSE) navBack();
       else if (state.createMode) setCreateMode(false);
     }
     if ((e.key === 'f' || e.key === 'F') && !$('#editorView').hidden) toggleFullscreenStage();
@@ -2673,7 +2731,7 @@ function init() {
   newProject();
   if (FROM_JESSE) {
     const btn = $('#navBackBtn');
-    if (btn) btn.textContent = '← KITCHEN';
+    if (btn) btn.textContent = "Jesse's";
   }
 }
 init();

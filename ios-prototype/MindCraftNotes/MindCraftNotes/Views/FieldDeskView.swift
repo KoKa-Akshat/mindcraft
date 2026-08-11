@@ -35,9 +35,10 @@ struct FieldDeskView: View {
     @State private var showProjectsScreen = false
     /// Standalone Desk (deskweb) — entered via the polka vending screen.
     @State private var showStandaloneDesk = false
+    /// Spatial Create studio (desk-os/studio) — entered via polka from Create.
+    @State private var showCreateStudio = false
     /// 0 = clear, 1 = solid white polka sheet covering the screen.
     @State private var polkaProgress: CGFloat = 0
-    @AppStorage("deskOs.createStudio.tokens") private var createTokens: Int = 120
     /// Widgets placed on the work desk via `+`.
     @State private var placedWidgets: Set<PlaceableWidget> = []
     /// Kitchen audio is off until the top-right volume control is tapped.
@@ -230,6 +231,9 @@ struct FieldDeskView: View {
             || (showActStage && actStageMaximized)
             || showManage
             || showProjectsPanel
+            || showProjectsScreen
+            || showStandaloneDesk
+            || showCreateStudio
     }
 
     /// Floating cards on Jesse’s (or minimized ACT chip).
@@ -442,6 +446,13 @@ struct FieldDeskView: View {
                     .zIndex(85)
                 }
 
+                // Spatial Create — same polka doorway, cream orbital board.
+                if showCreateStudio {
+                    CreateStudioView(onClose: { closeCreateStudio() })
+                        .zIndex(86)
+                        .transition(.opacity)
+                }
+
                 // Polka doorway sheet rides above both worlds while crossing.
                 if polkaProgress > 0.001 {
                     PolkaTransitionOverlay(progress: polkaProgress)
@@ -599,10 +610,9 @@ struct FieldDeskView: View {
                             .accessibilityIdentifier("fieldDeskManageButton")
                             .accessibilityLabel("Manage · instances, tutors, workflows")
                         } else {
-                            // Create — icon lands now; the full studio ships
-                            // with Akshat's Figma pass.
+                            // Create — polka bloom into the spatial studio board.
                             Button {
-                                flash("Create · new studio coming soon")
+                                openCreateStudio()
                             } label: {
                                 Image(systemName: "plus.viewfinder")
                                     .font(.system(size: 13, weight: .bold))
@@ -1070,7 +1080,7 @@ struct FieldDeskView: View {
 
     /// Polka dots bloom over the kitchen; the Desk waits underneath.
     private func openStandaloneDesk() {
-        guard !showStandaloneDesk else { return }
+        guard !showStandaloneDesk, !showCreateStudio else { return }
         withAnimation(.easeInOut(duration: 0.85)) { polkaProgress = 1 }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
             showStandaloneDesk = true
@@ -1084,6 +1094,24 @@ struct FieldDeskView: View {
             showStandaloneDesk = false
             // Kitchen camera settles front-facing behind the sheet.
             JesseKitchenBackgroundView.exitProjectsCamera()
+            withAnimation(.easeInOut(duration: 0.6)) { polkaProgress = 0 }
+        }
+    }
+
+    /// Polka bloom → spatial Create board (desk-os/studio · spatial2).
+    private func openCreateStudio() {
+        guard !showCreateStudio, !showStandaloneDesk else { return }
+        withAnimation(.easeInOut(duration: 0.85)) { polkaProgress = 1 }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
+            showCreateStudio = true
+            withAnimation(.easeInOut(duration: 0.55)) { polkaProgress = 0 }
+        }
+    }
+
+    private func closeCreateStudio() {
+        withAnimation(.easeInOut(duration: 0.6)) { polkaProgress = 1 }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.65) {
+            showCreateStudio = false
             withAnimation(.easeInOut(duration: 0.6)) { polkaProgress = 0 }
         }
     }
