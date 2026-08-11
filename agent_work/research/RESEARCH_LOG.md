@@ -4,6 +4,35 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-11 — Synthesizer tick v1.16: merge Parts CXVII–CXXV
+
+**Tick type:** Synthesizer (UTC hour 15; hour%6≠0; ≥8 researcher entries since synthesizer v1.15 → Synthesizer)  
+**Chapter written:** none (merge pass only)  
+**Files revised:** `MINDCRAFT_RESEARCH_CONSTITUTION_v1.md` (edition/header / I.2 / I.4 / III / IX / XIV / XX / XXI / XXII glossary / Appendix F / closing); `NEXT_LAB.md`; this log; PDF regen.
+
+**Doctrine promoted to I.4 company law (provisional tags removed):**
+- SAFE-FADEX (CXVII) — protect-then-fade under HMA; no forever-E0 / flood / Calm Score™ fade gates
+- SAFE-SOFTMSG (CXVIII) — grain+failure-enhancing+one CTA; no Miss Streak / shame-push
+- SAFE-MAPORCH (CXIX) — brief→grain-slice→adjust; no always-on Map / mid-attempt full-graph
+- SAFE-BURNWARN (CXX) — fidelity/load early-warn→org redesign; no Burnout Score™ / wellness-primary
+- SAFE-EXPLAINQA (CXXI) — principle-short wrap QA gates; no fluency≡pedagogy / LLM-judge-alone
+- SAFE-TAXON (CXXII) — typed soft-wrong marks; no Partial Credit Score™ / all-wrongs-equal
+- SAFE-LOADSHED (CXXIII) — exam-week acuity shed; no hours-booked crunch / pour≡exam support
+- SAFE-DISTRACTOR (CXXIV) — misconception-mapped distractors; no Distractor Score™ / beauty traps
+- SAFE-CONFMISS (CXXV) — confidence×type recovery; no Identity Score™ / equal-weight recovery
+
+**Red Team kills promoted:** #71–#79 (from provisional chapter kills → v1.16 company dossier).
+
+**Experiment families confirmed in Part IX:** FADEX / SOFTMSG / MAPORCH / BURNWARN / EXPLAINQA / TAXON / LOADSHED / DISTRACTOR / CONFMISS.
+
+**Claim killed (synthesis):** Treating CXVII–CXXV as orphan provisional deep-dives or independent North Stars (Fade Score™ / Miss Streak / Map Score™ / Burnout Score™ / Rubric Score™ / Partial Credit Score™ / Load Shed Score™ / Distractor Score™ / Identity Score™·Confidence Personality™ and their costume variants) — demoted under FEI + SAFE-* method-not-costume rule.
+
+**Next researcher id:** **126** (tutor micro-debrief fidelity under time caps). Researcher count since v1.16 synthesizer: **0**. Unfinished queue still ≥3 (126–128); no QUEUE_EXTENDED promote this tick.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-11 — Researcher tick: Part CXXV Confidence-tagged misses in gap-scan recovery (SAFE-CONFMISS)
 
 **Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch125 never written → prefer Researcher per rotation; researcher count since synthesizer v1.15 = 8 → Researcher)  
