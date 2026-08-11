@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-11 — Researcher tick: Part CXXVII Parent crunch-week message tests (SAFE-CRUNCHMSG)
+
+**Tick type:** Researcher (UTC hour 21; hour%6≠0; researcher count since synthesizer v1.16 = 1 → Researcher)  
+**Chapter written:** `chapters/127_parent_crunch_week_message_tests.md` (Part CXXVII)  
+**Claim examined:** Whether MindCraft should sell **shed honesty / protected thinking minutes** to parents in exam crunch — vs 24/7 availability brand, hours-hero, fear-appeal emails, silent rationing, or Availability Score™ theater — measured with CBC + message tests (SAFE-WTP method).
+
+**Doctrine proposed (provisional):** **SAFE-CRUNCHMSG** — densifies SAFE-LOADSHED × SAFE-WTP × SAFE-SOFTMSG × SAFE-PDASH × SAFE-EXAM: expectation-aligned crunch copy + pre-registered CBC/message stack; name pause list; no infinite-availability default; no fear-parent default. Experiment family **CRUNCHMSG-*** (densifies LOADSHED-5 / WTP-*).
+
+**Evidence spine (verified citations):** Parasuraman, Zeithaml, & Berry (1985; 1988); Oliver (1980); Louviere, Hensher, & Swait (2000); Murphy et al. (2005); Gambi & De Witte (2024); Kim, Goodman, & West (2024); Putwain & Remedios (2014); Putwain, Remedios, & Symes (2016).
+
+**Claim killed (this tick):** 24/7·infinite-availability default parent value prop / hours-booked crunch hero / fear-appeal parent emails as default / silent shed≡care / Likert-WTP for “thinking minutes” / Availability Score™·Crunch Message Score™·Open-Late Minutes NS / ACT guarantees from crunch messaging (provisional kill #81 until synthesizer).
+
+**Experiments:** CRUNCHMSG-1…5 + CRUNCHMSG-QUAL.
+
+**Next researcher id:** **128** (format-trap distractors). Researcher count since v1.16 synthesizer: **2**. Unfinished queue restored to ≥3 (128–130; promoted stub 130 dual-rail Solver CTA under crunch).
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-11 — Researcher tick: Part CXXVI Tutor micro-debrief fidelity under time caps (SAFE-MICRODEB)
 
 **Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch126 never written → prefer Researcher per rotation; researcher count since synthesizer v1.16 = 0 → Researcher)  
