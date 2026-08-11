@@ -99,18 +99,18 @@ def decay_edge(
     from mindcraft_graph.engine.edge_weights import PRIOR_PSEUDO_COUNTS
     pseudo_total = PRIOR_PSEUDO_COUNTS.get(edge.relation, 2.0)
 
-    # We don't store the original strength, so estimate prior mean
-    # from the initial alpha/beta ratio. For edges that haven't moved
-    # much, this is close to the ontology strength.
-    # For heavily updated edges, the prior is less important anyway.
-    prior_mean = 0.5  # fallback for discovered edges
+    # New edges retain their exact ontology prior. Legacy documents fall back
+    # to the historical relation estimate below.
+    prior_mean = edge.prior_mean
+    if prior_mean is None:
+        prior_mean = 0.5  # fallback for discovered edges
 
-    if edge.relation == "prerequisite":
-        prior_mean = 0.9  # most prereqs start high
-    elif edge.relation == "related":
-        prior_mean = 0.4
-    elif edge.relation == "application":
-        prior_mean = 0.5
+        if edge.relation == "prerequisite":
+            prior_mean = 0.9  # most prereqs start high
+        elif edge.relation == "related":
+            prior_mean = 0.4
+        elif edge.relation == "application":
+            prior_mean = 0.5
 
     alpha_prior = prior_mean * pseudo_total
     beta_prior = (1 - prior_mean) * pseudo_total

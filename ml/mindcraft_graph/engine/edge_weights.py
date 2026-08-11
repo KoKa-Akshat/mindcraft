@@ -22,6 +22,7 @@ class EdgeState(BaseModel):
     relation: str
     alpha: float  # pseudo-successes (evidence for this edge)
     beta: float   # pseudo-failures
+    prior_mean: float | None = None
     last_updated: datetime | None = None
 
     @property
@@ -47,6 +48,7 @@ def initialize_edge_from_ontology(edge: OntologyEdge) -> EdgeState:
         relation=edge.relation,
         alpha=alpha_prior,
         beta=beta_prior,
+        prior_mean=edge.strength,
     )
 
 
@@ -92,6 +94,7 @@ def update_edges_from_events(
                             relation="discovered",
                             alpha=1.0,
                             beta=1.0,
+                            prior_mean=0.5,
                         )
                     else:
                         continue

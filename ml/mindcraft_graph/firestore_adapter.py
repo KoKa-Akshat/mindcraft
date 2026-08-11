@@ -344,6 +344,7 @@ def save_personal_graph(student_id: str, graph: PersonalGraph):
                 "relation": edge.relation,
                 "alpha": edge.alpha,
                 "beta": edge.beta,
+                "priorMean": edge.prior_mean,
                 "weight": edge.weight,
                 "lastUpdated": edge.last_updated,
             }
