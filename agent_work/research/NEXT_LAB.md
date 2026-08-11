@@ -118,9 +118,10 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 124 | Distractor design for diagnostic soft-wrong MC | SAFE-TAXON × SAFE-MISCON; Eedi-style options without beauty traps | **DONE** (2026-08-11) — Part CXXIV / SAFE-DISTRACTOR |
 | 125 | Confidence-tagged misses in gap-scan recovery | SAFE-TAXON × SAFE-CALIB; hard/kinda/easy × mark type without Identity Score™ | **DONE** (2026-08-11) — Part CXXV / SAFE-CONFMISS |
 | — | **Synthesizer v1.16** | Merge CXVII–CXXV SAFE-* into core OS I.4 / XIV / IX / XXI | **DONE** (2026-08-11 UTC 15) |
-| 126 | Tutor micro-debrief fidelity under time caps | SAFE-AAR × SAFE-LOADSHED; 90-second after-action without lecture cosplay | **NEXT** |
-| 127 | Parent crunch-week message tests (availability vs thinking minutes) | SAFE-LOADSHED × SAFE-WTP; CBC on shed honesty vs 24/7 brand | queued |
+| 126 | Tutor micro-debrief fidelity under time caps | SAFE-AAR × SAFE-LOADSHED; 90-second after-action without lecture cosplay | **DONE** (2026-08-11) — Part CXXVI / SAFE-MICRODEB |
+| 127 | Parent crunch-week message tests (availability vs thinking minutes) | SAFE-LOADSHED × SAFE-WTP; CBC on shed honesty vs 24/7 brand | **NEXT** |
 | 128 | Format-trap distractors on diagram/graph items | SAFE-DISTRACTOR × SAFE-FORMAT/DUAL; visual distractors without decoration theater | queued |
+| 129 | Session-open brief fidelity under late joins | SAFE-AAR × SAFE-MICRODEB; 30-second brief when clock already burned | queued |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 
@@ -207,3 +208,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any hours-booked / session-volume crunch NS / Load Shed Score™ or Crunch Minutes / infinite-availability exam brand / wellness-primary under caseload spike / hire-surge without coach bandwidth / pour-mode≡exam support / hospital-cosplay ads / soft standards for crunch personas / ACT guarantees from crunch playbooks (Part CXXIII / SAFE-LOADSHED / v1.16 company law)
 - Any Distractor Score™ / Option Minutes / always-four≡better / beauty traps·absurd fillers·NOTA-AOTA default / unmapped wrongs≡diagnostic / LLM distractors without mis_ seal / option-count or item-count NS / ACT guarantees from distractor packaging (Part CXXIV / SAFE-DISTRACTOR / v1.16 company law)
 - Any Identity Score™ / Confidence Personality™ from hard/kinda/easy / equal-weight recovery for all misses / easy≡mastered / inflate-confidence as recovery NS / Belief Score™ / CA-without-route / ACT guarantees from confidence-tagged recovery packaging (Part CXXV / SAFE-CONFMISS / v1.16 company law)
+- Any “no time for debrief” default / lecture-as-micro-debrief / Microdebrief Score™·Debrief Minutes·Reflection Streak NS / +25% ACT from borrowed debrief metas / military-cosplay micro-AAR / vibes-only close without traces / therapy-length mandate under crunch / ACT guarantees from micro-debrief packaging (Part CXXVI / SAFE-MICRODEB)

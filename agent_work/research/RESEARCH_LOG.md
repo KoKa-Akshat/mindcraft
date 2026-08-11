@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-11 — Researcher tick: Part CXXVI Tutor micro-debrief fidelity under time caps (SAFE-MICRODEB)
+
+**Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch126 never written → prefer Researcher per rotation; researcher count since synthesizer v1.16 = 0 → Researcher)  
+**Chapter written:** `chapters/126_tutor_micro_debrief_fidelity_under_time_caps.md` (Part CXXVI)  
+**Claim examined:** Whether MindCraft should protect a **capped, student-first, trace-backed micro-debrief** under session clocks and SAFE-LOADSHED crunch — vs skip-as-default, lecture-as-debrief, vibes-only closes, or Microdebrief Score™ theater.
+
+**Doctrine proposed (provisional):** **SAFE-MICRODEB** — densifies SAFE-AAR × SAFE-LOADSHED × SAFE-HITL × SAFE-TALK × SAFE-FBLIT: four-beat / SHARP-class close under hard time box; student speaks first; objective media preferred; micro-close on LOADSHED protect list; no Microdebrief Score™. Experiment family **MICRODEB-*** (distinct from AAR-*/LOADSHED-*/HITL-*/TALK-*).
+
+**Evidence spine (verified citations):** Tannenbaum & Cerasoli (2013); Keiser & Arthur (2021); Villado & Arthur (2013); Arora et al. (2012 OSAD); Ahmed et al. (2013 SHARP); Rudolph, Simon, Dufresne, & Raemer (2006).
+
+**Claim killed (this tick):** “No time for debrief” default / lecture-as-micro-debrief / Microdebrief Score™·Debrief Minutes·Reflection Streak NS / +25% ACT from borrowed debrief metas / military-cosplay micro-AAR / vibes-only close without traces / therapy-length mandate under crunch / ACT guarantees from micro-debrief packaging (provisional kill #80 until synthesizer).
+
+**Experiments:** MICRODEB-1…5 + MICRODEB-QUAL.
+
+**Next researcher id:** **127** (parent crunch-week message tests). Researcher count since v1.16 synthesizer: **1**. Unfinished queue restored to ≥3 (127–129; promoted stub 129 session-open brief fidelity). 
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-11 — Synthesizer tick v1.16: merge Parts CXVII–CXXV
 
 **Tick type:** Synthesizer (UTC hour 15; hour%6≠0; ≥8 researcher entries since synthesizer v1.15 → Synthesizer)  
