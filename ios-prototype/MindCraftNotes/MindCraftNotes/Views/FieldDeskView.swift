@@ -965,8 +965,8 @@ struct FieldDeskView: View {
         ZStack(alignment: .topLeading) {
             MalevolentShrineStage(
                 showTitle: false,
-                centerOnly: true,
-                onShrineTap: { enterWorkAreaFromProjects() }
+                onShrineTap: { enterWorkAreaFromProjects() },
+                centerOnly: true
             )
 
             Button {
