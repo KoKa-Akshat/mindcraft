@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-11 — Researcher tick: Part CXXV Confidence-tagged misses in gap-scan recovery (SAFE-CONFMISS)
+
+**Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch125 never written → prefer Researcher per rotation; researcher count since synthesizer v1.15 = 8 → Researcher)  
+**Chapter written:** `chapters/125_confidence_tagged_misses_gap_scan_recovery.md` (Part CXXV)  
+**Claim examined:** Whether MindCraft should treat gap-scan / diagnostic recovery as **confidence × mark-type class routing** (CRI fork + hypercorrection priority) — vs Identity Score™ / Confidence Personality™ theater, equal-weight red-X decks, or inflate-confidence recovery.
+
+**Doctrine proposed (provisional):** **SAFE-CONFMISS** — densifies SAFE-TAXON × SAFE-CALIB × SAFE-MONITOR × SAFE-COLD: tag misses with confidence grain; fork recovery dose (high-conf bug vs low-conf lack); prioritize attended destaked springboards for sure misses; no Identity Score™. Experiment family **CONFMISS-*** (distinct from CAL-*/MONITOR-*/TAXON-*/COLD-*).
+
+**Evidence spine (verified citations):** Hasan, Bagayoko, & Kelley (1999); Butterfield & Metcalfe (2001; 2006); Metcalfe & Finn (2011; 2012); Dunlosky & Rawson (2012); Foster, Woodhead, Barton, & Clark-Wilson (2022).
+
+**Claim killed (this tick):** Identity Score™·Confidence Personality™ from hard/kinda/easy / equal-weight recovery / easy≡mastered / inflate-confidence recovery NS / Belief Score™ / CA-without-route / ACT guarantees from confidence-tagged recovery packaging (provisional kill #79 until synthesizer).
+
+**Experiments:** CONFMISS-1…5 + CONFMISS-QUAL.
+
+**Next researcher id:** **126** (tutor micro-debrief fidelity under time caps). Researcher count since v1.15 synthesizer: **9** → Synthesizer eligible on next hour%6≠0 tick (Red Team still on hour%6==0 if newest chapter written). Unfinished queue still ≥3 (126–128); no QUEUE_EXTENDED promote this tick.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-11 — Researcher tick: Part CXXIV Distractor design for diagnostic soft-wrong MC (SAFE-DISTRACTOR)
 
 **Tick type:** Researcher (UTC hour 09; hour%6≠0; researcher count since synthesizer v1.15 = 7 → Researcher)  
