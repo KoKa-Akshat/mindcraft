@@ -60,25 +60,42 @@ rm -rf "${PROTO}/MindCraftNotes/MindCraftNotes.xcodeproj/project.xcworkspace/xcs
 rm -rf "${HOME}/Library/Developer/Xcode/DerivedData"
 
 echo "== Resolve packages from CLI (this is the Firebase fix) =="
+echo "NOTE: first Firebase download is BIG. Expect 10–25 minutes of quiet work."
+echo "You should see heartbeat lines every 30s. Do NOT Ctrl-C unless >30 min with no heartbeat."
 if ! command -v xcodebuild >/dev/null 2>&1; then
   echo "xcodebuild missing — open Xcode once, then re-run."
   exit 1
 fi
 
+# Stream logs live (old `tail -40` made this look frozen until the end).
+: > /tmp/mc-spm-resolve.log
+(
+  while true; do
+    sleep 30
+    if ! kill -0 $$ 2>/dev/null; then exit 0; fi
+    SZ=$(wc -c < /tmp/mc-spm-resolve.log 2>/dev/null || echo 0)
+    echo "  … still resolving SPM ($(date +%H:%M:%S), log ${SZ} bytes)"
+  done
+) &
+HEART_PID=$!
+trap 'kill $HEART_PID 2>/dev/null || true' EXIT
+
 set +e
+# stdbuf may be missing on macOS; plain tee still streams better than tail.
 xcodebuild -resolvePackageDependencies \
   -project "$PROJ" \
   -scheme MindCraftNotes \
   -derivedDataPath /tmp/mc-dd-resolve \
-  2>&1 | tee /tmp/mc-spm-resolve.log | tail -40
+  2>&1 | tee /tmp/mc-spm-resolve.log
 RESOLVE_RC=${PIPESTATUS[0]}
 set -e
+kill "$HEART_PID" 2>/dev/null || true
 
 if [[ "$RESOLVE_RC" -ne 0 ]]; then
   echo
   echo "SPM resolve FAILED (exit $RESOLVE_RC)."
   echo "Last errors:"
-  rg -i 'error:|fatal:|No space|timed out|Could not resolve' /tmp/mc-spm-resolve.log | tail -30 || true
+  grep -Ei 'error:|fatal:|No space|timed out|Could not resolve' /tmp/mc-spm-resolve.log | tail -30 || true
   echo
   echo "If you see 'No space left on device' → free Storage → Developer rows, re-run."
   echo "If network/timeout → retry on stable Wi‑Fi."
@@ -86,6 +103,17 @@ if [[ "$RESOLVE_RC" -ne 0 ]]; then
 fi
 
 echo "== Build for iOS Simulator (typecheck) =="
+echo "NOTE: first clean build can take another 10–20 minutes. Heartbeat every 30s."
+: > /tmp/mc-xcodebuild.log
+(
+  while true; do
+    sleep 30
+    SZ=$(wc -c < /tmp/mc-xcodebuild.log 2>/dev/null || echo 0)
+    echo "  … still building ($(date +%H:%M:%S), log ${SZ} bytes)"
+  done
+) &
+HEART_PID=$!
+
 set +e
 xcodebuild build \
   -project "$PROJ" \
@@ -93,14 +121,16 @@ xcodebuild build \
   -destination 'generic/platform=iOS Simulator' \
   -derivedDataPath /tmp/mc-dd-build \
   CODE_SIGNING_ALLOWED=NO \
-  2>&1 | tee /tmp/mc-xcodebuild.log | tail -50
+  2>&1 | tee /tmp/mc-xcodebuild.log
 BUILD_RC=${PIPESTATUS[0]}
 set -e
+kill "$HEART_PID" 2>/dev/null || true
+trap - EXIT
 
 if [[ "$BUILD_RC" -ne 0 ]]; then
   echo
   echo "BUILD FAILED. Compile errors:"
-  rg -n 'error:' /tmp/mc-xcodebuild.log | head -40 || true
+  grep -n 'error:' /tmp/mc-xcodebuild.log | head -40 || true
   exit "$BUILD_RC"
 fi
 
