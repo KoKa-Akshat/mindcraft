@@ -122,9 +122,10 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 127 | Parent crunch-week message tests (availability vs thinking minutes) | SAFE-LOADSHED × SAFE-WTP; CBC on shed honesty vs 24/7 brand | **DONE** (2026-08-11) — Part CXXVII / SAFE-CRUNCHMSG |
 | 128 | Format-trap distractors on diagram/graph items | SAFE-DISTRACTOR × SAFE-FORMAT/DUAL; visual distractors without decoration theater | **DONE** (2026-08-12) — Part CXXVIII / SAFE-FORMTRAP |
 | 129 | Session-open brief fidelity under late joins | SAFE-AAR × SAFE-MICRODEB; 30-second brief when clock already burned | **DONE** (2026-08-12) — Part CXXIX / SAFE-MICROBRIEF |
-| 130 | Dual-rail Solver CTA copy under crunch (help tonight vs Practice gym) | SAFE-HWHELP × SAFE-CRUNCHMSG; parent/student CTAs without Chegg hero | **NEXT** |
-| 131 | Figure key-verify loops for generated FormatId stems | SAFE-GENQ × SAFE-FORMTRAP/DUAL; structural key gates without fluency SVG pass | queued |
+| 130 | Dual-rail Solver CTA copy under crunch (help tonight vs Practice gym) | SAFE-HWHELP × SAFE-CRUNCHMSG; parent/student CTAs without Chegg hero | **DONE** (2026-08-12) — Part CXXX / SAFE-CRUNCHCTA |
+| 131 | Figure key-verify loops for generated FormatId stems | SAFE-GENQ × SAFE-FORMTRAP/DUAL; structural key gates without fluency SVG pass | **NEXT** |
 | 132 | Async pre-brief cards while waiting for late tutor | SAFE-MICROBRIEF × SAFE-SRL; student-owned Set without pour-open / idle lobby | queued |
+| 133 | One-tap Solver→Practice transfer grain after instrumental help | SAFE-HWHELP × SAFE-CRUNCHCTA × SAFE-SCHED; handoff without dump-and-quit | queued |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 
@@ -215,3 +216,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any 24/7·infinite-availability default parent value prop / hours-booked crunch hero / fear-appeal parent emails as default / silent shed≡care / Likert-WTP for “thinking minutes” / Availability Score™·Crunch Message Score™·Open-Late Minutes NS / ACT guarantees from crunch messaging (Part CXXVII / SAFE-CRUNCHMSG)
 - Any FormatTrap Score™ / Visual Distractor Minutes / seductive stem art≡FormatId / beauty-trap option pictures / unmapped visual wrongs≡diagnostic / decoration≡dual-coding distractors / LLM figure options without trap seal / visual miss≡topic-only / ACT guarantees from visual-distractor packaging (Part CXXVIII / SAFE-FORMTRAP)
 - Any “no time for brief/goals” default / pour-open lecture-as-brief / Brief Score™·Brief Minutes·Opening Streak NS / late-join shame open / aviation·OR·I-PASS cosplay ACT ads / vibes-only open without named edge / soft standards via “we connected” / ACT guarantees from micro-brief packaging (Part CXXIX / SAFE-MICROBRIEF)
+- Any single Chegg-hero Solver CTA under crunch / “finish tonight’s homework” primary brand / fear-countdown→dump CTAs / Dual-CTA Score™·Help Tonight Minutes·Crunch Click NS / silent Practice-rail collapse in exam week / assisted≡ready from Solver CTA / ACT guarantees from dual-rail CTA packaging (Part CXXX / SAFE-CRUNCHCTA)

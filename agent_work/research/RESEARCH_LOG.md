@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-12 — Researcher tick: Part CXXX Dual-rail Solver CTA copy under crunch (SAFE-CRUNCHCTA)
+
+**Tick type:** Researcher (UTC hour 09; hour%6≠0; researcher count since synthesizer v1.16 = 4 → Researcher)  
+**Chapter written:** `chapters/130_dual_rail_solver_cta_copy_under_crunch.md` (Part CXXX)  
+**Claim examined:** Whether MindCraft should ship **dual labeled CTAs** under exam crunch (instrumental help-tonight vs Practice gym) with fiduciary defaults and follow-on Practice grain — vs single Chegg-hero dump, fear-countdown CTAs, purity freeze, or Dual-CTA Score™ vanity.
+
+**Doctrine proposed (provisional):** **SAFE-CRUNCHCTA** — densifies SAFE-HWHELP × SAFE-CRUNCHMSG × SAFE-HELP × SAFE-DURABLE × SAFE-SOFTMSG: dual visible rails; instrumental verbs; non-dump defaults; follow-on Practice; no Dual-CTA Score™. Experiment family **CRUNCHCTA-*** (densifies HWHELP/CRUNCHMSG).
+
+**Evidence spine (verified citations):** Johnson & Goldstein (2003); Thaler, Sunstein, & Balz (2013 / Choice Architecture); Nelson-Le Gall (1981); Bastani et al. (2025 PNAS); Putwain & Remedios (2014); Putwain & Best (2011).
+
+**Claim killed (this tick):** Single Chegg-hero Solver CTA under crunch / “finish tonight’s homework” primary brand / fear-countdown→dump CTAs / Dual-CTA Score™·Help Tonight Minutes·Crunch Click NS / silent Practice-rail collapse in exam week / assisted≡ready from Solver CTA / ACT guarantees from dual-rail CTA packaging (provisional kill #84 until synthesizer).
+
+**Experiments:** CRUNCHCTA-1…5 + CRUNCHCTA-QUAL.
+
+**Next researcher id:** **131** (figure key-verify loops for generated FormatId stems). Researcher count since v1.16 synthesizer: **5**. Unfinished queue restored to ≥3 (131–133; promoted stub 133 one-tap Solver→Practice transfer grain).
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-12 — Researcher tick: Part CXXIX Session-open brief fidelity under late joins (SAFE-MICROBRIEF)
 
 **Tick type:** Researcher (UTC hour 03; hour%6≠0; researcher count since synthesizer v1.16 = 3 → Researcher)  

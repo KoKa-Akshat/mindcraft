@@ -92,5 +92,6 @@ Promote 3 at a time into `NEXT_LAB.md`. Do not write all at once.
 | 116 | Offline practice fidelity (paper/whiteboard capture) | Photo-to-Map; attempt grain without phone distraction | promoted → NEXT_LAB |
 | 124 | Distractor design for diagnostic soft-wrong MC | SAFE-TAXON × SAFE-MISCON; Eedi-style options | promoted → NEXT_LAB |
 | 125 | Confidence-tagged misses in gap-scan recovery | SAFE-TAXON × SAFE-CALIB; hard/kinda/easy × mark type | promoted → NEXT_LAB |
-| 130 | Dual-rail Solver CTA copy under crunch (help tonight vs Practice gym) | SAFE-HWHELP × SAFE-CRUNCHMSG; parent/student CTAs without Chegg hero | promoted → NEXT_LAB |
+| 130 | Dual-rail Solver CTA copy under crunch (help tonight vs Practice gym) | SAFE-HWHELP × SAFE-CRUNCHMSG; parent/student CTAs without Chegg hero | **DONE** → `130_dual_rail_solver_cta_copy_under_crunch.md` |
 | 132 | Async pre-brief cards while waiting for late tutor | SAFE-MICROBRIEF × SAFE-SRL; student-owned Set without pour-open | promoted → NEXT_LAB |
+| 133 | One-tap Solver→Practice transfer grain after instrumental help | SAFE-HWHELP × SAFE-CRUNCHCTA × SAFE-SCHED; handoff without dump-and-quit | promoted → NEXT_LAB |
