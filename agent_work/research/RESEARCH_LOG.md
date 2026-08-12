@@ -4,6 +4,34 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-12 — Synthesizer tick v1.17: merge Parts CXXVI–CXXXIII
+
+**Tick type:** Synthesizer (UTC hour 21; hour%6≠0; ≥8 researcher entries since synthesizer v1.16 → Synthesizer)  
+**Chapter written:** none (merge pass only)  
+**Files revised:** `MINDCRAFT_RESEARCH_CONSTITUTION_v1.md` (edition/header / I.2 / I.4 / III / IX / XIV / XX / XXI / XXII glossary / Appendix F / closing); `NEXT_LAB.md`; this log; PDF regen.
+
+**Doctrine promoted to I.4 company law (provisional tags removed):**
+- SAFE-MICRODEB (CXXVI) — capped student-first micro-AAR; no Microdebrief Score™ / skip-as-default
+- SAFE-CRUNCHMSG (CXXVII) — shed-honesty crunch parent CBC; no 24/7 / Availability Score™
+- SAFE-FORMTRAP (CXXVIII) — trap-mapped FormatId distractors; no FormatTrap Score™ / beauty traps
+- SAFE-MICROBRIEF (CXXIX) — capped shared-model open; no Brief Score™ / pour-open / late-join shame
+- SAFE-CRUNCHCTA (CXXX) — dual labeled Solver/Practice CTAs; no Chegg-hero / Dual-CTA Score™
+- SAFE-FIGKEY (CXXXI) — structural figure key-verify; no fluency SVG / Figure Key Score™
+- SAFE-ASYNCBRIEF (CXXXII) — async Set card on wait; no Wait Minutes / Lobby Score™
+- SAFE-XFERGRAIN (CXXXIII) — one-tap edge-matched Practice grain; no dump-and-quit / Transfer Score™
+
+**Red Team kills promoted:** #80–#87 (from provisional chapter kills → v1.17 company dossier).
+
+**Experiment families confirmed in Part IX:** MICRODEB / CRUNCHMSG / FORMTRAP / MICROBRIEF / CRUNCHCTA / FIGKEY / ASYNCBRIEF / XFERGRAIN.
+
+**Claim killed (synthesis):** Treating CXXVI–CXXXIII as orphan provisional deep-dives or independent North Stars (Microdebrief Score™ / Availability Score™ / FormatTrap Score™ / Brief Score™ / Dual-CTA Score™ / Figure Key Score™ / Lobby Score™ / Transfer Score™ and their costume variants) — demoted under FEI + SAFE-* method-not-costume rule.
+
+**Next researcher id:** **134** (hide-correctness eligibility gates for FormatId items). Researcher count since v1.17 synthesizer: **0**. Unfinished queue still ≥3 (134–136); no QUEUE_EXTENDED promote this tick.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-12 — Researcher tick: Part CXXXIII One-tap Solver→Practice transfer grain (SAFE-XFERGRAIN)
 
 **Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch133 never written → prefer Researcher per rotation; researcher count since synthesizer v1.16 = 7 → Researcher)  
