@@ -237,7 +237,7 @@ def add_page(canvas, doc):
     canvas.drawCentredString(
         letter[0] / 2,
         0.55 * inch,
-        f"MindCraft Brand Book v1.1  ·  The Desk by MindCraft  ·  page {doc.page}",
+        f"MindCraft Brand Book v2.0  ·  The Desk by MindCraft  ·  page {doc.page}",
     )
     canvas.restoreState()
 
@@ -266,17 +266,17 @@ def main() -> int:
         Paragraph("MINDCRAFT", styles["cover_kicker"]),
         Paragraph("Brand Book", styles["cover_title"]),
         Spacer(1, 0.15 * inch),
-        Paragraph("Version 1.1 · The Desk by MindCraft", styles["cover_sub"]),
+        Paragraph("Version 2.0 · The Desk by MindCraft", styles["cover_sub"]),
         Spacer(1, 0.35 * inch),
         HRFlowable(width="36%", thickness=2, color=LIME, spaceBefore=4, spaceAfter=14),
         Paragraph(
-            "Math is the mechanism. The story is the point.<br/>"
-            "The Desk is the place. Everything serves the click.",
+            "Never work alone. Office hours from your room.<br/>"
+            "Inside Solver, math is still the mechanism, the story is still the point.",
             styles["cover_sub"],
         ),
         Spacer(1, 0.45 * inch),
         Paragraph(
-            "Voice · Maya · vocabulary · visual stages · anti-positioning · research handshake",
+            "Positioning · voice · Maya · Jordan · vocabulary · visual stages · anti-positioning · Katha",
             styles["meta"],
         ),
         Spacer(1, 0.2 * inch),
