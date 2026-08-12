@@ -588,29 +588,51 @@ struct FieldDeskView: View {
                     .animation(.easeInOut(duration: 0.22), value: showTopChrome)
                 }
             }
-            // Top-left product mark → Manage (text only: The Desk).
+            // Top-left product mark → Manage (text only: The Desk), plus Call
+            // right beside it. `topChrome` below is a swipe-to-reveal bar
+            // that's also fully suppressed on Standalone Desk / Create
+            // Studio (`floatDockBlocked`) — Call used to live only there, so
+            // it vanished entirely on those two screens and needed a swipe
+            // to appear on Jesse's. Anchoring it to this always-visible
+            // header instead gives it one consistent home across all three
+            // screens, next to "The Desk" wordmark (Akshat).
             .overlay(alignment: .topLeading) {
                 if !deskOverlayChromeBlocked {
-                    Button {
-                        openManageFromChrome()
-                    } label: {
-                        Text("The Desk")
-                            .font(.system(size: 13, weight: .heavy, design: .rounded))
-                            .foregroundColor(Color(fdHex: "143a2e"))
-                            .padding(.horizontal, 14)
-                            .padding(.vertical, 10)
-                            .background(
-                                Capsule()
-                                    .fill(Color.white.opacity(0.96))
-                                    .shadow(color: .black.opacity(0.16), radius: 8, y: 3)
-                            )
+                    HStack(spacing: 10) {
+                        Button {
+                            openManageFromChrome()
+                        } label: {
+                            Text("The Desk")
+                                .font(.system(size: 13, weight: .heavy, design: .rounded))
+                                .foregroundColor(Color(fdHex: "143a2e"))
+                                .padding(.horizontal, 14)
+                                .padding(.vertical, 10)
+                                .background(
+                                    Capsule()
+                                        .fill(Color.white.opacity(0.96))
+                                        .shadow(color: .black.opacity(0.16), radius: 8, y: 3)
+                                )
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityIdentifier("fieldDeskLogoManage")
+                        .accessibilityLabel("The Desk · Manage")
+
+                        Button {
+                            showFindTutor = true
+                        } label: {
+                            Image(systemName: "phone.fill")
+                                .font(.system(size: 14, weight: .medium))
+                                .foregroundColor(Color(fdHex: "c4f547"))
+                                .frame(width: 40, height: 40)
+                                .background(Circle().fill(Color(fdHex: "111111")))
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityIdentifier("fieldDeskCallButton")
+                        .accessibilityLabel("Call")
                     }
-                    .buttonStyle(.plain)
                     .padding(.top, 12)
                     .padding(.leading, 16)
                     .zIndex(80)
-                    .accessibilityIdentifier("fieldDeskLogoManage")
-                    .accessibilityLabel("The Desk · Manage")
                 }
             }
             // Top-right: mode toggle (Create/Work or Jesse's pair) · Sign out.
@@ -754,21 +776,11 @@ struct FieldDeskView: View {
     }
 
     private var topChrome: some View {
-        // Call · (name at end) — logo / Home / desk pill retired per Akshat.
+        // Call now lives in the always-visible top-leading header next to
+        // "The Desk" wordmark (see the .overlay(alignment: .topLeading)
+        // above) so it shows up consistently on Jesse's, Work, and Create —
+        // this swipe-to-reveal bar just carries the name now.
         HStack(spacing: 10) {
-            Button {
-                showFindTutor = true
-            } label: {
-                Image(systemName: "phone.fill")
-                    .font(.system(size: 14, weight: .medium))
-                    .foregroundColor(Color(fdHex: "c4f547"))
-                    .frame(width: 34, height: 34)
-                    .background(Circle().fill(Color(fdHex: "111111")))
-            }
-            .buttonStyle(.plain)
-            .accessibilityIdentifier("fieldDeskCallButton")
-            .accessibilityLabel("Call")
-
             Spacer(minLength: 8)
                 .allowsHitTesting(false)
 
@@ -1122,6 +1134,11 @@ struct FieldDeskView: View {
             shrineBeatPhase = .idle
             shrineCaption = ""
         }
+        // Akshat: tapping "Work" should default straight into the beat that
+        // used to require a separate manual tap on the shrine.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            startShrineEntranceBeat()
+        }
     }
 
     private func switchDeskToCreate() {
@@ -1191,6 +1208,14 @@ struct FieldDeskView: View {
             // Straight to centered shrine — no polka sheet on this path.
             withAnimation(.easeInOut(duration: 0.25)) {
                 showProjectsScreen = true
+            }
+            // Akshat: entering Work should go straight into the beat, not
+            // gate it behind an extra manual tap on the shrine. Reuses the
+            // same startShrineEntranceBeat() the shrine tap calls, guarded
+            // by the same `shrineBeatPhase == .idle` check so a fast manual
+            // tap in the meantime can't double-fire it.
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                startShrineEntranceBeat()
             }
         case .wakeJesse:
             flash("Jesse’s Kitchen")

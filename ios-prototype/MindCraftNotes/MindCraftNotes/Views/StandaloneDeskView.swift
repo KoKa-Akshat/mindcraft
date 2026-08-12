@@ -69,11 +69,32 @@ private struct DeskWebView: UIViewRepresentable {
         return URL(string: "\(KitchenSchemeHandler.scheme)://desk/desk.html")!
     }
 
+    /// Diagnosed: `if showStandaloneDesk { StandaloneDeskView(...) }` in
+    /// FieldDeskView fully destroys this `UIViewRepresentable` every time the
+    /// user leaves the Desk, so returning used to call `makeUIView` fresh —
+    /// a full HTML/CSS/JS cold start (plus the Google Fonts network fetch in
+    /// desk.html's `<head>`) on every single visit. That cold start, not the
+    /// old `.reloadIgnoringLocalCacheData` policy, was the visible "glitch"
+    /// (the top-level `mcworld://` load is served by `KitchenSchemeHandler`
+    /// straight from the bundle and never touches the HTTP cache regardless
+    /// of policy). Fix: keep one `WKWebView` alive for the process lifetime
+    /// and reuse it — the page loads once and later visits just re-parent it.
+    private static var cachedWebView: WKWebView?
+
     func makeCoordinator() -> Coordinator {
         Coordinator(onAction: onAction)
     }
 
     func makeUIView(context: Context) -> WKWebView {
+        if let cached = Self.cachedWebView {
+            // Re-bind the native bridge to this mount's coordinator; the
+            // page itself (and all its DOM/JS state) stays exactly as the
+            // user left it.
+            cached.configuration.userContentController.removeScriptMessageHandler(forName: "deskAction")
+            cached.configuration.userContentController.add(context.coordinator, name: "deskAction")
+            return cached
+        }
+
         let config = WKWebViewConfiguration()
         config.allowsInlineMediaPlayback = true
         config.setURLSchemeHandler(KitchenSchemeHandler(), forURLScheme: KitchenSchemeHandler.scheme)
@@ -92,7 +113,12 @@ private struct DeskWebView: UIViewRepresentable {
             view.isInspectable = true
         }
         view.accessibilityIdentifier = "standaloneDeskWebView"
-        view.load(URLRequest(url: Self.deskURL, cachePolicy: .reloadIgnoringLocalCacheData))
+        // Standard HTTP caching (was `.reloadIgnoringLocalCacheData`, which
+        // forced a no-cache network re-fetch on the debug URL-override path
+        // every load — inert for the default bundled `mcworld://` path since
+        // the scheme handler never consults the HTTP cache either way).
+        view.load(URLRequest(url: Self.deskURL, cachePolicy: .useProtocolCachePolicy))
+        Self.cachedWebView = view
         return view
     }
 
@@ -101,7 +127,9 @@ private struct DeskWebView: UIViewRepresentable {
     }
 
     static func dismantleUIView(_ uiView: WKWebView, coordinator: Coordinator) {
-        uiView.configuration.userContentController.removeScriptMessageHandler(forName: "deskAction")
+        // Deliberately do NOT remove the script message handler or discard
+        // the view here — `cachedWebView` keeps it alive so the next mount
+        // reuses the already-loaded page instead of reloading from scratch.
     }
 
     final class Coordinator: NSObject, WKScriptMessageHandler {

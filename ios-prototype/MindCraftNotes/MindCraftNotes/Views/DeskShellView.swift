@@ -340,17 +340,20 @@ struct DeskShellView: View {
                     .foregroundColor(ShellColor.ink)
                     .accessibilityIdentifier("deskHubWordmark")
 
-                // Settings gear (was Manage).
-                Button { showManage = true } label: {
-                    Image(systemName: "gearshape.fill")
+                // Was Settings (opened AccountManageView, which Akshat found
+                // did nothing functional) — now goes straight to Jesse's,
+                // reusing the same `fieldDeskRoute = .plain` navigation the
+                // house icon and "The Desk" instance card already use.
+                Button { fieldDeskRoute = .plain } label: {
+                    Image(systemName: "fork.knife")
                         .font(.system(size: 15, weight: .semibold))
                         .foregroundColor(ShellColor.ink)
-                        .frame(width: 34, height: 34)
+                        .frame(width: 44, height: 44)
                         .background(Circle().fill(ShellColor.brandGreen.opacity(0.22)))
                 }
                 .buttonStyle(.plain)
                 .accessibilityIdentifier("deskHubManage")
-                .accessibilityLabel("Settings")
+                .accessibilityLabel("Go to Jesse's")
                 callButton
             }
             Spacer(minLength: 8)
@@ -372,7 +375,7 @@ struct DeskShellView: View {
                     Image(systemName: "house.fill")
                         .font(.system(size: 14, weight: .semibold))
                         .foregroundColor(ShellColor.ink)
-                        .frame(width: 34, height: 34)
+                        .frame(width: 44, height: 44)
                         .background(Circle().fill(ShellColor.brandGreen.opacity(0.22)))
                 }
                 .buttonStyle(.plain)
@@ -529,7 +532,7 @@ struct DeskShellView: View {
             Image(systemName: "phone.fill")
                 .font(.system(size: 14, weight: .medium))
                 .foregroundColor(Color(shellHex: "c4f547"))
-                .frame(width: 34, height: 34)
+                .frame(width: 44, height: 44)
                 .background(Circle().fill(Color(shellHex: "111111")))
         }
         .buttonStyle(.plain)
@@ -1789,7 +1792,7 @@ private struct DeskBootView: View {
         ("books.vertical.fill", Color(shellHex: "c4f547")),
         ("sparkles", Color(shellHex: "c4f547")),
         ("waveform", Color(shellHex: "9ad4ff")),
-        ("doc.text.fill", Color(shellHex: "f4efe2")),
+        ("doc.text.fill", ShellColor.ink),
         ("note.text", Color(shellHex: "f0c674")),
         ("envelope.fill", Color(shellHex: "ff8a80")),
         ("calendar", Color(shellHex: "80cbc4")),

@@ -556,6 +556,13 @@
   .cap .glyph svg{width:24px; height:24px;}
   .cap h3{font-size:21px; margin-bottom:8px;}
   .cap p{font-size:14px; font-weight:700; color:var(--muted); line-height:1.5;}
+
+  /* ---------- Workflows showcase ---------- */
+  .workflows{background:linear-gradient(180deg, var(--blue), var(--mint));}
+  .workflow-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:46px;}
+  @media(max-width:900px){.workflow-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:640px){.workflow-grid{grid-template-columns:1fr;}}
+
   .cap.featured{
     display:grid; grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);
     gap:22px; align-items:center; padding:22px 24px;
@@ -1635,11 +1642,11 @@
   </svg>
   <div class="hero-stage">
     <div>
-      <a class="hero-announce" href="#learns"><i>NEW</i> The Desk by MindCraft →</a>
-      <h1><span class="hero-first-line">Like a gym membership</span><em>for learning.</em></h1>
-      <p class="lead">Personalized. We make sure you get care and support when you need it.</p>
+      <a class="hero-announce" href="#learns"><i>NEW</i> The Desk by MindCraft · never work alone →</a>
+      <h1><span class="hero-first-line">Two minds craft</span><em>better than one.</em></h1>
+      <p class="lead">Office hours from your room. Bring whatever you're working on — a real mentor meets you there.</p>
       <div class="hero-actions">
-        <a class="btn primary" href="#start">Build my learning map</a>
+        <a class="btn primary" href="#start">Claim your desk</a>
         <a class="btn soft" href="#learns">See how it learns</a>
       </div>
     </div>
@@ -1838,6 +1845,68 @@
         <span>Scan</span><i>→</i><span>Build</span><i>→</i><span>Care</span><i>→</i><span>Grow</span>
       </div>
       <a class="btn primary reveal" href="#start">Start with ACT</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WORKFLOWS SHOWCASE ================= -->
+<section class="workflows" id="workflows">
+  <div class="wrap">
+    <div class="kicker reveal">Where it shows up</div>
+    <h2 class="h2 reveal">One desk. <span class="script">Six ways in.</span></h2>
+    <p class="lede reveal">Whatever's due tonight, there's already a real workflow for it — and a real person a tap away, if you want one.</p>
+
+    <div class="workflow-grid">
+      <div class="cap reveal">
+        <div class="glyph" style="background:var(--leaf);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h9l4 4v12H6z"/><path d="M15 4v4h4"/><path d="M9 12.5h6M9 16h4"/></svg>
+        </div>
+        <h3>Notes</h3>
+        <p>Drop in a worksheet or a link and it lands on your desk, named and dated — try it above.</p>
+      </div>
+      <div class="cap reveal">
+        <div class="glyph" style="background:var(--teal);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l5-6 4 3 6-8"/><circle cx="19" cy="6" r="1.6" fill="#fff" stroke="none"/></svg>
+        </div>
+        <h3>Solver</h3>
+        <p>Finds the exact gap in math or the ACT, then builds the lesson that closes it.</p>
+      </div>
+      <div class="cap reveal">
+        <div class="glyph" style="background:var(--violet);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="5"/><path d="M10 9l6 3-6 3z"/></svg>
+        </div>
+        <h3>Create</h3>
+        <p>Turn an idea into a video or a deck, scene by scene, with Jesse right beside you.</p>
+      </div>
+      <div class="cap reveal">
+        <div class="glyph" style="background:var(--gold-deep);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="m12.5 6.5 6 5.5-6 5.5"/></svg>
+        </div>
+        <h3>Ask</h3>
+        <p>Knows what you're working on. Bring it whatever's stuck, right from the desk.</p>
+      </div>
+      <div class="cap reveal">
+        <div class="glyph" style="background:var(--rose);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="m9 13 2.3 2.3L16 10.5"/></svg>
+        </div>
+        <h3>Apply</h3>
+        <p>Build a resume and apply — today. One place for the whole application, not six tabs.</p>
+      </div>
+      <div class="cap reveal">
+        <div class="glyph" style="background:var(--amber);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="9" r="4"/><path d="M3 20c1.4-3.6 4-5.4 7-5.4s5.6 1.8 7 5.4"/><circle cx="18.5" cy="6.5" r="2" fill="#fff" stroke="none"/></svg>
+        </div>
+        <h3>Find a mentor</h3>
+        <p>Real college mentors, searchable near you. Book one the moment you're stuck.</p>
+      </div>
+    </div>
+
+    <div class="proof reveal" style="margin-top:48px;">
+      <div class="proof-frame">
+        <div class="proof-bar"><i></i><i></i><i></i><span>the desk · create studio</span></div>
+        <img src="img/app/create-studio-live.png" alt="The Desk's Create studio: a story mid-edit with Jesse's prompt bar, scene timeline, captions, and music panels open">
+      </div>
+      <div class="proof-cap">an idea becomes a video, live</div>
     </div>
   </div>
 </section>
