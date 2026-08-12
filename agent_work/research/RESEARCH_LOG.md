@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-12 — Researcher tick: Part CXXXI Figure key-verify loops for generated FormatId stems (SAFE-FIGKEY)
+
+**Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch131 never written → prefer Researcher per rotation; researcher count since synthesizer v1.16 = 5 → Researcher)  
+**Chapter written:** `chapters/131_figure_key_verify_loops_generated_formatid.md` (Part CXXXI)  
+**Claim examined:** Whether MindCraft must ship **structural figure key-verify** (constraints / IR / stem–figure–option joint checks) for generated FormatId stems — vs fluency SVG pass, LLM-as-judge-alone, FormatId-count heroes, or unverified figures in hide-correctness diagnostic.
+
+**Doctrine proposed (provisional):** **SAFE-FIGKEY** — densifies SAFE-GENQ × SAFE-FORMTRAP × SAFE-DUAL × SAFE-COVER × SAFE-EXPLAINQA: figures are keys; deterministic spine; use gating; no Figure Key Score™. Experiment family **FIGKEY-*** (densifies GENQ/FORMTRAP/DUAL/COVER).
+
+**Evidence spine (verified citations):** Gierl & Lai (2012; 2016); Gierl, Lai, & Turner (2012); Kane (2013); Mayer, Heiser, & Lonn (2001); Moreno & Mayer (1999); Ginns (2006); Haladyna, Downing, & Rodriguez (2002); Zhang et al. MathVerse (2024 arXiv); Kumar et al. DiagramIR (2025 arXiv); Wang et al. MagicGeo (2025 arXiv).
+
+**Claim killed (this tick):** Fluency SVG / pretty-render≡keyed figure / LLM-as-judge-alone figure ship / Figure Key Score™·Visual QA Minutes / unverified FormatId figures as diagnostic ground truth / FormatId-count or “AI drew N diagrams” hero / soft-pass wrong geometry / ACT guarantees from figure-generation packaging (provisional kill #85 until synthesizer).
+
+**Experiments:** FIGKEY-1…5 + FIGKEY-QUAL.
+
+**Next researcher id:** **132** (async pre-brief cards while waiting for late tutor). Researcher count since v1.16 synthesizer: **6**. Unfinished queue restored to ≥3 (132–134; promoted stub 134 hide-correctness eligibility for FormatId items).
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-12 — Researcher tick: Part CXXX Dual-rail Solver CTA copy under crunch (SAFE-CRUNCHCTA)
 
 **Tick type:** Researcher (UTC hour 09; hour%6≠0; researcher count since synthesizer v1.16 = 4 → Researcher)  
