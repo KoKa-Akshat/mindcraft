@@ -93,6 +93,7 @@ Promote 3 at a time into `NEXT_LAB.md`. Do not write all at once.
 | 124 | Distractor design for diagnostic soft-wrong MC | SAFE-TAXON × SAFE-MISCON; Eedi-style options | promoted → NEXT_LAB |
 | 125 | Confidence-tagged misses in gap-scan recovery | SAFE-TAXON × SAFE-CALIB; hard/kinda/easy × mark type | promoted → NEXT_LAB |
 | 130 | Dual-rail Solver CTA copy under crunch (help tonight vs Practice gym) | SAFE-HWHELP × SAFE-CRUNCHMSG; parent/student CTAs without Chegg hero | **DONE** → `130_dual_rail_solver_cta_copy_under_crunch.md` |
-| 132 | Async pre-brief cards while waiting for late tutor | SAFE-MICROBRIEF × SAFE-SRL; student-owned Set without pour-open | promoted → NEXT_LAB |
+| 132 | Async pre-brief cards while waiting for late tutor | SAFE-MICROBRIEF × SAFE-SRL; student-owned Set without pour-open | **DONE** → `132_async_prebrief_cards_late_tutor_wait.md` |
 | 133 | One-tap Solver→Practice transfer grain after instrumental help | SAFE-HWHELP × SAFE-CRUNCHCTA × SAFE-SCHED; handoff without dump-and-quit | promoted → NEXT_LAB |
 | 134 | Hide-correctness eligibility gates for FormatId items | SAFE-FIGKEY × SAFE-CALIB/COLD; when figure-keyed items may enter gap-scan | promoted → NEXT_LAB |
+| 135 | Known-finite ETA honesty in late-tutor lobby copy | SAFE-ASYNCBRIEF × Maister uncertain-wait; ETA truth without shame feed | promoted → NEXT_LAB |

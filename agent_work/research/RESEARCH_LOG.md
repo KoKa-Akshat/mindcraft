@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-12 — Researcher tick: Part CXXXII Async pre-brief cards while waiting for late tutor (SAFE-ASYNCBRIEF)
+
+**Tick type:** Researcher (UTC hour 15; hour%6≠0; researcher count since synthesizer v1.16 = 6 → Researcher)  
+**Chapter written:** `chapters/132_async_prebrief_cards_late_tutor_wait.md` (Part CXXXII)  
+**Claim examined:** Whether MindCraft must convert late/early **idle lobby** into a **capped student-owned Set/pre-brief card** that write-throughs to SAFE-MICROBRIEF — vs spinner-only waits, entertainment lobbies, pour-open AI warm-ups, forced marathon Practice-before-join, or Wait Minutes / Lobby Score™ vanity.
+
+**Doctrine proposed (provisional):** **SAFE-ASYNCBRIEF** — densifies SAFE-MICROBRIEF × SAFE-SRL × SAFE-ATTN × SAFE-LOADSHED × SAFE-EXPECTANCY: session-related occupied wait; four Set beats + if-then chip; live verify-not-replace; no Wait Minutes / Lobby Score™. Experiment family **ASYNCBRIEF-*** (absorbs MICROBRIEF-3).
+
+**Evidence spine (verified citations):** Maister (1985); Zimmerman (2002); Cosnefroy, Fenouillet, Mazé, & Bonnefoy (2018); Cleary & Zimmerman (2001); Gollwitzer (1999); Ausubel (1960); Leroy (2009); Locke & Latham (2002).
+
+**Claim killed (this tick):** Idle spinner-only late lobby / pour-open AI wait dump / Wait Minutes·Lobby Score™·Prebrief Streak NS / entertainment-primary fill / forced marathon Practice-before-join / late-tutor shame feed / ACT guarantees from async pre-brief packaging (provisional kill #86 until synthesizer).
+
+**Experiments:** ASYNCBRIEF-1…5 + ASYNCBRIEF-QUAL.
+
+**Next researcher id:** **133** (one-tap Solver→Practice transfer grain after instrumental help). Researcher count since v1.16 synthesizer: **7**. Unfinished queue restored to ≥3 (133–135; promoted stub 135 known-finite ETA honesty in late-tutor lobby).
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-12 — Researcher tick: Part CXXXI Figure key-verify loops for generated FormatId stems (SAFE-FIGKEY)
 
 **Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch131 never written → prefer Researcher per rotation; researcher count since synthesizer v1.16 = 5 → Researcher)  

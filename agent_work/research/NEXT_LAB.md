@@ -124,9 +124,10 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 129 | Session-open brief fidelity under late joins | SAFE-AAR × SAFE-MICRODEB; 30-second brief when clock already burned | **DONE** (2026-08-12) — Part CXXIX / SAFE-MICROBRIEF |
 | 130 | Dual-rail Solver CTA copy under crunch (help tonight vs Practice gym) | SAFE-HWHELP × SAFE-CRUNCHMSG; parent/student CTAs without Chegg hero | **DONE** (2026-08-12) — Part CXXX / SAFE-CRUNCHCTA |
 | 131 | Figure key-verify loops for generated FormatId stems | SAFE-GENQ × SAFE-FORMTRAP/DUAL; structural key gates without fluency SVG pass | **DONE** (2026-08-12) — Part CXXXI / SAFE-FIGKEY |
-| 132 | Async pre-brief cards while waiting for late tutor | SAFE-MICROBRIEF × SAFE-SRL; student-owned Set without pour-open / idle lobby | **NEXT** |
-| 133 | One-tap Solver→Practice transfer grain after instrumental help | SAFE-HWHELP × SAFE-CRUNCHCTA × SAFE-SCHED; handoff without dump-and-quit | queued |
+| 132 | Async pre-brief cards while waiting for late tutor | SAFE-MICROBRIEF × SAFE-SRL; student-owned Set without pour-open / idle lobby | **DONE** (2026-08-12) — Part CXXXII / SAFE-ASYNCBRIEF |
+| 133 | One-tap Solver→Practice transfer grain after instrumental help | SAFE-HWHELP × SAFE-CRUNCHCTA × SAFE-SCHED; handoff without dump-and-quit | **NEXT** |
 | 134 | Hide-correctness eligibility gates for FormatId items | SAFE-FIGKEY × SAFE-CALIB/COLD; when figure-keyed items may enter gap-scan | queued |
+| 135 | Known-finite ETA honesty in late-tutor lobby copy | SAFE-ASYNCBRIEF × Maister uncertain-wait; ETA truth without shame feed | queued |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 
@@ -219,3 +220,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any “no time for brief/goals” default / pour-open lecture-as-brief / Brief Score™·Brief Minutes·Opening Streak NS / late-join shame open / aviation·OR·I-PASS cosplay ACT ads / vibes-only open without named edge / soft standards via “we connected” / ACT guarantees from micro-brief packaging (Part CXXIX / SAFE-MICROBRIEF)
 - Any single Chegg-hero Solver CTA under crunch / “finish tonight’s homework” primary brand / fear-countdown→dump CTAs / Dual-CTA Score™·Help Tonight Minutes·Crunch Click NS / silent Practice-rail collapse in exam week / assisted≡ready from Solver CTA / ACT guarantees from dual-rail CTA packaging (Part CXXX / SAFE-CRUNCHCTA)
 - Any fluency SVG / pretty-render≡keyed figure / LLM-as-judge-alone figure ship / Figure Key Score™·Visual QA Minutes / unverified FormatId figures as diagnostic ground truth / FormatId-count or “AI drew N diagrams” hero / soft-pass wrong geometry because traps were mapped / ACT guarantees from figure-generation packaging (Part CXXXI / SAFE-FIGKEY)
+- Any idle spinner-only late lobby / pour-open AI wait dump / Wait Minutes·Lobby Score™·Prebrief Streak NS / entertainment-primary fill / forced marathon Practice-before-join / late-tutor shame feed / ACT guarantees from async pre-brief packaging (Part CXXXII / SAFE-ASYNCBRIEF)
