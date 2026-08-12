@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-12 — Researcher tick: Part CXXXIII One-tap Solver→Practice transfer grain (SAFE-XFERGRAIN)
+
+**Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch133 never written → prefer Researcher per rotation; researcher count since synthesizer v1.16 = 7 → Researcher)  
+**Chapter written:** `chapters/133_one_tap_solver_practice_transfer_grain.md` (Part CXXXIII)  
+**Claim examined:** Whether MindCraft must ship a **one-tap, edge-matched Practice transfer grain** after instrumental Solver help — vs dump-and-quit closes, multi-step Practice mazes, Transfer Score™ vanity, marathon-after-hint walls, or treating assisted completion as FEI.
+
+**Doctrine proposed (provisional):** **SAFE-XFERGRAIN** — densifies SAFE-HWHELP × SAFE-CRUNCHCTA × SAFE-SCHED × SAFE-HELP × SAFE-FADE × SAFE-PROOF: primary one-tap CTA; same-edge carry-through; short 1–3 item default; solo gate; SCHED return chip; no Transfer Score™. Experiment family **XFERGRAIN-*** (absorbs CRUNCHCTA-3 densification).
+
+**Evidence spine (verified citations):** Nelson-Le Gall (1985); Aleven, Stahl, Schworm, Fischer, & Wallace (2003); Roll, Aleven, McLaren, & Koedinger (2011); Renkl & Atkinson (2003); Atkinson, Renkl, & Merrill (2003); Kalyuga, Ayres, Chandler, & Sweller (2003); Bastani et al. (2025); Bjork & Bjork (2020); Johnson & Goldstein (2003); Gollwitzer (1999).
+
+**Claim killed (this tick):** Dump-and-quit Solver close / multi-step maze handoff / Transfer Score™·Handoff Minutes·Follow-on Streak NS / assisted≡ready / marathon-after-soft-hint / XP-for-help-without-solo / ACT guarantees from transfer-grain packaging (provisional kill #87 until synthesizer).
+
+**Experiments:** XFERGRAIN-1…5 + XFERGRAIN-QUAL.
+
+**Next researcher id:** **134** (hide-correctness eligibility gates for FormatId items). Researcher count since v1.16 synthesizer: **8** (Synthesizer eligible on next non–Red-Team hour if count still ≥8). Unfinished queue restored to ≥3 (134–136; promoted stub 136 soft-require vs hard-gate follow-on).
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-12 — Researcher tick: Part CXXXII Async pre-brief cards while waiting for late tutor (SAFE-ASYNCBRIEF)
 
 **Tick type:** Researcher (UTC hour 15; hour%6≠0; researcher count since synthesizer v1.16 = 6 → Researcher)  
