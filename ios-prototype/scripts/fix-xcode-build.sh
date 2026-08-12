@@ -14,7 +14,7 @@ PROTO="$(cd "${SCRIPT_DIR}/.." && pwd)"
 REPO="$(cd "${PROTO}/.." && pwd)"
 PROJ="${PROTO}/MindCraftNotes/MindCraftNotes.xcodeproj"
 MYSCRIPT="${PROTO}/MindCraftNotes/MindCraftNotes/Networking/MyScriptRecognizer.swift"
-BUNDLE_ID="com.mindcraft.MindCraftNotes"
+BUNDLE_ID="com.mindcraft.notes.prototype.akshat"
 # Single DerivedData for resolve+build (two folders doubles disk use).
 DD="${MC_DERIVED_DATA:-/tmp/mc-dd}"
 SKIP_RESOLVE="${SKIP_RESOLVE:-0}"
