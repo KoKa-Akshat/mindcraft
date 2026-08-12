@@ -4,18 +4,25 @@
 
 ---
 
-## iOS prototype · The Desk naming (2026-08-11)
+## iOS prototype · The Desk + local Mac disk (2026-08-12) — HANDOFF
 
-**CI already green** for naming tip `06e64284`: https://github.com/KoKa-Akshat/mindcraft/actions/runs/31518010669  
-Local Xcode “Missing Firebase*” = Mac disk full (SPM fetch failed). Free space:
+**Product naming shipped on main.** App chrome = **The Desk** (no MindCraft/raccoon logo). Entry surfaces = The Desk + by MindCraft. Naming CI green: `06e64284` · https://github.com/KoKa-Akshat/mindcraft/actions/runs/31518010669
+
+**Akshat’s Mac is the blocker, not the code.** ~15GB free. Opening Xcode GUI after CLI success re-triggers `No space left` / Missing Firebase cascade. Keep Xcode **quit**; use low-disk fixer:
 
 ```bash
-bash ios-prototype/scripts/free-mac-space.sh
 cd ~/Developer/mindcraft && git pull origin main
-# Xcode → Packages → Reset/Resolve → Clean → Run
+killall Xcode 2>/dev/null
+# if SPM already resolved once:
+SKIP_RESOLVE=1 bash ios-prototype/scripts/fix-xcode-build.sh
+# else full: bash ios-prototype/scripts/fix-xcode-build.sh
 ```
 
-Expect: Welcome **The Desk / by MindCraft** · chrome **The Desk** (no logo) · Ask **Ask The Desk…** · work desk **The Desk · work area**.
+Scripts: `ios-prototype/scripts/fix-xcode-build.sh` · `free-mac-space.sh` · note `ios-prototype/MAC_FREE_SPACE.md`  
+MyScript stub is **committed** (`Networking/MyScriptRecognizer.swift`).  
+Destination must be **iPad Simulator**, never **Any iOS Device**.  
+External SSD recommended → `MC_DERIVED_DATA=/Volumes/SSD/mc-dd bash …/fix-xcode-build.sh`  
+Brand Book PDF: https://raw.githubusercontent.com/KoKa-Akshat/mindcraft/main/BRAND_BOOK.pdf
 
 ## Canon pack for agents (2026-08-11)
 
