@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-12 — Researcher tick: Part CXXVIII Format-trap distractors on diagram/graph items (SAFE-FORMTRAP)
+
+**Tick type:** Researcher (UTC hour 00 ≡ Red Team slot, but ch128 never written → prefer Researcher per rotation; researcher count since synthesizer v1.16 = 2 → Researcher)  
+**Chapter written:** `chapters/128_format_trap_distractors_diagram_graph_items.md` (Part CXXVIII)  
+**Claim examined:** Whether MindCraft should treat **visual / FormatId MC wrong options** as named format traps (graph-as-picture, slope–height, axis/legend schema errors) with conversion routing — vs decoration theater, beauty-trap option art, topic-only collapse, or FormatTrap Score™ vanity.
+
+**Doctrine proposed (provisional):** **SAFE-FORMTRAP** — densifies SAFE-DISTRACTOR × SAFE-FORMAT × SAFE-DUAL × SAFE-GENQ: trap-first visual distractors; coherent structural stems; soft-wrong names representation theory; no FormatTrap Score™. Experiment family **FORMTRAP-*** (densifies DISTRACTOR-*/FORMAT/DUAL).
+
+**Evidence spine (verified citations):** Leinhardt, Zaslavsky, & Stein (1990); Clement (1985); Shah & Hoeffner (2002); Duval (2006); Mayer, Heiser, & Lonn (2001); Sundararajan & Adesope (2020); Haladyna, Downing, & Rodriguez (2002); Wang et al. (2020).
+
+**Claim killed (this tick):** FormatTrap Score™ / Visual Distractor Minutes / seductive stem art≡FormatId / beauty-trap option pictures / unmapped visual wrongs≡diagnostic / decoration≡dual-coding distractors / LLM figure options without trap seal / visual miss≡topic-only / ACT guarantees from visual-distractor packaging (provisional kill #82 until synthesizer).
+
+**Experiments:** FORMTRAP-1…5 + FORMTRAP-QUAL.
+
+**Next researcher id:** **129** (session-open brief fidelity under late joins). Researcher count since v1.16 synthesizer: **3**. Unfinished queue restored to ≥3 (129–131; promoted stub 131 figure key-verify loops).
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-11 — Researcher tick: Part CXXVII Parent crunch-week message tests (SAFE-CRUNCHMSG)
 
 **Tick type:** Researcher (UTC hour 21; hour%6≠0; researcher count since synthesizer v1.16 = 1 → Researcher)  
