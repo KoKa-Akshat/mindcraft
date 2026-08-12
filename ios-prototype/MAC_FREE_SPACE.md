@@ -43,11 +43,13 @@ It lists sizes and asks before wiping. Safe targets: Xcode DerivedData, SPM, VS 
 - Your `~/Developer/mindcraft` folder  
 - Keychain / Passwords  
 
-## 3) After you have several GB free
+## 3) After you have several GB free — fix the build
 
 ```bash
 cd ~/Developer/mindcraft && git pull origin main
-open ios-prototype/MindCraftNotes/MindCraftNotes.xcodeproj
+bash ios-prototype/scripts/fix-xcode-build.sh
 ```
 
-Xcode → **File → Packages → Reset Package Caches** → **Resolve Package Versions** → **Product → Clean Build Folder** → Run.
+That script quits Xcode, ensures the MyScript stub exists, clears wedged
+DerivedData/SPM caches, resolves Firebase/GoogleSignIn from the CLI, and
+typechecks the app. When it prints `BUILD SUCCEEDED`, open Xcode and Cmd+R.

@@ -27,18 +27,17 @@ jobs:
       - name: Xcode version
         run: xcodebuild -version && xcrun simctl list runtimes | head -5
 
-      - name: Stub MyScriptRecognizer (gitignored real-credentials file)
+      - name: Ensure MyScriptRecognizer present (committed stub; write if missing)
         run: |
           F="ios-prototype/MindCraftNotes/MindCraftNotes/Networking/MyScriptRecognizer.swift"
-          if [ ! -f "$F" ]; then
+          if [ -f "$F" ]; then
+            echo "MyScriptRecognizer.swift present"
+          else
             cat > "$F" <<'EOF'
           import Foundation
           import CoreGraphics
           import PencilKit
 
-          /// CI stub. The real implementation (MyScript credentials) is
-          /// gitignored and only exists on the dev Mac. Recognition paths
-          /// surface a friendly error instead of crashing.
           enum MyScriptRecognizer {
               static func recognizeLatex(drawing: PKDrawing, canvasSize: CGSize) async throws -> String {
                   throw NSError(
@@ -49,9 +48,7 @@ jobs:
               }
           }
           EOF
-            echo "stub written"
-          else
-            echo "real file present"
+            echo "stub written (fallback)"
           fi
 
       - name: Pick an iPad simulator
