@@ -93,3 +93,4 @@ Promote 3 at a time into `NEXT_LAB.md`. Do not write all at once.
 | 124 | Distractor design for diagnostic soft-wrong MC | SAFE-TAXON × SAFE-MISCON; Eedi-style options | promoted → NEXT_LAB |
 | 125 | Confidence-tagged misses in gap-scan recovery | SAFE-TAXON × SAFE-CALIB; hard/kinda/easy × mark type | promoted → NEXT_LAB |
 | 130 | Dual-rail Solver CTA copy under crunch (help tonight vs Practice gym) | SAFE-HWHELP × SAFE-CRUNCHMSG; parent/student CTAs without Chegg hero | promoted → NEXT_LAB |
+| 132 | Async pre-brief cards while waiting for late tutor | SAFE-MICROBRIEF × SAFE-SRL; student-owned Set without pour-open | promoted → NEXT_LAB |

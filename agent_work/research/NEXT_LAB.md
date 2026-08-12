@@ -121,9 +121,10 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 126 | Tutor micro-debrief fidelity under time caps | SAFE-AAR × SAFE-LOADSHED; 90-second after-action without lecture cosplay | **DONE** (2026-08-11) — Part CXXVI / SAFE-MICRODEB |
 | 127 | Parent crunch-week message tests (availability vs thinking minutes) | SAFE-LOADSHED × SAFE-WTP; CBC on shed honesty vs 24/7 brand | **DONE** (2026-08-11) — Part CXXVII / SAFE-CRUNCHMSG |
 | 128 | Format-trap distractors on diagram/graph items | SAFE-DISTRACTOR × SAFE-FORMAT/DUAL; visual distractors without decoration theater | **DONE** (2026-08-12) — Part CXXVIII / SAFE-FORMTRAP |
-| 129 | Session-open brief fidelity under late joins | SAFE-AAR × SAFE-MICRODEB; 30-second brief when clock already burned | **NEXT** |
-| 130 | Dual-rail Solver CTA copy under crunch (help tonight vs Practice gym) | SAFE-HWHELP × SAFE-CRUNCHMSG; parent/student CTAs without Chegg hero | queued |
+| 129 | Session-open brief fidelity under late joins | SAFE-AAR × SAFE-MICRODEB; 30-second brief when clock already burned | **DONE** (2026-08-12) — Part CXXIX / SAFE-MICROBRIEF |
+| 130 | Dual-rail Solver CTA copy under crunch (help tonight vs Practice gym) | SAFE-HWHELP × SAFE-CRUNCHMSG; parent/student CTAs without Chegg hero | **NEXT** |
 | 131 | Figure key-verify loops for generated FormatId stems | SAFE-GENQ × SAFE-FORMTRAP/DUAL; structural key gates without fluency SVG pass | queued |
+| 132 | Async pre-brief cards while waiting for late tutor | SAFE-MICROBRIEF × SAFE-SRL; student-owned Set without pour-open / idle lobby | queued |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 
@@ -213,3 +214,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any “no time for debrief” default / lecture-as-micro-debrief / Microdebrief Score™·Debrief Minutes·Reflection Streak NS / +25% ACT from borrowed debrief metas / military-cosplay micro-AAR / vibes-only close without traces / therapy-length mandate under crunch / ACT guarantees from micro-debrief packaging (Part CXXVI / SAFE-MICRODEB)
 - Any 24/7·infinite-availability default parent value prop / hours-booked crunch hero / fear-appeal parent emails as default / silent shed≡care / Likert-WTP for “thinking minutes” / Availability Score™·Crunch Message Score™·Open-Late Minutes NS / ACT guarantees from crunch messaging (Part CXXVII / SAFE-CRUNCHMSG)
 - Any FormatTrap Score™ / Visual Distractor Minutes / seductive stem art≡FormatId / beauty-trap option pictures / unmapped visual wrongs≡diagnostic / decoration≡dual-coding distractors / LLM figure options without trap seal / visual miss≡topic-only / ACT guarantees from visual-distractor packaging (Part CXXVIII / SAFE-FORMTRAP)
+- Any “no time for brief/goals” default / pour-open lecture-as-brief / Brief Score™·Brief Minutes·Opening Streak NS / late-join shame open / aviation·OR·I-PASS cosplay ACT ads / vibes-only open without named edge / soft standards via “we connected” / ACT guarantees from micro-brief packaging (Part CXXIX / SAFE-MICROBRIEF)

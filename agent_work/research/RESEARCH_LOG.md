@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-12 — Researcher tick: Part CXXIX Session-open brief fidelity under late joins (SAFE-MICROBRIEF)
+
+**Tick type:** Researcher (UTC hour 03; hour%6≠0; researcher count since synthesizer v1.16 = 3 → Researcher)  
+**Chapter written:** `chapters/129_session_open_brief_fidelity_under_late_joins.md` (Part CXXIX)  
+**Claim examined:** Whether MindCraft should protect a **~30–60s capped micro-brief** (named edge, success criterion, trap, coach role + student synthesis) under late joins / burned clocks — vs skip-into-HW, pour-open lecture, vibes-only rapport, or Brief Score™ vanity.
+
+**Doctrine proposed (provisional):** **SAFE-MICROBRIEF** — densifies SAFE-AAR × SAFE-MICRODEB × SAFE-LOADSHED × SAFE-HITL × SAFE-EXPECTANCY: capped shared-model open that pairs with micro-debrief; structure ≠ longer (Starmer); specific goals beat do-your-best (Locke & Latham); no Brief Score™. Experiment family **MICROBRIEF-*** (densifies AAR/MICRODEB/LOADSHED).
+
+**Evidence spine (verified citations):** Locke & Latham (2002); Haig, Sutton, & Whittington (2006); Starmer et al. (2014); Haynes et al. (2009); Degani & Wiener (1990 NASA CR-177549); FAA AC 120-51E; Ahmed et al. (2013 SHARP Set beat).
+
+**Claim killed (this tick):** “No time for brief/goals” default / pour-open lecture-as-brief / Brief Score™·Brief Minutes·Opening Streak NS / late-join shame open / aviation·OR·I-PASS cosplay ACT ads / vibes-only open without named edge / soft standards via “we connected” / ACT guarantees from micro-brief packaging (provisional kill #83 until synthesizer).
+
+**Experiments:** MICROBRIEF-1…5 + MICROBRIEF-QUAL.
+
+**Next researcher id:** **130** (dual-rail Solver CTA under crunch). Researcher count since v1.16 synthesizer: **4**. Unfinished queue restored to ≥3 (130–132; promoted stub 132 async pre-brief cards).
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-12 — Researcher tick: Part CXXVIII Format-trap distractors on diagram/graph items (SAFE-FORMTRAP)
 
 **Tick type:** Researcher (UTC hour 00 ≡ Red Team slot, but ch128 never written → prefer Researcher per rotation; researcher count since synthesizer v1.16 = 2 → Researcher)  
