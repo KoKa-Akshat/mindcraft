@@ -203,7 +203,7 @@
   .hero .btn.soft:hover{background:rgba(255,255,255,.12);}
   .hero-below{
     position:relative; z-index:2; width:100%; max-width:1240px; margin:0 auto;
-    padding:0 clamp(20px,4vw,48px) clamp(18px,3vh,28px);
+    padding:0 clamp(20px,4vw,48px) 8px;
   }
   .hero-trust{
     display:flex; flex-wrap:wrap; justify-content:center; gap:12px clamp(20px,4vw,56px);
@@ -213,7 +213,7 @@
   .trust b{font-family:"Fredoka",sans-serif; font-size:15px; color:#fff; letter-spacing:.02em; white-space:nowrap;}
   .trust span{font-size:12px; font-weight:900; line-height:1.3; color:rgba(255,255,255,.42);}
   .scroll-cue{
-    display:flex; justify-content:center; align-items:center; gap:10px; margin-top:26px;
+    display:flex; justify-content:center; align-items:center; gap:10px; margin-top:18px;
     font-family:"Caveat",cursive; font-size:23px; color:var(--leaf); animation:rise .8s .4s var(--ease) both;
   }
   .scroll-cue i{font-style:normal; display:inline-block; animation:cueBob 2.2s var(--ease) infinite;}
@@ -956,7 +956,7 @@
 
   /* Intro school strip — bare logos, float + expand */
   .intro-schools{
-    margin-top:22px; padding-top:18px; border-top:1px solid rgba(255,253,247,.14);
+    margin-top:0; padding-top:0; border-top:none;
     display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:14px 18px;
     animation:rise .8s .35s var(--ease) both;
   }
@@ -1362,14 +1362,14 @@
   .story-led .user-note span{display:block; margin-top:8px; color:#143a2e; font-family:"Fredoka",sans-serif; font-size:15px; line-height:1.2; overflow-wrap:anywhere;}
 
   .credibility{
-    padding:42px 0 64px; background:#07110e; color:#fff;
-    border-top:1px solid rgba(255,255,255,.1);
+    padding:10px 0 48px; background:#07110e; color:#fff;
+    border-top:none;
   }
   .cred-stats{display:grid; grid-template-columns:repeat(3,1fr); gap:34px; text-align:center;}
   .cred-stats > div{min-width:0;}
   .cred-stats strong{display:block; color:var(--lime); font-family:"Fredoka",sans-serif; font-size:22px; letter-spacing:0;}
   .cred-stats span{display:block; margin-top:5px; color:rgba(255,255,255,.5); font-size:11px; font-weight:900;}
-  .credibility .intro-schools{margin-top:36px; padding-top:28px; border-color:rgba(255,255,255,.1);}
+  .credibility .intro-schools{margin-top:0; padding-top:0; border-top:none;}
   .credibility .intro-schools > span{color:rgba(255,255,255,.48);}
   .credibility .intro-schools li{filter:drop-shadow(0 10px 18px rgba(0,0,0,.24));}
   .credibility .intro-schools .mac img{filter:brightness(0) invert(1);}
@@ -1549,9 +1549,9 @@
     .story-led .hero-trust{justify-content:flex-start; gap:10px 18px;}
     .story-led .trust span{display:none;}
     .story-led .trust b{font-size:12px;}
-    .credibility{padding:38px 0 52px;}
+    .credibility{padding:8px 0 40px;}
     .cred-stats{grid-template-columns:1fr; gap:18px;}
-    .credibility .intro-schools{margin-top:28px; padding-top:24px;}
+    .credibility .intro-schools{margin-top:0; padding-top:0;}
     .story-beat{padding:82px 0;}
     .story-beat h2,.mission-story h2,.across-copy h2,.care-story h2,.act-proof-copy h2{font-size:40px;}
     .story-intro p,.across-copy p,.lesson-heading p,.care-copy p,.act-proof-copy > p{font-size:16px;}
