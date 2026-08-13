@@ -993,6 +993,81 @@ final class MindCraftNotesUITests: XCTestCase {
         XCUIDevice.shared.orientation = .portrait
     }
 
+    /// SchedulingWorkflowsView existed on disk but was never registered in
+    /// the Xcode project or wired to the dock - this proves the fix end to
+    /// end: dock tap -> picker renders -> a card opens its editor -> back
+    /// navigation actually closes the overlay and returns dock control.
+    func testSchedulingWorkflowsOpensFromDock() {
+        let app = XCUIApplication()
+        app.launchArguments = ["--ui-testing-in-memory", "--ui-testing-skip-auth"]
+        app.launch()
+        XCUIDevice.shared.orientation = .landscapeLeft
+
+        // Field Desk (Jesse's Kitchen) is the launch surface itself - no
+        // shell-hub card to tap first. Cold WebGL/texture load can take up
+        // to ~36s (see the camera-pose auto-enter retry fix, 2026-08-12).
+        XCTAssertTrue(app.buttons["fieldDeskModeToggle"].waitForExistence(timeout: 40), "expected Field Desk chrome after cold load")
+
+        // Camera-pose auto-enter can't get real pose data in the Simulator,
+        // so the kitchen WebView's own "Enter World" button is the reliable
+        // path here (matches a slow/no-pose device falling back the same way).
+        let enterWorld = app.buttons["Enter World →"]
+        if enterWorld.waitForExistence(timeout: 3) {
+            enterWorld.tap()
+        }
+
+        // The dock is swipe-to-reveal by default (immersive kitchen view) -
+        // drag up from the thin bottom-edge strip to call revealTopChrome().
+        let bottomEdge = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.98))
+        let midScreen = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.55))
+        bottomEdge.press(forDuration: 0.05, thenDragTo: midScreen)
+
+        let workflowsButton = app.buttons["fieldDeskWorkflows"]
+        XCTAssertTrue(workflowsButton.waitForExistence(timeout: 8), "expected Workflows dock icon")
+        if workflowsButton.isHittable {
+            workflowsButton.tap()
+        } else {
+            workflowsButton.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        }
+
+        // Container-level accessibilityIdentifiers on plain ZStack/VStack
+        // views (schedulingWorkflows, schedulingCard_*) don't reliably
+        // materialize as their own queryable XCUITest element without an
+        // explicit .accessibilityElement(children: .contain) - confirmed via
+        // a real screenshot of a passing run where the picker was visibly
+        // correct despite the identifier query missing it. Query the leaf
+        // Text/Button elements instead, which SwiftUI always exposes.
+        XCTAssertTrue(app.staticTexts["Select your workflow"].waitForExistence(timeout: 5), "expected picker headline")
+        attachScreenshot(app, name: "scheduling_workflows_picker")
+
+        // Group Poll is first in Kind.allCases, so its "Create" button is
+        // the first "Create"-labeled button in visual/tree order.
+        let createButton = app.buttons.matching(NSPredicate(format: "label == %@", "Create")).firstMatch
+        XCTAssertTrue(createButton.waitForExistence(timeout: 3), "expected a Create button on the picker")
+        if createButton.isHittable {
+            createButton.tap()
+        } else {
+            createButton.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        }
+
+        XCTAssertTrue(app.staticTexts["Group Poll"].waitForExistence(timeout: 3), "expected editor header for Group Poll")
+        attachScreenshot(app, name: "scheduling_workflows_editor")
+
+        // schedulingWorkflowsBack's identifier is reachable, but the button's
+        // own VoiceOver label ("Back", derived from the chevron.left symbol)
+        // is the more robust query given the accessibility-identifier
+        // clobbering documented above.
+        let back = app.buttons["Back"]
+        XCTAssertTrue(back.waitForExistence(timeout: 3), "expected editor back control")
+        back.tap()
+        XCTAssertTrue(app.staticTexts["Select your workflow"].waitForExistence(timeout: 3), "expected back to picker")
+
+        back.tap()
+        XCTAssertFalse(app.staticTexts["Select your workflow"].waitForExistence(timeout: 3), "expected overlay closed after picker back")
+        XCTAssertTrue(app.buttons["fieldDeskWorkflows"].waitForExistence(timeout: 5), "expected dock control back")
+        XCUIDevice.shared.orientation = .portrait
+    }
+
     /// Round 26: drag the Field Desk - must pan, must NOT bounce back to hub.
     func testFieldDeskPanDoesNotDismiss() {
         let app = XCUIApplication()

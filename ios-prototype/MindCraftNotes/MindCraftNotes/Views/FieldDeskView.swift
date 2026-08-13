@@ -398,13 +398,18 @@ struct FieldDeskView: View {
                 }
 
                 if showSchedulingWorkflows {
+                    // No wrapper .accessibilityIdentifier here: applying one
+                    // to a composite view like this clobbers the identifier
+                    // of every nested button underneath it (confirmed via a
+                    // real accessibility-tree dump - e.g. schedulingWorkflowsBack
+                    // reporting as this wrapper's id instead of its own).
+                    // SchedulingWorkflowsView already tags its own root.
                     SchedulingWorkflowsView(
                         onClose: { showSchedulingWorkflows = false },
                         onOpenApplyToday: { showApplyToday = true }
                     )
                         .transition(.opacity)
                         .zIndex(90)
-                        .accessibilityIdentifier("fieldDeskSchedulingWorkflowsOverlay")
                 }
 
                 if showGmailBox {
