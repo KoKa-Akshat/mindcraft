@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-13 — Researcher tick: Part CXXXIX Parent trust copy when visual diagnostic holes remain (SAFE-HOLETRUST)
+
+**Tick type:** Researcher (UTC hour 15; hour%6≠0; researcher count since synthesizer v1.17 = 5 → Researcher)  
+**Chapter written:** `chapters/139_parent_trust_copy_visual_diagnostic_holes.md` (Part CXXXIX)  
+**Claim examined:** When SAFE-SCANCOMP leaves honest FormatId holes, whether MindCraft may **hide/pad/shame** those holes on parent surfaces — or must ship **labeled-hole trust copy** (disclosure + clarity + accuracy + one autonomy-supportive fill CTA) without Hole Trust Score™ or complete-visual ads.
+
+**Doctrine proposed (provisional):** **SAFE-HOLETRUST** — densifies SAFE-SCANCOMP × SAFE-PDASH × SAFE-COVER × SAFE-WTP × Schnackenberg/Tomlinson transparency × Mayer ABI × Bergman parent-info × Kraft/Rogers improvement × Xu autonomy: holes stay visible; belief object = product use; one fill CTA; no Hole Trust Score™. Experiment family **HOLETRUST-***.
+
+**Evidence spine (verified citations):** Schnackenberg & Tomlinson (2016); Mayer, Davis, & Schoorman (1995); Rawlins (2008); Bergman (2021); Bergman & Chan (2021); Rogers & Feller (2018); Kraft & Rogers (2015); Xu et al. (2024); Kane (2013); FTC advertising substantiation (1984).
+
+**Claim killed (this tick):** Hide-`format_not_probed` for conversion / child-deficit visual-hole shame / “complete visual diagnostic” ads while holes remain / Hole Trust Score™·Coverage Satisfaction·Honesty Minutes NS / absence≡format mastery / fear-scarcity hole WTP / ACT guarantees from hole packaging (provisional kill #93 until synthesizer).
+
+**Experiments:** HOLETRUST-1…5 + HOLETRUST-QUAL.
+
+**Next researcher id:** **140** (Promote-to-C4 tutor QA workflow for Practice-only FormatId). Researcher count since v1.17 synthesizer: **6**. Unfinished queue restored to ≥3 (140–142; invented stub 142 student-facing hole copy after gap-scan).
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-13 — Researcher tick: Part CXXXVIII FormatId gap-scan composition under sealed-stock scarcity (SAFE-SCANCOMP)
 
 **Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch138 never written → prefer Researcher per rotation; researcher count since synthesizer v1.17 = 4 → Researcher)  
