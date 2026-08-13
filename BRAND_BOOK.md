@@ -90,7 +90,7 @@ Inside that OS, the **Solver vertical** carries its own fuller vision, unchanged
 **The evidence layer underneath the OS.** Every session, every practice set, every note, every question a mentor answers — all of it is evidence, not just activity. MindCraft turns that evidence into a living map of what a student actually knows, where they're shaky, and what caused the shakiness. That map is the thing MindCraft is actually building; the workspace is where a student uses it. Two commitments follow directly from this, and both are binding, not aspirational copy:
 
 - **The record belongs to the student.** Exportable, inspectable, deletable — the same way it would be if the student kept it themselves. MindCraft earns the right to compute a recommendation from that record; it does not own the record.
-- **Knowledge shouldn't be locked up either.** The instinct that makes a student's own data theirs runs the other direction too — the best learning material available should be as easy to find as the person who already learned it, not gated behind a login it doesn't need. `Dan's Digital Archive` (linked from the marketing site) is a first, small expression of that: free, open, no-login intelligent textbooks a curious student can walk into today, with no product pitch attached.
+- **Knowledge shouldn't be locked up either.** The instinct that makes a student's own data theirs runs the other direction too — the best learning material available should be as easy to find as the person who already learned it, not gated behind a login it doesn't need. The **Open Learning Archive** (linked from the marketing site) is a first, small expression of that: free, open, no-login intelligent textbooks a curious student can walk into today, with no product pitch attached. Public name is deliberately neutral — `Dan's Digital Archive` is the internal/engineering name only, pending his explicit sign-off per §16.
 
 This layer is a design influence from the wider open intelligent-textbook and learning-graph research community, most directly a conversation with researcher Dan McCreary — credit the work, not a partnership. See the anti-endorsement rule in §16 before his name, photo, or work appears anywhere public.
 
@@ -492,7 +492,8 @@ A warm conversation with a researcher, mentor, or potential partner is not the s
 
 | Do | Don't |
 |---|---|
-| Credit his public, freely-shared work by name when linking to it (e.g. crediting `Dan's Digital Archive`'s source) | Say "built with," "advised by," or imply a formal relationship without his explicit written agreement |
+| Credit his public, freely-shared work by name when linking to it (e.g. the Open Learning Archive's in-page credit line) | Say "built with," "advised by," or imply a formal relationship without his explicit written agreement |
+| Keep the internal codename (`Dan's Digital Archive`) off public-facing titles/nav/branding until he's seen it and said yes | Name a public product or feature after him before he's agreed to that specific use |
 | Treat the conversation as a design and research influence internally | Put his photo, quote, or an "advisor" badge on the site |
 | Ask permission before any public use of his name, title, or likeness | Repeat a private compliment as if it were a public testimonial |
 | Link out to open work; never rehost or rewrite it as MindCraft's own | Imply MindCraft created content that a named external researcher actually created |
