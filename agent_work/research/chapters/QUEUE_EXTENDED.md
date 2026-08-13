@@ -96,8 +96,8 @@ Promote 3 at a time into `NEXT_LAB.md`. Do not write all at once.
 | 132 | Async pre-brief cards while waiting for late tutor | SAFE-MICROBRIEF × SAFE-SRL; student-owned Set without pour-open | **DONE** → `132_async_prebrief_cards_late_tutor_wait.md` |
 | 133 | One-tap Solver→Practice transfer grain after instrumental help | SAFE-HWHELP × SAFE-CRUNCHCTA × SAFE-SCHED; handoff without dump-and-quit | promoted → NEXT_LAB |
 | 134 | Hide-correctness eligibility gates for FormatId items | SAFE-FIGKEY × SAFE-CALIB/COLD; when figure-keyed items may enter gap-scan | **DONE** → `134_hide_correctness_eligibility_formatid.md` |
-| 135 | Known-finite ETA honesty in late-tutor lobby copy | SAFE-ASYNCBRIEF × Maister uncertain-wait; ETA truth without shame feed | promoted → NEXT_LAB |
+| 135 | Known-finite ETA honesty in late-tutor lobby copy | SAFE-ASYNCBRIEF × Maister uncertain-wait; ETA truth without shame feed | **DONE** → `135_known_finite_eta_honesty_late_tutor_lobby.md` |
 | 136 | Soft-require vs hard-gate follow-on under help-avoidance risk | SAFE-XFERGRAIN × SAFE-HELP; quit/avoidance falsifiers for transfer CTA | promoted → NEXT_LAB |
 | 137 | Reveal-Practice vs C4 split pools for sealed FormatId | SAFE-HCELIG × SAFE-REPAIR; graded use without silent Map writes | promoted → NEXT_LAB |
-| 138 | FormatId gap-scan composition under sealed-stock scarcity | SAFE-HCELIG × SAFE-COVER/FORMAT; honest holes vs symbolic pad theater | queued |
+| 138 | FormatId gap-scan composition under sealed-stock scarcity | SAFE-HCELIG × SAFE-COVER/FORMAT; honest holes vs symbolic pad theater | promoted → NEXT_LAB |
 | 139 | Parent trust copy when visual diagnostic holes remain | SAFE-HCELIG × SAFE-PDASH/WTP; hole honesty without coverage shame | queued |

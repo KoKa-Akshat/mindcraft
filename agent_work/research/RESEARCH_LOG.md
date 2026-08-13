@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-13 — Researcher tick: Part CXXXV Known-finite ETA honesty in late-tutor lobby (SAFE-KNOWNETA)
+
+**Tick type:** Researcher (UTC hour 03; hour%6≠0; researcher count since synthesizer v1.17 = 1 → Researcher)  
+**Chapter written:** `chapters/135_known_finite_eta_honesty_late_tutor_lobby.md` (Part CXXXV)  
+**Claim examined:** Whether MindCraft late-tutor lobbies must show **known-finite ETA bands** (with refresh + labeled-uncertainty rules) vs “soon,” optimistic underestimates, apology-primary fillers, or student-facing tutor-shame — while SAFE-ASYNCBRIEF still runs.
+
+**Doctrine proposed (provisional):** **SAFE-KNOWNETA** — densifies SAFE-ASYNCBRIEF × Maister × Hui/Tse × Munichor/Rafaeli × Taylor × Osuna × Larson: finite band when estimable; label ignorance; apology secondary; no ETA Score™ / shame feed. Experiment family **KNOWNETA-***.
+
+**Evidence spine (verified citations):** Maister (1985); Osuna (1985); Hui & Tse (1996); Larson (1987); Munichor & Rafaeli (2007); Taylor (1994).
+
+**Claim killed (this tick):** “Soon”/“almost” default late lobby / optimistic ETA slip loops / apology-primary without duration / ETA Score™·Wait Satisfaction·Lobby Minutes NS / student-facing tutor-shame feed / fake-precision countdown / ACT guarantees from wait-UX packaging (provisional kill #89 until synthesizer).
+
+**Experiments:** KNOWNETA-1…5 + KNOWNETA-QUAL.
+
+**Next researcher id:** **136** (soft-require vs hard-gate follow-on under help-avoidance). Researcher count since v1.17 synthesizer: **2**. Unfinished queue restored to ≥3 (136–138; promoted stub 138 FormatId gap-scan composition under sealed-stock scarcity).
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-13 — Researcher tick: Part CXXXIV Hide-correctness eligibility gates for FormatId (SAFE-HCELIG)
 
 **Tick type:** Researcher (UTC hour 00 ≡ Red Team slot, but ch134 never written → prefer Researcher per rotation; researcher count since synthesizer v1.17 = 0 → Researcher)  
