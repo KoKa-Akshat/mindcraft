@@ -11,16 +11,7 @@
 
 ## CXLI.1 Why this chapter exists
 
-SAFE-SPLITPOOL ordered split pools and named cool-down as a contract line. SAFE-SCANCOMP capped exposure under N≈1 sealed stock. The selector gap remains:
-
-1. **Immediate same-stem C4** — Practice reveal at 4:02 → gap-scan hides the key on the identical stem at 4:03 → Map writes a “format gap” that is really **key memory**.  
-2. **Forever ban** — one Practice peek permanently removes the stem from that student’s C4 (and sometimes from Practice), starving thin FormatId cells into pad theater.  
-3. **Global cool-down** — one student’s reveal locks the item for everyone (security costume MindCraft does not need; starves SCANCOMP).  
-4. **Cool-Down Score™ / Exposure Minutes NS** — vanity that rewards longer locks without isomorphic substitutes.  
-5. **Ignore isomorphism** — cool-down only on exact `item_id` while near-identical clones (same figure, swapped numbers) still leak answer-hunt.  
-6. **Policy cool-down + isomorphic substitutes + honest holes (this chapter)** — anti-answer-hunt without pretending thin pools are infinite.
-
-Without SAFE-COOLDOWN, split pools still let Reveal-Practice contaminate C4 *for that student*, and thin FormatId cells either get violated (pad/reuse) or look “diagnosed” when the student merely remembers the key.
+SAFE-SPLITPOOL named cool-down as a contract line; SAFE-SCANCOMP capped thin-stock exposure. The selector gap remains: **immediate same-stem C4** after reveal (key memory dressed as diagnosis); **forever/global bans** that starve FormatId cells into pad theater; **Cool-Down Score™**; **clone leak** (same figure, swapped digits). Doctrine: policy cool-down + isomorphic substitutes + honest holes — anti-answer-hunt without infinite-pool cosplay.
 
 **FOUNDER BELIEF under audit:** Parents prefer a **shorter honest probe set** (or labeled hole) over a green Map cell earned by remembering tonight’s key — honesty as WTP, not a tax.
 
