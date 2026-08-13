@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-13 — Researcher tick: Part CXXXVIII FormatId gap-scan composition under sealed-stock scarcity (SAFE-SCANCOMP)
+
+**Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch138 never written → prefer Researcher per rotation; researcher count since synthesizer v1.17 = 4 → Researcher)  
+**Chapter written:** `chapters/138_formatid_gap_scan_composition_sealed_stock_scarcity.md` (Part CXXXVIII)  
+**Claim examined:** When C4-eligible FormatId stock is thin, whether MindCraft may **pad** gap-scan blueprint cells (symbolic / Practice-only / equal-quota theater) — or must compose from sealed stock with **labeled holes**, depth-over-fake-breadth, and exposure caps.
+
+**Doctrine proposed (provisional):** **SAFE-SCANCOMP** — densifies SAFE-HCELIG × SAFE-SPLITPOOL × SAFE-COVER × SAFE-FORMAT × Kane/Messick/Sireci/Raymond/van der Linden: blueprint-first; stock gates fulfillment; `format_not_probed` beats pad; no Composition Score™. Experiment family **SCANCOMP-***.
+
+**Evidence spine (verified citations):** Kane (2013); Messick (1995); Sireci & Faulkner-Bond (2014); Raymond & Grande (2019); van der Linden, Ariel, & Veldkamp (2006).
+
+**Claim killed (this tick):** Symbolic/Practice pad into C4 FormatId cells / equal-quota theater under thin stock / silent underrepresentation as format-flexible / Composition Score™·Format Balance %·Scan Completeness Minutes NS / “diagnose every format” ads under thin C4 / absence≡mastery / ACT guarantees from balanced-scan packaging (provisional kill #92 until synthesizer).
+
+**Experiments:** SCANCOMP-1…5 + SCANCOMP-QUAL.
+
+**Next researcher id:** **139** (Parent trust copy when visual diagnostic holes remain). Researcher count since v1.17 synthesizer: **5**. Unfinished queue restored to ≥3 (139–141; invented stub 141 exposure cool-down after reveal before same-stem C4).
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-13 — Researcher tick: Part CXXXVII Reveal-Practice vs C4 split pools for sealed FormatId (SAFE-SPLITPOOL)
 
 **Tick type:** Researcher (UTC hour 09; hour%6≠0; researcher count since synthesizer v1.17 = 3 → Researcher)  
