@@ -56,8 +56,6 @@ struct DeskShellView: View {
     @State private var toastMessage: String?
     @State private var tutorFilter: String = "All"
     @State private var workflowQuery: String = ""
-    @State private var tutorsExpanded = true
-    @State private var workflowsExpanded = true
     /// Writable map search (web FindTutor Places parity via CLGeocoder).
     @State private var mapSearchText: String = ""
     @State private var mapSearchOrigin: CLLocationCoordinate2D?
@@ -124,8 +122,6 @@ struct DeskShellView: View {
             kitchenReady = true
         }
         .onReceive(NotificationCenter.default.publisher(for: .mcOpenHubFromDesk)) { _ in
-            tutorsExpanded = true
-            workflowsExpanded = true
             // If Field Desk is up as a cover, dismiss it first — presenting
             // two covers from the same host silently fails.
             if fieldDeskRoute != nil {
@@ -282,26 +278,16 @@ struct DeskShellView: View {
                         .padding(.bottom, 16)
                     instanceGrid
 
-                    collapsibleTab(
-                        title: "Tutors nearby",
-                        subtitle: "Map + roster of tutors near you",
-                        expanded: $tutorsExpanded,
-                        a11y: "deskHubTutorsNearby"
-                    ) {
-                        tutorsNearbySection
-                    }
-                    .padding(.top, 22)
+                    // Shown directly, no collapse/expand toolbar wrapper -
+                    // tutors and workflows are always visible on the hub.
+                    plainSectionHeader(title: "Tutors nearby", a11y: "deskHubTutorsNearby")
+                        .padding(.top, 22)
+                    tutorsNearbySection
 
-                    collapsibleTab(
-                        title: "Workflow market",
-                        subtitle: "Coming-soon study loops & role apps",
-                        expanded: $workflowsExpanded,
-                        a11y: "deskHubWorkflowMarket"
-                    ) {
-                        workflowMarketSection
-                    }
-                    .padding(.top, 12)
-                    .padding(.bottom, 12)
+                    plainSectionHeader(title: "Workflow market", a11y: "deskHubWorkflowMarket")
+                        .padding(.top, 22)
+                    workflowMarketSection
+                        .padding(.bottom, 12)
                 }
                 // Pull content left toward the logo / wordmark.
                 .padding(.leading, 14)
@@ -339,21 +325,6 @@ struct DeskShellView: View {
                     .font(.system(size: 22, weight: .bold, design: .rounded))
                     .foregroundColor(ShellColor.ink)
                     .accessibilityIdentifier("deskHubWordmark")
-
-                // Was Settings (opened AccountManageView, which Akshat found
-                // did nothing functional) — now goes straight to Jesse's,
-                // reusing the same `fieldDeskRoute = .plain` navigation the
-                // house icon and "The Desk" instance card already use.
-                Button { fieldDeskRoute = .plain } label: {
-                    Image(systemName: "fork.knife")
-                        .font(.system(size: 15, weight: .semibold))
-                        .foregroundColor(ShellColor.ink)
-                        .frame(width: 44, height: 44)
-                        .background(Circle().fill(ShellColor.brandGreen.opacity(0.22)))
-                }
-                .buttonStyle(.plain)
-                .accessibilityIdentifier("deskHubManage")
-                .accessibilityLabel("Go to Jesse's")
                 callButton
             }
             Spacer(minLength: 8)
@@ -393,51 +364,13 @@ struct DeskShellView: View {
         .padding(.bottom, 14)
     }
 
-    /// Collapsible hub tab - title row always visible; body expands in place.
-    private func collapsibleTab<Content: View>(
-        title: String,
-        subtitle: String,
-        expanded: Binding<Bool>,
-        a11y: String,
-        @ViewBuilder content: () -> Content
-    ) -> some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Button {
-                withAnimation(.easeInOut(duration: 0.2)) { expanded.wrappedValue.toggle() }
-            } label: {
-                HStack(spacing: 12) {
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(title)
-                            .font(.system(size: 17, weight: .bold, design: .rounded))
-                            .foregroundColor(ShellColor.ink)
-                        Text(subtitle)
-                            .font(.system(size: 12, weight: .medium, design: .rounded))
-                            .foregroundColor(ShellColor.ink.opacity(0.5))
-                    }
-                    Spacer()
-                    Image(systemName: expanded.wrappedValue ? "chevron.up" : "chevron.down")
-                        .font(.system(size: 13, weight: .bold))
-                        .foregroundColor(Color(shellHex: "c4f547"))
-                }
-                .padding(.horizontal, 14)
-                .padding(.vertical, 12)
-                .background(
-                    RoundedRectangle(cornerRadius: 14, style: .continuous)
-                        .fill(ShellColor.cardFill)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 14, style: .continuous)
-                                .strokeBorder(ShellColor.ink.opacity(0.12), lineWidth: 1)
-                        )
-                )
-            }
-            .buttonStyle(.plain)
+    /// Plain section heading, always visible - no collapse/expand toolbar.
+    private func plainSectionHeader(title: String, a11y: String) -> some View {
+        Text(title)
+            .font(.system(size: 17, weight: .bold, design: .rounded))
+            .foregroundColor(ShellColor.ink)
+            .padding(.bottom, 10)
             .accessibilityIdentifier(a11y)
-
-            if expanded.wrappedValue {
-                content()
-                    .transition(.opacity.combined(with: .move(edge: .top)))
-            }
-        }
     }
 
     private var greeting: some View {
@@ -595,23 +528,6 @@ struct DeskShellView: View {
     /// tile at the end.
     private var instanceGrid: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 240), spacing: 16)], spacing: 16) {
-            instanceCard(
-                id: "desk_main", name: "The Desk", badge: "Home",
-                systemImage: "square.grid.2x2.fill", accent: ShellColor.ink,
-                execUsed: 12, execCap: 1000, running: true, isFunctional: true
-            ) {
-                fieldDeskRoute = .plain
-            }
-            .accessibilityIdentifier("deskInstance_fieldDesk")
-            instanceCard(
-                id: "test_main", name: "test-instance", badge: "Doc→Cook",
-                systemImage: "doc.badge.gearshape.fill",
-                accent: Color(shellHex: "c4f547"),
-                execUsed: 10, execCap: 1000, running: true, isFunctional: true
-            ) {
-                showTestInstance = true
-            }
-            .accessibilityIdentifier("deskInstance_testInstance")
             ForEach(customInstances.instances) { inst in
                 instanceCard(
                     id: inst.id, name: inst.name, badge: inst.subject,
