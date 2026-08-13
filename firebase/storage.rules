@@ -32,6 +32,19 @@ service firebase.storage {
       allow delete: if request.auth != null && request.auth.uid == uid;
     }
 
+    // Binder uploads (BYOB — "Bring Your Own Book", ios-prototype
+    // MindCraftNotes app): source files a student uploads to bind into a
+    // custom field book, one folder per binder_items Firestore doc
+    // (binder/{studentId}/{itemId}/{fileName}). This is private study
+    // material, not a public profile photo, so — unlike users/{uid}/profile
+    // above — read is owner-only too. Ownership check mirrors the Firestore
+    // binder_items rule's studentId == request.auth.uid gate exactly.
+    match /binder/{studentId}/{itemId}/{fileName} {
+      allow read, delete: if request.auth != null && request.auth.uid == studentId;
+      allow write: if request.auth != null && request.auth.uid == studentId
+        && request.resource.size < 25 * 1024 * 1024;
+    }
+
     // Marketing tutor applications: anonymous upload of resume + photo, then
     // download links are emailed via FormSubmit. Tokenized download URLs work
     // even without public read. Size + content-type capped to limit abuse.

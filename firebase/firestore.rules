@@ -143,6 +143,42 @@ service cloud.firestore {
       allow delete: if false;
     }
 
+    // Per-student notebook (BINDER feature, ios-prototype MindCraftNotes app):
+    // Memo / Doc / BYOB items filed into the app's spine-bound Binder. Same
+    // ownership shape as student_work / homework_sessions / wrong_answer_notes
+    // directly above — a student owns and can create/update only their own
+    // items (request.resource.data.studentId == request.auth.uid), a linked
+    // parent can read their child's via childId/childIds on their own users/
+    // {uid} doc. UNLIKE those append-only academic-evidence collections,
+    // this is the student's own scratch notebook: they may also delete their
+    // own items (no tutor/admin override for v1 — a student clearing their
+    // own memo/doc/BYOB entry isn't an academic-integrity concern the way
+    // deleting a wrong-answer note or student_work entry would be). "Books"
+    // (the ACT map / concept-story library) is read-only reference content
+    // baked into the app bundle and is never written here — only
+    // type in {"memo","doc","byob"} documents live in this collection.
+    match /binder_items/{docId} {
+      allow create: if request.auth != null
+        && request.resource.data.studentId == request.auth.uid;
+      // Tightened beyond the create/update==student_work precedent: update
+      // requires owning the EXISTING doc too (resource.data), not just
+      // naming yourself as the new owner in the write. Precedent elsewhere
+      // in this file only checks request.resource.data, which would let a
+      // caller who somehow knew another student's (unguessable) doc id
+      // "adopt" it via update. Free to close here since nothing in this app
+      // ever updates a doc it didn't first read from its own scoped listener.
+      allow update: if request.auth != null
+        && resource.data.studentId == request.auth.uid
+        && request.resource.data.studentId == request.auth.uid;
+      allow read: if request.auth != null && (
+        resource.data.studentId == request.auth.uid
+        || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childId == resource.data.studentId
+        || (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds is list
+            && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds.hasAny([resource.data.studentId]))
+      );
+      allow delete: if request.auth != null && resource.data.studentId == request.auth.uid;
+    }
+
     match /chats/{chatId} {
       allow read, write: if request.auth != null && (
         chatId.split('_')[0] == request.auth.uid ||

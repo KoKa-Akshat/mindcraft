@@ -38,6 +38,8 @@
 		763A49F23F7D4F1AB3188ECC /* MindCraftNotesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A74CA882801493092A9127F /* MindCraftNotesApp.swift */; };
 		7869C262B727FB7D115F4A2F /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B2C0A75B7798044001A892 /* AuthService.swift */; };
 		7B0241FF6DC5A084EEFC9B48 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 4EA3DB63C1CC574240263223 /* FirebaseAuth */; };
+		B5A7E28672A28330C2F41AF2 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 260FF3185A2FFB978B0C475F /* FirebaseStorage */; };
+		08767AA809AC30C242D9FBC2 /* BinderStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDBCE2A4A4F89B33A5443D0 /* BinderStore.swift */; };
 		832F52CD564C2C1CA71BB4CC /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2DEFA331CCE58D98C0F61F /* LoginView.swift */; };
 		87C1DC075E078CFE838ACC26 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 6F5EECD612652564C64E12E5 /* FirebaseFirestore */; };
 		8ACCA09803A0C1DF9B8F19BB /* FirestoreStudentStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EAAFE0F66A60907CDB1C332 /* FirestoreStudentStore.swift */; };
@@ -135,6 +137,7 @@
 		20548665090C49E3A52E9BE8 /* LaTeXMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaTeXMath.swift; sourceTree = "<group>"; };
 		26D7B26A0454408F10798AFA /* NotesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesListView.swift; sourceTree = "<group>"; };
 		2EAAFE0F66A60907CDB1C332 /* FirestoreStudentStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreStudentStore.swift; sourceTree = "<group>"; };
+		7CDBCE2A4A4F89B33A5443D0 /* BinderStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinderStore.swift; sourceTree = "<group>"; };
 		333EDEE01284D66F3CAF76DD /* KnowledgeGraphClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnowledgeGraphClient.swift; sourceTree = "<group>"; };
 		3890F71414E363C12CC19397 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		3BB03A317B6A9CB5F0D8C128 /* wizard-doodle-cheer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wizard-doodle-cheer.png"; sourceTree = "<group>"; };
@@ -240,6 +243,7 @@
 				87C1DC075E078CFE838ACC26 /* FirebaseFirestore in Frameworks */,
 				A3E01DEA9E457CF7B43D8FEB /* FirebaseCore in Frameworks */,
 				C6D853AD3DD7E07164282908 /* GoogleSignIn in Frameworks */,
+				B5A7E28672A28330C2F41AF2 /* FirebaseStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,6 +310,7 @@
 				12E044A4E94D7F34216D068C /* FirebaseBootstrap.swift */,
 				14B2C0A75B7798044001A892 /* AuthService.swift */,
 				2EAAFE0F66A60907CDB1C332 /* FirestoreStudentStore.swift */,
+				7CDBCE2A4A4F89B33A5443D0 /* BinderStore.swift */,
 				333EDEE01284D66F3CAF76DD /* KnowledgeGraphClient.swift */,
 				5A9A2FA726DCF7636F59A480 /* SessionNotesClient.swift */,
 				CD38C7392605523E1A10E7F6 /* TutorDirectoryClient.swift */,
@@ -482,6 +487,7 @@
 				6F5EECD612652564C64E12E5 /* FirebaseFirestore */,
 				716E4F08BB6B9FFFBB68959F /* FirebaseCore */,
 				7314E3633FB32FCF9B9FB4EB /* GoogleSignIn */,
+				260FF3185A2FFB978B0C475F /* FirebaseStorage */,
 			);
 			productName = MindCraftNotes;
 			productReference = 8BF232E3B60D4484AC821058 /* MindCraftNotes.app */;
@@ -590,6 +596,7 @@
 				A311D97B749C8B429FB7A34B /* LiveSessionClient.swift in Sources */,
 				832F52CD564C2C1CA71BB4CC /* LoginView.swift in Sources */,
 				8ACCA09803A0C1DF9B8F19BB /* FirestoreStudentStore.swift in Sources */,
+				08767AA809AC30C242D9FBC2 /* BinderStore.swift in Sources */,
 				9A6F2325A1FDC007FA06B7CA /* KnowledgeGraphClient.swift in Sources */,
 				9D00117C89A5E8CB2AA33B3D /* DashboardView.swift in Sources */,
 				B3D89B38899B7A196FE908B0 /* ContentsRoadmapView.swift in Sources */,
@@ -965,6 +972,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 27D133A0F995B31A942566E9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		260FF3185A2FFB978B0C475F /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 27D133A0F995B31A942566E9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
 		};
 		716E4F08BB6B9FFFBB68959F /* FirebaseCore */ = {
 			isa = XCSwiftPackageProductDependency;

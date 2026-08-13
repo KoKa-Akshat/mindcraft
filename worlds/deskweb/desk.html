@@ -141,27 +141,69 @@
     background:
       radial-gradient(120% 90% at 80% 0%,rgba(196,245,71,.14),transparent 55%),
       linear-gradient(160deg,#15291f 0%,#0f1f18 55%,#0b1611 100%);
-    display:flex; flex-direction:column; justify-content:space-between;
-    padding:26px 26px 22px 40px;
+    display:flex; flex-direction:column;
+    padding:24px 24px 20px 44px;
   }
-  .binder-cover::before{
-    content:""; position:absolute; left:18px; top:0; bottom:0; width:2px;
-    background:rgba(255,255,255,.16);
+  /* Spine-bound edge: a visible binding element, not just a hairline —
+     ring/hole motif down the left edge with a gradient for depth, kept
+     inside the existing dark binder-cover palette (no new colors). */
+  .binder-spine{
+    position:absolute; left:0; top:0; bottom:0; width:17px; z-index:1;
+    background:linear-gradient(180deg,#1d3627 0%,#0c1712 50%,#1d3627 100%);
+    box-shadow:inset -3px 0 7px rgba(0,0,0,.45),1px 0 0 rgba(255,255,255,.06);
   }
-  .binder-cover::after{
-    content:""; position:absolute; left:0; top:0; bottom:0; width:12px;
-    background:linear-gradient(90deg,rgba(0,0,0,.4),transparent);
+  .binder-spine::before{
+    content:""; position:absolute; inset:0;
+    background-image:repeating-linear-gradient(180deg,rgba(255,255,255,.1) 0 1.5px,transparent 1.5px 21px);
   }
-  .binder-kicker{color:rgba(255,255,255,.5); font-size:10px; font-weight:1000; letter-spacing:.2em; text-transform:uppercase;}
-  .binder-title{margin-top:8px; font-family:"Fredoka",sans-serif; font-size:clamp(22px,2.6vw,34px); color:#f4f7f2; line-height:1.12;}
+  .binder-spine::after{
+    content:""; position:absolute; left:50%; top:16px; bottom:16px; width:5px; transform:translateX(-50%);
+    background-image:repeating-radial-gradient(circle,rgba(5,13,10,.92) 0 1.9px,transparent 2.4px 21px);
+  }
+  .binder-kicker{color:rgba(255,255,255,.5); font-size:10px; font-weight:1000; letter-spacing:.2em; text-transform:uppercase; position:relative; z-index:1;}
+  .binder-title{margin-top:8px; font-family:"Fredoka",sans-serif; font-size:clamp(22px,2.6vw,34px); color:#f4f7f2; line-height:1.12; position:relative; z-index:1;}
   .binder-title span{color:var(--lime);}
-  .binder-rows{margin-top:14px; display:grid; gap:8px;}
+  .binder-tabs{
+    position:relative; z-index:1; margin-top:14px; display:flex; gap:4px;
+    flex:none;
+  }
+  .binder-tab{
+    flex:1; padding:7px 4px; border:0; border-radius:8px; background:transparent;
+    color:rgba(255,255,255,.48); font-size:10.5px; font-weight:1000; letter-spacing:.05em;
+    text-transform:uppercase; cursor:pointer; transition:color .18s ease,background .18s ease;
+  }
+  .binder-tab:hover{color:rgba(255,255,255,.8);}
+  .binder-tab.is-active{background:rgba(196,245,71,.15); color:var(--lime);}
+  .binder-body{
+    position:relative; z-index:1; margin-top:12px; flex:1; min-height:0;
+    overflow-y:auto; -webkit-overflow-scrolling:touch;
+  }
+  .binder-panel{display:none;}
+  .binder-panel.is-active{display:block;}
+  .binder-rows{display:grid; gap:8px;}
   .binder-row{
     display:flex; align-items:center; gap:9px;
     color:rgba(255,255,255,.78); font-size:12.5px; font-weight:900;
   }
   .binder-row i{width:7px; height:7px; border-radius:50%; background:var(--lime); opacity:.85;}
+  .binder-list{display:grid; gap:8px;}
+  .binder-item{
+    display:flex; flex-direction:column; gap:3px; padding:9px 11px; border-radius:9px;
+    background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.09);
+  }
+  .binder-item b{color:#f4f7f2; font-size:12px; font-weight:1000; line-height:1.3;}
+  .binder-item span{color:rgba(255,255,255,.56); font-size:11px; font-weight:700; line-height:1.35;}
+  .binder-item small{color:rgba(255,255,255,.36); font-size:9.5px; font-weight:900; text-transform:uppercase; letter-spacing:.06em;}
+  .binder-empty{display:block; color:rgba(255,255,255,.42); font-size:12px; font-weight:800; line-height:1.5; padding:6px 2px 2px;}
+  .binder-byob-cta{
+    display:block; width:100%; margin-bottom:10px; padding:10px 12px;
+    border:1px dashed rgba(196,245,71,.5); border-radius:10px; background:rgba(196,245,71,.08);
+    color:var(--lime); font-size:12px; font-weight:1000; text-align:left; cursor:pointer;
+    transition:background .18s ease,border-color .18s ease;
+  }
+  .binder-byob-cta:hover{background:rgba(196,245,71,.16); border-color:var(--lime);}
   .binder-foot{
+    position:relative; z-index:1; flex:none; margin-top:12px;
     display:flex; align-items:center; justify-content:space-between; gap:10px;
     color:rgba(255,255,255,.42); font-size:11px; font-weight:900;
   }
@@ -489,13 +531,17 @@
     .tile-label{top:-23px; font-size:10px;}
     .topbar-title span{display:none;}
     .top-pill{padding:8px 11px; font-size:11px;}
+    .binder-tab{font-size:9.5px; padding:6px 3px;}
   }
   @media(max-width:520px){
     .desk{min-height:520px;}
     .desk::after{background-size:auto,42px 42px; background-position:center,12px 12px;}
     .scene{inset:76px 12px 96px;}
     .binder-tile{left:13%; top:4%; width:74%; height:53%; padding:5px; border-radius:13px;}
-    .binder-cover{padding:18px 16px 14px 26px; border-radius:8px;}
+    .binder-cover{padding:18px 16px 14px 30px; border-radius:8px;}
+    .binder-spine{width:13px;}
+    .binder-tabs{gap:2px;}
+    .binder-tab{font-size:8.5px; padding:5px 2px;}
     .binder-rows{display:none;}
     .memo-preview{left:0; top:20%; width:32%; min-height:130px; padding:17px 12px;}
     .memo-preview .memo-kicker,.memo-preview p,.memo-preview small{display:none;}
@@ -551,17 +597,39 @@
     <div class="tile binder-tile" id="binder" data-draggable data-resizable data-wireable role="button" tabindex="0" aria-expanded="false" aria-controls="command" aria-label="Open your binder prompt">
       <span class="tile-label">Binder</span>
       <span class="binder-cover">
-        <span>
-          <span class="binder-kicker">MindCraft &middot; Field binder</span>
-          <span class="binder-title">Your <span>Binder</span></span>
-          <span class="binder-rows" aria-hidden="true">
-            <span class="binder-row"><i></i>Systems of equations &middot; worksheet</span>
-            <span class="binder-row"><i></i>Session notes &middot; this week</span>
+        <span class="binder-spine" aria-hidden="true"></span>
+        <span class="binder-kicker">MindCraft &middot; Field binder</span>
+        <span class="binder-title">Your <span>Binder</span></span>
+        <span class="binder-tabs" role="tablist" aria-label="Binder sections">
+          <button type="button" class="binder-tab is-active" id="binderTabBooks" data-tab="books" role="tab" aria-selected="true" aria-controls="binderPanelBooks">Books</button>
+          <button type="button" class="binder-tab" id="binderTabMemo" data-tab="memo" role="tab" aria-selected="false" aria-controls="binderPanelMemo">Memo</button>
+          <button type="button" class="binder-tab" id="binderTabDoc" data-tab="doc" role="tab" aria-selected="false" aria-controls="binderPanelDoc">Doc</button>
+          <button type="button" class="binder-tab" id="binderTabByob" data-tab="byob" role="tab" aria-selected="false" aria-controls="binderPanelByob">BYOB</button>
+        </span>
+        <span class="binder-body" id="binderBody">
+          <span class="binder-panel is-active" id="binderPanelBooks" data-panel="books" role="tabpanel" aria-labelledby="binderTabBooks">
+            <span class="binder-rows" aria-hidden="true">
+              <span class="binder-row"><i></i>Systems of equations &middot; worksheet</span>
+              <span class="binder-row"><i></i>Session notes &middot; this week</span>
+            </span>
+            <button class="binder-act" id="binderAct" type="button" aria-label="Open the ACT map">
+              <img src="img/new-dash-home.jpg" alt="ACT learning map preview">
+              <b>ACT map &middot; open</b>
+            </button>
           </span>
-          <button class="binder-act" id="binderAct" type="button" aria-label="Open the ACT map">
-            <img src="img/new-dash-home.jpg" alt="ACT learning map preview">
-            <b>ACT map &middot; open</b>
-          </button>
+          <span class="binder-panel" id="binderPanelMemo" data-panel="memo" role="tabpanel" aria-labelledby="binderTabMemo">
+            <span class="binder-list" id="binderMemoList"></span>
+            <span class="binder-empty" id="binderMemoEmpty">No memos yet &mdash; jot one from the + tray, or stop a transcription to save it here.</span>
+          </span>
+          <span class="binder-panel" id="binderPanelDoc" data-panel="doc" role="tabpanel" aria-labelledby="binderTabDoc">
+            <span class="binder-list" id="binderDocList"></span>
+            <span class="binder-empty" id="binderDocEmpty">No docs yet &mdash; create a Gdoc or Presentation from the + tray to file it here.</span>
+          </span>
+          <span class="binder-panel" id="binderPanelByob" data-panel="byob" role="tabpanel" aria-labelledby="binderTabByob">
+            <button type="button" class="binder-byob-cta" id="binderByobCta">+ Cook a Field Book</button>
+            <span class="binder-list" id="binderByobList"></span>
+            <span class="binder-empty" id="binderByobEmpty">No field books yet &mdash; upload files to bind your first one.</span>
+          </span>
         </span>
         <span class="binder-foot">
           <span>Tap a card to wire boards · Ask bar below</span>
@@ -690,7 +758,27 @@
     const gcalTile = document.getElementById('gcalTile');
     const wiresSvg = document.getElementById('wires');
     const wireToast = document.getElementById('wireToast');
+    const binderTabs = Array.from(document.querySelectorAll('.binder-tab'));
+    const binderPanels = Array.from(document.querySelectorAll('.binder-panel'));
+    const binderByobCta = document.getElementById('binderByobCta');
+    const binderMemoList = document.getElementById('binderMemoList');
+    const binderMemoEmpty = document.getElementById('binderMemoEmpty');
+    const binderDocList = document.getElementById('binderDocList');
+    const binderDocEmpty = document.getElementById('binderDocEmpty');
+    const binderByobList = document.getElementById('binderByobList');
+    const binderByobEmpty = document.getElementById('binderByobEmpty');
 
+    // Generic bridge send - {action:'back'} etc keep working via postDesk(),
+    // structured payloads (binderSave) go through postDeskMessage directly.
+    const postDeskMessage = msg => {
+      try {
+        if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.deskAction) {
+          window.webkit.messageHandlers.deskAction.postMessage(msg);
+          return true;
+        }
+      } catch (_) {}
+      return false;
+    };
     const postDesk = action => {
       try {
         if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.deskAction) {
@@ -1124,6 +1212,74 @@
     });
     binderAddNote && binderAddNote.addEventListener('pointerdown', event => event.stopPropagation());
 
+    // Four-tab Binder (Books / Memo / Doc / BYOB) — Books stays the existing
+    // read-only ACT map content; the other three render real binder_items
+    // pushed in from native (see window.__mcBinderSetItems below).
+    const setBinderTab = name => {
+      binderTabs.forEach(tab => {
+        const active = tab.dataset.tab === name;
+        tab.classList.toggle('is-active', active);
+        tab.setAttribute('aria-selected', String(active));
+      });
+      binderPanels.forEach(panel => panel.classList.toggle('is-active', panel.dataset.panel === name));
+    };
+    binderTabs.forEach(tab => {
+      tab.addEventListener('pointerdown', event => event.stopPropagation());
+      tab.addEventListener('click', event => {
+        event.stopPropagation();
+        setBinderTab(tab.dataset.tab);
+      });
+    });
+
+    binderByobCta && binderByobCta.addEventListener('pointerdown', event => event.stopPropagation());
+    binderByobCta && binderByobCta.addEventListener('click', event => {
+      event.stopPropagation();
+      // Native opens Cook a Field Book (CreateInstanceStudioView); web
+      // preview has nowhere to send this, so just say so.
+      if (postDesk('byob')) return;
+      showWireToast('Cook a Field Book opens in the app');
+    });
+
+    const escapeHtml = value => String(value == null ? '' : value).replace(/[&<>"']/g, char => (
+      { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[char]
+    ));
+
+    const renderBinderList = (items, type, listEl, emptyEl, fallbackTitle) => {
+      if (!listEl || !emptyEl) return;
+      const rows = items.filter(item => item && item.type === type);
+      listEl.innerHTML = rows.map(item => {
+        const title = escapeHtml(item.title || fallbackTitle);
+        const body = escapeHtml(String(item.body || '').slice(0, 90));
+        const source = escapeHtml(String(item.source || '').replace(/_/g, ' '));
+        return '<span class="binder-item"><b>' + title + '</b>' +
+          (body ? '<span>' + body + '</span>' : '') +
+          (source ? '<small>' + source + '</small>' : '') +
+          '</span>';
+      }).join('');
+      listEl.style.display = rows.length ? 'grid' : 'none';
+      emptyEl.style.display = rows.length ? 'none' : 'block';
+    };
+
+    // Native pushes the current binder_items list here after every
+    // BinderStore change (create/update/delete) and once on load — the
+    // simplest reliable path for a single-device v1 (no polling round-trip
+    // needed from the web side).
+    window.__mcBinderSetItems = items => {
+      const list = Array.isArray(items) ? items : [];
+      renderBinderList(list, 'memo', binderMemoList, binderMemoEmpty, 'Untitled memo');
+      renderBinderList(list, 'doc', binderDocList, binderDocEmpty, 'Untitled doc');
+      renderBinderList(list, 'byob', binderByobList, binderByobEmpty, 'Untitled book');
+    };
+    window.__mcBinderSetItems([]);
+
+    // clientId → Firestore id, resolved by native right after a create so a
+    // Doc/Presentation tile's later blur-saves update the same item instead
+    // of creating duplicates.
+    const pendingBinderIds = {};
+    window.__mcBinderResolveId = (clientId, id) => {
+      if (clientId && id) pendingBinderIds[clientId] = id;
+    };
+
     const placeTile = tile => {
       const index = noteLayer.children.length;
       const spot = noteSpots[index % noteSpots.length];
@@ -1256,6 +1412,25 @@
       ].join('');
       placeTile(doc);
       wireWhiteboard(doc);
+
+      // File this Gdoc into the Binder's Doc tab (was: floats loose on the
+      // canvas only, never saved anywhere). Save at creation, then again on
+      // blur of either field — id resolves via __mcBinderResolveId so a
+      // re-save updates the same binder_items doc instead of duplicating it.
+      const clientId = 'doc_' + Math.random().toString(36).slice(2, 9);
+      const titleInput = doc.querySelector('.board-title');
+      const noteInput = doc.querySelector('.board-note');
+      const saveDoc = () => {
+        const title = (titleInput.value || 'Untitled board').trim().slice(0, 80);
+        const body = (noteInput.value || '').trim().slice(0, 4000);
+        postDeskMessage({
+          action: 'binderSave', type: 'doc', source: 'workflow_gdoc',
+          title, body, clientId, id: pendingBinderIds[clientId] || null
+        });
+      };
+      noteInput.addEventListener('blur', saveDoc);
+      titleInput.addEventListener('blur', saveDoc);
+      saveDoc();
     };
 
     const addCalendar = () => {
@@ -1267,7 +1442,7 @@
       redrawWires();
     };
 
-    const wirePresentation = tile => {
+    const wirePresentation = (tile, onSave) => {
       const slides = [
         { title: 'Untitled deck', body: 'Your first point goes here.' },
         { title: 'Next beat', body: 'Add what you want the room to remember.' },
@@ -1287,6 +1462,7 @@
       [titleEl, bodyEl].forEach(el => {
         el.addEventListener('pointerdown', event => event.stopPropagation());
         el.addEventListener('keydown', event => event.stopPropagation());
+        el.addEventListener('blur', () => onSave && onSave(slides));
       });
       tile.querySelector('[data-act="prev"]').addEventListener('click', event => {
         event.stopPropagation();
@@ -1303,11 +1479,14 @@
         slides.splice(index + 1, 0, { title: 'New slide', body: 'Say the next thing.' });
         index += 1;
         render();
+        onSave && onSave(slides);
       });
       tile.querySelectorAll('.slide-nav button').forEach(btn => {
         btn.addEventListener('pointerdown', event => event.stopPropagation());
       });
       render();
+      // Initial file-in (create-time save) — same reasoning as addDocPage.
+      onSave && onSave(slides);
     };
 
     const addSlide = () => {
@@ -1329,7 +1508,22 @@
         '</div>'
       ].join('');
       placeTile(slide);
-      wirePresentation(slide);
+
+      // File this Presentation into the Binder's Doc tab (source distinguishes
+      // it from a Gdoc). One binder_items record for the whole deck — title
+      // is the current slide's title, body is all slides flattened.
+      const clientId = 'slide_' + Math.random().toString(36).slice(2, 9);
+      wirePresentation(slide, slides => {
+        const title = ((slides[0] && slides[0].title) || 'Untitled deck').trim().slice(0, 80);
+        const body = slides
+          .map((s, i) => 'Slide ' + (i + 1) + ': ' + (s.title || '') + ' — ' + (s.body || ''))
+          .join('\n')
+          .slice(0, 4000);
+        postDeskMessage({
+          action: 'binderSave', type: 'doc', source: 'workflow_presentation',
+          title, body, clientId, id: pendingBinderIds[clientId] || null
+        });
+      });
     };
 
     const addIntel = () => {
@@ -1346,6 +1540,7 @@
     // Recording lives on the transcript tile only (dock Record removed).
     let recording = false;
     const setRecording = next => {
+      const wasRecording = recording;
       recording = next;
       transcript.classList.toggle('is-recording', recording);
       transcriptState.textContent = recording ? 'Auto transcribing' : 'Paused';
@@ -1354,6 +1549,19 @@
         : 'Tap play to start listening.';
       if (recording) {
         transcriptLine.textContent = 'Worksheet: graph both equations, then check where the lines meet.';
+      } else if (wasRecording) {
+        // Stop fires here. Transcript capture itself is still scripted demo
+        // text (real capture is out of scope for this pass) - but the SAVE
+        // path is real: file whatever's on screen into the Binder as a memo,
+        // source 'transcription', so real transcription is a drop-in later.
+        const text = (transcriptLine.textContent || '').trim();
+        if (text && text !== 'Hit play and I will listen while you work.') {
+          postDeskMessage({
+            action: 'binderSave', type: 'memo', source: 'transcription',
+            title: 'Transcript · ' + new Date().toLocaleDateString(),
+            body: text
+          });
+        }
       }
       transcriptPlay.innerHTML = recording ? '&#10073;&#10073;' : '&#9654;';
       transcriptPlay.setAttribute('aria-label', recording ? 'Pause transcribing' : 'Start transcribing');
@@ -1401,7 +1609,7 @@
     scene.addEventListener('pointerup', wireAfterMove);
     scene.addEventListener('pointermove', e => { if (e.buttons) wireAfterMove(); });
 
-    noteComposer.addEventListener('submit', async event => {
+    noteComposer.addEventListener('submit', event => {
       event.preventDefault();
       const text = noteText.value.trim().slice(0,180);
       if (!text) return;
@@ -1410,33 +1618,19 @@
       closeComposer();
       closeTray();
       noteStatus.textContent = 'Saving...';
-      const payload = {
-        note:text,
-        source:'field_desk_prototype',
-        context:'The Desk worksheet',
-        createdAt:new Date().toISOString()
-      };
-      let saved = false;
-      try {
-        const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(),3500);
-        const response = await fetch('/api/marketing-note',{
-          method:'POST',
-          credentials:'same-origin',
-          signal:controller.signal,
-          headers:{
-            'Content-Type':'application/json',
-            'Accept':'application/json',
-            'X-MindCraft-Intent':'pin-note'
-          },
-          body:JSON.stringify(payload)
-        });
-        clearTimeout(timeout);
-        saved = response.ok;
-      } catch (_) {
-        saved = false;
-      }
-      noteStatus.textContent = saved ? 'Pinned securely.' : 'Pinned locally for this preview.';
+      // Was: fetch('/api/marketing-note') — a marketing-site-only endpoint
+      // that doesn't exist inside the app bundle's mcworld:// scheme, so this
+      // always silently fell back to "Pinned locally for this preview." Real
+      // persistence now goes through the same deskAction bridge native
+      // already uses for 'back' etc. → BinderStore → Firestore binder_items.
+      const bridged = postDeskMessage({
+        action: 'binderSave',
+        type: 'memo',
+        title: text.slice(0, 48),
+        body: text,
+        source: 'manual'
+      });
+      noteStatus.textContent = bridged ? 'Saved to your Binder.' : 'Pinned locally for this preview.';
     });
 
     const transcriptLines = [
