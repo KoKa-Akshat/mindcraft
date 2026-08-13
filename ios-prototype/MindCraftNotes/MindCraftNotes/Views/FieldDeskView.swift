@@ -61,6 +61,7 @@ struct FieldDeskView: View {
     @State private var showFindTutor = false
     @State private var showWorkflowLibrary = false
     @State private var showApplyToday = false
+    @State private var showSchedulingWorkflows = false
     @State private var showGmailBox = false
     @State private var gmailStartReconnect = false
     @State private var gmailOpenTopReply = false
@@ -195,6 +196,7 @@ struct FieldDeskView: View {
         showBlankPage = false
         showGmailBox = false
         showApplyToday = false
+        showSchedulingWorkflows = false
         showActFieldBook = false
         showActStage = false
         actStageMaximized = false
@@ -238,6 +240,7 @@ struct FieldDeskView: View {
         showActFieldBook
             || showGmailBox
             || showApplyToday
+            || showSchedulingWorkflows
             || (showActStage && actStageMaximized)
             || showManage
             || showProjectsPanel
@@ -392,6 +395,16 @@ struct FieldDeskView: View {
                         // Above Work/Create web surfaces so workflows use the big area.
                         .zIndex(90)
                         .accessibilityIdentifier("fieldDeskApplyTodayOverlay")
+                }
+
+                if showSchedulingWorkflows {
+                    SchedulingWorkflowsView(
+                        onClose: { showSchedulingWorkflows = false },
+                        onOpenApplyToday: { showApplyToday = true }
+                    )
+                        .transition(.opacity)
+                        .zIndex(90)
+                        .accessibilityIdentifier("fieldDeskSchedulingWorkflowsOverlay")
                 }
 
                 if showGmailBox {
@@ -1677,8 +1690,10 @@ struct FieldDeskView: View {
             dockIconCompact("calendar", tool: .calendar)
             dockIconCompact("magnifyingglass", tool: .search)
 
-            // Book → Apply today board immediately (sketch popup on desk).
-            Button { showApplyToday = true } label: {
+            // Book → Scheduling Workflows picker (poll / sign-up / 1:1 / booking).
+            // Apply today demoted to secondary — reachable from inside the
+            // picker ("Also: Apply today board") or the long-press library.
+            Button { showSchedulingWorkflows = true } label: {
                 Image(systemName: "book.closed")
                     .font(.system(size: 14, weight: .semibold))
                     .foregroundColor(Color(fdHex: "0c1207"))
@@ -1687,7 +1702,7 @@ struct FieldDeskView: View {
             }
             .buttonStyle(.plain)
             .accessibilityIdentifier("fieldDeskWorkflows")
-            .accessibilityLabel("Apply today")
+            .accessibilityLabel("Workflows")
             .simultaneousGesture(
                 LongPressGesture(minimumDuration: 0.55).onEnded { _ in
                     showWorkflowLibrary = true
@@ -2941,7 +2956,7 @@ struct FieldDeskView: View {
                 DeskAskClient.CalendarEvent(day: $0.day, title: $0.title)
             },
             connected: connected,
-            openSurface: showGmailBox ? "gmail" : (showApplyToday ? "applyToday" : "desk")
+            openSurface: showGmailBox ? "gmail" : (showApplyToday ? "applyToday" : (showSchedulingWorkflows ? "schedulingWorkflows" : "desk"))
         )
 
         Task { @MainActor in
