@@ -32,6 +32,12 @@
   .desk{
     position:relative; width:100vw; height:100svh; min-height:560px;
     overflow:hidden; isolation:isolate; background:#f8faf7;
+    /* Every other custom-drag surface in this file (.tile, .resize-handle,
+       .transcript, the whiteboard canvas) opts out of native touch handling
+       so JS owns the gesture outright — the canvas-pan target itself was the
+       one gap, leaving iPadOS free to intercept/delay a single-finger drag
+       that starts on empty desk space before our pointermove ever saw it. */
+    touch-action:none;
   }
   .desk::before{
     content:""; position:absolute; inset:0; z-index:-2;
@@ -976,9 +982,21 @@
 
     const setPan = (x, y) => {
       const base = matchMedia('(max-width:520px)').matches ? 20 : 36;
-      const limit = base + Math.max(0,zoom - 1) * Math.min(innerWidth,innerHeight) * .45;
-      panX = Math.max(-limit, Math.min(limit, x));
-      panY = Math.max(-limit, Math.min(limit, y));
+      // Root cause of "panning locked unless a tile has focus": this used to
+      // scale purely off `Math.max(0,zoom-1)`, which is 0 at the default
+      // zoom (1) — collapsing the whole clamp down to `base` (~36px) no
+      // matter how far the scene actually extends past the viewport. `.scene`
+      // is 160%/140% of `.desk`, so most of it (including tiles toward the
+      // edges, like Intel/Gmail, and newly placed cards) sat structurally
+      // out of reach until the user zoomed in first. Base the limit on the
+      // scene's real rendered overflow instead, so empty-canvas panning has
+      // genuine range at every zoom level, not just once zoomed in.
+      const overflowX = Math.max(0, scene.offsetWidth * zoom - innerWidth) / 2;
+      const overflowY = Math.max(0, scene.offsetHeight * zoom - innerHeight) / 2;
+      const limitX = base + overflowX;
+      const limitY = base + overflowY;
+      panX = Math.max(-limitX, Math.min(limitX, x));
+      panY = Math.max(-limitY, Math.min(limitY, y));
       scene.style.setProperty('--pan-x', panX.toFixed(1) + 'px');
       scene.style.setProperty('--pan-y', panY.toFixed(1) + 'px');
     };
@@ -1280,6 +1298,23 @@
       if (clientId && id) pendingBinderIds[clientId] = id;
     };
 
+    // Akshat: "+Gdoc opens in an entirely new screen section, move the focus
+    // there, don't stay [where I was]." `noteSpots` places new tiles toward
+    // the scene's edges, which — especially before the `setPan` clamp fix
+    // above — regularly land outside the visible viewport. Pan the scene so
+    // the new tile settles centered on screen, reusing the same `.scene`
+    // transform transition (.7s var(--ease)) that already animates drag-pan,
+    // instead of a separate/bouncier motion.
+    const scrollTileIntoView = tile => {
+      requestAnimationFrame(() => {
+        const rect = tile.getBoundingClientRect();
+        const deskRect = desk.getBoundingClientRect();
+        const dx = (deskRect.left + deskRect.width / 2) - (rect.left + rect.width / 2);
+        const dy = (deskRect.top + deskRect.height / 2) - (rect.top + rect.height / 2);
+        setPan(panX + dx, panY + dy);
+      });
+    };
+
     const placeTile = tile => {
       const index = noteLayer.children.length;
       const spot = noteSpots[index % noteSpots.length];
@@ -1296,6 +1331,7 @@
       tile.dataset.wireable = '';
       attachPorts(tile);
       redrawWires();
+      scrollTileIntoView(tile);
     };
 
     const addMemo = text => {

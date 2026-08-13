@@ -775,6 +775,21 @@ struct FieldDeskView: View {
         }
     }
 
+    /// The only real exit from the ACT stage back to the standalone work
+    /// desk (see `fieldDeskActStageBackToWork`) — mirrors the same
+    /// close-current → brief delay → reopen `showStandaloneDesk` sequence
+    /// `switchCreateToWork()` uses elsewhere in this file, rather than
+    /// inventing a parallel transition.
+    private func closeActStageBackToWork() {
+        withAnimation(.easeInOut(duration: 0.22)) {
+            showActStage = false
+            actStageMaximized = false
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+            showStandaloneDesk = true
+        }
+    }
+
     private var topChrome: some View {
         // Call now lives in the always-visible top-leading header next to
         // "The Desk" wordmark (see the .overlay(alignment: .topLeading)
@@ -1128,17 +1143,9 @@ struct FieldDeskView: View {
     }
 
     private func openWorkFromJesse() {
-        guard !showStandaloneDesk, !showCreateStudio else { return }
-        withAnimation(.easeInOut(duration: 0.25)) {
-            showProjectsScreen = true
-            shrineBeatPhase = .idle
-            shrineCaption = ""
-        }
-        // Akshat: tapping "Work" should default straight into the beat that
-        // used to require a separate manual tap on the shrine.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            startShrineEntranceBeat()
-        }
+        // Akshat: skip the Malevolent Shrine beat entirely — straight to the
+        // work desk on tap, no shrine screen in between.
+        openStandaloneDesk()
     }
 
     private func switchDeskToCreate() {
@@ -1205,18 +1212,9 @@ struct FieldDeskView: View {
         showBlankPage = false
         switch action {
         case .openDesk, .projects:
-            // Straight to centered shrine — no polka sheet on this path.
-            withAnimation(.easeInOut(duration: 0.25)) {
-                showProjectsScreen = true
-            }
-            // Akshat: entering Work should go straight into the beat, not
-            // gate it behind an extra manual tap on the shrine. Reuses the
-            // same startShrineEntranceBeat() the shrine tap calls, guarded
-            // by the same `shrineBeatPhase == .idle` check so a fast manual
-            // tap in the meantime can't double-fire it.
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                startShrineEntranceBeat()
-            }
+            // Akshat: skip the Malevolent Shrine entirely — straight to the
+            // work desk, no shrine beat on this path.
+            openStandaloneDesk()
         case .wakeJesse:
             flash("Jesse’s Kitchen")
         case .intel:
@@ -1445,12 +1443,21 @@ struct FieldDeskView: View {
             .frame(width: w, height: h)
             .background(
                 RoundedRectangle(cornerRadius: 18, style: .continuous)
-                    .fill(Color(fdHex: "0f1f18"))
+                    // Desk OS surfaces are cream/paper, not dark theater
+                    // (Brand Book §9) — was the old dark-shell green
+                    // (`0f1f18`, DeskShellView's hub background), fought the
+                    // embedded DashboardView's own light paper chrome. Same
+                    // cream `paperCard`/minimized-chip tone used everywhere
+                    // else in this file.
+                    .fill(Color(fdHex: "fbf8f3"))
                     .shadow(color: .black.opacity(0.45), radius: 22, y: 10)
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 18, style: .continuous)
-                    .stroke(Color.white.opacity(0.14), lineWidth: 1)
+                    // Matches the paper-card edge language elsewhere in this
+                    // file — the old 0.14 white stroke was tuned for the dark
+                    // fill above and nearly vanished on cream.
+                    .strokeBorder(Color(fdHex: "1c1a17").opacity(0.10), lineWidth: 1)
             )
             // Avoid clipping Pencil Metal layers - radius via background only.
             .overlay(alignment: .bottomTrailing) {
@@ -1478,6 +1485,37 @@ struct FieldDeskView: View {
             .position(x: viewport.width - 28, y: 28)
             .accessibilityIdentifier("fieldDeskActStageMinimize")
             .accessibilityLabel("Minimize ACT stage")
+
+            // Real exit back to the work desk. The embedded DashboardView's
+            // own "Home" button is a dead end here — when `embeddedInDesk`
+            // is true it just resets its own tab state and returns before
+            // ever calling `onDeskHome` — so this stage had no way out.
+            // Deliberately its own chevron/pill, not a relabeled reuse of
+            // that misleading Home control.
+            Button {
+                closeActStageBackToWork()
+            } label: {
+                HStack(spacing: 7) {
+                    Image(systemName: "chevron.left")
+                        .font(.system(size: 12, weight: .heavy))
+                    Text("Back to Work")
+                        .font(.system(size: 13, weight: .heavy, design: .rounded))
+                }
+                .foregroundColor(Color(fdHex: "143a2e"))
+                .padding(.horizontal, 14)
+                .padding(.vertical, 9)
+                .background(
+                    Capsule()
+                        .fill(Color.white.opacity(0.95))
+                        .shadow(color: .black.opacity(0.18), radius: 10, y: 4)
+                )
+            }
+            .buttonStyle(.plain)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .padding(.top, 20)
+            .padding(.leading, 16)
+            .accessibilityIdentifier("fieldDeskActStageBackToWork")
+            .accessibilityLabel("Back to Work")
         }
         .onAppear {
             // First open: fill most of the available stage area.
