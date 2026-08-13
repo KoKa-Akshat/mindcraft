@@ -130,9 +130,10 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 134 | Hide-correctness eligibility gates for FormatId items | SAFE-FIGKEY × SAFE-CALIB/COLD; when figure-keyed items may enter gap-scan | **DONE** (2026-08-13) — Part CXXXIV / SAFE-HCELIG |
 | 135 | Known-finite ETA honesty in late-tutor lobby copy | SAFE-ASYNCBRIEF × Maister uncertain-wait; ETA truth without shame feed | **DONE** (2026-08-13) — Part CXXXV / SAFE-KNOWNETA |
 | 136 | Soft-require vs hard-gate follow-on under help-avoidance risk | SAFE-XFERGRAIN × SAFE-HELP; quit/avoidance falsifiers for transfer CTA | **DONE** (2026-08-13) — Part CXXXVI / SAFE-SOFTGATE |
-| 137 | Reveal-Practice vs C4 split pools for sealed FormatId | SAFE-HCELIG × SAFE-REPAIR; graded use without silent Map writes | **NEXT** |
-| 138 | FormatId gap-scan composition under sealed-stock scarcity | SAFE-HCELIG × SAFE-COVER/FORMAT; honest holes vs symbolic pad theater | queued |
+| 137 | Reveal-Practice vs C4 split pools for sealed FormatId | SAFE-HCELIG × SAFE-REPAIR; graded use without silent Map writes | **DONE** (2026-08-13) — Part CXXXVII / SAFE-SPLITPOOL |
+| 138 | FormatId gap-scan composition under sealed-stock scarcity | SAFE-HCELIG × SAFE-COVER/FORMAT; honest holes vs symbolic pad theater | **NEXT** |
 | 139 | Parent trust copy when visual diagnostic holes remain | SAFE-HCELIG × SAFE-PDASH/WTP; hole honesty without coverage shame | queued |
+| 140 | Promote-to-C4 tutor QA workflow for Practice-only FormatId | SAFE-SPLITPOOL × SAFE-REPAIR/FIGKEY; ticketed promote without play-count flip | queued |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 
@@ -230,3 +231,5 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any tagged-FormatId≡C4-eligible / fluency-render eligibility / coverage-padding unsealed visuals into gap-scan / HideCorrectness Score™·Eligibility Minutes·FormatId-count-in-scan NS / miss-on-broken-figure≡format-gap without seals / ACT guarantees from visual diagnostic packaging (Part CXXXIV / SAFE-HCELIG)
 - Any “soon”/“almost” default late lobby / optimistic ETA slip loops / apology-primary without duration / ETA Score™·Wait Satisfaction·Lobby Minutes NS / student-facing tutor-shame feed / fake-precision countdown / ACT guarantees from wait-UX packaging (Part CXXXV / SAFE-KNOWNETA)
 - Any universal hard-gate after every hint / optional-only dump chip as sole close / Gate Score™·Forced Follow-On %·Soft-Require Compliance Minutes NS / “can’t leave until Practice” hint-tax shame / ignore help-avoidance when Forced % rises / ACT guarantees from soft-vs-hard gate packaging (Part CXXXVI / SAFE-SOFTGATE)
+- Any unified sealed bank ≡ Practice+C4 / silent dual-write Practice→Map / auto-promote from play counts / SplitPool Score™·Dual-Use Minutes·Pool-Separation % NS / padding C4 with Practice-only visuals / ACT guarantees from one-bank packaging (Part CXXXVII / SAFE-SPLITPOOL)
+- Any unified sealed bank ≡ Practice+C4 / silent dual-write Practice→Map / auto-promote from play counts / SplitPool Score™·Dual-Use Minutes·Pool-Separation % NS / padding C4 with Practice-only visuals / ACT guarantees from one-bank packaging (Part CXXXVII / SAFE-SPLITPOOL)

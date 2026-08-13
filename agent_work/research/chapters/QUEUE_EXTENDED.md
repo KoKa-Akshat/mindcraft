@@ -101,3 +101,6 @@ Promote 3 at a time into `NEXT_LAB.md`. Do not write all at once.
 | 137 | Reveal-Practice vs C4 split pools for sealed FormatId | SAFE-HCELIG × SAFE-REPAIR; graded use without silent Map writes | promoted → NEXT_LAB |
 | 138 | FormatId gap-scan composition under sealed-stock scarcity | SAFE-HCELIG × SAFE-COVER/FORMAT; honest holes vs symbolic pad theater | promoted → NEXT_LAB |
 | 139 | Parent trust copy when visual diagnostic holes remain | SAFE-HCELIG × SAFE-PDASH/WTP; hole honesty without coverage shame | promoted → NEXT_LAB |
+| 140 | Promote-to-C4 tutor QA workflow for Practice-only FormatId | SAFE-SPLITPOOL × SAFE-REPAIR/FIGKEY; ticketed promote without play-count flip | promoted → NEXT_LAB |
+| 141 | Same-student cool-down: revealed Practice stems barred from C4 | SAFE-SPLITPOOL × SAFE-CALIB; exposure window without Pool Score™ | queued |
+| 142 | Event-source taxonomy: Practice vs diagnostic Map write authority | SAFE-SPLITPOOL × SAFE-INSTRUMENT; illicit dual-write audits | queued |

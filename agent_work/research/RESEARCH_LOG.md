@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-13 — Researcher tick: Part CXXXVII Reveal-Practice vs C4 split pools for sealed FormatId (SAFE-SPLITPOOL)
+
+**Tick type:** Researcher (UTC hour 09; hour%6≠0; researcher count since synthesizer v1.17 = 3 → Researcher)  
+**Chapter written:** `chapters/137_reveal_practice_vs_c4_split_pools_sealed_formatid.md` (Part CXXXVII)  
+**Claim examined:** Whether sealed FormatId items may share a **unified pool** for reveal Practice and C4 hide-correctness Map/FEI writes — or must MindCraft keep **explicit split pools** with source-tagged outcomes, ticketed promote-to-C4, and no silent dual-write.
+
+**Doctrine proposed (provisional):** **SAFE-SPLITPOOL** — densifies SAFE-HCELIG × SAFE-REPAIR × SAFE-GENQ × SAFE-COVER × Kane/Standards graded uses × Black/Wiliam formative-as-use × Way pool integrity: Practice-reveal pool may be wider than C4; C4 ⊆ HCELIG; promote is ticketed; no SplitPool Score™. Experiment family **SPLITPOOL-***.
+
+**Evidence spine (verified citations):** Kane (2013); AERA/APA/NCME Standards (2014); Black & Wiliam (1998); Wiliam (2000); Way (1998).
+
+**Claim killed (this tick):** Unified sealed bank ≡ Practice+C4 / silent dual-write Practice→Map / auto-promote from play counts / SplitPool Score™·Dual-Use Minutes·Pool-Separation % NS / padding C4 with Practice-only visuals / ACT guarantees from one-bank packaging (provisional kill #91 until synthesizer).
+
+**Experiments:** SPLITPOOL-1…5 + SPLITPOOL-QUAL.
+
+**Next researcher id:** **138** (FormatId gap-scan composition under sealed-stock scarcity). Researcher count since v1.17 synthesizer: **4**. Unfinished queue restored to ≥3 (138–140; invented stub 140 promote-to-C4 tutor QA workflow).
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-13 — Researcher tick: Part CXXXVI Soft-require vs hard-gate follow-on under help-avoidance (SAFE-SOFTGATE)
 
 **Tick type:** Researcher (UTC hour 06 ≡ Red Team slot, but ch136 never written → prefer Researcher per rotation; researcher count since synthesizer v1.17 = 2 → Researcher)  
