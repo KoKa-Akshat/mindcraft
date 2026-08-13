@@ -811,6 +811,28 @@
   .act-card strong{display:block; margin:12px 0 18px; font-family:"Fredoka",sans-serif; font-size:40px; line-height:.95; color:var(--leaf); letter-spacing:-.03em;}
   .act-card .btn{width:100%;}
 
+  /* ---------- Archive teaser ---------- */
+  .archive-teaser{background:var(--paper);}
+  .archive-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:clamp(30px,5vw,72px); align-items:center;}
+  .archive-stack{position:relative; height:340px;}
+  .af{
+    position:absolute; width:210px; padding:16px 16px 14px; border-radius:4px;
+    background:#1c1a17; box-shadow:0 16px 36px rgba(20,30,20,.22);
+  }
+  .af::after{content:""; position:absolute; inset:8px; background:var(--cream); border-radius:2px; z-index:0;}
+  .af-sub,.af-t{position:relative; z-index:1; display:block;}
+  .af-sub{font-size:9.5px; font-weight:1000; letter-spacing:.1em; text-transform:uppercase; color:var(--leaf); padding:14px 14px 0;}
+  .af-t{font-family:"Fredoka",sans-serif; font-weight:700; font-size:14px; line-height:1.28; padding:8px 14px 16px; color:var(--ink);}
+  .af1{top:0; left:10%; transform:rotate(-4deg); z-index:4;}
+  .af2{top:40px; left:38%; transform:rotate(3deg); z-index:3;}
+  .af3{top:120px; left:6%; transform:rotate(2.5deg); z-index:2;}
+  .af4{top:150px; left:34%; transform:rotate(-3deg); z-index:1;}
+  @media (max-width:900px){
+    .archive-grid{grid-template-columns:1fr;}
+    .archive-stack{height:260px; margin-top:20px;}
+    .af{width:170px;}
+  }
+
   /* Reveal */
   .reveal{opacity:0; transform:translateY(26px); transition:opacity .7s var(--ease), transform .7s var(--ease);}
   .reveal.in{opacity:1; transform:none;}
@@ -1616,6 +1638,7 @@
     <a href="#anything">Any subject</a>
     <a href="#care">Care</a>
     <a href="#mission">Mission</a>
+    <a href="dans-archive.html">Dan's Archive</a>
     <a class="join" href="#start">Join free beta</a>
   </div>
 </nav>
@@ -2165,6 +2188,31 @@
   </div>
 </section>
 
+<!-- ================= ARCHIVE / OWN YOUR DATA ================= -->
+<section class="archive-teaser" id="archive">
+  <div class="wrap">
+    <div class="archive-grid">
+      <div>
+        <div class="kicker reveal">Chapter 06 · The record</div>
+        <h2 class="h2 reveal">Your record is yours. So is the shelf it sits on.</h2>
+        <p class="lede reveal">Every gap MindCraft finds, every concept you master, belongs to you — exportable, deletable, never locked behind someone else's login. That belief runs the other direction too: knowledge shouldn't be locked up either.</p>
+        <p class="reveal" style="margin-top:14px; font-weight:700; color:var(--muted); max-width:520px;">
+          <strong style="color:var(--ink);">Dan's Digital Archive</strong> is 113 free, open intelligent textbooks —
+          math, science, engineering, AI, history, and more — built by learning-graph
+          researcher Dan McCreary and shared free for anyone to use. No login. No paywall.
+        </p>
+        <a class="btn primary reveal" href="dans-archive.html" style="margin-top:22px;">Browse the archive →</a>
+      </div>
+      <div class="archive-stack reveal" aria-hidden="true">
+        <div class="af af1"><span class="af-sub">Mathematics</span><span class="af-t">Calculus</span></div>
+        <div class="af af2"><span class="af-sub">Engineering</span><span class="af-t">Real-Time DSP on a $5 Microcontroller</span></div>
+        <div class="af af3"><span class="af-sub">Biology</span><span class="af-t">Genetics: Analysis, Genomics &amp; Inference</span></div>
+        <div class="af af4"><span class="af-sub">AI / Education</span><span class="af-t">Learning Sciences for Textbook Design</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ================= ACT SUMMER PACKAGE ================= -->
 <section class="act" id="act">
   <div class="wrap">
@@ -2353,6 +2401,7 @@
         <a href="#anything">Any subject</a>
         <a href="#care">Human care</a>
         <a href="#mission">Mission</a>
+        <a href="dans-archive.html">Dan's Digital Archive</a>
         <a href="desk.html">Open The Desk</a>
       </div>
       <div class="foot-links foot-social">

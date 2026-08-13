@@ -1,9 +1,11 @@
 # MindCraft Brand Book
 
-**Version 2.0 · 2026-08-11**  
+**Version 2.1 · 2026-08-13**  
 Product name on the web: **The Desk by MindCraft**. App chrome / home screen: **The Desk**.  
 Pedagogy translation of research: [`docs/canon/PEDAGOGY.md`](docs/canon/PEDAGOGY.md) · Research OS: [`agent_work/research/`](agent_work/research/) (Constitution v1.16).  
 Shareable PDF: regenerate with `python3 docs/canon/generate_brand_book.py` → `BRAND_BOOK.pdf`.
+
+**v2.1 addition note:** adds the evidence/ownership layer to §4 Vision — every interaction becomes evidence, evidence becomes a student-owned map, and that map is exportable and deletable, not just visible. This is an addition, not a pivot: the essence, manifesto, personas, and voice below are unchanged. Prompted by a conversation with learning-graph researcher Dan McCreary; see the caution below before using his name anywhere public.
 
 This document governs every design, copy, product, and marketing decision at MindCraft. When two options conflict, this book breaks the tie. When the book itself is unclear, the Brand Essence breaks the tie. Read it before you write a headline, pick a color, name a feature, or ship a screen. Agents: start at [`docs/canon/README.md`](docs/canon/README.md).
 
@@ -84,6 +86,13 @@ Turn every student working alone into a student who never has to be. Build the o
 **The Desk** becomes the operating system for everything a student does outside class: the workspace where they take notes, join meetings, build presentations, manage projects, create content, and pull in a mentor or an AI the moment they get stuck — on any subject, any kind of work. `WORLD_VISION.md`'s own Horizon 1 already names this shape, in its own words: "The Desk as the student OS ... Binder, Intel, Connect, Ask, workflows, gap scan, Map, story-framed practice." That horizon was written before the company said the positioning out loud; this book is catching up to what the codebase already started building.
 
 Inside that OS, the **Solver vertical** carries its own fuller vision, unchanged: a living world where the student is the character, every math problem is a mission, mastery visibly changes the map, and a mentor walks in already knowing the gap. That is no longer the whole company vision — it is what the vision looks like specifically for math. Full horizon map, including Katha's math-as-a-world roadmap: `WORLD_VISION.md`. Research thesis under audit (developed within Solver): identity transformation, not mathematics delivery (`agent_work/research/`).
+
+**The evidence layer underneath the OS.** Every session, every practice set, every note, every question a mentor answers — all of it is evidence, not just activity. MindCraft turns that evidence into a living map of what a student actually knows, where they're shaky, and what caused the shakiness. That map is the thing MindCraft is actually building; the workspace is where a student uses it. Two commitments follow directly from this, and both are binding, not aspirational copy:
+
+- **The record belongs to the student.** Exportable, inspectable, deletable — the same way it would be if the student kept it themselves. MindCraft earns the right to compute a recommendation from that record; it does not own the record.
+- **Knowledge shouldn't be locked up either.** The instinct that makes a student's own data theirs runs the other direction too — the best learning material available should be as easy to find as the person who already learned it, not gated behind a login it doesn't need. `Dan's Digital Archive` (linked from the marketing site) is a first, small expression of that: free, open, no-login intelligent textbooks a curious student can walk into today, with no product pitch attached.
+
+This layer is a design influence from the wider open intelligent-textbook and learning-graph research community, most directly a conversation with researcher Dan McCreary — credit the work, not a partnership. See the anti-endorsement rule in §16 before his name, photo, or work appears anywhere public.
 
 ---
 
@@ -477,4 +486,19 @@ Brand copy must stay inside what pedagogy can defend. When research kills a Scor
 
 ---
 
-*End of Brand Book v2.0. When in doubt, reread the essence: never work alone, office hours from your room, The Desk is the place — and inside Solver specifically, math is still the mechanism, the story is still the point, and everything there still serves the click.*
+## 16. External credit and endorsement
+
+A warm conversation with a researcher, mentor, or potential partner is not the same as a formal advisor relationship, a testimonial, or permission to use their name, photo, or title publicly. This rule exists specifically for how MindCraft talks about **Dan McCreary** and anyone like him, and it is binding.
+
+| Do | Don't |
+|---|---|
+| Credit his public, freely-shared work by name when linking to it (e.g. crediting `Dan's Digital Archive`'s source) | Say "built with," "advised by," or imply a formal relationship without his explicit written agreement |
+| Treat the conversation as a design and research influence internally | Put his photo, quote, or an "advisor" badge on the site |
+| Ask permission before any public use of his name, title, or likeness | Repeat a private compliment as if it were a public testimonial |
+| Link out to open work; never rehost or rewrite it as MindCraft's own | Imply MindCraft created content that a named external researcher actually created |
+
+If he later formally advises the company, update this section and the team/advisor copy with his preferred bio and photo — until then, the safe move is a plain "research & influences" credit, not a relationship claim. Same rule applies to any other mentor, researcher, or public figure MindCraft cites.
+
+---
+
+*End of Brand Book v2.1. When in doubt, reread the essence: never work alone, office hours from your room, The Desk is the place — and inside Solver specifically, math is still the mechanism, the story is still the point, and everything there still serves the click.*

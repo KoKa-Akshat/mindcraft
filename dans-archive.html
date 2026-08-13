@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Dan's Digital Archive · The Desk by MindCraft</title>
+<meta name="description" content="113 free, open intelligent textbooks by Dan McCreary — learning graphs, MicroSims, and AI-assisted courses across math, science, engineering, and more. Browse and open any of them, free, no login.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://joinmindcraft.com/dans-archive.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MindCraft">
+<meta property="og:url" content="https://joinmindcraft.com/dans-archive.html">
+<meta property="og:title" content="Dan's Digital Archive · The Desk by MindCraft">
+<meta property="og:description" content="113 free, open intelligent textbooks by Dan McCreary. Browse and open any of them, free, no login.">
+<link rel="icon" type="image/png" href="img/favicon-raccoon.png">
+<link rel="apple-touch-icon" href="img/favicon-raccoon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito+Sans:wght@600;700;800;900;1000&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#143a2e; --leaf:#247a4d; --leaf2:#5fb779;
+    --lime:#c4f547; --gold:#f5d348;
+    --cream:#fff8e9; --paper:#fffdf7;
+    --stakes:#c1121f; --muted:#687468; --line:rgba(20,58,46,.14);
+    --shadow:0 24px 70px rgba(29,84,54,.14);
+    --ease:cubic-bezier(.16,1,.3,1);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:"Nunito Sans", system-ui, sans-serif; background:var(--cream);
+    color:var(--ink); -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit; text-decoration:none;}
+  img{display:block; max-width:100%;}
+  .wrap{max-width:1240px; margin:0 auto; padding:0 clamp(20px,4vw,48px);}
+  h1,h2,h3{font-family:"Fredoka","Nunito Sans",sans-serif; font-weight:700; letter-spacing:-.03em; line-height:1.05;}
+  .serif{font-family:"DM Serif Display",Georgia,serif; font-weight:400;}
+
+  /* ---------- Nav ---------- */
+  .nav{
+    position:sticky; top:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    padding:16px clamp(20px,4vw,48px);
+    background:rgba(255,253,247,.92);
+    -webkit-backdrop-filter:blur(16px); backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--line);
+  }
+  .brand{display:flex; align-items:center; gap:10px; font-weight:1000; font-size:15px;}
+  .brand img{border-radius:8px;}
+  .nav-links{display:flex; align-items:center; gap:22px; font-size:13.5px; font-weight:800;}
+  .nav-links a{opacity:.75; transition:opacity .2s;}
+  .nav-links a:hover{opacity:1;}
+  .nav-links .home{opacity:1; padding:9px 16px; border-radius:999px; background:var(--ink); color:#fff;}
+
+  /* ---------- Hero ---------- */
+  .hero{padding:clamp(48px,7vw,84px) 0 clamp(28px,4vw,44px);}
+  .kicker{
+    display:inline-flex; align-items:center; gap:8px; margin-bottom:16px;
+    font-size:11px; font-weight:1000; letter-spacing:.16em; text-transform:uppercase; color:var(--leaf);
+  }
+  .kicker::before{content:"●"; color:var(--lime); -webkit-text-stroke:1px var(--ink);}
+  .hero h1{font-size:clamp(36px,6vw,60px); max-width:760px;}
+  .hero .lede{margin-top:16px; font-size:17px; font-weight:700; line-height:1.6; color:var(--muted); max-width:660px;}
+  .credit{
+    margin-top:22px; padding:14px 18px; border:1px solid var(--line); border-radius:16px;
+    background:var(--paper); font-size:13.5px; font-weight:700; color:var(--ink);
+    max-width:660px; line-height:1.55;
+  }
+  .credit a{color:var(--leaf); text-decoration:underline; text-decoration-color:rgba(36,122,77,.35); text-underline-offset:2px;}
+  .stat-row{display:flex; gap:22px; margin-top:26px; flex-wrap:wrap;}
+  .stat-row div{font-size:12px; font-weight:1000; letter-spacing:.04em; text-transform:uppercase; color:var(--muted);}
+  .stat-row b{display:block; font-family:"Fredoka",sans-serif; font-size:26px; color:var(--ink); letter-spacing:-.02em;}
+
+  /* ---------- Ask/search bar ---------- */
+  .ask-bar{
+    position:sticky; top:66px; z-index:40; margin:22px 0 6px;
+    display:flex; align-items:center; gap:10px; padding:8px 8px 8px 18px;
+    background:var(--ink); border-radius:999px; box-shadow:0 16px 40px rgba(20,58,46,.22);
+  }
+  .ask-bar svg{flex:none; opacity:.7;}
+  .ask-bar input{
+    flex:1; background:none; border:none; outline:none; color:#fff;
+    font-family:"Nunito Sans",sans-serif; font-size:15px; font-weight:700;
+  }
+  .ask-bar input::placeholder{color:rgba(255,255,255,.5);}
+  .ask-count{flex:none; padding:8px 16px; border-radius:999px; background:var(--lime); color:var(--ink); font-size:12px; font-weight:1000; white-space:nowrap;}
+
+  .filters{display:flex; flex-wrap:wrap; gap:8px; margin:18px 0 8px;}
+  .filter-chip{
+    padding:8px 14px; border-radius:999px; border:1.5px solid var(--line); background:var(--paper);
+    font-size:12.5px; font-weight:900; cursor:pointer; transition:all .15s var(--ease); color:var(--ink);
+  }
+  .filter-chip:hover{border-color:var(--leaf);}
+  .filter-chip.active{background:var(--ink); color:#fff; border-color:var(--ink);}
+
+  /* ---------- Gallery ---------- */
+  .gallery{
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));
+    gap:18px; padding:28px 0 90px; grid-auto-flow:dense;
+  }
+  .frame{
+    position:relative; border-radius:4px; padding:10px; background:#1c1a17;
+    box-shadow:0 10px 26px rgba(20,30,20,.16); cursor:pointer;
+    transition:transform .22s var(--ease), box-shadow .22s var(--ease);
+    display:flex; flex-direction:column;
+  }
+  .frame:hover{transform:translateY(-4px) rotate(-.3deg); box-shadow:0 20px 44px rgba(20,30,20,.26);}
+  .frame:nth-child(7n+1){transform:rotate(.6deg);}
+  .frame:nth-child(7n+1):hover{transform:translateY(-4px) rotate(.9deg);}
+  .frame:nth-child(5n+3){transform:rotate(-.5deg);}
+  .frame:nth-child(5n+3):hover{transform:translateY(-4px) rotate(-.8deg);}
+  /* a few larger "featured" frames, gallery-wall style */
+  .frame.big{grid-column:span 2; grid-row:span 2;}
+  @media (max-width:640px){ .frame.big{grid-column:span 1; grid-row:span 1;} }
+
+  .mat{
+    background:var(--paper); border-radius:2px; padding:20px 16px 16px; flex:1;
+    display:flex; flex-direction:column; min-height:150px;
+  }
+  .frame.big .mat{min-height:270px; padding:26px 22px 20px;}
+  .swatch{
+    width:38px; height:38px; border-radius:9px; margin-bottom:14px;
+    display:flex; align-items:center; justify-content:center;
+    font-family:"Fredoka",sans-serif; font-weight:700; font-size:15px; color:#fff;
+  }
+  .frame.big .swatch{width:48px; height:48px; font-size:19px;}
+  .card-subject{font-size:10px; font-weight:1000; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-bottom:6px;}
+  .card-title{font-family:"Fredoka",sans-serif; font-weight:700; font-size:16px; letter-spacing:-.015em; line-height:1.22; margin-bottom:8px;}
+  .frame.big .card-title{font-size:22px;}
+  .card-desc{font-size:12.5px; line-height:1.5; color:var(--muted); flex:1; font-weight:600;
+    display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;}
+  .frame.big .card-desc{-webkit-line-clamp:5; font-size:13.5px;}
+  .card-stats{margin-top:12px; font-size:10.5px; font-weight:800; color:var(--leaf); letter-spacing:.01em;}
+
+  .empty-state{grid-column:1/-1; text-align:center; padding:70px 20px; color:var(--muted); font-weight:700;}
+
+  /* ---------- Lightbox ---------- */
+  .lightbox{
+    position:fixed; inset:0; z-index:100; background:rgba(8,14,20,.86);
+    display:none; align-items:center; justify-content:center; padding:24px;
+    -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
+  }
+  .lightbox.open{display:flex;}
+  .lb-box{
+    position:relative; width:min(640px, 100%); max-height:88vh; overflow-y:auto;
+    background:var(--paper); border-radius:26px; padding:clamp(28px,4vw,44px);
+    box-shadow:0 40px 100px rgba(0,0,0,.5);
+  }
+  .lb-close{
+    position:absolute; top:18px; right:18px; width:38px; height:38px; border-radius:12px;
+    background:var(--cream); border:1px solid var(--line); display:flex; align-items:center; justify-content:center;
+    cursor:pointer; font-size:16px; font-weight:900;
+  }
+  .lb-swatch{width:52px; height:52px; border-radius:14px; margin-bottom:18px; display:flex; align-items:center; justify-content:center; font-family:"Fredoka",sans-serif; font-weight:700; font-size:20px; color:#fff;}
+  .lb-subject{font-size:11px; font-weight:1000; letter-spacing:.1em; text-transform:uppercase; color:var(--leaf); margin-bottom:8px;}
+  .lb-title{font-size:clamp(24px,3.4vw,34px); margin-bottom:14px; max-width:520px;}
+  .lb-desc{font-size:15.5px; line-height:1.65; color:var(--ink); font-weight:600; margin-bottom:18px;}
+  .lb-stats{font-size:12.5px; font-weight:800; color:var(--muted); margin-bottom:26px; line-height:1.6;}
+  .lb-actions{display:flex; align-items:center; gap:12px; flex-wrap:wrap;}
+  .lb-visit{
+    display:inline-flex; align-items:center; gap:8px; padding:13px 22px; border-radius:999px;
+    background:var(--ink); color:#fff; font-size:13px; font-weight:1000; letter-spacing:.03em;
+  }
+  .lb-visit:hover{background:var(--leaf);}
+  .lb-nav{display:flex; gap:8px; margin-left:auto;}
+  .lb-nav button{
+    width:42px; height:42px; border-radius:12px; border:1.5px solid var(--line); background:var(--cream);
+    cursor:pointer; font-size:16px; font-weight:900; color:var(--ink);
+  }
+  .lb-nav button:hover{border-color:var(--leaf);}
+  .lb-nav button:disabled{opacity:.3; cursor:default;}
+  .lb-counter{font-size:11.5px; font-weight:900; color:var(--muted); margin-top:16px; text-align:center;}
+
+  /* ---------- Footer ---------- */
+  footer{border-top:1px solid var(--line); padding:32px 0 60px; margin-top:20px;}
+  .foot-note{font-size:12.5px; color:var(--muted); font-weight:700; line-height:1.6; max-width:600px;}
+  .foot-note a{color:var(--leaf); text-decoration:underline; text-underline-offset:2px;}
+
+  .visually-hidden{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0);}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="brand" href="index.html">
+    <img src="img/raccoon-logo.png" alt="" width="30" height="30">
+    <span>MindCraft</span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html#learns">How it learns</a>
+    <a href="index.html" class="home">← Back to The Desk</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <section class="hero">
+    <div class="kicker">Free · Open · No login</div>
+    <h1>Dan's Digital Archive</h1>
+    <p class="lede">
+      113 free, open intelligent textbooks — math, science, engineering, AI,
+      history, language, and more — each one built with real learning graphs,
+      interactive MicroSims, and a knowledge structure that could tell you
+      exactly where you got stuck. Explore any of them, free, no account needed.
+    </p>
+    <div class="credit">
+      Every textbook here was created by <a href="https://www.linkedin.com/in/danmccreary/" target="_blank" rel="noopener noreferrer">Dan McCreary</a>,
+      shared freely on his own sites as open Level&nbsp;2.9 intelligent textbooks. MindCraft
+      didn't make any of this — we're just making it easier to find and browse. Full
+      original catalog: <a href="https://dmccreary.github.io/intelligent-textbooks/case-studies/" target="_blank" rel="noopener noreferrer">dmccreary.github.io</a>.
+    </div>
+    <div class="stat-row" id="statRow"></div>
+  </section>
+
+  <div class="ask-bar">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.6" y2="16.6"/></svg>
+    <input type="text" id="searchInput" placeholder="Search or ask for a subject — “calculus”, “graph databases”, “dementia”…" autocomplete="off">
+    <span class="ask-count" id="askCount">113 books</span>
+  </div>
+
+  <div class="filters" id="filters"></div>
+
+  <div class="gallery" id="gallery" aria-live="polite"></div>
+</div>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+  <div class="lb-box">
+    <button class="lb-close" id="lbClose" aria-label="Close">✕</button>
+    <div class="lb-swatch" id="lbSwatch"></div>
+    <div class="lb-subject" id="lbSubject"></div>
+    <h2 class="lb-title" id="lbTitle"></h2>
+    <p class="lb-desc" id="lbDesc"></p>
+    <div class="lb-stats" id="lbStats"></div>
+    <div class="lb-actions">
+      <a class="lb-visit" id="lbVisit" href="#" target="_blank" rel="noopener noreferrer">Open textbook →</a>
+      <div class="lb-nav">
+        <button id="lbPrev" aria-label="Previous">←</button>
+        <button id="lbNext" aria-label="Next">→</button>
+      </div>
+    </div>
+    <div class="lb-counter" id="lbCounter"></div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p class="foot-note">
+      © MindCraft · Textbook content, titles, and descriptions belong to their
+      respective authors (primarily <a href="https://www.linkedin.com/in/danmccreary/" target="_blank" rel="noopener noreferrer">Dan McCreary</a>) and
+      are linked here, not rehosted. Questions or corrections:
+      <a href="mailto:joinmindcraft@gmail.com">joinmindcraft@gmail.com</a>.
+    </p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const SWATCHES = ['#247a4d','#1d3a8a','#c1121f','#744056','#c9963f','#4f8a8b','#7d6fa8','#c96a7e','#5fb779','#d3a900'];
+  const CATEGORY_RULES = [
+    { label: 'Math', test: s => /mathemat|calculus|algebra|geometry|trigonom|statistics|functions|linear algebra/i.test(s) },
+    { label: 'Computer Science / AI', test: s => /computer science|\bai\b|artificial|machine learning|deep learning|graph neural|generative|llm|conversational|agents|prompt/i.test(s) },
+    { label: 'Engineering', test: s => /engineering|circuits|electronics|robotics|3d printing|fluid power|signal|dsp|semiconductor|microcontroller/i.test(s) },
+    { label: 'Science', test: s => /physics|chemistry|biology|ecology|genetics|bioinformatics|forensic|food science|public health|healthcare|medicine/i.test(s) },
+    { label: 'Business', test: s => /business|finance|economics|entrepreneur|investor|organizational/i.test(s) },
+    { label: 'History / Culture', test: s => /history|culture|heritage/i.test(s) },
+    { label: 'Language', test: s => /language/i.test(s) },
+    { label: 'Education Tech', test: s => /education technology|education\/ai|learning science|digital literacy/i.test(s) },
+    { label: 'Other', test: () => true },
+  ];
+
+  function categoryFor(subject){
+    for (const rule of CATEGORY_RULES) if (rule.test(subject)) return rule.label;
+    return 'Other';
+  }
+  function swatchFor(str){
+    let h = 0;
+    for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) >>> 0;
+    return SWATCHES[h % SWATCHES.length];
+  }
+  function initials(title){
+    const words = title.replace(/[^a-zA-Z0-9 ]/g, ' ').split(/\s+/).filter(Boolean);
+    return ((words[0]||'')[0] + (words[1]||'')[0]).toUpperCase();
+  }
+  function escapeHtml(s){
+    return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  let ALL = [];
+  let filtered = [];
+  let activeCategory = 'All';
+  let lbIndex = -1;
+
+  const galleryEl = document.getElementById('gallery');
+  const filtersEl = document.getElementById('filters');
+  const searchEl = document.getElementById('searchInput');
+  const askCountEl = document.getElementById('askCount');
+  const statRowEl = document.getElementById('statRow');
+
+  fetch('data/dansArchive.json')
+    .then(r => r.json())
+    .then(data => {
+      ALL = data.books.map((b, i) => Object.assign({}, b, { category: categoryFor(b.subject), id: i }));
+      buildStats(data);
+      buildFilters();
+      applyFilters();
+    })
+    .catch(() => {
+      galleryEl.innerHTML = '<div class="empty-state">Couldn\'t load the archive right now. Try refreshing.</div>';
+    });
+
+  function buildStats(data){
+    const cats = new Set(ALL.map(b => b.category)).size;
+    statRowEl.innerHTML = `
+      <div><b>${ALL.length}</b>Textbooks</div>
+      <div><b>${cats}</b>Subject areas</div>
+      <div><b>$0</b>Cost</div>
+    `;
+  }
+
+  function buildFilters(){
+    const cats = ['All', ...CATEGORY_RULES.map(r => r.label)];
+    const present = new Set(ALL.map(b => b.category));
+    filtersEl.innerHTML = cats
+      .filter(c => c === 'All' || present.has(c))
+      .map(c => `<button class="filter-chip${c==='All'?' active':''}" data-cat="${escapeHtml(c)}">${escapeHtml(c)}</button>`)
+      .join('');
+    filtersEl.querySelectorAll('.filter-chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        activeCategory = btn.dataset.cat;
+        filtersEl.querySelectorAll('.filter-chip').forEach(b => b.classList.toggle('active', b === btn));
+        applyFilters();
+      });
+    });
+  }
+
+  function applyFilters(){
+    const q = searchEl.value.trim().toLowerCase();
+    filtered = ALL.filter(b => {
+      const matchesCat = activeCategory === 'All' || b.category === activeCategory;
+      const matchesQ = !q || (b.title + ' ' + b.description + ' ' + b.subject).toLowerCase().includes(q);
+      return matchesCat && matchesQ;
+    });
+    askCountEl.textContent = `${filtered.length} book${filtered.length === 1 ? '' : 's'}`;
+    renderGallery();
+  }
+
+  function renderGallery(){
+    if (!filtered.length) {
+      galleryEl.innerHTML = '<div class="empty-state">No textbooks match that search. Try a broader term.</div>';
+      return;
+    }
+    galleryEl.innerHTML = filtered.map((b, i) => {
+      const big = i % 11 === 0 ? ' big' : '';
+      const color = swatchFor(b.title);
+      return `
+        <div class="frame${big}" data-id="${b.id}" tabindex="0" role="button" aria-label="Open ${escapeHtml(b.title)}">
+          <div class="mat">
+            <div class="swatch" style="background:${color}">${initials(b.title)}</div>
+            <div class="card-subject">${escapeHtml(b.subject)}</div>
+            <div class="card-title">${escapeHtml(b.title)}</div>
+            <div class="card-desc">${escapeHtml(b.description)}</div>
+            ${b.stats ? `<div class="card-stats">${escapeHtml(b.stats)}</div>` : ''}
+          </div>
+        </div>`;
+    }).join('');
+
+    galleryEl.querySelectorAll('.frame').forEach(el => {
+      el.addEventListener('click', () => openLightbox(parseInt(el.dataset.id, 10)));
+      el.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(parseInt(el.dataset.id, 10)); }
+      });
+    });
+  }
+
+  searchEl.addEventListener('input', applyFilters);
+
+  // ---------- Lightbox ----------
+  const lightboxEl = document.getElementById('lightbox');
+  const lbSwatch = document.getElementById('lbSwatch');
+  const lbSubject = document.getElementById('lbSubject');
+  const lbTitle = document.getElementById('lbTitle');
+  const lbDesc = document.getElementById('lbDesc');
+  const lbStats = document.getElementById('lbStats');
+  const lbVisit = document.getElementById('lbVisit');
+  const lbCounter = document.getElementById('lbCounter');
+  const lbPrev = document.getElementById('lbPrev');
+  const lbNext = document.getElementById('lbNext');
+
+  function openLightbox(bookId){
+    const idx = filtered.findIndex(b => b.id === bookId);
+    if (idx === -1) return;
+    lbIndex = idx;
+    renderLightbox();
+    lightboxEl.classList.add('open');
+  }
+  function renderLightbox(){
+    const b = filtered[lbIndex];
+    if (!b) return;
+    lbSwatch.style.background = swatchFor(b.title);
+    lbSwatch.textContent = initials(b.title);
+    lbSubject.textContent = b.subject;
+    lbTitle.textContent = b.title;
+    lbDesc.textContent = b.description;
+    lbStats.textContent = b.stats || '';
+    lbVisit.href = b.url;
+    lbCounter.textContent = `${lbIndex + 1} of ${filtered.length}`;
+    lbPrev.disabled = lbIndex <= 0;
+    lbNext.disabled = lbIndex >= filtered.length - 1;
+  }
+  function closeLightbox(){
+    lightboxEl.classList.remove('open');
+    lbIndex = -1;
+  }
+  function step(delta){
+    const next = lbIndex + delta;
+    if (next < 0 || next >= filtered.length) return;
+    lbIndex = next;
+    renderLightbox();
+  }
+
+  document.getElementById('lbClose').addEventListener('click', closeLightbox);
+  lightboxEl.addEventListener('click', e => { if (e.target === lightboxEl) closeLightbox(); });
+  lbPrev.addEventListener('click', () => step(-1));
+  lbNext.addEventListener('click', () => step(1));
+
+  document.addEventListener('keydown', e => {
+    if (!lightboxEl.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    else if (e.key === 'ArrowLeft') step(-1);
+    else if (e.key === 'ArrowRight') step(1);
+  });
+})();
+</script>
+
+</body>
+</html>
