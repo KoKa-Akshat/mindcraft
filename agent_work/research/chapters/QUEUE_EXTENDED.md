@@ -100,4 +100,4 @@ Promote 3 at a time into `NEXT_LAB.md`. Do not write all at once.
 | 136 | Soft-require vs hard-gate follow-on under help-avoidance risk | SAFE-XFERGRAIN × SAFE-HELP; quit/avoidance falsifiers for transfer CTA | promoted → NEXT_LAB |
 | 137 | Reveal-Practice vs C4 split pools for sealed FormatId | SAFE-HCELIG × SAFE-REPAIR; graded use without silent Map writes | promoted → NEXT_LAB |
 | 138 | FormatId gap-scan composition under sealed-stock scarcity | SAFE-HCELIG × SAFE-COVER/FORMAT; honest holes vs symbolic pad theater | promoted → NEXT_LAB |
-| 139 | Parent trust copy when visual diagnostic holes remain | SAFE-HCELIG × SAFE-PDASH/WTP; hole honesty without coverage shame | queued |
+| 139 | Parent trust copy when visual diagnostic holes remain | SAFE-HCELIG × SAFE-PDASH/WTP; hole honesty without coverage shame | promoted → NEXT_LAB |

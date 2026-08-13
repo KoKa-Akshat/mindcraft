@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-13 — Researcher tick: Part CXXXVI Soft-require vs hard-gate follow-on under help-avoidance (SAFE-SOFTGATE)
+
+**Tick type:** Researcher (UTC hour 06 ≡ Red Team slot, but ch136 never written → prefer Researcher per rotation; researcher count since synthesizer v1.17 = 2 → Researcher)  
+**Chapter written:** `chapters/136_soft_require_vs_hard_gate_follow_on_help_avoidance.md` (Part CXXXVI)  
+**Claim examined:** Whether MindCraft must default to **soft-require** (primary one-tap Practice grain; Close demoted) after instrumental Solver help vs universal **hard-gate** walls — without optional-only dump chips, Gate Score™ vanity, or ignoring help-avoidance when Forced % rises.
+
+**Doctrine proposed (provisional):** **SAFE-SOFTGATE** — densifies SAFE-XFERGRAIN × SAFE-HELP × SAFE-CRUNCHCTA × Thaler/Sunstein nudge≠mandate × Brehm/Ball–Goodboy reactance × Deci/Ryan autonomy × Ryan/Pintrich help-threat: soft-require default; conditional short hard-gate with avoidance falsifiers; no Gate Score™ / hint-tax shame. Experiment family **SOFTGATE-*** (absorbs densified XFERGRAIN-3).
+
+**Evidence spine (verified citations):** Thaler & Sunstein (2008); Johnson & Goldstein (2003); Brehm (1966); Ball & Goodboy (2014); Deci & Ryan (2000); Ryan & Pintrich (1997); Karabenick & Knapp (1991); Aleven et al. (2016); Bastani et al. (2025).
+
+**Claim killed (this tick):** Universal hard-gate after every hint / optional-only dump chip as sole close / Gate Score™·Forced Follow-On %·Soft-Require Compliance Minutes NS / “can’t leave until Practice” hint-tax shame / ignore help-avoidance when Forced % rises / ACT guarantees from soft-vs-hard gate packaging (provisional kill #90 until synthesizer).
+
+**Experiments:** SOFTGATE-1…5 + SOFTGATE-QUAL.
+
+**Next researcher id:** **137** (Reveal-Practice vs C4 split pools for sealed FormatId). Researcher count since v1.17 synthesizer: **3**. Unfinished queue restored to ≥3 (137–139; promoted stub 139 parent trust copy when visual diagnostic holes remain).
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-13 — Researcher tick: Part CXXXV Known-finite ETA honesty in late-tutor lobby (SAFE-KNOWNETA)
 
 **Tick type:** Researcher (UTC hour 03; hour%6≠0; researcher count since synthesizer v1.17 = 1 → Researcher)  
