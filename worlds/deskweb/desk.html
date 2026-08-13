@@ -100,6 +100,14 @@
   }
   .wire-toast.show{opacity:1;}
   .scene.is-pinching{transition:none;}
+  /* Single-finger canvas pan updates --pan-x/--pan-y on every pointermove
+     (60-120Hz). Without this, the unconditional .7s transform transition
+     above restarts on each frame, so the scene is always easing toward a
+     target that's already moved again — it visibly lags behind the finger
+     and never catches up. Mirrors the is-pinching escape hatch; the .7s
+     transition still runs for programmatic pans (e.g. scrollTileIntoView
+     snapping a new tile into view), just not while a raw drag is live. */
+  .scene.is-panning{transition:none;}
   .scene::before{
     content:""; position:absolute; left:20%; right:20%; bottom:-8%; height:26%;
     background:radial-gradient(ellipse,rgba(20,58,46,.18),transparent 70%);
@@ -1008,13 +1016,17 @@
       panStartY = event.clientY;
       panBaseX = panX;
       panBaseY = panY;
+      scene.classList.add('is-panning');
       desk.setPointerCapture?.(event.pointerId);
     });
     desk.addEventListener('pointermove', event => {
       if (!panning) return;
       setPan(panBaseX + (event.clientX - panStartX) * .25, panBaseY + (event.clientY - panStartY) * .25);
     });
-    ['pointerup','pointercancel'].forEach(type => desk.addEventListener(type, () => { panning = false; }));
+    ['pointerup','pointercancel'].forEach(type => desk.addEventListener(type, () => {
+      panning = false;
+      scene.classList.remove('is-panning');
+    }));
 
     // Tapping empty desk (not a card) hides whichever card's ports were showing.
     desk.addEventListener('click', event => {
