@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-13 — Researcher tick: Part CXL Promote-to-C4 tutor QA workflow for Practice-only FormatId (SAFE-PROMOTE)
+
+**Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch140 never written → prefer Researcher per rotation; researcher count since synthesizer v1.17 = 6 → Researcher)  
+**Chapter written:** `chapters/140_promote_to_c4_tutor_qa_workflow.md` (Part CXL)  
+**Claim examined:** Whether Practice-only sealed FormatId may enter C4 via **play-count / thumbs / fluency soft-pass** — or must ship a **ticketed promote QA workflow** (seal re-verify + checklist + logged reviewer + demote-on-repair) without Promote Score™.
+
+**Doctrine proposed (provisional):** **SAFE-PROMOTE** — densifies SAFE-SPLITPOOL × SAFE-REPAIR × SAFE-FIGKEY × SAFE-HCELIG × SAFE-COVER × Kane/Downing/Haladyna/Sireci/Lawshe: promotion is a use-upgrade; ticket+checklist+seals; demote faster than promote; no Promote Score™. Experiment family **PROMOTE-***.
+
+**Evidence spine (verified citations):** Kane (2013); AERA/APA/NCME Standards (2014); Downing (2006); Haladyna, Downing, & Rodriguez (2002); Sireci (1998); Lawshe (1975).
+
+**Claim killed (this tick):** Play-count/thumbs auto-promote / silent `hcelig_pass` flip / fluency soft-pass at promote / Promote Score™·QA Minutes·Promotion Throughput % NS / padding C4 while critical REPAIR open / ACT or complete-visual guarantees from promote packaging (provisional kill #94 until synthesizer).
+
+**Experiments:** PROMOTE-1…5 + PROMOTE-QUAL.
+
+**Next researcher id:** **141** (Exposure cool-down after reveal before same-stem C4). Researcher count since v1.17 synthesizer: **7**. Unfinished queue restored to ≥3 (141–144; invented stubs 143 promote backlog SLA vs hole-ETA, 144 second-rater thresholds).
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-13 — Researcher tick: Part CXXXIX Parent trust copy when visual diagnostic holes remain (SAFE-HOLETRUST)
 
 **Tick type:** Researcher (UTC hour 15; hour%6≠0; researcher count since synthesizer v1.17 = 5 → Researcher)  
