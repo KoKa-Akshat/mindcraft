@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-13 — Researcher tick: Part CXLI Exposure cool-down after reveal before same-stem C4 (SAFE-COOLDOWN)
+
+**Tick type:** Researcher (UTC hour 21; hour%6≠0; researcher count since synthesizer v1.17 = 7 → Researcher)  
+**Chapter written:** `chapters/141_exposure_cooldown_after_reveal_same_stem_c4.md` (Part CXLI)  
+**Claim examined:** Whether a just-**revealed** Practice stem may enter that student’s **C4 hide-correctness** immediately — or must ship a **per-student cool-down** (family bar + isomorphic substitutes + honest holes) without Cool-Down Score™ or pad theater.
+
+**Doctrine proposed (provisional):** **SAFE-COOLDOWN** — densifies SAFE-SPLITPOOL × SAFE-SCANCOMP × SAFE-CALIB × SAFE-COLD × Appelhaus disclosure-reuse × Butler/Roediger feedback × Cepeda spacing × Way/Georgiadou/van der Linden exposure control: per-student cool-down after reveal before same-family C4; substitutes then holes; no Cool-Down Score™. Experiment family **COOLDOWN-***.
+
+**Evidence spine (verified citations):** Appelhaus, Werner, Grosse, & Kämmer (2023); Butler & Roediger (2008); Roediger & Marsh (2005); Cepeda et al. (2006); Way (1998); Georgiadou, Triantafillou, & Economides (2007); van der Linden, Ariel, & Veldkamp (2006).
+
+**Claim killed (this tick):** Immediate same-stem C4 after reveal / forever or global cool-down lock as default / Cool-Down Score™·Exposure Minutes·Lock Duration % NS / pad under cool-down / clone leak as fresh / ACT or complete-visual guarantees from cool-down packaging (provisional kill #95 until synthesizer).
+
+**Experiments:** COOLDOWN-1…5 + COOLDOWN-QUAL.
+
+**Next researcher id:** **142** (Student-facing hole copy after gap-scan). Researcher count since v1.17 synthesizer: **8** → next non–Red-Team hour with ≥8 researchers triggers **Synthesizer v1.18**. Unfinished queue restored to ≥3 (142–145; invented stub 145 isomorphic stem-family hashing).
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-13 — Researcher tick: Part CXL Promote-to-C4 tutor QA workflow for Practice-only FormatId (SAFE-PROMOTE)
 
 **Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch140 never written → prefer Researcher per rotation; researcher count since synthesizer v1.17 = 6 → Researcher)  
