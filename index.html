@@ -832,6 +832,31 @@
     .archive-stack{height:260px; margin-top:20px;}
     .af{width:170px;}
   }
+  .archive-inline-search{margin-top:26px; max-width:480px;}
+  .ais-bar{
+    display:flex; align-items:center; gap:10px; padding:13px 16px; border-radius:16px;
+    background:var(--ink); color:#fff;
+  }
+  .ais-bar svg{flex:none; opacity:.65;}
+  .ais-bar input{
+    flex:1; background:none; border:none; outline:none; color:#fff;
+    font-family:"Nunito Sans",sans-serif; font-size:14px; font-weight:700;
+  }
+  .ais-bar input::placeholder{color:rgba(255,255,255,.5);}
+  .ais-results{margin-top:10px; display:grid; gap:6px;}
+  .ais-row{
+    display:flex; align-items:baseline; gap:10px; padding:10px 14px; border-radius:12px;
+    background:var(--paper); border:1px solid var(--line); font-size:13px;
+  }
+  .ais-row b{font-weight:900; color:var(--ink);}
+  .ais-row span{color:var(--muted); font-weight:700; font-size:11.5px;}
+  .ais-empty{font-size:12.5px; font-weight:700; color:var(--muted); padding:4px 2px;}
+
+  /* ---------- Touch the idea ---------- */
+  .touch-idea{background:var(--mint);}
+  .touch-stats{display:flex; gap:clamp(24px,4vw,56px); flex-wrap:wrap; margin:28px 0 24px;}
+  .ts b{display:block; font-family:"Fredoka",sans-serif; font-size:clamp(36px,4.4vw,52px); letter-spacing:-.03em; color:var(--leaf); line-height:1;}
+  .ts span{display:block; margin-top:8px; font-size:13px; font-weight:800; color:var(--ink); max-width:200px; line-height:1.35;}
 
   /* Reveal */
   .reveal{opacity:0; transform:translateY(26px); transition:opacity .7s var(--ease), transform .7s var(--ease);}
@@ -2195,13 +2220,19 @@
       <div>
         <div class="kicker reveal">Chapter 06 · The record</div>
         <h2 class="h2 reveal">Your record is yours. So is the shelf it sits on.</h2>
-        <p class="lede reveal">Every gap MindCraft finds, every concept you master, belongs to you — exportable, deletable, never locked behind someone else's login. That belief runs the other direction too: knowledge shouldn't be locked up either.</p>
+        <p class="lede reveal">Every gap MindCraft finds belongs to you. Export it. Delete it. It never lives behind someone else's login. Knowledge works the same way. It shouldn't be locked up either.</p>
         <p class="reveal" style="margin-top:14px; font-weight:700; color:var(--muted); max-width:520px;">
-          The <strong style="color:var(--ink);">Open Learning Archive</strong> is 113 free, open intelligent textbooks —
-          math, science, engineering, AI, history, and more — built by learning-graph
-          researcher Dan McCreary and shared free for anyone to use. No login. No paywall.
+          113 free, open intelligent textbooks. Math, science, engineering, AI, history.
+          Built by learning-graph researcher Dan McCreary. No login. No paywall. Just open a book.
         </p>
         <a class="btn primary reveal" href="dans-archive.html" style="margin-top:22px;">Browse the archive →</a>
+        <div class="archive-inline-search reveal" id="archiveInlineSearch">
+          <div class="ais-bar">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.6" y2="16.6"/></svg>
+            <input type="text" id="aisInput" placeholder="Try “calculus,” “graph databases,” “dementia”…" autocomplete="off">
+          </div>
+          <div class="ais-results" id="aisResults"></div>
+        </div>
       </div>
       <div class="archive-stack reveal" aria-hidden="true">
         <div class="af af1"><span class="af-sub">Mathematics</span><span class="af-t">Calculus</span></div>
@@ -2210,6 +2241,21 @@
         <div class="af af4"><span class="af-sub">AI / Education</span><span class="af-t">Learning Sciences for Textbook Design</span></div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ================= TOUCH THE IDEA ================= -->
+<section class="touch-idea" id="touch">
+  <div class="wrap">
+    <div class="kicker reveal">Chapter 06.5 · The instinct</div>
+    <h2 class="h2 reveal">Don't just get the answer. Touch it.</h2>
+    <p class="lede reveal">Every book in the archive works the same way. Pick a variable. Change it. Watch the concept move before anyone explains it to you.</p>
+    <div class="touch-stats">
+      <div class="ts reveal"><b>389</b><span>MicroSims in one Health Education book alone</span></div>
+      <div class="ts reveal"><b>173</b><span>in AI Assisted Geometry</span></div>
+      <div class="ts reveal"><b>62</b><span>paired with 16 illustrated stories in Real-Time DSP on a $5 Microcontroller</span></div>
+    </div>
+    <a class="btn soft reveal" href="dans-archive.html?open=91" style="margin-top:8px;">See the DSP book →</a>
   </div>
 </section>
 
@@ -3053,6 +3099,48 @@
       });
     }
   });
+</script>
+<script>
+  // ---------- Archive inline search (homepage teaser) ----------
+  (function(){
+    const input = document.getElementById('aisInput');
+    const results = document.getElementById('aisResults');
+    if (!input || !results) return;
+    let books = null;
+
+    function escapeHtml(s){
+      return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    function render(q){
+      if (!books) return;
+      if (!q) { results.innerHTML = ''; return; }
+      const needle = q.toLowerCase();
+      const matches = books
+        .map((b, i) => ({ b, i }))
+        .filter(({ b }) => (b.title + ' ' + b.description + ' ' + b.subject).toLowerCase().includes(needle))
+        .slice(0, 4);
+      if (!matches.length) {
+        results.innerHTML = '<div class="ais-empty">No match yet — try a broader word, or browse the full archive.</div>';
+        return;
+      }
+      results.innerHTML = matches.map(({ b, i }) =>
+        `<a class="ais-row" href="dans-archive.html?open=${i}"><b>${escapeHtml(b.title)}</b><span>${escapeHtml(b.subject)}</span></a>`
+      ).join('');
+    }
+
+    input.addEventListener('focus', () => {
+      if (books) return;
+      fetch('data/dansArchive.json').then(r => r.json()).then(data => {
+        books = data.books;
+        render(input.value.trim());
+      }).catch(() => {
+        results.innerHTML = '<div class="ais-empty">Couldn\'t load the archive right now.</div>';
+      });
+    }, { once: true });
+
+    input.addEventListener('input', () => render(input.value.trim()));
+  })();
 </script>
 </body>
 </html>

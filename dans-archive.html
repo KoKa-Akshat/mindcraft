@@ -304,6 +304,8 @@
       buildStats(data);
       buildFilters();
       applyFilters();
+      const openParam = new URLSearchParams(location.search).get('open');
+      if (openParam !== null && ALL[+openParam]) openLightbox(+openParam);
     })
     .catch(() => {
       galleryEl.innerHTML = '<div class="empty-state">Couldn\'t load the archive right now. Try refreshing.</div>';
