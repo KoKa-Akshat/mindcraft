@@ -127,9 +127,10 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 132 | Async pre-brief cards while waiting for late tutor | SAFE-MICROBRIEF × SAFE-SRL; student-owned Set without pour-open / idle lobby | **DONE** (2026-08-12) — Part CXXXII / SAFE-ASYNCBRIEF |
 | 133 | One-tap Solver→Practice transfer grain after instrumental help | SAFE-HWHELP × SAFE-CRUNCHCTA × SAFE-SCHED; handoff without dump-and-quit | **DONE** (2026-08-12) — Part CXXXIII / SAFE-XFERGRAIN |
 | — | **Synthesizer v1.17** | Merge CXXVI–CXXXIII SAFE-* into core OS I.4 / XIV / IX / XXI | **DONE** (2026-08-12 UTC 21) |
-| 134 | Hide-correctness eligibility gates for FormatId items | SAFE-FIGKEY × SAFE-CALIB/COLD; when figure-keyed items may enter gap-scan | **NEXT** |
-| 135 | Known-finite ETA honesty in late-tutor lobby copy | SAFE-ASYNCBRIEF × Maister uncertain-wait; ETA truth without shame feed | queued |
+| 134 | Hide-correctness eligibility gates for FormatId items | SAFE-FIGKEY × SAFE-CALIB/COLD; when figure-keyed items may enter gap-scan | **DONE** (2026-08-13) — Part CXXXIV / SAFE-HCELIG |
+| 135 | Known-finite ETA honesty in late-tutor lobby copy | SAFE-ASYNCBRIEF × Maister uncertain-wait; ETA truth without shame feed | **NEXT** |
 | 136 | Soft-require vs hard-gate follow-on under help-avoidance risk | SAFE-XFERGRAIN × SAFE-HELP; quit/avoidance falsifiers for transfer CTA | queued |
+| 137 | Reveal-Practice vs C4 split pools for sealed FormatId | SAFE-HCELIG × SAFE-REPAIR; graded use without silent Map writes | queued |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 
@@ -224,3 +225,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any fluency SVG / pretty-render≡keyed figure / LLM-as-judge-alone figure ship / Figure Key Score™·Visual QA Minutes / unverified FormatId figures as diagnostic ground truth / FormatId-count or “AI drew N diagrams” hero / soft-pass wrong geometry because traps were mapped / ACT guarantees from figure-generation packaging (Part CXXXI / SAFE-FIGKEY / v1.17 company law)
 - Any idle spinner-only late lobby / pour-open AI wait dump / Wait Minutes·Lobby Score™·Prebrief Streak NS / entertainment-primary fill / forced marathon Practice-before-join / late-tutor shame feed / ACT guarantees from async pre-brief packaging (Part CXXXII / SAFE-ASYNCBRIEF / v1.17 company law)
 - Any dump-and-quit Solver close / multi-step maze handoff / Transfer Score™·Handoff Minutes·Follow-on Streak NS / assisted≡ready / marathon-after-soft-hint / XP-for-help-without-solo / ACT guarantees from transfer-grain packaging (Part CXXXIII / SAFE-XFERGRAIN / v1.17 company law)
+- Any tagged-FormatId≡C4-eligible / fluency-render eligibility / coverage-padding unsealed visuals into gap-scan / HideCorrectness Score™·Eligibility Minutes·FormatId-count-in-scan NS / miss-on-broken-figure≡format-gap without seals / ACT guarantees from visual diagnostic packaging (Part CXXXIV / SAFE-HCELIG)

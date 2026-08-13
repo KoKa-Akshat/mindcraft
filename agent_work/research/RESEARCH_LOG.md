@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-13 — Researcher tick: Part CXXXIV Hide-correctness eligibility gates for FormatId (SAFE-HCELIG)
+
+**Tick type:** Researcher (UTC hour 00 ≡ Red Team slot, but ch134 never written → prefer Researcher per rotation; researcher count since synthesizer v1.17 = 0 → Researcher)  
+**Chapter written:** `chapters/134_hide_correctness_eligibility_formatid.md` (Part CXXXIV)  
+**Claim examined:** Whether MindCraft must ship an explicit **hide-correctness eligibility gate** for FormatId items — stricter than Practice browse — vs treating any tagged diagram/graph as C4-ready, fluency-render as admission, or padding gap-scan coverage with unsealed visuals.
+
+**Doctrine proposed (provisional):** **SAFE-HCELIG** — densifies SAFE-FIGKEY × SAFE-GENQ × SAFE-CALIB × SAFE-COLD × SAFE-FORMAT × SAFE-COVER × SAFE-FORMTRAP: `hcelig_pass` distinct from “in bank”; C4 is the strictest use; seals first; honest holes > fake coverage; no HideCorrectness Score™. Experiment family **HCELIG-***.
+
+**Evidence spine (verified citations):** Kane (2013); Messick (1989); Diezmann & Lowrie (2009); Lowrie, Diezmann, & Kay (2011); Haladyna, Downing, & Rodriguez (2002); Gierl & Lai (2016); Fischhoff, Slovic, & Lichtenstein (1977); Zhang et al. (2024, MathVerse preprint — method caution).
+
+**Claim killed (this tick):** Tagged-FormatId≡C4-eligible / fluency-render eligibility / coverage-padding unsealed visuals into gap-scan / HideCorrectness Score™·Eligibility Minutes·FormatId-count-in-scan NS / miss-on-broken-figure≡format-gap without seals / ACT guarantees from visual diagnostic packaging (provisional kill #88 until synthesizer).
+
+**Experiments:** HCELIG-1…5 + HCELIG-QUAL.
+
+**Next researcher id:** **135** (known-finite ETA honesty in late-tutor lobby copy). Researcher count since v1.17 synthesizer: **1**. Unfinished queue restored to ≥3 (135–137; promoted stub 137 Reveal-Practice vs C4 split pools).
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-12 — Synthesizer tick v1.17: merge Parts CXXVI–CXXXIII
 
 **Tick type:** Synthesizer (UTC hour 21; hour%6≠0; ≥8 researcher entries since synthesizer v1.16 → Synthesizer)  
