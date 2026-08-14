@@ -1109,6 +1109,41 @@ final class MindCraftNotesUITests: XCTestCase {
         XCUIDevice.shared.orientation = .portrait
     }
 
+    /// Same shape as testArchiveWorkflowOpensFromLibrary - confirms the
+    /// third workflow library entry (Create a book) launches its WKWebView
+    /// shell and Done returns cleanly.
+    func testBookWorkflowOpensFromLibrary() {
+        let app = XCUIApplication()
+        app.launchArguments = ["--ui-testing-in-memory", "--ui-testing-skip-auth"]
+        app.launch()
+        XCUIDevice.shared.orientation = .landscapeLeft
+
+        XCTAssertTrue(app.buttons["fieldDeskModeToggle"].waitForExistence(timeout: 40), "expected Field Desk chrome after cold load")
+        let bootText = app.staticTexts["Your workspace is starting up"]
+        if bootText.exists { _ = bootText.waitForNonExistence(timeout: 90) }
+
+        let bottomEdge = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.98))
+        let midScreen = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.55))
+        bottomEdge.press(forDuration: 0.05, thenDragTo: midScreen)
+
+        let workflowsButton = app.buttons["fieldDeskWorkflows"]
+        XCTAssertTrue(workflowsButton.waitForExistence(timeout: 8), "expected Workflows dock icon")
+        workflowsButton.press(forDuration: 0.7)
+
+        let bookRow = app.buttons["workflowOpen_book"]
+        XCTAssertTrue(bookRow.waitForExistence(timeout: 5), "expected Create a book row in workflow library")
+        bookRow.tap()
+
+        let doneButton = app.buttons["bookWorkflowBack"]
+        XCTAssertTrue(doneButton.waitForExistence(timeout: 10), "expected Done control on the book workflow shell")
+        attachScreenshot(app, name: "book_workflow_open")
+        doneButton.tap()
+
+        XCTAssertFalse(app.buttons["bookWorkflowBack"].waitForExistence(timeout: 3), "expected book workflow closed")
+        XCTAssertTrue(app.buttons["fieldDeskWorkflows"].waitForExistence(timeout: 5), "expected dock control back")
+        XCUIDevice.shared.orientation = .portrait
+    }
+
     /// Minimize/reconnect: collapsing Scheduling Workflows should NOT close
     /// it (that's a separate, existing control) - it should shrink to a
     /// reconnectable chip on the desk, same treatment as the ACT stage's

@@ -9,6 +9,8 @@
       blurb: 'Jesse on a call. LinkedIn pull. Drive folder you already own.' },
     { id: 'archive', title: 'Open Learning Archive', tone: '#143a2e', icon: '▣',
       blurb: 'Ask Jesse. Exact page from Dan’s open textbooks. Data stays yours.' },
+    { id: 'book', title: 'Create a book', tone: '#6B7A4A', icon: '✒',
+      blurb: 'Hop on a call with Jesse and write your own short book.' },
     { id: 'poll', title: 'Group Poll', tone: '#c4a484', icon: '◷',
       blurb: 'Find the time that works for everyone. Votes stack. Share the link.' },
     { id: 'signup', title: 'Sign-up Sheet', tone: '#1f6b4a', icon: '▥',
@@ -66,6 +68,10 @@
     }
     if (kind === 'archive') {
       location.href = './archive/?v=a2';
+      return;
+    }
+    if (kind === 'book') {
+      location.href = './book/?v=b1';
       return;
     }
     if (kind === 'booking') {

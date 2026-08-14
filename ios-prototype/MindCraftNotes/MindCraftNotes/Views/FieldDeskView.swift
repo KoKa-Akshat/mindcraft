@@ -79,6 +79,7 @@ struct FieldDeskView: View {
     @State private var showWorkflowLibrary = false
     @State private var showResumeAgent = false
     @State private var showArchiveWorkflow = false
+    @State private var showBookWorkflow = false
     @State private var showApplyToday = false
     @State private var showSchedulingWorkflows = false
     @State private var schedulingWorkflowsMinimized = false
@@ -816,6 +817,12 @@ struct FieldDeskView: View {
                         showArchiveWorkflow = true
                     }
                 },
+                onOpenBook: {
+                    showWorkflowLibrary = false
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        showBookWorkflow = true
+                    }
+                },
                 onOpenApplyToday: {
                     showWorkflowLibrary = false
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
@@ -837,6 +844,12 @@ struct FieldDeskView: View {
         }
         .fullScreenCover(isPresented: $showArchiveWorkflow) {
             ArchiveWorkflowView(onClose: { showArchiveWorkflow = false })
+        }
+        .fullScreenCover(isPresented: $showBookWorkflow) {
+            BookWorkflowView(
+                onClose: { showBookWorkflow = false },
+                onPublished: { flash("Filed to your Binder") }
+            )
         }
         .sheet(isPresented: $showManage) {
             AccountManageView()

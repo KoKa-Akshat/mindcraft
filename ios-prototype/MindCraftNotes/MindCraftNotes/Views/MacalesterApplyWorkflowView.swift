@@ -354,6 +354,7 @@ struct WorkflowLibraryView: View {
     @ObservedObject var market: WorkflowMarketStore
     var onOpenResumeBuilder: () -> Void = {}
     var onOpenArchive: () -> Void = {}
+    var onOpenBook: () -> Void = {}
     var onOpenApplyToday: () -> Void
 
     var body: some View {
@@ -409,6 +410,31 @@ struct WorkflowLibraryView: View {
                         }
                     }
                     .accessibilityIdentifier("workflowOpen_archive")
+
+                    Button {
+                        dismiss()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                            onOpenBook()
+                        }
+                    } label: {
+                        HStack(spacing: 12) {
+                            Image(systemName: "book.pages.fill")
+                                .foregroundColor(Color(wfHex: "0c1207"))
+                                .frame(width: 36, height: 36)
+                                .background(RoundedRectangle(cornerRadius: 10).fill(Color(wfHex: "c4f547")))
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("Create a book")
+                                    .font(.system(size: 16, weight: .bold, design: .rounded))
+                                Text("Jesse · hop on a call, write your own book")
+                                    .font(.system(size: 12, weight: .medium, design: .rounded))
+                                    .foregroundColor(.secondary)
+                            }
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                    .accessibilityIdentifier("workflowOpen_book")
 
                     Button {
                         market.buy("application_tracker")
