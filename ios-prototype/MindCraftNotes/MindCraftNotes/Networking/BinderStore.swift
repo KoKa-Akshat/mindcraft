@@ -108,6 +108,13 @@ final class BinderStore: ObservableObject {
         create(type: "doc", title: title, body: body, source: source, storageRefs: [])
     }
 
+    /// A student-authored book from the Jesse book-creation workflow -
+    /// `body` is the assembled chapter markdown. See `BookWorkflowView`.
+    @discardableResult
+    func addBook(title: String, body: String) -> String {
+        create(type: "book", title: title, body: body, source: "jesse_book_agent", storageRefs: [])
+    }
+
     /// Uploads each local file to Storage at `binder/{studentId}/{itemId}/{filename}`,
     /// then writes the `binder_items` doc with `type: "byob"`,
     /// `source: "upload"`. A single file failing to upload doesn't drop the

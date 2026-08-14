@@ -110,6 +110,7 @@
 		D9SCHEDWORKF01A2B3C4 /* SchedulingWorkflowsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9SCHEDWORKF01A2B3C4 /* SchedulingWorkflowsView.swift */; };
 		D9OPENARCHIVE01A2B3C4 /* OpenLearningArchiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9OPENARCHIVE01A2B3C4 /* OpenLearningArchiveView.swift */; };
 		D9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift */; };
+		D9BOOKWORKF01A2B3C4 /* BookWorkflowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BOOKWORKF01A2B3C4 /* BookWorkflowView.swift */; };
 		D9FRIENDSTORE01A2B3 /* FriendsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FRIENDSTORE01A2B3 /* FriendsStore.swift */; };
 		D9QCALINVITE01A2B3C4 /* QCalInvite.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9QCALINVITE01A2B3C4 /* QCalInvite.swift */; };
 		D9FRIENDSVIEW01A2B3 /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FRIENDSVIEW01A2B3 /* FriendsView.swift */; };
@@ -220,6 +221,7 @@
 		C9SCHEDWORKF01A2B3C4 /* SchedulingWorkflowsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchedulingWorkflowsView.swift; sourceTree = "<group>"; };
 		C9OPENARCHIVE01A2B3C4 /* OpenLearningArchiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenLearningArchiveView.swift; sourceTree = "<group>"; };
 		C9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveWorkflowView.swift; sourceTree = "<group>"; };
+		C9BOOKWORKF01A2B3C4 /* BookWorkflowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookWorkflowView.swift; sourceTree = "<group>"; };
 		C9FRIENDSTORE01A2B3 /* FriendsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsStore.swift; sourceTree = "<group>"; };
 		C9QCALINVITE01A2B3C4 /* QCalInvite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QCalInvite.swift; sourceTree = "<group>"; };
 		C9FRIENDSVIEW01A2B3 /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
@@ -406,6 +408,7 @@
 				C9SCHEDWORKF01A2B3C4 /* SchedulingWorkflowsView.swift */,
 				C9OPENARCHIVE01A2B3C4 /* OpenLearningArchiveView.swift */,
 				C9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift */,
+				C9BOOKWORKF01A2B3C4 /* BookWorkflowView.swift */,
 				C9FRIENDSVIEW01A2B3 /* FriendsView.swift */,
 			);
 			path = Views;
@@ -656,6 +659,7 @@
 				D9SCHEDWORKF01A2B3C4 /* SchedulingWorkflowsView.swift in Sources */,
 				D9OPENARCHIVE01A2B3C4 /* OpenLearningArchiveView.swift in Sources */,
 				D9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift in Sources */,
+				D9BOOKWORKF01A2B3C4 /* BookWorkflowView.swift in Sources */,
 				D9FRIENDSTORE01A2B3 /* FriendsStore.swift in Sources */,
 				D9QCALINVITE01A2B3C4 /* QCalInvite.swift in Sources */,
 				D9FRIENDSVIEW01A2B3 /* FriendsView.swift in Sources */,

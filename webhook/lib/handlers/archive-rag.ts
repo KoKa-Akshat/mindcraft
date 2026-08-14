@@ -14,7 +14,7 @@ import { setCors } from '../cors'
 import corpus from '../../data/dans-archive-chunks.json'
 
 const ANTHROPIC_MODEL = 'claude-sonnet-4-20250514'
-const GROQ_MODEL = 'meta-llama/llama-3.3-70b-versatile'
+const GROQ_MODEL = 'llama-3.3-70b-versatile'
 const WAIT_MS = 5000
 const STOP = new Set([
   'the', 'and', 'for', 'with', 'that', 'this', 'from', 'what', 'how', 'why',
