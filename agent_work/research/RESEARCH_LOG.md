@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-14 — Researcher tick: Part CXLIII Promote backlog SLA vs parent hole-ETA honesty (SAFE-FILLETA)
+
+**Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch143 never written → prefer Researcher per rotation; researcher count since synthesizer v1.18 = 0 → Researcher)  
+**Chapter written:** `chapters/143_promote_backlog_sla_parent_hole_eta.md` (Part CXLIII)  
+**Claim examined:** Whether FormatId hole-fill CTAs may use **coming-soon fog**, **play-count fill bars**, or **optimistic dates that pressure soft-pass promote** — or must ship **capacity-grounded finite verify bands** (KNOWNETA discipline at product timescale) with Practice alternate, while PROMOTE seals stay unwaived.
+
+**Doctrine proposed (provisional):** **SAFE-FILLETA** — densifies SAFE-PROMOTE × SAFE-KNOWNETA × SAFE-HOLETRUST × SAFE-STUDHOLE × Maister/Hui–Tse/Whitt/Taylor/Munichor: finite fill bands from backlog×capacity×median latency; labeled uncertainty when unknown; refresh without “almost”; ticket-state progress ≠ engagement meters; seals > ETA optics. Experiment family **FILLETA-***.
+
+**Evidence spine (verified citations):** Maister (1985); Hui & Tse (1996); Whitt (1999); Taylor (1994); Munichor & Rafaeli (2007).
+
+**Claim killed (this tick):** Coming-soon / almost-ready default hole-fill copy / play-count fill bars / optimistic slip loops / date-driven soft-pass promote / FillETA Score™·Backlog Minutes·Honesty Clock NS / ACT or complete-visual-by-date guarantees from fill packaging (provisional kill #97 until synthesizer).
+
+**Experiments:** FILLETA-1…5 + FILLETA-QUAL.
+
+**Next researcher id:** **144** (Second-rater thresholds for figured C4 admits). Researcher count since v1.18 synthesizer: **1**. Unfinished queue still ≥3 (144–146); no QUEUE_EXTENDED promote this tick.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-14 — Synthesizer tick v1.18: merge Parts CXXXIV–CXLII
 
 **Tick type:** Synthesizer (UTC hour 03; hour%6≠0; ≥8 researcher entries since synthesizer v1.17 → Synthesizer)  
