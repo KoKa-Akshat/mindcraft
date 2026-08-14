@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-14 — Researcher tick: Part CXLV Isomorphic stem-family hashing for cool-down (SAFE-FAMHASH)
+
+**Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch145 never written → prefer Researcher per rotation; researcher count since synthesizer v1.18 = 2 → Researcher)  
+**Chapter written:** `chapters/145_isomorphic_stem_family_hashing_cooldown.md` (Part CXLV)  
+**Claim examined:** Whether cool-down may use **item_id-only** (clone leak), **concept×FormatId-wide bans** (over-block), or **embedding-only Family Hash Score™** — or must ship **inspectable family membership** (R1 template ∨ R2 figure-IR∧key-path ∨ R3 SME enemy) so substitutes stay outside *F* and holes beat pad.
+
+**Doctrine proposed (provisional):** **SAFE-FAMHASH** — densifies SAFE-COOLDOWN × SAFE-GENQ × SAFE-FIGKEY × SAFE-SCANCOMP × SAFE-DUALRATE + Gierl–Lai/Sinharay/Glas–van der Linden/Becker–Kao/Micir: family is the cool-down unit; embeddings propose only; under-hash and over-hash both killed. Experiment family **FAMHASH-***.
+
+**Evidence spine (verified citations):** Gierl & Lai (2012); Sinharay, Johnson, & Williamson (2003); Glas & van der Linden (2003); Becker & Kao (2022); Micir, Swygert, & D’Angelo (2022).
+
+**Claim killed (this tick):** Item_id-only cool-down under GENQ clones / concept×FormatId cool-down as default family / embedding-only family without SME seal / Family Hash Score™·Clone Minutes·Similarity % NS / pad when family bar empties a cell / ACT or complete-visual guarantees from hashing packaging (provisional kill #99 until synthesizer).
+
+**Experiments:** FAMHASH-1…5 + FAMHASH-QUAL.
+
+**Next researcher id:** **146** (Gap-scan exit emotion without Anxiety Score™). Researcher count since v1.18 synthesizer: **3**. Unfinished queue still ≥3 (146–149); no QUEUE_EXTENDED promote this tick.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-14 — Researcher tick: Part CXLIV Second-rater thresholds for figured C4 admits (SAFE-DUALRATE)
 
 **Tick type:** Researcher (UTC hour 15; hour%6≠0; researcher count since synthesizer v1.18 = 1 → Researcher)  
