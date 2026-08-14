@@ -168,6 +168,51 @@
   }
   .sheet textarea{min-height:110px; resize:vertical}
 
+  /* iPad+ - this workflow used to stay phone-width (430px) no matter the
+     viewport, so on a ~1180-1366pt desk it opened into what read as mostly
+     empty polka canvas with a phone card stranded in the middle. Widen the
+     conversational screens moderately (they're vertical flows - a 430px
+     column reads better than a 900px one for a title + a hold button), and
+     give the desk screen a proper two-column layout - identity/actions on
+     the left, the actual paper resume on the right - since that's the one
+     screen genuinely built from a stack of narrow blocks that all belong
+     side by side once there's room, and it's the composed "workflow"
+     screen the Figma brief calls out as its own state, not a modal. */
+  @media (min-width:860px){
+    .phone{max-width:600px; padding-top:calc(28px + env(safe-area-inset-top))}
+    .phone::before{
+      content:"";
+      position:fixed; left:50%; top:38%; width:min(1100px,140vw); height:min(1100px,140vw);
+      transform:translate(-50%,-50%);
+      background:radial-gradient(circle,rgba(255,255,255,.4),rgba(255,255,255,0) 62%);
+      pointer-events:none; z-index:-1;
+    }
+    /* #desk is the one screen that wants to be wider than the rest - the
+       parent .phone would otherwise clip it at 600px, so widen .phone
+       itself (still centered via its own margin:0 auto) only while desk
+       is the active screen. */
+    .phone:has(#desk.on){max-width:1040px}
+    #desk.on{
+      display:grid;
+      grid-template-columns:minmax(260px,360px) minmax(0,1fr);
+      grid-template-areas:
+        "call  call"
+        "id    paper"
+        "dock  paper"
+        "apply paper";
+      column-gap:24px; row-gap:14px;
+      align-items:start;
+    }
+    #desk .callbar{grid-area:call}
+    #desk .platter{grid-area:id}
+    #desk .paper{grid-area:paper; align-self:stretch; max-height:none}
+    #desk .dock{grid-area:dock; align-self:start}
+    #desk #applyBtn{grid-area:apply}
+  }
+  @media (min-width:1080px){
+    .phone{max-width:680px}
+    .phone:has(#desk.on){max-width:1180px}
+  }
 </style>
 </head>
 <body>
