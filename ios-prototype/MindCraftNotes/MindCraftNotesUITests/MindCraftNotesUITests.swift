@@ -1068,6 +1068,47 @@ final class MindCraftNotesUITests: XCTestCase {
         XCUIDevice.shared.orientation = .portrait
     }
 
+    /// Long-press on the Workflows dock icon opens the workflow library
+    /// (Resume builder / Open Learning Archive / Apply today) - a different
+    /// picker than the short-tap Scheduling Workflows one above. Confirms
+    /// the archive entry launches its WKWebView shell and Done returns.
+    func testArchiveWorkflowOpensFromLibrary() {
+        let app = XCUIApplication()
+        app.launchArguments = ["--ui-testing-in-memory", "--ui-testing-skip-auth"]
+        app.launch()
+        XCUIDevice.shared.orientation = .landscapeLeft
+
+        XCTAssertTrue(app.buttons["fieldDeskModeToggle"].waitForExistence(timeout: 40), "expected Field Desk chrome after cold load")
+        let bootText = app.staticTexts["Your workspace is starting up"]
+        if bootText.exists { _ = bootText.waitForNonExistence(timeout: 90) }
+
+        let bottomEdge = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.98))
+        let midScreen = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.55))
+        bottomEdge.press(forDuration: 0.05, thenDragTo: midScreen)
+
+        let workflowsButton = app.buttons["fieldDeskWorkflows"]
+        XCTAssertTrue(workflowsButton.waitForExistence(timeout: 8), "expected Workflows dock icon")
+        workflowsButton.press(forDuration: 0.7)
+
+        let archiveRow = app.buttons["workflowOpen_archive"]
+        XCTAssertTrue(archiveRow.waitForExistence(timeout: 5), "expected Open Learning Archive row in workflow library")
+        attachScreenshot(app, name: "workflow_library")
+        archiveRow.tap()
+
+        // A container-level identifier on a plain ZStack (archiveWorkflowRoot)
+        // doesn't reliably materialize as its own queryable element - same
+        // caveat as schedulingWorkflows/schedulingCard_* above. Query the
+        // leaf Done button instead, which SwiftUI always exposes.
+        let doneButton = app.buttons["archiveWorkflowBack"]
+        XCTAssertTrue(doneButton.waitForExistence(timeout: 10), "expected Done control on the archive workflow shell")
+        attachScreenshot(app, name: "archive_workflow_open")
+        doneButton.tap()
+
+        XCTAssertFalse(app.buttons["archiveWorkflowBack"].waitForExistence(timeout: 3), "expected archive workflow closed")
+        XCTAssertTrue(app.buttons["fieldDeskWorkflows"].waitForExistence(timeout: 5), "expected dock control back")
+        XCUIDevice.shared.orientation = .portrait
+    }
+
     /// Minimize/reconnect: collapsing Scheduling Workflows should NOT close
     /// it (that's a separate, existing control) - it should shrink to a
     /// reconnectable chip on the desk, same treatment as the ACT stage's
