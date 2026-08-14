@@ -6,8 +6,9 @@
 
 ## Resume agent · liquid glass proto (2026-08-14)
 
-Try now (no Xcode): **https://mindcraft-93858.web.app/desk-os/workflows/resume/?v=r1**  
-Allow mic + sound. Hold to talk, then LinkedIn (demo pull) / Drive folder / upload / call.
+Try now (no Xcode): **https://mindcraft-93858.web.app/desk-os/workflows/resume/?v=r2**  
+Allow mic + sound. Hold to talk, then LinkedIn (demo pull) / Drive folder / upload / call.  
+v2 = real liquid glass (shader port of [liquid_glass_widgets](https://github.com/sdegenaar/liquid_glass_widgets) PATH A): polka wallpaper refracts at rims, 135° specular, no nested glass.
 
 - Design brief for next agent (Figma tokens): `agent_work/product/RESUME_AGENT_FIGMA_BRIEF.md`
 - Source: `agent_work/product/desk_os/workflows/resume/index.html` (CI syncs via `app/scripts/syncDeskOs.mjs`)

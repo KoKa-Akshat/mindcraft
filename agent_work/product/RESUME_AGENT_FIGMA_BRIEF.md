@@ -3,7 +3,7 @@
 **Product:** The Desk by MindCraft  
 **Surface:** Resume builder workflow (Jesse, voice-first)  
 **Tryable proto:** https://mindcraft-93858.web.app/desk-os/workflows/resume/  
-**Canon:** `BRAND_BOOK.md` · `docs/canon/PEDAGOGY.md` · Apple liquid-glass pattern from [sdegenaar/liquid_glass_widgets](https://github.com/sdegenaar/liquid_glass_widgets)
+**Canon:** `BRAND_BOOK.md` · `docs/canon/PEDAGOGY.md` · Apple liquid-glass from [sdegenaar/liquid_glass_widgets](https://github.com/sdegenaar/liquid_glass_widgets) (`lightweight_glass.frag` PATH A)
 
 Do **not** clone Jack & Jill chrome. Steal the *feel*: hi → recorder → guided call → LinkedIn/Drive. Speak Desk.
 
@@ -11,26 +11,44 @@ Do **not** clone Jack & Jill chrome. Steal the *feel*: hi → recorder → guide
 
 ## 1. Design tokens (map onto glass)
 
+Desk ink on Apple’s iOS 26 glass. Numbers below are the Flutter kit’s `LiquidGlassSettings` defaults, ported into the resume proto’s WebGL layer.
+
 | Token | Value | Use |
 |---|---|---|
-| Ink | `#143a2e` | Type, primary buttons |
+| Ink | `#143a2e` | Type, opaque primary fill (`Jump on a call`) |
 | Leaf | `#247a4d` | Status, links |
-| Lime | `#c4f547` | Student bubbles, hold-to-talk, CTA fill |
-| Paper | `#f4efe6` / `#f7f4ec` | Page field |
-| Polka | `radial-gradient(circle, rgba(20,58,46,.18) 1.15px, transparent 1.7px)` size `22px` | Studio/dash background — always on |
-| Glass fill | `linear-gradient(180deg, rgba(255,255,255,.62), rgba(255,253,247,.38))` | Cards, topbar, call bar |
-| Glass blur | `backdrop-filter: blur(22px) saturate(160%)` | Required; Reduce Transparency → solid paper |
-| Stroke | `1px solid rgba(255,255,255,.55)` + inset highlight | Specular rim (liquid glass) |
-| Radius | `28px` cards · `999px` pills · `22px` buttons | iOS 26, not 8px material |
-| Type | Fredoka 700 titles · Nunito Sans UI · Caveat only on avatar glyph | No Inter/SF as brand |
-| Motion | `cubic-bezier(.22, 1.2, .36, 1)` 0.45–0.6s enter · scale `.97` press | Jelly, not bounce-confetti |
+| Lime | `#c4f547` | Student bubbles, wallpaper blobs |
+| Paper | `#f4efe6` → `#efe8d8` | `GlassScaffold` wallpaper only |
+| Polka | `rgba(20,58,46,.18)` dots, 22px grid | Refraction source — glass must sit on this |
+| `blur` | `10` | Frost (CSS fallback `blur(10px)`) |
+| `thickness` | `30` platters · `40` hold orb | Rim / lens bend |
+| `refractiveIndex` | `0.15` | iOS 26 edge highlight |
+| `chromaticAberration` | `0.06` on proto (kit default `0` for sheets) | RGB split at rim |
+| `saturation` | `1.2` | Backdrop chroma boost |
+| `lightIntensity` | `0.7` | Specular |
+| `lightAngle` | `2.356` rad (135°, upper-left) | Pointer nudges this |
+| `ambientStrength` | `0.4` | Body darken |
+| `glassColor` | `#1FFFFFFF` (12% white) | Achromatic frost lift |
+| Specular | dual: n=16 key + n=16 kick × 0.4 | Anisotropic rim |
+| Hairline | `0.5px` | Not a 1px grey stroke |
+| Radius | `28` cards · capsule bars · `22` buttons · circle orb | |
+| Type | Fredoka 700 titles · Nunito Sans UI · Caveat on avatar glyph | No Inter/SF as brand |
+| Motion | `cubic-bezier(.22, 1.2, .36, 1)` · press scale `.97` | Jelly |
 | Voice | System TTS, en-US, rate ~0.96, prefer Samantha / Ava | Human, not chipper robot |
 
-**Liquid glass rules (from the Flutter kit, translated):**
-- Glass must sit **on** a controlled background (polka paper). Never on empty white.
-- Grouped glass shares one layer (topbar + cards), not 12 different blurs.
-- Morph: one physics curve for sheet present / call expand.
-- Accessibility: Reduce Motion → fade only. Reduce Transparency → opaque cream cards, keep layout.
+**Composition (from the kit — do not violate):**
+
+Glass is the **navigation / control layer**, not a wrapper.
+
+| Glass (platter) | Opaque (content) |
+|---|---|
+| App bar, call bar, hold orb | Titles, lede, resume paper |
+| Connect / Drive / Upload tiles | `Jump on a call` ink fill |
+| Data-rights strip | Transcript student lime bubbles |
+
+- One shared wallpaper + one shader pass (`AdaptiveLiquidGlassLayer`). Never 12 independent blurs.
+- **Do not nest glass.** Hold orb and LinkedIn button are siblings of cards, not children. Nested refractive widgets get `avoidsRefraction` and go flat.
+- Reduce Motion → fade only. Reduce Transparency → solid `#f7f4ec`, keep layout.
 
 **Never:** emoji in product copy, exclamation in chrome, confetti, raccoon in chrome, “MindCraftNotes”, Jack/Jill wordmarks.
 
