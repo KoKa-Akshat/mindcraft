@@ -1068,6 +1068,124 @@ final class MindCraftNotesUITests: XCTestCase {
         XCUIDevice.shared.orientation = .portrait
     }
 
+    /// Long-press on the Workflows dock icon opens the workflow library
+    /// (Resume builder / Open Learning Archive / Apply today) - a different
+    /// picker than the short-tap Scheduling Workflows one above. Confirms
+    /// the archive entry launches its WKWebView shell and Done returns.
+    func testArchiveWorkflowOpensFromLibrary() {
+        let app = XCUIApplication()
+        app.launchArguments = ["--ui-testing-in-memory", "--ui-testing-skip-auth"]
+        app.launch()
+        XCUIDevice.shared.orientation = .landscapeLeft
+
+        XCTAssertTrue(app.buttons["fieldDeskModeToggle"].waitForExistence(timeout: 40), "expected Field Desk chrome after cold load")
+        let bootText = app.staticTexts["Your workspace is starting up"]
+        if bootText.exists { _ = bootText.waitForNonExistence(timeout: 90) }
+
+        let bottomEdge = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.98))
+        let midScreen = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.55))
+        bottomEdge.press(forDuration: 0.05, thenDragTo: midScreen)
+
+        let workflowsButton = app.buttons["fieldDeskWorkflows"]
+        XCTAssertTrue(workflowsButton.waitForExistence(timeout: 8), "expected Workflows dock icon")
+        workflowsButton.press(forDuration: 0.7)
+
+        let archiveRow = app.buttons["workflowOpen_archive"]
+        XCTAssertTrue(archiveRow.waitForExistence(timeout: 5), "expected Open Learning Archive row in workflow library")
+        attachScreenshot(app, name: "workflow_library")
+        archiveRow.tap()
+
+        // A container-level identifier on a plain ZStack (archiveWorkflowRoot)
+        // doesn't reliably materialize as its own queryable element - same
+        // caveat as schedulingWorkflows/schedulingCard_* above. Query the
+        // leaf Done button instead, which SwiftUI always exposes.
+        let doneButton = app.buttons["archiveWorkflowBack"]
+        XCTAssertTrue(doneButton.waitForExistence(timeout: 10), "expected Done control on the archive workflow shell")
+        attachScreenshot(app, name: "archive_workflow_open")
+        doneButton.tap()
+
+        XCTAssertFalse(app.buttons["archiveWorkflowBack"].waitForExistence(timeout: 3), "expected archive workflow closed")
+        XCTAssertTrue(app.buttons["fieldDeskWorkflows"].waitForExistence(timeout: 5), "expected dock control back")
+        XCUIDevice.shared.orientation = .portrait
+    }
+
+    /// Minimize/reconnect: collapsing Scheduling Workflows should NOT close
+    /// it (that's a separate, existing control) - it should shrink to a
+    /// reconnectable chip on the desk, same treatment as the ACT stage's
+    /// existing minimize, and tapping the chip should bring back the exact
+    /// same open state (still on the picker), not reset it.
+    func testSchedulingWorkflowsMinimizeAndReconnect() {
+        let app = XCUIApplication()
+        app.launchArguments = ["--ui-testing-in-memory", "--ui-testing-skip-auth"]
+        app.launch()
+        XCUIDevice.shared.orientation = .landscapeLeft
+
+        XCTAssertTrue(app.buttons["fieldDeskModeToggle"].waitForExistence(timeout: 40), "expected Field Desk chrome after cold load")
+        let bootText = app.staticTexts["Your workspace is starting up"]
+        if bootText.exists { _ = bootText.waitForNonExistence(timeout: 90) }
+
+        let bottomEdge = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.98))
+        let midScreen = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.55))
+        bottomEdge.press(forDuration: 0.05, thenDragTo: midScreen)
+
+        let workflowsButton = app.buttons["fieldDeskWorkflows"]
+        XCTAssertTrue(workflowsButton.waitForExistence(timeout: 8), "expected Workflows dock icon")
+        workflowsButton.tap()
+        XCTAssertTrue(app.staticTexts["Select your workflow"].waitForExistence(timeout: 5), "expected picker to open")
+        attachScreenshot(app, name: "picker_open_baseline")
+
+        let minimize = app.buttons["fieldDeskWorkflowsMinimize"]
+        XCTAssertTrue(minimize.waitForExistence(timeout: 3), "expected minimize control")
+        minimize.tap()
+
+        XCTAssertFalse(app.staticTexts["Select your workflow"].waitForExistence(timeout: 2), "expected picker hidden, not closed, after minimize")
+        attachScreenshot(app, name: "after_minimize_tap")
+        let chip = app.buttons["fieldDeskWorkflowsChip"]
+        XCTAssertTrue(chip.waitForExistence(timeout: 3), "expected minimized chip on the desk")
+        XCTAssertTrue(app.staticTexts["Tap to reconnect"].exists, "expected reconnect affordance text")
+        attachScreenshot(app, name: "workflows_minimized_chip")
+
+        chip.tap()
+        XCTAssertTrue(app.staticTexts["Select your workflow"].waitForExistence(timeout: 3), "expected reconnect to restore the same open state")
+        XCUIDevice.shared.orientation = .portrait
+    }
+
+    /// Verifies the Instance Hub cleanup: no fork.knife icon, no Desk/Test
+    /// Instance placeholder cards, tutors/workflow sections shown directly
+    /// (no collapse toggle chevron).
+    func testInstanceHubShowsCleanedUpLayout() {
+        let app = XCUIApplication()
+        app.launchArguments = ["--ui-testing-in-memory", "--ui-testing-skip-auth"]
+        app.launch()
+        XCUIDevice.shared.orientation = .landscapeLeft
+
+        XCTAssertTrue(app.buttons["fieldDeskModeToggle"].waitForExistence(timeout: 40), "expected Field Desk chrome after cold load")
+
+        // fieldDeskModeToggle existing only proves FieldDeskView is mounted
+        // underneath DeskBootView, not that boot has actually dismissed -
+        // DeskBootView only completes once kitchenReady fires from the
+        // WebView (guard kitchenReady, elapsed >= 6.0), which can take a
+        // while on a genuinely fresh/never-booted simulator. Wait for the
+        // boot text to actually disappear before interacting with chrome.
+        let bootText = app.staticTexts["Your workspace is starting up"]
+        if bootText.exists {
+            _ = bootText.waitForNonExistence(timeout: 90)
+        }
+
+        let manage = app.buttons["fieldDeskLogoManage"]
+        XCTAssertTrue(manage.waitForExistence(timeout: 5), "expected Manage button")
+        manage.tap()
+
+        XCTAssertTrue(app.staticTexts["Tutors nearby"].waitForExistence(timeout: 5), "expected hub to open")
+        attachScreenshot(app, name: "instance_hub_cleaned_up")
+
+        XCTAssertFalse(app.buttons["deskHubManage"].exists, "fork.knife icon should be removed")
+        XCTAssertFalse(app.buttons["deskInstance_fieldDesk"].exists, "Desk placeholder card should be removed")
+        XCTAssertFalse(app.buttons["deskInstance_testInstance"].exists, "Test Instance placeholder card should be removed")
+        XCTAssertTrue(app.buttons["deskHubCreateInstance"].exists, "Create an instance should remain")
+        XCTAssertTrue(app.staticTexts["Workflow market"].exists, "expected Workflow market header shown directly")
+    }
+
     /// Round 26: drag the Field Desk - must pan, must NOT bounce back to hub.
     func testFieldDeskPanDoesNotDismiss() {
         let app = XCUIApplication()

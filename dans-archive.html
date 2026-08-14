@@ -97,35 +97,37 @@
 
   /* ---------- Gallery ---------- */
   .gallery{
-    display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));
-    gap:18px; padding:28px 0 90px; grid-auto-flow:dense;
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(240px, 1fr));
+    gap:22px; padding:28px 0 90px;
   }
   .frame{
-    position:relative; border-radius:4px; padding:10px; background:#1c1a17;
-    box-shadow:0 10px 26px rgba(20,30,20,.16); cursor:pointer;
+    position:relative; background:#fffdf8; border:1.5px solid #1c1a17;
+    cursor:pointer; display:flex; flex-direction:column; padding:0;
+    box-shadow:0 10px 24px rgba(20,58,46,.08);
     transition:transform .22s var(--ease), box-shadow .22s var(--ease);
-    display:flex; flex-direction:column;
   }
-  .frame:hover{transform:translateY(-4px) rotate(-.3deg); box-shadow:0 20px 44px rgba(20,30,20,.26);}
-  .frame:nth-child(7n+1){transform:rotate(.6deg);}
-  .frame:nth-child(7n+1):hover{transform:translateY(-4px) rotate(.9deg);}
-  .frame:nth-child(5n+3){transform:rotate(-.5deg);}
-  .frame:nth-child(5n+3):hover{transform:translateY(-4px) rotate(-.8deg);}
-  /* a few larger "featured" frames, gallery-wall style */
-  .frame.big{grid-column:span 2; grid-row:span 2;}
-  @media (max-width:640px){ .frame.big{grid-column:span 1; grid-row:span 1;} }
+  .frame:hover{transform:translateY(-6px); box-shadow:0 18px 40px rgba(20,58,46,.14);}
+  .frame.big{grid-column:span 2;}
+  @media (max-width:640px){ .frame.big{grid-column:span 1;} }
 
   .mat{
-    background:var(--paper); border-radius:2px; padding:20px 16px 16px; flex:1;
-    display:flex; flex-direction:column; min-height:150px;
+    background:#fffdf8; padding:16px 16px 18px; flex:1;
+    display:flex; flex-direction:column;
   }
-  .frame.big .mat{min-height:270px; padding:26px 22px 20px;}
+  .cover-art{
+    width:100%; aspect-ratio:3/4; object-fit:cover; display:block;
+    background:#efe8d8; margin:0;
+  }
   .swatch{
-    width:38px; height:38px; border-radius:9px; margin-bottom:14px;
+    width:38px; height:38px; border-radius:9px; margin:16px 16px 0;
     display:flex; align-items:center; justify-content:center;
     font-family:"Fredoka",sans-serif; font-weight:700; font-size:15px; color:#fff;
   }
   .frame.big .swatch{width:48px; height:48px; font-size:19px;}
+  .lb-cover{
+    width:min(180px,40%); aspect-ratio:3/4; object-fit:cover; border-radius:10px;
+    margin:0 0 18px; box-shadow:0 12px 28px rgba(20,30,20,.18);
+  }
   .card-subject{font-size:10px; font-weight:1000; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-bottom:6px;}
   .card-title{font-family:"Fredoka",sans-serif; font-weight:700; font-size:16px; letter-spacing:-.015em; line-height:1.22; margin-bottom:8px;}
   .frame.big .card-title{font-size:22px;}
@@ -211,6 +213,10 @@
       original catalog: <a href="https://dmccreary.github.io/intelligent-textbooks/case-studies/" target="_blank" rel="noopener noreferrer">dmccreary.github.io</a>.
     </div>
     <div class="stat-row" id="statRow"></div>
+    <p class="lede" style="margin-top:22px;">
+      Or ask Jesse. Same call as the resume workflow. He opens the exact page.
+    </p>
+    <a class="lb-visit" href="https://mindcraft-93858.web.app/desk-os/workflows/archive/?v=a2" style="margin-top:10px;width:fit-content;">Ask Jesse on the archive →</a>
   </section>
 
   <div class="ask-bar">
@@ -224,9 +230,10 @@
   <div class="gallery" id="gallery" aria-live="polite"></div>
 </div>
 
-<div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
   <div class="lb-box">
     <button class="lb-close" id="lbClose" aria-label="Close">✕</button>
+    <img class="lb-cover" id="lbCover" alt="" hidden>
     <div class="lb-swatch" id="lbSwatch"></div>
     <div class="lb-subject" id="lbSubject"></div>
     <h2 class="lb-title" id="lbTitle"></h2>
@@ -234,6 +241,7 @@
     <div class="lb-stats" id="lbStats"></div>
     <div class="lb-actions">
       <a class="lb-visit" id="lbVisit" href="#" target="_blank" rel="noopener noreferrer">Open textbook →</a>
+      <a class="lb-visit" id="lbAsk" href="#" style="background:transparent;color:var(--ink);border:1.5px solid var(--line);">Ask Jesse</a>
       <div class="lb-nav">
         <button id="lbPrev" aria-label="Previous">←</button>
         <button id="lbNext" aria-label="Next">→</button>
@@ -355,10 +363,13 @@
     galleryEl.innerHTML = filtered.map((b, i) => {
       const big = i % 11 === 0 ? ' big' : '';
       const color = swatchFor(b.title);
+      const art = b.cover
+        ? `<img class="cover-art" src="${escapeHtml(b.cover)}" alt="">`
+        : `<div class="swatch" style="background:${color}">${initials(b.title)}</div>`;
       return `
         <div class="frame${big}" data-id="${b.id}" tabindex="0" role="button" aria-label="Open ${escapeHtml(b.title)}">
+          ${art}
           <div class="mat">
-            <div class="swatch" style="background:${color}">${initials(b.title)}</div>
             <div class="card-subject">${escapeHtml(b.subject)}</div>
             <div class="card-title">${escapeHtml(b.title)}</div>
             <div class="card-desc">${escapeHtml(b.description)}</div>
@@ -399,13 +410,24 @@
   function renderLightbox(){
     const b = filtered[lbIndex];
     if (!b) return;
-    lbSwatch.style.background = swatchFor(b.title);
-    lbSwatch.textContent = initials(b.title);
+    const coverEl = document.getElementById('lbCover');
+    if (b.cover) {
+      coverEl.src = b.cover;
+      coverEl.hidden = false;
+      lbSwatch.style.display = 'none';
+    } else {
+      coverEl.hidden = true;
+      coverEl.removeAttribute('src');
+      lbSwatch.style.display = '';
+      lbSwatch.style.background = swatchFor(b.title);
+      lbSwatch.textContent = initials(b.title);
+    }
     lbSubject.textContent = b.subject;
     lbTitle.textContent = b.title;
     lbDesc.textContent = b.description;
     lbStats.textContent = b.stats || '';
     lbVisit.href = b.url;
+    document.getElementById('lbAsk').href = 'https://mindcraft-93858.web.app/desk-os/workflows/archive/?v=a2&q=' + encodeURIComponent(b.title);
     lbCounter.textContent = `${lbIndex + 1} of ${filtered.length}`;
     lbPrev.disabled = lbIndex <= 0;
     lbNext.disabled = lbIndex >= filtered.length - 1;

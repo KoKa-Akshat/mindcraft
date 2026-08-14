@@ -8,6 +8,22 @@ private enum ShrineBeatPhase: Equatable {
     case starting
 }
 
+/// Real iOS 26 Liquid Glass for nav/control chrome (dock, floating chips,
+/// pills) - never on card/content bodies, which stay opaque paper. Matches
+/// Apple's own glass-vs-content split: glass is for the floating control
+/// layer, not for lists/cards/scrollable content. Falls back to a plain
+/// tinted fill pre-iOS 26 since this prototype's deployment target is 17.
+private extension View {
+    @ViewBuilder
+    func fdGlass<S: Shape>(in shape: S, tint: Color, fallbackFill: Color) -> some View {
+        if #available(iOS 26.0, *) {
+            self.glassEffect(.regular.tint(tint), in: shape)
+        } else {
+            self.background(shape.fill(fallbackFill))
+        }
+    }
+}
+
 /// **Round 28. Field Desk cards + ACT stage.**
 /// Tap card → shine → drag whole card → bottom-right resize. Canvas-only
 /// pinch. Binder is the centerpiece. Connect toggles disconnect. ACT opens
@@ -59,9 +75,13 @@ struct FieldDeskView: View {
     @State private var showBottomChrome = false
     @State private var chromeHideToken = UUID()
     @State private var showFindTutor = false
+    @State private var showFriends = false
     @State private var showWorkflowLibrary = false
+    @State private var showResumeAgent = false
+    @State private var showArchiveWorkflow = false
     @State private var showApplyToday = false
     @State private var showSchedulingWorkflows = false
+    @State private var schedulingWorkflowsMinimized = false
     @State private var showGmailBox = false
     @State private var gmailStartReconnect = false
     @State private var gmailOpenTopReply = false
@@ -91,6 +111,16 @@ struct FieldDeskView: View {
     @State private var cardSizes: [DeskCardID: CGSize] = [:]
     @State private var focusedCard: DeskCardID?
     @State private var resizeStart: CGSize?
+    /// `DragGesture`'s `.translation` is measured from the original touch-down
+    /// point, not from where `minimumDistance` was crossed - so the very
+    /// first `.onChanged` already reports translation >= minimumDistance,
+    /// which pops the card by that amount instead of easing from zero.
+    /// Recorded once per gesture and subtracted out so the visible drag
+    /// always starts at zero, no matter the threshold.
+    @State private var dragBaseline: [DeskCardID: CGSize] = [:]
+    /// Card currently being actively dragged (distinct from `focusedCard`,
+    /// which persists after the drag ends) - drives the pick-up/drop lift.
+    @State private var draggingCard: DeskCardID?
     /// While the corner grip is dragging, the whole-card move gesture must
     /// stand down — both are simultaneous on the same touch.
     @State private var resizingCard: DeskCardID?
@@ -145,7 +175,7 @@ struct FieldDeskView: View {
             .intel: CGSize(width: 340, height: 220),
             .gmail: CGSize(width: 260, height: 200),
             .notes: CGSize(width: 260, height: 200),
-            .gdoc: CGSize(width: 260, height: 230),
+            .gdoc: CGSize(width: 480, height: 420),
             .slides: CGSize(width: 320, height: 214),
         ]
     }
@@ -197,6 +227,7 @@ struct FieldDeskView: View {
         showGmailBox = false
         showApplyToday = false
         showSchedulingWorkflows = false
+        schedulingWorkflowsMinimized = false
         showActFieldBook = false
         showActStage = false
         actStageMaximized = false
@@ -240,7 +271,7 @@ struct FieldDeskView: View {
         showActFieldBook
             || showGmailBox
             || showApplyToday
-            || showSchedulingWorkflows
+            || (showSchedulingWorkflows && !schedulingWorkflowsMinimized)
             || (showActStage && actStageMaximized)
             || showManage
             || showProjectsPanel
@@ -397,19 +428,41 @@ struct FieldDeskView: View {
                         .accessibilityIdentifier("fieldDeskApplyTodayOverlay")
                 }
 
-                if showSchedulingWorkflows {
+                if showSchedulingWorkflows && !schedulingWorkflowsMinimized {
                     // No wrapper .accessibilityIdentifier here: applying one
                     // to a composite view like this clobbers the identifier
                     // of every nested button underneath it (confirmed via a
                     // real accessibility-tree dump - e.g. schedulingWorkflowsBack
                     // reporting as this wrapper's id instead of its own).
                     // SchedulingWorkflowsView already tags its own root.
-                    SchedulingWorkflowsView(
-                        onClose: { showSchedulingWorkflows = false },
-                        onOpenApplyToday: { showApplyToday = true }
-                    )
-                        .transition(.opacity)
-                        .zIndex(90)
+                    ZStack(alignment: .topTrailing) {
+                        SchedulingWorkflowsView(
+                            onClose: {
+                                showSchedulingWorkflows = false
+                                schedulingWorkflowsMinimized = false
+                            },
+                            onOpenApplyToday: { showApplyToday = true }
+                        )
+                        // Corner-only minimize, same treatment as ACT stage's
+                        // - collapses to a reconnectable chip on the desk
+                        // instead of fully closing, so other cards stay
+                        // reachable without losing the workflow's progress.
+                        Button {
+                            withAnimation(.easeInOut(duration: 0.2)) { schedulingWorkflowsMinimized = true }
+                        } label: {
+                            Image(systemName: "arrow.down.right.and.arrow.up.left")
+                                .font(.system(size: 12, weight: .bold))
+                                .foregroundColor(.white)
+                                .padding(10)
+                                .background(Circle().fill(Color.black.opacity(0.55)))
+                        }
+                        .buttonStyle(.plain)
+                        .padding(28)
+                        .accessibilityIdentifier("fieldDeskWorkflowsMinimize")
+                        .accessibilityLabel("Minimize workflow")
+                    }
+                    .transition(.opacity)
+                    .zIndex(90)
                 }
 
                 if showGmailBox {
@@ -636,7 +689,7 @@ struct FieldDeskView: View {
                         .accessibilityLabel("The Desk · Manage")
 
                         Button {
-                            showFindTutor = true
+                            showFriends = true
                         } label: {
                             Image(systemName: "phone.fill")
                                 .font(.system(size: 14, weight: .medium))
@@ -679,6 +732,19 @@ struct FieldDeskView: View {
                     .padding(.top, 12)
                     .padding(.trailing, 16)
                     .zIndex(80)
+                }
+            }
+            // Deliberately its own top-level .overlay(), NOT a ZStack child -
+            // not inside deskCardsLayer (that layer only mounts when
+            // deskChromeLive is true, i.e. Work-mode cards), but both ACT and
+            // Workflows are reachable straight from Jesse's Kitchen via the
+            // dock/house, where deskChromeLive is false.
+            .overlay(alignment: .topLeading) {
+                if showActStage && !actStageMaximized {
+                    minimizedActChip(viewport: viewport)
+                }
+                if showSchedulingWorkflows && schedulingWorkflowsMinimized {
+                    minimizedWorkflowsChip(viewport: viewport)
                 }
             }
         }
@@ -732,13 +798,45 @@ struct FieldDeskView: View {
                     }
             }
         }
+        .fullScreenCover(isPresented: $showFriends) {
+            FriendsView(onClose: { showFriends = false })
+        }
         .fullScreenCover(isPresented: $showWorkflowLibrary) {
-            WorkflowLibraryView(market: workflowMarket) {
-                showWorkflowLibrary = false
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    showApplyToday = true
+            WorkflowLibraryView(
+                market: workflowMarket,
+                onOpenResumeBuilder: {
+                    showWorkflowLibrary = false
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        showResumeAgent = true
+                    }
+                },
+                onOpenArchive: {
+                    showWorkflowLibrary = false
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        showArchiveWorkflow = true
+                    }
+                },
+                onOpenApplyToday: {
+                    showWorkflowLibrary = false
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        showApplyToday = true
+                    }
                 }
-            }
+            )
+        }
+        .fullScreenCover(isPresented: $showResumeAgent) {
+            ResumeAgentView(
+                onClose: { showResumeAgent = false },
+                onApply: {
+                    showResumeAgent = false
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                        showApplyToday = true
+                    }
+                }
+            )
+        }
+        .fullScreenCover(isPresented: $showArchiveWorkflow) {
+            ArchiveWorkflowView(onClose: { showArchiveWorkflow = false })
         }
         .sheet(isPresented: $showManage) {
             AccountManageView()
@@ -880,6 +978,10 @@ struct FieldDeskView: View {
         if showActStage && !actStageMaximized {
             rects.append(CGRect(x: 1100, y: 160, width: 220, height: 110).insetBy(dx: -12, dy: -12))
         }
+        // The Workflows chip is NOT in this list - it's a top-level sibling
+        // now (see body's own showSchedulingWorkflows block), not part of
+        // deskCardsLayer, so it isn't part of this layer's own collision
+        // math either.
         return rects
     }
 
@@ -940,10 +1042,6 @@ struct FieldDeskView: View {
                     slidesCardBody
                 }
                 .zIndex(focusedCard == .slides ? 21 : 11)
-            }
-            if showActStage && !actStageMaximized {
-                minimizedActChip
-                    .zIndex(12)
             }
         }
         .frame(width: viewport.width, height: viewport.height, alignment: .topLeading)
@@ -1271,6 +1369,7 @@ struct FieldDeskView: View {
         let settled = cardOffsets[id] ?? .zero
         let live = cardDrag[id] ?? .zero
         let focused = focusedCard == id
+        let lifting = draggingCard == id || resizingCard == id
 
         paperCard(
             title: title ?? id.rawValue,
@@ -1287,6 +1386,10 @@ struct FieldDeskView: View {
         }
         .contentShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
         .compositingGroup()
+        // Apple-style pick-up lift: subtle scale + deeper shadow while the
+        // card is actively being dragged, spring-settles back on release.
+        .scaleEffect(lifting ? 1.035 : 1.0)
+        .shadow(color: .black.opacity(lifting ? 0.32 : 0), radius: lifting ? 22 : 0, y: lifting ? 14 : 0)
         .simultaneousGesture(cardMoveGesture(id))
         .simultaneousGesture(TapGesture().onEnded {
             focusedCard = id
@@ -1312,6 +1415,7 @@ struct FieldDeskView: View {
         let settled = cardOffsets[id] ?? .zero
         let live = cardDrag[id] ?? .zero
         let focused = focusedCard == id
+        let lifting = draggingCard == id || resizingCard == id
 
         bookCard(
             tab: "BOOK",
@@ -1331,6 +1435,8 @@ struct FieldDeskView: View {
         }
         .contentShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
         .compositingGroup()
+        .scaleEffect(lifting ? 1.035 : 1.0)
+        .shadow(color: .black.opacity(lifting ? 0.32 : 0), radius: lifting ? 22 : 0, y: lifting ? 14 : 0)
         .simultaneousGesture(cardMoveGesture(id))
         .simultaneousGesture(TapGesture().onEnded {
             focusedCard = id
@@ -1377,17 +1483,39 @@ struct FieldDeskView: View {
             .onChanged { value in
                 guard resizingCard == nil else { return }
                 focusedCard = id
-                cardDrag[id] = value.translation
+                let baseline: CGSize
+                if let existing = dragBaseline[id] {
+                    baseline = existing
+                } else {
+                    baseline = value.translation
+                    dragBaseline[id] = baseline
+                    withAnimation(.spring(response: 0.28, dampingFraction: 0.7)) {
+                        draggingCard = id
+                    }
+                }
+                cardDrag[id] = CGSize(
+                    width: value.translation.width - baseline.width,
+                    height: value.translation.height - baseline.height
+                )
             }
             .onEnded { value in
+                let baseline = dragBaseline[id] ?? .zero
+                dragBaseline[id] = nil
+                withAnimation(.spring(response: 0.32, dampingFraction: 0.75)) {
+                    draggingCard = nil
+                }
                 guard resizingCard == nil else {
                     cardDrag[id] = .zero
                     return
                 }
+                let effective = CGSize(
+                    width: value.translation.width - baseline.width,
+                    height: value.translation.height - baseline.height
+                )
                 let prev = cardOffsets[id] ?? .zero
                 cardOffsets[id] = CGSize(
-                    width: prev.width + value.translation.width,
-                    height: prev.height + value.translation.height
+                    width: prev.width + effective.width,
+                    height: prev.height + effective.height
                 )
                 cardDrag[id] = .zero
             }
@@ -1411,13 +1539,15 @@ struct FieldDeskView: View {
             DragGesture(minimumDistance: 1)
                 .onChanged { value in
                     focusedCard = id
-                    resizingCard = id
                     if resizeStart == nil {
                         resizeStart = cardSizes[id] ?? def
+                        withAnimation(.spring(response: 0.28, dampingFraction: 0.7)) {
+                            resizingCard = id
+                        }
                     }
                     let start = resizeStart ?? def
-                    let maxW: CGFloat = id == .binder ? 640 : (id == .connect ? 720 : 520)
-                    let maxH: CGFloat = id == .binder ? 420 : (id == .connect ? 780 : 420)
+                    let maxW: CGFloat = id == .binder ? 640 : (id == .connect ? 720 : (id == .gdoc ? 820 : 520))
+                    let maxH: CGFloat = id == .binder ? 420 : (id == .connect ? 780 : (id == .gdoc ? 700 : 420))
                     cardSizes[id] = CGSize(
                         width: min(maxW, max(140, start.width + value.translation.width)),
                         height: min(maxH, max(110, start.height + value.translation.height))
@@ -1425,7 +1555,9 @@ struct FieldDeskView: View {
                 }
                 .onEnded { _ in
                     resizeStart = nil
-                    resizingCard = nil
+                    withAnimation(.spring(response: 0.32, dampingFraction: 0.75)) {
+                        resizingCard = nil
+                    }
                 }
         )
         .accessibilityIdentifier("fieldDeskResize_\(id.rawValue)")
@@ -1584,42 +1716,70 @@ struct FieldDeskView: View {
         .padding(10)
     }
 
-    private var minimizedActChip: some View {
-        Button {
+    /// Clamped to `viewport` - a fixed x:1100 offset lands mostly off-screen
+    /// on an 11" iPad (1180pt-wide window); see `minimizedWorkflowsChip`.
+    private func minimizedActChip(viewport: CGSize) -> some View {
+        let chipWidth: CGFloat = 220
+        let chipHeight: CGFloat = 110
+        let margin: CGFloat = 24
+        let x = max(margin, min(1100, viewport.width - chipWidth - margin))
+        let y = max(margin, min(160, viewport.height - chipHeight - margin))
+        return Button {
             withAnimation(.easeInOut(duration: 0.2)) { actStageMaximized = true }
         } label: {
             VStack(alignment: .leading, spacing: 6) {
                 Text("ACT")
                     .font(.system(size: 10, weight: .heavy, design: .rounded))
                     .foregroundColor(Color(fdHex: "0c1207"))
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 3)
-                    .background(Capsule().fill(Color(fdHex: "c4f547")))
                 Text("ACT Field Book")
-                    .font(.system(size: 18, weight: .regular, design: .serif))
-                    .italic()
-                    .foregroundColor(Color(fdHex: "1c1a17"))
+                    .font(.system(size: 16, weight: .bold, design: .rounded))
+                    .foregroundColor(Color(fdHex: "143a2e"))
                 Text("Tap to maximize")
                     .font(.system(size: 12, weight: .medium, design: .rounded))
-                    .foregroundColor(Color(fdHex: "8a8478"))
+                    .foregroundColor(Color(fdHex: "143a2e").opacity(0.7))
             }
             .padding(14)
-            .frame(width: 220, height: 110, alignment: .topLeading)
-            .background(
-                RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .fill(Color(fdHex: "fbf8f3"))
-                    .shadow(color: .black.opacity(0.4), radius: 14, y: 8)
-            )
-            .overlay(alignment: .bottomTrailing) {
-                Image(systemName: "arrow.up.left.and.arrow.down.right")
-                    .font(.system(size: 11, weight: .bold))
-                    .foregroundColor(Color(fdHex: "1c1a17").opacity(0.7))
-                    .padding(8)
-            }
+            .fdGlass(in: RoundedRectangle(cornerRadius: 12, style: .continuous), tint: .white.opacity(0.35), fallbackFill: Color.white.opacity(0.96))
+            .shadow(color: .black.opacity(0.16), radius: 8, y: 3)
         }
         .buttonStyle(.plain)
-        .offset(x: 1100, y: 160)
+        .offset(x: x, y: y)
         .accessibilityIdentifier("fieldDeskActStageChip")
+        .zIndex(25)
+    }
+
+    /// Same reconnectable-chip treatment as `minimizedActChip`, offset below
+    /// it so both can be minimized at once without overlapping. Clamped to
+    /// `viewport` (not a fixed offset like `minimizedActChip`) - confirmed via
+    /// a real device-sized UI test that a hardcoded x:1100 offset lands mostly
+    /// off-screen on an 11" iPad (1180pt-wide window), rendering nothing.
+    private func minimizedWorkflowsChip(viewport: CGSize) -> some View {
+        let chipWidth: CGFloat = 220
+        let chipHeight: CGFloat = 110
+        let margin: CGFloat = 24
+        let x = max(margin, min(1100, viewport.width - chipWidth - margin))
+        let y = max(margin, min(290, viewport.height - chipHeight - margin))
+        return Button {
+            withAnimation(.easeInOut(duration: 0.2)) { schedulingWorkflowsMinimized = false }
+        } label: {
+            VStack(alignment: .leading, spacing: 6) {
+                Text("WORKFLOW")
+                    .font(.system(size: 10, weight: .heavy, design: .rounded))
+                    .foregroundColor(Color(fdHex: "0c1207"))
+                Text("Scheduling Workflows")
+                    .font(.system(size: 16, weight: .bold, design: .rounded))
+                    .foregroundColor(Color(fdHex: "143a2e"))
+                Text("Tap to reconnect")
+                    .font(.system(size: 12, weight: .medium, design: .rounded))
+                    .foregroundColor(Color(fdHex: "143a2e").opacity(0.7))
+            }
+            .padding(14)
+            .fdGlass(in: RoundedRectangle(cornerRadius: 12, style: .continuous), tint: .white.opacity(0.35), fallbackFill: Color.white.opacity(0.96))
+            .shadow(color: .black.opacity(0.16), radius: 8, y: 3)
+        }
+        .buttonStyle(.plain)
+        .offset(x: x, y: y)
+        .accessibilityIdentifier("fieldDeskWorkflowsChip")
         .zIndex(25)
     }
 
@@ -2429,14 +2589,22 @@ struct FieldDeskView: View {
                 .accessibilityIdentifier("fieldDeskConnectSampleCal")
             } else if connector.id == "gdrive" {
                 Button {
-                    // Prototype: mark connected after student follows Drive folder steps.
-                    // Full Google Drive OAuth (folder-scoped read-only) wires next.
-                    if store.markConnected("gdrive") {
-                        flash("Drive ready · The Desk folder")
-                        store.prependIntel("Drive · The Desk · read-only folder linked")
+                    Task {
+                        let files = await DriveClient.shared.connectAndReadFolder()
+                        if DriveClient.shared.folderName != nil {
+                            if store.markConnected("gdrive") {
+                                let n = files.count
+                                flash(n == 0
+                                      ? "Drive ready · The Desk folder (empty)"
+                                      : "Drive ready · \(n) files in The Desk")
+                                store.prependIntel("Drive · The Desk · \(n) files · folder-scoped read")
+                            }
+                        } else if let err = DriveClient.shared.lastError {
+                            flash(err)
+                        }
+                        activeGuideId = nil
                     }
-                    activeGuideId = nil
-                } label: { guidePrimary(linked ? "Reconnect Drive steps" : "Connect Google Drive") }
+                } label: { guidePrimary(linked ? "Reconnect Google Drive" : "Connect Google Drive") }
                 .buttonStyle(.plain)
                 .accessibilityIdentifier("fieldDeskConnectOpenDrive")
 

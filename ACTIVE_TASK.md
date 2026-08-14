@@ -4,6 +4,33 @@
 
 ---
 
+## Archive RAG · Jesse on Dan’s books (2026-08-14)
+
+Try: **https://mindcraft-93858.web.app/desk-os/workflows/archive/?v=a2**  
+Catalogue covers: **https://joinmindcraft.com/dans-archive.html** (after CI)
+
+- 16 generated covers in `img/dans-covers/` + proto `workflows/archive/covers/`
+- Same call as resume (hold, 5s beat, Samantha/Ava). Page box is opaque cream.
+- Agent: `POST https://mindcraft-webhook.vercel.app/api/archive-rag` + on-device `chunks.json` (chapter excerpts + 22 live MicroSim URLs)
+- Study plan: Jesse asks time (15 / 45 / 2h / week) then interest, then lays story-boxes (mustard/teal/magenta/olive/lavender/forest/lime)
+- Book spread: DM Serif chapter + iframe to Dan’s `sims/{id}/main.html`
+- Textbook cards on shelf + `dans-archive.html` (cream, sharp ink border, cover then type)
+- Figma MCP unauthenticated → `agent_work/product/ARCHIVE_RAG_FIGMA_BRIEF.md`
+- Do not restyle marketing into glass. Do not touch FieldDeskView (Claude’s lane).
+
+## Resume agent · Jesse (2026-08-14)
+
+Try: **https://mindcraft-93858.web.app/desk-os/workflows/resume/?v=r4**  
+Allow mic + sound. Jesse waits **5 seconds** before talking back.
+
+- LinkedIn: paste profile URL + About/Experience (or LinkedIn PDF). OpenID does not include jobs; we extract what you paste.
+- Drive: Google OAuth, folder named **The Desk** only. iOS uses `DriveClient` + PDFKit.
+- Upload: PDF text extract → Jesse.
+- Let’s apply → Apply today board (iOS) with resume + LinkedIn marked ready.
+- Agent: `POST https://mindcraft-webhook.vercel.app/api/resume-agent`
+
+v2 glass shader still underneath.
+
 ## iOS prototype · The Desk + local Mac disk (2026-08-12) — HANDOFF
 
 **Product naming shipped on main.** App chrome = **The Desk** (no MindCraft/raccoon logo). Entry surfaces = The Desk + by MindCraft. Naming CI green: `06e64284` · https://github.com/KoKa-Akshat/mindcraft/actions/runs/31518010669

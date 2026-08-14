@@ -4,6 +4,46 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-14 — Researcher tick: Part CXLV Isomorphic stem-family hashing for cool-down (SAFE-FAMHASH)
+
+**Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch145 never written → prefer Researcher per rotation; researcher count since synthesizer v1.18 = 2 → Researcher)  
+**Chapter written:** `chapters/145_isomorphic_stem_family_hashing_cooldown.md` (Part CXLV)  
+**Claim examined:** Whether cool-down may use **item_id-only** (clone leak), **concept×FormatId-wide bans** (over-block), or **embedding-only Family Hash Score™** — or must ship **inspectable family membership** (R1 template ∨ R2 figure-IR∧key-path ∨ R3 SME enemy) so substitutes stay outside *F* and holes beat pad.
+
+**Doctrine proposed (provisional):** **SAFE-FAMHASH** — densifies SAFE-COOLDOWN × SAFE-GENQ × SAFE-FIGKEY × SAFE-SCANCOMP × SAFE-DUALRATE + Gierl–Lai/Sinharay/Glas–van der Linden/Becker–Kao/Micir: family is the cool-down unit; embeddings propose only; under-hash and over-hash both killed. Experiment family **FAMHASH-***.
+
+**Evidence spine (verified citations):** Gierl & Lai (2012); Sinharay, Johnson, & Williamson (2003); Glas & van der Linden (2003); Becker & Kao (2022); Micir, Swygert, & D’Angelo (2022).
+
+**Claim killed (this tick):** Item_id-only cool-down under GENQ clones / concept×FormatId cool-down as default family / embedding-only family without SME seal / Family Hash Score™·Clone Minutes·Similarity % NS / pad when family bar empties a cell / ACT or complete-visual guarantees from hashing packaging (provisional kill #99 until synthesizer).
+
+**Experiments:** FAMHASH-1…5 + FAMHASH-QUAL.
+
+**Next researcher id:** **146** (Gap-scan exit emotion without Anxiety Score™). Researcher count since v1.18 synthesizer: **3**. Unfinished queue still ≥3 (146–149); no QUEUE_EXTENDED promote this tick.
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-14 — Researcher tick: Part CXLIV Second-rater thresholds for figured C4 admits (SAFE-DUALRATE)
+
+**Tick type:** Researcher (UTC hour 15; hour%6≠0; researcher count since synthesizer v1.18 = 1 → Researcher)  
+**Chapter written:** `chapters/144_second_rater_thresholds_figured_c4.md` (Part CXLIV)  
+**Claim examined:** Whether figured Practice→C4 promotes may use **always-dual brand theater**, **never-dual soft-pass**, or **Dual Rater Score™ / kappa dashboards** — or must ship **risk-triggered consensus dual review** (written T1–T6) with seals unwaived and FILLETA capacity honest.
+
+**Doctrine proposed (provisional):** **SAFE-DUALRATE** — densifies SAFE-PROMOTE × SAFE-FIGKEY × SAFE-HITL × SAFE-FILLETA × Kane/Cohen/McHugh/NAEP-process/Lawshe + mammography double-reading *with transfer limits*: dual intensity follows use ambition + figure risk; consensus dual; discord→reject; IRR as ops hygiene not NS. Experiment family **DUALRATE-***.
+
+**Evidence spine (verified citations):** Kane (2013); AERA/APA/NCME (2014); Cohen (1960); McHugh (2012); NCES/NAEP TDW IRR; Lawshe (1975); Brown et al. (1996); Dinnes et al. (2001); Posso et al. (2016).
+
+**Claim killed (this tick):** Always-dual / never-dual on figured parent-facing C4 / Dual Rater Score™·Agreement Minutes·Kappa % NS / second-rater soft-pass when seals fail / mammography-cosplay ACT or complete-visual guarantees / ETA-skipped dual (provisional kill #98 until synthesizer).
+
+**Experiments:** DUALRATE-1…5 + DUALRATE-QUAL.
+
+**Next researcher id:** **145** (Isomorphic stem-family hashing for cool-down without over-block). Researcher count since v1.18 synthesizer: **2**. Unfinished queue was <3 after this DONE → promoted stubs **147–149** into NEXT_LAB (dual capacity×FILLETA; template-trust inheritance; stratified post-promote repair dashboards).
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-14 — Researcher tick: Part CXLIII Promote backlog SLA vs parent hole-ETA honesty (SAFE-FILLETA)
 
 **Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch143 never written → prefer Researcher per rotation; researcher count since synthesizer v1.18 = 0 → Researcher)  

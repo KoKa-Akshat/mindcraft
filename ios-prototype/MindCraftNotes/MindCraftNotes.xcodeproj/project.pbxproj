@@ -54,6 +54,7 @@
 		A48A1E9C157F4E7EA3822414 /* MindCraftNotes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FAAFB7B2FB6B48A2BA5C98FD /* MindCraftNotes.xcdatamodeld */; };
 		A49B04C4A6E7F8091B2C3D4E /* CreateInstanceStudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49B04C4A6E7F8091B2C3D4E /* CreateInstanceStudioView.swift */; };
 		A49BCREATESTUDIO01A2B3 /* CreateStudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49BCREATESTUDIO01A2B3 /* CreateStudioView.swift */; };
+		A49BRESUMEAGENT01A2 /* ResumeAgentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49BRESUMEAGENT01A2 /* ResumeAgentView.swift */; };
 		A49BDESKBOARD01A2B3 /* DeskBoardCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49BDESKBOARD01A2B3 /* DeskBoardCards.swift */; };
 		A49BSHRINE01A2B3C4D5 /* MalevolentShrineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49BSHRINE01A2B3C4D5 /* MalevolentShrineView.swift */; };
 		A59B05C5A6E7F8091B2C3D4E /* TestInstanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59B05C5A6E7F8091B2C3D4E /* TestInstanceView.swift */; };
@@ -98,6 +99,7 @@
 		D5JOBOSSHELL01A2B3C4 /* JobOSShellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5JOBOSSHELL01A2B3C4 /* JobOSShellView.swift */; };
 		D61E1093C9F9476A8193B4BD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473BF2A15353473E8B559067 /* ContentView.swift */; };
 		D6GMAILCLIENT01A2B3C4 /* GmailClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6GMAILCLIENT01A2B3C4 /* GmailClient.swift */; };
+		D6DRIVECLIENT01A2B3C4 /* DriveClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DRIVECLIENT01A2B3C4 /* DriveClient.swift */; };
 		D701D0CAFA36FDCD398C790B /* storyArt in Resources */ = {isa = PBXBuildFile; fileRef = 6C6EE743854CB1274F574739 /* storyArt */; };
 		D7GMAILBOXVW01A2B3C4 /* GmailWorkflowBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7GMAILBOXVW01A2B3C4 /* GmailWorkflowBoxView.swift */; };
 		D8DESKCALLOAD01A2B3 /* DeskCalendarLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DESKCALLOAD01A2B3 /* DeskCalendarLoader.swift */; };
@@ -106,6 +108,11 @@
 		D9DESKRECORDSH01A2 /* DeskRecordSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DESKRECORDSH01A2 /* DeskRecordSheet.swift */; };
 		DAE6F420718293B4C5D6E7F8 /* FieldDeskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D5E31F607182A3B4C5D6E7 /* FieldDeskView.swift */; };
 		D9SCHEDWORKF01A2B3C4 /* SchedulingWorkflowsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9SCHEDWORKF01A2B3C4 /* SchedulingWorkflowsView.swift */; };
+		D9OPENARCHIVE01A2B3C4 /* OpenLearningArchiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9OPENARCHIVE01A2B3C4 /* OpenLearningArchiveView.swift */; };
+		D9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift */; };
+		D9FRIENDSTORE01A2B3 /* FriendsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FRIENDSTORE01A2B3 /* FriendsStore.swift */; };
+		D9QCALINVITE01A2B3C4 /* QCalInvite.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9QCALINVITE01A2B3C4 /* QCalInvite.swift */; };
+		D9FRIENDSVIEW01A2B3 /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FRIENDSVIEW01A2B3 /* FriendsView.swift */; };
 		DB8E5A9D2D06DFC8246BA1F0 /* WorkPracticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788775E6F0E0DB324F25E292 /* WorkPracticeView.swift */; };
 		E1F7A5318293A4C5D6E7F809 /* ActFieldChrome.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E6F420718293B4C5D6E7F8 /* ActFieldChrome.swift */; };
 		E58FA0E3DF3B8556BD025DCB /* conceptContent.json in Resources */ = {isa = PBXBuildFile; fileRef = CC3901FD3CB48D913D28033E /* conceptContent.json */; };
@@ -180,6 +187,7 @@
 		B39B03C3A6E7F8091B2C3D4E /* AccountManageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManageView.swift; sourceTree = "<group>"; };
 		B49B04C4A6E7F8091B2C3D4E /* CreateInstanceStudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateInstanceStudioView.swift; sourceTree = "<group>"; };
 		B49BCREATESTUDIO01A2B3 /* CreateStudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateStudioView.swift; sourceTree = "<group>"; };
+		B49BRESUMEAGENT01A2 /* ResumeAgentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeAgentView.swift; sourceTree = "<group>"; };
 		B49BDESKBOARD01A2B3 /* DeskBoardCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskBoardCards.swift; sourceTree = "<group>"; };
 		B49BSHRINE01A2B3C4D5 /* MalevolentShrineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalevolentShrineView.swift; sourceTree = "<group>"; };
 		B5428A47D8655E6D13382E35 /* GraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
@@ -203,12 +211,18 @@
 		C4JOBOSSTORE01A2B3C4 /* JobOSStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobOSStore.swift; sourceTree = "<group>"; };
 		C5JOBOSSHELL01A2B3C4 /* JobOSShellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobOSShellView.swift; sourceTree = "<group>"; };
 		C6GMAILCLIENT01A2B3C4 /* GmailClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GmailClient.swift; sourceTree = "<group>"; };
+		C6DRIVECLIENT01A2B3C4 /* DriveClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriveClient.swift; sourceTree = "<group>"; };
 		C7GMAILBOXVW01A2B3C4 /* GmailWorkflowBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GmailWorkflowBoxView.swift; sourceTree = "<group>"; };
 		C804A39BF276CEEBF088A65C /* actToc.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = actToc.json; sourceTree = "<group>"; };
 		C8DESKCALLOAD01A2B3 /* DeskCalendarLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskCalendarLoader.swift; sourceTree = "<group>"; };
 		C9818B2D6693B4381129CB08 /* DiagnosticGateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticGateView.swift; sourceTree = "<group>"; };
 		C9D5E31F607182A3B4C5D6E7 /* FieldDeskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldDeskView.swift; sourceTree = "<group>"; };
 		C9SCHEDWORKF01A2B3C4 /* SchedulingWorkflowsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchedulingWorkflowsView.swift; sourceTree = "<group>"; };
+		C9OPENARCHIVE01A2B3C4 /* OpenLearningArchiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenLearningArchiveView.swift; sourceTree = "<group>"; };
+		C9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveWorkflowView.swift; sourceTree = "<group>"; };
+		C9FRIENDSTORE01A2B3 /* FriendsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsStore.swift; sourceTree = "<group>"; };
+		C9QCALINVITE01A2B3C4 /* QCalInvite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QCalInvite.swift; sourceTree = "<group>"; };
+		C9FRIENDSVIEW01A2B3 /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
 		C9DESKASKCLIENT01A2 /* DeskAskClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskAskClient.swift; sourceTree = "<group>"; };
 		C9BOOTMOTIV01A2B3C4 /* BootMotivationClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BootMotivationClient.swift; sourceTree = "<group>"; };
 		C9DESKRECORDSH01A2 /* DeskRecordSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskRecordSheet.swift; sourceTree = "<group>"; };
@@ -323,8 +337,11 @@
 				DA7262B1A341CC17EEC08DFE /* LiveSessionClient.swift */,
 				B19B01C1A6E7F8091B2C3D4E /* AgentMailClient.swift */,
 				C6GMAILCLIENT01A2B3C4 /* GmailClient.swift */,
+				C6DRIVECLIENT01A2B3C4 /* DriveClient.swift */,
 				C9DESKASKCLIENT01A2 /* DeskAskClient.swift */,
 				C9BOOTMOTIV01A2B3C4 /* BootMotivationClient.swift */,
+				C9FRIENDSTORE01A2B3 /* FriendsStore.swift */,
+				C9QCALINVITE01A2B3C4 /* QCalInvite.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -378,6 +395,7 @@
 				B39B03C3A6E7F8091B2C3D4E /* AccountManageView.swift */,
 				B49B04C4A6E7F8091B2C3D4E /* CreateInstanceStudioView.swift */,
 				B49BCREATESTUDIO01A2B3 /* CreateStudioView.swift */,
+				B49BRESUMEAGENT01A2 /* ResumeAgentView.swift */,
 				B49BDESKBOARD01A2B3 /* DeskBoardCards.swift */,
 				B49BSHRINE01A2B3C4D5 /* MalevolentShrineView.swift */,
 				B59B05C5A6E7F8091B2C3D4E /* TestInstanceView.swift */,
@@ -386,6 +404,9 @@
 				B89B08C8A6E7F8091B2C3D4E /* SpeechCaptureController.swift */,
 				B99B09C9A6E7F8091B2C3D4E /* DeskPanCanvas.swift */,
 				C9SCHEDWORKF01A2B3C4 /* SchedulingWorkflowsView.swift */,
+				C9OPENARCHIVE01A2B3C4 /* OpenLearningArchiveView.swift */,
+				C9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift */,
+				C9FRIENDSVIEW01A2B3 /* FriendsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -633,6 +654,11 @@
 				B8C4D20E5F607192B3C4D5E6 /* PianoFieldBookView.swift in Sources */,
 				DAE6F420718293B4C5D6E7F8 /* FieldDeskView.swift in Sources */,
 				D9SCHEDWORKF01A2B3C4 /* SchedulingWorkflowsView.swift in Sources */,
+				D9OPENARCHIVE01A2B3C4 /* OpenLearningArchiveView.swift in Sources */,
+				D9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift in Sources */,
+				D9FRIENDSTORE01A2B3 /* FriendsStore.swift in Sources */,
+				D9QCALINVITE01A2B3C4 /* QCalInvite.swift in Sources */,
+				D9FRIENDSVIEW01A2B3 /* FriendsView.swift in Sources */,
 				D0BLANKPAGE01A2B3C4D5E6F7 /* BlankDeskPageView.swift in Sources */,
 				D2JESSEKITCH01A2B3C4D5E6 /* JesseKitchenBackgroundView.swift in Sources */,
 				D2PASSTHRU01A2B3C4D5E6F7 /* PassThroughOverlay.swift in Sources */,
@@ -646,6 +672,7 @@
 				FC08164293A4B5C6D7E8F91A /* FieldDeskStore.swift in Sources */,
 				A19B01C1A6E7F8091B2C3D4E /* AgentMailClient.swift in Sources */,
 				D6GMAILCLIENT01A2B3C4 /* GmailClient.swift in Sources */,
+				D6DRIVECLIENT01A2B3C4 /* DriveClient.swift in Sources */,
 				D9DESKASKCLIENT01A2 /* DeskAskClient.swift in Sources */,
 				D9BOOTMOTIV01A2B3C4 /* BootMotivationClient.swift in Sources */,
 				D9DESKRECORDSH01A2 /* DeskRecordSheet.swift in Sources */,
@@ -655,6 +682,7 @@
 				A39B03C3A6E7F8091B2C3D4E /* AccountManageView.swift in Sources */,
 				A49B04C4A6E7F8091B2C3D4E /* CreateInstanceStudioView.swift in Sources */,
 				A49BCREATESTUDIO01A2B3 /* CreateStudioView.swift in Sources */,
+				A49BRESUMEAGENT01A2 /* ResumeAgentView.swift in Sources */,
 				A49BDESKBOARD01A2B3 /* DeskBoardCards.swift in Sources */,
 				A49BSHRINE01A2B3C4D5 /* MalevolentShrineView.swift in Sources */,
 				A59B05C5A6E7F8091B2C3D4E /* TestInstanceView.swift in Sources */,
@@ -796,6 +824,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MindCraftNotes/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "The Desk";
+				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "The Desk uses your calendar to schedule study sessions with friends and tutors.";
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "The Desk uses your calendar to schedule study sessions with friends and tutors.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -894,6 +924,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MindCraftNotes/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "The Desk";
+				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "The Desk uses your calendar to schedule study sessions with friends and tutors.";
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "The Desk uses your calendar to schedule study sessions with friends and tutors.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

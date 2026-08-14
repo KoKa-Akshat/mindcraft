@@ -29,7 +29,9 @@
     { "source": "/api/marketing-lead", "destination": "/api/app-actions?action=marketing-lead" },
     { "source": "/api/marketing-drop", "destination": "/api/app-actions?action=marketing-drop" },
     { "source": "/api/cron-marketing-followup", "destination": "/api/app-actions?action=cron-marketing-followup" },
-    { "source": "/api/desk-ask", "destination": "/api/app-actions?action=desk-ask" }
+    { "source": "/api/desk-ask", "destination": "/api/app-actions?action=desk-ask" },
+    { "source": "/api/resume-agent", "destination": "/api/app-actions?action=resume-agent" },
+    { "source": "/api/archive-rag", "destination": "/api/app-actions?action=archive-rag" }
   ],
   "crons": [
     { "path": "/api/cron-fireflies", "schedule": "0 6 * * *" },

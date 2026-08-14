@@ -11,6 +11,10 @@
 			</array>
 		</dict>
 	</array>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Jesse listens only while you hold the recorder so we can place skills on your resume.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Speech stays on device to turn what you say into resume lines.</string>
 	<key>UIAppFonts</key>
 	<array/>
 </dict>
