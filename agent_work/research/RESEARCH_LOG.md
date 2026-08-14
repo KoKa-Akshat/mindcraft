@@ -4,6 +4,135 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-14 — Researcher tick: Part CXLIV Second-rater thresholds for figured C4 admits (SAFE-DUALRATE)
+
+**Tick type:** Researcher (UTC hour 15; hour%6≠0; researcher count since synthesizer v1.18 = 1 → Researcher)  
+**Chapter written:** `chapters/144_second_rater_thresholds_figured_c4.md` (Part CXLIV)  
+**Claim examined:** Whether figured Practice→C4 promotes may use **always-dual brand theater**, **never-dual soft-pass**, or **Dual Rater Score™ / kappa dashboards** — or must ship **risk-triggered consensus dual review** (written T1–T6) with seals unwaived and FILLETA capacity honest.
+
+**Doctrine proposed (provisional):** **SAFE-DUALRATE** — densifies SAFE-PROMOTE × SAFE-FIGKEY × SAFE-HITL × SAFE-FILLETA × Kane/Cohen/McHugh/NAEP-process/Lawshe + mammography double-reading *with transfer limits*: dual intensity follows use ambition + figure risk; consensus dual; discord→reject; IRR as ops hygiene not NS. Experiment family **DUALRATE-***.
+
+**Evidence spine (verified citations):** Kane (2013); AERA/APA/NCME (2014); Cohen (1960); McHugh (2012); NCES/NAEP TDW IRR; Lawshe (1975); Brown et al. (1996); Dinnes et al. (2001); Posso et al. (2016).
+
+**Claim killed (this tick):** Always-dual / never-dual on figured parent-facing C4 / Dual Rater Score™·Agreement Minutes·Kappa % NS / second-rater soft-pass when seals fail / mammography-cosplay ACT or complete-visual guarantees / ETA-skipped dual (provisional kill #98 until synthesizer).
+
+**Experiments:** DUALRATE-1…5 + DUALRATE-QUAL.
+
+**Next researcher id:** **145** (Isomorphic stem-family hashing for cool-down without over-block). Researcher count since v1.18 synthesizer: **2**. Unfinished queue was <3 after this DONE → promoted stubs **147–149** into NEXT_LAB (dual capacity×FILLETA; template-trust inheritance; stratified post-promote repair dashboards).
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-14 — Researcher tick: Part CXLIII Promote backlog SLA vs parent hole-ETA honesty (SAFE-FILLETA)
+
+**Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch143 never written → prefer Researcher per rotation; researcher count since synthesizer v1.18 = 0 → Researcher)  
+**Chapter written:** `chapters/143_promote_backlog_sla_parent_hole_eta.md` (Part CXLIII)  
+**Claim examined:** Whether FormatId hole-fill CTAs may use **coming-soon fog**, **play-count fill bars**, or **optimistic dates that pressure soft-pass promote** — or must ship **capacity-grounded finite verify bands** (KNOWNETA discipline at product timescale) with Practice alternate, while PROMOTE seals stay unwaived.
+
+**Doctrine proposed (provisional):** **SAFE-FILLETA** — densifies SAFE-PROMOTE × SAFE-KNOWNETA × SAFE-HOLETRUST × SAFE-STUDHOLE × Maister/Hui–Tse/Whitt/Taylor/Munichor: finite fill bands from backlog×capacity×median latency; labeled uncertainty when unknown; refresh without “almost”; ticket-state progress ≠ engagement meters; seals > ETA optics. Experiment family **FILLETA-***.
+
+**Evidence spine (verified citations):** Maister (1985); Hui & Tse (1996); Whitt (1999); Taylor (1994); Munichor & Rafaeli (2007).
+
+**Claim killed (this tick):** Coming-soon / almost-ready default hole-fill copy / play-count fill bars / optimistic slip loops / date-driven soft-pass promote / FillETA Score™·Backlog Minutes·Honesty Clock NS / ACT or complete-visual-by-date guarantees from fill packaging (provisional kill #97 until synthesizer).
+
+**Experiments:** FILLETA-1…5 + FILLETA-QUAL.
+
+**Next researcher id:** **144** (Second-rater thresholds for figured C4 admits). Researcher count since v1.18 synthesizer: **1**. Unfinished queue still ≥3 (144–146); no QUEUE_EXTENDED promote this tick.
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-14 — Synthesizer tick v1.18: merge Parts CXXXIV–CXLII
+
+**Tick type:** Synthesizer (UTC hour 03; hour%6≠0; ≥8 researcher entries since synthesizer v1.17 → Synthesizer)  
+**Chapter written:** none (merge pass only)  
+**Files revised:** `MINDCRAFT_RESEARCH_CONSTITUTION_v1.md` (edition/header / I.2 / I.4 / III / IX / XIV / XX / XXI / XXII glossary / Appendix F / closing); `NEXT_LAB.md`; this log; PDF regen.
+
+**Doctrine promoted to I.4 company law (provisional tags removed):**
+- SAFE-HCELIG (CXXXIV) — seals-first FormatId C4 eligibility; no HideCorrectness Score™ / tagged≡C4
+- SAFE-KNOWNETA (CXXXV) — known-finite late ETA + refresh honesty; no ETA Score™ / soon-default
+- SAFE-SOFTGATE (CXXXVI) — soft-require default; conditional hard-gate + avoidance falsifiers; no Gate Score™
+- SAFE-SPLITPOOL (CXXXVII) — graded Practice vs C4 pools; ticketed promote; no SplitPool Score™ / silent dual-write
+- SAFE-SCANCOMP (CXXXVIII) — sealed-stock scan composition + labeled holes; no Composition Score™ / pad
+- SAFE-HOLETRUST (CXXXIX) — parent hole honesty + one fill CTA; no Hole Trust Score™ / hide-holes
+- SAFE-PROMOTE (CXL) — ticketed Practice→C4 QA; demote faster than promote; no Promote Score™ / play-count flip
+- SAFE-COOLDOWN (CXLI) — per-student reveal→C4 cool-down; no Cool-Down Score™ / immediate same-stem C4
+- SAFE-STUDHOLE (CXLII) — student hole parity + product-hole frame + one CTA; no Student Hole Score™ / fake greens
+
+**Red Team kills promoted:** #88–#96 (from provisional chapter kills → v1.18 company dossier).
+
+**Experiment families confirmed in Part IX:** HCELIG / KNOWNETA / SOFTGATE / SPLITPOOL / SCANCOMP / HOLETRUST / PROMOTE / COOLDOWN / STUDHOLE.
+
+**Claim killed (synthesis):** Treating CXXXIV–CXLII as orphan provisional deep-dives or independent North Stars (HideCorrectness Score™ / ETA Score™ / Gate Score™ / SplitPool Score™ / Composition Score™ / Hole Trust Score™ / Promote Score™ / Cool-Down Score™ / Student Hole Score™ and costume variants) — demoted under FEI + SAFE-* method-not-costume rule.
+
+**Next researcher id:** **143** (Promote backlog SLA vs parent hole-ETA honesty). Researcher count since v1.18 synthesizer: **0**. Unfinished queue still ≥3 (143–146); no QUEUE_EXTENDED promote this tick.
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-14 — Researcher tick: Part CXLII Student-facing hole copy after gap-scan (SAFE-STUDHOLE)
+
+**Tick type:** Researcher (UTC hour 00 ≡ Red Team slot, but ch142 never written → prefer Researcher per rotation; researcher count since synthesizer v1.17 = 8 → Researcher)  
+**Chapter written:** `chapters/142_student_facing_hole_copy_after_gap_scan.md` (Part CXLII)  
+**Claim examined:** Whether gap-scan FormatId holes may be **hidden from students**, painted as **fake greens**, or framed as **ability shame / empty mindset posters** — or must ship **parity honesty** with parent HOLETRUST plus one Practice CTA without Student Hole Score™.
+
+**Doctrine proposed (provisional):** **SAFE-STUDHOLE** — densifies SAFE-HOLETRUST × SAFE-COLD × SAFE-CALIB × SAFE-SOFTMSG × SAFE-FBLIT × Schnackenberg/Tomlinson transparency × Black/Wiliam formative use × Hattie/Timperley levels × Mueller/Dweck ability-label caution × Yeager et al. conditional mindset: students see holes; product-hole frame; neutral chips; one CTA; no fake greens. Experiment family **STUDHOLE-***.
+
+**Evidence spine (verified citations):** Schnackenberg & Tomlinson (2016); Mayer, Davis, & Schoorman (1995); Black & Wiliam (1998); Hattie & Timperley (2007); Mueller & Dweck (1998); Yeager et al. (2019).
+
+**Claim killed (this tick):** Parent-only hole honesty / fake greens for `not_probed` / ability-shame hole frames / empty growth-mindset poster without CTA / Student Hole Score™·Completeness %·Honesty Minutes NS / absence≡mastery / ACT or identity guarantees from student hole packaging (provisional kill #96 until synthesizer).
+
+**Experiments:** STUDHOLE-1…5 + STUDHOLE-QUAL.
+
+**Next researcher id:** **143** (Promote backlog SLA vs parent hole-ETA honesty). Researcher count since v1.17 synthesizer: **9** → next non–Red-Team hour with ≥8 researchers still triggers **Synthesizer v1.18** (overdue). Unfinished queue restored to ≥3 (143–146; invented stub 146 gap-scan exit emotion without Anxiety Score™).
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-13 — Researcher tick: Part CXLI Exposure cool-down after reveal before same-stem C4 (SAFE-COOLDOWN)
+
+**Tick type:** Researcher (UTC hour 21; hour%6≠0; researcher count since synthesizer v1.17 = 7 → Researcher)  
+**Chapter written:** `chapters/141_exposure_cooldown_after_reveal_same_stem_c4.md` (Part CXLI)  
+**Claim examined:** Whether a just-**revealed** Practice stem may enter that student’s **C4 hide-correctness** immediately — or must ship a **per-student cool-down** (family bar + isomorphic substitutes + honest holes) without Cool-Down Score™ or pad theater.
+
+**Doctrine proposed (provisional):** **SAFE-COOLDOWN** — densifies SAFE-SPLITPOOL × SAFE-SCANCOMP × SAFE-CALIB × SAFE-COLD × Appelhaus disclosure-reuse × Butler/Roediger feedback × Cepeda spacing × Way/Georgiadou/van der Linden exposure control: per-student cool-down after reveal before same-family C4; substitutes then holes; no Cool-Down Score™. Experiment family **COOLDOWN-***.
+
+**Evidence spine (verified citations):** Appelhaus, Werner, Grosse, & Kämmer (2023); Butler & Roediger (2008); Roediger & Marsh (2005); Cepeda et al. (2006); Way (1998); Georgiadou, Triantafillou, & Economides (2007); van der Linden, Ariel, & Veldkamp (2006).
+
+**Claim killed (this tick):** Immediate same-stem C4 after reveal / forever or global cool-down lock as default / Cool-Down Score™·Exposure Minutes·Lock Duration % NS / pad under cool-down / clone leak as fresh / ACT or complete-visual guarantees from cool-down packaging (provisional kill #95 until synthesizer).
+
+**Experiments:** COOLDOWN-1…5 + COOLDOWN-QUAL.
+
+**Next researcher id:** **142** (Student-facing hole copy after gap-scan). Researcher count since v1.17 synthesizer: **8** → next non–Red-Team hour with ≥8 researchers triggers **Synthesizer v1.18**. Unfinished queue restored to ≥3 (142–145; invented stub 145 isomorphic stem-family hashing).
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-13 — Researcher tick: Part CXL Promote-to-C4 tutor QA workflow for Practice-only FormatId (SAFE-PROMOTE)
+
+**Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch140 never written → prefer Researcher per rotation; researcher count since synthesizer v1.17 = 6 → Researcher)  
+**Chapter written:** `chapters/140_promote_to_c4_tutor_qa_workflow.md` (Part CXL)  
+**Claim examined:** Whether Practice-only sealed FormatId may enter C4 via **play-count / thumbs / fluency soft-pass** — or must ship a **ticketed promote QA workflow** (seal re-verify + checklist + logged reviewer + demote-on-repair) without Promote Score™.
+
+**Doctrine proposed (provisional):** **SAFE-PROMOTE** — densifies SAFE-SPLITPOOL × SAFE-REPAIR × SAFE-FIGKEY × SAFE-HCELIG × SAFE-COVER × Kane/Downing/Haladyna/Sireci/Lawshe: promotion is a use-upgrade; ticket+checklist+seals; demote faster than promote; no Promote Score™. Experiment family **PROMOTE-***.
+
+**Evidence spine (verified citations):** Kane (2013); AERA/APA/NCME Standards (2014); Downing (2006); Haladyna, Downing, & Rodriguez (2002); Sireci (1998); Lawshe (1975).
+
+**Claim killed (this tick):** Play-count/thumbs auto-promote / silent `hcelig_pass` flip / fluency soft-pass at promote / Promote Score™·QA Minutes·Promotion Throughput % NS / padding C4 while critical REPAIR open / ACT or complete-visual guarantees from promote packaging (provisional kill #94 until synthesizer).
+
+**Experiments:** PROMOTE-1…5 + PROMOTE-QUAL.
+
+**Next researcher id:** **141** (Exposure cool-down after reveal before same-stem C4). Researcher count since v1.17 synthesizer: **7**. Unfinished queue restored to ≥3 (141–144; invented stubs 143 promote backlog SLA vs hole-ETA, 144 second-rater thresholds).
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-13 — Researcher tick: Part CXXXIX Parent trust copy when visual diagnostic holes remain (SAFE-HOLETRUST)
 
 **Tick type:** Researcher (UTC hour 15; hour%6≠0; researcher count since synthesizer v1.17 = 5 → Researcher)  
