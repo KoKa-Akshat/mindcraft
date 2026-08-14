@@ -10,64 +10,82 @@
 <style>
   :root{
     --ink:#143a2e; --leaf:#247a4d; --lime:#c4f547; --paper:#f4efe6;
-    --glass:rgba(255,253,247,.52); --stroke:rgba(20,58,46,.14);
-    --ease:cubic-bezier(.2,.8,.2,1); --spring:cubic-bezier(.22,1.2,.36,1);
+    --spring:cubic-bezier(.22,1.2,.36,1);
+    --ease:cubic-bezier(.2,.8,.2,1);
+    /* liquid_glass_widgets GlassThemeSettings (standard / light) */
+    --lg-blur:10px;
+    --lg-sat:1.2;
+    --lg-tint:rgba(255,255,255,.12);
+    --lg-radius:28px;
   }
   *{box-sizing:border-box}
-  html,body{margin:0;height:100%;}
+  html,body{margin:0;height:100%;background:#f4efe6}
   body{
     font-family:"Nunito Sans",sans-serif;
     color:var(--ink);
-    background:
-      radial-gradient(circle,rgba(20,58,46,.18) 1.15px,transparent 1.7px),
-      linear-gradient(180deg,#f7f4ec 0%,#efe8d8 100%);
-    background-size:22px 22px, auto;
     -webkit-font-smoothing:antialiased;
+    overflow:hidden;
   }
+  #wall,#lg{
+    position:fixed; inset:0; width:100%; height:100%;
+    pointer-events:none; display:block;
+  }
+  #wall{z-index:0}
+  #lg{z-index:1}
   .phone{
-    min-height:100%; max-width:430px; margin:0 auto;
+    position:relative; z-index:2;
+    height:100%; max-width:430px; margin:0 auto;
     padding:calc(12px + env(safe-area-inset-top)) 16px calc(18px + env(safe-area-inset-bottom));
     display:flex; flex-direction:column; gap:12px;
+    overflow:auto;
   }
-  .glass{
-    background:linear-gradient(180deg,rgba(255,255,255,.62),rgba(255,253,247,.38));
-    backdrop-filter:blur(22px) saturate(160%);
-    -webkit-backdrop-filter:blur(22px) saturate(160%);
-    border:1px solid rgba(255,255,255,.55);
-    box-shadow:0 18px 40px rgba(20,58,46,.08), inset 0 1px 0 rgba(255,255,255,.7);
-    border-radius:28px;
+  /* Glass is a platter the shader draws. HTML stays empty so polka can refract. */
+  [data-glass]{
+    background:transparent;
+    position:relative;
+    isolation:isolate;
   }
-  .topbar{
+  .no-gl [data-glass]{
+    background:rgba(255,255,255,.12);
+    backdrop-filter:blur(10px) saturate(1.2);
+    -webkit-backdrop-filter:blur(10px) saturate(1.2);
+    box-shadow:
+      inset 0.5px 0.5px 0 rgba(255,255,255,.55),
+      inset -0.5px -0.5px 0 rgba(20,58,46,.08),
+      0 18px 40px rgba(20,58,46,.08);
+  }
+  .appbar{
     display:flex; align-items:center; justify-content:space-between;
-    padding:10px 14px; border-radius:999px;
+    padding:10px 16px; border-radius:999px; flex-shrink:0;
   }
-  .mark{font-family:"Fredoka",sans-serif; font-weight:700; font-size:15px; letter-spacing:.01em;}
+  .mark{font-family:"Fredoka",sans-serif; font-weight:700; font-size:15px; letter-spacing:.01em}
   .pill{
     font-size:10px; font-weight:800; letter-spacing:.12em; text-transform:uppercase;
-    color:var(--leaf); background:rgba(196,245,71,.35); padding:6px 10px; border-radius:999px;
+    color:var(--leaf); padding:6px 10px;
   }
-  .screen{display:none; flex:1; flex-direction:column; gap:14px; animation:rise .55s var(--spring) both;}
-  .screen.on{display:flex}
+  .screen{display:none; flex:1; flex-direction:column; gap:14px; min-height:0}
+  .screen.on{display:flex; animation:rise .55s var(--spring) both}
   @keyframes rise{from{opacity:0; transform:translateY(16px) scale(.98)} to{opacity:1; transform:none}}
-  h1{font-family:"Fredoka",sans-serif; font-size:34px; line-height:1.05; margin:8px 4px 0; font-weight:700;}
-  .lede{margin:0 4px; font-size:16px; font-weight:700; color:rgba(20,58,46,.62); line-height:1.35;}
-  .card{padding:18px;}
+  @media (prefers-reduced-motion:reduce){
+    .screen.on{animation:fade .35s ease both}
+    @keyframes fade{from{opacity:0} to{opacity:1}}
+    .btn:active,.rec:active{transform:none}
+  }
+  @media (prefers-reduced-transparency:reduce){
+    [data-glass]{background:#f7f4ec !important; backdrop-filter:none !important}
+  }
+  h1{font-family:"Fredoka",sans-serif; font-size:34px; line-height:1.05; margin:8px 4px 0; font-weight:700}
+  .lede{margin:0 4px; font-size:16px; font-weight:700; color:rgba(20,58,46,.62); line-height:1.35}
+  .platter{padding:18px; border-radius:28px}
   .avatar{
     width:56px; height:56px; border-radius:18px;
     background:linear-gradient(160deg,#d8f08a,#9ad4a0);
     display:grid; place-items:center;
     font-family:"Caveat",cursive; font-size:28px; color:#143a2e;
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.8);
   }
-  .row{display:flex; gap:12px; align-items:center;}
-  .wave{
-    flex:1; height:42px; display:flex; align-items:center; gap:3px; padding:0 6px;
-  }
-  .wave b{
-    display:block; width:3px; border-radius:3px; background:var(--leaf);
-    animation:eq 1.1s ease-in-out infinite;
-    transform-origin:center;
-  }
+  .row{display:flex; gap:12px; align-items:center}
+  .wave{flex:1; height:42px; display:flex; align-items:center; gap:3px; padding:0 6px}
+  .wave b{display:block; width:3px; border-radius:3px; background:var(--leaf); animation:eq 1.1s ease-in-out infinite; transform-origin:center}
   .wave.off b{animation:none; height:8px !important; opacity:.28}
   @keyframes eq{0%,100%{transform:scaleY(.35)} 50%{transform:scaleY(1)}}
   .btn{
@@ -75,31 +93,29 @@
     border-radius:22px; padding:16px 18px;
     font-family:"Fredoka",sans-serif; font-size:17px; font-weight:600;
     display:flex; align-items:center; justify-content:center; gap:10px;
-    transition:transform .28s var(--spring), box-shadow .28s var(--ease);
+    color:var(--ink); background:transparent;
+    transition:transform .28s var(--spring);
   }
   .btn:active{transform:scale(.97)}
-  .btn.primary{background:var(--ink); color:#f7f5f0; box-shadow:0 16px 30px rgba(20,58,46,.22)}
-  .btn.lime{background:var(--lime); color:var(--ink)}
-  .btn.ghost{background:rgba(255,255,255,.45); color:var(--ink); border:1px solid var(--stroke)}
-  .quiet{text-align:center; font-size:13px; font-weight:800; color:rgba(20,58,46,.45); background:none; border:0; cursor:pointer;}
+  .btn.fill{background:var(--ink); color:#f7f5f0; box-shadow:0 16px 30px rgba(20,58,46,.22)}
+  .quiet{text-align:center; font-size:13px; font-weight:800; color:rgba(20,58,46,.45); background:none; border:0; cursor:pointer; padding:8px}
   .rec{
     width:88px; height:88px; border-radius:50%; margin:8px auto 0; display:grid; place-items:center;
-    background:radial-gradient(circle at 30% 25%, #fff, var(--lime) 42%, #8fb83a);
-    border:0; cursor:pointer; box-shadow:0 16px 32px rgba(36,122,77,.28);
+    border:0; cursor:pointer; background:transparent;
     font-size:13px; font-weight:800; color:var(--ink);
+    transition:transform .28s var(--spring);
+    touch-action:none;
   }
+  .rec:active{transform:scale(.97)}
   .rec.hot{animation:pulse 1.2s var(--ease) infinite}
   @keyframes pulse{0%,100%{transform:scale(1)} 50%{transform:scale(1.06)}}
   .hint{text-align:center; font-size:12px; font-weight:800; color:rgba(20,58,46,.42); margin:0}
-  .rights{
-    font-size:12px; font-weight:800; line-height:1.4; color:rgba(20,58,46,.55);
-    padding:14px 16px;
-  }
+  .rights{font-size:12px; font-weight:800; line-height:1.4; color:rgba(20,58,46,.62); padding:14px 16px; border-radius:22px}
   .rights b{color:var(--ink)}
   .chips{display:flex; flex-wrap:wrap; gap:8px}
   .chip{
     padding:7px 11px; border-radius:999px; font-size:12px; font-weight:800;
-    background:rgba(196,245,71,.38); border:1px solid rgba(20,58,46,.08);
+    background:rgba(196,245,71,.38);
   }
   .paper{
     background:#fffdf8; border-radius:22px; padding:18px 16px;
@@ -110,40 +126,64 @@
   .paper .meta{color:rgba(20,58,46,.5); font-weight:700; margin-bottom:10px; font-size:12px}
   .paper h3{font-size:11px; letter-spacing:.12em; text-transform:uppercase; margin:12px 0 4px}
   .paper ul{margin:0; padding-left:16px}
-  .dock{
-    display:grid; grid-template-columns:1fr 1fr; gap:8px;
-  }
+  .dock{display:grid; grid-template-columns:1fr 1fr; gap:8px}
   .mini{
     padding:12px; border-radius:18px; text-align:left; cursor:pointer;
-    font-weight:800; font-size:12px; border:1px solid var(--stroke);
-    background:rgba(255,255,255,.5);
+    font-weight:800; font-size:12px; border:0; color:var(--ink); background:transparent;
+    font-family:"Nunito Sans",sans-serif;
   }
-  .callbar{
-    display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:999px;
-  }
+  .callbar{display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:999px}
   .dot{width:8px; height:8px; border-radius:50%; background:#3dba6a; box-shadow:0 0 0 4px rgba(61,186,106,.18)}
   .transcript{
     flex:1; overflow:auto; display:flex; flex-direction:column; gap:8px; padding:4px 2px 12px;
-    min-height:180px; max-height:42vh;
+    min-height:180px;
   }
   .bubble{max-width:86%; padding:10px 12px; border-radius:16px; font-size:14px; font-weight:700; line-height:1.35}
-  .bubble.j{align-self:flex-start; background:rgba(255,255,255,.7)}
+  .bubble.j{align-self:flex-start; background:rgba(255,255,255,.55)}
   .bubble.you{align-self:flex-end; background:var(--lime)}
   input[type=file]{display:none}
   .status{font-size:11px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--leaf)}
+  .suggest{display:flex; flex-wrap:wrap; gap:8px; justify-content:center}
+  .suggest button{
+    border:0; cursor:pointer; font:800 11px/1 "Nunito Sans",sans-serif;
+    padding:8px 12px; border-radius:999px; color:var(--ink); background:transparent;
+  }
+  .think{
+    position:fixed; left:50%; bottom:28px; transform:translateX(-50%);
+    z-index:5; padding:12px 18px; border-radius:999px;
+    font-size:13px; font-weight:800; color:var(--ink);
+    pointer-events:none;
+  }
+  .sheet{
+    position:fixed; inset:0; z-index:6; display:flex; align-items:flex-end; justify-content:center;
+    background:rgba(20,58,46,.28);
+  }
+  .sheet[hidden]{display:none}
+  .sheet .platter{width:min(430px,100%); margin:0; padding:20px 18px 28px; border-radius:28px 28px 0 0}
+  .sheet label{display:block; font-size:11px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; margin:12px 0 6px}
+  .sheet input, .sheet textarea{
+    width:100%; border:0; border-radius:16px; padding:12px;
+    font:700 14px/1.4 "Nunito Sans",sans-serif; color:var(--ink);
+    background:rgba(255,255,255,.55);
+  }
+  .sheet textarea{min-height:110px; resize:vertical}
+
 </style>
 </head>
 <body>
-  <div class="phone">
-    <div class="glass topbar">
+  <canvas id="wall" aria-hidden="true"></canvas>
+  <canvas id="lg" aria-hidden="true"></canvas>
+
+  <div class="phone" id="phone">
+    <header class="appbar" data-glass="bar" data-radius="999">
       <span class="mark">The Desk</span>
       <span class="pill" id="dataPill">Your data</span>
-    </div>
+    </header>
 
     <section class="screen on" id="meet">
       <h1>Hi. I’m Jesse.</h1>
       <p class="lede">I’ll help you build a resume that sounds like you. Hold the recorder, then we pull what you already have.</p>
-      <div class="glass card">
+      <div class="platter" data-glass="card">
         <div class="row">
           <div class="avatar" aria-hidden="true">J</div>
           <div>
@@ -151,12 +191,12 @@
             <div class="wave off" id="meetWave"></div>
           </div>
         </div>
-        <button class="rec" id="recBtn" type="button">Hold</button>
-        <p class="hint">Hold to talk. Release when you’re done.</p>
       </div>
-      <button class="btn primary" id="callBtn" type="button">Jump on a call with Jesse</button>
+      <button class="rec" id="recBtn" type="button" data-glass="orb" data-thickness="40" data-density="1">Hold</button>
+      <p class="hint">Hold to talk. Release when you’re done.</p>
+      <button class="btn fill" id="callBtn" type="button">Jump on a call with Jesse</button>
       <button class="quiet" id="toLink">or continue to LinkedIn</button>
-      <div class="glass rights">
+      <div class="rights" data-glass="card">
         <b>Your data stays yours.</b> Mail, Drive, and this resume live in accounts you already own. The Desk reads the folder you choose. Nothing is sold.
       </div>
     </section>
@@ -164,29 +204,29 @@
     <section class="screen" id="link">
       <h1>Link the story you already wrote.</h1>
       <p class="lede">LinkedIn is the fastest pull. Drive is already on the desk from Google sign-in.</p>
-      <div class="glass card">
+      <div class="platter" data-glass="card">
         <p class="status">Connect</p>
         <p style="margin:8px 0 14px;font-weight:800;color:rgba(20,58,46,.62)">We copy name, school, and roles into a private draft on this device. You can drop any field.</p>
-        <button class="btn lime" id="liBtn" type="button">Connect LinkedIn</button>
       </div>
+      <button class="btn" id="liBtn" type="button" data-glass="btn" data-density="1">Connect LinkedIn</button>
       <div class="dock">
-        <button class="mini glass" id="driveBtn" type="button">The Desk Drive folder</button>
-        <button class="mini glass" id="uploadBtn" type="button">Upload a file</button>
+        <button class="mini" id="driveBtn" type="button" data-glass="btn">The Desk Drive folder</button>
+        <button class="mini" id="uploadBtn" type="button" data-glass="btn">Upload a file</button>
       </div>
       <input id="filePick" type="file" accept=".pdf,.doc,.docx,.txt,application/pdf">
-      <div class="glass rights" id="linkNote">Drive access is folder-scoped. Revoke anytime in Google Account → Security.</div>
+      <div class="rights" data-glass="card" id="linkNote">Drive access is folder-scoped. Revoke anytime in Google Account → Security.</div>
     </section>
 
     <section class="screen" id="desk">
-      <div class="glass callbar">
+      <div class="callbar" data-glass="bar" data-radius="999">
         <span class="dot"></span>
         <div style="flex:1">
           <b style="font-family:Fredoka,sans-serif">Jesse on the desk</b>
           <div class="status" id="deskLive">Listening when you are</div>
         </div>
-        <button class="btn lime" style="width:auto;padding:10px 14px;border-radius:999px" id="deskCall" type="button">Call</button>
+        <button class="btn fill" style="width:auto;padding:10px 14px;border-radius:999px" id="deskCall" type="button">Call</button>
       </div>
-      <div class="glass card">
+      <div class="platter" data-glass="card">
         <div class="row">
           <div class="avatar">A</div>
           <div>
@@ -198,221 +238,327 @@
       </div>
       <article class="paper" id="resume"></article>
       <div class="dock">
-        <button class="mini" id="addSkill" type="button">Add a skill</button>
-        <button class="mini" id="deskUpload" type="button">Upload / Drive</button>
+        <button class="mini" id="addSkill" type="button" data-glass="btn">Add a skill</button>
+        <button class="mini" id="deskUpload" type="button" data-glass="btn">Upload / Drive</button>
       </div>
+      <button class="btn fill" id="applyBtn" type="button" hidden>Let’s apply</button>
     </section>
 
     <section class="screen" id="call">
-      <div class="glass callbar">
+      <div class="callbar" data-glass="bar" data-radius="999">
         <span class="dot"></span>
         <div style="flex:1"><b style="font-family:Fredoka,sans-serif">On a call with Jesse</b><div class="status">Friendly. Guided. Your words.</div></div>
         <button class="quiet" id="endCall" type="button">End</button>
       </div>
       <div class="transcript" id="log"></div>
-      <button class="rec" id="callRec" type="button">Talk</button>
-      <p class="hint">Try: “Add Python.” “I interned at TD.” “Connect Drive.”</p>
+      <div class="suggest">
+        <button type="button" data-glass="chip" data-say="Add Python">Add Python</button>
+        <button type="button" data-glass="chip" data-say="I interned at TD">I interned at TD</button>
+        <button type="button" data-glass="chip" data-say="Connect Drive">Connect Drive</button>
+      </div>
+      <button class="rec" id="callRec" type="button" data-glass="orb" data-thickness="40" data-density="1">Talk</button>
+    </section>
+
+    <section class="screen" id="apply">
+      <h1>Let’s apply.</h1>
+      <p class="lede">Directions from your draft. Search, then log Applied on the board. Nothing is submitted for you.</p>
+      <div id="applyList"></div>
+      <button class="btn fill" id="applyBack" type="button">Back to the draft</button>
     </section>
   </div>
 
+  <div class="think" id="think" hidden data-glass="bar"><b>Jesse is reading</b></div>
+
+  <div class="sheet" id="liSheet" hidden>
+    <div class="platter" data-glass="card">
+      <p class="status">LinkedIn</p>
+      <p class="lede" style="margin:8px 0 0">LinkedIn does not give apps your Experience. Paste the URL, then About / Experience, or the PDF from More → Save to PDF.</p>
+      <label for="liUrl">Profile URL</label>
+      <input id="liUrl" type="url" placeholder="https://www.linkedin.com/in/…">
+      <label for="liText">About and Experience</label>
+      <textarea id="liText" placeholder="Paste the parts that belong on a resume."></textarea>
+      <label for="liPdf">LinkedIn PDF</label>
+      <input id="liPdf" type="file" accept=".pdf,application/pdf" style="display:block">
+      <div class="dock" style="margin-top:14px">
+        <button class="mini" id="liCancel" type="button" data-glass="btn">Cancel</button>
+        <button class="btn fill" id="liSave" type="button" style="width:auto">Extract</button>
+      </div>
+    </div>
+  </div>
+
 <script>
+/* Liquid glass layer — port of sdegenaar/liquid_glass_widgets lightweight_glass.frag PATH A
+   (MIT). One shared wallpaper + one shader pass for every platter. Do not nest glass. */
 (() => {
-  const $ = (id) => document.getElementById(id);
-  const state = {
-    name: '',
-    headline: '',
-    school: '',
-    skills: [],
-    roles: [],
-    files: [],
-    drive: false,
-    linkedin: false,
-  };
+  const wall = document.getElementById('wall');
+  const lg = document.getElementById('lg');
+  const reducedT = matchMedia('(prefers-reduced-transparency: reduce)').matches;
+  if (reducedT) { document.body.classList.add('no-gl'); return; }
 
-  const wave = $('meetWave');
-  for (let i = 0; i < 18; i++) {
-    const b = document.createElement('b');
-    b.style.height = (8 + Math.random() * 28) + 'px';
-    b.style.animationDelay = (i * 0.06) + 's';
-    wave.appendChild(b);
-  }
+  const w2d = wall.getContext('2d');
+  const gl = lg.getContext('webgl', { alpha: true, premultipliedAlpha: false, antialias: true });
+  if (!gl) { document.body.classList.add('no-gl'); return; }
 
-  function show(id) {
-    document.querySelectorAll('.screen').forEach((el) => el.classList.toggle('on', el.id === id));
-  }
+  const VS = `
+    attribute vec2 a_pos;
+    void main(){ gl_Position = vec4(a_pos, 0.0, 1.0); }
+  `;
+  const FS = `
+    precision highp float;
+    uniform vec2 u_canvas;      // css size
+    uniform float u_dpr;
+    uniform vec4 u_rect;        // css x,y,w,h
+    uniform float u_radius;
+    uniform float u_thickness;
+    uniform vec2 u_light;
+    uniform float u_glow;
+    uniform float u_density;
+    uniform sampler2D u_bg;
 
-  function pickVoice() {
-    const voices = speechSynthesis.getVoices();
-    const prefer = ['Samantha', 'Google US English', 'Jenny', 'Ava', 'Karen', 'Female'];
-    for (const p of prefer) {
-      const v = voices.find((x) => x.name.includes(p) && x.lang.startsWith('en'));
-      if (v) return v;
+    const vec3 LUMA = vec3(0.299, 0.587, 0.114);
+    const vec4 uGlassColor = vec4(1.0, 1.0, 1.0, 0.12);
+    const float uLightIntensity = 0.7;
+    const float uAmbient = 0.4;
+    const float uSaturation = 1.2;
+    const float uIOR = 0.15;
+    const float uCA = 0.06;
+    const float uBackdropLuma = 0.85;
+
+    vec3 applyGlassColor(vec3 liquidColor, vec4 glassColor) {
+      float backdropLuminance = dot(liquidColor, LUMA);
+      float glassLuminance = dot(glassColor.rgb, LUMA);
+      vec3 tinted = clamp(glassColor.rgb + (backdropLuminance - glassLuminance), 0.0, 1.0);
+      float chroma = max(max(glassColor.r, glassColor.g), glassColor.b)
+                   - min(min(glassColor.r, glassColor.g), glassColor.b);
+      float chromaWeight = clamp(chroma * 8.0, 0.0, 1.0);
+      vec3 directMix = mix(liquidColor, glassColor.rgb, glassColor.a);
+      vec3 luminosityMix = mix(liquidColor, tinted, glassColor.a);
+      return mix(directMix, luminosityMix, chromaWeight);
     }
-    return voices.find((x) => x.lang.startsWith('en')) || null;
-  }
 
-  function speak(text) {
-    speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(text);
-    u.rate = 0.96;
-    u.pitch = 1.04;
-    const v = pickVoice();
-    if (v) u.voice = v;
-    speechSynthesis.speak(u);
-  }
-  speechSynthesis.onvoiceschanged = () => {};
+    void main() {
+      vec2 css = vec2(gl_FragCoord.x, u_canvas.y * u_dpr - gl_FragCoord.y) / u_dpr;
+      vec2 halfSize = u_rect.zw * 0.5;
+      vec2 p = css - (u_rect.xy + halfSize);
+      float r = min(u_radius, min(halfSize.x, halfSize.y));
+      vec2 q = abs(p) - halfSize + r;
+      vec2 maxQ = max(q, 0.0);
+      float maxQLen = length(maxQ);
+      float dist = maxQLen + min(max(q.x, q.y), 0.0) - r;
+      float smoothing = 1.0;
+      float mask = 1.0 - smoothstep(-smoothing, smoothing, dist);
+      if (mask <= 0.001) discard;
 
-  function sayLog(who, text) {
-    const el = document.createElement('div');
-    el.className = 'bubble ' + who;
-    el.textContent = text;
-    $('log').appendChild(el);
-    $('log').scrollTop = $('log').scrollHeight;
-    if (who === 'j') speak(text);
-  }
+      bool isEdge = maxQLen > 0.01;
+      vec2 surfaceNormal = isEdge ? (sign(p) * maxQ / maxQLen) : vec2(0.0);
+      float normalZ = sqrt(max(0.0, 1.0 - dot(surfaceNormal, surfaceNormal)));
 
-  function renderResume() {
-    const name = state.name || 'Your name';
-    const head = state.headline || 'Add a line that sounds like you';
-    const skills = state.skills.length ? state.skills.map((s) => `<span class="chip">${s}</span>`).join('') : '<span class="chip">skills land here</span>';
-    const roles = state.roles.length
-      ? '<ul>' + state.roles.map((r) => `<li>${r}</li>`).join('') + '</ul>'
-      : '<p>Roles appear after LinkedIn or a call.</p>';
-    const files = state.files.length ? state.files.join(', ') : 'None yet';
-    $('nm').textContent = name;
-    $('hd').textContent = head;
-    $('skills').innerHTML = skills;
-    $('resume').innerHTML = `
-      <h2>${name}</h2>
-      <div class="meta">${head}</div>
-      <h3>Experience</h3>
-      ${roles}
-      <h3>Skills</h3>
-      <div class="chips">${skills}</div>
-      <h3>Files on The Desk</h3>
-      <p>${files}${state.drive ? ' · Drive folder linked' : ''}</p>
-    `;
-  }
+      float borderMask = 1.0 - smoothstep(0.0, smoothing, abs(dist) - 0.5);
+      float thicknessNorm = u_thickness / 10.0;
+      float densitySpecularBoost = (1.0 + (thicknessNorm - 1.0) * 0.15) * (1.0 + u_density * 0.2);
 
-  function pullLinkedIn() {
-    state.linkedin = true;
-    state.name = state.name || 'Akshat Koirala';
-    state.headline = 'Mathematics and Economics · Macalester College · UWC Davis Scholar';
-    state.school = 'Macalester College';
-    state.skills = Array.from(new Set([...state.skills, 'R', 'Excel', 'Tutoring', 'Writing']));
-    state.roles = Array.from(new Set([...state.roles, 'Research assistant — quantitative methods', 'Tutor — high school math']));
-    $('dataPill').textContent = 'Private draft';
-    renderResume();
-    show('desk');
-    speak('Pulled. This is a private draft on your desk. Tell me what to add or cut.');
-  }
+      vec2 anisoN = isEdge
+        ? (surfaceNormal + vec2(-surfaceNormal.y, surfaceNormal.x) * 0.2) * 0.9805806
+        : vec2(0.0);
+      float lightCatch = max(dot(anisoN, u_light), 0.0);
+      float kickCatch = max(dot(anisoN, -u_light), 0.0);
+      float lc2 = lightCatch * lightCatch; float lc4 = lc2 * lc2; float lc8 = lc4 * lc4;
+      float keySpecular = lc8 * lc8;
+      float kc2 = kickCatch * kickCatch; float kc4 = kc2 * kc2; float kc8 = kc4 * kc4;
+      float kickSpecular = kc8 * kc8;
+      keySpecular *= uLightIntensity * densitySpecularBoost;
+      kickSpecular *= uLightIntensity * 0.4 * densitySpecularBoost;
+      float totalSpecular = keySpecular + kickSpecular;
 
-  function ingest(text) {
-    const t = text.toLowerCase();
-    if (/python|r\b|excel|sql|stata|writing|tutoring/.test(t)) {
-      const hit = (t.match(/python|excel|sql|stata|writing|tutoring|\br\b/) || ['skill'])[0];
-      const label = hit === 'r' ? 'R' : hit[0].toUpperCase() + hit.slice(1);
-      if (!state.skills.includes(label)) state.skills.push(label);
-      renderResume();
-      return `Added ${label}. Say another skill if you want.`;
+      float thicknessOffset = (u_thickness - 10.0) / 10.0;
+      float rimFade = 1.0 - smoothstep(0.3, 0.5, uBackdropLuma) * 0.92;
+      float rimAlphaBase = 0.65 * rimFade;
+      rimAlphaBase *= uIOR;
+      rimAlphaBase += totalSpecular * 0.5 * rimFade;
+      rimAlphaBase *= (1.0 + thicknessOffset * 0.15) * (1.0 + u_density * 0.1);
+      rimAlphaBase *= borderMask;
+      rimAlphaBase = clamp(rimAlphaBase, 0.0, 1.0);
+
+      float fresnel = (1.0 - normalZ) * borderMask * 0.10 * mix(1.2, 0.8, uBackdropLuma);
+
+      vec2 uv = gl_FragCoord.xy / (u_canvas * u_dpr);
+      float distFromEdge = abs(dist);
+      float edgeInfluence = smoothstep(10.0, 0.0, distFromEdge);
+      edgeInfluence *= edgeInfluence;
+      vec2 edgeOffset = surfaceNormal * edgeInfluence * u_thickness * 0.5;
+      vec2 texOffset = vec2(edgeOffset.x, -edgeOffset.y) / u_canvas;
+      vec2 refractedUV = uv + texOffset;
+      vec2 ca = vec2(surfaceNormal.x, -surfaceNormal.y) * uCA * edgeInfluence / u_canvas;
+      float rC = texture2D(u_bg, refractedUV + ca).r;
+      float gC = texture2D(u_bg, refractedUV).g;
+      float bC = texture2D(u_bg, refractedUV - ca).b;
+      vec3 bgRgb = vec3(rC, gC, bC);
+      float bgLuminance = dot(bgRgb, LUMA);
+      vec3 saturatedBg = mix(vec3(bgLuminance), bgRgb, uSaturation);
+      float vertCoord = (css.y - u_rect.y) / max(u_rect.w, 1.0);
+      float bottomDarken = vertCoord * 0.04;
+      float ambientDarken = clamp((uAmbient * 0.25 + 0.08) * (1.0 + u_density * 0.5) + bottomDarken, 0.0, 0.8);
+      ambientDarken *= 0.2;
+      vec3 darkenedBg = saturatedBg * (1.0 - ambientDarken);
+      vec3 bodyColor = applyGlassColor(darkenedBg, uGlassColor);
+      vec3 adaptiveRimColor = mix(bgRgb, vec3(1.0), 0.7);
+      vec3 finalColor = bodyColor * (1.0 - rimAlphaBase) + adaptiveRimColor * rimAlphaBase;
+      finalColor += vec3(u_glow * 0.3);
+      finalColor = clamp(finalColor + vec3(fresnel), 0.0, 1.0);
+      gl_FragColor = vec4(finalColor, mask);
     }
-    if (/intern|td|bank|salesforce|work/.test(t)) {
-      const role = /td/.test(t) ? 'Intern — TD' : 'Role from your voice note';
-      if (!state.roles.includes(role)) state.roles.push(role);
-      renderResume();
-      return `${role} is on the page. Keep going.`;
-    }
-    if (/drive|folder/.test(t)) {
-      state.drive = true;
-      renderResume();
-      return 'The Desk folder is linked. I can only see what you drop in there.';
-    }
-    if (/upload|file|resume|pdf/.test(t)) {
-      $('filePick').click();
-      return 'Pick a file. It stays in your account.';
-    }
-    if (/linkedin/.test(t)) {
-      pullLinkedIn();
-      return 'Connecting LinkedIn now.';
-    }
-    return 'I heard you. Name the skill or the role and I will place it.';
-  }
+  `;
 
-  let rec = null;
-  async function listen(button, onText) {
-    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SR) {
-      const fake = prompt('Type what you would say');
-      if (fake) onText(fake);
-      return;
+  function compile(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+      console.warn(gl.getShaderInfoLog(s));
+      return null;
     }
-    const r = new SR();
-    r.lang = 'en-US';
-    r.interimResults = false;
-    button.classList.add('hot');
-    wave.classList.remove('off');
-    $('meetStatus').textContent = 'Listening';
-    r.onresult = (e) => onText(e.results[0][0].transcript);
-    r.onend = () => {
-      button.classList.remove('hot');
-      wave.classList.add('off');
-      $('meetStatus').textContent = 'Ready to listen';
-    };
-    r.start();
-    rec = r;
+    return s;
   }
+  const vs = compile(gl.VERTEX_SHADER, VS);
+  const fs = compile(gl.FRAGMENT_SHADER, FS);
+  if (!vs || !fs) { document.body.classList.add('no-gl'); return; }
+  const prog = gl.createProgram();
+  gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { document.body.classList.add('no-gl'); return; }
+  gl.useProgram(prog);
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  const loc = gl.getAttribLocation(prog, 'a_pos');
+  gl.enableVertexAttribArray(loc);
+  gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+  const U = {};
+  for (const name of ['u_canvas','u_dpr','u_rect','u_radius','u_thickness','u_light','u_glow','u_density','u_bg']) {
+    U[name] = gl.getUniformLocation(prog, name);
+  }
+  const tex = gl.createTexture();
+  gl.bindTexture(gl.TEXTURE_2D, tex);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  gl.uniform1i(U.u_bg, 0);
 
-  $('recBtn').addEventListener('pointerdown', () => {
-    listen($('recBtn'), (text) => {
-      speak(ingest(text));
-      show('link');
+  const blobs = [
+    { x: 0.18, y: 0.22, r: 0.28, c: 'rgba(196,245,71,.42)' },
+    { x: 0.82, y: 0.18, r: 0.22, c: 'rgba(36,122,77,.22)' },
+    { x: 0.55, y: 0.72, r: 0.34, c: 'rgba(216,240,138,.38)' },
+    { x: 0.12, y: 0.78, r: 0.20, c: 'rgba(154,212,160,.30)' },
+  ];
+
+  let light = { x: Math.cos(2.356), y: Math.sin(2.356) };
+  let dpr = 1, cssW = 1, cssH = 1;
+
+  function paintWall() {
+    const w = wall.width, h = wall.height;
+    const g = w2d.createLinearGradient(0, 0, 0, h);
+    g.addColorStop(0, '#f7f4ec');
+    g.addColorStop(1, '#efe8d8');
+    w2d.fillStyle = g;
+    w2d.fillRect(0, 0, w, h);
+    blobs.forEach((b) => {
+      const x = b.x * w, y = b.y * h, rad = b.r * Math.min(w, h);
+      const rg = w2d.createRadialGradient(x, y, 0, x, y, rad);
+      rg.addColorStop(0, b.c);
+      rg.addColorStop(1, 'rgba(247,244,236,0)');
+      w2d.fillStyle = rg;
+      w2d.beginPath(); w2d.arc(x, y, rad, 0, Math.PI * 2); w2d.fill();
     });
-  });
-  $('callBtn').addEventListener('click', () => {
-    show('call');
-    $('log').innerHTML = '';
-    sayLog('j', 'Hi. I’m Jesse. We can add skills, pull LinkedIn, or file a PDF. What should we do first?');
-  });
-  $('toLink').addEventListener('click', () => show('link'));
-  $('liBtn').addEventListener('click', pullLinkedIn);
-  $('driveBtn').addEventListener('click', () => {
-    state.drive = true;
-    $('linkNote').innerHTML = '<b>Drive folder linked.</b> Only The Desk folder. Revoke anytime.';
-    speak('Drive folder linked. Only the folder you chose.');
-  });
-  function openFile() { $('filePick').click(); }
-  $('uploadBtn').addEventListener('click', openFile);
-  $('deskUpload').addEventListener('click', openFile);
-  $('filePick').addEventListener('change', () => {
-    const f = $('filePick').files[0];
-    if (!f) return;
-    state.files.push(f.name);
-    renderResume();
-    speak('Filed ' + f.name + '. It stays yours.');
-    if (!$('desk').classList.contains('on') && !$('call').classList.contains('on')) show('desk');
-  });
-  $('deskCall').addEventListener('click', () => $('callBtn').click());
-  $('endCall').addEventListener('click', () => {
-    speechSynthesis.cancel();
-    show('desk');
-    renderResume();
-  });
-  $('callRec').addEventListener('click', () => {
-    listen($('callRec'), (text) => {
-      sayLog('you', text);
-      setTimeout(() => sayLog('j', ingest(text)), 280);
-    });
-  });
-  $('addSkill').addEventListener('click', () => {
-    const s = prompt('Skill to add');
-    if (!s) return;
-    state.skills.push(s.trim());
-    renderResume();
-  });
+    w2d.fillStyle = 'rgba(20,58,46,0.18)';
+    const step = 22 * dpr;
+    const rad = 1.15 * dpr;
+    for (let y = 11 * dpr; y < h; y += step) {
+      for (let x = 11 * dpr; x < w; x += step) {
+        w2d.beginPath();
+        w2d.arc(x, y, rad, 0, Math.PI * 2);
+        w2d.fill();
+      }
+    }
+    gl.bindTexture(gl.TEXTURE_2D, tex);
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, wall);
+  }
 
-  renderResume();
-  setTimeout(() => speak('Hi. I’m Jesse. I’ll help you build a resume that sounds like you.'), 600);
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    cssW = innerWidth; cssH = innerHeight;
+    for (const c of [wall, lg]) {
+      c.width = Math.floor(cssW * dpr);
+      c.height = Math.floor(cssH * dpr);
+      c.style.width = cssW + 'px';
+      c.style.height = cssH + 'px';
+    }
+    gl.viewport(0, 0, lg.width, lg.height);
+    paintWall();
+    draw();
+  }
+
+  function quad(x, y, w, h) {
+    const pad = 3;
+    const l = ((x - pad) / cssW) * 2 - 1;
+    const r = ((x + w + pad) / cssW) * 2 - 1;
+    const t = 1 - ((y - pad) / cssH) * 2;
+    const b = 1 - ((y + h + pad) / cssH) * 2;
+    return new Float32Array([l, t, r, t, l, b, r, b]);
+  }
+
+  function draw() {
+    gl.clearColor(0, 0, 0, 0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+    gl.uniform2f(U.u_canvas, cssW, cssH);
+    gl.uniform1f(U.u_dpr, dpr);
+    gl.uniform2f(U.u_light, light.x, light.y);
+    document.querySelectorAll('[data-glass]').forEach((el) => {
+      if (!el.offsetParent && el.getClientRects().length === 0) return;
+      const screen = el.closest('.screen');
+      if (screen && !screen.classList.contains('on')) return;
+      const b = el.getBoundingClientRect();
+      if (b.width < 2 || b.height < 2) return;
+      const kind = el.getAttribute('data-glass');
+      let radius = parseFloat(el.dataset.radius || '') || (kind === 'orb' || kind === 'chip' || kind === 'bar' ? 999 : kind === 'btn' ? 22 : 28);
+      if (radius >= 999) radius = Math.min(b.width, b.height) / 2;
+      const thickness = parseFloat(el.dataset.thickness || '30');
+      const density = parseFloat(el.dataset.density || (kind === 'orb' || kind === 'btn' ? '1' : '0'));
+      const glow = el.classList.contains('hot') ? 0.85 : parseFloat(el.dataset.glow || '0');
+      gl.bufferData(gl.ARRAY_BUFFER, quad(b.left, b.top, b.width, b.height), gl.STREAM_DRAW);
+      gl.uniform4f(U.u_rect, b.left, b.top, b.width, b.height);
+      gl.uniform1f(U.u_radius, radius);
+      gl.uniform1f(U.u_thickness, thickness);
+      gl.uniform1f(U.u_glow, glow);
+      gl.uniform1f(U.u_density, density);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    });
+  }
+
+  window.deskGlass = { draw, resize };
+  addEventListener('resize', resize);
+  addEventListener('scroll', draw, true);
+  addEventListener('pointermove', (e) => {
+    const nx = e.clientX / cssW - 0.5;
+    const ny = e.clientY / cssH - 0.5;
+    const a = 2.356 + nx * 0.45;
+    light.x = Math.cos(a);
+    light.y = Math.sin(a) + ny * 0.15;
+    draw();
+  }, { passive: true });
+  new ResizeObserver(() => draw()).observe(document.getElementById('phone'));
+  resize();
 })();
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+  if (window.pdfjsLib) {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  }
+</script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="./agent.js?v=r4"></script>
 </body>
 </html>

@@ -818,7 +818,15 @@ struct FieldDeskView: View {
             )
         }
         .fullScreenCover(isPresented: $showResumeAgent) {
-            ResumeAgentView(onClose: { showResumeAgent = false })
+            ResumeAgentView(
+                onClose: { showResumeAgent = false },
+                onApply: {
+                    showResumeAgent = false
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                        showApplyToday = true
+                    }
+                }
+            )
         }
         .sheet(isPresented: $showManage) {
             AccountManageView()
@@ -2571,14 +2579,22 @@ struct FieldDeskView: View {
                 .accessibilityIdentifier("fieldDeskConnectSampleCal")
             } else if connector.id == "gdrive" {
                 Button {
-                    // Prototype: mark connected after student follows Drive folder steps.
-                    // Full Google Drive OAuth (folder-scoped read-only) wires next.
-                    if store.markConnected("gdrive") {
-                        flash("Drive ready · The Desk folder")
-                        store.prependIntel("Drive · The Desk · read-only folder linked")
+                    Task {
+                        let files = await DriveClient.shared.connectAndReadFolder()
+                        if DriveClient.shared.folderName != nil {
+                            if store.markConnected("gdrive") {
+                                let n = files.count
+                                flash(n == 0
+                                      ? "Drive ready · The Desk folder (empty)"
+                                      : "Drive ready · \(n) files in The Desk")
+                                store.prependIntel("Drive · The Desk · \(n) files · folder-scoped read")
+                            }
+                        } else if let err = DriveClient.shared.lastError {
+                            flash(err)
+                        }
+                        activeGuideId = nil
                     }
-                    activeGuideId = nil
-                } label: { guidePrimary(linked ? "Reconnect Drive steps" : "Connect Google Drive") }
+                } label: { guidePrimary(linked ? "Reconnect Google Drive" : "Connect Google Drive") }
                 .buttonStyle(.plain)
                 .accessibilityIdentifier("fieldDeskConnectOpenDrive")
 

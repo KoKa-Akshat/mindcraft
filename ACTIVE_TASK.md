@@ -4,17 +4,18 @@
 
 ---
 
-## Resume agent · liquid glass proto (2026-08-14)
+## Resume agent · Jesse (2026-08-14)
 
-Try now (no Xcode): **https://mindcraft-93858.web.app/desk-os/workflows/resume/?v=r1**  
-Allow mic + sound. Hold to talk, then LinkedIn (demo pull) / Drive folder / upload / call.
+Try: **https://mindcraft-93858.web.app/desk-os/workflows/resume/?v=r4**  
+Allow mic + sound. Jesse waits **5 seconds** before talking back.
 
-- Design brief for next agent (Figma tokens): `agent_work/product/RESUME_AGENT_FIGMA_BRIEF.md`
-- Source: `agent_work/product/desk_os/workflows/resume/index.html` (CI syncs via `app/scripts/syncDeskOs.mjs`)
-- iOS: Workflows → Resume builder → `ResumeAgentView` WKWebView
-- Marketing: hero trust + logos strip now say **Your data stays yours**
+- LinkedIn: paste profile URL + About/Experience (or LinkedIn PDF). OpenID does not include jobs; we extract what you paste.
+- Drive: Google OAuth, folder named **The Desk** only. iOS uses `DriveClient` + PDFKit.
+- Upload: PDF text extract → Jesse.
+- Let’s apply → Apply today board (iOS) with resume + LinkedIn marked ready.
+- Agent: `POST https://mindcraft-webhook.vercel.app/api/resume-agent`
 
-Figma MCP was not authenticated this run — brief is the file to paste into Figma/Claude.
+v2 glass shader still underneath.
 
 ## iOS prototype · The Desk + local Mac disk (2026-08-12) — HANDOFF
 
