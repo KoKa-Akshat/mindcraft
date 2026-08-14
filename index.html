@@ -823,6 +823,9 @@
   .af-sub,.af-t{position:relative; z-index:1; display:block;}
   .af-sub{font-size:9.5px; font-weight:1000; letter-spacing:.1em; text-transform:uppercase; color:var(--leaf); padding:14px 14px 0;}
   .af-t{font-family:"Fredoka",sans-serif; font-weight:700; font-size:14px; line-height:1.28; padding:8px 14px 16px; color:var(--ink);}
+  .af img{position:relative; z-index:1; width:calc(100% - 16px); margin:8px; aspect-ratio:3/4; object-fit:cover; border-radius:2px; display:block;}
+  .af.has-cover::after{display:none;}
+  .af.has-cover .af-sub,.af.has-cover .af-t{display:none;}
   .af1{top:0; left:10%; transform:rotate(-4deg); z-index:4;}
   .af2{top:40px; left:38%; transform:rotate(3deg); z-index:3;}
   .af3{top:120px; left:6%; transform:rotate(2.5deg); z-index:2;}
@@ -2232,6 +2235,7 @@
           Built by learning-graph researcher Dan McCreary. No login. No paywall. Just open a book.
         </p>
         <a class="btn primary reveal" href="dans-archive.html" style="margin-top:22px;">Browse the archive →</a>
+        <a class="btn soft reveal" href="https://mindcraft-93858.web.app/desk-os/workflows/archive/?v=a1" style="margin-top:10px;">Ask Jesse for a page →</a>
         <div class="archive-inline-search reveal" id="archiveInlineSearch">
           <div class="ais-bar">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.6" y2="16.6"/></svg>
@@ -2241,10 +2245,10 @@
         </div>
       </div>
       <div class="archive-stack reveal" aria-hidden="true">
-        <div class="af af1"><span class="af-sub">Mathematics</span><span class="af-t">Calculus</span></div>
-        <div class="af af2"><span class="af-sub">Engineering</span><span class="af-t">Real-Time DSP on a $5 Microcontroller</span></div>
-        <div class="af af3"><span class="af-sub">Biology</span><span class="af-t">Genetics: Analysis, Genomics &amp; Inference</span></div>
-        <div class="af af4"><span class="af-sub">AI / Education</span><span class="af-t">Learning Sciences for Textbook Design</span></div>
+        <div class="af af1 has-cover"><img src="img/dans-covers/calculus.jpg" alt="Calculus"><span class="af-sub">Mathematics</span><span class="af-t">Calculus</span></div>
+        <div class="af af2 has-cover"><img src="img/dans-covers/dsp.jpg" alt="Real-Time DSP on a $5 Microcontroller"><span class="af-sub">Engineering</span><span class="af-t">Real-Time DSP on a $5 Microcontroller</span></div>
+        <div class="af af3 has-cover"><img src="img/dans-covers/biology.jpg" alt="Biology"><span class="af-sub">Biology</span><span class="af-t">Biology: An Interactive Course</span></div>
+        <div class="af af4 has-cover"><img src="img/dans-covers/micropython.jpg" alt="MicroPython"><span class="af-sub">Engineering</span><span class="af-t">Learning MicroPython with AI</span></div>
       </div>
     </div>
   </div>

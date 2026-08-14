@@ -4,6 +4,17 @@
 
 ---
 
+## Archive RAG · Jesse on Dan’s books (2026-08-14)
+
+Try: **https://mindcraft-93858.web.app/desk-os/workflows/archive/?v=a1**  
+Catalogue covers: **https://joinmindcraft.com/dans-archive.html** (after CI)
+
+- 16 generated covers in `img/dans-covers/` + proto `workflows/archive/covers/`
+- Same call as resume (hold, 5s beat, Samantha/Ava). Page box is opaque cream.
+- RAG: `POST /api/archive-rag` + on-device `chunks.json` (216 chapter excerpts)
+- Figma MCP unauthenticated → `agent_work/product/ARCHIVE_RAG_FIGMA_BRIEF.md`
+- Do not restyle marketing into glass. Do not touch FieldDeskView (Claude’s lane).
+
 ## Resume agent · Jesse (2026-08-14)
 
 Try: **https://mindcraft-93858.web.app/desk-os/workflows/resume/?v=r4**  
