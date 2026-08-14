@@ -2,7 +2,7 @@
 
 **Product:** The Desk by MindCraft  
 **Surface:** Open Learning Archive agent (Jesse, voice-first, exact-page fetch)  
-**Try:** https://mindcraft-93858.web.app/desk-os/workflows/archive/?v=a1  
+**Try:** https://mindcraft-93858.web.app/desk-os/workflows/archive/?v=a2  
 **Catalogue:** https://joinmindcraft.com/dans-archive.html  
 **Canon:** `BRAND_BOOK.md` · resume glass tokens in `RESUME_AGENT_FIGMA_BRIEF.md`
 
@@ -20,25 +20,34 @@ Dan’s books stay on `dmccreary.github.io`. We index chapter excerpts. We do no
 
 ---
 
-## Frames (390×844)
+## Frames (390×844, plus iPad 1180)
 
 ### A. Meet
-Top glass capsule: **The Desk** · **Your data**  
-Title: `Hi. I’m Jesse.`  
-Lede: `Ask a book. I’ll fetch the exact page from Dan’s open shelf.`  
-Hold disc. `Jump on a call with Jesse`. `or browse the shelf`.  
-Footer: **Your data stays yours.** Questions stay on device.
+Jesse asks **time** and **interest** first. Hold disc. `Make a study plan`. `or browse the shelf`.
 
-### B. Shelf
-16 generated covers in a 3-column grid. Tap a spine → call with that title. `Ask Jesse` ink button.
+### B. Shelf — textbook cards
+Cream card, 1.5px ink border, sharp corners. Cover on top (3:4). Then ENGINEERING / title / description / stats in leaf green. Matches the Circuits reference card.
 
-### C. Call + page box
-Live call capsule. Transcript (Jesse left / student lime).  
-**Page box** (cream, not glass): book kicker · page title · quote · `Open this page`.  
-Suggest chips: FFT on a $5 chip · Derivatives · Blink an LED.
+### C. Desk workspace
+Call bar. Time chips then interest chips. Jesse emits **story-boxes** onto a board:
 
-### D. Catalogue wall (marketing, 1280×800)
-`dans-archive.html` gallery: real covers where they exist, initials swatch elsewhere. Lightbox shows the cover. CTA to the agent.
+| Tone | Use |
+|---|---|
+| mustard `#F0C14B` / espresso | Your window (time) |
+| teal `#49A7A7` / cream | Today’s book |
+| magenta `#E11D74` / white | Touch the idea / load sim |
+| olive, lavender, forest, lime | Pages in the plan |
+
+Boxes: Fredoka title, DM Serif body, pill kicker, white pill CTA.
+
+### D. Book spread
+Opaque cream, ink hairline. DM Serif chapter title, Nunito body. Optional iframe to Dan’s live MicroSim (`{book}/sims/{sim-id}/main.html`). Link out. We do not rehost.
+
+---
+
+## RAG + plan
+
+Jesse asks time (15 / 45 / 2h / week) then interest. Retrieval picks 1–4 chapter excerpts. If a chunk has a live `simUrl`, the box CTA loads the simulation.
 
 ---
 

@@ -249,7 +249,9 @@
       "pageTitle": "Diagram: Cycle Budget Calculator",
       "location": "chapters/02-know-your-board/",
       "pageUrl": "https://dmccreary.github.io/fft-benchmarking/chapters/02-know-your-board/",
-      "quote": "Cycle Budget Calculator Type: microsim sim-id: cycle-budget-calculator Library: p5.js Status: Specified Bloom Taxonomy: Apply Bloom Taxonomy Verb: Calculate, apply Learning objective: Let students calculate the CPU-cycle budget available for a real-time task, given clock speed and a time deadline, and see how that budget shrinks as the deadline tightens or grows as clock speed increases. Canvas layout: - Top (250px): large readout showing the calculation as it updates:"
+      "quote": "Cycle Budget Calculator Type: microsim sim-id: cycle-budget-calculator Library: p5.js Status: Specified Bloom Taxonomy: Apply Bloom Taxonomy Verb: Calculate, apply Learning objective: Let students calculate the CPU-cycle budget available for a real-time task, given clock speed and a time deadline, and see how that budget shrinks as the deadline tightens or grows as clock speed increases. Canvas layout: - Top (250px): large readout showing the calculation as it updates:",
+      "simId": "cycle-budget-calculator",
+      "simUrl": "https://dmccreary.github.io/fft-benchmarking/sims/cycle-budget-calculator/"
     },
     {
       "bookSlug": "fft-benchmarking",
@@ -265,7 +267,9 @@
       "pageTitle": "Diagram: Harmonic Stack Synthesizer",
       "location": "chapters/04-waves/",
       "pageUrl": "https://dmccreary.github.io/fft-benchmarking/chapters/04-waves/",
-      "quote": "Harmonic Stack Synthesizer Type: microsim sim-id: harmonic-stack-synthesizer Library: p5.js Status: Specified Bloom Taxonomy: Analyze Bloom Taxonomy Verb: Examine, differentiate Learning objective: Let students adjust the relative amplitude of several overtones above a fixed fundamental frequency and analyze how the combined waveform's shape (timbre) changes while its repetition rate (pitch) does not, differentiating the roles of fundamental frequency and overtone mixture."
+      "quote": "Harmonic Stack Synthesizer Type: microsim sim-id: harmonic-stack-synthesizer Library: p5.js Status: Specified Bloom Taxonomy: Analyze Bloom Taxonomy Verb: Examine, differentiate Learning objective: Let students adjust the relative amplitude of several overtones above a fixed fundamental frequency and analyze how the combined waveform's shape (timbre) changes while its repetition rate (pitch) does not, differentiating the roles of fundamental frequency and overtone mixture.",
+      "simId": "harmonic-stack-synthesizer",
+      "simUrl": "https://dmccreary.github.io/fft-benchmarking/sims/harmonic-stack-synthesizer/"
     },
     {
       "bookSlug": "fft-benchmarking",
@@ -289,7 +293,9 @@
       "pageTitle": "Diagram: Wave Superposition and Beats Simulator",
       "location": "chapters/07-complex-numbers-and-wave-superposition/",
       "pageUrl": "https://dmccreary.github.io/fft-benchmarking/chapters/07-complex-numbers-and-wave-superposition/",
-      "quote": "Wave Superposition and Beats Simulator Type: microsim sim-id: wave-superposition-beats-simulator Library: p5.js Status: Specified Bloom Taxonomy: Analyze Bloom Taxonomy Verb: Examine, compare Learning objective: Let students set the frequency and phase of two independent sine waves, examine the summed waveform, and compare regions of constructive interference, destructive interference, and \u2014 when frequencies are close but unequal \u2014 the resulting beat pattern. Canvas layout:"
+      "quote": "Wave Superposition and Beats Simulator Type: microsim sim-id: wave-superposition-beats-simulator Library: p5.js Status: Specified Bloom Taxonomy: Analyze Bloom Taxonomy Verb: Examine, compare Learning objective: Let students set the frequency and phase of two independent sine waves, examine the summed waveform, and compare regions of constructive interference, destructive interference, and \u2014 when frequencies are close but unequal \u2014 the resulting beat pattern. Canvas layout:",
+      "simId": "wave-superposition-beats-simulator",
+      "simUrl": "https://dmccreary.github.io/fft-benchmarking/sims/wave-superposition-beats-simulator/"
     },
     {
       "bookSlug": "learning-micropython",
@@ -449,7 +455,9 @@
       "pageTitle": "Diagram: LED Circuit Builder",
       "location": "chapters/03-breadboard-electrical-fundamentals/",
       "pageUrl": "https://dmccreary.github.io/raspberry-pi-stem/chapters/03-breadboard-electrical-fundamentals/",
-      "quote": "Run the LED Circuit Builder MicroSim fullscreen LED Circuit Builder (MicroSim) Type: microsim sim-id: led-circuit-builder Library: p5.js Template: https://github.com/dmccreary/moving-rainbow/tree/main/docs/sims/current-predictor Status: Specified Learning objective: Students will apply (Bloom L3: Apply) the current-limiting resistor formula to build a safe LED circuit, and analyze (Bloom L4: Analyze) what happens to current and LED lifespan when the resistor is too small,"
+      "quote": "Run the LED Circuit Builder MicroSim fullscreen LED Circuit Builder (MicroSim) Type: microsim sim-id: led-circuit-builder Library: p5.js Template: https://github.com/dmccreary/moving-rainbow/tree/main/docs/sims/current-predictor Status: Specified Learning objective: Students will apply (Bloom L3: Apply) the current-limiting resistor formula to build a safe LED circuit, and analyze (Bloom L4: Analyze) what happens to current and LED lifespan when the resistor is too small,",
+      "simId": "led-circuit-builder",
+      "simUrl": "https://dmccreary.github.io/raspberry-pi-stem/sims/led-circuit-builder/"
     },
     {
       "bookSlug": "raspberry-pi-stem",
@@ -457,7 +465,9 @@
       "pageTitle": "Diagram: Blink an LED Code Tracer",
       "location": "chapters/04-digital-io-pwm-micropython/",
       "pageUrl": "https://dmccreary.github.io/raspberry-pi-stem/chapters/04-digital-io-pwm-micropython/",
-      "quote": "Run the Blink an LED Code Tracer MicroSim fullscreen Blink an LED Code Tracer (MicroSim) Type: microsim sim-id: blink-led-code-tracer Library: p5.js Template: https://github.com/dmccreary/learning-micropython/tree/main/docs/sims/pico-pinout-explorer Status: Specified Learning objective: Students will apply (Bloom L3: Apply) knowledge of MicroPython syntax to trace the blink-an-LED program line by line and predict the resulting GPIO pin state and LED behavior at each step."
+      "quote": "Run the Blink an LED Code Tracer MicroSim fullscreen Blink an LED Code Tracer (MicroSim) Type: microsim sim-id: blink-led-code-tracer Library: p5.js Template: https://github.com/dmccreary/learning-micropython/tree/main/docs/sims/pico-pinout-explorer Status: Specified Learning objective: Students will apply (Bloom L3: Apply) knowledge of MicroPython syntax to trace the blink-an-LED program line by line and predict the resulting GPIO pin state and LED behavior at each step.",
+      "simId": "blink-led-code-tracer",
+      "simUrl": "https://dmccreary.github.io/raspberry-pi-stem/sims/blink-led-code-tracer/"
     },
     {
       "bookSlug": "raspberry-pi-stem",
@@ -601,7 +611,8 @@
       "pageTitle": "Diagram: Circuit Diagram and Schematic Symbol Explorer",
       "location": "chapters/01-electricity-basics/",
       "pageUrl": "https://dmccreary.github.io/beginning-electronics/chapters/01-electricity-basics/",
-      "quote": "Circuit Diagram and Schematic Symbol Explorer Type: infographic sim-id: schematic-symbol-explorer Library: p5.js Status: Specified Template: https://github.com/dmccreary/circuits/tree/main/docs/sims/circuit-symbol-flashcards Purpose: Help students recognize the schematic symbols and terminal/lead vocabulary introduced in this chapter, and connect each symbol to the real component it represents. Bloom Taxonomy: Remember (L1). Bloom Verb: identify. Learning objective: Identify"
+      "quote": "Circuit Diagram and Schematic Symbol Explorer Type: infographic sim-id: schematic-symbol-explorer Library: p5.js Status: Specified Template: https://github.com/dmccreary/circuits/tree/main/docs/sims/circuit-symbol-flashcards Purpose: Help students recognize the schematic symbols and terminal/lead vocabulary introduced in this chapter, and connect each symbol to the real component it represents. Bloom Taxonomy: Remember (L1). Bloom Verb: identify. Learning objective: Identify",
+      "simId": "schematic-symbol-explorer"
     },
     {
       "bookSlug": "beginning-electronics",
@@ -609,7 +620,8 @@
       "pageTitle": "Diagram: Electron Flow vs. Conventional Current",
       "location": "chapters/02-current-charge-units-safety/",
       "pageUrl": "https://dmccreary.github.io/beginning-electronics/chapters/02-current-charge-units-safety/",
-      "quote": "Electron Flow vs. Conventional Current Simulator Type: microsim sim-id: electron-vs-conventional-current Library: p5.js Status: Specified Template: https://github.com/dmccreary/intro-to-physics-course/tree/main/docs/sims/current-animation Purpose: Resolve the beginner confusion between electron flow and conventional current by showing both directions on the same simple circuit, under learner control. Bloom Taxonomy: Understand (L2). Bloom Verb: explain. Learning objective:"
+      "quote": "Electron Flow vs. Conventional Current Simulator Type: microsim sim-id: electron-vs-conventional-current Library: p5.js Status: Specified Template: https://github.com/dmccreary/intro-to-physics-course/tree/main/docs/sims/current-animation Purpose: Resolve the beginner confusion between electron flow and conventional current by showing both directions on the same simple circuit, under learner control. Bloom Taxonomy: Understand (L2). Bloom Verb: explain. Learning objective:",
+      "simId": "electron-vs-conventional-current"
     },
     {
       "bookSlug": "beginning-electronics",
@@ -617,7 +629,8 @@
       "pageTitle": "Diagram: Circuit Safety Hazard Explorer",
       "location": "chapters/03-circuit-analysis-kirchhoff/",
       "pageUrl": "https://dmccreary.github.io/beginning-electronics/chapters/03-circuit-analysis-kirchhoff/",
-      "quote": "Circuit Safety Hazard Explorer Type: infographic sim-id: circuit-safety-hazard-explorer Library: p5.js Status: Specified Purpose: Help learners connect each of the four circuit hazards introduced in this chapter to its cause, its consequence, and the specific habit or component that protects against it. Bloom Taxonomy: Understand (L2). Bloom Verb: explain. Learning objective: Explain how overcurrent, reverse polarity, static discharge, and short circuits damage components,"
+      "quote": "Circuit Safety Hazard Explorer Type: infographic sim-id: circuit-safety-hazard-explorer Library: p5.js Status: Specified Purpose: Help learners connect each of the four circuit hazards introduced in this chapter to its cause, its consequence, and the specific habit or component that protects against it. Bloom Taxonomy: Understand (L2). Bloom Verb: explain. Learning objective: Explain how overcurrent, reverse polarity, static discharge, and short circuits damage components,",
+      "simId": "circuit-safety-hazard-explorer"
     },
     {
       "bookSlug": "beginning-electronics",
@@ -625,7 +638,8 @@
       "pageTitle": "Diagram: Circuit Topology Explorer",
       "location": "chapters/04-series-parallel-topology/",
       "pageUrl": "https://dmccreary.github.io/beginning-electronics/chapters/04-series-parallel-topology/",
-      "quote": "Circuit Topology Explorer Type: diagram sim-id: circuit-topology-explorer Library: p5.js Status: Specified Purpose: Help students recognize and label nodes, branches, and loops on a real series-parallel circuit diagram, and see that topology describes electrical connection, not physical position. Bloom Taxonomy: Remember (L1). Bloom Verb: identify. Learning objective: Identify the nodes, branches, and loops in a series-parallel circuit (one battery, one series resistor, and"
+      "quote": "Circuit Topology Explorer Type: diagram sim-id: circuit-topology-explorer Library: p5.js Status: Specified Purpose: Help students recognize and label nodes, branches, and loops on a real series-parallel circuit diagram, and see that topology describes electrical connection, not physical position. Bloom Taxonomy: Remember (L1). Bloom Verb: identify. Learning objective: Identify the nodes, branches, and loops in a series-parallel circuit (one battery, one series resistor, and",
+      "simId": "circuit-topology-explorer"
     },
     {
       "bookSlug": "beginning-electronics",
@@ -633,7 +647,8 @@
       "pageTitle": "Diagram: Circuit Continuity and Fault Tester",
       "location": "chapters/05-conductors-batteries-review/",
       "pageUrl": "https://dmccreary.github.io/beginning-electronics/chapters/05-conductors-batteries-review/",
-      "quote": "Circuit Continuity and Fault Tester Type: microsim sim-id: circuit-continuity-fault-tester Library: p5.js Status: Specified Purpose: Give students hands-on practice identifying a voltage source, circuit load, and current path in a simple diagram, and using a virtual continuity tester to locate a circuit fault breaking the loop. Bloom Taxonomy: Analyze (L4). Bloom Verb: examine. Learning objective: Examine a simple circuit diagram containing a voltage source, one or more"
+      "quote": "Circuit Continuity and Fault Tester Type: microsim sim-id: circuit-continuity-fault-tester Library: p5.js Status: Specified Purpose: Give students hands-on practice identifying a voltage source, circuit load, and current path in a simple diagram, and using a virtual continuity tester to locate a circuit fault breaking the loop. Bloom Taxonomy: Analyze (L4). Bloom Verb: examine. Learning objective: Examine a simple circuit diagram containing a voltage source, one or more",
+      "simId": "circuit-continuity-fault-tester"
     },
     {
       "bookSlug": "beginning-electronics",
@@ -705,7 +720,9 @@
       "pageTitle": "Diagram: Atomic Structure Explorer MicroSim",
       "location": "chapters/01-scientific-foundations-and-chemistry/",
       "pageUrl": "https://dmccreary.github.io/biology/chapters/01-scientific-foundations-and-chemistry/",
-      "quote": "View Fullscreen Atomic Structure Explorer MicroSim Type: microsim sim-id: atomic-structure-explorer Library: p5.js Status: Complete Bloom Level: Understand (L2) Bloom Verb: explain Learning Objective: Students will explain the relationship between an element's atomic number, electron configuration, valence electrons, and its bonding behavior in biological molecules. Instructional Rationale: An Understand/explain objective is best served by an interactive model where students"
+      "quote": "View Fullscreen Atomic Structure Explorer MicroSim Type: microsim sim-id: atomic-structure-explorer Library: p5.js Status: Complete Bloom Level: Understand (L2) Bloom Verb: explain Learning Objective: Students will explain the relationship between an element's atomic number, electron configuration, valence electrons, and its bonding behavior in biological molecules. Instructional Rationale: An Understand/explain objective is best served by an interactive model where students",
+      "simId": "atomic-structure-explorer",
+      "simUrl": "https://dmccreary.github.io/biology/sims/atomic-structure-explorer/"
     },
     {
       "bookSlug": "biology",
@@ -713,7 +730,9 @@
       "pageTitle": "Diagram: Condensation and Hydrolysis Reaction Simulator",
       "location": "chapters/02-water-ph-and-organic-chemistry/",
       "pageUrl": "https://dmccreary.github.io/biology/chapters/02-water-ph-and-organic-chemistry/",
-      "quote": "View Fullscreen Condensation and Hydrolysis Reaction Simulator MicroSim Type: microsim sim-id: condensation-hydrolysis Library: p5.js Status: Specified Bloom Level: Understand (L2) Bloom Verb: explain Learning Objective: Students will explain which atoms leave to form water in a condensation reaction and which bond is broken by water in hydrolysis, and identify which direction requires energy input and which releases energy. Canvas layout: - Top drawing area (60%): Shows"
+      "quote": "View Fullscreen Condensation and Hydrolysis Reaction Simulator MicroSim Type: microsim sim-id: condensation-hydrolysis Library: p5.js Status: Specified Bloom Level: Understand (L2) Bloom Verb: explain Learning Objective: Students will explain which atoms leave to form water in a condensation reaction and which bond is broken by water in hydrolysis, and identify which direction requires energy input and which releases energy. Canvas layout: - Top drawing area (60%): Shows",
+      "simId": "condensation-hydrolysis",
+      "simUrl": "https://dmccreary.github.io/biology/sims/condensation-hydrolysis/"
     },
     {
       "bookSlug": "biology",
@@ -801,7 +820,9 @@
       "pageTitle": "Diagram: Interactive Mass Spectrometer Simulation",
       "location": "chapters/02-atomic-structure-and-mass-spectrometry/",
       "pageUrl": "https://dmccreary.github.io/chemistry/chapters/02-atomic-structure-and-mass-spectrometry/",
-      "quote": "Interactive Mass Spectrometer MicroSim Type: MicroSim sim-id: mass-spectrometer-sim Library: p5.js Status: Specified This interactive MicroSim occupies an 800\u00d7450 px canvas (responsive to window width). The canvas is divided into two panels side by side. The LEFT panel (roughly 55% width) shows a schematic diagram of the mass spectrometer with labeled components drawn in a clean technical style on a dark background (#1a1a2e): (1) Sample inlet \u2014 a small square labeled"
+      "quote": "Interactive Mass Spectrometer MicroSim Type: MicroSim sim-id: mass-spectrometer-sim Library: p5.js Status: Specified This interactive MicroSim occupies an 800\u00d7450 px canvas (responsive to window width). The canvas is divided into two panels side by side. The LEFT panel (roughly 55% width) shows a schematic diagram of the mass spectrometer with labeled components drawn in a clean technical style on a dark background (#1a1a2e): (1) Sample inlet \u2014 a small square labeled",
+      "simId": "mass-spectrometer-sim",
+      "simUrl": "https://dmccreary.github.io/chemistry/sims/mass-spectrometer-sim/"
     },
     {
       "bookSlug": "chemistry",
@@ -833,7 +854,9 @@
       "pageTitle": "Diagram: Ideal Gas Law Interactive Simulator",
       "location": "chapters/06-intermolecular-forces-and-states-of-matter/",
       "pageUrl": "https://dmccreary.github.io/chemistry/chapters/06-intermolecular-forces-and-states-of-matter/",
-      "quote": "Ideal Gas Law Interactive Simulator Type: MicroSim sim-id: ideal-gas-law-simulator Library: p5.js Status: Specified Learning objective: Students will manipulate pressure, volume, temperature, and moles of an ideal gas and observe how changes to one variable affect the others, applying the ideal gas law quantitatively (Bloom L3: Apply \u2014 use the equation; Bloom L4: Analyze \u2014 predict the direction of change). Canvas size: 800 \u00d7 450 px, responsive to window resize. Layout: -"
+      "quote": "Ideal Gas Law Interactive Simulator Type: MicroSim sim-id: ideal-gas-law-simulator Library: p5.js Status: Specified Learning objective: Students will manipulate pressure, volume, temperature, and moles of an ideal gas and observe how changes to one variable affect the others, applying the ideal gas law quantitatively (Bloom L3: Apply \u2014 use the equation; Bloom L4: Analyze \u2014 predict the direction of change). Canvas size: 800 \u00d7 450 px, responsive to window resize. Layout: -",
+      "simId": "ideal-gas-law-simulator",
+      "simUrl": "https://dmccreary.github.io/chemistry/sims/ideal-gas-law-simulator/"
     },
     {
       "bookSlug": "chemistry",
@@ -841,7 +864,9 @@
       "pageTitle": "Diagram: Interactive Heating Curve Simulator",
       "location": "chapters/07-phase-changes-solutions-and-gas-laws/",
       "pageUrl": "https://dmccreary.github.io/chemistry/chapters/07-phase-changes-solutions-and-gas-laws/",
-      "quote": "Interactive Heating Curve Simulator Type: MicroSim sim-id: heating-curve-simulator Library: p5.js Status: Specified Learning objective: Students will identify the five segments of a heating curve, explain why plateaus occur, and predict how changing the substance or heating rate affects the curve (Bloom L4: Analyze \u2014 differentiate, attribute, and organize data from a dynamic graph). Canvas size: 800 \u00d7 450 px, responsive to window resize. Layout: Left panel (65% width): The"
+      "quote": "Interactive Heating Curve Simulator Type: MicroSim sim-id: heating-curve-simulator Library: p5.js Status: Specified Learning objective: Students will identify the five segments of a heating curve, explain why plateaus occur, and predict how changing the substance or heating rate affects the curve (Bloom L4: Analyze \u2014 differentiate, attribute, and organize data from a dynamic graph). Canvas size: 800 \u00d7 450 px, responsive to window resize. Layout: Left panel (65% width): The",
+      "simId": "heating-curve-simulator",
+      "simUrl": "https://dmccreary.github.io/chemistry/sims/heating-curve-simulator/"
     },
     {
       "bookSlug": "chemistry",
@@ -857,7 +882,9 @@
       "pageTitle": "Diagram: Interactive Titration Calculator MicroSim",
       "location": "chapters/09-stoichiometry-titrations-and-analysis/",
       "pageUrl": "https://dmccreary.github.io/chemistry/chapters/09-stoichiometry-titrations-and-analysis/",
-      "quote": "Interactive Titration Calculator \u2014 Acid-Base Titration Type: MicroSim (p5.js interactive calculator) sim-id: titration-calculator Library: p5.js Status: Specified Canvas size: 800\u00d7450px, responsive to window resize. The simulation presents a split layout: left panel (400px) shows sliders and input fields; right panel (400px) shows a live titration curve graph. Left panel controls: - Dropdown to select \"Strong Acid / Strong Base\" or \"Weak Acid / Strong Base\" - Slider:"
+      "quote": "Interactive Titration Calculator \u2014 Acid-Base Titration Type: MicroSim (p5.js interactive calculator) sim-id: titration-calculator Library: p5.js Status: Specified Canvas size: 800\u00d7450px, responsive to window resize. The simulation presents a split layout: left panel (400px) shows sliders and input fields; right panel (400px) shows a live titration curve graph. Left panel controls: - Dropdown to select \"Strong Acid / Strong Base\" or \"Weak Acid / Strong Base\" - Slider:",
+      "simId": "titration-calculator",
+      "simUrl": "https://dmccreary.github.io/chemistry/sims/titration-calculator/"
     },
     {
       "bookSlug": "chemistry",
@@ -865,7 +892,9 @@
       "pageTitle": "Diagram: Arrhenius Equation Explorer",
       "location": "chapters/10-reaction-rates-and-rate-laws/",
       "pageUrl": "https://dmccreary.github.io/chemistry/chapters/10-reaction-rates-and-rate-laws/",
-      "quote": "Arrhenius Equation Explorer \u2014 Interactive k vs T and Arrhenius Plot Type: microsim sim-id: arrhenius-equation-explorer Library: p5.js Status: Specified Learning objective: Students will be able to (1) predict how changing Ea and A affects the rate constant at different temperatures (Bloom L3: Apply \u2014 predict, calculate), and (2) explain why reactions with large Ea are more temperature-sensitive (Bloom L4: Analyze \u2014 differentiate, explain). Canvas: 800 px wide \u00d7 450 px tall,"
+      "quote": "Arrhenius Equation Explorer \u2014 Interactive k vs T and Arrhenius Plot Type: microsim sim-id: arrhenius-equation-explorer Library: p5.js Status: Specified Learning objective: Students will be able to (1) predict how changing Ea and A affects the rate constant at different temperatures (Bloom L3: Apply \u2014 predict, calculate), and (2) explain why reactions with large Ea are more temperature-sensitive (Bloom L4: Analyze \u2014 differentiate, explain). Canvas: 800 px wide \u00d7 450 px tall,",
+      "simId": "arrhenius-equation-explorer",
+      "simUrl": "https://dmccreary.github.io/chemistry/sims/arrhenius-equation-explorer/"
     },
     {
       "bookSlug": "intro-to-physics-course",
@@ -1185,7 +1214,9 @@
       "pageTitle": "Diagram: History of Hydroponics Timeline",
       "location": "chapters/01-introduction/",
       "pageUrl": "https://dmccreary.github.io/hydroponics/chapters/01-introduction/",
-      "quote": "History of Hydroponics Timeline Type: timeline sim-id: hydroponics-history-timeline Library: vis-timeline Status: Specified Purpose: Show the progression of soilless growing from ancient practice to modern industry, giving students historical context and making the concept of hydroponics feel like part of a long human story rather than a recent invention. Bloom Level: Understand (L2) Bloom Verb: Explain \u2014 students explain why each era advanced the field Time period: 1200 CE"
+      "quote": "History of Hydroponics Timeline Type: timeline sim-id: hydroponics-history-timeline Library: vis-timeline Status: Specified Purpose: Show the progression of soilless growing from ancient practice to modern industry, giving students historical context and making the concept of hydroponics feel like part of a long human story rather than a recent invention. Bloom Level: Understand (L2) Bloom Verb: Explain \u2014 students explain why each era advanced the field Time period: 1200 CE",
+      "simId": "hydroponics-history-timeline",
+      "simUrl": "https://dmccreary.github.io/hydroponics/sims/hydroponics-history-timeline/"
     },
     {
       "bookSlug": "hydroponics",
@@ -1465,7 +1496,9 @@
       "pageTitle": "Diagram: Computational Thinking Pillars",
       "location": "chapters/01-intro-to-computer-science/",
       "pageUrl": "https://dmccreary.github.io/computer-science/chapters/01-intro-to-computer-science/",
-      "quote": "Computational Thinking Pillars Interactive Infographic Type: infographic sim-id: computational-thinking-pillars Library: p5.js Status: Specified Bloom Level: Understand (L2) Bloom Verb: classify, explain Learning Objective: Students will be able to identify and explain the four pillars of computational thinking (decomposition, pattern recognition, abstraction, algorithms) and describe how they work together to solve problems. Purpose: Present the four pillars of"
+      "quote": "Computational Thinking Pillars Interactive Infographic Type: infographic sim-id: computational-thinking-pillars Library: p5.js Status: Specified Bloom Level: Understand (L2) Bloom Verb: classify, explain Learning Objective: Students will be able to identify and explain the four pillars of computational thinking (decomposition, pattern recognition, abstraction, algorithms) and describe how they work together to solve problems. Purpose: Present the four pillars of",
+      "simId": "computational-thinking-pillars",
+      "simUrl": "https://dmccreary.github.io/computer-science/sims/computational-thinking-pillars/"
     },
     {
       "bookSlug": "computer-science",
@@ -1481,7 +1514,9 @@
       "pageTitle": "Diagram: Interactive Truth Table Builder",
       "location": "chapters/03-boolean-logic/",
       "pageUrl": "https://dmccreary.github.io/computer-science/chapters/03-boolean-logic/",
-      "quote": "Interactive Truth Table Builder MicroSim Type: microsim sim-id: truth-table-builder Library: p5.js Status: Specified Bloom Level: Analyze (L4) Bloom Verb: construct, evaluate Learning Objective: Students will be able to construct truth tables for compound Boolean expressions and evaluate whether two expressions are logically equivalent. Purpose: An interactive tool where students can type a Boolean expression and see the automatically generated truth table, or build a truth"
+      "quote": "Interactive Truth Table Builder MicroSim Type: microsim sim-id: truth-table-builder Library: p5.js Status: Specified Bloom Level: Analyze (L4) Bloom Verb: construct, evaluate Learning Objective: Students will be able to construct truth tables for compound Boolean expressions and evaluate whether two expressions are logically equivalent. Purpose: An interactive tool where students can type a Boolean expression and see the automatically generated truth table, or build a truth",
+      "simId": "truth-table-builder",
+      "simUrl": "https://dmccreary.github.io/computer-science/sims/truth-table-builder/"
     },
     {
       "bookSlug": "computer-science",
@@ -1497,7 +1532,9 @@
       "pageTitle": "Diagram: String Slicing Playground",
       "location": "chapters/05-working-with-strings/",
       "pageUrl": "https://dmccreary.github.io/computer-science/chapters/05-working-with-strings/",
-      "quote": "String Slicing Playground MicroSim Type: microsim sim-id: string-slicing-playground Library: p5.js Status: Specified Bloom Level: Apply (L3) Bloom Verb: demonstrate, predict Learning Objective: Students will be able to use slice notation to extract substrings, predict the result of a slice expression, and experiment with start, stop, and step parameters. Purpose: An interactive playground where students can adjust start, stop, and step values using sliders and immediately"
+      "quote": "String Slicing Playground MicroSim Type: microsim sim-id: string-slicing-playground Library: p5.js Status: Specified Bloom Level: Apply (L3) Bloom Verb: demonstrate, predict Learning Objective: Students will be able to use slice notation to extract substrings, predict the result of a slice expression, and experiment with start, stop, and step parameters. Purpose: An interactive playground where students can adjust start, stop, and step values using sliders and immediately",
+      "simId": "string-slicing-playground",
+      "simUrl": "https://dmccreary.github.io/computer-science/sims/string-slicing-playground/"
     },
     {
       "bookSlug": "computer-science",
@@ -1505,7 +1542,9 @@
       "pageTitle": "Diagram: Variable Scope Visualizer",
       "location": "chapters/06-functions-and-modular-design/",
       "pageUrl": "https://dmccreary.github.io/computer-science/chapters/06-functions-and-modular-design/",
-      "quote": "Variable Scope Visualizer MicroSim Type: microsim sim-id: variable-scope-visualizer Library: p5.js Status: Specified Bloom Level: Apply (L3) Bloom Verb: demonstrate, predict Learning Objective: Students will be able to predict the value of variables at different points in a program by understanding the rules of local and global variable scope. Purpose: An interactive code execution visualizer that shows which variables exist (and their values) at each step of a program"
+      "quote": "Variable Scope Visualizer MicroSim Type: microsim sim-id: variable-scope-visualizer Library: p5.js Status: Specified Bloom Level: Apply (L3) Bloom Verb: demonstrate, predict Learning Objective: Students will be able to predict the value of variables at different points in a program by understanding the rules of local and global variable scope. Purpose: An interactive code execution visualizer that shows which variables exist (and their values) at each step of a program",
+      "simId": "variable-scope-visualizer",
+      "simUrl": "https://dmccreary.github.io/computer-science/sims/variable-scope-visualizer/"
     },
     {
       "bookSlug": "computer-science",
@@ -1513,7 +1552,9 @@
       "pageTitle": "Diagram: Recursive Call Stack Visualizer",
       "location": "chapters/07-higher-order-functions-and-recursion/",
       "pageUrl": "https://dmccreary.github.io/computer-science/chapters/07-higher-order-functions-and-recursion/",
-      "quote": "Recursive Call Stack Visualizer MicroSim Type: microsim sim-id: recursive-call-stack Library: p5.js Status: Specified Bloom Level: Analyze (L4) Bloom Verb: trace, differentiate Learning Objective: Students will be able to trace the call stack during recursive execution, identify when frames are pushed and popped, and determine the value of local variables at any point during execution. Layout: - Left panel (60%): Code display showing the recursive function with line-by-line"
+      "quote": "Recursive Call Stack Visualizer MicroSim Type: microsim sim-id: recursive-call-stack Library: p5.js Status: Specified Bloom Level: Analyze (L4) Bloom Verb: trace, differentiate Learning Objective: Students will be able to trace the call stack during recursive execution, identify when frames are pushed and popped, and determine the value of local variables at any point during execution. Layout: - Left panel (60%): Code display showing the recursive function with line-by-line",
+      "simId": "recursive-call-stack",
+      "simUrl": "https://dmccreary.github.io/computer-science/sims/recursive-call-stack/"
     },
     {
       "bookSlug": "computer-science",
@@ -1521,7 +1562,9 @@
       "pageTitle": "Diagram: List Methods Playground",
       "location": "chapters/08-lists/",
       "pageUrl": "https://dmccreary.github.io/computer-science/chapters/08-lists/",
-      "quote": "List Methods Playground Type: microsim sim-id: list-methods-playground Library: p5.js Status: Specified Bloom Level: Apply (L3) Bloom Verb: apply, demonstrate, experiment Learning Objective: Students will be able to apply common list methods (append, insert, remove, pop, sort, reverse) and predict the resulting list state. Purpose: An interactive sandbox where students can apply list methods to a visual list and see the result animated step by step. Canvas layout: - Top"
+      "quote": "List Methods Playground Type: microsim sim-id: list-methods-playground Library: p5.js Status: Specified Bloom Level: Apply (L3) Bloom Verb: apply, demonstrate, experiment Learning Objective: Students will be able to apply common list methods (append, insert, remove, pop, sort, reverse) and predict the resulting list state. Purpose: An interactive sandbox where students can apply list methods to a visual list and see the result animated step by step. Canvas layout: - Top",
+      "simId": "list-methods-playground",
+      "simUrl": "https://dmccreary.github.io/computer-science/sims/list-methods-playground/"
     },
     {
       "bookSlug": "computer-science",
@@ -1537,7 +1580,9 @@
       "pageTitle": "Diagram: Venn Diagram Set Operations",
       "location": "chapters/10-tuples-and-sets/",
       "pageUrl": "https://dmccreary.github.io/computer-science/chapters/10-tuples-and-sets/",
-      "quote": "Venn Diagram Set Operations MicroSim Type: microsim sim-id: venn-diagram-sets Library: p5.js Status: Specified Bloom Level: Apply (L3) Bloom Verb: demonstrate, compute Learning Objective: Students will be able to compute union, intersection, difference, and symmetric difference of two sets by interacting with a Venn diagram and seeing the results highlighted visually and computed in code. Purpose: An interactive Venn diagram that lets students add elements to two sets, then"
+      "quote": "Venn Diagram Set Operations MicroSim Type: microsim sim-id: venn-diagram-sets Library: p5.js Status: Specified Bloom Level: Apply (L3) Bloom Verb: demonstrate, compute Learning Objective: Students will be able to compute union, intersection, difference, and symmetric difference of two sets by interacting with a Venn diagram and seeing the results highlighted visually and computed in code. Purpose: An interactive Venn diagram that lets students add elements to two sets, then",
+      "simId": "venn-diagram-sets",
+      "simUrl": "https://dmccreary.github.io/computer-science/sims/venn-diagram-sets/"
     },
     {
       "bookSlug": "stem-robots",
@@ -1577,7 +1622,9 @@
       "pageTitle": "Diagram: Physical Computing Explorer",
       "location": "chapters/01-intro-computational-thinking/",
       "pageUrl": "https://dmccreary.github.io/stem-robots/chapters/01-intro-computational-thinking/",
-      "quote": "Run Physical Computing Explorer Fullscreen Interactive diagram showing inputs, the microcontroller, and outputs forming the sense-decide-act loop Type: MicroSim sim-id: physical-computing-explorer Library: p5.js Status: Specified Learning objective: Students will identify (Bloom L1: Remember) the three layers of a physical computing system \u2014 inputs, processor, and outputs \u2014 and explain (Bloom L2: Understand) how information flows through the sense \u2192 decide \u2192 act loop. Canvas"
+      "quote": "Run Physical Computing Explorer Fullscreen Interactive diagram showing inputs, the microcontroller, and outputs forming the sense-decide-act loop Type: MicroSim sim-id: physical-computing-explorer Library: p5.js Status: Specified Learning objective: Students will identify (Bloom L1: Remember) the three layers of a physical computing system \u2014 inputs, processor, and outputs \u2014 and explain (Bloom L2: Understand) how information flows through the sense \u2192 decide \u2192 act loop. Canvas",
+      "simId": "physical-computing-explorer",
+      "simUrl": "https://dmccreary.github.io/stem-robots/sims/physical-computing-explorer/"
     },
     {
       "bookSlug": "stem-robots",
@@ -1585,7 +1632,9 @@
       "pageTitle": "Diagram: Robot Assembly Workflow",
       "location": "chapters/02-hardware-platform-assembly/",
       "pageUrl": "https://dmccreary.github.io/stem-robots/chapters/02-hardware-platform-assembly/",
-      "quote": "Robot Assembly Workflow Type: workflow sim-id: robot-assembly-workflow Library: p5.js Status: Specified Bloom Level: Apply (L3) \u2014 Assemble the Smart Car chassis by following the correct sequence of steps and explain why each step comes before the next. Bloom Verb: Assemble Learning Objective: Students will sequence the eight assembly steps in the correct order and explain the mechanical reason each step precedes the next (e.g., why standoffs must be installed before the"
+      "quote": "Robot Assembly Workflow Type: workflow sim-id: robot-assembly-workflow Library: p5.js Status: Specified Bloom Level: Apply (L3) \u2014 Assemble the Smart Car chassis by following the correct sequence of steps and explain why each step comes before the next. Bloom Verb: Assemble Learning Objective: Students will sequence the eight assembly steps in the correct order and explain the mechanical reason each step precedes the next (e.g., why standoffs must be installed before the",
+      "simId": "robot-assembly-workflow",
+      "simUrl": "https://dmccreary.github.io/stem-robots/sims/robot-assembly-workflow/"
     },
     {
       "bookSlug": "stem-robots",

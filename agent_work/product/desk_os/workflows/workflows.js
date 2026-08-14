@@ -65,7 +65,7 @@
       return;
     }
     if (kind === 'archive') {
-      location.href = './archive/?v=a1';
+      location.href = './archive/?v=a2';
       return;
     }
     if (kind === 'booking') {
