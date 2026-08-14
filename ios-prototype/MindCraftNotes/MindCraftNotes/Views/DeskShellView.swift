@@ -52,6 +52,7 @@ struct DeskShellView: View {
     @State private var fieldDeskRoute: FieldDeskRoute?
     @State private var showTestInstance = false
     @State private var showCheckIn = false
+    @State private var showFriends = false
     @State private var showFindTutor = false
     @State private var toastMessage: String?
     @State private var tutorFilter: String = "All"
@@ -72,6 +73,7 @@ struct DeskShellView: View {
     @StateObject private var customInstances = CustomInstanceStore.shared
     @State private var showManage = false
     @State private var showCreateInstance = false
+    @State private var showOpenArchive = false
     @State private var openCustomId: String?
     /// Full hub page (tutors map + workflow market) opened from the work
     /// area's Manage button.
@@ -194,6 +196,9 @@ struct DeskShellView: View {
             // Round 25: document→cook learning instance (McCreary stack showcase).
             TestInstanceView()
         }
+        .fullScreenCover(isPresented: $showOpenArchive) {
+            OpenLearningArchiveView(onClose: { showOpenArchive = false })
+        }
         .fullScreenCover(isPresented: $showFindTutor) {
             NavigationStack {
                 FindTutorView()
@@ -208,6 +213,9 @@ struct DeskShellView: View {
             MasteryCheckInSheet(store: goalStore) { message in
                 flashHub(message)
             }
+        }
+        .fullScreenCover(isPresented: $showFriends) {
+            FriendsView(onClose: { showFriends = false })
         }
         .sheet(isPresented: $showManage) {
             AccountManageView()
@@ -460,7 +468,7 @@ struct DeskShellView: View {
     /// `.hub-call` - compact phone next to Manage (mastery strip removed).
     private var callButton: some View {
         Button {
-            showCheckIn = true
+            showFriends = true
         } label: {
             Image(systemName: "phone.fill")
                 .font(.system(size: 14, weight: .medium))
@@ -528,6 +536,15 @@ struct DeskShellView: View {
     /// tile at the end.
     private var instanceGrid: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 240), spacing: 16)], spacing: 16) {
+            instanceCard(
+                id: "open_archive", name: "Open Learning Archive", badge: "Free · No login",
+                systemImage: "books.vertical.fill", accent: Color(shellHex: "c4f547"),
+                execUsed: 113, execCap: 113, running: true, isFunctional: true,
+                statLabel: "Free intelligent textbooks"
+            ) {
+                showOpenArchive = true
+            }
+            .accessibilityIdentifier("deskInstance_openArchive")
             ForEach(customInstances.instances) { inst in
                 instanceCard(
                     id: inst.id, name: inst.name, badge: inst.subject,
@@ -546,6 +563,7 @@ struct DeskShellView: View {
     private func instanceCard(
         id: String, name: String, badge: String, systemImage: String, accent: Color,
         execUsed: Int, execCap: Int, running: Bool, isFunctional: Bool,
+        statLabel: String = "Execution steps",
         action: (() -> Void)? = nil
     ) -> some View {
         let pct = min(1.0, Double(execUsed) / Double(max(1, execCap)))
@@ -597,7 +615,7 @@ struct DeskShellView: View {
                     }
                 }
                 .frame(height: 4)
-                Text("Execution steps")
+                Text(statLabel)
                     .font(.system(size: 10, weight: .medium, design: .rounded))
                     .foregroundColor(ShellColor.ink.opacity(0.45))
             }

@@ -27,6 +27,12 @@ service cloud.firestore {
           !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role'])
           || (!('role' in resource.data) && request.resource.data.role == 'student')
         );
+
+      // Personal contact list for QCal invites (native app Friends tab) —
+      // a simple owner-only address book, not a mutual friend-request graph.
+      match /friends/{friendId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
     }
 
     // Invite-only sign-in gate (see app/src/lib/loginAllowlist.ts + postLogin.ts).

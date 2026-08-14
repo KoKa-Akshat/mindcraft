@@ -59,6 +59,7 @@ struct FieldDeskView: View {
     @State private var showBottomChrome = false
     @State private var chromeHideToken = UUID()
     @State private var showFindTutor = false
+    @State private var showFriends = false
     @State private var showWorkflowLibrary = false
     @State private var showApplyToday = false
     @State private var showSchedulingWorkflows = false
@@ -636,7 +637,7 @@ struct FieldDeskView: View {
                         .accessibilityLabel("The Desk · Manage")
 
                         Button {
-                            showFindTutor = true
+                            showFriends = true
                         } label: {
                             Image(systemName: "phone.fill")
                                 .font(.system(size: 14, weight: .medium))
@@ -731,6 +732,9 @@ struct FieldDeskView: View {
                         }
                     }
             }
+        }
+        .fullScreenCover(isPresented: $showFriends) {
+            FriendsView(onClose: { showFriends = false })
         }
         .fullScreenCover(isPresented: $showWorkflowLibrary) {
             WorkflowLibraryView(market: workflowMarket) {
