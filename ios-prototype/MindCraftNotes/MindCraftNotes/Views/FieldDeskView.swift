@@ -93,6 +93,16 @@ struct FieldDeskView: View {
     @State private var cardSizes: [DeskCardID: CGSize] = [:]
     @State private var focusedCard: DeskCardID?
     @State private var resizeStart: CGSize?
+    /// `DragGesture`'s `.translation` is measured from the original touch-down
+    /// point, not from where `minimumDistance` was crossed - so the very
+    /// first `.onChanged` already reports translation >= minimumDistance,
+    /// which pops the card by that amount instead of easing from zero.
+    /// Recorded once per gesture and subtracted out so the visible drag
+    /// always starts at zero, no matter the threshold.
+    @State private var dragBaseline: [DeskCardID: CGSize] = [:]
+    /// Card currently being actively dragged (distinct from `focusedCard`,
+    /// which persists after the drag ends) - drives the pick-up/drop lift.
+    @State private var draggingCard: DeskCardID?
     /// While the corner grip is dragging, the whole-card move gesture must
     /// stand down — both are simultaneous on the same touch.
     @State private var resizingCard: DeskCardID?
@@ -1312,6 +1322,7 @@ struct FieldDeskView: View {
         let settled = cardOffsets[id] ?? .zero
         let live = cardDrag[id] ?? .zero
         let focused = focusedCard == id
+        let lifting = draggingCard == id || resizingCard == id
 
         paperCard(
             title: title ?? id.rawValue,
@@ -1328,6 +1339,10 @@ struct FieldDeskView: View {
         }
         .contentShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
         .compositingGroup()
+        // Apple-style pick-up lift: subtle scale + deeper shadow while the
+        // card is actively being dragged, spring-settles back on release.
+        .scaleEffect(lifting ? 1.035 : 1.0)
+        .shadow(color: .black.opacity(lifting ? 0.32 : 0), radius: lifting ? 22 : 0, y: lifting ? 14 : 0)
         .simultaneousGesture(cardMoveGesture(id))
         .simultaneousGesture(TapGesture().onEnded {
             focusedCard = id
@@ -1353,6 +1368,7 @@ struct FieldDeskView: View {
         let settled = cardOffsets[id] ?? .zero
         let live = cardDrag[id] ?? .zero
         let focused = focusedCard == id
+        let lifting = draggingCard == id || resizingCard == id
 
         bookCard(
             tab: "BOOK",
@@ -1372,6 +1388,8 @@ struct FieldDeskView: View {
         }
         .contentShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
         .compositingGroup()
+        .scaleEffect(lifting ? 1.035 : 1.0)
+        .shadow(color: .black.opacity(lifting ? 0.32 : 0), radius: lifting ? 22 : 0, y: lifting ? 14 : 0)
         .simultaneousGesture(cardMoveGesture(id))
         .simultaneousGesture(TapGesture().onEnded {
             focusedCard = id
@@ -1418,17 +1436,39 @@ struct FieldDeskView: View {
             .onChanged { value in
                 guard resizingCard == nil else { return }
                 focusedCard = id
-                cardDrag[id] = value.translation
+                let baseline: CGSize
+                if let existing = dragBaseline[id] {
+                    baseline = existing
+                } else {
+                    baseline = value.translation
+                    dragBaseline[id] = baseline
+                    withAnimation(.spring(response: 0.28, dampingFraction: 0.7)) {
+                        draggingCard = id
+                    }
+                }
+                cardDrag[id] = CGSize(
+                    width: value.translation.width - baseline.width,
+                    height: value.translation.height - baseline.height
+                )
             }
             .onEnded { value in
+                let baseline = dragBaseline[id] ?? .zero
+                dragBaseline[id] = nil
+                withAnimation(.spring(response: 0.32, dampingFraction: 0.75)) {
+                    draggingCard = nil
+                }
                 guard resizingCard == nil else {
                     cardDrag[id] = .zero
                     return
                 }
+                let effective = CGSize(
+                    width: value.translation.width - baseline.width,
+                    height: value.translation.height - baseline.height
+                )
                 let prev = cardOffsets[id] ?? .zero
                 cardOffsets[id] = CGSize(
-                    width: prev.width + value.translation.width,
-                    height: prev.height + value.translation.height
+                    width: prev.width + effective.width,
+                    height: prev.height + effective.height
                 )
                 cardDrag[id] = .zero
             }
@@ -1452,9 +1492,11 @@ struct FieldDeskView: View {
             DragGesture(minimumDistance: 1)
                 .onChanged { value in
                     focusedCard = id
-                    resizingCard = id
                     if resizeStart == nil {
                         resizeStart = cardSizes[id] ?? def
+                        withAnimation(.spring(response: 0.28, dampingFraction: 0.7)) {
+                            resizingCard = id
+                        }
                     }
                     let start = resizeStart ?? def
                     let maxW: CGFloat = id == .binder ? 640 : (id == .connect ? 720 : 520)
@@ -1466,7 +1508,9 @@ struct FieldDeskView: View {
                 }
                 .onEnded { _ in
                     resizeStart = nil
-                    resizingCard = nil
+                    withAnimation(.spring(response: 0.32, dampingFraction: 0.75)) {
+                        resizingCard = nil
+                    }
                 }
         )
         .accessibilityIdentifier("fieldDeskResize_\(id.rawValue)")

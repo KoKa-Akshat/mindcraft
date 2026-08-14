@@ -138,8 +138,22 @@
     border-color:rgba(36,122,77,.34);
     box-shadow:0 30px 74px rgba(20,58,46,.22),0 0 0 5px rgba(196,245,71,.14);
   }
-  .tile.is-dragging{z-index:30; cursor:grabbing; transition:none;}
-  .tile.is-resizing{z-index:31; transition:none;}
+  /* Pick-up lift: box-shadow is a separate transition target from
+     transform - listing only it here means it animates in smoothly
+     (.18s) while position (transform, driven every pointermove) stays
+     completely untransitioned, so the two never fight. Settle-back on
+     release uses .tile's own base transition (box-shadow .35s) once
+     these classes are removed. */
+  .tile.is-dragging{
+    z-index:30; cursor:grabbing;
+    transition:box-shadow .18s var(--ease);
+    box-shadow:0 34px 90px rgba(20,58,46,.34),0 0 0 2px rgba(196,245,71,.22);
+  }
+  .tile.is-resizing{
+    z-index:31;
+    transition:box-shadow .18s var(--ease);
+    box-shadow:0 30px 78px rgba(20,58,46,.3),0 0 0 2px rgba(196,245,71,.16);
+  }
   .tile img{border-radius:11px; pointer-events:none;}
   .tile-label{
     position:absolute; left:3px; top:-28px; white-space:nowrap;
@@ -296,7 +310,11 @@
     transition:transform .35s var(--ease),box-shadow .35s var(--ease);
     cursor:grab; touch-action:none; user-select:none;
   }
-  .transcript.is-dragging{z-index:32; cursor:grabbing; transition:none;}
+  .transcript.is-dragging{
+    z-index:32; cursor:grabbing;
+    transition:box-shadow .18s var(--ease);
+    box-shadow:0 34px 90px rgba(0,0,0,.58),0 0 0 2px rgba(196,245,71,.22);
+  }
   .transcript .tile-label{color:rgba(20,58,46,.62);}
   .transcript.is-recording .voice i{animation-duration:.6s;}
   .transcript-head{display:flex; align-items:center; justify-content:space-between; gap:12px;}
