@@ -136,6 +136,7 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 140 | Promote-to-C4 tutor QA workflow for Practice-only FormatId | SAFE-SPLITPOOL × SAFE-REPAIR/FIGKEY; ticketed promote without play-count flip | **DONE** (2026-08-13) — Part CXL / SAFE-PROMOTE |
 | 141 | Exposure cool-down after reveal before same-stem C4 | SAFE-SPLITPOOL × SAFE-SCANCOMP; anti-answer-hunt without pool starvation | **DONE** (2026-08-13) — Part CXLI / SAFE-COOLDOWN |
 | 142 | Student-facing hole copy after gap-scan (no shame, no fake greens) | SAFE-HOLETRUST × SAFE-COLD/CALIB; student summary without parent-only honesty | **DONE** (2026-08-14) — Part CXLII / SAFE-STUDHOLE |
+| — | **Synthesizer v1.18** | Merge CXXXIV–CXLII SAFE-* into core OS I.4 / XIV / IX / XXI | **DONE** (2026-08-14 UTC 03) |
 | 143 | Promote backlog SLA vs parent hole-ETA honesty | SAFE-PROMOTE × SAFE-KNOWNETA/HOLETRUST; finite verify bands without play-count fill bars | **NEXT** |
 | 144 | Second-rater thresholds for figured C4 admits | SAFE-PROMOTE × SAFE-FIGKEY/HITL; when dual review is mandatory vs cost theater | queued |
 | 145 | Isomorphic stem-family hashing for cool-down without over-block | SAFE-COOLDOWN × SAFE-GENQ/FIGKEY; clone seals without starving FormatId practice | queued |

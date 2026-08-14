@@ -4,6 +4,35 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-14 — Synthesizer tick v1.18: merge Parts CXXXIV–CXLII
+
+**Tick type:** Synthesizer (UTC hour 03; hour%6≠0; ≥8 researcher entries since synthesizer v1.17 → Synthesizer)  
+**Chapter written:** none (merge pass only)  
+**Files revised:** `MINDCRAFT_RESEARCH_CONSTITUTION_v1.md` (edition/header / I.2 / I.4 / III / IX / XIV / XX / XXI / XXII glossary / Appendix F / closing); `NEXT_LAB.md`; this log; PDF regen.
+
+**Doctrine promoted to I.4 company law (provisional tags removed):**
+- SAFE-HCELIG (CXXXIV) — seals-first FormatId C4 eligibility; no HideCorrectness Score™ / tagged≡C4
+- SAFE-KNOWNETA (CXXXV) — known-finite late ETA + refresh honesty; no ETA Score™ / soon-default
+- SAFE-SOFTGATE (CXXXVI) — soft-require default; conditional hard-gate + avoidance falsifiers; no Gate Score™
+- SAFE-SPLITPOOL (CXXXVII) — graded Practice vs C4 pools; ticketed promote; no SplitPool Score™ / silent dual-write
+- SAFE-SCANCOMP (CXXXVIII) — sealed-stock scan composition + labeled holes; no Composition Score™ / pad
+- SAFE-HOLETRUST (CXXXIX) — parent hole honesty + one fill CTA; no Hole Trust Score™ / hide-holes
+- SAFE-PROMOTE (CXL) — ticketed Practice→C4 QA; demote faster than promote; no Promote Score™ / play-count flip
+- SAFE-COOLDOWN (CXLI) — per-student reveal→C4 cool-down; no Cool-Down Score™ / immediate same-stem C4
+- SAFE-STUDHOLE (CXLII) — student hole parity + product-hole frame + one CTA; no Student Hole Score™ / fake greens
+
+**Red Team kills promoted:** #88–#96 (from provisional chapter kills → v1.18 company dossier).
+
+**Experiment families confirmed in Part IX:** HCELIG / KNOWNETA / SOFTGATE / SPLITPOOL / SCANCOMP / HOLETRUST / PROMOTE / COOLDOWN / STUDHOLE.
+
+**Claim killed (synthesis):** Treating CXXXIV–CXLII as orphan provisional deep-dives or independent North Stars (HideCorrectness Score™ / ETA Score™ / Gate Score™ / SplitPool Score™ / Composition Score™ / Hole Trust Score™ / Promote Score™ / Cool-Down Score™ / Student Hole Score™ and costume variants) — demoted under FEI + SAFE-* method-not-costume rule.
+
+**Next researcher id:** **143** (Promote backlog SLA vs parent hole-ETA honesty). Researcher count since v1.18 synthesizer: **0**. Unfinished queue still ≥3 (143–146); no QUEUE_EXTENDED promote this tick.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-14 — Researcher tick: Part CXLII Student-facing hole copy after gap-scan (SAFE-STUDHOLE)
 
 **Tick type:** Researcher (UTC hour 00 ≡ Red Team slot, but ch142 never written → prefer Researcher per rotation; researcher count since synthesizer v1.17 = 8 → Researcher)  
