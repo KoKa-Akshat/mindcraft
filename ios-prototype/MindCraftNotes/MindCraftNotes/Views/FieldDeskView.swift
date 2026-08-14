@@ -63,6 +63,7 @@ struct FieldDeskView: View {
     @State private var showWorkflowLibrary = false
     @State private var showApplyToday = false
     @State private var showSchedulingWorkflows = false
+    @State private var schedulingWorkflowsMinimized = false
     @State private var showGmailBox = false
     @State private var gmailStartReconnect = false
     @State private var gmailOpenTopReply = false
@@ -198,6 +199,7 @@ struct FieldDeskView: View {
         showGmailBox = false
         showApplyToday = false
         showSchedulingWorkflows = false
+        schedulingWorkflowsMinimized = false
         showActFieldBook = false
         showActStage = false
         actStageMaximized = false
@@ -241,7 +243,7 @@ struct FieldDeskView: View {
         showActFieldBook
             || showGmailBox
             || showApplyToday
-            || showSchedulingWorkflows
+            || (showSchedulingWorkflows && !schedulingWorkflowsMinimized)
             || (showActStage && actStageMaximized)
             || showManage
             || showProjectsPanel
@@ -398,19 +400,41 @@ struct FieldDeskView: View {
                         .accessibilityIdentifier("fieldDeskApplyTodayOverlay")
                 }
 
-                if showSchedulingWorkflows {
+                if showSchedulingWorkflows && !schedulingWorkflowsMinimized {
                     // No wrapper .accessibilityIdentifier here: applying one
                     // to a composite view like this clobbers the identifier
                     // of every nested button underneath it (confirmed via a
                     // real accessibility-tree dump - e.g. schedulingWorkflowsBack
                     // reporting as this wrapper's id instead of its own).
                     // SchedulingWorkflowsView already tags its own root.
-                    SchedulingWorkflowsView(
-                        onClose: { showSchedulingWorkflows = false },
-                        onOpenApplyToday: { showApplyToday = true }
-                    )
-                        .transition(.opacity)
-                        .zIndex(90)
+                    ZStack(alignment: .topTrailing) {
+                        SchedulingWorkflowsView(
+                            onClose: {
+                                showSchedulingWorkflows = false
+                                schedulingWorkflowsMinimized = false
+                            },
+                            onOpenApplyToday: { showApplyToday = true }
+                        )
+                        // Corner-only minimize, same treatment as ACT stage's
+                        // - collapses to a reconnectable chip on the desk
+                        // instead of fully closing, so other cards stay
+                        // reachable without losing the workflow's progress.
+                        Button {
+                            withAnimation(.easeInOut(duration: 0.2)) { schedulingWorkflowsMinimized = true }
+                        } label: {
+                            Image(systemName: "arrow.down.right.and.arrow.up.left")
+                                .font(.system(size: 12, weight: .bold))
+                                .foregroundColor(.white)
+                                .padding(10)
+                                .background(Circle().fill(Color.black.opacity(0.55)))
+                        }
+                        .buttonStyle(.plain)
+                        .padding(28)
+                        .accessibilityIdentifier("fieldDeskWorkflowsMinimize")
+                        .accessibilityLabel("Minimize workflow")
+                    }
+                    .transition(.opacity)
+                    .zIndex(90)
                 }
 
                 if showGmailBox {
@@ -682,6 +706,19 @@ struct FieldDeskView: View {
                     .zIndex(80)
                 }
             }
+            // Deliberately its own top-level .overlay(), NOT a ZStack child -
+            // not inside deskCardsLayer (that layer only mounts when
+            // deskChromeLive is true, i.e. Work-mode cards), but both ACT and
+            // Workflows are reachable straight from Jesse's Kitchen via the
+            // dock/house, where deskChromeLive is false.
+            .overlay(alignment: .topLeading) {
+                if showActStage && !actStageMaximized {
+                    minimizedActChip(viewport: viewport)
+                }
+                if showSchedulingWorkflows && schedulingWorkflowsMinimized {
+                    minimizedWorkflowsChip(viewport: viewport)
+                }
+            }
         }
         .background(Color(fdHex: "080e14"))
         .ignoresSafeArea()
@@ -884,6 +921,10 @@ struct FieldDeskView: View {
         if showActStage && !actStageMaximized {
             rects.append(CGRect(x: 1100, y: 160, width: 220, height: 110).insetBy(dx: -12, dy: -12))
         }
+        // The Workflows chip is NOT in this list - it's a top-level sibling
+        // now (see body's own showSchedulingWorkflows block), not part of
+        // deskCardsLayer, so it isn't part of this layer's own collision
+        // math either.
         return rects
     }
 
@@ -944,10 +985,6 @@ struct FieldDeskView: View {
                     slidesCardBody
                 }
                 .zIndex(focusedCard == .slides ? 21 : 11)
-            }
-            if showActStage && !actStageMaximized {
-                minimizedActChip
-                    .zIndex(12)
             }
         }
         .frame(width: viewport.width, height: viewport.height, alignment: .topLeading)
@@ -1588,42 +1625,76 @@ struct FieldDeskView: View {
         .padding(10)
     }
 
-    private var minimizedActChip: some View {
-        Button {
+    /// Clamped to `viewport` - a fixed x:1100 offset lands mostly off-screen
+    /// on an 11" iPad (1180pt-wide window); see `minimizedWorkflowsChip`.
+    private func minimizedActChip(viewport: CGSize) -> some View {
+        let chipWidth: CGFloat = 220
+        let chipHeight: CGFloat = 110
+        let margin: CGFloat = 24
+        let x = max(margin, min(1100, viewport.width - chipWidth - margin))
+        let y = max(margin, min(160, viewport.height - chipHeight - margin))
+        return Button {
             withAnimation(.easeInOut(duration: 0.2)) { actStageMaximized = true }
         } label: {
             VStack(alignment: .leading, spacing: 6) {
                 Text("ACT")
                     .font(.system(size: 10, weight: .heavy, design: .rounded))
                     .foregroundColor(Color(fdHex: "0c1207"))
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 3)
-                    .background(Capsule().fill(Color(fdHex: "c4f547")))
                 Text("ACT Field Book")
-                    .font(.system(size: 18, weight: .regular, design: .serif))
-                    .italic()
-                    .foregroundColor(Color(fdHex: "1c1a17"))
+                    .font(.system(size: 16, weight: .bold, design: .rounded))
+                    .foregroundColor(Color(fdHex: "143a2e"))
                 Text("Tap to maximize")
                     .font(.system(size: 12, weight: .medium, design: .rounded))
-                    .foregroundColor(Color(fdHex: "8a8478"))
+                    .foregroundColor(Color(fdHex: "143a2e").opacity(0.7))
             }
             .padding(14)
-            .frame(width: 220, height: 110, alignment: .topLeading)
             .background(
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .fill(Color(fdHex: "fbf8f3"))
-                    .shadow(color: .black.opacity(0.4), radius: 14, y: 8)
+                    .fill(Color.white.opacity(0.96))
+                    .shadow(color: .black.opacity(0.16), radius: 8, y: 3)
             )
-            .overlay(alignment: .bottomTrailing) {
-                Image(systemName: "arrow.up.left.and.arrow.down.right")
-                    .font(.system(size: 11, weight: .bold))
-                    .foregroundColor(Color(fdHex: "1c1a17").opacity(0.7))
-                    .padding(8)
-            }
         }
         .buttonStyle(.plain)
-        .offset(x: 1100, y: 160)
+        .offset(x: x, y: y)
         .accessibilityIdentifier("fieldDeskActStageChip")
+        .zIndex(25)
+    }
+
+    /// Same reconnectable-chip treatment as `minimizedActChip`, offset below
+    /// it so both can be minimized at once without overlapping. Clamped to
+    /// `viewport` (not a fixed offset like `minimizedActChip`) - confirmed via
+    /// a real device-sized UI test that a hardcoded x:1100 offset lands mostly
+    /// off-screen on an 11" iPad (1180pt-wide window), rendering nothing.
+    private func minimizedWorkflowsChip(viewport: CGSize) -> some View {
+        let chipWidth: CGFloat = 220
+        let chipHeight: CGFloat = 110
+        let margin: CGFloat = 24
+        let x = max(margin, min(1100, viewport.width - chipWidth - margin))
+        let y = max(margin, min(290, viewport.height - chipHeight - margin))
+        return Button {
+            withAnimation(.easeInOut(duration: 0.2)) { schedulingWorkflowsMinimized = false }
+        } label: {
+            VStack(alignment: .leading, spacing: 6) {
+                Text("WORKFLOW")
+                    .font(.system(size: 10, weight: .heavy, design: .rounded))
+                    .foregroundColor(Color(fdHex: "0c1207"))
+                Text("Scheduling Workflows")
+                    .font(.system(size: 16, weight: .bold, design: .rounded))
+                    .foregroundColor(Color(fdHex: "143a2e"))
+                Text("Tap to reconnect")
+                    .font(.system(size: 12, weight: .medium, design: .rounded))
+                    .foregroundColor(Color(fdHex: "143a2e").opacity(0.7))
+            }
+            .padding(14)
+            .background(
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .fill(Color.white.opacity(0.96))
+                    .shadow(color: .black.opacity(0.16), radius: 8, y: 3)
+            )
+        }
+        .buttonStyle(.plain)
+        .offset(x: x, y: y)
+        .accessibilityIdentifier("fieldDeskWorkflowsChip")
         .zIndex(25)
     }
 
