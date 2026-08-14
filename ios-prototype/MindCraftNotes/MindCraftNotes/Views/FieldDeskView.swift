@@ -59,9 +59,12 @@ struct FieldDeskView: View {
     @State private var showBottomChrome = false
     @State private var chromeHideToken = UUID()
     @State private var showFindTutor = false
+    @State private var showFriends = false
     @State private var showWorkflowLibrary = false
     @State private var showResumeAgent = false
     @State private var showApplyToday = false
+    @State private var showSchedulingWorkflows = false
+    @State private var schedulingWorkflowsMinimized = false
     @State private var showGmailBox = false
     @State private var gmailStartReconnect = false
     @State private var gmailOpenTopReply = false
@@ -196,6 +199,8 @@ struct FieldDeskView: View {
         showBlankPage = false
         showGmailBox = false
         showApplyToday = false
+        showSchedulingWorkflows = false
+        schedulingWorkflowsMinimized = false
         showActFieldBook = false
         showActStage = false
         actStageMaximized = false
@@ -239,6 +244,7 @@ struct FieldDeskView: View {
         showActFieldBook
             || showGmailBox
             || showApplyToday
+            || (showSchedulingWorkflows && !schedulingWorkflowsMinimized)
             || (showActStage && actStageMaximized)
             || showManage
             || showProjectsPanel
@@ -393,6 +399,43 @@ struct FieldDeskView: View {
                         // Above Work/Create web surfaces so workflows use the big area.
                         .zIndex(90)
                         .accessibilityIdentifier("fieldDeskApplyTodayOverlay")
+                }
+
+                if showSchedulingWorkflows && !schedulingWorkflowsMinimized {
+                    // No wrapper .accessibilityIdentifier here: applying one
+                    // to a composite view like this clobbers the identifier
+                    // of every nested button underneath it (confirmed via a
+                    // real accessibility-tree dump - e.g. schedulingWorkflowsBack
+                    // reporting as this wrapper's id instead of its own).
+                    // SchedulingWorkflowsView already tags its own root.
+                    ZStack(alignment: .topTrailing) {
+                        SchedulingWorkflowsView(
+                            onClose: {
+                                showSchedulingWorkflows = false
+                                schedulingWorkflowsMinimized = false
+                            },
+                            onOpenApplyToday: { showApplyToday = true }
+                        )
+                        // Corner-only minimize, same treatment as ACT stage's
+                        // - collapses to a reconnectable chip on the desk
+                        // instead of fully closing, so other cards stay
+                        // reachable without losing the workflow's progress.
+                        Button {
+                            withAnimation(.easeInOut(duration: 0.2)) { schedulingWorkflowsMinimized = true }
+                        } label: {
+                            Image(systemName: "arrow.down.right.and.arrow.up.left")
+                                .font(.system(size: 12, weight: .bold))
+                                .foregroundColor(.white)
+                                .padding(10)
+                                .background(Circle().fill(Color.black.opacity(0.55)))
+                        }
+                        .buttonStyle(.plain)
+                        .padding(28)
+                        .accessibilityIdentifier("fieldDeskWorkflowsMinimize")
+                        .accessibilityLabel("Minimize workflow")
+                    }
+                    .transition(.opacity)
+                    .zIndex(90)
                 }
 
                 if showGmailBox {
@@ -589,29 +632,51 @@ struct FieldDeskView: View {
                     .animation(.easeInOut(duration: 0.22), value: showTopChrome)
                 }
             }
-            // Top-left product mark → Manage (text only: The Desk).
+            // Top-left product mark → Manage (text only: The Desk), plus Call
+            // right beside it. `topChrome` below is a swipe-to-reveal bar
+            // that's also fully suppressed on Standalone Desk / Create
+            // Studio (`floatDockBlocked`) — Call used to live only there, so
+            // it vanished entirely on those two screens and needed a swipe
+            // to appear on Jesse's. Anchoring it to this always-visible
+            // header instead gives it one consistent home across all three
+            // screens, next to "The Desk" wordmark (Akshat).
             .overlay(alignment: .topLeading) {
                 if !deskOverlayChromeBlocked {
-                    Button {
-                        openManageFromChrome()
-                    } label: {
-                        Text("The Desk")
-                            .font(.system(size: 13, weight: .heavy, design: .rounded))
-                            .foregroundColor(Color(fdHex: "143a2e"))
-                            .padding(.horizontal, 14)
-                            .padding(.vertical, 10)
-                            .background(
-                                Capsule()
-                                    .fill(Color.white.opacity(0.96))
-                                    .shadow(color: .black.opacity(0.16), radius: 8, y: 3)
-                            )
+                    HStack(spacing: 10) {
+                        Button {
+                            openManageFromChrome()
+                        } label: {
+                            Text("The Desk")
+                                .font(.system(size: 13, weight: .heavy, design: .rounded))
+                                .foregroundColor(Color(fdHex: "143a2e"))
+                                .padding(.horizontal, 14)
+                                .padding(.vertical, 10)
+                                .background(
+                                    Capsule()
+                                        .fill(Color.white.opacity(0.96))
+                                        .shadow(color: .black.opacity(0.16), radius: 8, y: 3)
+                                )
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityIdentifier("fieldDeskLogoManage")
+                        .accessibilityLabel("The Desk · Manage")
+
+                        Button {
+                            showFriends = true
+                        } label: {
+                            Image(systemName: "phone.fill")
+                                .font(.system(size: 14, weight: .medium))
+                                .foregroundColor(Color(fdHex: "c4f547"))
+                                .frame(width: 40, height: 40)
+                                .background(Circle().fill(Color(fdHex: "111111")))
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityIdentifier("fieldDeskCallButton")
+                        .accessibilityLabel("Call")
                     }
-                    .buttonStyle(.plain)
                     .padding(.top, 12)
                     .padding(.leading, 16)
                     .zIndex(80)
-                    .accessibilityIdentifier("fieldDeskLogoManage")
-                    .accessibilityLabel("The Desk · Manage")
                 }
             }
             // Top-right: mode toggle (Create/Work or Jesse's pair) · Sign out.
@@ -640,6 +705,19 @@ struct FieldDeskView: View {
                     .padding(.top, 12)
                     .padding(.trailing, 16)
                     .zIndex(80)
+                }
+            }
+            // Deliberately its own top-level .overlay(), NOT a ZStack child -
+            // not inside deskCardsLayer (that layer only mounts when
+            // deskChromeLive is true, i.e. Work-mode cards), but both ACT and
+            // Workflows are reachable straight from Jesse's Kitchen via the
+            // dock/house, where deskChromeLive is false.
+            .overlay(alignment: .topLeading) {
+                if showActStage && !actStageMaximized {
+                    minimizedActChip(viewport: viewport)
+                }
+                if showSchedulingWorkflows && schedulingWorkflowsMinimized {
+                    minimizedWorkflowsChip(viewport: viewport)
                 }
             }
         }
@@ -692,6 +770,9 @@ struct FieldDeskView: View {
                         }
                     }
             }
+        }
+        .fullScreenCover(isPresented: $showFriends) {
+            FriendsView(onClose: { showFriends = false })
         }
         .fullScreenCover(isPresented: $showWorkflowLibrary) {
             WorkflowLibraryView(
@@ -766,22 +847,27 @@ struct FieldDeskView: View {
         }
     }
 
-    private var topChrome: some View {
-        // Call · (name at end) — logo / Home / desk pill retired per Akshat.
-        HStack(spacing: 10) {
-            Button {
-                showFindTutor = true
-            } label: {
-                Image(systemName: "phone.fill")
-                    .font(.system(size: 14, weight: .medium))
-                    .foregroundColor(Color(fdHex: "c4f547"))
-                    .frame(width: 34, height: 34)
-                    .background(Circle().fill(Color(fdHex: "111111")))
-            }
-            .buttonStyle(.plain)
-            .accessibilityIdentifier("fieldDeskCallButton")
-            .accessibilityLabel("Call")
+    /// The only real exit from the ACT stage back to the standalone work
+    /// desk (see `fieldDeskActStageBackToWork`) — mirrors the same
+    /// close-current → brief delay → reopen `showStandaloneDesk` sequence
+    /// `switchCreateToWork()` uses elsewhere in this file, rather than
+    /// inventing a parallel transition.
+    private func closeActStageBackToWork() {
+        withAnimation(.easeInOut(duration: 0.22)) {
+            showActStage = false
+            actStageMaximized = false
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+            showStandaloneDesk = true
+        }
+    }
 
+    private var topChrome: some View {
+        // Call now lives in the always-visible top-leading header next to
+        // "The Desk" wordmark (see the .overlay(alignment: .topLeading)
+        // above) so it shows up consistently on Jesse's, Work, and Create —
+        // this swipe-to-reveal bar just carries the name now.
+        HStack(spacing: 10) {
             Spacer(minLength: 8)
                 .allowsHitTesting(false)
 
@@ -848,6 +934,10 @@ struct FieldDeskView: View {
         if showActStage && !actStageMaximized {
             rects.append(CGRect(x: 1100, y: 160, width: 220, height: 110).insetBy(dx: -12, dy: -12))
         }
+        // The Workflows chip is NOT in this list - it's a top-level sibling
+        // now (see body's own showSchedulingWorkflows block), not part of
+        // deskCardsLayer, so it isn't part of this layer's own collision
+        // math either.
         return rects
     }
 
@@ -908,10 +998,6 @@ struct FieldDeskView: View {
                     slidesCardBody
                 }
                 .zIndex(focusedCard == .slides ? 21 : 11)
-            }
-            if showActStage && !actStageMaximized {
-                minimizedActChip
-                    .zIndex(12)
             }
         }
         .frame(width: viewport.width, height: viewport.height, alignment: .topLeading)
@@ -1129,12 +1215,9 @@ struct FieldDeskView: View {
     }
 
     private func openWorkFromJesse() {
-        guard !showStandaloneDesk, !showCreateStudio else { return }
-        withAnimation(.easeInOut(duration: 0.25)) {
-            showProjectsScreen = true
-            shrineBeatPhase = .idle
-            shrineCaption = ""
-        }
+        // Akshat: skip the Malevolent Shrine beat entirely — straight to the
+        // work desk on tap, no shrine screen in between.
+        openStandaloneDesk()
     }
 
     private func switchDeskToCreate() {
@@ -1201,10 +1284,9 @@ struct FieldDeskView: View {
         showBlankPage = false
         switch action {
         case .openDesk, .projects:
-            // Straight to centered shrine — no polka sheet on this path.
-            withAnimation(.easeInOut(duration: 0.25)) {
-                showProjectsScreen = true
-            }
+            // Akshat: skip the Malevolent Shrine entirely — straight to the
+            // work desk, no shrine beat on this path.
+            openStandaloneDesk()
         case .wakeJesse:
             flash("Jesse’s Kitchen")
         case .intel:
@@ -1433,12 +1515,21 @@ struct FieldDeskView: View {
             .frame(width: w, height: h)
             .background(
                 RoundedRectangle(cornerRadius: 18, style: .continuous)
-                    .fill(Color(fdHex: "0f1f18"))
+                    // Desk OS surfaces are cream/paper, not dark theater
+                    // (Brand Book §9) — was the old dark-shell green
+                    // (`0f1f18`, DeskShellView's hub background), fought the
+                    // embedded DashboardView's own light paper chrome. Same
+                    // cream `paperCard`/minimized-chip tone used everywhere
+                    // else in this file.
+                    .fill(Color(fdHex: "fbf8f3"))
                     .shadow(color: .black.opacity(0.45), radius: 22, y: 10)
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 18, style: .continuous)
-                    .stroke(Color.white.opacity(0.14), lineWidth: 1)
+                    // Matches the paper-card edge language elsewhere in this
+                    // file — the old 0.14 white stroke was tuned for the dark
+                    // fill above and nearly vanished on cream.
+                    .strokeBorder(Color(fdHex: "1c1a17").opacity(0.10), lineWidth: 1)
             )
             // Avoid clipping Pencil Metal layers - radius via background only.
             .overlay(alignment: .bottomTrailing) {
@@ -1466,6 +1557,37 @@ struct FieldDeskView: View {
             .position(x: viewport.width - 28, y: 28)
             .accessibilityIdentifier("fieldDeskActStageMinimize")
             .accessibilityLabel("Minimize ACT stage")
+
+            // Real exit back to the work desk. The embedded DashboardView's
+            // own "Home" button is a dead end here — when `embeddedInDesk`
+            // is true it just resets its own tab state and returns before
+            // ever calling `onDeskHome` — so this stage had no way out.
+            // Deliberately its own chevron/pill, not a relabeled reuse of
+            // that misleading Home control.
+            Button {
+                closeActStageBackToWork()
+            } label: {
+                HStack(spacing: 7) {
+                    Image(systemName: "chevron.left")
+                        .font(.system(size: 12, weight: .heavy))
+                    Text("Back to Work")
+                        .font(.system(size: 13, weight: .heavy, design: .rounded))
+                }
+                .foregroundColor(Color(fdHex: "143a2e"))
+                .padding(.horizontal, 14)
+                .padding(.vertical, 9)
+                .background(
+                    Capsule()
+                        .fill(Color.white.opacity(0.95))
+                        .shadow(color: .black.opacity(0.18), radius: 10, y: 4)
+                )
+            }
+            .buttonStyle(.plain)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .padding(.top, 20)
+            .padding(.leading, 16)
+            .accessibilityIdentifier("fieldDeskActStageBackToWork")
+            .accessibilityLabel("Back to Work")
         }
         .onAppear {
             // First open: fill most of the available stage area.
@@ -1516,42 +1638,76 @@ struct FieldDeskView: View {
         .padding(10)
     }
 
-    private var minimizedActChip: some View {
-        Button {
+    /// Clamped to `viewport` - a fixed x:1100 offset lands mostly off-screen
+    /// on an 11" iPad (1180pt-wide window); see `minimizedWorkflowsChip`.
+    private func minimizedActChip(viewport: CGSize) -> some View {
+        let chipWidth: CGFloat = 220
+        let chipHeight: CGFloat = 110
+        let margin: CGFloat = 24
+        let x = max(margin, min(1100, viewport.width - chipWidth - margin))
+        let y = max(margin, min(160, viewport.height - chipHeight - margin))
+        return Button {
             withAnimation(.easeInOut(duration: 0.2)) { actStageMaximized = true }
         } label: {
             VStack(alignment: .leading, spacing: 6) {
                 Text("ACT")
                     .font(.system(size: 10, weight: .heavy, design: .rounded))
                     .foregroundColor(Color(fdHex: "0c1207"))
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 3)
-                    .background(Capsule().fill(Color(fdHex: "c4f547")))
                 Text("ACT Field Book")
-                    .font(.system(size: 18, weight: .regular, design: .serif))
-                    .italic()
-                    .foregroundColor(Color(fdHex: "1c1a17"))
+                    .font(.system(size: 16, weight: .bold, design: .rounded))
+                    .foregroundColor(Color(fdHex: "143a2e"))
                 Text("Tap to maximize")
                     .font(.system(size: 12, weight: .medium, design: .rounded))
-                    .foregroundColor(Color(fdHex: "8a8478"))
+                    .foregroundColor(Color(fdHex: "143a2e").opacity(0.7))
             }
             .padding(14)
-            .frame(width: 220, height: 110, alignment: .topLeading)
             .background(
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .fill(Color(fdHex: "fbf8f3"))
-                    .shadow(color: .black.opacity(0.4), radius: 14, y: 8)
+                    .fill(Color.white.opacity(0.96))
+                    .shadow(color: .black.opacity(0.16), radius: 8, y: 3)
             )
-            .overlay(alignment: .bottomTrailing) {
-                Image(systemName: "arrow.up.left.and.arrow.down.right")
-                    .font(.system(size: 11, weight: .bold))
-                    .foregroundColor(Color(fdHex: "1c1a17").opacity(0.7))
-                    .padding(8)
-            }
         }
         .buttonStyle(.plain)
-        .offset(x: 1100, y: 160)
+        .offset(x: x, y: y)
         .accessibilityIdentifier("fieldDeskActStageChip")
+        .zIndex(25)
+    }
+
+    /// Same reconnectable-chip treatment as `minimizedActChip`, offset below
+    /// it so both can be minimized at once without overlapping. Clamped to
+    /// `viewport` (not a fixed offset like `minimizedActChip`) - confirmed via
+    /// a real device-sized UI test that a hardcoded x:1100 offset lands mostly
+    /// off-screen on an 11" iPad (1180pt-wide window), rendering nothing.
+    private func minimizedWorkflowsChip(viewport: CGSize) -> some View {
+        let chipWidth: CGFloat = 220
+        let chipHeight: CGFloat = 110
+        let margin: CGFloat = 24
+        let x = max(margin, min(1100, viewport.width - chipWidth - margin))
+        let y = max(margin, min(290, viewport.height - chipHeight - margin))
+        return Button {
+            withAnimation(.easeInOut(duration: 0.2)) { schedulingWorkflowsMinimized = false }
+        } label: {
+            VStack(alignment: .leading, spacing: 6) {
+                Text("WORKFLOW")
+                    .font(.system(size: 10, weight: .heavy, design: .rounded))
+                    .foregroundColor(Color(fdHex: "0c1207"))
+                Text("Scheduling Workflows")
+                    .font(.system(size: 16, weight: .bold, design: .rounded))
+                    .foregroundColor(Color(fdHex: "143a2e"))
+                Text("Tap to reconnect")
+                    .font(.system(size: 12, weight: .medium, design: .rounded))
+                    .foregroundColor(Color(fdHex: "143a2e").opacity(0.7))
+            }
+            .padding(14)
+            .background(
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .fill(Color.white.opacity(0.96))
+                    .shadow(color: .black.opacity(0.16), radius: 8, y: 3)
+            )
+        }
+        .buttonStyle(.plain)
+        .offset(x: x, y: y)
+        .accessibilityIdentifier("fieldDeskWorkflowsChip")
         .zIndex(25)
     }
 
@@ -1627,8 +1783,10 @@ struct FieldDeskView: View {
             dockIconCompact("calendar", tool: .calendar)
             dockIconCompact("magnifyingglass", tool: .search)
 
-            // Book → Apply today board immediately (sketch popup on desk).
-            Button { showApplyToday = true } label: {
+            // Book → Scheduling Workflows picker (poll / sign-up / 1:1 / booking).
+            // Apply today demoted to secondary — reachable from inside the
+            // picker ("Also: Apply today board") or the long-press library.
+            Button { showSchedulingWorkflows = true } label: {
                 Image(systemName: "book.closed")
                     .font(.system(size: 14, weight: .semibold))
                     .foregroundColor(Color(fdHex: "0c1207"))
@@ -1637,7 +1795,7 @@ struct FieldDeskView: View {
             }
             .buttonStyle(.plain)
             .accessibilityIdentifier("fieldDeskWorkflows")
-            .accessibilityLabel("Apply today")
+            .accessibilityLabel("Workflows")
             .simultaneousGesture(
                 LongPressGesture(minimumDuration: 0.55).onEnded { _ in
                     showWorkflowLibrary = true
@@ -2891,7 +3049,7 @@ struct FieldDeskView: View {
                 DeskAskClient.CalendarEvent(day: $0.day, title: $0.title)
             },
             connected: connected,
-            openSurface: showGmailBox ? "gmail" : (showApplyToday ? "applyToday" : "desk")
+            openSurface: showGmailBox ? "gmail" : (showApplyToday ? "applyToday" : (showSchedulingWorkflows ? "schedulingWorkflows" : "desk"))
         )
 
         Task { @MainActor in

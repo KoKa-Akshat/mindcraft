@@ -4,6 +4,363 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-14 — Researcher tick: Part CXLIV Second-rater thresholds for figured C4 admits (SAFE-DUALRATE)
+
+**Tick type:** Researcher (UTC hour 15; hour%6≠0; researcher count since synthesizer v1.18 = 1 → Researcher)  
+**Chapter written:** `chapters/144_second_rater_thresholds_figured_c4.md` (Part CXLIV)  
+**Claim examined:** Whether figured Practice→C4 promotes may use **always-dual brand theater**, **never-dual soft-pass**, or **Dual Rater Score™ / kappa dashboards** — or must ship **risk-triggered consensus dual review** (written T1–T6) with seals unwaived and FILLETA capacity honest.
+
+**Doctrine proposed (provisional):** **SAFE-DUALRATE** — densifies SAFE-PROMOTE × SAFE-FIGKEY × SAFE-HITL × SAFE-FILLETA × Kane/Cohen/McHugh/NAEP-process/Lawshe + mammography double-reading *with transfer limits*: dual intensity follows use ambition + figure risk; consensus dual; discord→reject; IRR as ops hygiene not NS. Experiment family **DUALRATE-***.
+
+**Evidence spine (verified citations):** Kane (2013); AERA/APA/NCME (2014); Cohen (1960); McHugh (2012); NCES/NAEP TDW IRR; Lawshe (1975); Brown et al. (1996); Dinnes et al. (2001); Posso et al. (2016).
+
+**Claim killed (this tick):** Always-dual / never-dual on figured parent-facing C4 / Dual Rater Score™·Agreement Minutes·Kappa % NS / second-rater soft-pass when seals fail / mammography-cosplay ACT or complete-visual guarantees / ETA-skipped dual (provisional kill #98 until synthesizer).
+
+**Experiments:** DUALRATE-1…5 + DUALRATE-QUAL.
+
+**Next researcher id:** **145** (Isomorphic stem-family hashing for cool-down without over-block). Researcher count since v1.18 synthesizer: **2**. Unfinished queue was <3 after this DONE → promoted stubs **147–149** into NEXT_LAB (dual capacity×FILLETA; template-trust inheritance; stratified post-promote repair dashboards).
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-14 — Researcher tick: Part CXLIII Promote backlog SLA vs parent hole-ETA honesty (SAFE-FILLETA)
+
+**Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch143 never written → prefer Researcher per rotation; researcher count since synthesizer v1.18 = 0 → Researcher)  
+**Chapter written:** `chapters/143_promote_backlog_sla_parent_hole_eta.md` (Part CXLIII)  
+**Claim examined:** Whether FormatId hole-fill CTAs may use **coming-soon fog**, **play-count fill bars**, or **optimistic dates that pressure soft-pass promote** — or must ship **capacity-grounded finite verify bands** (KNOWNETA discipline at product timescale) with Practice alternate, while PROMOTE seals stay unwaived.
+
+**Doctrine proposed (provisional):** **SAFE-FILLETA** — densifies SAFE-PROMOTE × SAFE-KNOWNETA × SAFE-HOLETRUST × SAFE-STUDHOLE × Maister/Hui–Tse/Whitt/Taylor/Munichor: finite fill bands from backlog×capacity×median latency; labeled uncertainty when unknown; refresh without “almost”; ticket-state progress ≠ engagement meters; seals > ETA optics. Experiment family **FILLETA-***.
+
+**Evidence spine (verified citations):** Maister (1985); Hui & Tse (1996); Whitt (1999); Taylor (1994); Munichor & Rafaeli (2007).
+
+**Claim killed (this tick):** Coming-soon / almost-ready default hole-fill copy / play-count fill bars / optimistic slip loops / date-driven soft-pass promote / FillETA Score™·Backlog Minutes·Honesty Clock NS / ACT or complete-visual-by-date guarantees from fill packaging (provisional kill #97 until synthesizer).
+
+**Experiments:** FILLETA-1…5 + FILLETA-QUAL.
+
+**Next researcher id:** **144** (Second-rater thresholds for figured C4 admits). Researcher count since v1.18 synthesizer: **1**. Unfinished queue still ≥3 (144–146); no QUEUE_EXTENDED promote this tick.
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-14 — Synthesizer tick v1.18: merge Parts CXXXIV–CXLII
+
+**Tick type:** Synthesizer (UTC hour 03; hour%6≠0; ≥8 researcher entries since synthesizer v1.17 → Synthesizer)  
+**Chapter written:** none (merge pass only)  
+**Files revised:** `MINDCRAFT_RESEARCH_CONSTITUTION_v1.md` (edition/header / I.2 / I.4 / III / IX / XIV / XX / XXI / XXII glossary / Appendix F / closing); `NEXT_LAB.md`; this log; PDF regen.
+
+**Doctrine promoted to I.4 company law (provisional tags removed):**
+- SAFE-HCELIG (CXXXIV) — seals-first FormatId C4 eligibility; no HideCorrectness Score™ / tagged≡C4
+- SAFE-KNOWNETA (CXXXV) — known-finite late ETA + refresh honesty; no ETA Score™ / soon-default
+- SAFE-SOFTGATE (CXXXVI) — soft-require default; conditional hard-gate + avoidance falsifiers; no Gate Score™
+- SAFE-SPLITPOOL (CXXXVII) — graded Practice vs C4 pools; ticketed promote; no SplitPool Score™ / silent dual-write
+- SAFE-SCANCOMP (CXXXVIII) — sealed-stock scan composition + labeled holes; no Composition Score™ / pad
+- SAFE-HOLETRUST (CXXXIX) — parent hole honesty + one fill CTA; no Hole Trust Score™ / hide-holes
+- SAFE-PROMOTE (CXL) — ticketed Practice→C4 QA; demote faster than promote; no Promote Score™ / play-count flip
+- SAFE-COOLDOWN (CXLI) — per-student reveal→C4 cool-down; no Cool-Down Score™ / immediate same-stem C4
+- SAFE-STUDHOLE (CXLII) — student hole parity + product-hole frame + one CTA; no Student Hole Score™ / fake greens
+
+**Red Team kills promoted:** #88–#96 (from provisional chapter kills → v1.18 company dossier).
+
+**Experiment families confirmed in Part IX:** HCELIG / KNOWNETA / SOFTGATE / SPLITPOOL / SCANCOMP / HOLETRUST / PROMOTE / COOLDOWN / STUDHOLE.
+
+**Claim killed (synthesis):** Treating CXXXIV–CXLII as orphan provisional deep-dives or independent North Stars (HideCorrectness Score™ / ETA Score™ / Gate Score™ / SplitPool Score™ / Composition Score™ / Hole Trust Score™ / Promote Score™ / Cool-Down Score™ / Student Hole Score™ and costume variants) — demoted under FEI + SAFE-* method-not-costume rule.
+
+**Next researcher id:** **143** (Promote backlog SLA vs parent hole-ETA honesty). Researcher count since v1.18 synthesizer: **0**. Unfinished queue still ≥3 (143–146); no QUEUE_EXTENDED promote this tick.
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-14 — Researcher tick: Part CXLII Student-facing hole copy after gap-scan (SAFE-STUDHOLE)
+
+**Tick type:** Researcher (UTC hour 00 ≡ Red Team slot, but ch142 never written → prefer Researcher per rotation; researcher count since synthesizer v1.17 = 8 → Researcher)  
+**Chapter written:** `chapters/142_student_facing_hole_copy_after_gap_scan.md` (Part CXLII)  
+**Claim examined:** Whether gap-scan FormatId holes may be **hidden from students**, painted as **fake greens**, or framed as **ability shame / empty mindset posters** — or must ship **parity honesty** with parent HOLETRUST plus one Practice CTA without Student Hole Score™.
+
+**Doctrine proposed (provisional):** **SAFE-STUDHOLE** — densifies SAFE-HOLETRUST × SAFE-COLD × SAFE-CALIB × SAFE-SOFTMSG × SAFE-FBLIT × Schnackenberg/Tomlinson transparency × Black/Wiliam formative use × Hattie/Timperley levels × Mueller/Dweck ability-label caution × Yeager et al. conditional mindset: students see holes; product-hole frame; neutral chips; one CTA; no fake greens. Experiment family **STUDHOLE-***.
+
+**Evidence spine (verified citations):** Schnackenberg & Tomlinson (2016); Mayer, Davis, & Schoorman (1995); Black & Wiliam (1998); Hattie & Timperley (2007); Mueller & Dweck (1998); Yeager et al. (2019).
+
+**Claim killed (this tick):** Parent-only hole honesty / fake greens for `not_probed` / ability-shame hole frames / empty growth-mindset poster without CTA / Student Hole Score™·Completeness %·Honesty Minutes NS / absence≡mastery / ACT or identity guarantees from student hole packaging (provisional kill #96 until synthesizer).
+
+**Experiments:** STUDHOLE-1…5 + STUDHOLE-QUAL.
+
+**Next researcher id:** **143** (Promote backlog SLA vs parent hole-ETA honesty). Researcher count since v1.17 synthesizer: **9** → next non–Red-Team hour with ≥8 researchers still triggers **Synthesizer v1.18** (overdue). Unfinished queue restored to ≥3 (143–146; invented stub 146 gap-scan exit emotion without Anxiety Score™).
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-13 — Researcher tick: Part CXLI Exposure cool-down after reveal before same-stem C4 (SAFE-COOLDOWN)
+
+**Tick type:** Researcher (UTC hour 21; hour%6≠0; researcher count since synthesizer v1.17 = 7 → Researcher)  
+**Chapter written:** `chapters/141_exposure_cooldown_after_reveal_same_stem_c4.md` (Part CXLI)  
+**Claim examined:** Whether a just-**revealed** Practice stem may enter that student’s **C4 hide-correctness** immediately — or must ship a **per-student cool-down** (family bar + isomorphic substitutes + honest holes) without Cool-Down Score™ or pad theater.
+
+**Doctrine proposed (provisional):** **SAFE-COOLDOWN** — densifies SAFE-SPLITPOOL × SAFE-SCANCOMP × SAFE-CALIB × SAFE-COLD × Appelhaus disclosure-reuse × Butler/Roediger feedback × Cepeda spacing × Way/Georgiadou/van der Linden exposure control: per-student cool-down after reveal before same-family C4; substitutes then holes; no Cool-Down Score™. Experiment family **COOLDOWN-***.
+
+**Evidence spine (verified citations):** Appelhaus, Werner, Grosse, & Kämmer (2023); Butler & Roediger (2008); Roediger & Marsh (2005); Cepeda et al. (2006); Way (1998); Georgiadou, Triantafillou, & Economides (2007); van der Linden, Ariel, & Veldkamp (2006).
+
+**Claim killed (this tick):** Immediate same-stem C4 after reveal / forever or global cool-down lock as default / Cool-Down Score™·Exposure Minutes·Lock Duration % NS / pad under cool-down / clone leak as fresh / ACT or complete-visual guarantees from cool-down packaging (provisional kill #95 until synthesizer).
+
+**Experiments:** COOLDOWN-1…5 + COOLDOWN-QUAL.
+
+**Next researcher id:** **142** (Student-facing hole copy after gap-scan). Researcher count since v1.17 synthesizer: **8** → next non–Red-Team hour with ≥8 researchers triggers **Synthesizer v1.18**. Unfinished queue restored to ≥3 (142–145; invented stub 145 isomorphic stem-family hashing).
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-13 — Researcher tick: Part CXL Promote-to-C4 tutor QA workflow for Practice-only FormatId (SAFE-PROMOTE)
+
+**Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch140 never written → prefer Researcher per rotation; researcher count since synthesizer v1.17 = 6 → Researcher)  
+**Chapter written:** `chapters/140_promote_to_c4_tutor_qa_workflow.md` (Part CXL)  
+**Claim examined:** Whether Practice-only sealed FormatId may enter C4 via **play-count / thumbs / fluency soft-pass** — or must ship a **ticketed promote QA workflow** (seal re-verify + checklist + logged reviewer + demote-on-repair) without Promote Score™.
+
+**Doctrine proposed (provisional):** **SAFE-PROMOTE** — densifies SAFE-SPLITPOOL × SAFE-REPAIR × SAFE-FIGKEY × SAFE-HCELIG × SAFE-COVER × Kane/Downing/Haladyna/Sireci/Lawshe: promotion is a use-upgrade; ticket+checklist+seals; demote faster than promote; no Promote Score™. Experiment family **PROMOTE-***.
+
+**Evidence spine (verified citations):** Kane (2013); AERA/APA/NCME Standards (2014); Downing (2006); Haladyna, Downing, & Rodriguez (2002); Sireci (1998); Lawshe (1975).
+
+**Claim killed (this tick):** Play-count/thumbs auto-promote / silent `hcelig_pass` flip / fluency soft-pass at promote / Promote Score™·QA Minutes·Promotion Throughput % NS / padding C4 while critical REPAIR open / ACT or complete-visual guarantees from promote packaging (provisional kill #94 until synthesizer).
+
+**Experiments:** PROMOTE-1…5 + PROMOTE-QUAL.
+
+**Next researcher id:** **141** (Exposure cool-down after reveal before same-stem C4). Researcher count since v1.17 synthesizer: **7**. Unfinished queue restored to ≥3 (141–144; invented stubs 143 promote backlog SLA vs hole-ETA, 144 second-rater thresholds).
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-13 — Researcher tick: Part CXXXIX Parent trust copy when visual diagnostic holes remain (SAFE-HOLETRUST)
+
+**Tick type:** Researcher (UTC hour 15; hour%6≠0; researcher count since synthesizer v1.17 = 5 → Researcher)  
+**Chapter written:** `chapters/139_parent_trust_copy_visual_diagnostic_holes.md` (Part CXXXIX)  
+**Claim examined:** When SAFE-SCANCOMP leaves honest FormatId holes, whether MindCraft may **hide/pad/shame** those holes on parent surfaces — or must ship **labeled-hole trust copy** (disclosure + clarity + accuracy + one autonomy-supportive fill CTA) without Hole Trust Score™ or complete-visual ads.
+
+**Doctrine proposed (provisional):** **SAFE-HOLETRUST** — densifies SAFE-SCANCOMP × SAFE-PDASH × SAFE-COVER × SAFE-WTP × Schnackenberg/Tomlinson transparency × Mayer ABI × Bergman parent-info × Kraft/Rogers improvement × Xu autonomy: holes stay visible; belief object = product use; one fill CTA; no Hole Trust Score™. Experiment family **HOLETRUST-***.
+
+**Evidence spine (verified citations):** Schnackenberg & Tomlinson (2016); Mayer, Davis, & Schoorman (1995); Rawlins (2008); Bergman (2021); Bergman & Chan (2021); Rogers & Feller (2018); Kraft & Rogers (2015); Xu et al. (2024); Kane (2013); FTC advertising substantiation (1984).
+
+**Claim killed (this tick):** Hide-`format_not_probed` for conversion / child-deficit visual-hole shame / “complete visual diagnostic” ads while holes remain / Hole Trust Score™·Coverage Satisfaction·Honesty Minutes NS / absence≡format mastery / fear-scarcity hole WTP / ACT guarantees from hole packaging (provisional kill #93 until synthesizer).
+
+**Experiments:** HOLETRUST-1…5 + HOLETRUST-QUAL.
+
+**Next researcher id:** **140** (Promote-to-C4 tutor QA workflow for Practice-only FormatId). Researcher count since v1.17 synthesizer: **6**. Unfinished queue restored to ≥3 (140–142; invented stub 142 student-facing hole copy after gap-scan).
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-13 — Researcher tick: Part CXXXVIII FormatId gap-scan composition under sealed-stock scarcity (SAFE-SCANCOMP)
+
+**Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch138 never written → prefer Researcher per rotation; researcher count since synthesizer v1.17 = 4 → Researcher)  
+**Chapter written:** `chapters/138_formatid_gap_scan_composition_sealed_stock_scarcity.md` (Part CXXXVIII)  
+**Claim examined:** When C4-eligible FormatId stock is thin, whether MindCraft may **pad** gap-scan blueprint cells (symbolic / Practice-only / equal-quota theater) — or must compose from sealed stock with **labeled holes**, depth-over-fake-breadth, and exposure caps.
+
+**Doctrine proposed (provisional):** **SAFE-SCANCOMP** — densifies SAFE-HCELIG × SAFE-SPLITPOOL × SAFE-COVER × SAFE-FORMAT × Kane/Messick/Sireci/Raymond/van der Linden: blueprint-first; stock gates fulfillment; `format_not_probed` beats pad; no Composition Score™. Experiment family **SCANCOMP-***.
+
+**Evidence spine (verified citations):** Kane (2013); Messick (1995); Sireci & Faulkner-Bond (2014); Raymond & Grande (2019); van der Linden, Ariel, & Veldkamp (2006).
+
+**Claim killed (this tick):** Symbolic/Practice pad into C4 FormatId cells / equal-quota theater under thin stock / silent underrepresentation as format-flexible / Composition Score™·Format Balance %·Scan Completeness Minutes NS / “diagnose every format” ads under thin C4 / absence≡mastery / ACT guarantees from balanced-scan packaging (provisional kill #92 until synthesizer).
+
+**Experiments:** SCANCOMP-1…5 + SCANCOMP-QUAL.
+
+**Next researcher id:** **139** (Parent trust copy when visual diagnostic holes remain). Researcher count since v1.17 synthesizer: **5**. Unfinished queue restored to ≥3 (139–141; invented stub 141 exposure cool-down after reveal before same-stem C4).
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-13 — Researcher tick: Part CXXXVII Reveal-Practice vs C4 split pools for sealed FormatId (SAFE-SPLITPOOL)
+
+**Tick type:** Researcher (UTC hour 09; hour%6≠0; researcher count since synthesizer v1.17 = 3 → Researcher)  
+**Chapter written:** `chapters/137_reveal_practice_vs_c4_split_pools_sealed_formatid.md` (Part CXXXVII)  
+**Claim examined:** Whether sealed FormatId items may share a **unified pool** for reveal Practice and C4 hide-correctness Map/FEI writes — or must MindCraft keep **explicit split pools** with source-tagged outcomes, ticketed promote-to-C4, and no silent dual-write.
+
+**Doctrine proposed (provisional):** **SAFE-SPLITPOOL** — densifies SAFE-HCELIG × SAFE-REPAIR × SAFE-GENQ × SAFE-COVER × Kane/Standards graded uses × Black/Wiliam formative-as-use × Way pool integrity: Practice-reveal pool may be wider than C4; C4 ⊆ HCELIG; promote is ticketed; no SplitPool Score™. Experiment family **SPLITPOOL-***.
+
+**Evidence spine (verified citations):** Kane (2013); AERA/APA/NCME Standards (2014); Black & Wiliam (1998); Wiliam (2000); Way (1998).
+
+**Claim killed (this tick):** Unified sealed bank ≡ Practice+C4 / silent dual-write Practice→Map / auto-promote from play counts / SplitPool Score™·Dual-Use Minutes·Pool-Separation % NS / padding C4 with Practice-only visuals / ACT guarantees from one-bank packaging (provisional kill #91 until synthesizer).
+
+**Experiments:** SPLITPOOL-1…5 + SPLITPOOL-QUAL.
+
+**Next researcher id:** **138** (FormatId gap-scan composition under sealed-stock scarcity). Researcher count since v1.17 synthesizer: **4**. Unfinished queue restored to ≥3 (138–140; invented stub 140 promote-to-C4 tutor QA workflow).
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-13 — Researcher tick: Part CXXXVI Soft-require vs hard-gate follow-on under help-avoidance (SAFE-SOFTGATE)
+
+**Tick type:** Researcher (UTC hour 06 ≡ Red Team slot, but ch136 never written → prefer Researcher per rotation; researcher count since synthesizer v1.17 = 2 → Researcher)  
+**Chapter written:** `chapters/136_soft_require_vs_hard_gate_follow_on_help_avoidance.md` (Part CXXXVI)  
+**Claim examined:** Whether MindCraft must default to **soft-require** (primary one-tap Practice grain; Close demoted) after instrumental Solver help vs universal **hard-gate** walls — without optional-only dump chips, Gate Score™ vanity, or ignoring help-avoidance when Forced % rises.
+
+**Doctrine proposed (provisional):** **SAFE-SOFTGATE** — densifies SAFE-XFERGRAIN × SAFE-HELP × SAFE-CRUNCHCTA × Thaler/Sunstein nudge≠mandate × Brehm/Ball–Goodboy reactance × Deci/Ryan autonomy × Ryan/Pintrich help-threat: soft-require default; conditional short hard-gate with avoidance falsifiers; no Gate Score™ / hint-tax shame. Experiment family **SOFTGATE-*** (absorbs densified XFERGRAIN-3).
+
+**Evidence spine (verified citations):** Thaler & Sunstein (2008); Johnson & Goldstein (2003); Brehm (1966); Ball & Goodboy (2014); Deci & Ryan (2000); Ryan & Pintrich (1997); Karabenick & Knapp (1991); Aleven et al. (2016); Bastani et al. (2025).
+
+**Claim killed (this tick):** Universal hard-gate after every hint / optional-only dump chip as sole close / Gate Score™·Forced Follow-On %·Soft-Require Compliance Minutes NS / “can’t leave until Practice” hint-tax shame / ignore help-avoidance when Forced % rises / ACT guarantees from soft-vs-hard gate packaging (provisional kill #90 until synthesizer).
+
+**Experiments:** SOFTGATE-1…5 + SOFTGATE-QUAL.
+
+**Next researcher id:** **137** (Reveal-Practice vs C4 split pools for sealed FormatId). Researcher count since v1.17 synthesizer: **3**. Unfinished queue restored to ≥3 (137–139; promoted stub 139 parent trust copy when visual diagnostic holes remain).
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-13 — Researcher tick: Part CXXXV Known-finite ETA honesty in late-tutor lobby (SAFE-KNOWNETA)
+
+**Tick type:** Researcher (UTC hour 03; hour%6≠0; researcher count since synthesizer v1.17 = 1 → Researcher)  
+**Chapter written:** `chapters/135_known_finite_eta_honesty_late_tutor_lobby.md` (Part CXXXV)  
+**Claim examined:** Whether MindCraft late-tutor lobbies must show **known-finite ETA bands** (with refresh + labeled-uncertainty rules) vs “soon,” optimistic underestimates, apology-primary fillers, or student-facing tutor-shame — while SAFE-ASYNCBRIEF still runs.
+
+**Doctrine proposed (provisional):** **SAFE-KNOWNETA** — densifies SAFE-ASYNCBRIEF × Maister × Hui/Tse × Munichor/Rafaeli × Taylor × Osuna × Larson: finite band when estimable; label ignorance; apology secondary; no ETA Score™ / shame feed. Experiment family **KNOWNETA-***.
+
+**Evidence spine (verified citations):** Maister (1985); Osuna (1985); Hui & Tse (1996); Larson (1987); Munichor & Rafaeli (2007); Taylor (1994).
+
+**Claim killed (this tick):** “Soon”/“almost” default late lobby / optimistic ETA slip loops / apology-primary without duration / ETA Score™·Wait Satisfaction·Lobby Minutes NS / student-facing tutor-shame feed / fake-precision countdown / ACT guarantees from wait-UX packaging (provisional kill #89 until synthesizer).
+
+**Experiments:** KNOWNETA-1…5 + KNOWNETA-QUAL.
+
+**Next researcher id:** **136** (soft-require vs hard-gate follow-on under help-avoidance). Researcher count since v1.17 synthesizer: **2**. Unfinished queue restored to ≥3 (136–138; promoted stub 138 FormatId gap-scan composition under sealed-stock scarcity).
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-13 — Researcher tick: Part CXXXIV Hide-correctness eligibility gates for FormatId (SAFE-HCELIG)
+
+**Tick type:** Researcher (UTC hour 00 ≡ Red Team slot, but ch134 never written → prefer Researcher per rotation; researcher count since synthesizer v1.17 = 0 → Researcher)  
+**Chapter written:** `chapters/134_hide_correctness_eligibility_formatid.md` (Part CXXXIV)  
+**Claim examined:** Whether MindCraft must ship an explicit **hide-correctness eligibility gate** for FormatId items — stricter than Practice browse — vs treating any tagged diagram/graph as C4-ready, fluency-render as admission, or padding gap-scan coverage with unsealed visuals.
+
+**Doctrine proposed (provisional):** **SAFE-HCELIG** — densifies SAFE-FIGKEY × SAFE-GENQ × SAFE-CALIB × SAFE-COLD × SAFE-FORMAT × SAFE-COVER × SAFE-FORMTRAP: `hcelig_pass` distinct from “in bank”; C4 is the strictest use; seals first; honest holes > fake coverage; no HideCorrectness Score™. Experiment family **HCELIG-***.
+
+**Evidence spine (verified citations):** Kane (2013); Messick (1989); Diezmann & Lowrie (2009); Lowrie, Diezmann, & Kay (2011); Haladyna, Downing, & Rodriguez (2002); Gierl & Lai (2016); Fischhoff, Slovic, & Lichtenstein (1977); Zhang et al. (2024, MathVerse preprint — method caution).
+
+**Claim killed (this tick):** Tagged-FormatId≡C4-eligible / fluency-render eligibility / coverage-padding unsealed visuals into gap-scan / HideCorrectness Score™·Eligibility Minutes·FormatId-count-in-scan NS / miss-on-broken-figure≡format-gap without seals / ACT guarantees from visual diagnostic packaging (provisional kill #88 until synthesizer).
+
+**Experiments:** HCELIG-1…5 + HCELIG-QUAL.
+
+**Next researcher id:** **135** (known-finite ETA honesty in late-tutor lobby copy). Researcher count since v1.17 synthesizer: **1**. Unfinished queue restored to ≥3 (135–137; promoted stub 137 Reveal-Practice vs C4 split pools).
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-12 — Synthesizer tick v1.17: merge Parts CXXVI–CXXXIII
+
+**Tick type:** Synthesizer (UTC hour 21; hour%6≠0; ≥8 researcher entries since synthesizer v1.16 → Synthesizer)  
+**Chapter written:** none (merge pass only)  
+**Files revised:** `MINDCRAFT_RESEARCH_CONSTITUTION_v1.md` (edition/header / I.2 / I.4 / III / IX / XIV / XX / XXI / XXII glossary / Appendix F / closing); `NEXT_LAB.md`; this log; PDF regen.
+
+**Doctrine promoted to I.4 company law (provisional tags removed):**
+- SAFE-MICRODEB (CXXVI) — capped student-first micro-AAR; no Microdebrief Score™ / skip-as-default
+- SAFE-CRUNCHMSG (CXXVII) — shed-honesty crunch parent CBC; no 24/7 / Availability Score™
+- SAFE-FORMTRAP (CXXVIII) — trap-mapped FormatId distractors; no FormatTrap Score™ / beauty traps
+- SAFE-MICROBRIEF (CXXIX) — capped shared-model open; no Brief Score™ / pour-open / late-join shame
+- SAFE-CRUNCHCTA (CXXX) — dual labeled Solver/Practice CTAs; no Chegg-hero / Dual-CTA Score™
+- SAFE-FIGKEY (CXXXI) — structural figure key-verify; no fluency SVG / Figure Key Score™
+- SAFE-ASYNCBRIEF (CXXXII) — async Set card on wait; no Wait Minutes / Lobby Score™
+- SAFE-XFERGRAIN (CXXXIII) — one-tap edge-matched Practice grain; no dump-and-quit / Transfer Score™
+
+**Red Team kills promoted:** #80–#87 (from provisional chapter kills → v1.17 company dossier).
+
+**Experiment families confirmed in Part IX:** MICRODEB / CRUNCHMSG / FORMTRAP / MICROBRIEF / CRUNCHCTA / FIGKEY / ASYNCBRIEF / XFERGRAIN.
+
+**Claim killed (synthesis):** Treating CXXVI–CXXXIII as orphan provisional deep-dives or independent North Stars (Microdebrief Score™ / Availability Score™ / FormatTrap Score™ / Brief Score™ / Dual-CTA Score™ / Figure Key Score™ / Lobby Score™ / Transfer Score™ and their costume variants) — demoted under FEI + SAFE-* method-not-costume rule.
+
+**Next researcher id:** **134** (hide-correctness eligibility gates for FormatId items). Researcher count since v1.17 synthesizer: **0**. Unfinished queue still ≥3 (134–136); no QUEUE_EXTENDED promote this tick.
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-12 — Researcher tick: Part CXXXIII One-tap Solver→Practice transfer grain (SAFE-XFERGRAIN)
+
+**Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch133 never written → prefer Researcher per rotation; researcher count since synthesizer v1.16 = 7 → Researcher)  
+**Chapter written:** `chapters/133_one_tap_solver_practice_transfer_grain.md` (Part CXXXIII)  
+**Claim examined:** Whether MindCraft must ship a **one-tap, edge-matched Practice transfer grain** after instrumental Solver help — vs dump-and-quit closes, multi-step Practice mazes, Transfer Score™ vanity, marathon-after-hint walls, or treating assisted completion as FEI.
+
+**Doctrine proposed (provisional):** **SAFE-XFERGRAIN** — densifies SAFE-HWHELP × SAFE-CRUNCHCTA × SAFE-SCHED × SAFE-HELP × SAFE-FADE × SAFE-PROOF: primary one-tap CTA; same-edge carry-through; short 1–3 item default; solo gate; SCHED return chip; no Transfer Score™. Experiment family **XFERGRAIN-*** (absorbs CRUNCHCTA-3 densification).
+
+**Evidence spine (verified citations):** Nelson-Le Gall (1985); Aleven, Stahl, Schworm, Fischer, & Wallace (2003); Roll, Aleven, McLaren, & Koedinger (2011); Renkl & Atkinson (2003); Atkinson, Renkl, & Merrill (2003); Kalyuga, Ayres, Chandler, & Sweller (2003); Bastani et al. (2025); Bjork & Bjork (2020); Johnson & Goldstein (2003); Gollwitzer (1999).
+
+**Claim killed (this tick):** Dump-and-quit Solver close / multi-step maze handoff / Transfer Score™·Handoff Minutes·Follow-on Streak NS / assisted≡ready / marathon-after-soft-hint / XP-for-help-without-solo / ACT guarantees from transfer-grain packaging (provisional kill #87 until synthesizer).
+
+**Experiments:** XFERGRAIN-1…5 + XFERGRAIN-QUAL.
+
+**Next researcher id:** **134** (hide-correctness eligibility gates for FormatId items). Researcher count since v1.16 synthesizer: **8** (Synthesizer eligible on next non–Red-Team hour if count still ≥8). Unfinished queue restored to ≥3 (134–136; promoted stub 136 soft-require vs hard-gate follow-on).
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-12 — Researcher tick: Part CXXXII Async pre-brief cards while waiting for late tutor (SAFE-ASYNCBRIEF)
+
+**Tick type:** Researcher (UTC hour 15; hour%6≠0; researcher count since synthesizer v1.16 = 6 → Researcher)  
+**Chapter written:** `chapters/132_async_prebrief_cards_late_tutor_wait.md` (Part CXXXII)  
+**Claim examined:** Whether MindCraft must convert late/early **idle lobby** into a **capped student-owned Set/pre-brief card** that write-throughs to SAFE-MICROBRIEF — vs spinner-only waits, entertainment lobbies, pour-open AI warm-ups, forced marathon Practice-before-join, or Wait Minutes / Lobby Score™ vanity.
+
+**Doctrine proposed (provisional):** **SAFE-ASYNCBRIEF** — densifies SAFE-MICROBRIEF × SAFE-SRL × SAFE-ATTN × SAFE-LOADSHED × SAFE-EXPECTANCY: session-related occupied wait; four Set beats + if-then chip; live verify-not-replace; no Wait Minutes / Lobby Score™. Experiment family **ASYNCBRIEF-*** (absorbs MICROBRIEF-3).
+
+**Evidence spine (verified citations):** Maister (1985); Zimmerman (2002); Cosnefroy, Fenouillet, Mazé, & Bonnefoy (2018); Cleary & Zimmerman (2001); Gollwitzer (1999); Ausubel (1960); Leroy (2009); Locke & Latham (2002).
+
+**Claim killed (this tick):** Idle spinner-only late lobby / pour-open AI wait dump / Wait Minutes·Lobby Score™·Prebrief Streak NS / entertainment-primary fill / forced marathon Practice-before-join / late-tutor shame feed / ACT guarantees from async pre-brief packaging (provisional kill #86 until synthesizer).
+
+**Experiments:** ASYNCBRIEF-1…5 + ASYNCBRIEF-QUAL.
+
+**Next researcher id:** **133** (one-tap Solver→Practice transfer grain after instrumental help). Researcher count since v1.16 synthesizer: **7**. Unfinished queue restored to ≥3 (133–135; promoted stub 135 known-finite ETA honesty in late-tutor lobby).
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-12 — Researcher tick: Part CXXXI Figure key-verify loops for generated FormatId stems (SAFE-FIGKEY)
+
+**Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch131 never written → prefer Researcher per rotation; researcher count since synthesizer v1.16 = 5 → Researcher)  
+**Chapter written:** `chapters/131_figure_key_verify_loops_generated_formatid.md` (Part CXXXI)  
+**Claim examined:** Whether MindCraft must ship **structural figure key-verify** (constraints / IR / stem–figure–option joint checks) for generated FormatId stems — vs fluency SVG pass, LLM-as-judge-alone, FormatId-count heroes, or unverified figures in hide-correctness diagnostic.
+
+**Doctrine proposed (provisional):** **SAFE-FIGKEY** — densifies SAFE-GENQ × SAFE-FORMTRAP × SAFE-DUAL × SAFE-COVER × SAFE-EXPLAINQA: figures are keys; deterministic spine; use gating; no Figure Key Score™. Experiment family **FIGKEY-*** (densifies GENQ/FORMTRAP/DUAL/COVER).
+
+**Evidence spine (verified citations):** Gierl & Lai (2012; 2016); Gierl, Lai, & Turner (2012); Kane (2013); Mayer, Heiser, & Lonn (2001); Moreno & Mayer (1999); Ginns (2006); Haladyna, Downing, & Rodriguez (2002); Zhang et al. MathVerse (2024 arXiv); Kumar et al. DiagramIR (2025 arXiv); Wang et al. MagicGeo (2025 arXiv).
+
+**Claim killed (this tick):** Fluency SVG / pretty-render≡keyed figure / LLM-as-judge-alone figure ship / Figure Key Score™·Visual QA Minutes / unverified FormatId figures as diagnostic ground truth / FormatId-count or “AI drew N diagrams” hero / soft-pass wrong geometry / ACT guarantees from figure-generation packaging (provisional kill #85 until synthesizer).
+
+**Experiments:** FIGKEY-1…5 + FIGKEY-QUAL.
+
+**Next researcher id:** **132** (async pre-brief cards while waiting for late tutor). Researcher count since v1.16 synthesizer: **6**. Unfinished queue restored to ≥3 (132–134; promoted stub 134 hide-correctness eligibility for FormatId items).
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-12 — Researcher tick: Part CXXX Dual-rail Solver CTA copy under crunch (SAFE-CRUNCHCTA)
+
+**Tick type:** Researcher (UTC hour 09; hour%6≠0; researcher count since synthesizer v1.16 = 4 → Researcher)  
+**Chapter written:** `chapters/130_dual_rail_solver_cta_copy_under_crunch.md` (Part CXXX)  
+**Claim examined:** Whether MindCraft should ship **dual labeled CTAs** under exam crunch (instrumental help-tonight vs Practice gym) with fiduciary defaults and follow-on Practice grain — vs single Chegg-hero dump, fear-countdown CTAs, purity freeze, or Dual-CTA Score™ vanity.
+
+**Doctrine proposed (provisional):** **SAFE-CRUNCHCTA** — densifies SAFE-HWHELP × SAFE-CRUNCHMSG × SAFE-HELP × SAFE-DURABLE × SAFE-SOFTMSG: dual visible rails; instrumental verbs; non-dump defaults; follow-on Practice; no Dual-CTA Score™. Experiment family **CRUNCHCTA-*** (densifies HWHELP/CRUNCHMSG).
+
+**Evidence spine (verified citations):** Johnson & Goldstein (2003); Thaler, Sunstein, & Balz (2013 / Choice Architecture); Nelson-Le Gall (1981); Bastani et al. (2025 PNAS); Putwain & Remedios (2014); Putwain & Best (2011).
+
+**Claim killed (this tick):** Single Chegg-hero Solver CTA under crunch / “finish tonight’s homework” primary brand / fear-countdown→dump CTAs / Dual-CTA Score™·Help Tonight Minutes·Crunch Click NS / silent Practice-rail collapse in exam week / assisted≡ready from Solver CTA / ACT guarantees from dual-rail CTA packaging (provisional kill #84 until synthesizer).
+
+**Experiments:** CRUNCHCTA-1…5 + CRUNCHCTA-QUAL.
+
+**Next researcher id:** **131** (figure key-verify loops for generated FormatId stems). Researcher count since v1.16 synthesizer: **5**. Unfinished queue restored to ≥3 (131–133; promoted stub 133 one-tap Solver→Practice transfer grain).
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-12 — Researcher tick: Part CXXIX Session-open brief fidelity under late joins (SAFE-MICROBRIEF)
 
 **Tick type:** Researcher (UTC hour 03; hour%6≠0; researcher count since synthesizer v1.16 = 3 → Researcher)  

@@ -27,24 +27,59 @@ struct WelcomeView: View {
     /// tap explains why when disabled.
     private static let appleSignInEnabled = false
 
+    @State private var appeared = false
+
+    /// Shared weighted-ease timing across the entry flow (see
+    /// `CoverView.weightedEase`) - matches the brand's `--ease-weight`
+    /// curve, fast start / long settle / zero bounce.
+    private let weightedEase = Animation.timingCurve(0.2, 0, 0, 1, duration: 0.36)
+
     var body: some View {
         ZStack {
             WelcomeBackground()
             ScrollView {
                 VStack(spacing: 0) {
                     topBar
+                    headline
+                        .padding(.top, 22)
                     heroCollage
-                        .padding(.top, 8)
+                        .padding(.top, 4)
                     welcomeLoginCard
-                        .padding(.top, 32)
+                        .padding(.top, 28)
                         .padding(.bottom, 40)
                 }
                 .padding(.horizontal, 24)
                 .frame(maxWidth: 720)
                 .frame(maxWidth: .infinity)
+                .opacity(appeared ? 1 : 0)
+                .offset(y: appeared ? 0 : 14)
             }
         }
-        .onAppear { WelcomeSession.markSeen() }
+        .onAppear {
+            WelcomeSession.markSeen()
+            withAnimation(weightedEase) { appeared = true }
+        }
+    }
+
+    // MARK: - Headline
+    // The screen's one loud statement (Brand Book §9: "the type scale
+    // jumps hard... every screen has one loud statement and quiet
+    // everything else"). Verbatim brand copy - the company tagline and
+    // explainer line, BRAND_BOOK.md §1: "MindCraft — Never work alone. /
+    // Office hours from your room." Gives this arrival screen an actual
+    // headline moment instead of jumping straight from a small top-bar
+    // wordmark to the sign-in card.
+    private var headline: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Never work alone.")
+                .font(.system(size: 36, weight: .bold, design: .rounded))
+                .tracking(-0.6)
+                .foregroundColor(Color(welcomeHex: "f5f5f5"))
+            Text("Office hours from your room.")
+                .font(.system(size: 16, weight: .medium, design: .rounded))
+                .foregroundColor(Color(welcomeHex: "f5f5f5").opacity(0.58))
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     // MARK: - Top bar
@@ -55,9 +90,12 @@ struct WelcomeView: View {
                 Text("The Desk")
                     .font(.system(size: 20, weight: .bold, design: .rounded))
                     .foregroundColor(Color(welcomeHex: "f5f5f5"))
+                // Was gold (`f5d348`), then lime - Akshat's call on-device:
+                // plain white/chalk reads cleaner as a static wordmark label
+                // than an accent color that isn't signaling anything earned.
                 Text("by MindCraft")
                     .font(.system(size: 11, weight: .semibold, design: .rounded))
-                    .foregroundColor(Color(welcomeHex: "f5d348").opacity(0.9))
+                    .foregroundColor(Color(welcomeHex: "f5f5f5").opacity(0.68))
             }
             .accessibilityElement(children: .combine)
             .accessibilityLabel("The Desk by MindCraft")
@@ -72,7 +110,7 @@ struct WelcomeView: View {
                     .font(.system(size: 13, weight: .semibold, design: .rounded))
                     .foregroundColor(Color(welcomeHex: "fffdf7").opacity(0.75))
             }
-            .buttonStyle(.plain)
+            .buttonStyle(DeskPressStyle())
             .accessibilityIdentifier("welcomeSignInLink")
         }
         .padding(.top, 18)
@@ -84,28 +122,23 @@ struct WelcomeView: View {
     private var heroCollage: some View {
         ZStack {
             if let side1 = StoryArtLoader.image(forConcept: "quadratic_equations") {
-                heroPlate(side1, size: 150)
+                heroPlate(side1, size: 132)
                     .rotationEffect(.degrees(-9))
-                    .offset(x: -108, y: 14)
+                    .offset(x: -96, y: 12)
             }
             if let side2 = StoryArtLoader.image(forConcept: "right_triangle_geometry") {
-                heroPlate(side2, size: 150)
+                heroPlate(side2, size: 132)
                     .rotationEffect(.degrees(8))
-                    .offset(x: 108, y: 22)
+                    .offset(x: 96, y: 20)
             }
             if let main = StoryArtLoader.image(forConcept: "fractions_decimals") {
-                heroPlate(main, size: 210)
+                heroPlate(main, size: 186)
                     .rotationEffect(.degrees(-1.5))
             }
-
-            decorativeSticker("constellation-compass-3d")
-                .offset(x: -132, y: -108)
-            decorativeSticker("star-trophy-3d")
-                .offset(x: 128, y: -96)
         }
         .frame(maxWidth: .infinity)
-        .frame(height: 280)
-        .padding(.top, 20)
+        .frame(height: 240)
+        .padding(.top, 12)
     }
 
     private func heroPlate(_ image: UIImage, size: CGFloat) -> some View {
@@ -122,23 +155,14 @@ struct WelcomeView: View {
             .shadow(color: .black.opacity(0.4), radius: 18, x: 0, y: 14)
     }
 
-    private func decorativeSticker(_ imageName: String) -> some View {
-        Group {
-            if let item = StickerCatalog.items.first(where: { $0.imageName == imageName }),
-               let image = StickerCatalog.image(for: item) {
-                Image(uiImage: image)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 64, height: 64)
-                    .shadow(color: .black.opacity(0.35), radius: 10, x: 0, y: 8)
-            }
-        }
-    }
-
     // MARK: - Welcome login card
     private var welcomeLoginCard: some View {
         VStack(alignment: .leading, spacing: 14) {
-            Text("Welcome")
+            // Was "Welcome" - now redundant with the headline above the
+            // collage, which already carries the arrival greeting. This
+            // label's actual job is naming the card ("here's how you get
+            // in"), so it says that instead.
+            Text("Sign in")
                 .font(.system(size: 12, weight: .semibold, design: .rounded))
                 .textCase(.uppercase)
                 .tracking(0.8)
@@ -174,7 +198,7 @@ struct WelcomeView: View {
                         .shadow(color: Color(welcomeHex: "c4f547").opacity(0.45), radius: 16, x: 0, y: 6)
                 )
             }
-            .buttonStyle(.plain)
+            .buttonStyle(DeskPressStyle())
             .disabled(authService.isBusy)
             .opacity(authService.isBusy ? 0.75 : 1)
             .accessibilityIdentifier("welcomeGoogleButton")
@@ -182,10 +206,10 @@ struct WelcomeView: View {
             if let message = authService.errorMessage, !message.isEmpty {
                 Text(message)
                     .font(.system(size: 13, weight: .medium, design: .rounded))
-                    .foregroundColor(Color(red: 0.62, green: 0.17, blue: 0.17))
+                    .foregroundColor(Color(welcomeHex: "9e2b2b"))
                     .padding(10)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(Color(red: 1, green: 0.96, blue: 0.945))
+                    .background(Color(welcomeHex: "fff5f1"))
                     .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
             }
 
@@ -213,7 +237,7 @@ struct WelcomeView: View {
                         .fill(Color(welcomeHex: "143a2e"))
                 )
             }
-            .buttonStyle(.plain)
+            .buttonStyle(DeskPressStyle())
             .disabled(authService.isBusy)
             .opacity(authService.isBusy ? 0.7 : 1)
             .accessibilityIdentifier("welcomeAppleButton")
@@ -221,6 +245,7 @@ struct WelcomeView: View {
             Button("Use a password instead") {
                 onSignIn()
             }
+            .buttonStyle(DeskPressStyle())
             .font(.system(size: 13, weight: .semibold, design: .rounded))
             .foregroundColor(Color(welcomeHex: "247a4d"))
             .padding(.top, 2)
@@ -232,10 +257,23 @@ struct WelcomeView: View {
         .background(
             RoundedRectangle(cornerRadius: 20, style: .continuous)
                 .fill(Color(welcomeHex: "faf6ef"))
-                .shadow(color: .black.opacity(0.35), radius: 28, x: 0, y: 14)
+                .shadow(color: .black.opacity(0.32), radius: 28, x: 0, y: 14)
+                .shadow(color: .black.opacity(0.16), radius: 6, x: 0, y: 2)
         )
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("welcomeLoginCard")
+    }
+}
+
+/// Tactile press feedback shared with the rest of the entry flow (see
+/// `CoverView.DeskPressStyle`) - a fast, weighted compress-and-release,
+/// no springy overshoot.
+private struct DeskPressStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.97 : 1)
+            .opacity(configuration.isPressed ? 0.9 : 1)
+            .animation(.easeOut(duration: 0.12), value: configuration.isPressed)
     }
 }
 

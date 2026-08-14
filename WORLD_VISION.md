@@ -5,6 +5,10 @@
 
 ---
 
+> **Brand pivot notice (2026-08-11).** `BRAND_BOOK.md` moved to **v2.0** and broadened the company-level positioning to "the operating system for student work" — read it for the current company essence, mission, and vision. This document's own **Horizon 1** already described that OS in its own words ("The Desk as the student OS ... Binder, Intel, Connect, Ask, workflows, gap scan, Map, story-framed practice") — the pivot is catching the brand up to what this doc already said, not contradicting it. Everything below — math as a world, the 42 concept stories, Katha, Maya — is now understood as the **Solver-vertical instantiation** of that larger vision, not the whole vision. Full horizon map and math-as-a-world narrative below are unchanged and still binding for Solver.
+
+---
+
 ## 1. The Problem
 
 Math education treats math as a destination — a thing to get through, a gate between a student and the rest of her life. We hand kids the finished machinery of four thousand years of human curiosity, stripped of every reason it was built, and act surprised when they feel nothing. A student learns to "complete the square" without ever knowing that al-Khwarizmi was literally completing a square — drawing it, cutting it, needing it. She performs the operation. She never feels the force that made it necessary.

@@ -50,11 +50,26 @@ private struct CreateStudioWebView: UIViewRepresentable {
         return URL(string: "https://mindcraft-93858.web.app/desk-os/studio/?v=spatial2&from=jesse")!
     }
 
+    /// Same bug class as `StandaloneDeskView`'s desk web view: SwiftUI fully
+    /// destroys this `UIViewRepresentable` every time `showCreateStudio`
+    /// flips to false, so re-opening Create used to cold-start the whole
+    /// studio page again (HTML/CSS/JS parse + Google Fonts fetch) instead of
+    /// showing the page the user already had open. Keep the instance alive
+    /// and reuse it across mounts.
+    private static var cachedWebView: WKWebView?
+
     func makeCoordinator() -> Coordinator {
         Coordinator(onAction: onAction)
     }
 
     func makeUIView(context: Context) -> WKWebView {
+        if let cached = Self.cachedWebView {
+            cached.configuration.userContentController.removeScriptMessageHandler(forName: "deskAction")
+            cached.configuration.userContentController.add(context.coordinator, name: "deskAction")
+            cached.navigationDelegate = context.coordinator
+            return cached
+        }
+
         let config = WKWebViewConfiguration()
         config.allowsInlineMediaPlayback = true
         config.mediaTypesRequiringUserActionForPlayback = []
@@ -72,7 +87,11 @@ private struct CreateStudioWebView: UIViewRepresentable {
         }
         view.accessibilityIdentifier = "createStudioWebView"
         view.navigationDelegate = context.coordinator
-        view.load(URLRequest(url: Self.studioURL, cachePolicy: .reloadIgnoringLocalCacheData))
+        // Standard HTTP caching — see StandaloneDeskView for why
+        // `.reloadIgnoringLocalCacheData` here was a real but secondary
+        // issue (only bites the live-URL fallback / debug override path).
+        view.load(URLRequest(url: Self.studioURL, cachePolicy: .useProtocolCachePolicy))
+        Self.cachedWebView = view
         return view
     }
 
@@ -81,8 +100,8 @@ private struct CreateStudioWebView: UIViewRepresentable {
     }
 
     static func dismantleUIView(_ uiView: WKWebView, coordinator: Coordinator) {
-        uiView.configuration.userContentController.removeScriptMessageHandler(forName: "deskAction")
-        uiView.navigationDelegate = nil
+        // Keep the handler + delegate + cached view alive for reuse — see
+        // `cachedWebView` above.
     }
 
     final class Coordinator: NSObject, WKScriptMessageHandler, WKNavigationDelegate {

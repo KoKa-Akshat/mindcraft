@@ -556,6 +556,13 @@
   .cap .glyph svg{width:24px; height:24px;}
   .cap h3{font-size:21px; margin-bottom:8px;}
   .cap p{font-size:14px; font-weight:700; color:var(--muted); line-height:1.5;}
+
+  /* ---------- Workflows showcase ---------- */
+  .workflows{background:linear-gradient(180deg, var(--blue), var(--mint));}
+  .workflow-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:46px;}
+  @media(max-width:900px){.workflow-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:640px){.workflow-grid{grid-template-columns:1fr;}}
+
   .cap.featured{
     display:grid; grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);
     gap:22px; align-items:center; padding:22px 24px;
@@ -656,7 +663,7 @@
   .cap.later h3{color:rgba(20,58,46,.6); font-size:19px;}
   .cap.later p{color:rgba(104,116,104,.8); font-size:13px;}
 
-  /* Tutors — one split stage, equal panes, no awkward overlap */
+  /* Tutors: one split stage, equal panes, no awkward overlap */
   .tutors{background:linear-gradient(180deg, var(--blue), var(--cream));}
   .tutor-head{margin-bottom:36px;}
   .tutor-head .h2{max-width:22ch;}
@@ -804,6 +811,53 @@
   .act-card strong{display:block; margin:12px 0 18px; font-family:"Fredoka",sans-serif; font-size:40px; line-height:.95; color:var(--leaf); letter-spacing:-.03em;}
   .act-card .btn{width:100%;}
 
+  /* ---------- Archive teaser ---------- */
+  .archive-teaser{background:var(--paper);}
+  .archive-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:clamp(30px,5vw,72px); align-items:center;}
+  .archive-stack{position:relative; height:340px;}
+  .af{
+    position:absolute; width:210px; padding:16px 16px 14px; border-radius:4px;
+    background:#1c1a17; box-shadow:0 16px 36px rgba(20,30,20,.22);
+  }
+  .af::after{content:""; position:absolute; inset:8px; background:var(--cream); border-radius:2px; z-index:0;}
+  .af-sub,.af-t{position:relative; z-index:1; display:block;}
+  .af-sub{font-size:9.5px; font-weight:1000; letter-spacing:.1em; text-transform:uppercase; color:var(--leaf); padding:14px 14px 0;}
+  .af-t{font-family:"Fredoka",sans-serif; font-weight:700; font-size:14px; line-height:1.28; padding:8px 14px 16px; color:var(--ink);}
+  .af1{top:0; left:10%; transform:rotate(-4deg); z-index:4;}
+  .af2{top:40px; left:38%; transform:rotate(3deg); z-index:3;}
+  .af3{top:120px; left:6%; transform:rotate(2.5deg); z-index:2;}
+  .af4{top:150px; left:34%; transform:rotate(-3deg); z-index:1;}
+  @media (max-width:900px){
+    .archive-grid{grid-template-columns:1fr;}
+    .archive-stack{height:260px; margin-top:20px;}
+    .af{width:170px;}
+  }
+  .archive-inline-search{margin-top:26px; max-width:480px;}
+  .ais-bar{
+    display:flex; align-items:center; gap:10px; padding:13px 16px; border-radius:16px;
+    background:var(--ink); color:#fff;
+  }
+  .ais-bar svg{flex:none; opacity:.65;}
+  .ais-bar input{
+    flex:1; background:none; border:none; outline:none; color:#fff;
+    font-family:"Nunito Sans",sans-serif; font-size:14px; font-weight:700;
+  }
+  .ais-bar input::placeholder{color:rgba(255,255,255,.5);}
+  .ais-results{margin-top:10px; display:grid; gap:6px;}
+  .ais-row{
+    display:flex; align-items:baseline; gap:10px; padding:10px 14px; border-radius:12px;
+    background:var(--paper); border:1px solid var(--line); font-size:13px;
+  }
+  .ais-row b{font-weight:900; color:var(--ink);}
+  .ais-row span{color:var(--muted); font-weight:700; font-size:11.5px;}
+  .ais-empty{font-size:12.5px; font-weight:700; color:var(--muted); padding:4px 2px;}
+
+  /* ---------- Touch the idea ---------- */
+  .touch-idea{background:var(--mint);}
+  .touch-stats{display:flex; gap:clamp(24px,4vw,56px); flex-wrap:wrap; margin:28px 0 24px;}
+  .ts b{display:block; font-family:"Fredoka",sans-serif; font-size:clamp(36px,4.4vw,52px); letter-spacing:-.03em; color:var(--leaf); line-height:1;}
+  .ts span{display:block; margin-top:8px; font-size:13px; font-weight:800; color:var(--ink); max-width:200px; line-height:1.35;}
+
   /* Reveal */
   .reveal{opacity:0; transform:translateY(26px); transition:opacity .7s var(--ease), transform .7s var(--ease);}
   .reveal.in{opacity:1; transform:none;}
@@ -918,7 +972,7 @@
   }
   .maker-note .note-statement .script{display:inline; font-size:1.05em; text-transform:none; letter-spacing:0; margin:0; font-weight:700; color:var(--leaf);}
   .maker-note .note-sub{margin-top:12px; font-size:13.5px; font-weight:700; color:var(--muted); line-height:1.45;}
-  /* Makers school strip — bare logos, float like social */
+  /* Makers school strip: bare logos, float like social */
   .makers-schools-wrap{margin:26px auto 10px; text-align:center;}
   .makers-schools-wrap > span{
     display:block; font-size:10px; font-weight:1000; letter-spacing:.14em; text-transform:uppercase;
@@ -954,7 +1008,7 @@
   .maker-note .btn{margin-top:20px;}
   .note-schools{display:none;}
 
-  /* Intro school strip — bare logos, float + expand */
+  /* Intro school strip: bare logos, float + expand */
   .intro-schools{
     margin-top:0; padding-top:0; border-top:none;
     display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:14px 18px;
@@ -996,7 +1050,7 @@
   .intro-schools .ken img{height:48px; max-width:52px;}
   .intro-schools .uwc img{height:46px; max-width:70px;}
 
-  /* 3D social dock — big, glowing, shuffled */
+  /* 3D social dock: big, glowing, shuffled */
   .intro-social{
     width:100%; display:flex; flex-wrap:wrap; align-items:center; justify-content:center;
     gap:18px 22px; margin-top:18px; padding:14px 10px 4px;
@@ -1613,6 +1667,7 @@
     <a href="#anything">Any subject</a>
     <a href="#care">Care</a>
     <a href="#mission">Mission</a>
+    <a href="dans-archive.html">Open Archive</a>
     <a class="join" href="#start">Join free beta</a>
   </div>
 </nav>
@@ -1639,11 +1694,11 @@
   </svg>
   <div class="hero-stage">
     <div>
-      <a class="hero-announce" href="#learns"><i>NEW</i> The Desk by MindCraft →</a>
-      <h1><span class="hero-first-line">Like a gym membership</span><em>for learning.</em></h1>
-      <p class="lead">Personalized. We make sure you get care and support when you need it.</p>
+      <a class="hero-announce" href="#learns"><i>NEW</i> The Desk by MindCraft · never work alone →</a>
+      <h1><span class="hero-first-line">Two minds craft</span><em>better than one.</em></h1>
+      <p class="lead">Office hours from your room. Bring whatever you're working on. A real mentor meets you there.</p>
       <div class="hero-actions">
-        <a class="btn primary" href="#start">Build my learning map</a>
+        <a class="btn primary" href="#start">Claim your desk</a>
         <a class="btn soft" href="#learns">See how it learns</a>
       </div>
     </div>
@@ -1726,7 +1781,7 @@
     <div class="story-intro reveal">
       <div class="kicker">01 · It notices</div>
       <h2>The Desk learns <span>how you learn.</span></h2>
-      <p>Not only what you missed. What made it click — then a human tutor walks in with the map already drawn.</p>
+      <p>Not only what you missed. What made it click, then a human tutor walks in with the map already drawn.</p>
     </div>
     <div class="learning-trace reveal" aria-label="An example of signals added to a private learning map">
       <svg class="trace-route" viewBox="0 0 1000 300" preserveAspectRatio="none" aria-hidden="true">
@@ -1844,6 +1899,68 @@
         <span>Scan</span><i>→</i><span>Build</span><i>→</i><span>Care</span><i>→</i><span>Grow</span>
       </div>
       <a class="btn primary reveal" href="#start">Start with ACT</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WORKFLOWS SHOWCASE ================= -->
+<section class="workflows" id="workflows">
+  <div class="wrap">
+    <div class="kicker reveal">Where it shows up</div>
+    <h2 class="h2 reveal">One desk. <span class="script">Six ways in.</span></h2>
+    <p class="lede reveal">Whatever's due tonight, there's already a real workflow for it, and a real person a tap away, if you want one.</p>
+
+    <div class="workflow-grid">
+      <div class="cap reveal">
+        <div class="glyph" style="background:var(--leaf);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h9l4 4v12H6z"/><path d="M15 4v4h4"/><path d="M9 12.5h6M9 16h4"/></svg>
+        </div>
+        <h3>Notes</h3>
+        <p>Drop in a worksheet or a link and it lands on your desk, named and dated. Try it above.</p>
+      </div>
+      <div class="cap reveal">
+        <div class="glyph" style="background:var(--teal);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l5-6 4 3 6-8"/><circle cx="19" cy="6" r="1.6" fill="#fff" stroke="none"/></svg>
+        </div>
+        <h3>Solver</h3>
+        <p>Finds the exact gap in math or the ACT, then builds the lesson that closes it.</p>
+      </div>
+      <div class="cap reveal">
+        <div class="glyph" style="background:var(--violet);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="5"/><path d="M10 9l6 3-6 3z"/></svg>
+        </div>
+        <h3>Create</h3>
+        <p>Turn an idea into a video or a deck, scene by scene, with Jesse right beside you.</p>
+      </div>
+      <div class="cap reveal">
+        <div class="glyph" style="background:var(--gold-deep);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="m12.5 6.5 6 5.5-6 5.5"/></svg>
+        </div>
+        <h3>Ask</h3>
+        <p>Knows what you're working on. Bring it whatever's stuck, right from the desk.</p>
+      </div>
+      <div class="cap reveal">
+        <div class="glyph" style="background:var(--rose);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="m9 13 2.3 2.3L16 10.5"/></svg>
+        </div>
+        <h3>Apply</h3>
+        <p>Build a resume and apply today. One place for the whole application, not six tabs.</p>
+      </div>
+      <div class="cap reveal">
+        <div class="glyph" style="background:var(--amber);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="9" r="4"/><path d="M3 20c1.4-3.6 4-5.4 7-5.4s5.6 1.8 7 5.4"/><circle cx="18.5" cy="6.5" r="2" fill="#fff" stroke="none"/></svg>
+        </div>
+        <h3>Find a mentor</h3>
+        <p>Real college mentors, searchable near you. Book one the moment you're stuck.</p>
+      </div>
+    </div>
+
+    <div class="proof reveal" style="margin-top:48px;">
+      <div class="proof-frame">
+        <div class="proof-bar"><i></i><i></i><i></i><span>the desk · create studio</span></div>
+        <img src="img/app/create-studio-live.png" alt="The Desk's Create studio: a story mid-edit with Jesse's prompt bar, scene timeline, captions, and music panels open">
+      </div>
+      <div class="proof-cap">an idea becomes a video, live</div>
     </div>
   </div>
 </section>
@@ -2102,6 +2219,52 @@
   </div>
 </section>
 
+<!-- ================= ARCHIVE / OWN YOUR DATA ================= -->
+<section class="archive-teaser" id="archive">
+  <div class="wrap">
+    <div class="archive-grid">
+      <div>
+        <div class="kicker reveal">Chapter 06 · The record</div>
+        <h2 class="h2 reveal">Your record is yours. So is the shelf it sits on.</h2>
+        <p class="lede reveal">Every gap MindCraft finds belongs to you. Export it. Delete it. It never lives behind someone else's login. Knowledge works the same way. It shouldn't be locked up either.</p>
+        <p class="reveal" style="margin-top:14px; font-weight:700; color:var(--muted); max-width:520px;">
+          113 free, open intelligent textbooks. Math, science, engineering, AI, history.
+          Built by learning-graph researcher Dan McCreary. No login. No paywall. Just open a book.
+        </p>
+        <a class="btn primary reveal" href="dans-archive.html" style="margin-top:22px;">Browse the archive →</a>
+        <div class="archive-inline-search reveal" id="archiveInlineSearch">
+          <div class="ais-bar">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.6" y2="16.6"/></svg>
+            <input type="text" id="aisInput" placeholder="Try “calculus,” “graph databases,” “dementia”…" autocomplete="off">
+          </div>
+          <div class="ais-results" id="aisResults"></div>
+        </div>
+      </div>
+      <div class="archive-stack reveal" aria-hidden="true">
+        <div class="af af1"><span class="af-sub">Mathematics</span><span class="af-t">Calculus</span></div>
+        <div class="af af2"><span class="af-sub">Engineering</span><span class="af-t">Real-Time DSP on a $5 Microcontroller</span></div>
+        <div class="af af3"><span class="af-sub">Biology</span><span class="af-t">Genetics: Analysis, Genomics &amp; Inference</span></div>
+        <div class="af af4"><span class="af-sub">AI / Education</span><span class="af-t">Learning Sciences for Textbook Design</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TOUCH THE IDEA ================= -->
+<section class="touch-idea" id="touch">
+  <div class="wrap">
+    <div class="kicker reveal">Chapter 06.5 · The instinct</div>
+    <h2 class="h2 reveal">Don't just get the answer. Touch it.</h2>
+    <p class="lede reveal">Every book in the archive works the same way. Pick a variable. Change it. Watch the concept move before anyone explains it to you.</p>
+    <div class="touch-stats">
+      <div class="ts reveal"><b>389</b><span>MicroSims in one Health Education book alone</span></div>
+      <div class="ts reveal"><b>173</b><span>in AI Assisted Geometry</span></div>
+      <div class="ts reveal"><b>62</b><span>paired with 16 illustrated stories in Real-Time DSP on a $5 Microcontroller</span></div>
+    </div>
+    <a class="btn soft reveal" href="dans-archive.html?open=91" style="margin-top:8px;">See the DSP book →</a>
+  </div>
+</section>
+
 <!-- ================= ACT SUMMER PACKAGE ================= -->
 <section class="act" id="act">
   <div class="wrap">
@@ -2290,6 +2453,7 @@
         <a href="#anything">Any subject</a>
         <a href="#care">Human care</a>
         <a href="#mission">Mission</a>
+        <a href="dans-archive.html">Open Learning Archive</a>
         <a href="desk.html">Open The Desk</a>
       </div>
       <div class="foot-links foot-social">
@@ -2471,7 +2635,7 @@
     ioMap.observe(mapEl);
   })();
 
-  // 3D social dock — random order each load
+  // 3D social dock: random order each load
   (function(){
     const host = document.getElementById('introSocial');
     if (!host) return;
@@ -2941,6 +3105,48 @@
       });
     }
   });
+</script>
+<script>
+  // ---------- Archive inline search (homepage teaser) ----------
+  (function(){
+    const input = document.getElementById('aisInput');
+    const results = document.getElementById('aisResults');
+    if (!input || !results) return;
+    let books = null;
+
+    function escapeHtml(s){
+      return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    function render(q){
+      if (!books) return;
+      if (!q) { results.innerHTML = ''; return; }
+      const needle = q.toLowerCase();
+      const matches = books
+        .map((b, i) => ({ b, i }))
+        .filter(({ b }) => (b.title + ' ' + b.description + ' ' + b.subject).toLowerCase().includes(needle))
+        .slice(0, 4);
+      if (!matches.length) {
+        results.innerHTML = '<div class="ais-empty">No match yet — try a broader word, or browse the full archive.</div>';
+        return;
+      }
+      results.innerHTML = matches.map(({ b, i }) =>
+        `<a class="ais-row" href="dans-archive.html?open=${i}"><b>${escapeHtml(b.title)}</b><span>${escapeHtml(b.subject)}</span></a>`
+      ).join('');
+    }
+
+    input.addEventListener('focus', () => {
+      if (books) return;
+      fetch('data/dansArchive.json').then(r => r.json()).then(data => {
+        books = data.books;
+        render(input.value.trim());
+      }).catch(() => {
+        results.innerHTML = '<div class="ais-empty">Couldn\'t load the archive right now.</div>';
+      });
+    }, { once: true });
+
+    input.addEventListener('input', () => render(input.value.trim()));
+  })();
 </script>
 </body>
 </html>

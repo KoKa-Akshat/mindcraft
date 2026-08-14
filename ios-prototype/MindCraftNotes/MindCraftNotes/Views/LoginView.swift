@@ -29,6 +29,7 @@ struct LoginView: View {
     @State private var email = ""
     @State private var password = ""
     @State private var showPassword = false
+    @State private var appeared = false
 
     private let weightedEase = Animation.timingCurve(0.2, 0, 0, 1, duration: 0.32)
 
@@ -43,10 +44,15 @@ struct LoginView: View {
                 .padding(.vertical, 56)
                 .padding(.horizontal, 24)
                 .frame(maxWidth: 440)
+                .opacity(appeared ? 1 : 0)
+                .offset(y: appeared ? 0 : 14)
             }
             .frame(maxWidth: .infinity)
         }
         .scrollDismissesKeyboard(.interactively)
+        .onAppear {
+            withAnimation(weightedEase) { appeared = true }
+        }
     }
 
     // MARK: - Background - matches the real web Login.module.css (`.page`
@@ -81,10 +87,11 @@ struct LoginView: View {
         VStack(spacing: 6) {
             Text("The Desk")
                 .font(.system(size: 36, weight: .bold, design: .rounded))
+                .tracking(-0.8)
                 .foregroundStyle(Color(mcHex: "e8f5e0"))
             Text("by MindCraft")
                 .font(.system(size: 13, weight: .semibold, design: .rounded))
-                .foregroundStyle(Color(mcHex: "c4f547").opacity(0.9))
+                .foregroundStyle(Color(mcHex: "e8f5e0").opacity(0.68))
                 .tracking(0.4)
         }
         .accessibilityElement(children: .combine)
@@ -114,11 +121,11 @@ struct LoginView: View {
             if let message = authService.errorMessage, !message.isEmpty {
                 Text(message)
                     .font(.system(size: 13, weight: .medium))
-                    .foregroundStyle(Color(red: 0.62, green: 0.17, blue: 0.17))
+                    .foregroundStyle(Color(mcHex: "9e2b2b"))
                     .padding(.vertical, 10)
                     .padding(.horizontal, 12)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(Color(red: 1, green: 0.96, blue: 0.945))
+                    .background(Color(mcHex: "fff5f1"))
                     .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
             }
 
@@ -144,7 +151,8 @@ struct LoginView: View {
             RoundedRectangle(cornerRadius: 20, style: .continuous)
                 .fill(Color(mcHex: "faf6ef"))
         )
-        .shadow(color: Color.black.opacity(0.35), radius: 28, x: 0, y: 14)
+        .shadow(color: Color.black.opacity(0.32), radius: 28, x: 0, y: 14)
+        .shadow(color: Color.black.opacity(0.16), radius: 6, x: 0, y: 2)
         .animation(weightedEase, value: showEmailMode)
     }
 
@@ -177,7 +185,7 @@ struct LoginView: View {
                     .shadow(color: Color(mcHex: "c4f547").opacity(0.45), radius: 16, x: 0, y: 6)
             )
         }
-        .buttonStyle(.plain)
+        .buttonStyle(DeskPressStyle())
         .disabled(authService.isBusy)
         .opacity(authService.isBusy ? 0.75 : 1)
         .accessibilityIdentifier("loginGoogleButton")
@@ -209,7 +217,7 @@ struct LoginView: View {
             .frame(maxWidth: .infinity)
             .padding(.vertical, 13)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(DeskPressStyle())
         .foregroundStyle(Color(mcHex: "faf6ef"))
         .background(
             RoundedRectangle(cornerRadius: 12, style: .continuous)
@@ -360,6 +368,18 @@ struct LoginView: View {
 // same-named helper elsewhere in the app (e.g. Agent C's
 // ContentsRoadmapView reading STATUS_COLOR hex strings, or DashboardView's
 // own `Color(deskHex:)`) cannot collide with this one.
+
+/// Tactile press feedback shared with the rest of the entry flow (see
+/// `CoverView.DeskPressStyle`) - a fast, weighted compress-and-release,
+/// no springy overshoot.
+private struct DeskPressStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.97 : 1)
+            .opacity(configuration.isPressed ? 0.9 : 1)
+            .animation(.easeOut(duration: 0.12), value: configuration.isPressed)
+    }
+}
 
 /// `--login-ink` (#143a2e).
 private let mcInk = Color(mcHex: "143a2e")

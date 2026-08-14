@@ -229,7 +229,22 @@ struct JesseKitchenBackgroundView: UIViewRepresentable {
             applySound(webView)
             enterTimer?.invalidate()
             enterAttempts = 0
-            // Short enter assist only — do NOT yank the camera for ~28s.
+            // Root cause of the cold-load "unresponsive until I tap Projects"
+            // bug: this used to give up after 10 tries (~4s). `kickAutoEnter`'s
+            // JS is fully idempotent past the first successful tick — the
+            // Start click and camera pose are each behind their own one-shot
+            // guard (`__MC_DESK_ENTERED__` / `__MC_DESK_CAM_SET__`) — so
+            // retrying longer never re-yanks the camera once it's entered,
+            // it only widens the window to catch a slow *first* load (cold
+            // cache: WebGL/texture assets not yet ready when the 3D scene's
+            // own Start button appears). On a cold login that took longer
+            // than ~4s to get there, the retry loop expired before the
+            // custom camera pose / Start click ever fired, leaving the
+            // kitchen camera parked off the intended framing — most signs
+            // sat out of the tappable frame while whatever was still in
+            // view (e.g. Projects) kept working, reading as "nothing
+            // responds until I click Projects." Stays capped (not infinite)
+            // so a genuinely broken remote host still gives up eventually.
             enterTimer = Timer.scheduledTimer(withTimeInterval: 0.4, repeats: true) { [weak self, weak webView] timer in
                 guard let self, let webView else {
                     timer.invalidate()
@@ -238,8 +253,9 @@ struct JesseKitchenBackgroundView: UIViewRepresentable {
                 self.enterAttempts += 1
                 self.kickAutoEnter(webView)
                 if self.enterAttempts % 2 == 0 { self.applySound(webView) }
-                // Stop once entered, or after a few tries.
-                if self.enterAttempts > 10 { timer.invalidate() }
+                // Stop once entered (see the `ok` completion below), or after
+                // ~36s covers even a slow first-ever cold load.
+                if self.enterAttempts > 90 { timer.invalidate() }
             }
             if let exitProjectsObserver {
                 NotificationCenter.default.removeObserver(exitProjectsObserver)

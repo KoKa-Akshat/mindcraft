@@ -132,13 +132,13 @@ def slide_01(c: canvas.Canvas) -> None:
     c.setFillColor(white)
     c.setFont(SERIF, 64)
     for i, line in enumerate([
-        "We are going to ask you",
-        "for introductions.",
+        "Never work alone.",
+        "Office hours from your room.",
     ]):
         c.drawString(64, H - 260 - i * 78, line)
     c.setFillColor(HexColor("#b7d0c2"))
     c.setFont(SANS, 22)
-    c.drawString(64, H - 460, "ACT parents. Counselors. College tutors.")
+    c.drawString(64, H - 460, "Students, mentors, any subject.")
     c.drawString(64, H - 494, "Four minutes to make the case.")
     c.setFillColor(Color(0.77, 0.96, 0.28, alpha=0.12))
     c.roundRect(64, 120, 720, 56, 28, fill=1, stroke=0)
@@ -161,15 +161,15 @@ def slide_02(c: canvas.Canvas) -> None:
     c.setFillColor(INK)
     c.setFont(SERIF, 52)
     lines = [
-        "Tutor plays detective.",
-        "Session ends.",
-        "Next week starts over.",
+        "Stuck on the work.",
+        "AI half-answers.",
+        "You're doing it alone.",
     ]
     y = H - 280
     for line in lines:
         c.drawCentredString(W / 2, y, line)
         y -= 70
-    chips = [("Student stuck", False), ("Parent pays", False), ("Tutor hunts", False), ("No map", True)]
+    chips = [("Paper's due", False), ("Code won't run", False), ("Quadratics again", False), ("Still stuck", True)]
     x = 420
     for label, hot in chips:
         tw = c.stringWidth(label, SANS_B, 16) + 40
@@ -190,10 +190,10 @@ def slide_03(c: canvas.Canvas) -> None:
     cream_bg(c)
     brand(c)
     num(c, 3)
-    kicker(c, "Why not a tutor alone", 64, H - 120)
+    kicker(c, "Why not one fixed tutor", 64, H - 120)
     c.setFillColor(INK)
     c.setFont(SERIF, 40)
-    c.drawString(64, H - 190, "Great tutors fail when they fly blind.")
+    c.drawString(64, H - 190, "One fixed tutor doesn't match real work.")
 
     # left card
     c.setFillColor(HexColor("#f4f1ea"))
@@ -202,10 +202,10 @@ def slide_03(c: canvas.Canvas) -> None:
     c.setFont(SANS_B, 24)
     c.drawString(100, 720, "Traditional tutoring")
     left = [
-        "Starts on tonight’s homework",
+        "One tutor for one subject",
+        "Locked into recurring sessions",
         "Forty minutes finding the gap",
-        "Progress lives in the tutor’s head",
-        "Practice is another worksheet",
+        "Progress lives in one person’s head",
     ]
     y = 640
     for t in left:
@@ -224,10 +224,10 @@ def slide_03(c: canvas.Canvas) -> None:
     c.setFont(SANS_B, 24)
     c.drawString(1032, 720, "MindCraft")
     right = [
-        "Gap diagnosed before session one",
-        "Tutor walks in already briefed",
-        "Living map parents can see",
-        "Story missions that make the click matter",
+        "Match the mentor to the moment",
+        "Calculus, a deck, code, an essay",
+        "Attached to your actual work",
+        "In Solver: briefed before session one",
     ]
     y = 640
     for t in right:
@@ -247,9 +247,9 @@ def slide_04(c: canvas.Canvas) -> None:
     c.setFillColor(white)
     c.setFont(SERIF, 48)
     lines = [
-        "We map the real math gap.",
-        "Then a college tutor starts",
-        "there, not page one.",
+        "Office hours",
+        "from your room —",
+        "for whatever you're working on.",
     ]
     y = H - 320
     for line in lines:
@@ -263,7 +263,7 @@ def ui_slide(c: canvas.Canvas, n: int, title: str, tag: str, image: str) -> None
     cream_bg(c)
     brand(c)
     num(c, n)
-    kicker(c, f"Product · {n - 4} of 3", 64, H - 120)
+    kicker(c, f"Flagship vertical · {n - 4} of 3", 64, H - 120)
     c.setFillColor(INK)
     c.setFont(SERIF, 44)
     c.drawString(64, H - 185, title)
@@ -280,7 +280,7 @@ def slide_07(c: canvas.Canvas) -> None:
     cream_bg(c)
     brand(c)
     num(c, 7)
-    kicker(c, "Product · 3 of 3", 64, H - 120)
+    kicker(c, "Flagship vertical · 3 of 3", 64, H - 120)
     c.setFillColor(INK)
     c.setFont(SERIF, 40)
     c.drawString(64, H - 185, "Story missions + college tutors")
@@ -334,9 +334,9 @@ def slide_09(c: canvas.Canvas) -> None:
     c.drawString(64, H - 230, "Who should we talk to?")
 
     asks = [
-        ("01", "Parent with a 10th–12th grader on ACT Math"),
-        ("02", "Counselor who hears “not a math person”"),
-        ("03", "College tutor tired of detective hours"),
+        ("01", "A student stuck on real work, any subject"),
+        ("02", "A college mentor ready to help outside class"),
+        ("03", "An ACT parent or counselor — still a channel"),
     ]
     y = H - 330
     for n, text in asks:

@@ -3,7 +3,18 @@ import UniformTypeIdentifiers
 
 /// Hub “Create an instance” - upload materials (Figma / web Cook a Field Book
 /// spirit). Files become a custom desk instance on the hub.
+///
+/// Also the BYOB ("Bring Your Own Book") flow surfaced from the Binder's BYOB
+/// tab (`StandaloneDeskView`) - when reached that way, `binderStore` is
+/// non-nil and `cook()` additionally uploads the picked files to Firebase
+/// Storage and writes a real `binder_items` doc (`type: "byob"`), so the book
+/// shows up durably in the Binder across sessions/devices, not just this
+/// screen's own local `CustomInstanceStore`. Existing call sites that don't
+/// pass a `binderStore` (the hub's separate "Create an instance" tile) keep
+/// their prior local-only behavior unchanged - deliberately not touched here,
+/// see BinderStore.swift's doc comment / the build report for why.
 struct CreateInstanceStudioView: View {
+    var binderStore: BinderStore? = nil
     var onCreated: (CustomInstance) -> Void
     @Environment(\.dismiss) private var dismiss
 
@@ -11,6 +22,11 @@ struct CreateInstanceStudioView: View {
     @State private var subject = "Custom"
     @State private var prompt = ""
     @State private var files: [String] = []
+    /// Local temp-file copies of whatever was picked, kept alongside `files`
+    /// (display names) so `cook()` can still read their bytes for a Storage
+    /// upload even though the fileImporter's security-scoped access window
+    /// has long since closed by the time the user taps "Create instance".
+    @State private var fileURLs: [URL] = []
     @State private var showImporter = false
     @State private var cooking = false
     @State private var note: String?
@@ -112,6 +128,18 @@ struct CreateInstanceStudioView: View {
                         let accessed = url.startAccessingSecurityScopedResource()
                         defer { if accessed { url.stopAccessingSecurityScopedResource() } }
                         files.append(url.lastPathComponent)
+                        // Copy into tmp now, while the security-scoped access
+                        // window is open — cook() runs later (after the user
+                        // fills in the rest of the form), well past when the
+                        // original picker URL would still be readable.
+                        if let data = try? Data(contentsOf: url) {
+                            let tmp = FileManager.default.temporaryDirectory
+                                .appendingPathComponent(UUID().uuidString)
+                                .appendingPathExtension(url.pathExtension.isEmpty ? "bin" : url.pathExtension)
+                            if (try? data.write(to: tmp)) != nil {
+                                fileURLs.append(tmp)
+                            }
+                        }
                     }
                 }
             }
@@ -131,19 +159,39 @@ struct CreateInstanceStudioView: View {
         }
         cooking = true
         // Lightweight bind - full extract→tag→generate pipeline is web
-        // `createBook.js`; native keeps the durable instance + file list.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
-            let inst = CustomInstance(
-                id: "custom_\(Int(Date().timeIntervalSince1970))",
-                name: trimmed,
-                subject: subject,
-                prompt: prompt,
-                files: files
-            )
-            CustomInstanceStore.shared.add(inst)
-            cooking = false
-            onCreated(inst)
-            dismiss()
+        // `createBook.js`; native keeps the durable instance + file list,
+        // plus (when reached via the Binder's BYOB tab) a real Storage
+        // upload + binder_items record so the book survives across sessions.
+        let capturedFileURLs = fileURLs
+        Task {
+            if let binderStore {
+                let result = await binderStore.addByob(title: trimmed, body: prompt, fileURLs: capturedFileURLs)
+                if case .failure(let error) = result {
+                    // BinderStore already queued this locally for retry on
+                    // next launch/sign-in - just let the student know it's
+                    // not lost, it just hasn't synced yet.
+                    await MainActor.run {
+                        note = "Saved · will sync when back online (\(error.localizedDescription))"
+                    }
+                }
+            } else {
+                // No BinderStore (an older, non-Binder entry point into this
+                // same screen) - keep the original lightweight "binding" beat.
+                try? await Task.sleep(nanoseconds: 450_000_000)
+            }
+            await MainActor.run {
+                let inst = CustomInstance(
+                    id: "custom_\(Int(Date().timeIntervalSince1970))",
+                    name: trimmed,
+                    subject: subject,
+                    prompt: prompt,
+                    files: files
+                )
+                CustomInstanceStore.shared.add(inst)
+                cooking = false
+                onCreated(inst)
+                dismiss()
+            }
         }
     }
 }

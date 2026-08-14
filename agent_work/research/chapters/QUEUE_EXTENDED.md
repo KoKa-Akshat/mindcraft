@@ -92,5 +92,15 @@ Promote 3 at a time into `NEXT_LAB.md`. Do not write all at once.
 | 116 | Offline practice fidelity (paper/whiteboard capture) | Photo-to-Map; attempt grain without phone distraction | promoted → NEXT_LAB |
 | 124 | Distractor design for diagnostic soft-wrong MC | SAFE-TAXON × SAFE-MISCON; Eedi-style options | promoted → NEXT_LAB |
 | 125 | Confidence-tagged misses in gap-scan recovery | SAFE-TAXON × SAFE-CALIB; hard/kinda/easy × mark type | promoted → NEXT_LAB |
-| 130 | Dual-rail Solver CTA copy under crunch (help tonight vs Practice gym) | SAFE-HWHELP × SAFE-CRUNCHMSG; parent/student CTAs without Chegg hero | promoted → NEXT_LAB |
-| 132 | Async pre-brief cards while waiting for late tutor | SAFE-MICROBRIEF × SAFE-SRL; student-owned Set without pour-open | promoted → NEXT_LAB |
+| 130 | Dual-rail Solver CTA copy under crunch (help tonight vs Practice gym) | SAFE-HWHELP × SAFE-CRUNCHMSG; parent/student CTAs without Chegg hero | **DONE** → `130_dual_rail_solver_cta_copy_under_crunch.md` |
+| 132 | Async pre-brief cards while waiting for late tutor | SAFE-MICROBRIEF × SAFE-SRL; student-owned Set without pour-open | **DONE** → `132_async_prebrief_cards_late_tutor_wait.md` |
+| 133 | One-tap Solver→Practice transfer grain after instrumental help | SAFE-HWHELP × SAFE-CRUNCHCTA × SAFE-SCHED; handoff without dump-and-quit | promoted → NEXT_LAB |
+| 134 | Hide-correctness eligibility gates for FormatId items | SAFE-FIGKEY × SAFE-CALIB/COLD; when figure-keyed items may enter gap-scan | **DONE** → `134_hide_correctness_eligibility_formatid.md` |
+| 135 | Known-finite ETA honesty in late-tutor lobby copy | SAFE-ASYNCBRIEF × Maister uncertain-wait; ETA truth without shame feed | **DONE** → `135_known_finite_eta_honesty_late_tutor_lobby.md` |
+| 136 | Soft-require vs hard-gate follow-on under help-avoidance risk | SAFE-XFERGRAIN × SAFE-HELP; quit/avoidance falsifiers for transfer CTA | promoted → NEXT_LAB |
+| 137 | Reveal-Practice vs C4 split pools for sealed FormatId | SAFE-HCELIG × SAFE-REPAIR; graded use without silent Map writes | promoted → NEXT_LAB |
+| 138 | FormatId gap-scan composition under sealed-stock scarcity | SAFE-HCELIG × SAFE-COVER/FORMAT; honest holes vs symbolic pad theater | promoted → NEXT_LAB |
+| 139 | Parent trust copy when visual diagnostic holes remain | SAFE-HCELIG × SAFE-PDASH/WTP; hole honesty without coverage shame | promoted → NEXT_LAB |
+| 140 | Promote-to-C4 tutor QA workflow for Practice-only FormatId | SAFE-SPLITPOOL × SAFE-REPAIR/FIGKEY; ticketed promote without play-count flip | promoted → NEXT_LAB |
+| 141 | Same-student cool-down: revealed Practice stems barred from C4 | SAFE-SPLITPOOL × SAFE-CALIB; exposure window without Pool Score™ | queued |
+| 142 | Event-source taxonomy: Practice vs diagnostic Map write authority | SAFE-SPLITPOOL × SAFE-INSTRUMENT; illicit dual-write audits | queued |

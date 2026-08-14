@@ -7,6 +7,12 @@ Manjushree landing-panel brief: `agent_work/manjushree-zone/LANDING_PANEL_HANDOF
 
 ---
 
+## Brand pivot notice (2026-08-11)
+
+MindCraft's positioning moved from "ACT-math tutoring" to "collaborative workspace / operating system for student work." `BRAND_BOOK.md` bumped to **v2.0** — read it before writing any new marketing or product copy. Math/Katha/"the click" is now the voice of the **Solver** vertical specifically, not the whole brand. New: `BUSINESS_MODEL.md`.
+
+---
+
 ## Active Field Desk checkpoint (2026-08-09)
 
 Native Desk OS + Desk Operator agent work landed today and is **pushed to main**.

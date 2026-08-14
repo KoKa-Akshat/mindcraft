@@ -182,6 +182,13 @@ html.from-jesse #editorView.create-on{
     linear-gradient(145deg,#fff 0%,#f7faf5 58%,#f2f7f1 100%);
   background-size:72px 72px,72px 72px,52px 52px,auto;
   background-position:0 0,0 0,18px 18px,0 0;
+  /* Bug fix: .topbar below is display:none in this mode, and a display:none
+     grid item is skipped by CSS Grid auto-placement — so #floatCanvas (the
+     entire Media/Text/Captions/Jesse/Stickers/Music/Looks board) was sliding
+     into the "auto" row meant for the now-invisible topbar instead of the
+     "1fr" row, collapsing to ~8px (its own padding-top) and rendering blank.
+     One visible grid child left (#floatCanvas) → one row that fills the view. */
+  grid-template-rows:1fr;
 }
 html.from-jesse #editorView.create-on .topbar{
   /* Native Field Desk chrome owns Jesse's / Work / logo */
