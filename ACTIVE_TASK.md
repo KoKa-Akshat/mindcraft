@@ -4,6 +4,18 @@
 
 ---
 
+## Resume agent · liquid glass proto (2026-08-14)
+
+Try now (no Xcode): **https://mindcraft-93858.web.app/desk-os/workflows/resume/?v=r1**  
+Allow mic + sound. Hold to talk, then LinkedIn (demo pull) / Drive folder / upload / call.
+
+- Design brief for next agent (Figma tokens): `agent_work/product/RESUME_AGENT_FIGMA_BRIEF.md`
+- Source: `agent_work/product/desk_os/workflows/resume/index.html` (CI syncs via `app/scripts/syncDeskOs.mjs`)
+- iOS: Workflows → Resume builder → `ResumeAgentView` WKWebView
+- Marketing: hero trust + logos strip now say **Your data stays yours**
+
+Figma MCP was not authenticated this run — brief is the file to paste into Figma/Claude.
+
 ## iOS prototype · The Desk + local Mac disk (2026-08-12) — HANDOFF
 
 **Product naming shipped on main.** App chrome = **The Desk** (no MindCraft/raccoon logo). Entry surfaces = The Desk + by MindCraft. Naming CI green: `06e64284` · https://github.com/KoKa-Akshat/mindcraft/actions/runs/31518010669

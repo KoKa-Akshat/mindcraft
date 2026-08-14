@@ -52,6 +52,7 @@
 		A48A1E9C157F4E7EA3822414 /* MindCraftNotes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FAAFB7B2FB6B48A2BA5C98FD /* MindCraftNotes.xcdatamodeld */; };
 		A49B04C4A6E7F8091B2C3D4E /* CreateInstanceStudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49B04C4A6E7F8091B2C3D4E /* CreateInstanceStudioView.swift */; };
 		A49BCREATESTUDIO01A2B3 /* CreateStudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49BCREATESTUDIO01A2B3 /* CreateStudioView.swift */; };
+		A49BRESUMEAGENT01A2 /* ResumeAgentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49BRESUMEAGENT01A2 /* ResumeAgentView.swift */; };
 		A49BDESKBOARD01A2B3 /* DeskBoardCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49BDESKBOARD01A2B3 /* DeskBoardCards.swift */; };
 		A49BSHRINE01A2B3C4D5 /* MalevolentShrineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49BSHRINE01A2B3C4D5 /* MalevolentShrineView.swift */; };
 		A59B05C5A6E7F8091B2C3D4E /* TestInstanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59B05C5A6E7F8091B2C3D4E /* TestInstanceView.swift */; };
@@ -176,6 +177,7 @@
 		B39B03C3A6E7F8091B2C3D4E /* AccountManageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManageView.swift; sourceTree = "<group>"; };
 		B49B04C4A6E7F8091B2C3D4E /* CreateInstanceStudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateInstanceStudioView.swift; sourceTree = "<group>"; };
 		B49BCREATESTUDIO01A2B3 /* CreateStudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateStudioView.swift; sourceTree = "<group>"; };
+		B49BRESUMEAGENT01A2 /* ResumeAgentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeAgentView.swift; sourceTree = "<group>"; };
 		B49BDESKBOARD01A2B3 /* DeskBoardCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskBoardCards.swift; sourceTree = "<group>"; };
 		B49BSHRINE01A2B3C4D5 /* MalevolentShrineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalevolentShrineView.swift; sourceTree = "<group>"; };
 		B5428A47D8655E6D13382E35 /* GraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
@@ -371,6 +373,7 @@
 				B39B03C3A6E7F8091B2C3D4E /* AccountManageView.swift */,
 				B49B04C4A6E7F8091B2C3D4E /* CreateInstanceStudioView.swift */,
 				B49BCREATESTUDIO01A2B3 /* CreateStudioView.swift */,
+				B49BRESUMEAGENT01A2 /* ResumeAgentView.swift */,
 				B49BDESKBOARD01A2B3 /* DeskBoardCards.swift */,
 				B49BSHRINE01A2B3C4D5 /* MalevolentShrineView.swift */,
 				B59B05C5A6E7F8091B2C3D4E /* TestInstanceView.swift */,
@@ -644,6 +647,7 @@
 				A39B03C3A6E7F8091B2C3D4E /* AccountManageView.swift in Sources */,
 				A49B04C4A6E7F8091B2C3D4E /* CreateInstanceStudioView.swift in Sources */,
 				A49BCREATESTUDIO01A2B3 /* CreateStudioView.swift in Sources */,
+				A49BRESUMEAGENT01A2 /* ResumeAgentView.swift in Sources */,
 				A49BDESKBOARD01A2B3 /* DeskBoardCards.swift in Sources */,
 				A49BSHRINE01A2B3C4D5 /* MalevolentShrineView.swift in Sources */,
 				A59B05C5A6E7F8091B2C3D4E /* TestInstanceView.swift in Sources */,
