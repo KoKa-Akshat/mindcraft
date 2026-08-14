@@ -140,8 +140,9 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 143 | Promote backlog SLA vs parent hole-ETA honesty | SAFE-PROMOTE × SAFE-KNOWNETA/HOLETRUST; finite verify bands without play-count fill bars | **DONE** (2026-08-14) — Part CXLIII / SAFE-FILLETA |
 | 144 | Second-rater thresholds for figured C4 admits | SAFE-PROMOTE × SAFE-FIGKEY/HITL; when dual review is mandatory vs cost theater | **DONE** (2026-08-14) — Part CXLIV / SAFE-DUALRATE |
 | 145 | Isomorphic stem-family hashing for cool-down without over-block | SAFE-COOLDOWN × SAFE-GENQ/FIGKEY; clone seals without starving FormatId practice | **DONE** (2026-08-14) — Part CXLV / SAFE-FAMHASH |
-| 146 | Gap-scan exit emotion without Anxiety Score™ (destake copy after holes) | SAFE-STUDHOLE × SAFE-PRIVACY/EXPOSE; calm language without mood telemetry | **NEXT** |
-| 147 | Dual-rater capacity planning vs FILLETA band honesty | SAFE-DUALRATE × SAFE-FILLETA/WORKFORCE; reviewer minutes in fill estimator without Dual Rater Score™ | queued |
+| 146 | Gap-scan exit emotion without Anxiety Score™ (destake copy after holes) | SAFE-STUDHOLE × SAFE-PRIVACY/EXPOSE; calm language without mood telemetry | **DONE** (2026-08-14) — Part CXLVI / SAFE-EXITEMO |
+| — | *(146 complete; 147 is next)* | | |
+| 147 | Dual-rater capacity planning vs FILLETA band honesty | SAFE-DUALRATE × SAFE-FILLETA/WORKFORCE; reviewer minutes in fill estimator without Dual Rater Score™ | **NEXT** |
 | 148 | Template-trust inheritance after first-of-cell dual admit | SAFE-DUALRATE × SAFE-COOLDOWN/FIGKEY; when isomorphic clones may single-rater promote | queued |
 | 149 | Post-promote repair stratified dashboards (single vs dual) | SAFE-DUALRATE × SAFE-PROMOTE/INSTRUMENT; ops IRR without Kappa % NS | queued |
 
@@ -250,3 +251,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any coming-soon / almost-ready default hole-fill / play-count fill bars / optimistic slip loops / date-driven soft-pass promote / FillETA Score™·Backlog Minutes·Honesty Clock NS / ACT or complete-visual-by-date guarantees from fill packaging (Part CXLIII / SAFE-FILLETA)
 - Any always-dual costume / never-dual figured C4 / Dual Rater Score™·Agreement Minutes·Kappa % NS / seal-waiving second rater / mammography-cosplay ACT ads / ETA-skipped mandatory dual / Discord-emoji≡second rater (Part CXLIV / SAFE-DUALRATE)
 - Any item_id-only cool-down under GENQ clones / concept×FormatId cool-down as default family / embedding-only family without SME seal / Family Hash Score™·Clone Minutes·Similarity % NS / pad when family bar empties a cell / ACT or complete-visual guarantees from hashing packaging (Part CXLV / SAFE-FAMHASH)
+- Any Anxiety Score™ / Calm Score™ / Exit Emotion Score™ / Mood Minutes NS / consoling “not everyone can…” ability talk / ego Completeness % beside hole honesty / mandatory mood gate / emotion-AI exit empathy / fake greens as affect management / calm-to-zero or ACT guarantees from gap-scan exit packaging (Part CXLVI / SAFE-EXITEMO)
