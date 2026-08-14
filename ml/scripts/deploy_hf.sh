@@ -34,6 +34,17 @@ trap cleanup EXIT INT TERM
 git clone "$REMOTE" "$TMP_DIR"
 
 find "$TMP_DIR" -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+# concept_embeddings.npz / pca_axes.npz / classification_index.npz self-heal at
+# container startup (serve.py rebuilds them from the ontology JSON + a
+# downloaded sentence-transformer if missing/stale) so they're safe to exclude.
+#
+# data/bank_index.npz is DIFFERENT — do not add it to this list. It's built by
+# scripts/build_bank_index.py from app/src/data + app/src/lib/questionBank.ts,
+# neither of which ship in this tarball, so it can NEVER regenerate inside the
+# Space. Excluding it via a blanket 'data/*.npz' glob (43dd7f15) broke every
+# prod deploy since: classification_index.npz's own rebuild path loads
+# bank_index.npz as an input, so its absence turned a harmless missing cache
+# into a hard container crash (BUILD_ERROR, FileNotFoundError).
 tar -C "$ML_DIR" \
   --exclude=.git \
   --exclude='.env*' \
@@ -55,11 +66,21 @@ tar -C "$ML_DIR" \
   --exclude=google-cloud-sdk \
   --exclude=google-cloud-cli-linux-x86_64.tar.gz \
   --exclude=mindcraft_remaining_modules.zip \
-  --exclude='data/*.npz' \
+  --exclude='data/concept_embeddings.npz' \
+  --exclude='data/pca_axes.npz' \
+  --exclude='data/classification_index.npz' \
   --exclude='*.deb' \
   --exclude='*.zip' \
   -cf - . | tar -C "$TMP_DIR" -xf -
 mv "$TMP_DIR/README_HF.md" "$TMP_DIR/README.md"
+
+# bank_index.npz cannot regenerate inside the Space (see comment above) — fail
+# fast here rather than pushing a build that will crash on startup.
+if [ ! -f "$TMP_DIR/data/bank_index.npz" ]; then
+  echo "ERROR: data/bank_index.npz is missing from the staged deploy. It must" >&2
+  echo "ship as-is; do not add it to the tar --exclude list above." >&2
+  exit 1
+fi
 
 (
   cd "$TMP_DIR"
