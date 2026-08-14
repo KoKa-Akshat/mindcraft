@@ -126,6 +126,15 @@
     font-family:"Fredoka",sans-serif; font-weight:700; font-size:15px; color:#fff;
   }
   .frame.big .swatch{width:48px; height:48px; font-size:19px;}
+  .cover-art{
+    width:100%; aspect-ratio:3/4; object-fit:cover; border-radius:2px;
+    margin-bottom:12px; background:#efe8d8;
+  }
+  .frame.big .cover-art{margin-bottom:16px;}
+  .lb-cover{
+    width:min(180px,40%); aspect-ratio:3/4; object-fit:cover; border-radius:10px;
+    margin:0 0 18px; box-shadow:0 12px 28px rgba(20,30,20,.18);
+  }
   .card-subject{font-size:10px; font-weight:1000; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-bottom:6px;}
   .card-title{font-family:"Fredoka",sans-serif; font-weight:700; font-size:16px; letter-spacing:-.015em; line-height:1.22; margin-bottom:8px;}
   .frame.big .card-title{font-size:22px;}
@@ -211,6 +220,10 @@
       original catalog: <a href="https://dmccreary.github.io/intelligent-textbooks/case-studies/" target="_blank" rel="noopener noreferrer">dmccreary.github.io</a>.
     </div>
     <div class="stat-row" id="statRow"></div>
+    <p class="lede" style="margin-top:22px;">
+      Or ask Jesse. Same call as the resume workflow. He opens the exact page.
+    </p>
+    <a class="lb-visit" href="https://mindcraft-93858.web.app/desk-os/workflows/archive/?v=a1" style="margin-top:10px;width:fit-content;">Ask Jesse on the archive →</a>
   </section>
 
   <div class="ask-bar">
@@ -224,9 +237,10 @@
   <div class="gallery" id="gallery" aria-live="polite"></div>
 </div>
 
-<div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
   <div class="lb-box">
     <button class="lb-close" id="lbClose" aria-label="Close">✕</button>
+    <img class="lb-cover" id="lbCover" alt="" hidden>
     <div class="lb-swatch" id="lbSwatch"></div>
     <div class="lb-subject" id="lbSubject"></div>
     <h2 class="lb-title" id="lbTitle"></h2>
@@ -234,6 +248,7 @@
     <div class="lb-stats" id="lbStats"></div>
     <div class="lb-actions">
       <a class="lb-visit" id="lbVisit" href="#" target="_blank" rel="noopener noreferrer">Open textbook →</a>
+      <a class="lb-visit" id="lbAsk" href="#" style="background:transparent;color:var(--ink);border:1.5px solid var(--line);">Ask Jesse</a>
       <div class="lb-nav">
         <button id="lbPrev" aria-label="Previous">←</button>
         <button id="lbNext" aria-label="Next">→</button>
@@ -355,10 +370,13 @@
     galleryEl.innerHTML = filtered.map((b, i) => {
       const big = i % 11 === 0 ? ' big' : '';
       const color = swatchFor(b.title);
+      const art = b.cover
+        ? `<img class="cover-art" src="${escapeHtml(b.cover)}" alt="">`
+        : `<div class="swatch" style="background:${color}">${initials(b.title)}</div>`;
       return `
         <div class="frame${big}" data-id="${b.id}" tabindex="0" role="button" aria-label="Open ${escapeHtml(b.title)}">
           <div class="mat">
-            <div class="swatch" style="background:${color}">${initials(b.title)}</div>
+            ${art}
             <div class="card-subject">${escapeHtml(b.subject)}</div>
             <div class="card-title">${escapeHtml(b.title)}</div>
             <div class="card-desc">${escapeHtml(b.description)}</div>
@@ -399,13 +417,24 @@
   function renderLightbox(){
     const b = filtered[lbIndex];
     if (!b) return;
-    lbSwatch.style.background = swatchFor(b.title);
-    lbSwatch.textContent = initials(b.title);
+    const coverEl = document.getElementById('lbCover');
+    if (b.cover) {
+      coverEl.src = b.cover;
+      coverEl.hidden = false;
+      lbSwatch.style.display = 'none';
+    } else {
+      coverEl.hidden = true;
+      coverEl.removeAttribute('src');
+      lbSwatch.style.display = '';
+      lbSwatch.style.background = swatchFor(b.title);
+      lbSwatch.textContent = initials(b.title);
+    }
     lbSubject.textContent = b.subject;
     lbTitle.textContent = b.title;
     lbDesc.textContent = b.description;
     lbStats.textContent = b.stats || '';
     lbVisit.href = b.url;
+    document.getElementById('lbAsk').href = 'https://mindcraft-93858.web.app/desk-os/workflows/archive/?v=a1&q=' + encodeURIComponent(b.title);
     lbCounter.textContent = `${lbIndex + 1} of ${filtered.length}`;
     lbPrev.disabled = lbIndex <= 0;
     lbNext.disabled = lbIndex >= filtered.length - 1;

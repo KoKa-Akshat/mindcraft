@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Archive · The Desk</title>
+<meta name="description" content="Ask Jesse for an exact page in Dan McCreary's open textbooks. Your question stays on this device.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito+Sans:wght@500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#143a2e; --leaf:#247a4d; --lime:#c4f547; --paper:#f4efe6;
+    --spring:cubic-bezier(.22,1.2,.36,1);
+    --ease:cubic-bezier(.2,.8,.2,1);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:#f4efe6}
+  body{
+    font-family:"Nunito Sans",sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    overflow:hidden;
+  }
+  #wall,#lg{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;display:block}
+  #wall{z-index:0} #lg{z-index:1}
+  .phone{
+    position:relative;z-index:2;
+    height:100%;max-width:430px;margin:0 auto;
+    padding:calc(12px + env(safe-area-inset-top)) 16px calc(18px + env(safe-area-inset-bottom));
+    display:flex;flex-direction:column;gap:12px;overflow:auto;
+  }
+  [data-glass]{background:transparent;position:relative;isolation:isolate}
+  .no-gl [data-glass]{
+    background:rgba(255,255,255,.12);
+    backdrop-filter:blur(10px) saturate(1.2);
+    -webkit-backdrop-filter:blur(10px) saturate(1.2);
+    box-shadow:inset .5px .5px 0 rgba(255,255,255,.55), inset -.5px -.5px 0 rgba(20,58,46,.08), 0 18px 40px rgba(20,58,46,.08);
+  }
+  .appbar{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-radius:999px;flex-shrink:0}
+  .mark{font-family:"Fredoka",sans-serif;font-weight:700;font-size:15px}
+  .pill{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--leaf);padding:6px 10px}
+  .screen{display:none;flex:1;flex-direction:column;gap:14px;min-height:0}
+  .screen.on{display:flex;animation:rise .55s var(--spring) both}
+  @keyframes rise{from{opacity:0;transform:translateY(16px) scale(.98)} to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){
+    .screen.on{animation:none}
+    .btn:active,.rec:active,.spine:active{transform:none}
+  }
+  @media (prefers-reduced-transparency:reduce){
+    [data-glass]{background:#f7f4ec !important;backdrop-filter:none !important}
+  }
+  h1{font-family:"Fredoka",sans-serif;font-size:34px;line-height:1.05;margin:8px 4px 0;font-weight:700}
+  .lede{margin:0 4px;font-size:16px;font-weight:700;color:rgba(20,58,46,.62);line-height:1.35}
+  .platter{padding:18px;border-radius:28px}
+  .avatar{
+    width:56px;height:56px;border-radius:18px;
+    background:linear-gradient(160deg,#d8f08a,#9ad4a0);
+    display:grid;place-items:center;
+    font-family:"Caveat",cursive;font-size:28px;color:#143a2e;
+  }
+  .row{display:flex;gap:12px;align-items:center}
+  .wave{flex:1;height:42px;display:flex;align-items:center;gap:3px;padding:0 6px}
+  .wave b{display:block;width:3px;border-radius:3px;background:var(--leaf);animation:eq 1.1s ease-in-out infinite;transform-origin:center}
+  .wave.off b{animation:none;height:8px !important;opacity:.28}
+  @keyframes eq{0%,100%{transform:scaleY(.35)} 50%{transform:scaleY(1)}}
+  .btn{
+    appearance:none;border:0;cursor:pointer;width:100%;
+    border-radius:22px;padding:16px 18px;
+    font-family:"Fredoka",sans-serif;font-size:17px;font-weight:600;
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    color:var(--ink);background:transparent;transition:transform .28s var(--spring);
+  }
+  .btn:active{transform:scale(.97)}
+  .btn.fill{background:var(--ink);color:#f7f5f0;box-shadow:0 16px 30px rgba(20,58,46,.22)}
+  .quiet{text-align:center;font-size:13px;font-weight:800;color:rgba(20,58,46,.45);background:none;border:0;cursor:pointer;padding:8px}
+  .rec{
+    width:88px;height:88px;border-radius:50%;margin:8px auto 0;display:grid;place-items:center;
+    border:0;cursor:pointer;background:transparent;font-size:13px;font-weight:800;color:var(--ink);
+    transition:transform .28s var(--spring);touch-action:none;
+  }
+  .rec:active{transform:scale(.97)}
+  .rec.hot{animation:pulse 1.2s var(--ease) infinite}
+  @keyframes pulse{0%,100%{transform:scale(1)} 50%{transform:scale(1.06)}}
+  .hint{text-align:center;font-size:12px;font-weight:800;color:rgba(20,58,46,.42);margin:0}
+  .rights{font-size:12px;font-weight:800;line-height:1.4;color:rgba(20,58,46,.62);padding:14px 16px;border-radius:22px}
+  .rights b{color:var(--ink)}
+  .status{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--leaf)}
+  .callbar{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:999px}
+  .dot{width:8px;height:8px;border-radius:50%;background:#3dba6a;box-shadow:0 0 0 4px rgba(61,186,106,.18)}
+  .transcript{flex:1;overflow:auto;display:flex;flex-direction:column;gap:8px;padding:4px 2px 8px;min-height:120px}
+  .bubble{max-width:86%;padding:10px 12px;border-radius:16px;font-size:14px;font-weight:700;line-height:1.35}
+  .bubble.j{align-self:flex-start;background:rgba(255,255,255,.55)}
+  .bubble.you{align-self:flex-end;background:var(--lime)}
+  .suggest{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+  .suggest button{
+    border:0;cursor:pointer;font:800 11px/1 "Nunito Sans",sans-serif;
+    padding:8px 12px;border-radius:999px;color:var(--ink);background:transparent;
+  }
+  .think{
+    position:fixed;left:50%;bottom:28px;transform:translateX(-50%);
+    z-index:5;padding:12px 18px;border-radius:999px;
+    font-size:13px;font-weight:800;color:var(--ink);pointer-events:none;
+  }
+  .shelf{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+    overflow:auto;padding:2px 2px 8px;min-height:0;
+  }
+  .spine{
+    border:0;padding:0;background:none;cursor:pointer;text-align:left;
+    transition:transform .28s var(--spring);
+  }
+  .spine:active{transform:scale(.97)}
+  .spine img{
+    width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:10px;
+    box-shadow:0 10px 22px rgba(20,58,46,.16);display:block;
+  }
+  .spine span{
+    display:block;margin-top:6px;font-size:10px;font-weight:800;line-height:1.25;
+    color:rgba(20,58,46,.7);
+  }
+  .pagebox{
+    background:#fffdf8;border-radius:22px;padding:16px;
+    box-shadow:0 10px 24px rgba(20,58,46,.06);
+  }
+  .pagebox .k{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--leaf);margin:0 0 6px}
+  .pagebox h2{font-family:"Fredoka",sans-serif;font-size:18px;margin:0 0 8px;line-height:1.2}
+  .pagebox p{margin:0;font-size:13.5px;line-height:1.45;font-weight:700;color:rgba(20,58,46,.78)}
+  .pagebox a{
+    display:inline-flex;margin-top:12px;font-size:12px;font-weight:800;
+    color:var(--ink);text-decoration:none;padding:8px 12px;border-radius:999px;
+  }
+</style>
+</head>
+<body>
+  <canvas id="wall" aria-hidden="true"></canvas>
+  <canvas id="lg" aria-hidden="true"></canvas>
+
+  <div class="phone" id="phone">
+    <header class="appbar" data-glass="bar" data-radius="999">
+      <span class="mark">The Desk</span>
+      <span class="pill">Your data</span>
+    </header>
+
+    <section class="screen on" id="meet">
+      <h1>Hi. I’m Jesse.</h1>
+      <p class="lede">Ask a book. I’ll fetch the exact page from Dan’s open shelf. Nothing is stored.</p>
+      <div class="platter" data-glass="card">
+        <div class="row">
+          <div class="avatar" aria-hidden="true">J</div>
+          <div>
+            <div class="status" id="meetStatus">Ready to listen</div>
+            <div class="wave off" id="meetWave"></div>
+          </div>
+        </div>
+      </div>
+      <button class="rec" id="recBtn" type="button" data-glass="orb" data-thickness="40" data-density="1">Hold</button>
+      <p class="hint">Hold to talk. Release when you’re done.</p>
+      <button class="btn fill" id="callBtn" type="button">Jump on a call with Jesse</button>
+      <button class="quiet" id="toShelf">or browse the shelf</button>
+      <div class="rights" data-glass="card">
+        <b>Your data stays yours.</b> Questions stay on this device. The books stay on Dan’s sites. We only open the page.
+      </div>
+    </section>
+
+    <section class="screen" id="shelf">
+      <h1>The shelf.</h1>
+      <p class="lede">Sixteen covers from the open catalogue. Tap one, or ask Jesse for a page.</p>
+      <div class="shelf" id="shelfGrid"></div>
+      <button class="btn fill" id="shelfCall" type="button">Ask Jesse</button>
+    </section>
+
+    <section class="screen" id="call">
+      <div class="callbar" data-glass="bar" data-radius="999">
+        <span class="dot"></span>
+        <div style="flex:1">
+          <b style="font-family:Fredoka,sans-serif">On a call with Jesse</b>
+          <div class="status">Exact page. His words.</div>
+        </div>
+        <button class="quiet" id="endCall" type="button">End</button>
+      </div>
+      <div class="transcript" id="log"></div>
+      <article class="pagebox" id="pageBox" hidden>
+        <p class="k" id="pageBook"></p>
+        <h2 id="pageTitle"></h2>
+        <p id="pageQuote"></p>
+        <a id="pageLink" href="#" target="_blank" rel="noopener noreferrer" data-glass="chip">Open this page</a>
+      </article>
+      <div class="suggest">
+        <button type="button" data-glass="chip" data-say="Open the DSP book on FFT">FFT on a $5 chip</button>
+        <button type="button" data-glass="chip" data-say="Show me derivatives in calculus">Derivatives</button>
+        <button type="button" data-glass="chip" data-say="How do I blink an LED in MicroPython">Blink an LED</button>
+      </div>
+      <button class="rec" id="callRec" type="button" data-glass="orb" data-thickness="40" data-density="1">Talk</button>
+    </section>
+  </div>
+
+  <div class="think" id="think" hidden data-glass="bar"><b>Jesse is reading</b></div>
+
+<script src="../glass.js"></script>
+<script src="./agent.js?v=a1"></script>
+</body>
+</html>
