@@ -135,10 +135,11 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 139 | Parent trust copy when visual diagnostic holes remain | SAFE-SCANCOMP × SAFE-PDASH/WTP; hole honesty without coverage shame | **DONE** (2026-08-13) — Part CXXXIX / SAFE-HOLETRUST |
 | 140 | Promote-to-C4 tutor QA workflow for Practice-only FormatId | SAFE-SPLITPOOL × SAFE-REPAIR/FIGKEY; ticketed promote without play-count flip | **DONE** (2026-08-13) — Part CXL / SAFE-PROMOTE |
 | 141 | Exposure cool-down after reveal before same-stem C4 | SAFE-SPLITPOOL × SAFE-SCANCOMP; anti-answer-hunt without pool starvation | **DONE** (2026-08-13) — Part CXLI / SAFE-COOLDOWN |
-| 142 | Student-facing hole copy after gap-scan (no shame, no fake greens) | SAFE-HOLETRUST × SAFE-COLD/CALIB; student summary without parent-only honesty | **NEXT** |
-| 143 | Promote backlog SLA vs parent hole-ETA honesty | SAFE-PROMOTE × SAFE-KNOWNETA/HOLETRUST; finite verify bands without play-count fill bars | queued |
+| 142 | Student-facing hole copy after gap-scan (no shame, no fake greens) | SAFE-HOLETRUST × SAFE-COLD/CALIB; student summary without parent-only honesty | **DONE** (2026-08-14) — Part CXLII / SAFE-STUDHOLE |
+| 143 | Promote backlog SLA vs parent hole-ETA honesty | SAFE-PROMOTE × SAFE-KNOWNETA/HOLETRUST; finite verify bands without play-count fill bars | **NEXT** |
 | 144 | Second-rater thresholds for figured C4 admits | SAFE-PROMOTE × SAFE-FIGKEY/HITL; when dual review is mandatory vs cost theater | queued |
 | 145 | Isomorphic stem-family hashing for cool-down without over-block | SAFE-COOLDOWN × SAFE-GENQ/FIGKEY; clone seals without starving FormatId practice | queued |
+| 146 | Gap-scan exit emotion without Anxiety Score™ (destake copy after holes) | SAFE-STUDHOLE × SAFE-PRIVACY/EXPOSE; calm language without mood telemetry | queued |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 
@@ -241,3 +242,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any hide-`format_not_probed` for conversion / child-deficit visual-hole shame / “complete visual diagnostic” ads while holes remain / Hole Trust Score™·Coverage Satisfaction·Honesty Minutes NS / absence≡format mastery / fear-scarcity hole WTP / ACT guarantees from hole packaging (Part CXXXIX / SAFE-HOLETRUST)
 - Any play-count / thumbs-up auto-promote to C4 / silent `hcelig_pass` flip / fluency soft-pass at promote / Promote Score™·QA Minutes·Promotion Throughput % NS / padding C4 while critical REPAIR open / ACT or complete-visual guarantees from promote packaging (Part CXL / SAFE-PROMOTE)
 - Any immediate same-stem C4 after reveal / forever or global cool-down lock as default / Cool-Down Score™·Exposure Minutes·Lock Duration % NS / pad under cool-down / isomorphic-clone leak as “fresh” / ACT or complete-visual guarantees from cool-down packaging (Part CXLI / SAFE-COOLDOWN)
+- Any parent-only hole honesty / fake greens for `not_probed` / ability-shame hole frames / empty growth-mindset poster without CTA / Student Hole Score™·Completeness %·Honesty Minutes NS / absence≡mastery / ACT or identity guarantees from student hole packaging (Part CXLII / SAFE-STUDHOLE)

@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-14 — Researcher tick: Part CXLII Student-facing hole copy after gap-scan (SAFE-STUDHOLE)
+
+**Tick type:** Researcher (UTC hour 00 ≡ Red Team slot, but ch142 never written → prefer Researcher per rotation; researcher count since synthesizer v1.17 = 8 → Researcher)  
+**Chapter written:** `chapters/142_student_facing_hole_copy_after_gap_scan.md` (Part CXLII)  
+**Claim examined:** Whether gap-scan FormatId holes may be **hidden from students**, painted as **fake greens**, or framed as **ability shame / empty mindset posters** — or must ship **parity honesty** with parent HOLETRUST plus one Practice CTA without Student Hole Score™.
+
+**Doctrine proposed (provisional):** **SAFE-STUDHOLE** — densifies SAFE-HOLETRUST × SAFE-COLD × SAFE-CALIB × SAFE-SOFTMSG × SAFE-FBLIT × Schnackenberg/Tomlinson transparency × Black/Wiliam formative use × Hattie/Timperley levels × Mueller/Dweck ability-label caution × Yeager et al. conditional mindset: students see holes; product-hole frame; neutral chips; one CTA; no fake greens. Experiment family **STUDHOLE-***.
+
+**Evidence spine (verified citations):** Schnackenberg & Tomlinson (2016); Mayer, Davis, & Schoorman (1995); Black & Wiliam (1998); Hattie & Timperley (2007); Mueller & Dweck (1998); Yeager et al. (2019).
+
+**Claim killed (this tick):** Parent-only hole honesty / fake greens for `not_probed` / ability-shame hole frames / empty growth-mindset poster without CTA / Student Hole Score™·Completeness %·Honesty Minutes NS / absence≡mastery / ACT or identity guarantees from student hole packaging (provisional kill #96 until synthesizer).
+
+**Experiments:** STUDHOLE-1…5 + STUDHOLE-QUAL.
+
+**Next researcher id:** **143** (Promote backlog SLA vs parent hole-ETA honesty). Researcher count since v1.17 synthesizer: **9** → next non–Red-Team hour with ≥8 researchers still triggers **Synthesizer v1.18** (overdue). Unfinished queue restored to ≥3 (143–146; invented stub 146 gap-scan exit emotion without Anxiety Score™).
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-13 — Researcher tick: Part CXLI Exposure cool-down after reveal before same-stem C4 (SAFE-COOLDOWN)
 
 **Tick type:** Researcher (UTC hour 21; hour%6≠0; researcher count since synthesizer v1.17 = 7 → Researcher)  
