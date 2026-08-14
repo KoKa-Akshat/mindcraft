@@ -59,7 +59,7 @@
 
   function startEditor(kind, aiPrompt = '') {
     if (kind === 'resume') {
-      location.href = './resume/?v=r2';
+      location.href = './resume/?v=r3';
       return;
     }
     if (kind === 'booking') {

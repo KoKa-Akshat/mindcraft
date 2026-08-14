@@ -2,7 +2,7 @@
 
 **Product:** The Desk by MindCraft  
 **Surface:** Resume builder workflow (Jesse, voice-first)  
-**Tryable proto:** https://mindcraft-93858.web.app/desk-os/workflows/resume/  
+**Tryable proto:** https://mindcraft-93858.web.app/desk-os/workflows/resume/?v=r3  
 **Canon:** `BRAND_BOOK.md` · `docs/canon/PEDAGOGY.md` · Apple liquid-glass from [sdegenaar/liquid_glass_widgets](https://github.com/sdegenaar/liquid_glass_widgets) (`lightweight_glass.frag` PATH A)
 
 Do **not** clone Jack & Jill chrome. Steal the *feel*: hi → recorder → guided call → LinkedIn/Drive. Speak Desk.
@@ -86,17 +86,18 @@ Glass is the **navigation / control layer**, not a wrapper.
 
 ## 3. Workflow (product, not theater)
 
-1. Open Resume builder → auto-speak greeting (once per session).
-2. Recorder captures speech → intent parse (skill / role / drive / upload / linkedin).
-3. LinkedIn connect → private **on-device draft** (name, school, roles). Student can delete any field.
-4. Google already signed in → Drive is **The Desk folder only**, same as Field Desk connector.
-5. Upload uses Files / Drive; never implies we own the PDF.
-6. Call is the same agent, not a second personality.
-7. Apply today stays a sibling workflow (Job OS board). Resume builder feeds it later; do not merge screens yet.
+1. Open Resume builder → greeting (Samantha/Ava). Replies wait **≥5s** (`waitMs`) with “Jesse is reading”.
+2. Recorder → `POST /api/resume-agent` with draft + sources. Jesse extracts; never invents employers.
+3. LinkedIn: URL + pasted About/Experience and/or LinkedIn PDF. OpenID does not include Experience.
+4. Drive: Google OAuth `drive.readonly`, app only reads folder **The Desk**.
+5. Upload PDF → pdf.js / PDFKit text → same agent.
+6. Let’s apply → suggested search directions + iOS Apply today ingest. Student submits; we do not apply for them.
 
 **Data contract (honest):**
-- Prototype: localStorage + file name only.
-- Production: no resume JSON to MindCraft servers without an explicit Save. LinkedIn tokens via existing Google/OAuth patterns. Drive stays folder-scoped read.
+- Extraction runs on `mindcraft-webhook` (`/api/resume-agent`). Draft stays on device until Let’s apply.
+- LinkedIn OpenID cannot supply Experience. Paste or PDF is required for roles.
+- Drive OAuth is `drive.readonly`; the app only reads folder **The Desk**.
+- We never submit applications. Apply today logs Applied after the student does.
 
 ---
 

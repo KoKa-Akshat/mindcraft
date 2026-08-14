@@ -148,6 +148,26 @@
     border:0; cursor:pointer; font:800 11px/1 "Nunito Sans",sans-serif;
     padding:8px 12px; border-radius:999px; color:var(--ink); background:transparent;
   }
+  .think{
+    position:fixed; left:50%; bottom:28px; transform:translateX(-50%);
+    z-index:5; padding:12px 18px; border-radius:999px;
+    font-size:13px; font-weight:800; color:var(--ink);
+    pointer-events:none;
+  }
+  .sheet{
+    position:fixed; inset:0; z-index:6; display:flex; align-items:flex-end; justify-content:center;
+    background:rgba(20,58,46,.28);
+  }
+  .sheet[hidden]{display:none}
+  .sheet .platter{width:min(430px,100%); margin:0; padding:20px 18px 28px; border-radius:28px 28px 0 0}
+  .sheet label{display:block; font-size:11px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; margin:12px 0 6px}
+  .sheet input, .sheet textarea{
+    width:100%; border:0; border-radius:16px; padding:12px;
+    font:700 14px/1.4 "Nunito Sans",sans-serif; color:var(--ink);
+    background:rgba(255,255,255,.55);
+  }
+  .sheet textarea{min-height:110px; resize:vertical}
+
 </style>
 </head>
 <body>
@@ -221,6 +241,7 @@
         <button class="mini" id="addSkill" type="button" data-glass="btn">Add a skill</button>
         <button class="mini" id="deskUpload" type="button" data-glass="btn">Upload / Drive</button>
       </div>
+      <button class="btn fill" id="applyBtn" type="button" hidden>Let’s apply</button>
     </section>
 
     <section class="screen" id="call">
@@ -237,6 +258,32 @@
       </div>
       <button class="rec" id="callRec" type="button" data-glass="orb" data-thickness="40" data-density="1">Talk</button>
     </section>
+
+    <section class="screen" id="apply">
+      <h1>Let’s apply.</h1>
+      <p class="lede">Directions from your draft. Search, then log Applied on the board. Nothing is submitted for you.</p>
+      <div id="applyList"></div>
+      <button class="btn fill" id="applyBack" type="button">Back to the draft</button>
+    </section>
+  </div>
+
+  <div class="think" id="think" hidden data-glass="bar"><b>Jesse is reading</b></div>
+
+  <div class="sheet" id="liSheet" hidden>
+    <div class="platter" data-glass="card">
+      <p class="status">LinkedIn</p>
+      <p class="lede" style="margin:8px 0 0">LinkedIn does not give apps your Experience. Paste the URL, then About / Experience, or the PDF from More → Save to PDF.</p>
+      <label for="liUrl">Profile URL</label>
+      <input id="liUrl" type="url" placeholder="https://www.linkedin.com/in/…">
+      <label for="liText">About and Experience</label>
+      <textarea id="liText" placeholder="Paste the parts that belong on a resume."></textarea>
+      <label for="liPdf">LinkedIn PDF</label>
+      <input id="liPdf" type="file" accept=".pdf,application/pdf" style="display:block">
+      <div class="dock" style="margin-top:14px">
+        <button class="mini" id="liCancel" type="button" data-glass="btn">Cancel</button>
+        <button class="btn fill" id="liSave" type="button" style="width:auto">Extract</button>
+      </div>
+    </div>
   </div>
 
 <script>
@@ -504,222 +551,14 @@
   resize();
 })();
 </script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script>
-(() => {
-  const $ = (id) => document.getElementById(id);
-  const glass = () => window.deskGlass && window.deskGlass.draw();
-  const state = {
-    name: '', headline: '', school: '',
-    skills: [], roles: [], files: [],
-    drive: false, linkedin: false,
-  };
-
-  const wave = $('meetWave');
-  for (let i = 0; i < 18; i++) {
-    const b = document.createElement('b');
-    b.style.height = (8 + Math.random() * 28) + 'px';
-    b.style.animationDelay = (i * 0.06) + 's';
-    wave.appendChild(b);
+  if (window.pdfjsLib) {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
   }
-
-  function show(id) {
-    document.querySelectorAll('.screen').forEach((el) => el.classList.toggle('on', el.id === id));
-    requestAnimationFrame(() => { glass(); requestAnimationFrame(glass); });
-  }
-
-  function pickVoice() {
-    const voices = speechSynthesis.getVoices();
-    const prefer = ['Samantha', 'Google US English', 'Jenny', 'Ava', 'Karen', 'Female'];
-    for (const p of prefer) {
-      const v = voices.find((x) => x.name.includes(p) && x.lang.startsWith('en'));
-      if (v) return v;
-    }
-    return voices.find((x) => x.lang.startsWith('en')) || null;
-  }
-
-  function speak(text) {
-    speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(text);
-    u.rate = 0.96;
-    u.pitch = 1.04;
-    const v = pickVoice();
-    if (v) u.voice = v;
-    speechSynthesis.speak(u);
-  }
-  speechSynthesis.onvoiceschanged = () => {};
-
-  function sayLog(who, text) {
-    const el = document.createElement('div');
-    el.className = 'bubble ' + who;
-    el.textContent = text;
-    $('log').appendChild(el);
-    $('log').scrollTop = $('log').scrollHeight;
-    if (who === 'j') speak(text);
-    glass();
-  }
-
-  function renderResume() {
-    const name = state.name || 'Your name';
-    const head = state.headline || 'Add a line that sounds like you';
-    const skills = state.skills.length ? state.skills.map((s) => `<span class="chip">${s}</span>`).join('') : '<span class="chip">skills land here</span>';
-    const roles = state.roles.length
-      ? '<ul>' + state.roles.map((r) => `<li>${r}</li>`).join('') + '</ul>'
-      : '<p>Roles appear after LinkedIn or a call.</p>';
-    const files = state.files.length ? state.files.join(', ') : 'None yet';
-    $('nm').textContent = name;
-    $('hd').textContent = head;
-    $('skills').innerHTML = skills;
-    $('resume').innerHTML = `
-      <h2>${name}</h2>
-      <div class="meta">${head}</div>
-      <h3>Experience</h3>
-      ${roles}
-      <h3>Skills</h3>
-      <div class="chips">${skills}</div>
-      <h3>Files on The Desk</h3>
-      <p>${files}${state.drive ? ' · Drive folder linked' : ''}</p>
-    `;
-    glass();
-  }
-
-  function pullLinkedIn() {
-    state.linkedin = true;
-    state.name = state.name || 'Akshat Koirala';
-    state.headline = 'Mathematics and Economics · Macalester College · UWC Davis Scholar';
-    state.school = 'Macalester College';
-    state.skills = Array.from(new Set([...state.skills, 'R', 'Excel', 'Tutoring', 'Writing']));
-    state.roles = Array.from(new Set([...state.roles, 'Research assistant — quantitative methods', 'Tutor — high school math']));
-    $('dataPill').textContent = 'Private draft';
-    renderResume();
-    show('desk');
-    speak('Pulled. This is a private draft on your desk. Tell me what to add or cut.');
-  }
-
-  function ingest(text) {
-    const t = text.toLowerCase();
-    if (/python|r\b|excel|sql|stata|writing|tutoring/.test(t)) {
-      const hit = (t.match(/python|excel|sql|stata|writing|tutoring|\br\b/) || ['skill'])[0];
-      const label = hit === 'r' ? 'R' : hit[0].toUpperCase() + hit.slice(1);
-      if (!state.skills.includes(label)) state.skills.push(label);
-      renderResume();
-      return `Added ${label}. Say another skill if you want.`;
-    }
-    if (/intern|td|bank|salesforce|work/.test(t)) {
-      const role = /td/.test(t) ? 'Intern — TD' : 'Role from your voice note';
-      if (!state.roles.includes(role)) state.roles.push(role);
-      renderResume();
-      return `${role} is on the page. Keep going.`;
-    }
-    if (/drive|folder/.test(t)) {
-      state.drive = true;
-      renderResume();
-      return 'The Desk folder is linked. I can only see what you drop in there.';
-    }
-    if (/upload|file|resume|pdf/.test(t)) {
-      $('filePick').click();
-      return 'Pick a file. It stays in your account.';
-    }
-    if (/linkedin/.test(t)) {
-      pullLinkedIn();
-      return 'Connecting LinkedIn now.';
-    }
-    return 'I heard you. Name the skill or the role and I will place it.';
-  }
-
-  let rec = null;
-  async function listen(button, onText) {
-    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SR) {
-      const fake = prompt('Type what you would say');
-      if (fake) onText(fake);
-      return;
-    }
-    const r = new SR();
-    r.lang = 'en-US';
-    r.interimResults = false;
-    button.classList.add('hot');
-    wave.classList.remove('off');
-    $('meetStatus').textContent = 'Listening';
-    glass();
-    r.onresult = (e) => onText(e.results[0][0].transcript);
-    r.onend = () => {
-      button.classList.remove('hot');
-      wave.classList.add('off');
-      $('meetStatus').textContent = 'Ready to listen';
-      rec = null;
-      glass();
-    };
-    r.start();
-    rec = r;
-  }
-  function stopListen() { if (rec) try { rec.stop(); } catch (_) {} }
-
-  $('recBtn').addEventListener('pointerdown', (e) => {
-    e.preventDefault();
-    listen($('recBtn'), (text) => {
-      speak(ingest(text));
-      show('link');
-    });
-  });
-  ['pointerup', 'pointercancel', 'pointerleave'].forEach((ev) => {
-    $('recBtn').addEventListener(ev, stopListen);
-    $('callRec').addEventListener(ev, stopListen);
-  });
-  $('callBtn').addEventListener('click', () => {
-    show('call');
-    $('log').innerHTML = '';
-    sayLog('j', 'Hi. I’m Jesse. We can add skills, pull LinkedIn, or file a PDF. What should we do first?');
-  });
-  $('toLink').addEventListener('click', () => show('link'));
-  $('liBtn').addEventListener('click', pullLinkedIn);
-  $('driveBtn').addEventListener('click', () => {
-    state.drive = true;
-    $('linkNote').innerHTML = '<b>Drive folder linked.</b> Only The Desk folder. Revoke anytime.';
-    speak('Drive folder linked. Only the folder you chose.');
-    glass();
-  });
-  function openFile() { $('filePick').click(); }
-  $('uploadBtn').addEventListener('click', openFile);
-  $('deskUpload').addEventListener('click', openFile);
-  $('filePick').addEventListener('change', () => {
-    const f = $('filePick').files[0];
-    if (!f) return;
-    state.files.push(f.name);
-    renderResume();
-    speak('Filed ' + f.name + '. It stays yours.');
-    if (!$('desk').classList.contains('on') && !$('call').classList.contains('on')) show('desk');
-  });
-  $('deskCall').addEventListener('click', () => $('callBtn').click());
-  $('endCall').addEventListener('click', () => {
-    speechSynthesis.cancel();
-    show('desk');
-    renderResume();
-  });
-  $('callRec').addEventListener('pointerdown', (e) => {
-    e.preventDefault();
-    listen($('callRec'), (text) => {
-      sayLog('you', text);
-      setTimeout(() => sayLog('j', ingest(text)), 280);
-    });
-  });
-  document.querySelectorAll('[data-say]').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const text = btn.getAttribute('data-say');
-      sayLog('you', text);
-      setTimeout(() => sayLog('j', ingest(text)), 280);
-    });
-  });
-  $('addSkill').addEventListener('click', () => {
-    const s = prompt('Skill to add');
-    if (!s) return;
-    state.skills.push(s.trim());
-    renderResume();
-  });
-
-  renderResume();
-  setTimeout(() => speak('Hi. I’m Jesse. I’ll help you build a resume that sounds like you.'), 600);
-})();
 </script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="./agent.js?v=r3"></script>
 </body>
 </html>

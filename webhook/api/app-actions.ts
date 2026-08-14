@@ -24,6 +24,7 @@ import marketingLead from '../lib/handlers/marketing-lead'
 import marketingDrop from '../lib/handlers/marketing-drop'
 import cronMarketingFollowup from '../lib/handlers/cron-marketing-followup'
 import deskAsk from '../lib/handlers/desk-ask'
+import resumeAgent from '../lib/handlers/resume-agent'
 
 const HANDLERS: Record<string, (req: VercelRequest, res: VercelResponse) => Promise<unknown> | unknown> = {
   'create-classroom': createClassroom,
@@ -42,6 +43,7 @@ const HANDLERS: Record<string, (req: VercelRequest, res: VercelResponse) => Prom
   'marketing-drop': marketingDrop,
   'cron-marketing-followup': cronMarketingFollowup,
   'desk-ask': deskAsk,
+  'resume-agent': resumeAgent,
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
