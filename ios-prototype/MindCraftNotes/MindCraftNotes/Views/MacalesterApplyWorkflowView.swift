@@ -348,10 +348,11 @@ struct MacalesterApplyWorkflowView: View {
 
 // MARK: - Workflows library (dock entry)
 
-/// Lists workflows the student has access to; opens Macalester Job OS.
+/// Lists workflows the student has access to; opens Resume agent or Job OS.
 struct WorkflowLibraryView: View {
     @Environment(\.dismiss) private var dismiss
     @ObservedObject var market: WorkflowMarketStore
+    var onOpenResumeBuilder: () -> Void = {}
     var onOpenApplyToday: () -> Void
 
     var body: some View {
@@ -359,10 +360,9 @@ struct WorkflowLibraryView: View {
             List {
                 Section {
                     Button {
-                        market.buy("application_tracker")
                         dismiss()
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-                            onOpenApplyToday()
+                            onOpenResumeBuilder()
                         }
                     } label: {
                         HStack(spacing: 12) {
@@ -373,7 +373,7 @@ struct WorkflowLibraryView: View {
                             VStack(alignment: .leading, spacing: 2) {
                                 Text("Resume builder")
                                     .font(.system(size: 16, weight: .bold, design: .rounded))
-                                Text("Job OS space · resume, roles, apply packet")
+                                Text("Jesse · voice, LinkedIn, Drive folder")
                                     .font(.system(size: 12, weight: .medium, design: .rounded))
                                     .foregroundColor(.secondary)
                             }

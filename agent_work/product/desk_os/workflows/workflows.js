@@ -5,6 +5,8 @@
   const $ = (s, r = document) => r.querySelector(s);
 
   const CARDS = [
+    { id: 'resume', title: 'Resume builder', tone: '#c4f547', icon: '✎',
+      blurb: 'Jesse on a call. LinkedIn pull. Drive folder you already own.' },
     { id: 'poll', title: 'Group Poll', tone: '#c4a484', icon: '◷',
       blurb: 'Find the time that works for everyone. Votes stack. Share the link.' },
     { id: 'signup', title: 'Sign-up Sheet', tone: '#1f6b4a', icon: '▥',
@@ -56,6 +58,10 @@
   }
 
   function startEditor(kind, aiPrompt = '') {
+    if (kind === 'resume') {
+      location.href = './resume/?v=r1';
+      return;
+    }
     if (kind === 'booking') {
       window.open(CALENDLY, '_blank', 'noopener');
       toast('Opening Calendly');
@@ -350,7 +356,8 @@
     e.preventDefault();
     applySearch($('#askInput').value);
     const q = $('#askInput').value.trim().toLowerCase();
-    if (q.includes('poll')) startEditor('poll');
+    if (q.includes('resume')) startEditor('resume');
+    else if (q.includes('poll')) startEditor('poll');
     else if (q.includes('sign')) startEditor('signup');
     else if (q.includes('1:1') || q.includes('one')) startEditor('oneOne');
     else if (q.includes('book') || q.includes('calendly')) startEditor('booking');

@@ -61,6 +61,7 @@ struct FieldDeskView: View {
     @State private var showFindTutor = false
     @State private var showFriends = false
     @State private var showWorkflowLibrary = false
+    @State private var showResumeAgent = false
     @State private var showApplyToday = false
     @State private var showSchedulingWorkflows = false
     @State private var schedulingWorkflowsMinimized = false
@@ -784,12 +785,24 @@ struct FieldDeskView: View {
             FriendsView(onClose: { showFriends = false })
         }
         .fullScreenCover(isPresented: $showWorkflowLibrary) {
-            WorkflowLibraryView(market: workflowMarket) {
-                showWorkflowLibrary = false
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    showApplyToday = true
+            WorkflowLibraryView(
+                market: workflowMarket,
+                onOpenResumeBuilder: {
+                    showWorkflowLibrary = false
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        showResumeAgent = true
+                    }
+                },
+                onOpenApplyToday: {
+                    showWorkflowLibrary = false
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        showApplyToday = true
+                    }
                 }
-            }
+            )
+        }
+        .fullScreenCover(isPresented: $showResumeAgent) {
+            ResumeAgentView(onClose: { showResumeAgent = false })
         }
         .sheet(isPresented: $showManage) {
             AccountManageView()
