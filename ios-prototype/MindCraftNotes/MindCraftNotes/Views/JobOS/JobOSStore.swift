@@ -188,9 +188,11 @@ final class JobOSStore: ObservableObject {
             addRole(
                 company: company,
                 role: role,
+                location: "",
+                lane: "Prepare",
+                fit: 84 - idx * 4,
                 url: "",
-                why: row.why.isEmpty ? row.query : row.why,
-                fit: 84 - idx * 4
+                why: row.why.isEmpty ? row.query : row.why
             )
         }
         flash("Jesse handed this to Apply today")
