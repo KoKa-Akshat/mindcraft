@@ -187,26 +187,31 @@ adding the whole format axis needed no new engine code.
     `trim_chain` if ever wired up. Delete or wire, don't leave.
 
 ## Fragile — works, but on shakier ground than it looks
-4. **`decay_edge` decays toward the wrong attractor.** It doesn't store the original prior;
-   it hardcodes prior means by relation (`prerequisite→0.9`). Bridge-derived edges carry
-   strengths like 0.55, so they rot toward 0.9. Fix: persist `prior_mean` on `EdgeState`.
+*Still open. Both require a measurement or pacing decision — see bucket C below.*
+
 5. **The "canonical chain" is a path, not a closure.** `get_prerequisite_chain` follows only
    the *single strongest* prereq, so real chains come out 2–4 nodes long and siblings are
    dropped. Exam mode hides this by passing all 29 targets at once.
-6. **`estimate_difficulty` is file ordering.** `typical_order` is literally the index in the
-   JSON array, so difficulty ≈ where the concept happens to sit in the file.
 7. **`effort` is synthesized from the outcome's sign** in `/record-outcomes` (0.6 if negative,
    0.4 if positive). So strength's "high effort + failure = confirmed weakness" is reading a
    constant, not evidence. Directionally right, epistemically empty.
-8. **`/submit-answer`'s concept write is transient.** It overwrites `mastery_by_concept[cid]`
-   with the ingredient aggregate but logs no event — the next `/recommend` rebuilds from the
-   event log and erases it. Fine-layer → coarse-layer feedback doesn't actually persist.
-9. **Bridge "weak" threshold is unreachable early.** Confidence starts at 0.0 and climbs
-   +0.15/success, so 5 straight wins are needed to clear 0.7 → nearly every attempted bridge
-   reads as a Tier-1 gap.
-10. **One `easy` rating erases a concept.** `trim_chain` calls anything with `strength ≥ 0`
-    mastered, and the gap-scan `easy` seed is +0.5 — enough to cut a concept from every chain
-    forever (until decay).
+
+## Resolved — Engine Bucket A + B (2026-08-14)
+4. ~~`decay_edge` decays toward the wrong attractor~~ — `EdgeState.prior_mean` now persists
+   the ontology strength at creation and decay reads it back. `c84f382d`.
+6. ~~`estimate_difficulty` is file ordering~~ — now derived from
+   `population_failure_prior.overall`, order-independent (regression-tested). `422430ad`.
+   Made **honest**, not yet **consumed** — see #15.
+8. ~~`/submit-answer`'s concept write is transient~~ — now emits a real
+   `exposure_weight=0.4` event (`source="card"`) instead of overwriting mastery directly;
+   survives a graph rebuild. `71f00bf9`.
+9. ~~Bridge "weak" threshold is unreachable early~~ — unattempted bridges seed from
+   `bridge_prior_confidence()` (`cd981aca`), and the additive `+0.15/−0.05` ratchet was
+   replaced by a Beta posterior (`170dc310`) so evidence no longer needs 5 straight wins to
+   move the needle.
+10. ~~One `easy` rating erases a concept~~ — self-report events dropped to
+    `exposure_weight=0.4` and `trim_chain` now requires ≥1 real practice event before either
+    MASTERED branch fires. `604f61ad`.
 
 ## Structural — the code is right, the wiring is the problem
 *No local edit fixes these. The change may be one line; the fix is a coordinated
@@ -236,4 +241,7 @@ re-bake or migration across every consumer.*
 
 ---
 
-**Bucket A is specced:** `ml/ENGINE_FIX_A_BUILD.md` covers #4, #9a, #2, #3, #11a.
+**Bucket A** (`ml/ENGINE_FIX_A_BUILD.md`, #4 · #9a · #2 · #3 · #11a) — **done.**
+**Bucket B** (`ml/ENGINE_FIX_B_BUILD.md`, #10 · #9b · #6 · #8) — **done.**
+**Bucket C — genuinely open, needs a decision, not a menu pick:** #1, #5, #7, #12,
+#13, #15. Plus dead code #14 (delete-or-wire, no decision needed, just do it).

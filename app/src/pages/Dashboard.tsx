@@ -28,6 +28,7 @@ import {
 import TocSectionMark from '../components/canvas/TocSectionMark'
 import NotebookIntro, { introAlreadySeen } from '../components/canvas/NotebookIntro'
 import CoverLanding, { clearCoverSeen, coverAlreadySeen } from '../components/book/CoverLanding'
+import DashboardRoutePanel from '../components/DashboardRoutePanel'
 import { ACT_TOC_SECTIONS, actConceptLabel, type ActTocSection } from '../lib/actToc'
 import { storyArtFor } from '../lib/storyArt'
 import { CalendarCheck, Lock, MessageCircle, LogOut, Map, PenLine, NotebookPen, Sparkles } from 'lucide-react'
@@ -273,12 +274,12 @@ export default function Dashboard({
 
   const rawView = embedded ? embedView : (searchParams.get('view') ?? 'home')
   const view = (
-    rawView === 'today' || rawView === 'route' ? 'home'
+    rawView === 'today' ? 'home'
     : rawView === 'gps' ? 'map'
     : rawView === 'homework' || rawView === 'worksheet' ? 'work'
     : rawView === 'saved' ? 'notes'
     : rawView
-  ) as 'home' | 'map' | 'work' | 'notes'
+  ) as 'home' | 'route' | 'map' | 'work' | 'notes'
 
   function withEmbed(path: string) {
     if (!frameEmbed || !viewingAs) return path
@@ -316,6 +317,11 @@ export default function Dashboard({
     navigate(`/concept/${encodeURIComponent(conceptId)}`, {
       state: { fromDashboard: true },
     })
+  }
+
+  function openRoute(conceptId: string) {
+    if (preview || viewingAs) { openChapter(conceptId); return }
+    navigate(`${homeBase.split('?')[0]}?view=route&concept=${encodeURIComponent(conceptId)}`)
   }
 
   function launchSolver() {
@@ -826,8 +832,8 @@ export default function Dashboard({
                       <button
                         type="button"
                         className={s.nextTopicCard}
-                        onClick={() => openChapter(nextTopic.conceptId)}
-                        title={`Open ${nextTopic.label} and tackle questions`}
+                        onClick={() => openRoute(nextTopic.conceptId)}
+                        title={`Plot your route to ${nextTopic.label}`}
                       >
                         <Sparkles size={20} aria-hidden="true" />
                         <div>
@@ -963,6 +969,12 @@ export default function Dashboard({
                     <button type="button" className={s.adminQuietLink} onClick={() => void resetOwnDiagnostic()}>reset my diagnostic</button>
                   </div>
                 )}
+              </div>
+            )}
+
+            {view === 'route' && (
+              <div className={s.homeCanvas}>
+                <DashboardRoutePanel targetId={searchParams.get('concept') || nextTopic?.conceptId || 'fractions_decimals'} />
               </div>
             )}
 

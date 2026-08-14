@@ -1,14 +1,25 @@
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { useState, useMemo, useEffect, useRef } from 'react'
+import { doc, getDoc } from 'firebase/firestore'
 import { NotebookPen, PenLine } from 'lucide-react'
 import { ScientificCalcPanel } from '../components/ScientificCalculator'
 import conceptStoriesRaw from '../data/conceptStories.json'
-import { getQuestions, questionFormat, type Question } from '../lib/questionBank'
+import { questionFormat, type Question } from '../lib/questionBank'
 import { canonicalConceptId } from '../lib/conceptAliases'
 import { useUser } from '../App'
 import BookmarkButton from '../components/BookmarkButton'
 import { loadDashboardPersonalization, toggleBookmark } from '../lib/dashboardPersonalization'
 import { loadQuestionWork, saveQuestionWork } from '../lib/studentWork'
+import { listStudentWork } from '../lib/studentWork'
+import { loadDiagnostic } from '../lib/practiceState'
+import { fetchPracticeHubRecommendations, type NextConcept } from '../lib/recommendNextConcept'
+import {
+  emphasizedChapterStory,
+  resolveChapterQuestions,
+  staticChapterQuestions,
+} from '../lib/bookPersonalization'
+import type { CurriculumTrack } from '../lib/curriculumTrack'
+import { db } from '../firebase'
 import { submitWorkEvidenceIfReady } from '../lib/workEvidence'
 import { appendChapterWorkToJournal } from '../lib/chapterJournal'
 import { recordWrongAnswer, resolveWrongAnswerNote } from '../lib/wrongAnswerNotes'
@@ -97,9 +108,6 @@ function storyTeaser(story: string, max = 90): string {
   const lastSpace = cut.lastIndexOf(' ')
   return `${(lastSpace > 80 ? cut.slice(0, lastSpace) : cut).trim()}…`
 }
-
-/** Chapter depth — same ballpark as Practice SESSION_LENGTH (Bloom ~10). */
-const CHAPTER_Q_COUNT = 10
 
 // ── Cluster identity ─────────────────────────────────────────────────────────
 
@@ -338,26 +346,48 @@ export default function ConceptChapterPage() {
   const cluster = CLUSTER_MAP[conceptId] ?? 'algebra'
   const theme = CLUSTER_THEME[cluster]
 
-  const questions = useMemo(() => {
-    if (!conceptId) return []
-    const qs = [
-      ...getQuestions(conceptId, 1, CHAPTER_Q_COUNT),
-      ...getQuestions(conceptId, 2, CHAPTER_Q_COUNT),
-      ...getQuestions(conceptId, 3, Math.ceil(CHAPTER_Q_COUNT / 2)),
-    ]
-    const seen = new Set<string>()
-    return qs
-      .filter(q => {
-        if (seen.has(q.question)) return false
-        seen.add(q.question)
-        return true
-      })
-      .slice(0, CHAPTER_Q_COUNT)
-  }, [conceptId])
+  const staticQuestions = useMemo(
+    () => conceptId ? staticChapterQuestions(conceptId) : [],
+    [conceptId],
+  )
+  const [questions, setQuestions] = useState<Question[]>(staticQuestions)
+  const [misconceptionGap, setMisconceptionGap] = useState<NextConcept | null>(null)
+
+  useEffect(() => {
+    setQuestions(staticQuestions)
+    setMisconceptionGap(null)
+    if (!user?.uid || !conceptId) return
+    let cancelled = false
+    void resolveChapterQuestions(canonicalId, staticQuestions, {
+      loadProfile: async () => {
+        const snap = await getDoc(doc(db, 'users', user.uid))
+        const data = snap.data()
+        return {
+          curriculumTrack: typeof data?.curriculumTrack === 'string'
+            ? data.curriculumTrack as CurriculumTrack
+            : null,
+          grade: typeof data?.grade === 'number' ? data.grade : undefined,
+        }
+      },
+      loadRecommendations: track => fetchPracticeHubRecommendations(user.uid, track),
+      loadDiagnostic: () => loadDiagnostic(user.uid),
+      listStudentWork: () => listStudentWork(user.uid, 200),
+    }).then(result => {
+      if (cancelled) return
+      setQuestions(result.questions)
+      setMisconceptionGap(result.misconceptionGap)
+    })
+    return () => { cancelled = true }
+  }, [canonicalId, conceptId, staticQuestions, user?.uid])
+
+  const chapterStory = useMemo(
+    () => emphasizedChapterStory(cs.story, cs.ingredientStories, misconceptionGap, canonicalId),
+    [canonicalId, cs.ingredientStories, cs.story, misconceptionGap],
+  )
 
   const panels = useMemo(
-    () => buildPanels(cs.story, questions.length),
-    [cs.story, questions.length],
+    () => buildPanels(chapterStory, questions.length),
+    [chapterStory, questions.length],
   )
 
   // Opening story once per concept — return visits skip to first quest.
