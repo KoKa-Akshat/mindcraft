@@ -6,7 +6,7 @@
 
 ## Resume agent · Jesse (2026-08-14)
 
-Try: **https://mindcraft-93858.web.app/desk-os/workflows/resume/?v=r3**  
+Try: **https://mindcraft-93858.web.app/desk-os/workflows/resume/?v=r4**  
 Allow mic + sound. Jesse waits **5 seconds** before talking back.
 
 - LinkedIn: paste profile URL + About/Experience (or LinkedIn PDF). OpenID does not include jobs; we extract what you paste.

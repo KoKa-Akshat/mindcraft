@@ -222,14 +222,40 @@
 
   function localFallback(message, sources) {
     const blob = [message, sources.linkedinText, sources.resumeText, ...(sources.driveFiles || []).map((f) => f.text)].join('\n');
-    const skills = ['Python', 'R', 'Excel', 'SQL', 'Stata', 'Tutoring', 'Writing'].filter((s) => new RegExp('\\b' + s + '\\b', 'i').test(blob));
+    const skills = ['Python', 'R', 'Excel', 'SQL', 'Stata', 'Java', 'JavaScript', 'TypeScript', 'Tutoring', 'Writing', 'Research', 'Tableau', 'Spanish', 'French']
+      .filter((s) => new RegExp('\\b' + s + '\\b', 'i').test(blob));
+    const email = (blob.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i) || [])[0] || '';
+    const school = (blob.match(/Macalester College|University of [A-Z][A-Za-z]+|College of [A-Z][A-Za-z ]+/i) || [])[0] || '';
+    const nameLine = blob.split('\n').map((l) => l.trim()).find((l) => /^[A-Z][a-z]+ [A-Z][a-z]+(?: [A-Z][a-z]+)?$/.test(l)) || '';
+    const roles = [];
+    blob.split('\n').forEach((line) => {
+      const m = line.trim().match(/^(.{3,60})\s+[–—-]\s+(.{3,60})$/);
+      if (m) roles.push({ title: m[1], org: m[2], when: '', bullets: [] });
+    });
+    const intern = blob.match(/intern(?:ed|ship)?\s+(?:at\s+)?([A-Z][A-Za-z0-9&.\- ]{2,40})/i);
+    if (intern) roles.push({ title: 'Intern', org: intern[1].trim(), when: '', bullets: [] });
+    const ready = Boolean(nameLine || roles.length || skills.length >= 2);
+    let reply = 'I heard you. Paste LinkedIn Experience, open The Desk folder, or upload a PDF.';
+    if (roles.length) reply = `Pulled ${roles[0].org} onto a private draft. Tell me what to add or cut.`;
+    else if (skills.length) reply = `Added ${skills.slice(0, 3).join(', ')}. Name a role if you want it on the page.`;
+    else if (nameLine) reply = `Got ${nameLine}. Add Experience or a PDF next.`;
+    if (/apply/i.test(message) && ready) reply = 'The draft is on your desk. Search from the directions, then log Applied on the board.';
     return {
-      reply: skills.length
-        ? `Added ${skills.slice(0, 3).join(', ')}. Keep going when you are ready.`
-        : 'I heard you. Paste LinkedIn, open The Desk folder, or upload a PDF.',
-      draft: { skills, drive: Boolean(sources.driveFiles && sources.driveFiles.length) },
-      suggestedRoles: [],
-      actions: [],
+      reply,
+      draft: {
+        name: nameLine, email, school, skills, roles,
+        files: sources.resumeFileName ? [sources.resumeFileName] : [],
+        linkedinUrl: sources.linkedinUrl || '',
+        drive: Boolean(sources.driveFiles && sources.driveFiles.length),
+      },
+      suggestedRoles: ready ? [{
+        company: 'Handshake / LinkedIn jobs',
+        role: 'Internship matching your draft',
+        why: 'From the facts on the page. You submit. We do not apply for you.',
+        query: [school, skills.slice(0, 2).join(' '), 'intern'].filter(Boolean).join(' '),
+      }] : [],
+      actions: /apply/i.test(message) && ready ? [{ type: 'open_apply' }] : [],
+      readyToApply: ready,
     };
   }
 
