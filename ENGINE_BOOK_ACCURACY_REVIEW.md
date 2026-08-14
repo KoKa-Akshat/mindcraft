@@ -57,7 +57,7 @@ The ASC index is now `READY`. The harness runs.
 
 ---
 
-## 2. First real measurement of the engine — it is worse than a coin
+## 2. First real measurement — with important limits on what it measures
 
 With the harness unblocked, across **all** students (`--all`):
 
@@ -69,47 +69,87 @@ brier_score  : 0.2964
 format_separability : OK, 13 cells, 71 rows, corr −0.2516
 ```
 
-`NEXT_SESSION.md` predicted `INSUFFICIENT_DATA` and told the next session to
-expect it. **We are past that.** There is enough data to grade the engine, and
-the grade is bad:
+`NEXT_SESSION.md` predicted `INSUFFICIENT_DATA`. We are past that threshold.
 
 | Predictor | Brier (lower = better) |
 |---|---|
-| Engine's `concept_mastery_before` | **0.2964** |
+| Replayed `concept_mastery_before` | **0.2964** |
 | Always predict the base rate (0.4455) | **0.2470** |
+| Replay excluding cold-start rows | 0.2596 (n=187) |
+| …vs. base rate on those same rows | 0.2448 |
 
-**The mastery estimate currently predicts whether a student gets a question
-right *worse than a constant* does.** n=211, 94 correct. That is the headline
-number for the accuracy workstream, and it is now measurable on every change.
+The replayed mastery predicts correctness **worse than a constant does**, and
+that holds after removing the artifact rows described below. But read §2.1
+before treating this as a verdict on the production engine — it is not one yet.
 
-### Where it goes wrong is specific, not diffuse
+### 2.1 What this test actually does — and three limits that bound it
 
-Reliability table (predicted vs. what actually happened):
+`validation/replay.py` walks the observation log oldest-first. For each attempt
+it records mastery **as reconstructed immediately before** that attempt, pairs it
+with the actual outcome, then folds the attempt in via the engine's real
+`apply_event_to_mastery`. `calibration.py` then bins by prediction and computes
+`Brier = mean((p − a)²)`. The scorer is textbook-correct and the
+before/after ordering is genuinely leak-free.
 
-| Predicted mastery | Empirical success | n | Reading |
-|---|---|---|---|
-| **0.000** | **0.583** | 24 | catastrophically pessimistic |
-| 0.150 | 0.400 | 15 | pessimistic |
-| 0.462 | 0.360 | 25 | overconfident |
-| 0.551 | 0.438 | 16 | overconfident |
-| 0.668 | 0.421 | 19 | overconfident |
-| 0.750 | 0.750 | 16 | calibrated |
-| 0.817 | 0.667 | 9 | overconfident |
+The limits are in what feeds it:
 
-Two systematic, opposite errors:
+**(a) The `predicted = 0.000` bin is a harness artifact, not an engine finding.**
+`replay._mastery()` returns `0.0` for a concept it hasn't seen yet — the replay
+starts every node at zero. Production starts untouched nodes at the **0.12
+floor**, which the replay never exercises. Measured: **all 24** of the
+`predicted == 0.0` rows are first-ever `(student, concept)` sightings. So the
+"predicted 0.0, 58% actually succeeded" line indicts the *replay's
+initialization*, not the 0.12 cold-start prior.
 
-1. **The floor is far too low.** Students the model scores at 0.0 succeed **58%**
-   of the time (n=24, the largest single bin). The 0.12 cold-start floor and
-   `−2.0` intercept in the mastery sigmoid are miscalibrated against reality.
-   This is the single biggest contributor to the Brier score.
-2. **The middle is overconfident.** Everything from 0.46–0.67 predicts ~10–25
-   points higher than observed.
+> **Correction:** an earlier draft of this review used that bin to argue the
+> 0.12 floor and the `−2.0` sigmoid intercept are miscalibrated, and claimed it
+> settled Bucket C #15. It does not. #15 remains an open decision, and this
+> harness in its current form **cannot** answer it, because it never runs the
+> production cold-start path.
 
-This is directly actionable and it **decides open Bucket C issue #15 for us.**
-`ENGINE_MECHANISM.md` #15 asks whether to use population failure rate as the
-cold-start prior, calling it a "pedagogical decision." It isn't anymore — the
-data says the cold-start prior is the problem. That's now an empirical question
-with a regression test attached.
+**(b) State is reconstructed from the observation log alone.** The replay does
+not load the student's real graph — no `/seed-assessment` gap-scan seed, no
+session-summary events, no temporal decay against wall-clock now. It also folds
+with `effort=0.0, duration_minutes=0.0, exposure_weight=1.0`, where production
+varies all three. So `concept_mastery_before` is **not** the number production
+would have predicted at that moment. This measures "mastery updated only by
+these 211 attempts," which is a strictly weaker predictor than the live engine.
+
+**(c) The sample is small and concentrated.** 211 rows across 5 students, but
+**105 (50%) come from a single student**. `validation/__init__.py` still labels
+the whole package *"SCAFFOLDING — built to be correct and ready, NOT to produce
+a verdict yet."* That label is still accurate.
+
+### 2.2 What survives the limits
+
+Middle-range overconfidence is not explained by (a), since those rows have real
+replayed history behind them:
+
+| Predicted mastery | Empirical success | n |
+|---|---|---|
+| 0.462 | 0.360 | 25 |
+| 0.551 | 0.438 | 16 |
+| 0.668 | 0.421 | 19 |
+| 0.750 | 0.750 | 16 |
+| 0.817 | 0.667 | 9 |
+
+Everything from 0.46–0.67 predicts ~10–25 points above observed. That is a
+directional signal worth chasing, on a sample too small and too
+single-student-weighted to size the effect. **Treat it as a hypothesis with a
+now-working test attached, not as a measured defect.**
+
+### 2.3 What would make this a real verdict
+
+In rough order of value:
+
+1. **Replay from the student's actual graph state**, not from zero — load the
+   seeded/decayed graph the way `/recommend` does, so the predictor is the one
+   production actually uses. Until this lands, no Brier number here can indict
+   or exonerate the live engine.
+2. **Fold with production's parameters** (real `effort`/duration/exposure_weight
+   per source) instead of the flat `0.0/0.0/1.0` stand-ins.
+3. **More students.** A 50%-single-student sample can't separate "the model is
+   miscalibrated" from "this student is unusual."
 
 ---
 
@@ -200,7 +240,7 @@ presentation layer is missing, but because:
 | `topMisconceptionGap` → which ingredient story leads | **1 of 211 observations** carries one → W3 ~never fires |
 | `weakness.formatId` → which format to drill | format axis works (`separability OK`) but `corr −0.2516` needs interpretation |
 | `confidence` → level selection | self-report only, deliberately gated to `exposure_weight 0.4` |
-| concept mastery → trim, ordering, "learn next" | **worse than a constant baseline** (§2) |
+| concept mastery → trim, ordering, "learn next" | replay says worse than a constant baseline — but see §2.1, that test doesn't yet measure the production predictor |
 
 Adding book features right now adds surface area on top of signals that don't
 yet earn their predictions. That's the structural argument for doing accuracy
@@ -245,17 +285,24 @@ Ordered by evidence, not preference. Each step makes the next measurable.
    Product.* Recovers ~2/3 of misconception evidence going forward.
 3. Add both `attempt_observations` index shapes to `firestore.indexes.json` so
    the ASC index isn't a snowflake that exists only because I created it by
-   hand today. *Lane: Engine.*
+   hand today. *Lane: Engine.* **Done** in this commit — `firestore.indexes.json`
+   is the deploy source of truth, so leaving it undeclared meant the next index
+   deploy would delete the new index and silently re-break the harness.
 
-**Next — fix the calibration (this is the accuracy work)**
-4. Attack the cold-start floor first (§2, largest bin, worst error). This is
-   Bucket C #15, now with an empirical answer available rather than a
-   pedagogical coin-flip. Gate on Brier improving against the 0.2470 baseline.
+**Next — make the harness able to render a verdict (§2.3)**
+4. Replay from the student's **real graph state** rather than from zero, and fold
+   with production's `effort`/duration/`exposure_weight`. *Lane: Engine.* This is
+   the prerequisite for every calibration claim — right now the harness grades a
+   weaker predictor than the one we ship, so neither a good nor a bad Brier
+   score can be trusted about production.
 5. Re-run `validation.run_harness --all` as the regression test on every engine
-   change. It works now. It should be in CI or a pre-deploy step.
+   change. It works now. Once step 4 lands it belongs in CI or a pre-deploy step.
+6. **Only then** revisit the calibration questions (Bucket C #15, the sigmoid
+   intercept). They are still open decisions — §2.1 explains why this harness
+   cannot currently answer them.
 
 **Then — ingredient enrichment / the 82 uncovered ingredients**
-6. Only after the misconception stream actually flows. Enriching labels that
+7. Only after the misconception stream actually flows. Enriching labels that
    nothing populates is premature — and per the existing memo, the 82 uncovered
    ingredients are advanced ACT-only concepts, i.e. *not* where a high
    schooler's foundational holes are. Low priority, unchanged.
@@ -301,3 +348,25 @@ HF_ORG=joinmindcraft sh scripts/deploy_hf.sh
 Distractor coverage and calibration figures were computed directly from
 `app/src/data/eediQuestions.json` and the live `attempt_observations`
 collection; both are reproducible from the commands above.
+
+To reproduce the §2.1 limits (that the `0.0` bin is a replay artifact, and the
+Brier gap with those rows removed):
+
+```python
+# ml/, venv active, FIRESTORE_PROJECT=mindcraft-93858
+from mindcraft_graph.firestore_adapter import load_attempt_observations, db
+from validation.replay import build_replay_table
+
+ids = {(d.to_dict() or {}).get("studentId")
+       for d in db.collection("attempt_observations").stream()}
+obs = [o for sid in ids if sid for o in load_attempt_observations(sid)]
+rows = build_replay_table(obs)
+
+zero = [r for r in rows if r.concept_mastery_before == 0.0]
+# -> 24 rows; every one is a first-ever (student, concept) sighting
+nz = [r for r in rows if r.concept_mastery_before > 0.0]
+brier = lambda rs: sum((r.predicted - r.actual_outcome) ** 2 for r in rs) / len(rs)
+base  = lambda rs: sum(r.actual_outcome for r in rs) / len(rs)
+print(brier(rows), brier(nz), base(nz) * (1 - base(nz)))
+# -> 0.2964   0.2596   0.2448
+```
