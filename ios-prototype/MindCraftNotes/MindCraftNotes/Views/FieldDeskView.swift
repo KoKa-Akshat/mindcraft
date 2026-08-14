@@ -175,7 +175,7 @@ struct FieldDeskView: View {
             .intel: CGSize(width: 340, height: 220),
             .gmail: CGSize(width: 260, height: 200),
             .notes: CGSize(width: 260, height: 200),
-            .gdoc: CGSize(width: 260, height: 230),
+            .gdoc: CGSize(width: 480, height: 420),
             .slides: CGSize(width: 320, height: 214),
         ]
     }
@@ -1546,8 +1546,8 @@ struct FieldDeskView: View {
                         }
                     }
                     let start = resizeStart ?? def
-                    let maxW: CGFloat = id == .binder ? 640 : (id == .connect ? 720 : 520)
-                    let maxH: CGFloat = id == .binder ? 420 : (id == .connect ? 780 : 420)
+                    let maxW: CGFloat = id == .binder ? 640 : (id == .connect ? 720 : (id == .gdoc ? 820 : 520))
+                    let maxH: CGFloat = id == .binder ? 420 : (id == .connect ? 780 : (id == .gdoc ? 700 : 420))
                     cardSizes[id] = CGSize(
                         width: min(maxW, max(140, start.width + value.translation.width)),
                         height: min(maxH, max(110, start.height + value.translation.height))
