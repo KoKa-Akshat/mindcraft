@@ -58,6 +58,15 @@ a bare `except Exception: return []` swallowed it. Silently. For every student.
 **Fixed + verified:** index recreated with DESC, stale ASC index deleted, real
 student's 8 observations now load (was 0). Commit `400bbd96`.
 
+> ⚠️ **CORRECTION (2026-08-14, see `ENGINE_BOOK_ACCURACY_REVIEW.md` §1):** that
+> fix was only half a fix. Deleting the ASC index broke the *other* loader —
+> `load_attempt_observations` (`firestore_adapter.py:165`) queries ASCENDING and
+> feeds the entire validation harness, which then reported `observations: 0` for
+> a student with 105 rows. The same `except Exception: return []` hid it a second
+> time. The ASC index has since been created (`studentId ASC, timestamp ASC`) and
+> **the harness now runs on all 211 observations.** Steps 1 and 3 below are
+> superseded — read the review instead.
+
 **Next steps:**
 1. Run the harness now that it can see data:
    `cd ml && source mindcraft/bin/activate && FIRESTORE_PROJECT=mindcraft-93858 python -m validation.run_harness --all`
