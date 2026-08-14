@@ -8,6 +8,22 @@ private enum ShrineBeatPhase: Equatable {
     case starting
 }
 
+/// Real iOS 26 Liquid Glass for nav/control chrome (dock, floating chips,
+/// pills) - never on card/content bodies, which stay opaque paper. Matches
+/// Apple's own glass-vs-content split: glass is for the floating control
+/// layer, not for lists/cards/scrollable content. Falls back to a plain
+/// tinted fill pre-iOS 26 since this prototype's deployment target is 17.
+private extension View {
+    @ViewBuilder
+    func fdGlass<S: Shape>(in shape: S, tint: Color, fallbackFill: Color) -> some View {
+        if #available(iOS 26.0, *) {
+            self.glassEffect(.regular.tint(tint), in: shape)
+        } else {
+            self.background(shape.fill(fallbackFill))
+        }
+    }
+}
+
 /// **Round 28. Field Desk cards + ACT stage.**
 /// Tap card → shine → drag whole card → bottom-right resize. Canvas-only
 /// pinch. Binder is the centerpiece. Connect toggles disconnect. ACT opens
@@ -1705,11 +1721,8 @@ struct FieldDeskView: View {
                     .foregroundColor(Color(fdHex: "143a2e").opacity(0.7))
             }
             .padding(14)
-            .background(
-                RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .fill(Color.white.opacity(0.96))
-                    .shadow(color: .black.opacity(0.16), radius: 8, y: 3)
-            )
+            .fdGlass(in: RoundedRectangle(cornerRadius: 12, style: .continuous), tint: .white.opacity(0.35), fallbackFill: Color.white.opacity(0.96))
+            .shadow(color: .black.opacity(0.16), radius: 8, y: 3)
         }
         .buttonStyle(.plain)
         .offset(x: x, y: y)
@@ -1743,11 +1756,8 @@ struct FieldDeskView: View {
                     .foregroundColor(Color(fdHex: "143a2e").opacity(0.7))
             }
             .padding(14)
-            .background(
-                RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .fill(Color.white.opacity(0.96))
-                    .shadow(color: .black.opacity(0.16), radius: 8, y: 3)
-            )
+            .fdGlass(in: RoundedRectangle(cornerRadius: 12, style: .continuous), tint: .white.opacity(0.35), fallbackFill: Color.white.opacity(0.96))
+            .shadow(color: .black.opacity(0.16), radius: 8, y: 3)
         }
         .buttonStyle(.plain)
         .offset(x: x, y: y)
