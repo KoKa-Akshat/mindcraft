@@ -62,7 +62,17 @@ struct CreateCanvasView: View {
                 .accessibilityIdentifier("createCanvasDone")
         }
         .animation(.spring(response: 0.45, dampingFraction: 0.86), value: callLive)
-        .accessibilityIdentifier("createCanvasRoot")
+        // Not a direct .accessibilityIdentifier() - confirmed live (via
+        // DeskGridDashboardView's identical bug) that doing so clobbers
+        // every nested button's own identifier (the Jesse rail's call
+        // button, the dock, storyboards, add-slide, …) with this
+        // container's own instead of just hiding them.
+        .accessibilityElement(children: .contain)
+        .overlay(alignment: .topLeading) {
+            Text(verbatim: "create").font(.system(size: 1)).foregroundColor(.clear)
+                .accessibilityIdentifier("createCanvasRoot")
+                .allowsHitTesting(false)
+        }
     }
 
     @ViewBuilder
@@ -278,7 +288,14 @@ struct CreateCanvasView: View {
                 .fill(Color(white: 0.985))
                 .shadow(color: .black.opacity(0.08), radius: 14, y: 6)
         )
-        .accessibilityIdentifier("createCanvasJesseRail")
+        // Not a direct .accessibilityIdentifier() - would clobber
+        // createCanvasCallJesse's own identifier the same way workDock did.
+        .accessibilityElement(children: .contain)
+        .overlay(alignment: .topLeading) {
+            Text(verbatim: "jesse-rail").font(.system(size: 1)).foregroundColor(.clear)
+                .accessibilityIdentifier("createCanvasJesseRail")
+                .allowsHitTesting(false)
+        }
     }
 
     private var transcriptionRail: some View {
@@ -407,7 +424,14 @@ struct CreateCanvasView: View {
         .padding(.horizontal, 22)
         .padding(.vertical, 14)
         .background(Capsule().fill(Color(createHex: "1c1c1e")))
-        .accessibilityIdentifier("createCanvasDock")
+        // Not a direct .accessibilityIdentifier() - would clobber
+        // createCanvasAsk and createCanvasMic's own identifiers.
+        .accessibilityElement(children: .contain)
+        .overlay(alignment: .topLeading) {
+            Text(verbatim: "create-dock").font(.system(size: 1)).foregroundColor(.clear)
+                .accessibilityIdentifier("createCanvasDock")
+                .allowsHitTesting(false)
+        }
     }
 
     private func phoneFAB(scale: CGFloat) -> some View {
