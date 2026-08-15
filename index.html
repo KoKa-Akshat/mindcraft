@@ -537,7 +537,7 @@
     <div class="reel-intro">
       <div class="kicker" style="justify-content:center;">Scroll to watch it work</div>
       <h2 class="h2 reveal">One desk. Six real screens.</h2>
-      <p class="lede reveal">Not a mockup: the actual, currently-shipped app. Keep scrolling; each frame below is real, running software.</p>
+      <p class="lede reveal">Every frame below is the live app, mid-session: Jesse's desk, a chapter, a problem worked through, a map lighting up as it happens.</p>
     </div>
   </div>
   <div class="reel-pin" id="reelPin">
@@ -1047,11 +1047,11 @@
       scrollTrigger: {
         trigger: pin,
         start: 'top top+=80',
-        // 85%/frame (510% total for 6 frames) held the pin for over five full
-        // viewport-heights of scrolling to read six captions - reduced to
-        // 70%/frame so each frame gets enough dwell to land the crossfade and
-        // read its caption without the section outstaying its welcome.
-        end: '+=' + (frames.length * 70) + '%',
+        // 85%/frame, then 70%/frame, both still held the pin for 4-5 full
+        // viewport-heights - still read as scroll-jacking even with a fast
+        // crossfade. 55%/frame (330% total) is the shortest dwell that still
+        // lands the crossfade and lets the caption register before advancing.
+        end: '+=' + (frames.length * 55) + '%',
         // .7 stacked with Lenis's own smoothing (see above) to double-lag the
         // crossfade behind the actual scroll input; .4 still smooths out
         // trackpad jitter but tracks the pointer closely enough to not feel
