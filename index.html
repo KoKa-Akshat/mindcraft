@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>The Desk by MindCraft · Never work alone</title>
-<meta name="description" content="MindCraft: never work alone. The Desk pairs a workspace that learns how you learn with real college mentors, so whatever you're stuck on, a person meets you there. Free during early access.">
+<meta name="description" content="MindCraft · never work alone. The Desk pairs a workspace that learns how you learn with real college mentors, so whatever you're stuck on, a person meets you there. Free during early access.">
 <meta name="keywords" content="The Desk, MindCraft, ACT math, student desk, knowledge graph, tutoring, resume help, college mentors, learning OS, open textbooks">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <link rel="canonical" href="https://joinmindcraft.com/">
@@ -61,6 +61,22 @@
     --serif:"Source Serif 4",Georgia,serif;
     --mono:"IBM Plex Mono",ui-monospace,monospace;
   }
+  /* ---------- Desk stage (cream) ----------
+     Real MindCraft brand system (BRAND_BOOK.md §9): "Field Desk cream"
+     paper (#f7f5f0) + ink green (#143a2e), used for The Desk OS canvas.
+     Deep Field near-black stays the default for the whole page (hero, the
+     reel, the pitch); this variant is scoped to a few deliberate breather
+     sections so the long dark scroll gets real light/dark rhythm instead of
+     one unbroken wall of near-black. Overriding the same custom properties
+     the dark theme uses means every existing component (cards, pills, text)
+     just inherits the right colors here without a parallel set of classes. */
+  .stage-desk{
+    --field:#f7f5f0; --field-1:#f2efe6; --field-2:#ffffff; --field-3:#eae5d7;
+    --edge:rgba(20,58,46,.14); --edge-soft:rgba(20,58,46,.07);
+    --chalk:#143a2e; --chalk-dim:rgba(20,58,46,.72); --chalk-faint:rgba(20,58,46,.5);
+    --shadow:0 20px 54px rgba(20,58,46,.1);
+    background:var(--field); color:var(--chalk);
+  }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:auto;}
   body{
@@ -96,6 +112,8 @@
   .btn.primary:hover{box-shadow:0 20px 46px rgba(196,245,71,.28);}
   .btn.soft{background:rgba(245,245,244,.04); border-color:var(--edge);}
   .btn.soft:hover{background:rgba(245,245,244,.08);}
+  .stage-desk .btn.soft{background:rgba(20,58,46,.045);}
+  .stage-desk .btn.soft:hover{background:rgba(20,58,46,.09);}
   .btn.stakes{background:transparent; border-color:rgba(224,57,74,.4); color:#ff8f9b;}
 
   @media (prefers-reduced-motion: reduce){
@@ -171,12 +189,21 @@
   .intro-schools{display:flex; flex-direction:column; align-items:center; gap:22px; text-align:center;}
   .intro-schools > span{font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--chalk-faint);}
   .intro-schools ul{display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:clamp(24px,5vw,56px); list-style:none;}
-  .intro-schools li img{height:26px; width:auto; object-fit:contain; opacity:.55; filter:grayscale(1) brightness(2); transition:opacity .2s;}
+  .intro-schools li img{height:26px; width:auto; object-fit:contain; opacity:.55; filter:grayscale(1) brightness(2); transition:opacity .2s, filter .2s;}
   .intro-schools li:hover img{opacity:.9;}
   .intro-social{display:flex; gap:10px;}
   .intro-social img{width:30px; height:30px; border-radius:9px; opacity:.6; transition:opacity .2s;}
   .intro-social a:hover img{opacity:1;}
   .data-yours{max-width:560px; font-size:13px; font-weight:400; color:var(--chalk-faint); line-height:1.55;}
+  /* On the cream Desk stage the school marks are dark navy/teal logotypes on
+     transparent PNG/SVG, not light ones — the dark-theme brightness(2) push
+     (built to turn them pale against near-black) would wash them out to
+     near-invisible against paper instead, so drop it and let their natural
+     grayscale tone read against cream, the way partner-logo strips usually
+     work on a light page. */
+  .stage-desk .intro-schools li img{opacity:.6; filter:grayscale(1);}
+  .stage-desk .intro-schools li:hover img{opacity:1;}
+  .stage-desk .intro-social img{opacity:.82;}
 
   /* ---------- Reel (flagship scroll sequence) ---------- */
   .reel{padding-top:clamp(88px,10vw,148px); padding-bottom:0;}
@@ -245,6 +272,7 @@
   .caps-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:48px;}
   .cap{ background:var(--field-2); border:1px solid var(--edge); border-radius:22px; padding:26px; transition:transform .25s var(--ease), border-color .25s var(--ease); }
   .cap:hover{transform:translateY(-4px); border-color:rgba(245,245,244,.2);}
+  .stage-desk .cap:hover{border-color:rgba(20,58,46,.28);}
   .cap .glyph{width:42px; height:42px; border-radius:12px; display:grid; place-items:center; margin-bottom:18px;}
   .cap .glyph svg{width:21px; height:21px;}
   .cap h3{font-size:18px; font-weight:600; margin-bottom:8px; letter-spacing:-.01em;}
@@ -345,6 +373,11 @@
   .pricing-lede-row{display:grid; grid-template-columns:1.3fr .7fr; gap:clamp(24px,4vw,48px); align-items:start; margin-bottom:16px;}
   .seats-chip{ display:inline-flex; align-items:center; gap:8px; padding:12px 16px; border-radius:14px; background:rgba(224,57,74,.08); border:1px solid rgba(224,57,74,.25); font-size:12.5px; font-weight:500; color:#ff8f9b; }
   .seats-chip b{font-weight:700; color:#ffb2ba;}
+  /* The pastel red used for the dark stage reads at ~2:1 contrast against
+     cream paper — swap to the brand's saturated Stakes red, which is tuned
+     to sit on light surfaces too. */
+  .stage-desk .seats-chip{color:var(--stakes);}
+  .stage-desk .seats-chip b{color:#a30f1a;}
   .price-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:44px;}
   .price-card{ background:var(--field-2); border:1px solid var(--edge); border-radius:22px; padding:26px 22px; display:flex; flex-direction:column; transition:transform .25s var(--ease), border-color .25s var(--ease); }
   .price-card.feature{border-color:rgba(196,245,71,.35); background:linear-gradient(180deg, rgba(196,245,71,.05), var(--field-2) 40%);}
@@ -353,6 +386,7 @@
   .price-card.free .tier-chip{background:rgba(245,245,244,.08); color:var(--chalk-dim);}
   .price-card.feature .tier-chip{background:var(--lime); color:var(--lime-ink);}
   .price-card.family .tier-chip{background:rgba(108,140,255,.12); color:var(--blue);}
+  .stage-desk .price-card.family .tier-chip{color:var(--navy);}
   .price-card.inst .tier-chip{background:rgba(245,245,244,.06); color:var(--chalk-faint);}
   .price-card h3{font-size:19px; font-weight:600; margin-bottom:4px; letter-spacing:-.01em;}
   .price-card .price{font-family:"Space Grotesk",sans-serif; font-size:clamp(24px,2.6vw,30px); font-weight:700; letter-spacing:-.02em; margin:6px 0 16px; color:var(--chalk);}
@@ -480,7 +514,7 @@
   </div>
 </header>
 
-<section class="credibility" aria-label="MindCraft proof and university community">
+<section class="credibility stage-desk" aria-label="MindCraft proof and university community">
   <div class="wrap">
     <div class="intro-schools">
       <span>Built by students from</span>
@@ -559,7 +593,7 @@
 </section>
 
 <!-- ================= CAPABILITIES ================= -->
-<section class="caps" id="capabilities">
+<section class="caps stage-desk" id="capabilities">
   <div class="wrap">
     <div class="kicker reveal">Where it shows up</div>
     <h2 class="h2 reveal">One desk. <span class="serif">Six ways in.</span></h2>
@@ -712,7 +746,7 @@
 </section>
 
 <!-- ================= PRICING ================= -->
-<section class="pricing" id="pricing">
+<section class="pricing stage-desk" id="pricing">
   <div class="wrap">
     <div class="pricing-lede-row">
       <div>
@@ -892,7 +926,13 @@
   // ---------- Smooth scroll (Lenis) - skipped under reduced motion ----------
   let lenis = null;
   if (!prefersReduced && window.Lenis) {
-    lenis = new Lenis({ duration: 1.05, smoothWheel: true, wheelMultiplier: 1 });
+    // Tuned down from duration:1.05/wheelMultiplier:1 - that combined with
+    // the reel's own ScrollTrigger scrub was double-smoothing every scroll
+    // input (Lenis smooths the raw wheel delta, then scrub smooths again
+    // toward Lenis's already-smoothed position), which read as laggy/floaty
+    // rather than responsive. A shorter duration plus a touch more wheel
+    // travel keeps the glide but tightens the lag between input and motion.
+    lenis = new Lenis({ duration: 0.8, smoothWheel: true, wheelMultiplier: 1.15 });
     function raf(time){ lenis.raf(time); requestAnimationFrame(raf); }
     requestAnimationFrame(raf);
     if (window.ScrollTrigger) lenis.on('scroll', ScrollTrigger.update);
@@ -951,8 +991,16 @@
       scrollTrigger: {
         trigger: pin,
         start: 'top top+=80',
-        end: '+=' + (frames.length * 85) + '%',
-        scrub: .7,
+        // 85%/frame (510% total for 6 frames) held the pin for over five full
+        // viewport-heights of scrolling to read six captions - reduced to
+        // 70%/frame so each frame gets enough dwell to land the crossfade and
+        // read its caption without the section outstaying its welcome.
+        end: '+=' + (frames.length * 70) + '%',
+        // .7 stacked with Lenis's own smoothing (see above) to double-lag the
+        // crossfade behind the actual scroll input; .4 still smooths out
+        // trackpad jitter but tracks the pointer closely enough to not feel
+        // detached from it.
+        scrub: .4,
         pin: true,
         anticipatePin: 1,
         invalidateOnRefresh: true,
