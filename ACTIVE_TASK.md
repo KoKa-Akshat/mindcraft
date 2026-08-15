@@ -4,6 +4,10 @@
 
 ---
 
+## Work opens the PDF dashboard (2026-08-15)
+
+Work / Projects / kitchen desk no longer open the old deskweb Field Binder (split FLOWS/BINDER/CALENDAR + Ask AI). They open the cream Create Dashboard with the merged dock.
+
 ## Work canvas full iPad width (2026-08-15)
 
 Create Dashboard tiles were painting at half width on iPad (Email / Gcal off-screen, black void on the right) even though GeometryReader reported 1180×820. Board is now a hard-framed artboard; tiles pin with offset, not `.position()`. Toolbar identifier fix is untouched.

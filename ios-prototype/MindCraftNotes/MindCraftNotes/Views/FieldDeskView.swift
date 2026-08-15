@@ -1124,7 +1124,7 @@ struct FieldDeskView: View {
             actStageMaximized = false
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-            showStandaloneDesk = true
+            openWorkCanvas()
         }
     }
 
@@ -1444,7 +1444,7 @@ struct FieldDeskView: View {
             shrineCaption = ""
         }
         // Skip polka on Projects → desk; shrine beat already did the doorway.
-        showStandaloneDesk = true
+        openWorkCanvas()
     }
 
     private func closeProjectsScreen() {
@@ -1519,9 +1519,16 @@ struct FieldDeskView: View {
     }
 
     private func openWorkFromJesse() {
-        // Akshat: skip the Malevolent Shrine beat entirely — straight to the
-        // work desk on tap, no shrine screen in between.
-        openStandaloneDesk()
+        openWorkCanvas()
+    }
+
+    /// Cream PDF Work canvas (Presentation Screen pages 4–5): five tiles +
+    /// one merged dock. Not `StandaloneDeskView` / deskweb Field Binder.
+    private func openWorkCanvas(rail: DeskGridDashboardView.Rail = .none) {
+        dashboardStartRail = rail
+        showStandaloneDesk = false
+        showCreateStudio = false
+        showDeskGridDashboard = true
     }
 
     private func switchDeskToCreate() {
@@ -1537,7 +1544,7 @@ struct FieldDeskView: View {
         guard showCreateStudio else { return }
         closeCreateStudio()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-            showStandaloneDesk = true
+            openWorkCanvas()
         }
     }
 
@@ -1589,8 +1596,8 @@ struct FieldDeskView: View {
         switch action {
         case .openDesk, .projects:
             // Akshat: skip the Malevolent Shrine entirely — straight to the
-            // work desk, no shrine beat on this path.
-            openStandaloneDesk()
+            // PDF Work canvas, no shrine beat on this path.
+            openWorkCanvas()
         case .wakeJesse:
             flash("Jesse’s Kitchen")
         case .intel:
