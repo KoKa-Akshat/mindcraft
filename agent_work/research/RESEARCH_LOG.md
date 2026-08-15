@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-15 — Researcher tick: Part CXLVII Dual-rater capacity planning vs FILLETA (SAFE-CAPPLAN)
+
+**Tick type:** Researcher (UTC hour 00 ≡ Red Team slot, but ch147 never written → prefer Researcher per rotation; researcher count since synthesizer v1.18 = 4 → Researcher)  
+**Chapter written:** `chapters/147_dual_rater_capacity_planning_filleeta.md` (Part CXLVII)  
+**Claim examined:** Whether dual-required figured C4 admits may use **FILLETA bands that omit dual minutes**, **ETA-skipped dual under backlog heat**, **always-dual costume without FTE**, or **Dual Rater Score™ / 100% util plans** — or must treat **dual minutes as first-class capacity** (Little \(L=\lambda W\) × Hopp–Spearman buffers × Wing–Langelier workforce multiplier) so parent clocks stay honest.
+
+**Doctrine proposed (provisional):** **SAFE-CAPPLAN** — densifies SAFE-DUALRATE × SAFE-FILLETA × SAFE-WORKFORCE + Little/Hopp–Spearman/Wing–Langelier/Maister–Whitt: dual-aware estimator, util headroom, named dual constraint, never clear T1–T6 for ETA. Experiment family **CAPPLAN-***.
+
+**Evidence spine (verified citations):** Little (1961); Hopp & Spearman (2011); Wing & Langelier (2009); Posso et al. (2016); Brown et al. (1996); Maister (1985); Whitt (1999); Kane (2013).
+
+**Claim killed (this tick):** Dual-omitted FILLETA / ETA-skipped dual / always-dual without dual FTE / 100% dual-util plans / Dual Rater Score™·Capacity Score™·Reviewer Minutes NS / hospital-cosplay dual-capacity ads / complete-visual-by-date or ACT guarantees from dual capacity packaging (provisional kill #101 until synthesizer).
+
+**Experiments:** CAPPLAN-1…5 + CAPPLAN-QUAL.
+
+**Next researcher id:** **148** (Template-trust inheritance after first-of-cell dual admit). Researcher count since v1.18 synthesizer: **5**. Unfinished queue still ≥3 (148–150); promoted id 150 stub this tick.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-14 — Researcher tick: Part CXLVI Gap-scan exit emotion without Anxiety Score™ (SAFE-EXITEMO)
 
 **Tick type:** Researcher (UTC hour 21; hour%6≠0; researcher count since synthesizer v1.18 = 3 → Researcher)  
