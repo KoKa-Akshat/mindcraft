@@ -252,7 +252,7 @@
   .reel-covers{ display:grid; grid-template-columns:1fr 1fr; gap:2px; width:100%; height:100%; }
   .reel-covers img{width:100%; height:100%; object-fit:cover; display:block;}
   .reel-shot.live{align-items:stretch;}
-  .reel-shot.live iframe{width:100%; height:100%; border:0; background:#080e14;}
+  .reel-shot.live iframe{width:100%; height:100%; border:0; background:#080e14; pointer-events:auto;}
   .sim-open{
     position:absolute; left:12px; bottom:12px; z-index:2;
     padding:8px 12px; border-radius:999px; background:rgba(8,14,20,.78);
@@ -628,8 +628,8 @@
       </div>
       <div class="reel-frame" data-i="1">
         <div class="reel-shot live">
-          <iframe title="Zone of Proximal Development Explorer" src="https://dmccreary.github.io/learning-graphs/sims/zpd-explorer/main.html" loading="lazy"></iframe>
-          <a class="sim-open" href="sims/zpd/">Click it · open full</a>
+          <iframe title="Zone of Proximal Development Explorer" src="sims/zpd/?embed=1" loading="lazy"></iframe>
+          <a class="sim-open" href="sims/zpd/">Open larger</a>
         </div>
         <div class="reel-cap"><span class="reel-tag">Solver</span><h3>Click the gold. The frontier moves.</h3><p>That moving ring is the next thing you can actually learn. Not a red X.</p></div>
       </div>

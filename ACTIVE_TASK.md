@@ -6,7 +6,7 @@
 
 ## Marketing sims + book studio (2026-08-15)
 
-joinmindcraft.com reel: live ZPD (`sims/zpd/` iframes Dan's explorer), 3D graph (`sims/graph/` from his public JSON), Jesse press centered, Create is a guided hobby-book studio. Caps cut to Talk / See / Make. Credit Dan, no partnership. Figma MCP still unauth → `agent_work/product/CREATE_BOOK_FIGMA_BRIEF.md`.
+ZPD is hosted on-site (`sims/zpd/`, drag to pan, click gold). No LinkedIn. 3D graph at `sims/graph/`. Jesse press centered. Create is a hobby-book studio.
 
 ## Marketing elevate (2026-08-15)
 
