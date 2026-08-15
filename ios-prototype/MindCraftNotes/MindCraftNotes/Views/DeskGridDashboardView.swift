@@ -48,25 +48,25 @@ struct DeskGridDashboardView: View {
     private var expanded: Bool { rail != .none }
 
     var body: some View {
-        ZStack {
-            Color(gridHex: "fff8e9").ignoresSafeArea()
-            GeometryReader { geo in
-                let scale = min(geo.size.width / artboard.width, geo.size.height / artboard.height)
-                let board = CGSize(width: artboard.width * scale, height: artboard.height * scale)
-                ZStack(alignment: .topLeading) {
-                    DottedDeskGrid()
-                    artboardTiles(scale: scale)
-                    placed(WorkArtboard.dock, scale: scale) { workDock }
-                    if expanded {
-                        placed(rail == .memo ? WorkArtboard.memoRail : WorkArtboard.flowsRail, scale: scale) {
-                            if rail == .memo { memoRail } else { flowsRail }
-                        }
-                    }
-                }
-                .frame(width: board.width, height: board.height)
-                .position(x: geo.size.width / 2, y: geo.size.height / 2)
+        // GeometryReader is the root (same shape as CreateCanvasView).
+        // Do not wrap it in an outer ZStack + Color sibling, and do not
+        // center the board with .position() — that pair was laying the
+        // 1440×810 artboard out at ~half width on iPad (Email / Gcal
+        // off-screen, FieldDeskView's 050a08 bleeding through on the
+        // right) even when geo.size reported the full 1180×820.
+        // One explicit ZStack child only. Tiles may .position() inside
+        // the hard-framed board; the board itself must not.
+        GeometryReader { geo in
+            let scale = min(geo.size.width / artboard.width, geo.size.height / artboard.height)
+            let board = CGSize(width: artboard.width * scale, height: artboard.height * scale)
+            ZStack {
+                Color(gridHex: "fff8e9").ignoresSafeArea()
+                tileBoard(scale: scale, board: board)
             }
+            .frame(width: geo.size.width, height: geo.size.height)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .ignoresSafeArea()
         .overlay(alignment: .topTrailing) {
             Button("Done", action: onClose)
                 .font(.system(size: 13, weight: .bold, design: .rounded))
@@ -78,7 +78,6 @@ struct DeskGridDashboardView: View {
                 .padding(.trailing, 16)
                 .accessibilityIdentifier("deskGridDashboardDone")
         }
-        .animation(.spring(response: 0.45, dampingFraction: 0.84), value: rail)
         // Not a direct .accessibilityIdentifier() here either - same
         // clobbering bug as workDock, this time it would stomp every
         // nested tile/dock/rail identifier with "deskGridDashboard".
@@ -90,16 +89,41 @@ struct DeskGridDashboardView: View {
         }
     }
 
-    @ViewBuilder
-    private func artboardTiles(scale: CGFloat) -> some View {
-        photoTile(.intel, box: expanded ? WorkArtboard.p5Intel : WorkArtboard.p4Intel, scale: scale)
-        photoTile(.moodle, box: expanded ? WorkArtboard.p5Moodle : WorkArtboard.p4Moodle, scale: scale)
-        photoTile(.binder, box: expanded ? WorkArtboard.p5Binder : WorkArtboard.p4Binder, scale: scale)
-        photoTile(.emailSummaries, box: expanded ? WorkArtboard.p5Email : WorkArtboard.p4Email, scale: scale)
-        photoTile(.gcal, box: expanded ? WorkArtboard.p5Gcal : WorkArtboard.p4Gcal, scale: scale)
+    private func tileBoard(scale: CGFloat, board: CGSize) -> some View {
+        ZStack(alignment: .topLeading) {
+            Color.clear
+                .frame(width: board.width, height: board.height)
+            DottedDeskGrid()
+                .frame(width: board.width, height: board.height)
+            pin(expanded ? WorkArtboard.p5Intel : WorkArtboard.p4Intel, scale: scale) {
+                photoTile(.intel)
+            }
+            pin(expanded ? WorkArtboard.p5Moodle : WorkArtboard.p4Moodle, scale: scale) {
+                photoTile(.moodle)
+            }
+            pin(expanded ? WorkArtboard.p5Binder : WorkArtboard.p4Binder, scale: scale) {
+                photoTile(.binder)
+            }
+            pin(expanded ? WorkArtboard.p5Email : WorkArtboard.p4Email, scale: scale) {
+                photoTile(.emailSummaries)
+            }
+            pin(expanded ? WorkArtboard.p5Gcal : WorkArtboard.p4Gcal, scale: scale) {
+                photoTile(.gcal)
+            }
+            pin(WorkArtboard.dock, scale: scale) { workDock }
+            if expanded {
+                pin(rail == .memo ? WorkArtboard.memoRail : WorkArtboard.flowsRail, scale: scale) {
+                    if rail == .memo { memoRail } else { flowsRail }
+                }
+            }
+        }
+        .frame(width: board.width, height: board.height, alignment: .topLeading)
     }
 
-    private func placed<Content: View>(_ box: CGRect, scale: CGFloat, @ViewBuilder content: () -> Content) -> some View {
+    /// Place a measured PDF box on the hard-framed board. `.position()` is
+    /// safe here — same helper as CreateCanvasView. The half-width bug was
+    /// applying `.position()` to the board itself inside GeometryReader.
+    private func pin<Content: View>(_ box: CGRect, scale: CGFloat, @ViewBuilder content: () -> Content) -> some View {
         content()
             .frame(width: box.width * scale, height: box.height * scale)
             .position(
@@ -149,7 +173,7 @@ struct DeskGridDashboardView: View {
         }
     }
 
-    private func photoTile(_ kind: TileKind, box: CGRect, scale: CGFloat) -> some View {
+    private func photoTile(_ kind: TileKind) -> some View {
         VStack(alignment: .leading, spacing: 6) {
             Text(kind.title)
                 .font(.system(size: 15, weight: .bold, design: .rounded))
@@ -195,11 +219,6 @@ struct DeskGridDashboardView: View {
             .buttonStyle(.plain)
             .accessibilityIdentifier("deskGridTile_\(kind.title)")
         }
-        .frame(width: box.width * scale, height: box.height * scale, alignment: .topLeading)
-        .position(
-            x: (box.minX + box.width / 2) * scale,
-            y: (box.minY + box.height / 2) * scale
-        )
     }
 
     private func handleTile(_ kind: TileKind) {
@@ -344,7 +363,7 @@ struct DeskGridDashboardView: View {
     }
 
     private func setRail(_ next: Rail) {
-        withAnimation { rail = next }
+        withAnimation(.spring(response: 0.45, dampingFraction: 0.84)) { rail = next }
     }
 }
 

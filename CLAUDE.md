@@ -576,6 +576,13 @@ Hard-won lessons, all confirmed empirically this session, not assumed:
   opens. Dock is Binder · Calendar · Memo · Gmail · Flows · search (not
   Ask AI). Reached via `+` → Dashboard or `+` → Flows. Deliberately a
   *separate* screen from the free-drag desk cards, not a reskin of them.
+  **Layout rule (2026-08-15):** GeometryReader is the root; the board is
+  a hard `frame` centered by ZStack (not `.position()` on the board).
+  Tiles may still `.position()` inside that frame, same as CreateCanvasView.
+  Do not put Color + GeometryReader as ZStack siblings — that pair plus a
+  positioned board rendered the artboard at ~half width on iPad (Email /
+  Gcal off-screen) even when `geo.size` was the full 1180×820. A view-wide
+  `.animation(_, value: rail)` is also gone; rail motion stays in `setRail`.
 - `CreateCanvasView.swift` — Create · Presentation / GDoc (PDF pages 1–3).
   Centered slide or doc, Jesse rail (never Jack), one Ask-AI dock, tap-to-
   toggle call via `JesseCallSession`. Call live → transcription +

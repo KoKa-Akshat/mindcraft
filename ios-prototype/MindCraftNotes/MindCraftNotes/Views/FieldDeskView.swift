@@ -580,6 +580,8 @@ struct FieldDeskView: View {
                         }
                     )
                     .id(dashboardStartRail)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .ignoresSafeArea()
                     .transition(.opacity)
                     .zIndex(70)
                     // Not .accessibilityIdentifier() here - DeskGridDashboardView's

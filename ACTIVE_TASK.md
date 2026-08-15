@@ -4,6 +4,10 @@
 
 ---
 
+## Work canvas full iPad width (2026-08-15)
+
+Create Dashboard tiles were painting at half width on iPad (Email / Gcal off-screen, black void on the right) even though GeometryReader reported 1180×820. Board is now a hard-framed artboard; tiles pin with offset, not `.position()`. Toolbar identifier fix is untouched.
+
 ## Mentor headline one line (2026-08-15)
 
 Tutors: "Someone who has done this walks in." stays on one line. The only sub line is the MindCraft software quote.

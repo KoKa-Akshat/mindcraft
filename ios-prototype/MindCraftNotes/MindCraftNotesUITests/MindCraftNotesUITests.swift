@@ -1908,6 +1908,36 @@ final class MindCraftNotesUITests: XCTestCase {
         XCTAssertTrue(card.waitForExistence(timeout: 5), "expected return to hub")
     }
 
+    /// PDF pages 4–5: all five photo tiles must sit on the iPad, not fall
+    /// off the right into Field Desk's black void. The half-width artboard
+    /// bug hid Email Summaries and Gcal even though geo.size was full-screen.
+    private func assertWorkCanvasTilesOnScreen(in app: XCUIApplication) {
+        let screen = app.frame
+        XCTAssertGreaterThan(screen.width, 0, "app frame should be real")
+        let ids = [
+            "deskGridTile_Intel",
+            "deskGridTile_Moodle",
+            "deskGridTile_Binder",
+            "deskGridTile_Email Summaries",
+            "deskGridTile_Gcal",
+        ]
+        for id in ids {
+            let tile = app.buttons[id]
+            XCTAssertTrue(tile.waitForExistence(timeout: 5), "expected \(id) on the work canvas")
+            let frame = tile.frame
+            XCTAssertFalse(frame.isEmpty, "\(id) should have a real frame")
+            XCTAssertGreaterThan(frame.maxX, screen.minX + 8, "\(id) should not sit entirely off the left")
+            XCTAssertLessThan(frame.minX, screen.maxX - 8, "\(id) should not sit entirely off the right")
+            XCTAssertGreaterThan(frame.maxY, screen.minY + 8, "\(id) should not sit entirely off the top")
+            XCTAssertLessThan(frame.minY, screen.maxY - 8, "\(id) should not sit entirely off the bottom")
+        }
+        let gcal = app.buttons["deskGridTile_Gcal"].frame
+        XCTAssertGreaterThan(gcal.midX, screen.minX + screen.width * 0.55, "Gcal belongs on the right of the 1440 artboard, not in a half-width board")
+        let binderChip = app.buttons["deskGridDock_Binder"].frame
+        let flowsChip = app.buttons["deskGridDock_Flows"].frame
+        XCTAssertGreaterThan(flowsChip.maxX - binderChip.minX, screen.width * 0.45, "dock chips should span most of the artboard, not a half-width strip")
+    }
+
     /// Work canvas (PDF page 4) + Create · Presentation (PDF page 1).
     /// Dashboard is a full-screen overlay, so it must stay hittable
     /// (`showDeskGridDashboard` is on `deskOverlayChromeBlocked`).
@@ -1931,12 +1961,16 @@ final class MindCraftNotesUITests: XCTestCase {
         XCTAssertTrue(app.buttons["deskGridTile_Binder"].waitForExistence(timeout: 10), "expected Binder tile")
         XCTAssertTrue(app.buttons["deskGridTile_Intel"].exists, "expected Intel tile")
         XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboardToolbar"].exists, "expected merged work toolbar")
+        assertWorkCanvasTilesOnScreen(in: app)
+        attachScreenshot(app, name: "dashboard-page4-default")
 
         let flows = app.buttons["deskGridDock_Flows"]
         XCTAssertTrue(flows.waitForExistence(timeout: 10), "expected Flows dock chip with its own identifier")
         flows.tap()
 
         XCTAssertTrue(app.descendants(matching: .any)["deskGridFlowsRail"].waitForExistence(timeout: 10), "expected Flows rail to open")
+        assertWorkCanvasTilesOnScreen(in: app)
+        attachScreenshot(app, name: "dashboard-page5-flows-rail")
 
         let presentation = app.buttons["deskGridFlow_Presentation"]
         XCTAssertTrue(presentation.waitForExistence(timeout: 10), "expected Presentation row in Flows rail")
