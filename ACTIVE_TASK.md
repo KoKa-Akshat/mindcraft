@@ -4,6 +4,17 @@
 
 ---
 
+## Field Desk Create / Work canvas (2026-08-15)
+
+Native iOS, not `app/public/desk-os`. Source of truth: `CLAUDE.md` iOS section + `agent_work/product/field_desk_create_redesign_2026-08-15/BRIEF.md`.
+
+- Work canvas: `DeskGridDashboardView` — cream dotted grid, PDF page-4 boxes, page-5 shrink/slide, dock = Binder · Calendar · Memo · Gmail · Flows · search
+- Create: `CreateCanvasView` — Presentation / GDoc centered, Jesse rail (never Jack), tap-to-toggle call via `JesseCallSession`
+- Flows is a right rail on the Work canvas (`fieldDeskAddFlows`), not `WorkflowLibraryView`
+- Add → Presentation opens Create. Add → Gdoc still places the whiteboard card (palm-rejection test)
+- `showCreateCanvas` is on `deskOverlayChromeBlocked`
+- Do not edit `app/public/desk-os/` (gitignored sync from `agent_work/product/desk_os/`)
+
 ## Archive RAG · Jesse on Dan’s books (2026-08-14)
 
 Try: **https://mindcraft-93858.web.app/desk-os/workflows/archive/?v=a3**  

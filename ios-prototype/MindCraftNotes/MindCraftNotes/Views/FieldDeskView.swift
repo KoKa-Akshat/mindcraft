@@ -56,6 +56,10 @@ struct FieldDeskView: View {
     /// Fixed-tile dashboard grid (`DeskGridDashboardView`) - PDF-referenced
     /// layout, distinct from the free-drag desk cards below.
     @State private var showDeskGridDashboard = false
+    @State private var dashboardStartRail: DeskGridDashboardView.Rail = .none
+    /// Native Create · Presentation / GDoc canvas (PDF pages 1–3).
+    @State private var showCreateCanvas = false
+    @State private var createCanvasKind: CreateCanvasKind = .presentation
     /// Projects screen — Malevolent Shrine project card; tap → work area.
     @State private var showProjectsScreen = false
     /// Shrine → Gen-Z captions → workspace starting → work desk.
@@ -362,6 +366,7 @@ struct FieldDeskView: View {
             || showProjectsScreen
             || showWorkflowLibrary
             || showDeskGridDashboard
+            || showCreateCanvas
     }
 
     /// Jesse kitchen Ask/dock only — Work/Create own their own prompt bars.
@@ -539,6 +544,7 @@ struct FieldDeskView: View {
 
                 if showDeskGridDashboard {
                     DeskGridDashboardView(
+                        initialRail: dashboardStartRail,
                         onOpenBinder: {
                             showDeskGridDashboard = false
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
@@ -547,8 +553,33 @@ struct FieldDeskView: View {
                                 }
                             }
                         },
-                        onClose: { showDeskGridDashboard = false }
+                        onClose: { showDeskGridDashboard = false },
+                        onOpenCalendar: {
+                            showDeskGridDashboard = false
+                            placeWidget(.calendar)
+                        },
+                        onOpenGmail: {
+                            showDeskGridDashboard = false
+                            showGmailBox = true
+                        },
+                        onOpenCreate: { kind in
+                            createCanvasKind = kind
+                            showCreateCanvas = true
+                        },
+                        onOpenFlow: { id in
+                            showDeskGridDashboard = false
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                                switch id {
+                                case "resume": showResumeAgent = true
+                                case "archive": showArchiveWorkflow = true
+                                case "book": showBookWorkflow = true
+                                case "apply": showApplyToday = true
+                                default: break
+                                }
+                            }
+                        }
                     )
+                    .id(dashboardStartRail)
                     .transition(.opacity)
                     .zIndex(70)
                     .accessibilityIdentifier("fieldDeskGridDashboardOverlay")
@@ -686,6 +717,16 @@ struct FieldDeskView: View {
                     CreateStudioView(onClose: { closeCreateStudio() })
                         .zIndex(86)
                         .transition(.opacity)
+                }
+
+                if showCreateCanvas {
+                    CreateCanvasView(
+                        kind: createCanvasKind,
+                        studentName: deskChromeName ?? "there",
+                        onClose: { showCreateCanvas = false }
+                    )
+                    .zIndex(87)
+                    .transition(.opacity)
                 }
 
                 // Polka doorway sheet rides above both worlds while crossing.
@@ -3040,20 +3081,17 @@ struct FieldDeskView: View {
                     .font(.system(size: 12, weight: .medium, design: .rounded))
                     .foregroundColor(Color(fdHex: "8a8478"))
 
-                // Flows leads the panel now, ahead of the individual desk
-                // cards - real, already-working infrastructure
-                // (WorkflowLibraryView/showWorkflowLibrary, previously only
-                // reachable from the classic work desk's own Workflows
-                // button), just given a second, more obvious entry point
-                // here.
+                // Flows opens the Work canvas right rail (PDF page 5),
+                // not WorkflowLibraryView as a new page.
                 addMenuRow(
                     title: "Flows",
-                    subtitle: "Resume, Archive, Book, Apply Today",
+                    subtitle: "Resume, Archive, Book, Apply — right rail, not a new page",
                     system: "bolt.fill",
                     enabled: true
                 ) {
                     showAddPanel = false
-                    showWorkflowLibrary = true
+                    dashboardStartRail = .flows
+                    showDeskGridDashboard = true
                 }
                 .accessibilityIdentifier("fieldDeskAddFlows")
 
@@ -3119,11 +3157,13 @@ struct FieldDeskView: View {
 
                 addMenuRow(
                     title: "Presentation",
-                    subtitle: placedWidgets.contains(.slides) ? "Already on desk" : "Presentation · slides",
+                    subtitle: "Create screen · Jesse on the rail",
                     system: "rectangle.on.rectangle.angled",
                     enabled: true
                 ) {
-                    placeWidget(.slides)
+                    showAddPanel = false
+                    createCanvasKind = .presentation
+                    showCreateCanvas = true
                 }
                 .accessibilityIdentifier("fieldDeskAddPresentation")
 
@@ -3154,6 +3194,7 @@ struct FieldDeskView: View {
                     enabled: true
                 ) {
                     showAddPanel = false
+                    dashboardStartRail = .none
                     showDeskGridDashboard = true
                 }
                 .accessibilityIdentifier("fieldDeskAddDashboard")

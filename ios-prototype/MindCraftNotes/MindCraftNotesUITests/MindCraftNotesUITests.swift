@@ -1907,4 +1907,48 @@ final class MindCraftNotesUITests: XCTestCase {
         app.buttons["testInstanceClose"].tap()
         XCTAssertTrue(card.waitForExistence(timeout: 5), "expected return to hub")
     }
+
+    /// Work canvas (PDF page 4) + Create · Presentation (PDF page 1).
+    /// Dashboard is a full-screen overlay, so it must stay hittable
+    /// (`showDeskGridDashboard` is on `deskOverlayChromeBlocked`).
+    func testWorkCanvasAndCreatePresentation() {
+        let app = launchFieldDeskApp()
+        XCUIDevice.shared.orientation = .landscapeLeft
+
+        let bottomEdge = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.98))
+        let midScreen = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.55))
+        bottomEdge.press(forDuration: 0.05, thenDragTo: midScreen)
+
+        let addButton = app.buttons["fieldDeskAdd"]
+        XCTAssertTrue(addButton.waitForExistence(timeout: 8), "expected + Add dock icon")
+        addButton.tap()
+
+        let addDashboard = app.buttons["fieldDeskAddDashboard"]
+        XCTAssertTrue(addDashboard.waitForExistence(timeout: 5), "expected Dashboard row")
+        addDashboard.tap()
+
+        XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 5), "expected the PDF work canvas")
+        XCTAssertTrue(app.descendants(matching: .any)["deskGridTile_Binder"].waitForExistence(timeout: 3), "expected Binder tile")
+        XCTAssertTrue(app.descendants(matching: .any)["deskGridTile_Intel"].waitForExistence(timeout: 2), "expected Intel tile")
+        XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboardToolbar"].waitForExistence(timeout: 2), "expected the single work dock")
+
+        let flows = app.buttons["deskGridDock_Flows"]
+        XCTAssertTrue(flows.waitForExistence(timeout: 3), "expected Flows on the work dock")
+        flows.tap()
+        XCTAssertTrue(app.descendants(matching: .any)["deskGridFlowsRail"].waitForExistence(timeout: 3), "expected Flows as a right rail, not a new page")
+
+        let presentation = app.buttons["deskGridFlow_Presentation"]
+        XCTAssertTrue(presentation.waitForExistence(timeout: 3), "expected Presentation in the Flows rail")
+        presentation.tap()
+
+        XCTAssertTrue(app.descendants(matching: .any)["createCanvasRoot"].waitForExistence(timeout: 5), "expected the Create screen, centered")
+        XCTAssertTrue(app.descendants(matching: .any)["createCanvasJesseRail"].waitForExistence(timeout: 3), "expected Jesse's rail")
+        XCTAssertTrue(app.buttons["createCanvasCallJesse"].waitForExistence(timeout: 3), "expected Jump on a call with Jesse")
+        XCTAssertFalse(app.staticTexts.containing(NSPredicate(format: "label CONTAINS 'Jack'")).firstMatch.exists, "agent name is Jesse, never Jack")
+
+        app.buttons["createCanvasDone"].tap()
+        XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 3), "closing Create returns to the work canvas")
+
+        XCUIDevice.shared.orientation = .portrait
+    }
 }

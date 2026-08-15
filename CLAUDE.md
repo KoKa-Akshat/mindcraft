@@ -549,11 +549,18 @@ Hard-won lessons, all confirmed empirically this session, not assumed:
 - Window state (placed card positions/sizes) now persists across relaunches
   (`FieldDeskStore.saveLayout`); this was a real, named gap in the product
   rebuild brief that's since been closed — don't re-flag it as missing.
-- `DeskGridDashboardView.swift` (added 2026-08-15) — a fixed-tile, non-
-  draggable dashboard (Intel/Moodle/Binder/Email Summaries/Gcal, reflows
-  when a tile is added), reached via the `+` add panel's "Dashboard" row.
-  Deliberately a *separate* screen from the free-drag desk cards above,
-  not a reskin of them — confirmed with Akshat directly before building.
+- `DeskGridDashboardView.swift` (added 2026-08-15, PDF boxes 2026-08-15) —
+  Work canvas from `Presentation Screen.pdf` pages 4–5: cream dotted grid,
+  measured 1440×810 tile boxes, page-5 shrink/slide when Memo or Flows
+  opens. Dock is Binder · Calendar · Memo · Gmail · Flows · search (not
+  Ask AI). Reached via `+` → Dashboard or `+` → Flows. Deliberately a
+  *separate* screen from the free-drag desk cards, not a reskin of them.
+- `CreateCanvasView.swift` — Create · Presentation / GDoc (PDF pages 1–3).
+  Centered slide or doc, Jesse rail (never Jack), one Ask-AI dock, tap-to-
+  toggle call via `JesseCallSession`. Call live → transcription +
+  storyboards. Opened from Add → Presentation or the Work canvas Flows
+  rail. `showCreateCanvas` is on `deskOverlayChromeBlocked`. Add → Gdoc
+  still places the movable whiteboard card (palm-rejection test).
 - **`JesseCallSession`/`JesseCallOverlay.swift`'s mic control is
   tap-to-toggle, not hold-to-talk** — `Button { call.isListening ?
   call.stopListening() : call.startListening() }`. Keep it that way; the

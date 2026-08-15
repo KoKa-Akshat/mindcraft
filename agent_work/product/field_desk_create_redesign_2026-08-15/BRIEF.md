@@ -248,6 +248,14 @@ guessing proportions from scratch.
 
 ---
 
+## Built 2026-08-15 (Cursor)
+
+- `DeskGridDashboardView` now uses the measured 1440×810 page-4 / page-5 boxes, cream dotted grid, one charcoal dock (Binder · Calendar · Memo · Gmail · Flows · search). Memo / Flows open the page-5 right rail.
+- `CreateCanvasView` is the Create screen for Presentation and GDoc (Jesse rail, tap-to-toggle call, live transcription + storyboards). Opened from Add → Presentation or Flows → Presentation / GDoc.
+- Add → Flows opens the Work canvas rail, not a new workflows page.
+- Add → Gdoc still places the movable whiteboard card so `testWhiteboardCardPencilOnlySeparation` stays valid.
+- Kitchen chrome (Jesse's button, Sign out under market) was already shipped earlier today — not re-touched.
+
 ## Suggested build order
 
 1. **[BUG] fixes first** — Open Learning Archive dead link, G-Doc/Presentation

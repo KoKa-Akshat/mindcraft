@@ -1,0 +1,498 @@
+import SwiftUI
+
+enum CreateCanvasKind: String {
+    case presentation
+    case gdoc
+}
+
+/// PDF pages 1–3: Create · Presentation / GDoc.
+/// Centered slide or doc, Jesse rail on the right, one Ask-AI dock.
+/// Call live → slide stays, transcription + storyboards open (page 2).
+/// Agent is Jesse. Mic is tap-to-toggle, same as `JesseCallSheetView`.
+struct CreateCanvasView: View {
+    var kind: CreateCanvasKind
+    var studentName: String
+    var onClose: () -> Void
+
+    @EnvironmentObject private var jesseCall: JesseCallSession
+
+    @State private var askText = ""
+    @State private var slides: [CreateSlide] = [
+        CreateSlide(title: "Untitled deck", body: "Your first point goes here."),
+        CreateSlide(title: "Next beat", body: "Add what you want the room to remember."),
+    ]
+    @State private var slideIndex = 0
+    @State private var docText = ""
+    @State private var instructionLog: [String] = []
+
+    private let artboard = CGSize(width: 1440, height: 810)
+
+    private var firstName: String {
+        let trimmed = studentName.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty, trimmed != "there" else { return "there" }
+        return trimmed.split(separator: " ").first.map(String.init) ?? trimmed
+    }
+
+    private var callLive: Bool {
+        jesseCall.isActive && jesseCall.context == "create"
+    }
+
+    var body: some View {
+        GeometryReader { geo in
+            let scale = min(geo.size.width / artboard.width, geo.size.height / artboard.height)
+            let board = CGSize(width: artboard.width * scale, height: artboard.height * scale)
+            ZStack {
+                Color.white.ignoresSafeArea()
+                ZStack(alignment: .topLeading) {
+                    artboardContent(scale: scale)
+                }
+                .frame(width: board.width, height: board.height)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+        .overlay(alignment: .topTrailing) {
+            Button("Done", action: onClose)
+                .font(.system(size: 13, weight: .bold, design: .rounded))
+                .foregroundColor(Color(createHex: "0c1207"))
+                .padding(.horizontal, 14)
+                .padding(.vertical, 8)
+                .background(Capsule().fill(Color(createHex: "c4f547")))
+                .padding(.top, 12)
+                .padding(.trailing, 16)
+                .accessibilityIdentifier("createCanvasDone")
+        }
+        .animation(.spring(response: 0.45, dampingFraction: 0.86), value: callLive)
+        .accessibilityIdentifier("createCanvasRoot")
+    }
+
+    @ViewBuilder
+    private func artboardContent(scale: CGFloat) -> some View {
+        phoneFAB(scale: scale)
+
+        if callLive {
+            placed(CreateArtboard.liveSlide, scale: scale) { slideOrDoc }
+            placed(CreateArtboard.transcription, scale: scale) { transcriptionRail }
+            placed(CreateArtboard.storyboards, scale: scale) { storyboardsRail }
+        } else {
+            placed(CreateArtboard.idleStage, scale: scale) { slideOrDoc }
+            placed(CreateArtboard.jesseRail, scale: scale) { jesseRail }
+        }
+
+        placed(CreateArtboard.dock, scale: scale) { createDock }
+    }
+
+    private func placed<Content: View>(_ box: CGRect, scale: CGFloat, @ViewBuilder content: () -> Content) -> some View {
+        content()
+            .frame(width: box.width * scale, height: box.height * scale)
+            .position(
+                x: (box.minX + box.width / 2) * scale,
+                y: (box.minY + box.height / 2) * scale
+            )
+    }
+
+    // MARK: - Stage
+
+    @ViewBuilder
+    private var slideOrDoc: some View {
+        if kind == .gdoc {
+            gdocStage
+                .accessibilityIdentifier("createCanvasGdoc")
+        } else {
+            presentationStage
+                .accessibilityIdentifier("createCanvasSlide")
+        }
+    }
+
+    private var presentationStage: some View {
+        let safe = min(max(0, slideIndex), max(0, slides.count - 1))
+        return VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Text("PRESENTATION")
+                    .font(.system(size: 11, weight: .heavy, design: .rounded))
+                    .tracking(1.1)
+                    .foregroundColor(.white.opacity(0.55))
+                Spacer()
+                Text("\(safe + 1) / \(max(slides.count, 1))")
+                    .font(.system(size: 12, weight: .bold, design: .rounded))
+                    .foregroundColor(Color(createHex: "c4f547"))
+                    .monospacedDigit()
+            }
+            TextField(
+                "Slide title",
+                text: Binding(
+                    get: { slides[safe].title },
+                    set: { slides[safe].title = $0 }
+                )
+            )
+            .font(.system(size: 28, weight: .bold, design: .rounded))
+            .foregroundColor(.white)
+            TextField(
+                "Talking point",
+                text: Binding(
+                    get: { slides[safe].body },
+                    set: { slides[safe].body = $0 }
+                ),
+                axis: .vertical
+            )
+            .font(.system(size: 16, weight: .medium, design: .rounded))
+            .foregroundColor(.white.opacity(0.82))
+            .lineLimit(3...8)
+            Spacer(minLength: 0)
+            HStack(spacing: 10) {
+                Button { slideIndex = max(0, slideIndex - 1) } label: {
+                    Image(systemName: "chevron.left")
+                        .frame(width: 36, height: 32)
+                        .background(Capsule().fill(Color.white.opacity(0.12)))
+                }
+                .disabled(safe == 0)
+                .opacity(safe == 0 ? 0.35 : 1)
+                Button {
+                    let at = min(safe + 1, slides.count)
+                    slides.insert(CreateSlide(title: "New slide", body: "Say the next thing."), at: at)
+                    slideIndex = at
+                } label: {
+                    Text("+ Slide")
+                        .font(.system(size: 12, weight: .heavy, design: .rounded))
+                        .padding(.horizontal, 14)
+                        .frame(height: 32)
+                        .background(Capsule().fill(Color(createHex: "c4f547")))
+                        .foregroundColor(Color(createHex: "0c1207"))
+                }
+                .accessibilityIdentifier("createCanvasAddSlide")
+                Spacer()
+                Button { slideIndex = min(slides.count - 1, slideIndex + 1) } label: {
+                    Image(systemName: "chevron.right")
+                        .frame(width: 36, height: 32)
+                        .background(Capsule().fill(Color.white.opacity(0.12)))
+                }
+                .disabled(safe >= slides.count - 1)
+                .opacity(safe >= slides.count - 1 ? 0.35 : 1)
+            }
+            .foregroundColor(.white)
+            .buttonStyle(.plain)
+        }
+        .padding(22)
+        .background(
+            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                .fill(LinearGradient(
+                    colors: [Color(createHex: "1a2c24"), Color(createHex: "0d1612")],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                ))
+                .shadow(color: .black.opacity(0.18), radius: 16, y: 8)
+        )
+    }
+
+    private var gdocStage: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("GDOC")
+                .font(.system(size: 11, weight: .heavy, design: .rounded))
+                .tracking(1.1)
+                .foregroundColor(Color(createHex: "143a2e").opacity(0.45))
+            TextEditor(text: $docText)
+                .font(.system(size: 16, weight: .medium, design: .rounded))
+                .scrollContentBackground(.hidden)
+                .foregroundColor(Color(createHex: "143a2e"))
+                .overlay(alignment: .topLeading) {
+                    if docText.isEmpty {
+                        Text("Write on the canvas. Jesse can take it from a call or the dock.")
+                            .font(.system(size: 15, weight: .medium, design: .rounded))
+                            .foregroundColor(Color(createHex: "143a2e").opacity(0.35))
+                            .padding(.top, 8)
+                            .padding(.leading, 5)
+                            .allowsHitTesting(false)
+                    }
+                }
+        }
+        .padding(22)
+        .background(
+            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                .fill(Color(createHex: "fff8e9"))
+                .shadow(color: .black.opacity(0.12), radius: 16, y: 8)
+        )
+    }
+
+    // MARK: - Jesse rail (page 1 / 3)
+
+    private var jesseRail: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            HStack(spacing: 10) {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        .fill(Color(createHex: "e8f3ec"))
+                    Image(systemName: "face.smiling")
+                        .font(.system(size: 22, weight: .medium))
+                        .foregroundColor(Color(createHex: "247a4d"))
+                }
+                .frame(width: 52, height: 52)
+                VStack(alignment: .leading, spacing: 4) {
+                    JesseMiniWaveform(active: jesseCall.isSpeaking || jesseCall.isListening)
+                    Text(jesseCall.isActive ? "On the line" : "Just now")
+                        .font(.system(size: 11, weight: .semibold, design: .rounded))
+                        .foregroundColor(Color(createHex: "143a2e").opacity(0.45))
+                }
+            }
+
+            Text("Hi \(firstName), Jesse here.")
+                .font(.system(size: 15, weight: .semibold, design: .rounded))
+                .foregroundColor(Color(createHex: "143a2e"))
+                .padding(12)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(
+                    RoundedRectangle(cornerRadius: 14, style: .continuous)
+                        .fill(Color(createHex: "eef1ec"))
+                )
+
+            Button(action: jumpOnCall) {
+                HStack {
+                    Image(systemName: "phone.fill")
+                    Text("Jump on a call with Jesse")
+                    Spacer(minLength: 0)
+                    Image(systemName: "arrow.right")
+                }
+                .font(.system(size: 14, weight: .bold, design: .rounded))
+                .foregroundColor(.white)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 14)
+                .background(Capsule().fill(Color.black))
+            }
+            .buttonStyle(.plain)
+            .accessibilityIdentifier("createCanvasCallJesse")
+
+            Text("or continue in chat")
+                .font(.system(size: 12, weight: .medium, design: .rounded))
+                .foregroundColor(Color(createHex: "143a2e").opacity(0.4))
+                .frame(maxWidth: .infinity)
+
+            if let status = jesseCall.status {
+                Text(status)
+                    .font(.system(size: 11, weight: .medium, design: .rounded))
+                    .foregroundColor(Color(createHex: "b0473f"))
+            }
+
+            Spacer(minLength: 0)
+        }
+        .padding(18)
+        .background(
+            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                .fill(Color(white: 0.985))
+                .shadow(color: .black.opacity(0.08), radius: 14, y: 6)
+        )
+        .accessibilityIdentifier("createCanvasJesseRail")
+    }
+
+    private var transcriptionRail: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Transcription")
+                .font(.system(size: 16, weight: .bold, design: .rounded))
+                .foregroundColor(Color(createHex: "143a2e"))
+                .frame(maxWidth: .infinity)
+            ScrollView {
+                VStack(alignment: .leading, spacing: 10) {
+                    ForEach(jesseCall.turns) { turn in
+                        transcriptLine(turn.speaker == "jesse" ? "Jesse" : firstName, turn.text)
+                    }
+                    if jesseCall.isListening, !jesseCall.liveTranscript.isEmpty {
+                        transcriptLine(firstName, jesseCall.liveTranscript)
+                            .opacity(0.55)
+                    }
+                    ForEach(Array(instructionLog.enumerated()), id: \.offset) { _, line in
+                        transcriptLine("Dock", line)
+                    }
+                    if jesseCall.isThinking {
+                        Text("Jesse is working")
+                            .font(.system(size: 12, weight: .semibold, design: .rounded))
+                            .foregroundColor(Color(createHex: "247a4d"))
+                    }
+                }
+            }
+        }
+        .padding(14)
+        .background(
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .fill(Color(createHex: "f3f1ec"))
+                .shadow(color: .black.opacity(0.08), radius: 10, y: 4)
+        )
+        .accessibilityIdentifier("createCanvasTranscription")
+    }
+
+    private func transcriptLine(_ who: String, _ text: String) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(who.uppercased())
+                .font(.system(size: 9, weight: .heavy, design: .rounded))
+                .tracking(0.6)
+                .foregroundColor(Color(createHex: "143a2e").opacity(0.4))
+            Text(text)
+                .font(.system(size: 13, weight: .medium, design: .rounded))
+                .foregroundColor(Color(createHex: "143a2e"))
+        }
+    }
+
+    private var storyboardsRail: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Storyboards")
+                .font(.system(size: 12, weight: .bold, design: .rounded))
+                .foregroundColor(Color(createHex: "143a2e").opacity(0.45))
+            ScrollView {
+                VStack(spacing: 8) {
+                    ForEach(Array(slides.enumerated()), id: \.element.id) { index, slide in
+                        Button { slideIndex = index } label: {
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(slide.title)
+                                    .font(.system(size: 11, weight: .bold, design: .rounded))
+                                    .foregroundColor(.white)
+                                    .lineLimit(2)
+                            }
+                            .padding(10)
+                            .frame(maxWidth: .infinity, minHeight: 72, alignment: .topLeading)
+                            .background(
+                                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                    .fill(index == slideIndex ? Color(createHex: "247a4d") : Color(createHex: "1a2c24"))
+                            )
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+            }
+        }
+        .padding(10)
+        .background(
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .fill(Color.white)
+                .shadow(color: .black.opacity(0.08), radius: 10, y: 4)
+        )
+        .accessibilityIdentifier("createCanvasStoryboards")
+    }
+
+    // MARK: - Dock + call
+
+    private var createDock: some View {
+        HStack(spacing: 12) {
+            Image(systemName: "paperclip")
+                .font(.system(size: 16, weight: .semibold))
+                .foregroundColor(.white.opacity(0.85))
+            TextField("Ask AI…", text: $askText)
+                .textFieldStyle(.plain)
+                .font(.system(size: 15, weight: .medium, design: .rounded))
+                .foregroundColor(.white)
+                .onSubmit { sendAsk() }
+                .accessibilityIdentifier("createCanvasAsk")
+            Button(action: sendAsk) {
+                Text("Send")
+                    .font(.system(size: 12, weight: .bold, design: .rounded))
+                    .foregroundColor(Color(createHex: "0c1207"))
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 6)
+                    .background(Capsule().fill(Color(createHex: "c4f547")))
+            }
+            .buttonStyle(.plain)
+            .opacity(askText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? 0.35 : 1)
+            .disabled(askText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+
+            Button {
+                toggleMic()
+            } label: {
+                Image(systemName: jesseCall.isListening ? "mic.fill" : "mic")
+                    .font(.system(size: 16, weight: .bold))
+                    .foregroundColor(jesseCall.isListening ? Color(createHex: "0c1207") : .white)
+                    .frame(width: 36, height: 36)
+                    .background(Circle().fill(jesseCall.isListening ? Color(createHex: "c4f547") : Color.white.opacity(0.12)))
+            }
+            .buttonStyle(.plain)
+            .accessibilityIdentifier("createCanvasMic")
+
+            JesseMiniWaveform(active: jesseCall.isListening || jesseCall.isSpeaking)
+                .frame(width: 28, height: 28)
+        }
+        .padding(.horizontal, 22)
+        .padding(.vertical, 14)
+        .background(Capsule().fill(Color(createHex: "1c1c1e")))
+        .accessibilityIdentifier("createCanvasDock")
+    }
+
+    private func phoneFAB(scale: CGFloat) -> some View {
+        Button(action: jumpOnCall) {
+            Image(systemName: "phone.fill")
+                .font(.system(size: 16, weight: .bold))
+                .foregroundColor(.white)
+                .frame(width: 52, height: 52)
+                .background(Circle().fill(Color.black))
+        }
+        .buttonStyle(.plain)
+        .position(x: 32 * scale, y: 40 * scale)
+        .accessibilityIdentifier("createCanvasPhoneFAB")
+    }
+
+    private func jumpOnCall() {
+        if !jesseCall.isActive {
+            jesseCall.begin(context: "create")
+        }
+        if jesseCall.isListening {
+            jesseCall.stopListening()
+        } else {
+            jesseCall.startListening()
+        }
+    }
+
+    private func toggleMic() {
+        if !jesseCall.isActive {
+            jesseCall.begin(context: "create")
+        }
+        if jesseCall.isListening {
+            jesseCall.stopListening()
+        } else {
+            jesseCall.startListening()
+        }
+    }
+
+    private func sendAsk() {
+        let text = askText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !text.isEmpty else { return }
+        instructionLog.append(text)
+        askText = ""
+        // Transcript is the instruction stream. Do not fake a finished slide.
+    }
+}
+
+private struct CreateSlide: Identifiable {
+    let id = UUID()
+    var title: String
+    var body: String
+}
+
+private enum CreateArtboard {
+    /// 1440×810 boxes from Presentation_Screen.pdf.
+    static let idleStage = CGRect(x: 96, y: 53, width: 840, height: 493)
+    static let jesseRail = CGRect(x: 988, y: 53, width: 376, height: 544)
+    static let liveSlide = CGRect(x: 30, y: 74, width: 840, height: 493)
+    static let transcription = CGRect(x: 898, y: 103, width: 300, height: 452)
+    static let storyboards = CGRect(x: 1225, y: 74, width: 196, height: 481)
+    static let dock = CGRect(x: 96, y: 632, width: 1321, height: 96)
+}
+
+struct JesseMiniWaveform: View {
+    var active: Bool
+
+    var body: some View {
+        HStack(spacing: 2) {
+            ForEach(0..<7, id: \.self) { i in
+                Capsule()
+                    .fill(Color(createHex: "247a4d").opacity(active ? 0.95 : 0.35))
+                    .frame(width: 3, height: active ? CGFloat([8, 14, 20, 12, 18, 10, 7][i]) : 7)
+            }
+        }
+        .animation(.easeInOut(duration: 0.28).repeatForever(autoreverses: true), value: active)
+    }
+}
+
+extension Color {
+    init(createHex hex: String) {
+        let cleaned = hex.hasPrefix("#") ? String(hex.dropFirst()) : hex
+        var value: UInt64 = 0
+        Scanner(string: cleaned).scanHexInt64(&value)
+        let r = Double((value >> 16) & 0xFF) / 255
+        let g = Double((value >> 8) & 0xFF) / 255
+        let b = Double(value & 0xFF) / 255
+        self.init(red: r, green: g, blue: b)
+    }
+}
