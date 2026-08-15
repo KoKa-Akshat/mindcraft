@@ -1459,7 +1459,7 @@ struct FieldDeskView: View {
             switch modeToggleKind {
             case .createWork:
                 modePill("Create", lime: true, id: "fieldDeskCreateButton") {
-                    openWorkCanvas()
+                    openCreateCanvas()
                 }
                 modePill("Work", lime: false, id: "fieldDeskWorkButton") {
                     openWorkFromJesse()
@@ -1469,7 +1469,7 @@ struct FieldDeskView: View {
                     closeStandaloneDesk()
                 }
                 modePill("Create", lime: true, id: "fieldDeskCreateButton") {
-                    openWorkCanvas()
+                    openCreateCanvas()
                 }
             case .jessesWork:
                 modePill("Jesse's", lime: false, id: "fieldDeskJessesButton") {
@@ -1528,7 +1528,17 @@ struct FieldDeskView: View {
         dashboardStartRail = rail
         showStandaloneDesk = false
         showCreateStudio = false
+        showCreateCanvas = false
         showDeskGridDashboard = true
+    }
+
+    /// PDF Create canvas (pages 1–3): slide or GDoc, Jesse rail, Ask dock.
+    private func openCreateCanvas() {
+        createCanvasKind = .presentation
+        showStandaloneDesk = false
+        showCreateStudio = false
+        showDeskGridDashboard = false
+        showCreateCanvas = true
     }
 
     private func switchDeskToCreate() {

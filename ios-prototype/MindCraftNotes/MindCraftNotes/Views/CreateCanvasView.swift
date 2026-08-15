@@ -25,6 +25,10 @@ struct CreateCanvasView: View {
     @State private var slideIndex = 0
     @State private var docText = ""
     @State private var instructionLog: [String] = []
+    @State private var spacePan: CGSize = .zero
+    @State private var spaceZoom: CGFloat = 1
+    @GestureState private var livePan: CGSize = .zero
+    @GestureState private var liveZoom: CGFloat = 1
 
     private let artboard = CGSize(width: 1440, height: 810)
 
@@ -38,6 +42,21 @@ struct CreateCanvasView: View {
         jesseCall.isActive && jesseCall.context == "create"
     }
 
+    private var spaceGesture: some Gesture {
+        let drag = DragGesture(minimumDistance: 12)
+            .updating($livePan) { value, state, _ in state = value.translation }
+            .onEnded { value in
+                spacePan.width += value.translation.width
+                spacePan.height += value.translation.height
+            }
+        let pinch = MagnificationGesture()
+            .updating($liveZoom) { value, state, _ in state = value }
+            .onEnded { value in
+                spaceZoom = min(2.6, max(0.65, spaceZoom * value))
+            }
+        return drag.simultaneously(with: pinch)
+    }
+
     var body: some View {
         GeometryReader { geo in
             let scale = min(geo.size.width / artboard.width, geo.size.height / artboard.height)
@@ -48,9 +67,15 @@ struct CreateCanvasView: View {
                     artboardContent(scale: scale)
                 }
                 .frame(width: board.width, height: board.height)
+                .scaleEffect(spaceZoom * liveZoom)
+                .offset(x: spacePan.width + livePan.width, y: spacePan.height + livePan.height)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .contentShape(Rectangle())
+            .gesture(spaceGesture)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .ignoresSafeArea()
         .overlay(alignment: .topTrailing) {
             Button("Done", action: onClose)
                 .font(.system(size: 13, weight: .bold, design: .rounded))

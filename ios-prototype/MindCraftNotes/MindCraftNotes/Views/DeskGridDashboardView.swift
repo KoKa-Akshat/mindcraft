@@ -23,6 +23,10 @@ struct DeskGridDashboardView: View {
     @State private var memoDraft = ""
     @State private var searchQuery = ""
     @State private var binderPulled = false
+    @State private var spacePan: CGSize = .zero
+    @State private var spaceZoom: CGFloat = 1
+    @GestureState private var livePan: CGSize = .zero
+    @GestureState private var liveZoom: CGFloat = 1
 
     private let artboard = CGSize(width: 1440, height: 810)
 
@@ -47,6 +51,23 @@ struct DeskGridDashboardView: View {
 
     private var expanded: Bool { rail != .none }
 
+    /// Drag empty cream to pan; pinch to move through the board in space.
+    /// Tiles still win taps (minimumDistance keeps a tap from becoming a pan).
+    private var spaceGesture: some Gesture {
+        let drag = DragGesture(minimumDistance: 12)
+            .updating($livePan) { value, state, _ in state = value.translation }
+            .onEnded { value in
+                spacePan.width += value.translation.width
+                spacePan.height += value.translation.height
+            }
+        let pinch = MagnificationGesture()
+            .updating($liveZoom) { value, state, _ in state = value }
+            .onEnded { value in
+                spaceZoom = min(2.6, max(0.65, spaceZoom * value))
+            }
+        return drag.simultaneously(with: pinch)
+    }
+
     var body: some View {
         // GeometryReader is the root (same shape as CreateCanvasView).
         // Do not wrap it in an outer ZStack + Color sibling, and do not
@@ -62,8 +83,12 @@ struct DeskGridDashboardView: View {
             ZStack {
                 Color(gridHex: "fff8e9").ignoresSafeArea()
                 tileBoard(scale: scale, board: board)
+                    .scaleEffect(spaceZoom * liveZoom)
+                    .offset(x: spacePan.width + livePan.width, y: spacePan.height + livePan.height)
             }
             .frame(width: geo.size.width, height: geo.size.height)
+            .contentShape(Rectangle())
+            .gesture(spaceGesture)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .ignoresSafeArea()
@@ -171,6 +196,17 @@ struct DeskGridDashboardView: View {
             case .memo: return "note.text"
             }
         }
+
+        var blurb: String {
+            switch self {
+            case .intel: return "Jesse pulled three things from this week."
+            case .moodle: return "Connect Moodle to drop homework here."
+            case .binder: return "ACT Field Book. Pull it onto the desk."
+            case .emailSummaries: return "Listen through what actually needs you."
+            case .gcal: return "This week, already on the page."
+            case .memo: return "Pin a note on the right rail."
+            }
+        }
     }
 
     private func photoTile(_ kind: TileKind) -> some View {
@@ -198,6 +234,18 @@ struct DeskGridDashboardView: View {
                             .font(.system(size: 36, weight: .medium))
                             .foregroundColor(.white.opacity(kind.connected ? 0.88 : 0.35))
                     }
+                    VStack {
+                        Spacer()
+                        HStack {
+                            Text(kind.blurb)
+                                .font(.system(size: 12, weight: .semibold, design: .rounded))
+                                .foregroundColor(kind == .binder || kind == .moodle ? Color(gridHex: "143a2e") : .white)
+                                .lineLimit(2)
+                                .multilineTextAlignment(.leading)
+                            Spacer(minLength: 0)
+                        }
+                        .padding(10)
+                    }
                     if !kind.connected {
                         Text("Connect")
                             .font(.system(size: 12, weight: .bold, design: .rounded))
@@ -205,7 +253,6 @@ struct DeskGridDashboardView: View {
                             .padding(.horizontal, 10)
                             .padding(.vertical, 5)
                             .background(Capsule().fill(Color.white.opacity(0.7)))
-                            .offset(y: 48)
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)

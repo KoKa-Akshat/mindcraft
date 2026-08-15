@@ -98,7 +98,9 @@ struct JesseKitchenBackgroundView: UIViewRepresentable {
         }
         view.accessibilityIdentifier = "fieldDeskJesseKitchen"
         context.coordinator.webView = view
-        let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 60)
+        // Reuse the last kitchen so a cold iPad open is not a full minute
+        // of re-downloading WebGL. Bundled mcworld:// still wins first.
+        let request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 30)
         view.load(request)
         return view
     }

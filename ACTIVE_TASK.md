@@ -4,6 +4,10 @@
 
 ---
 
+## Dashboards move in space (2026-08-15)
+
+Create and Work boards were empty color blocks you could not pan. Tiles now carry a line of copy. Drag / pinch moves the board in space. Kitchen reuses cache so Jesse's is not a full minute download each open. Lime Create opens the slide canvas; Work opens the tile board.
+
 ## Lime Create opens the PDF board (2026-08-15)
 
 The old web Field Binder has Jesse's + Create, no Work. Lime Create (kitchen and that desk) now opens the cream tile board. Dashboard sits above deskweb so the old page cannot cover it.
