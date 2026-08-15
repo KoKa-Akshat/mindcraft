@@ -12,7 +12,7 @@
     "api/agent-check-in.ts": { "maxDuration": 15 },
     "api/transcribe-scratch.ts": { "maxDuration": 30 },
     "api/app-actions.ts": { "maxDuration": 60 },
-    "api/tts.ts": { "maxDuration": 60, "memory": 2048 }
+    "api/tts.ts": { "maxDuration": 60 }
   },
   "rewrites": [
     { "source": "/api/create-classroom", "destination": "/api/app-actions?action=create-classroom" },
