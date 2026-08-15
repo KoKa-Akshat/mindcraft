@@ -32,7 +32,8 @@
     { "source": "/api/desk-ask", "destination": "/api/app-actions?action=desk-ask" },
     { "source": "/api/resume-agent", "destination": "/api/app-actions?action=resume-agent" },
     { "source": "/api/archive-rag", "destination": "/api/app-actions?action=archive-rag" },
-    { "source": "/api/book-agent", "destination": "/api/app-actions?action=book-agent" }
+    { "source": "/api/book-agent", "destination": "/api/app-actions?action=book-agent" },
+    { "source": "/api/gmail-digest", "destination": "/api/app-actions?action=gmail-digest" }
   ],
   "crons": [
     { "path": "/api/cron-fireflies", "schedule": "0 6 * * *" },
