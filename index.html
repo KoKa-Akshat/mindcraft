@@ -520,15 +520,26 @@
   .cta-lattice-box{
     position:relative; min-height:520px; border-radius:28px; overflow:hidden;
     border:1px solid rgba(196,245,71,.22);
-    background:#05070a;
+    background:
+      radial-gradient(ellipse 58% 62% at 50% 40%, rgba(196,245,71,.09), transparent 72%),
+      #05070a;
     box-shadow:0 30px 80px rgba(0,0,0,.35);
+    pointer-events:none;
   }
-  .cta-lattice{position:absolute; inset:0;}
-  .cta-lattice canvas{outline:none;}
+  .cta-lattice{position:absolute; inset:0; display:block; width:100%; height:100%;}
   .cta-lattice-cap{
-    position:absolute; left:22px; bottom:20px; z-index:2;
-    font-family:var(--serif); font-style:italic; font-size:16px; color:rgba(245,245,244,.72);
-    text-shadow:0 8px 24px rgba(0,0,0,.6);
+    position:absolute; left:22px; right:22px; bottom:22px; z-index:2;
+    max-width:28ch; margin:0;
+    font-family:var(--serif); font-style:italic;
+    font-size:clamp(17px,2vw,23px); line-height:1.35; color:#f4f1ea;
+    text-shadow:0 2px 18px rgba(0,0,0,.72);
+    transition:opacity .42s ease;
+  }
+  .cta-lattice-cap.is-out{opacity:0;}
+  .cta-lattice-kicker{
+    display:block; margin-bottom:7px;
+    font-family:"Inter",system-ui,sans-serif; font-style:normal; font-size:10px;
+    letter-spacing:.16em; text-transform:uppercase; color:var(--lime);
   }
   .ctaband{
     position:relative; border-radius:28px; overflow:hidden; text-align:left;
@@ -958,8 +969,11 @@
   <div class="wrap">
     <div class="cta-split reveal">
       <aside class="cta-lattice-box" aria-hidden="true">
-        <div class="cta-lattice" id="ctaLattice"></div>
-        <p class="cta-lattice-cap">Your map starts here.</p>
+        <canvas class="cta-lattice" id="ctaLattice"></canvas>
+        <p class="cta-lattice-cap" id="ctaLatticeCaption">
+          <span class="cta-lattice-kicker">Create</span>
+          An interactive lesson on fractals.
+        </p>
       </aside>
       <div class="ctaband">
       <h2>Never work <em>alone</em> again.</h2>
@@ -1196,53 +1210,180 @@
     }
   })();
 
-  // ---------- Claim-desk lattice box (cubic connected graph) ----------
+  // ---------- Claim-desk mascot lattice + workflow captions. Not pressable. ----------
   (function(){
-    const el = document.getElementById('ctaLattice');
-    if (!el || !window.ForceGraph3D) return;
-    const n = 5, gap = 22;
-    const colors = ['#c4f547','#4fd1c5','#6c8cff','#a78bfa','#f2b84b','#e05a5a'];
-    const nodes = [];
-    const links = [];
-    const idAt = (x,y,z) => x + y * n + z * n * n;
-    for (let z = 0; z < n; z++){
-      for (let y = 0; y < n; y++){
-        for (let x = 0; x < n; x++){
-          nodes.push({
-            id: idAt(x,y,z),
-            fx: (x - (n - 1) / 2) * gap,
-            fy: (y - (n - 1) / 2) * gap,
-            fz: (z - (n - 1) / 2) * gap,
-            color: colors[(x + y + z) % colors.length]
-          });
-          if (x < n - 1) links.push({ source: idAt(x,y,z), target: idAt(x + 1,y,z) });
-          if (y < n - 1) links.push({ source: idAt(x,y,z), target: idAt(x,y + 1,z) });
-          if (z < n - 1) links.push({ source: idAt(x,y,z), target: idAt(x,y,z + 1) });
+    const canvas = document.getElementById('ctaLattice');
+    const caption = document.getElementById('ctaLatticeCaption');
+    const box = canvas && canvas.closest('.cta-lattice-box');
+    if (!canvas || !box) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const beats = [
+      { k:'Create', t:'An interactive lesson on fractals.' },
+      { k:'Inbox', t:'Pull my emails. Draft the replies I should send.' },
+      { k:'Resume', t:'Say what you did. Jesse writes it clean.' },
+      { k:'Map', t:'The map just changed. Gold is the next move.' },
+      { k:'Notes', t:'The page is already here. Keep going.' }
+    ];
+    let beat = 0;
+    function paintCaption(n){
+      if (!caption) return;
+      const b = beats[n % beats.length];
+      caption.innerHTML = '<span class="cta-lattice-kicker">' + b.k + '</span>' + b.t;
+    }
+    paintCaption(0);
+    if (caption && !prefersReduced){
+      setInterval(() => {
+        caption.classList.add('is-out');
+        setTimeout(() => {
+          beat = (beat + 1) % beats.length;
+          paintCaption(beat);
+          caption.classList.remove('is-out');
+        }, 420);
+      }, 3400);
+    }
+
+    const extras = [
+      { r:196, g:245, b:71 },
+      { r:79, g:209, b:197 },
+      { r:242, g:184, b:75 },
+      { r:244, g:241, b:234 }
+    ];
+    let dots = [];
+    let cssW = 0, cssH = 0, dpr = 1;
+    const t0 = performance.now();
+
+    function fit(){
+      const r = box.getBoundingClientRect();
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      cssW = Math.max(1, r.width);
+      cssH = Math.max(1, r.height);
+      canvas.width = Math.floor(cssW * dpr);
+      canvas.height = Math.floor(cssH * dpr);
+      canvas.style.width = cssW + 'px';
+      canvas.style.height = cssH + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function linkDots(){
+      for (let i = 0; i < dots.length; i++){
+        dots[i].nbr = [];
+        for (let j = i + 1; j < dots.length && dots[i].nbr.length < 3; j++){
+          const dx = dots[i].nx - dots[j].nx;
+          const dy = dots[i].ny - dots[j].ny;
+          if (dx * dx + dy * dy < 0.0048) dots[i].nbr.push(j);
         }
       }
     }
-    const graph = ForceGraph3D({ controlType:'orbit' })(el)
-      .graphData({ nodes, links })
-      .backgroundColor('#05070a')
-      .nodeColor(n => n.color)
-      .nodeRelSize(2.4)
-      .nodeLabel(() => '')
-      .linkColor(() => 'rgba(196,245,71,.28)')
-      .linkOpacity(0.4)
-      .showNavInfo(false)
-      .enableNodeDrag(false)
-      .enableNavigationControls(true)
-      .d3AlphaDecay(1)
-      .warmupTicks(0)
-      .cooldownTicks(0);
-    const ctrl = graph.controls && graph.controls();
-    if (ctrl){
-      if ('enableZoom' in ctrl) ctrl.enableZoom = false;
-      if ('enablePan' in ctrl) ctrl.enablePan = false;
-      ctrl.autoRotate = !prefersReduced;
-      ctrl.autoRotateSpeed = 0.55;
+
+    function sample(img){
+      const off = document.createElement('canvas');
+      const maxW = 96;
+      off.width = maxW;
+      off.height = Math.max(1, Math.round(img.height * (maxW / img.width)));
+      const octx = off.getContext('2d');
+      octx.drawImage(img, 0, 0, off.width, off.height);
+      const data = octx.getImageData(0, 0, off.width, off.height).data;
+      const raw = [];
+      for (let y = 0; y < off.height; y++){
+        for (let x = 0; x < off.width; x++){
+          const i = (y * off.width + x) * 4;
+          const a = data[i + 3];
+          if (a < 70) continue;
+          const r = data[i], g = data[i + 1], b = data[i + 2];
+          if (0.2126 * r + 0.7152 * g + 0.0722 * b < 38) continue;
+          raw.push({ x: x / off.width, y: y / off.height, r, g, b });
+        }
+      }
+      const step = Math.max(1, Math.floor(raw.length / 460));
+      dots = [];
+      for (let i = 0; i < raw.length; i += step){
+        const p = raw[i];
+        const tint = extras[i % extras.length];
+        const mix = (i % 5 === 0) ? 0.55 : 0.12;
+        dots.push({
+          nx: p.x, ny: p.y, ph: Math.random() * Math.PI * 2,
+          r: Math.round(p.r * (1 - mix) + tint.r * mix),
+          g: Math.round(p.g * (1 - mix) + tint.g * mix),
+          b: Math.round(p.b * (1 - mix) + tint.b * mix)
+        });
+      }
+      linkDots();
     }
-    graph.cameraPosition({ x: 70, y: 36, z: 110 }, { x:0, y:0, z:0 });
+
+    function fallbackDots(){
+      dots = [];
+      for (let i = 0; i < 280; i++){
+        const ang = Math.random() * Math.PI * 2;
+        const rad = Math.pow(Math.random(), 0.52) * 0.4;
+        const tint = extras[i % extras.length];
+        dots.push({
+          nx: 0.5 + Math.cos(ang) * rad,
+          ny: 0.44 + Math.sin(ang) * rad * 1.12,
+          ph: Math.random() * Math.PI * 2,
+          r: tint.r, g: tint.g, b: tint.b
+        });
+      }
+      linkDots();
+    }
+
+    function draw(now){
+      if (!cssW) fit();
+      const padX = cssW * 0.12;
+      const padY = cssH * 0.08;
+      const tw = cssW - padX * 2;
+      const th = Math.max(140, cssH - padY * 2 - 104);
+      const t = (now - t0) / 1000;
+      ctx.clearRect(0, 0, cssW, cssH);
+      for (let i = 0; i < dots.length; i++){
+        const a = dots[i];
+        a._x = padX + a.nx * tw + (prefersReduced ? 0 : Math.sin(t * 0.7 + a.ph) * 2.1);
+        a._y = padY + a.ny * th + (prefersReduced ? 0 : Math.cos(t * 0.55 + a.ph) * 2.1);
+      }
+      ctx.lineWidth = 0.55;
+      for (let i = 0; i < dots.length; i++){
+        const a = dots[i];
+        const nbr = a.nbr || [];
+        for (let k = 0; k < nbr.length; k++){
+          const b = dots[nbr[k]];
+          const dx = a._x - b._x, dy = a._y - b._y;
+          const d2 = dx * dx + dy * dy;
+          ctx.strokeStyle = 'rgba(196,245,71,' + (0.2 * Math.max(0, 1 - d2 / 900)) + ')';
+          ctx.beginPath();
+          ctx.moveTo(a._x, a._y);
+          ctx.lineTo(b._x, b._y);
+          ctx.stroke();
+        }
+      }
+      for (let i = 0; i < dots.length; i++){
+        const a = dots[i];
+        const pulse = prefersReduced ? 1 : 0.84 + 0.16 * Math.sin(t * 1.35 + a.ph);
+        ctx.fillStyle = 'rgba(' + a.r + ',' + a.g + ',' + a.b + ',' + (0.58 + 0.34 * pulse) + ')';
+        ctx.beginPath();
+        ctx.arc(a._x, a._y, 1.8 * pulse, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      if (!prefersReduced) requestAnimationFrame(draw);
+    }
+
+    const img = new Image();
+    img.onload = function(){
+      fit();
+      sample(img);
+      if (!dots.length) fallbackDots();
+      draw(performance.now());
+    };
+    img.onerror = function(){
+      fit();
+      fallbackDots();
+      draw(performance.now());
+    };
+    img.src = 'img/raccoon-logo.png';
+    addEventListener('resize', () => {
+      fit();
+      if (img.complete && img.naturalWidth) sample(img);
+    });
   })();
 
   // ---------- Live mentor map (Leaflet) ----------

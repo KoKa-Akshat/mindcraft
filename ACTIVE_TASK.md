@@ -4,6 +4,10 @@
 
 ---
 
+## Claim desk mascot lattice (2026-08-15)
+
+The apply-form left box is no longer a pressable 3D cube. It is the raccoon, drawn as a breathing lime-dot lattice, with workflow captions cycling inside the box (fractals lesson, pull emails / draft replies, resume, map, notes). Pointer events off.
+
 ## Jesse talk + claim lattice (2026-08-15)
 
 Press to talk asks for the mic, writes words live, then Jesse speaks back. Claim desk sits on a cream card beside a spinning 3D lattice box.
