@@ -203,25 +203,18 @@
   @keyframes rise{from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:none;}}
 
   /* ---------- Credibility strip ---------- */
-  .credibility{padding:56px 0; border-top:1px solid var(--edge); border-bottom:1px solid var(--edge); background:var(--field-1);}
-  .intro-schools{display:flex; flex-direction:column; align-items:center; gap:22px; text-align:center;}
+  .credibility{padding:64px 0; border-top:1px solid var(--edge); border-bottom:1px solid var(--edge); background:var(--field-1);}
+  .intro-schools{display:flex; flex-direction:column; align-items:center; gap:28px; text-align:center;}
   .intro-schools > span{font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--chalk-faint);}
-  .intro-schools ul{display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:clamp(24px,5vw,56px); list-style:none;}
-  .intro-schools li img{height:26px; width:auto; object-fit:contain; opacity:.55; filter:grayscale(1) brightness(2); transition:opacity .2s, filter .2s;}
-  .intro-schools li:hover img{opacity:.9;}
+  .intro-schools ul{display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:clamp(28px,5vw,64px); list-style:none;}
+  .intro-schools li img{height:52px; width:auto; object-fit:contain; opacity:1; filter:none; transition:transform .25s var(--ease);}
+  .intro-schools li:hover img{transform:scale(1.04);}
   .intro-social{display:flex; gap:10px;}
   .intro-social img{width:30px; height:30px; border-radius:9px; opacity:.6; transition:opacity .2s;}
   .intro-social a:hover img{opacity:1;}
   .data-yours{max-width:560px; font-size:13px; font-weight:400; color:var(--chalk-faint); line-height:1.55;}
-  /* On the cream Desk stage the school marks are dark navy/teal logotypes on
-     transparent PNG/SVG, not light ones - the dark-theme brightness(2) push
-     (built to turn them pale against near-black) would wash them out to
-     near-invisible against paper instead, so drop it and let their natural
-     grayscale tone read against cream, the way partner-logo strips usually
-     work on a light page. */
-  .stage-desk .intro-schools li img{opacity:.6; filter:grayscale(1);}
-  .stage-desk .intro-schools li:hover img{opacity:1;}
-  .stage-desk .intro-social img{opacity:.82;}
+  .stage-desk .intro-schools li img{opacity:1; filter:none;}
+  .stage-desk .intro-social img{opacity:.9;}
 
   /* ---------- Reel (flagship scroll sequence) ---------- */
   .reel{padding-top:clamp(88px,10vw,148px); padding-bottom:0;}
@@ -400,12 +393,12 @@
   /* ---------- Tutors ---------- */
   .tutors{background:var(--field-1); border-top:1px solid var(--edge); border-bottom:1px solid var(--edge);}
   .tutor-head .h2{max-width:24ch;}
-  .tutor-head-row{ margin-top:24px; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:clamp(18px,3vw,36px); align-items:start; }
-  .scan-points{display:grid; gap:11px;}
-  .scan-point{display:flex; gap:12px; align-items:flex-start; background:var(--field-2); border:1px solid var(--edge); border-radius:16px; padding:14px 16px;}
-  .scan-point .pip{width:24px; height:24px; flex:none; border-radius:8px; display:grid; place-items:center; font-size:11px; font-weight:700; color:var(--lime-ink); background:var(--lime); font-family:var(--mono);}
-  .scan-point p{font-size:14px; font-weight:400; line-height:1.4; color:var(--chalk-dim);}
-  .tutor-quote{ position:relative; padding:24px 26px; border-radius:18px; background:var(--field-2); border:1px solid var(--edge); align-self:stretch; display:flex; align-items:center; }
+  .tutor-caption{
+    margin-top:20px; max-width:46ch;
+    font-family:var(--serif); font-style:italic; font-weight:500;
+    font-size:clamp(16px,1.8vw,20px); line-height:1.45; color:var(--chalk-dim);
+  }
+  .tutor-quote{ position:relative; margin-top:22px; max-width:52ch; padding:0; border:0; background:none; }
   .tutor-quote p{font-family:var(--serif); font-style:italic; font-size:clamp(17px,1.8vw,21px); line-height:1.4; color:var(--chalk);}
   .tutor-quote p em{font-style:italic; color:var(--lime);}
   .tutor-duo{ margin:38px auto 0; display:grid; grid-template-columns:1.1fr 1fr; gap:16px; width:100%; padding:14px; border-radius:26px; border:1px solid var(--edge); background:var(--field-2); box-shadow:var(--shadow); }
@@ -425,18 +418,18 @@
   .tm-card:hover{border-color:rgba(196,245,71,.3);}
   .tm-card-top{display:flex; gap:12px; align-items:flex-start;}
   .tm-avatar{width:38px; height:38px; border-radius:50%; flex:none; display:grid; place-items:center; color:#fff; font-size:12px; font-weight:700;}
-  .tm-card h4{font-family:"Space Grotesk",sans-serif; font-size:16px; font-weight:600; color:var(--chalk); line-height:1.15; margin:0 0 4px;}
-  .tm-meta{font-size:10px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; color:#ff8f9b; margin-bottom:6px;}
-  .tm-card p{font-size:12.5px; font-weight:400; color:var(--chalk-dim); line-height:1.4; margin:0;}
-  .tm-dist{ display:inline-block; margin-top:8px; font-size:10px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--lime-ink); background:var(--lime); border-radius:999px; padding:3px 9px; }
-  .tm-book{ display:block; margin-top:11px; text-align:center; border-radius:12px; background:rgba(245,245,244,.06); border:1px solid var(--edge); color:var(--chalk); padding:11px 14px; font-size:11px; font-weight:600; letter-spacing:.04em; text-transform:uppercase; transition:background .2s var(--ease); }
+  .tm-card h4{font-family:var(--serif); font-style:italic; font-weight:600; font-size:22px; letter-spacing:-.02em; color:var(--chalk); line-height:1.15; margin:0 0 6px;}
+  .tm-meta{font-family:var(--serif); font-style:italic; font-size:13.5px; font-weight:500; letter-spacing:0; text-transform:none; color:rgba(245,245,244,.58); margin-bottom:8px;}
+  .tm-card p{font-size:13px; font-weight:400; color:var(--chalk-dim); line-height:1.45; margin:0;}
+  .tm-dist{ display:inline-block; margin-top:10px; font-family:var(--serif); font-style:italic; font-size:12.5px; font-weight:500; letter-spacing:0; text-transform:none; color:var(--lime); background:none; border-radius:0; padding:0; }
+  .tm-book{ display:block; margin-top:14px; text-align:center; border-radius:999px; background:transparent; border:1px solid rgba(196,245,71,.45); color:var(--lime); padding:12px 16px; font-family:"Space Grotesk",sans-serif; font-size:14px; font-weight:600; letter-spacing:-.01em; text-transform:none; transition:background .2s var(--ease), color .2s var(--ease); }
   .tm-book:hover{background:var(--lime); color:var(--lime-ink); border-color:var(--lime);}
   .leaflet-container{font:inherit; background:#0e151b;}
   .leaflet-control-attribution{font-size:9px !important; background:rgba(10,14,19,.8) !important; color:var(--chalk-faint) !important;}
   .leaflet-control-attribution a{color:var(--chalk-dim) !important;}
   .leaflet-control-zoom a{background:#0e151b !important; color:var(--chalk) !important; border-color:var(--edge) !important;}
   .tutor-actions{display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:28px;}
-  @media (max-width:820px){ .tutor-duo{grid-template-columns:1fr;} .tutor-pane{height:400px;} .tutor-head-row{grid-template-columns:1fr;} }
+  @media (max-width:820px){ .tutor-duo{grid-template-columns:1fr;} .tutor-pane{height:400px;} }
 
   /* ---------- Archive ---------- */
   .archive{background:var(--field);}
@@ -754,14 +747,8 @@
       <div class="kicker reveal">Real people, on call</div>
       <h2 class="h2 reveal">Someone who has done this <span class="serif">walks in.</span></h2>
       <p class="lede reveal">They open your map before hello. The hour goes to the click, not the detective work. First session free.</p>
-      <div class="tutor-head-row">
-        <div class="scan-points">
-          <div class="scan-point reveal"><span class="pip">1</span><p>Show the actual page.</p></div>
-          <div class="scan-point reveal"><span class="pip">2</span><p>A college mentor who remembers junior year.</p></div>
-          <div class="scan-point reveal"><span class="pip">3</span><p>Search near you. Book tonight.</p></div>
-        </div>
-        <blockquote class="tutor-quote reveal"><p>MindCraft is not software instead of people. It is software that <em>makes the people better.</em></p></blockquote>
-      </div>
+      <p class="tutor-caption reveal">Show the page. A mentor who remembers junior year. Book tonight.</p>
+      <blockquote class="tutor-quote reveal"><p>MindCraft is not software instead of people. It is software that <em>makes the people better.</em></p></blockquote>
     </div>
     <div class="tutor-duo reveal" id="tutorLive">
       <div class="tutor-pane map">
@@ -1215,11 +1202,11 @@
         const near = origin ? t.mi < 250 : i === 0;
         return '<article class="tm-card'+(near?' is-near':'')+'" data-id="'+t.id+'">' +
           '<div class="tm-card-top"><div class="tm-avatar" style="background:'+t.color+'">'+t.initials+'</div>' +
-          '<div><h4>'+t.name+'</h4><div class="tm-meta">'+t.region+' · Now booking</div>' +
+          '<div><h4>'+t.name+'</h4><div class="tm-meta">'+t.region+' · now booking</div>' +
           '<p>'+t.bio+'</p>' +
-          (origin ? '<span class="tm-dist">'+(i===0?'Closest · ':'')+fmtMi(t.mi)+'</span>' : '<span class="tm-dist">Online over Meet</span>') +
+          (origin ? '<span class="tm-dist">'+(i===0?'Closest, ':'')+fmtMi(t.mi)+'</span>' : '<span class="tm-dist">Online over Meet</span>') +
           '</div></div>' +
-          '<a class="tm-book" href="'+t.book+'" target="_blank" rel="noopener">Book free session</a>' +
+          '<a class="tm-book" href="'+t.book+'" target="_blank" rel="noopener">Book a free session</a>' +
           '</article>';
       }).join('');
       if (nearLabel) nearLabel.textContent = label ? ('near ' + label) : 'three near you';

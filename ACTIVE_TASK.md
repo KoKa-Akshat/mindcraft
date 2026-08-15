@@ -4,6 +4,10 @@
 
 ---
 
+## Mentor strip polish (2026-08-15)
+
+College marks are larger and in color. Tutor bullets are one caption line. Names and booking type are serif / sentence case.
+
 ## Jesse live transcribe (2026-08-15)
 
 Press on the Jesse story card live-transcribes as you speak (Web Speech API). Words replace the headline. Chrome/Safari. Tap again to stop.
