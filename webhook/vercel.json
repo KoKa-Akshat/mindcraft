@@ -11,7 +11,7 @@
     "api/agent-check-in.ts": { "maxDuration": 15 },
     "api/transcribe-scratch.ts": { "maxDuration": 30 },
     "api/app-actions.ts": { "maxDuration": 60 },
-    "api/tts.ts": { "maxDuration": 60 }
+    "api/tts.ts": { "maxDuration": 60, "includeFiles": "node_modules/kokoro-js/voices/*.bin" }
   },
   "rewrites": [
     { "source": "/api/create-classroom", "destination": "/api/app-actions?action=create-classroom" },
