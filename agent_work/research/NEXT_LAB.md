@@ -143,10 +143,11 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 146 | Gap-scan exit emotion without Anxiety Score™ (destake copy after holes) | SAFE-STUDHOLE × SAFE-PRIVACY/EXPOSE; calm language without mood telemetry | **DONE** (2026-08-14) — Part CXLVI / SAFE-EXITEMO |
 | 147 | Dual-rater capacity planning vs FILLETA band honesty | SAFE-DUALRATE × SAFE-FILLETA/WORKFORCE; reviewer minutes in fill estimator without Dual Rater Score™ | **DONE** (2026-08-15) — Part CXLVII / SAFE-CAPPLAN |
 | 148 | Template-trust inheritance after first-of-cell dual admit | SAFE-DUALRATE × SAFE-FAMHASH/FIGKEY; when isomorphic clones may single-rater promote | **DONE** (2026-08-15) — Part CXLVIII / SAFE-TMPTRUST |
-| — | *(148 complete; 149 is next)* | | |
-| 149 | Post-promote repair stratified dashboards (single vs dual) | SAFE-DUALRATE × SAFE-PROMOTE/INSTRUMENT; ops IRR without Kappa % NS | **NEXT** |
-| 150 | Dual-capacity hire vs contract SME panels under exam-week spikes | SAFE-CAPPLAN × SAFE-LOADSHED/WORKFORCE; surge dual without Dual Rater Score™ | queued |
+| 149 | Post-promote repair stratified dashboards (single vs dual) | SAFE-DUALRATE × SAFE-PROMOTE/INSTRUMENT; ops IRR without Kappa % NS | **DONE** (2026-08-15) — Part CXLIX / SAFE-REPAIRSTRAT |
+| — | *(149 complete; 150 is next)* | | |
+| 150 | Dual-capacity hire vs contract SME panels under exam-week spikes | SAFE-CAPPLAN × SAFE-LOADSHED/WORKFORCE; surge dual without Dual Rater Score™ | **NEXT** |
 | 151 | Template-trust revoke & sample-dual cadence under repair spikes | SAFE-TMPTRUST × SAFE-REPAIR/CAPPLAN; tighten/revoke without Template Trust Score™ | queued |
+| 152 | Path-conditioned dual blame tests (selection vs quality) | SAFE-REPAIRSTRAT × SAFE-DUALRATE/CAPPLAN; risk-adjusted path tables without Dual Shame Score™ | queued |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 
@@ -256,3 +257,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any Anxiety Score™ / Calm Score™ / Exit Emotion Score™ / Mood Minutes NS / consoling “not everyone can…” ability talk / ego Completeness % beside hole honesty / mandatory mood gate / emotion-AI exit empathy / fake greens as affect management / calm-to-zero or ACT guarantees from gap-scan exit packaging (Part CXLVI / SAFE-EXITEMO)
 - Any dual-omitted FILLETA / ETA-skipped dual / always-dual without dual FTE / 100% dual-util plans / Dual Rater Score™·Capacity Score™·Reviewer Minutes NS / hospital-cosplay dual-capacity ads / complete-visual-by-date or ACT guarantees from dual capacity packaging (Part CXLVII / SAFE-CAPPLAN)
 - Any forever-dual on sealed isomorphic clones after blueprint dual / silent inherit without template+family seals / Template Trust Score™·Inherit %·Family Calibration Score™ NS / first dual ≡ forever trust without sample audit / embedding-only inheritance / FERF≡C4-ready ads / ACT or complete-visual guarantees from template-inheritance packaging (Part CXLVIII / SAFE-TMPTRUST)
+- Any Kappa % / Dual Rater Score™ / Agreement Minutes NS / pooled-only post-promote repair vanity / Landis–Koch “almost perfect” marketing band / unconditioned dual-shame boards / mammography-cosplay IRR heroes / ACT or complete-visual guarantees from IRR packaging (Part CXLIX / SAFE-REPAIRSTRAT)

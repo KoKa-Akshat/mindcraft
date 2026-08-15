@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-15 — Researcher tick: Part CXLIX Post-promote repair stratified dashboards (SAFE-REPAIRSTRAT)
+
+**Tick type:** Researcher (UTC hour 09 → Researcher; hour%6≠0; researcher count since synthesizer v1.18 = 6 → Researcher)  
+**Chapter written:** `chapters/149_post_promote_repair_stratified_dashboards.md` (Part CXLIX)  
+**Claim examined:** Whether post-promote integrity may be sold as a **pooled Kappa %** / Dual Rater Score™, or must use **path-stratified repair + contingency drill-downs** (single vs dual vs inherit) so TMPTRUST revoke and DUALRATE retune see which admit path is poisoning Map.
+
+**Doctrine proposed (provisional):** **SAFE-REPAIRSTRAT** — densifies SAFE-DUALRATE × SAFE-PROMOTE × SAFE-INSTRUMENT (+ TMPTRUST/CAPPLAN) + Cohen κ / Landis–Koch / Feinstein–Cicchetti paradoxes / Myford–Wolfe DRIFT / Sgammato–Donoghue trend scoring / Kane IUA: stratify first; κ is drill-down not NS. Experiment family **REPAIRSTRAT-***.
+
+**Evidence spine (verified citations):** Cohen (1960); Landis & Koch (1977); Feinstein & Cicchetti (1990); Cicchetti & Feinstein (1990); Myford & Wolfe (2009); Sgammato & Donoghue (2017); Kane (2013).
+
+**Claim killed (this tick):** Kappa %·Dual Rater Score™·Agreement Minutes NS / pooled-only repair vanity / Landis–Koch “almost perfect” marketing / unconditioned dual-shame boards / IRR packaging as ACT or complete-visual guarantee (provisional kill #103 until synthesizer).
+
+**Experiments:** REPAIRSTRAT-1…5 + REPAIRSTRAT-QUAL.
+
+**Next researcher id:** **150** (Dual-capacity hire vs contract SME panels). Researcher count since v1.18 synthesizer: **7**. Unfinished queue was dropping to 2 (150–151) → promoted id **152** stub this tick.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-15 — Researcher tick: Part CXLVIII Template-trust inheritance after first-of-cell dual (SAFE-TMPTRUST)
 
 **Tick type:** Researcher (UTC hour 06 ≡ Red Team slot, but ch148 never written → prefer Researcher per rotation; researcher count since synthesizer v1.18 = 5 → Researcher)  
