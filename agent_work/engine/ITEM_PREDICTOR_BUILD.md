@@ -158,6 +158,109 @@ waiting. Do not tune until it passes.
 
 ---
 
+---
+
+## PRE-REGISTRATION — the 2-parameter variant (written 2026-08-15, before running)
+
+Stage 1 was built and fitted. It **failed** its acceptance criterion. Recording
+the next experiment's prediction *before* running it, so the result can't be
+rationalized after the fact.
+
+### What happened
+
+In-sample Brier **0.2387** (beats the 0.2495 constant, and far better than the
+0.3221 mastery baseline). Held out, observation-weighted across 151 rows:
+
+| | |
+|---|---|
+| Predictor | **0.2676** |
+| Constant | **0.2538** |
+| | **loses by 0.0138** |
+
+"5 of 9 students beat the constant" is misleading: **117 of 151 held-out rows
+(77.5%) sit in failing folds**, and the only two folds with meaningful held-out
+n — `Qy0e` (81) and `Xu7` (29) — both lose. The passing folds have n of 1, 3, 4,
+4, 12, 13.
+
+### The diagnosis
+
+Parameters are **not identified** at this volume:
+
+| param | range across folds |
+|---|---|
+| discrimination | 0.37 → 1.10 |
+| concept_weight | 0.80 → **5.00** (pinned to its bound) |
+| format_weight | **−2.21** → 1.97 (sign flip) |
+| level_scale | **−0.11** → 1.08 (sign flip) |
+
+But the per-student readout shows `format_weight` is worse than unidentified —
+it is **mis-specified**. Format mastery is a **global node, not per-concept**, so
+adding it to a per-concept score leaks cross-concept competence into concepts the
+student is failing: `functions_basics` 25% accuracy with format mastery 0.80 →
+predicted 0.71; `factoring_polynomials` 40% with format 0.78 → 0.70. That
+independently explains both the separability harness's −0.25 concept/format
+correlation and the fold where the optimizer drove `w_f` to −2.21 — it was
+cancelling a backwards term, not learning that format hurts.
+
+### The experiment
+
+Fit **2 parameters only**: `a` and `w_c`. Set `format_weight = 0` and
+`level_scale = 0` (not fitted, not merely bounded near zero).
+
+### The predictions — stated now
+
+1. **In-sample Brier gets worse** than 0.2387 (fewer parameters, less to fit
+   with). Expect roughly 0.240–0.250.
+2. **The generalization gap shrinks materially.** Per-fold
+   `held_out − train` should fall well below the current 0.0635 / 0.0430 /
+   0.0314 on the three largest folds.
+3. **`concept_weight` stops pinning at 5.0** and lands in a stable range across
+   folds — this is the identification test.
+4. **Observation-weighted held-out Brier improves toward 0.2538**, and may still
+   not beat it.
+
+### How to read the outcome
+
+- **Gap collapses and held-out beats 0.2538** → diagnosis confirmed; the 4-param
+  model was overfitting on two mis-specified terms. Promote the 2-param model.
+- **Gap collapses but held-out still loses** → identification was the problem,
+  volume is the remaining one. Correct move is to **stop modeling** and go fix
+  the duplicate-write bug (`PRACTICE_LOOP_EVIDENCE_BUILD.md` A), then re-run.
+  This is a legitimate result — record it and move on.
+- **Gap does not collapse** → the diagnosis was wrong; the instability is
+  elsewhere (likely `Qy0e` holding 54% of rows). Do not add parameters back.
+
+**Do not** tune, re-bound, or add features to make this pass. If it fails, the
+finding is "we need volume," and the cheapest volume is the idempotent-finish fix.
+
+### Also do, independently of the outcome
+
+- **Drop `deploy_smoke_1782584817`** and any non-student account from the corpus.
+  It contributes 3 rows and a meaningless 0.3681 held-out Brier.
+- **Report observation-weighted aggregates**, not just per-fold. The current
+  output makes a failing model look like a 5-of-9 success.
+
+### Next, once volume allows
+
+`b` is currently keyed **per concept**, not per item (`replay.py:95`,
+`difficulty_by_concept`). Within a concept, difficulty takes only 3 values (one
+per level), so two different questions in the same concept at the same level get
+identical predictions — the only true per-item input is `level`. **Empirical item
+difficulty** (a question's observed failure rate once enough students have
+answered it, falling back to the concept prior when cold) is the natural next
+term, and unlike ingredient-level θ it needs no tagging, no classifier, and no
+new data model.
+
+**On gradient boosting:** not at n=151 — a GBM has effectively hundreds of
+parameters where 4 are already unidentified, and 54% of rows come from one
+student. There is also an interpretability cost that matters here: IRT parameters
+are meaningful (`θ` is ability, `b` is difficulty), which is what lets the product
+select items near P≈0.7. A GBM gives a number with no such handle. Revisit when
+there are ~10³ observations across ~50+ students, and even then as a
+*benchmark* for the parametric model rather than a replacement.
+
+---
+
 ## Explicitly out of scope
 
 - **Changing `compute_mastery_score` or any mastery consumer.** Not this build.

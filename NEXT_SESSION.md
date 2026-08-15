@@ -1,328 +1,238 @@
-# Next session — engine + Level 3 book handoff
+# Next session — predictor, evidence integrity, and the annotation gap
 
-Written 2026-08-14. Everything below is pushed; `origin/main` and local are level.
-Start with `git pull origin main`.
+Written 2026-08-15. **Supersedes the 2026-08-14 version** of this file (that one
+described the engine bucket A/B session; its §1 was substantially wrong — see
+"Retractions" below, they matter).
 
----
-
-## Where things stand
-
-**Strategic frame (new, matters for scoping):** the React web app is **legacy**.
-iOS (`ios-prototype/MindCraftNotes`) is the product. Web is kept deliberately as
-(1) an **ML accuracy lab** and (2) a **Level 3 book prototype** to port to Swift.
-Don't propose web UX polish as product work. `ml/**` serves both surfaces.
-
-**Shipped this session (14 commits):**
-- **Engine bucket A** — edge decay priors persisted, bridge confidence seeded from
-  the ontology, dead code removed, legacy ingredient alias map deleted.
-- **Engine bucket B** — Beta posteriors for ingredient/bridge evidence (the
-  `+0.15/−0.05` ratchet meant coin-flip performance converged to mastery 1.0),
-  self-report gated so an `easy` rating can't trim a concept, difficulty derived
-  from `population_failure_prior.overall`, card outcomes persisted as weighted
-  events.
-- **Book Level 2.9 → 3** (`BOOK_LEVEL3_BUILD.md`) — chapters now adapt level,
-  format, grade, seen-questions and misconception targeting from the learner
-  model; `StudyPlanList` renders the pathfinder route; fail-soft so a sleeping ML
-  service still renders a complete chapter.
-- **Firestore index fix** — see below, this one matters.
-
-**Verified green:** `ml` 68/68 pytest + 85/85 end2end · `app` 219 passed/1 skipped.
+The through-line: **we are making the Level 3 book real by making the student
+model predictive.** Everything below serves that.
 
 ---
 
-## Read these first
+## 0. Repo state — read before touching anything
 
-| File | Why |
-|---|---|
-| `ml/ENGINE_MECHANISM.md` | how the engine works (8 stations) + the live issue list |
-| `ml/ENGINE_FIX_A_BUILD.md`, `ml/ENGINE_FIX_B_BUILD.md` | what A/B did and why |
-| `BOOK_LEVEL3_BUILD.md` | the book spec, incl. McCreary's Level 3 definition |
-| `CLAUDE.md` | lanes, deploy rules, gotchas |
-
----
-
-## 1. The accuracy thread (highest value, newly unblocked)
-
-**What was wrong:** `firestore.indexes.json` declared the `attempt_observations`
-composite index as `timestamp: ASCENDING`, but `load_recent_attempt_observations`
-queries `DESCENDING`. Firestore rejected every read with `FailedPrecondition`, and
-a bare `except Exception: return []` swallowed it. Silently. For every student.
-
-**Consequences, both now unblocked:**
-- `/recommend`'s `misconceptionGaps[]` was **always empty** — on web *and* iOS
-  (`RouteClient.swift` hits the same endpoint).
-- `validation/run_harness.py` reads the same observations, so the
-  predictive-validity harness was running on **n=0**, not "n~1 noise" as its
-  docstring assumes.
-
-**Fixed + verified:** index recreated with DESC, stale ASC index deleted, real
-student's 8 observations now load (was 0). Commit `400bbd96`.
-
-> ⚠️ **CORRECTION (2026-08-14, see `ENGINE_BOOK_ACCURACY_REVIEW.md` §1):** that
-> fix was only half a fix. Deleting the ASC index broke the *other* loader —
-> `load_attempt_observations` (`firestore_adapter.py:165`) queries ASCENDING and
-> feeds the entire validation harness, which then reported `observations: 0` for
-> a student with 105 rows. The same `except Exception: return []` hid it a second
-> time. The ASC index has since been created (`studentId ASC, timestamp ASC`) and
-> **the harness now runs on all 211 observations.** Steps 1 and 3 below are
-> superseded — read the review instead.
-
-**Next steps:**
-1. Run the harness now that it can see data:
-   `cd ml && source mindcraft/bin/activate && FIRESTORE_PROJECT=mindcraft-93858 python -m validation.run_harness --all`
-   Expect `INSUFFICIENT_DATA` — `calibration.py` needs `MIN_ATTEMPTS = 50`. That's
-   correct behavior, not a failure. The point is it's no longer structurally blind.
-2. **Fix the silent swallow.** `ml/mindcraft_graph/firestore_adapter.py:225` —
-   `except Exception: return []` converted a one-word config bug into an invisible
-   multi-feature outage. Log it at minimum. Audit the file for the same pattern
-   elsewhere; this will not be the only one.
-3. **0 of 8 observations carry a `misconception_id`.** So `misconceptionGaps` stays
-   empty for real reasons now. Check whether the frontend/iOS actually sends
-   `misconception_id` + `selected_choice_index` on wrong answers — if not, the
-   whole distractor evidence stream (Stream A) never populates and W3 can't fire
-   regardless.
-
-**Auth gotcha:** `firebase deploy --only firestore:indexes` **403s** — the Firebase
-CLI is authed as `blakeykell@gmail.com`, which lacks
-`roles/serviceusage.serviceUsageConsumer` on `mindcraft-93858`. `gcloud` is authed
-as `joinmindcraft@gmail.com` and works:
+**3 commits are local and UNPUSHED:**
 ```
-gcloud firestore indexes composite create --collection-group=X \
-  --field-config=field-path=studentId,order=ascending \
-  --field-config=field-path=timestamp,order=descending \
-  --project=mindcraft-93858 --async
+10576984 specs: practice-loop evidence integrity + ingredient mastery rewire
+6e4680e8 specs(engine): item predictor build + classifier/ingredient audit prompt
+45ef0d9b docs: session-fragmentation hunt resolves to duplicate re-submission
 ```
-Use `--async` — without it gcloud blocks until the index finishes building.
+
+**Substantial uncommitted work in the tree** (implementations of the specs, done
+by agents; verify state before assuming anything is finished):
+```
+ M app/src/pages/Practice.tsx                      ← practice-loop A/C
+ M ml/serve.py, models/events.py,
+   engine/ingredient_runtime.py, config.py         ← practice-loop B + ingredient rewire
+ M ml/mindcraft_graph/firestore_adapter.py         ← dedup
+ M ml/validation/replay.py, run_harness.py
+?? ml/validation/predictor.py, fit_predictor.py    ← the item predictor
+?? ml/tests/test_item_predictor.py,
+   test_attempt_observation_dedup.py
+?? agent_work/engine/CLASSIFIER_INGREDIENT_AUDIT.md ← audit deliverable, done
+?? ml/scripts/audit_classifier_ingredient.py
+```
+
+First moves: `git pull origin main`, run `cd ml && pytest` and
+`python scripts/end2end.py` (expect 85/85), then decide what to commit. Per
+CLAUDE.md never leave work uncommitted across sessions — this is already over
+that line.
 
 ---
 
-## 2. Bucket C — six open engine issues, each needs a decision first
+## Retractions — do NOT re-derive these
 
-Full detail in `ml/ENGINE_MECHANISM.md` § *Issues to look into*. These are **not**
-code-blocked; they're blocked on choices only Blake can make.
+Two confident claims from this work were **wrong and are corrected in the repo**.
+Both failed the same way: inferring a defect from code shape without checking
+what the data meant. If you find yourself about to "fix" either, stop.
 
-| # | Issue | The decision owed |
+1. **The `resolveChoiceEvidence` "shadowing bug" is NOT a bug.**
+   `questionBank.ts` returns early on a distractor entry whose
+   `misconception_id` is null instead of falling back to the question-level flat
+   id. That looks like a bug. It isn't: `ingest_eedi.py` takes the **first** wrong
+   choice with a misconception and `break`s, so the flat id **belongs to one
+   specific wrong choice**. Falling through would tag a student with a
+   misconception belonging to a choice they didn't pick. **The current code
+   correctly declines to guess. Do not "fix" it.**
+
+2. **The "August session-fragmentation regression" was a mis-framing.** The real
+   problem is duplicate re-submission across *all* months (see §2).
+
+Also corrected: the 2026-08-14 claim that the `attempt_observations` index bug
+was "fixed + verified." It was half-fixed — see §1.
+
+---
+
+## 1. Infrastructure fixed this session (don't redo)
+
+- **HF Space deploys work again.** The Hub now rejects plain binary pushes, so
+  `bank_index.npz` ships via the Hub API inside `ml/scripts/deploy_hf.sh`. One
+  command, idempotent, verified over 3 consecutive runs:
+  ```bash
+  cd ml && source mindcraft/bin/activate
+  export HF_TOKEN=<write token>          # or see ~/.git-credentials
+  HF_ORG=joinmindcraft sh scripts/deploy_hf.sh
+  ```
+  Engine buckets A/B are **live** on the Space (they weren't before).
+
+- **Firestore: the missing ASC index was created.** `400bbd96` had created the
+  DESC index and *deleted* the ASC one — but `load_attempt_observations`
+  (`firestore_adapter.py:165`) queries **ASCENDING** and feeds the entire
+  validation harness, which was silently returning `[]` via the bare
+  `except Exception: return []`. Both index shapes are now declared in
+  `firestore.indexes.json` (that file is the deploy source of truth — leaving one
+  undeclared means the next index deploy deletes it).
+
+- **Still unfixed, still dangerous:** the bare `except Exception: return []` at
+  `firestore_adapter.py:195` and `:225`. It has now hidden two multi-feature
+  outages. Make them log.
+
+---
+
+## 2. The duplicate-evidence bug (highest-value open item)
+
+**28.4% of `attempt_observations` and 46% of practice `SessionEvents` are
+duplicates** — same `(student, question, outcome)` written repeatedly, across all
+months (Jun 46 / Jul 14 / Aug 28), affecting **6 of 9 students** (14%–55% each).
+Only 10 cases are genuine re-attempts.
+
+Mechanism, each link verified in code:
+1. `finishSession` (`Practice.tsx:~1370`) posts the **entire** results array every
+   time it fires
+2. it never clears the draft
+3. the persist effect (`~760`) skips only `'onboard'`/`'path'`, so a draft **is
+   saved at `pPhase:'complete'`**
+4. `restorePracticeDraft` (`~534`) passes `'complete'` through with
+   `results`/`questions`/`qIndex` intact
+
+**Not closed:** the exact user action that re-reaches `finishSession` from
+restored state. Repeat intervals are human-scale (89min, 41min, 103min) — a
+person returning to the app, not a retry loop. This is why the fix guards the
+*submission* (idempotency) rather than one suspected entry path.
+
+**Why it matters twice over:**
+- *Production:* ten duplicate folds move `log(W_eff+1)` from 0.69 → 2.40, ≈ **+1.37
+  on the mastery logit**, from evidence the student never produced.
+- *Testing:* duplicates **flatter** calibration (folding the same outcome
+  repeatedly drags mastery toward it, so the next identical prediction scores
+  well). Deduped, the picture is worse: Brier 0.3221 vs 0.2495 constant.
+
+**Volume is the binding constraint on everything in §3, and this bug is the
+cheapest source of it.**
+
+---
+
+## 3. The item predictor — built, failed, diagnosed
+
+**The category error it fixes:** the harness used concept mastery *directly* as
+P(correct), so nothing about the question entered. Mastery is a hand-tuned
+pedagogical index (`σ(−2.0 + 0.8·log(W+1) + …)`), never fit to correctness.
+
+**Design decision (hold this line):** the predictor is **decoupled** from mastery
+and lives in `ml/validation/`. Mastery has many consumers — pathfinder trim, exam
+ranking, learn-next, decay, displacement, UI — and they all want a stable
+aggregate. **Do not "fix" prediction by changing `compute_mastery_score`.**
+
+**Result:** in-sample 0.2387 (beats the 0.2495 constant). Held out,
+observation-weighted: **0.2676 vs 0.2538 — fails.** 117 of 151 held-out rows sit
+in failing folds; the only two folds with meaningful n both lose.
+
+**Diagnosis:** parameters unidentified (`concept_weight` pinned at its 5.0 bound;
+`format_weight` and `level_scale` flip sign across folds). And `format_weight` is
+worse than unidentified — it is **mis-specified**: format mastery is a **global
+node, not per-concept**, so it leaks cross-concept competence into concepts the
+student is failing (`functions_basics` 25% accurate, format 0.80 → predicted
+0.71). This independently explains the separability harness's −0.25
+concept/format correlation.
+
+**Next step is pre-registered** in
+`agent_work/engine/ITEM_PREDICTOR_BUILD.md` — a 2-parameter variant (`a`, `w_c`
+only) with its predictions written down *before* running, and explicit
+instructions for how to read each outcome. **Read that section before running
+it.** Do not tune to pass.
+
+**Known limit, for later:** `b` is keyed **per concept**, not per item
+(`replay.py:95`). Two questions in the same concept at the same level get
+identical predictions; the only true per-item input is `level`. **Empirical item
+difficulty** is the natural next term and needs no ingredient tagging.
+
+**Not now: gradient boosting.** n=151 with 54% from one student, where 4
+parameters are already unidentified. Also costs the interpretability that lets
+the product select items near P≈0.7.
+
+---
+
+## 4. The audit found a free win — take it first
+
+`agent_work/engine/CLASSIFIER_INGREDIENT_AUDIT.md` (delivered, uncommitted).
+Verdict: *conditional yes, but aimed at the wrong bottleneck.*
+
+**The headline: 2,055 per-distractor misconception tags are sitting unused in
+`data/eedi/train.csv`.** `ingest_eedi.py` `break`s after the first wrong answer
+with a misconception, discarding the rest. **2,010 already resolve to an
+ingredient through the existing 655-entry map — 1.87× the ingredient evidence the
+bank carries today, for zero model cost.** This also closes the "1 real + 2 null
+distractors" problem at the source, without generation.
+
+Two other corrections from the audit:
+- The classifier's **0.80 is 0.7593** in the configuration that actually ships.
+- The generation "**~30% bad key rate**" is not a key-error rate at all — all 45
+  drops carry the single reason `solver_disagreed` (one LLM disagreeing with
+  another), and the dropped text was never persisted, so the standing "it's
+  arithmetic" hypothesis has never had evidence either way.
+
+---
+
+## 5. Open specs (all in `agent_work/`, indexed in its README)
+
+| Spec | Lane | State |
 |---|---|---|
-| **5** | Prereq chain is a *path*, not a closure — only the single strongest prereq is followed, so chains are 2–4 nodes | full closure gives 10–20 node chains. Pacing/motivation call. **Also ask: is this really a granularity problem?** McCreary targets 200–500 concepts per subject; we have 42 |
-| **7** | `effort` is synthesized from the outcome's *sign*, not measured | what *is* effort? time-on-task? attempts? hints? Plumbing is trivial (`OutcomeItem` takes optional fields); the definition is the hard part |
-| **1** | Zero `related`/`application` edges exist, so the entire "supplements" feature is dead code | author them by hand (42 concepts of judgment), derive from embeddings (noisy — similar text ≠ pedagogically analogous), or **cut the feature** |
-| **15** | Difficulty is honest now but has **no ranking consumer** (B3a left it deliberately unwired after A3 deleted `adjusted_strength`) | restore difficulty-weighted strength, or use failure rate as the cold-start mastery prior (moves every untouched node) |
-| **13** | Concept embedding text is failure-mode prose, not a description | fenced by `CLASSIFICATION_FIX_BUILD.md` §C-C. Changing it re-bakes PCA axes + their labels. Needs its own build file |
-| **12** | Ontology Layers 2–5 are schema-only, unwired | architecture project |
-
-**Also cheap and decision-free:** **#14** — `choose_roadmap_start` +
-`get_mastered_chain_concepts` in `planning/pathfinder.py` are called only by each
-other, and carry a *second* mastery threshold (0.45/0.0) that would silently
-compete with `trim_chain` if ever wired. Delete or wire. Bundle into any build.
-
-**Recommended order:** #5 first (users would actually feel it), then #15 and #1
-together (both "is this feature real" questions).
+| `cross-cutting/PRACTICE_LOOP_EVIDENCE_BUILD.md` | Product A/C + Engine B | implemented, uncommitted — **ordered**: idempotent finish → repeat weighting → 3 lives. C triples repeats by design, only safe after B |
+| `engine/INGREDIENT_MASTERY_REWIRE_BUILD.md` | Engine | implemented, uncommitted. Key call: must emit a **low-weight `SessionEvent`**, not overwrite `mastery_by_concept`, or the next rebuild discards it |
+| `engine/ITEM_PREDICTOR_BUILD.md` | Engine | Stage 1 done + failed; 2-param experiment pre-registered |
+| `engine/CLASSIFIER_INGREDIENT_AUDIT_PROMPT.md` | Engine | **done** → see the audit |
+| `product/APP_ROOT_NO_REDIRECT_PLAN.md` | Product | open, untouched |
 
 ---
 
-## 3. Engine observability (recommended *before* bucket C)
+## 6. Design decisions already made — don't relitigate
 
-The A/B changes were invisible — no way to see the engine's behavior shift. Two
-distinct needs, and only one is blocked:
-
-- **"Did my change alter what the engine decides?"** — not blocked, buildable now.
-  `ml/mindcraft_graph/simulation/synthetic_student.py` exists but is **unseeded**
-  (bare `random.*`, so non-deterministic) and **called by nothing**. Seed it, add
-  scenario fixtures (fresh / mid-practice / exam-crunch), snapshot the engine's
-  *decisions* (trimmed chain, worst weakness, severity ranking, pruned
-  ingredients) as golden files, diff on every change.
-- **"Is the engine right?"** — `ml/validation/` is well-built and now unblocked by
-  the index fix, but needs attempt volume.
-
-**The clever bit nobody has wired:** the synthetic student knows its own
-`_true_mastery`. That's a **ground-truth oracle** — you can validate the mastery
-estimator with zero real students. It's how you'd prove B2's Beta posterior is
-better rather than merely different (simulate true mastery 0.5; the old rule
-converged to 1.0).
-
-**Also worth stealing from McCreary (ideas only — see licensing below):** DAG
-validation as a standing check — cycle detection, orphan detection,
-indegree/outdegree, linear-chain flagging, connectivity. **We run none of these**,
-and our edges are *derived* from `comes_from`, so nobody has ever verified the
-result is acyclic or connected. ~50 lines, and it de-risks #5.
+- **A session event** = one concept's aggregate score from **one
+  `/record-outcomes` call**, scored `k/N`. Not login-to-tab-close. A three-lives
+  run is one call, so it is one event per concept.
+- **Two channels stay asymmetric:** repeats damp **mastery** (via
+  `exposure_weight`, which already scales both accumulators and already has
+  precedent at 0.4) but do **not** damp `misconception_counts` — a repeated wrong
+  answer on the same trap is *stronger* evidence of a stable misconception.
+- **Ingredient evidence is second-hand** (the map is 53% LLM-generated) → it
+  enters at `exposure_weight` 0.15, as an event, never as an overwrite.
+- **Licensing:** all McCreary repos are CC BY-NC-SA (NonCommercial); MindCraft is
+  commercial. His graphs/skills/books **cannot** be ingested. Reimplementing
+  *methods* is fine. `BRAND_BOOK.md` §16 binds public use of his name.
 
 ---
 
-## 4. Dan McCreary research — full detail, for the Level 3 book work
+## 7. Recommended order
 
-Investigated because Akshat had a real conversation with McCreary (a learning-graph
-researcher) and built `dans-archive.html` — a link-out gallery to his 113 open
-textbooks (`data/dansArchive.json`; top subjects: Engineering 8, Computer Science 7,
-Mathematics 6, Education Technology 6, the rest long-tail across ~70 categories).
-That in turn is what put "make our books Level 3" on the table. Four things were
-researched: three of his GitHub repos, plus his intelligent-textbooks site/writing.
-
-### Licensing — the constraint, and the carve-out we're using right now
-
-**All three repos (`graph-lms`, `microsims`, `claude-skills`) are CC BY-NC-SA
-4.0** — Attribution, **NonCommercial**, ShareAlike. Verified by fetching each
-repo's license text directly, not inferred.
-
-**Decision (2026-08-14, Blake):** for as long as this stays internal prototyping —
-building and running the Level 3 book locally/on this machine, on the web surface,
-never distributed or shipped to real users — the NonCommercial restriction isn't a
-practical blocker. Treat this as **free rein to read his repos, borrow ideas, and
-even directly reference his schemas/structure while prototyping.**
-
-**This carve-out ends the moment anything ships.** Before any McCreary-derived
-technique, schema shape, or content reaches a real user (web or iOS, even a soft
-launch), it needs one of: (a) our own independently-built equivalent, built from
-the *idea* without copying his files/text, or (b) his explicit written permission
-for that specific commercial use. `BRAND_BOOK.md` §16 already codifies the
-public-facing half of this — his name/work can be credited when linking out, never
-used to imply partnership or endorsement without his sign-off. Don't let a
-prototyping shortcut become a shipped dependency without that check happening.
-
-### What each repo actually is
-
-**`github.com/dmccreary/graph-lms`** — architecture writing, not a working system.
-Describes a "Graph-based Integrated Learning Architecture (ILA)": Concept Graphs,
-Content Graphs, Learning Trajectories, xAPI (Experience API) for activity tracking,
-an LRS (Learning Record Store) for the data. Mentions JSON data models, NetworkX
-for graph analysis, vis.js for visualization — but **the README does not publish
-actual schemas, CSV templates, or a mastery model.** No downloadable concept graphs
-in machine-readable form were found in this repo. Read it as a vision doc, not a
-reference implementation.
-
-**`github.com/dmccreary/claude-skills`** — 19 Claude Code skills automating
-intelligent-textbook production. This is the one with real substance:
-- `learning-graph-generator` — the core one. **13-step workflow**: (1) score a
-  course description against a 100-point rubric, (2) generate 200–500 concept
-  labels (Title Case, ≤32 chars, entity names not questions), (3) build a CSV —
-  columns **`ConceptID, ConceptLabel, Dependencies, TaxonomyID`** — as a DAG (no
-  cycles, no self-references, foundational concepts have empty `Dependencies`),
-  (4) **validate**: cycle detection, orphaned-node detection, indegree/outdegree
-  analysis, linear-chain flagging, connectivity check, (5–6) assign taxonomy —
-  target ~12 categories, none over 30% of concepts, plus a mandatory
-  `taxonomy-names.json` mapping IDs to display names, (7–9) emit metadata + a
-  24-color group palette + run `csv-to-json.py` → `learning-graph.json`
-  (validates against `learning-graph-schema.json`), (10–13) coverage report, index
-  page, session log.
-  - **The published JSON schema**: nodes carry `id, label, group, shape, title,
-    level`; edges carry only `from, to, arrows, label, title, smooth`. **Directed
-    edges representing dependencies — one relationship type. No `related` or
-    `application` category exists in his schema.** This is the same gap as our
-    open issue #1 — he hasn't solved cross-relation edges either, so there's
-    nothing to import there.
-- `book-chapter-generator`, `chapter-content-generator` (uses Bloom's Taxonomy
-  2001 revision for learning outcomes), `glossary-generator` (ISO 11179-compliant
-  terms), `quiz-generator`, `faq-generator`, `reference-generator`,
-  `course-description-analyzer` — pure content generation, chained off the
-  learning graph.
-- `microsim-p5`, `microsim-standardization`, `bubble-chart-generator`,
-  `timeline-generator`, `mermaid-generator`, `venn-diagram-generator`,
-  `vis-network` — visualization generators.
-- `intelligent-textbook`, `intelligent-textbook-creator`,
-  `install-learning-graph-viewer`, `readme-generator` — orchestration; builds a
-  full MkDocs Material site.
-- **Confirmed explicitly**: *"purely content generation-focused and does not
-  implement per-student mastery tracking, learner state modeling, misconception
-  detection, or adaptive assessment."* Static resources, not a responsive system.
-
-**`github.com/dmccreary/microsims`** — 100+ interactive p5.js STEM simulations
-(physics, CS, math, electronics, biology). Each sim: own directory, `index.md`,
-JS, preview image, Dublin Core metadata in YAML, validated against
-`microsim-schema.json` via `validate-yaml-file.py`. Generated with
-ChatGPT/Claude. `mk-gallery.py` builds the gallery page. Same CC BY-NC-SA license.
-Relevant to us only as a possible future format for interactive card
-representations (`CardTemplate` geometric/algebraic/procedural — we have no
-interactive rendering yet, per `WORLD_VISION.md` "Designed, not built").
-
-**Intelligent-textbooks site / "Five Levels of Intelligent Textbooks" (Medium)** —
-the level taxonomy that framed the whole book-build decision:
-- **Level 3**: *"adjust content based on analysis of user input or
-  performance… simple deterministic rules like concept graph traversal
-  algorithms to personalize learning pathways, and select from fixed levels of
-  curated content based on simple assessment scores and delay-time-based
-  rules… capturing every MicroSim interaction as an xAPI statement, storing it
-  in a Learning Record Store, and using that evidence to predict which
-  concepts a student has actually mastered."*
-- **Level 4**: generative-AI-powered, chatbot interface at runtime. Explicitly
-  **not** our target — `AGENT_RULEBOOK.md` keeps the deterministic spine on
-  purpose (*"LLM is the bookends, deterministic is the spine"*), and Level 4's
-  privacy bar is materially higher (stores conversation histories/queries).
-- **Level 5**: full student profiling, not defined in detail, not relevant yet.
-- His own books top out at **2.9** — static content generation plus data
-  capture scaffolding (xAPI/LRS references), but no actual learner model reading
-  that data back. That gap is precisely what `BOOK_LEVEL3_BUILD.md` closed on our
-  side (see §"Where things stand" above).
-
-### Bottom line
-
-- **He builds the map; we build the student.** No mastery tracking, no
-  misconception modeling, no adaptive assessment anywhere in his published work —
-  our engine (bucket A/B work, the whole mastery/decay/pathfinder stack) is not
-  redundant with anything he has.
-- **Nothing to import as data.** His graph schema is dependency-only (42 vs our
-  same problem), his catalog is subject-mismatched (~6 of 113 books are Math), and
-  under the current internal-only carve-out we *could* use his structure directly
-  — but there's genuinely nothing worth copying wholesale. The CSV schema shape
-  (`ConceptID, ConceptLabel, Dependencies, TaxonomyID`) and the DAG validation
-  checklist are the two things worth re-implementing as **our own code**, listed
-  as concrete next steps below.
-- **His 200–500-concept target vs our 42** is the one number worth sitting with
-  independent of licensing — it's a real signal that our thin 2–4-node chains
-  (issue #5) might be a granularity problem as much as a walk-algorithm problem.
-
-### Next steps specific to McCreary-derived work
-
-1. **Build our own DAG validator** (already flagged in §3 above, restated here
-   with the source): reimplement his checklist — cycle detection, orphaned-node
-   detection, indegree/outdegree analysis, linear-chain flagging, connectivity —
-   against `01_mindcraft_concept_ontology_v2_6_with_combinations.json`. ~50 lines,
-   own code, no licensing question at all since it's an algorithm not his content.
-   Run it before touching issue #5 (chain closure) so any reshaping starts from a
-   verified-sound graph.
-2. **Taxonomy balance check**, same spirit as his ~12-category/≤30% rule: audit
-   our 4 `level` tiers (foundational/core/advanced/cross_cutting) and the 42
-   concepts across them for lopsidedness. Cheap, and maps onto known coverage
-   holes (5 zero-coverage concepts per `CLAUDE.md`).
-3. **When #5 (chain closure) gets built**, revisit whether 42 concepts is the
-   right grain before assuming the walk algorithm is the whole problem — his
-   200–500 concept norm is a data point, not a target to hit.
-4. **If the book (or anything McCreary-adjacent) is ever scoped to actually
-   ship**, that's the trigger to re-open the licensing conversation for real —
-   either build proprietary versions of anything borrowed, or reach out to him
-   for explicit written commercial permission. Don't let this slide by default
-   because the prototype worked.
+1. **Commit/push what's in the tree** (it's overdue) after `pytest` + `end2end`.
+2. **Ship practice-loop A** (idempotent finish). It stops live mastery corruption
+   and is the cheapest source of the volume everything else needs.
+3. **Re-ingest Eedi without the `break`** (§4). Free 1.87× ingredient evidence.
+4. **Run the pre-registered 2-param predictor experiment.** Read the
+   pre-registration first; accept a null result if that's what it gives.
+5. Then: empirical item difficulty, or the ingredient→mastery rewire, depending
+   on what step 4 says.
 
 ---
 
-## 5. Loose ends
+## 8. Gotchas worth carrying forward
 
-- **W3 (ingredient-lead prose + misconception-targeted questions) is wired but
-  cannot fire** until distractor-tagged wrong answers exist. See §1 step 3.
-- **Local testing without login:** `/try/dashboard` — real Dashboard, demo user,
-  sessionStorage only, nothing written to Firestore. `/login` also does
-  email+password and magic-link, not just Google OAuth (which breaks in the IDE's
-  embedded browser).
-- **Run both servers** (frontend `.env.local` points at `localhost:8080`):
-  ```
-  cd ml && source mindcraft/bin/activate && ML_AUTH_ENABLED=false FIRESTORE_PROJECT=mindcraft-93858 uvicorn serve:app --host 0.0.0.0 --port 8080
-  cd app && npm run dev     # → localhost:5173
-  ```
-- **Ingredient coverage ceiling:** 97/179 ingredients have ≥1 labeled example, 82
-  have none. The 82 sit in matrices / complex numbers / logarithmic functions /
-  integrals — Eedi (UK GCSE) doesn't cover them. Closing that needs a separate
-  ACT-only enrichment pass over L3 `subtopics`/`skill_gap_if_wrong`, **not** more
-  effort on the Eedi batch. Those are advanced concepts, i.e. not where a
-  high-schooler's foundational holes are — so this is a low priority.
-- **The ML engine is NOT deployed** with any of this session's A/B fixes. The HF
-  Space still runs the old code. Deploy is manual: `ml/scripts/deploy_hf.sh`
-  (needs an HF write token). **Nothing is live to iOS until this runs.**
-- **4 pre-existing stashes** (`stash@{1}`–`{4}`: tutor/parent + concept-id work,
-  two wips, a pre-rebase temp) predate this session and need triage.
-
----
-
-## Suggested opening move
-
-**Deploy the engine** (`ml/scripts/deploy_hf.sh`) — buckets A and B are green and
-committed but invisible to both surfaces until the HF Space is updated. Then pick
-between the **observability build** (makes future changes reviewable, and would
-have caught the index bug) and **bucket C #5** (users would feel it).
+- `validation.run_harness` takes student ids **positionally** — there is no
+  `--student` flag. `--all` discovers them.
+- `evictQuestionCache` lives in `questionAgent.ts` and is for **LLM-generated**
+  questions; `getQuestions` (static bank) has **no cache** — it shuffles.
+- `getQuestions` accepts `seenIds`, but **`Practice.tsx` passes `[]` at both call
+  sites** — repeat avoidance is effectively off.
+- Firestore returns tz-aware datetimes; the engine is naive. `_to_naive()`.
+- **Detail lives in `ENGINE_BOOK_ACCURACY_REVIEW.md`** (repo root) — the full
+  measurements, both retractions with evidence, and the reproduction commands.
