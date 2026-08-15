@@ -6,7 +6,7 @@
 
 ## Marketing sims + book studio (2026-08-15)
 
-ZPD is hosted on-site (`sims/zpd/`, drag to pan, click gold). No LinkedIn. 3D graph at `sims/graph/`. Jesse press centered. Create is a hobby-book studio.
+joinmindcraft.com is one hero story: the colored 3D graph is the spine. Scroll down zooms in. Pages pop (night, verdict, walk in, map, Jesse, book). No researcher name on the chrome. Mentors, archive, pricing, apply forms stay below.
 
 ## Marketing elevate (2026-08-15)
 

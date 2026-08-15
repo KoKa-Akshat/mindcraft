@@ -532,6 +532,91 @@
     .form-grid{grid-template-columns:1fr;}
     section{padding:clamp(64px,10vw,96px) 0;}
   }
+
+  /* ---------- Epic: graph is the spine. Scroll down zooms in. ---------- */
+  .epic{ height: 720vh; padding:0; background:#05070a; }
+  .epic-sticky{
+    position:sticky; top:0; height:100svh; overflow:hidden;
+    background:#05070a;
+  }
+  .epic-graph{ position:absolute; inset:0; width:100%; height:100%; touch-action:pan-y; }
+  .epic-graph canvas{ outline:none; touch-action:pan-y; }
+  .epic-fog{
+    position:absolute; inset:0; pointer-events:none; z-index:1; opacity:.62;
+    background:
+      radial-gradient(ellipse 70% 60% at 50% 45%, transparent 18%, rgba(5,7,10,.22) 68%, rgba(5,7,10,.7) 100%),
+      linear-gradient(180deg, rgba(5,7,10,.42) 0%, transparent 20%, transparent 72%, rgba(5,7,10,.58) 100%);
+  }
+  .epic-pages{ position:absolute; inset:0; z-index:2; pointer-events:none; }
+  .epic-page{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    padding: clamp(88px,12vh,140px) clamp(20px,5vw,72px);
+    opacity:0; transform:translateY(22px) scale(.972);
+    transition:opacity .7s var(--ease), transform .7s var(--ease);
+    pointer-events:none;
+  }
+  .epic-page.is-on{ opacity:1; transform:none; }
+  .epic-page.is-on .epic-card,
+  .epic-page.is-on .epic-open-copy{ pointer-events:auto; }
+  .epic-open{ align-items:flex-end; justify-content:flex-start; padding-bottom:clamp(48px,10vh,96px); }
+  .epic-open-copy{ max-width:min(760px,100%); }
+  .epic-open-copy h1{ text-shadow:0 24px 70px rgba(0,0,0,.55); }
+  .epic-card{
+    width:min(560px,100%);
+    padding: clamp(26px,3.6vw,42px);
+    border-radius:28px;
+    background:rgba(8,12,16,.42);
+    border:1px solid rgba(255,255,255,.12);
+    box-shadow:0 30px 80px rgba(0,0,0,.35);
+    -webkit-backdrop-filter:blur(22px); backdrop-filter:blur(22px);
+  }
+  .epic-card.paper{
+    background:rgba(247,245,240,.94);
+    color:#143a2e; border-color:rgba(20,58,46,.12);
+  }
+  .epic-card.paper .epic-k{color:#247a4d;}
+  .epic-card.paper h2, .epic-card.paper h1{color:#143a2e;}
+  .epic-card.paper .epic-line{color:rgba(20,58,46,.72);}
+  .epic-k{
+    font-family:var(--mono); font-size:11px; font-weight:600;
+    letter-spacing:.16em; text-transform:uppercase; color:var(--lime); margin-bottom:16px;
+  }
+  .epic-page h1, .epic-page h2{
+    font-size:clamp(36px,6vw,76px); letter-spacing:-.04em; line-height:1.02; color:var(--chalk);
+  }
+  .epic-page h1 em, .epic-page h2 em{ font-style:normal; color:var(--lime); }
+  .epic-line{
+    margin-top:16px; font-size:clamp(16px,2vw,22px); font-weight:500;
+    color:rgba(245,245,244,.78); max-width:28ch;
+  }
+  .epic-line.serif{ font-family:var(--serif); font-style:italic; font-weight:500; max-width:22ch; }
+  .epic-cue{
+    margin-top:28px; font-family:var(--mono); font-size:11px; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--chalk-faint);
+  }
+  .epic-left{ justify-content:flex-start; }
+  .epic-right{ justify-content:flex-end; }
+  .epic-actions{ display:flex; flex-wrap:wrap; gap:12px; margin-top:26px; }
+  .epic-wait{
+    position:absolute; inset:0; display:grid; place-items:center;
+    color:var(--chalk-faint); font-size:13px; z-index:1;
+  }
+  .epic-ticks{
+    position:absolute; right:max(16px, env(safe-area-inset-right)); top:50%;
+    transform:translateY(-50%); z-index:3; list-style:none;
+    display:flex; flex-direction:column; gap:11px; pointer-events:none;
+  }
+  .epic-ticks li{
+    width:6px; height:6px; border-radius:50%;
+    background:rgba(245,245,244,.2);
+    transition:transform .4s var(--ease), background .4s var(--ease);
+  }
+  .epic-ticks li.on{ background:var(--lime); transform:scale(1.45); box-shadow:0 0 10px rgba(196,245,71,.55); }
+  @media (max-width:700px){
+    .epic{height:620vh;}
+    .epic-left, .epic-right, .epic-open{justify-content:center;}
+    .epic-ticks{display:none;}
+  }
 </style>
 </head>
 <body>
@@ -541,11 +626,10 @@
   <a class="brand" href="#" aria-label="MindCraft home">
     <img src="img/raccoon-logo.png" alt="" width="28" height="28">
     <span class="visually-hidden">MindCraft</span>
-    <span aria-hidden="true">MindCraft</span>
+    <span aria-hidden="true">The Desk</span>
   </a>
   <div class="nav-links">
-    <a href="#reel">Product</a>
-    <a href="#resume">Resume Help</a>
+    <a href="#story">Story</a>
     <a href="#tutors">Mentors</a>
     <a href="dans-archive.html">Archive</a>
     <a href="#pricing">Pricing</a>
@@ -553,45 +637,78 @@
   </div>
 </nav>
 
-<!-- ================= HERO ================= -->
-<header class="hero">
-  <svg class="hero-map" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-    <line x1="80" y1="120" x2="240" y2="210"/><line x1="240" y1="210" x2="410" y2="150"/>
-    <line x1="410" y1="150" x2="560" y2="260"/><line x1="240" y1="210" x2="300" y2="380"/>
-    <line x1="300" y1="380" x2="470" y2="450"/><line x1="470" y1="450" x2="560" y2="260"/>
-    <line x1="560" y1="260" x2="760" y2="200"/><line x1="760" y1="200" x2="950" y2="290"/>
-    <line x1="470" y1="450" x2="420" y2="620"/><line x1="420" y1="620" x2="220" y2="560"/>
-    <line x1="220" y1="560" x2="300" y2="380"/><line x1="470" y1="450" x2="680" y2="540"/>
-    <line x1="680" y1="540" x2="860" y2="470"/><line x1="860" y1="470" x2="950" y2="290"/>
-    <line x1="860" y1="470" x2="1060" y2="560"/><line x1="950" y1="290" x2="1120" y2="220"/>
-    <circle class="n" cx="80" cy="120" r="5"/><circle class="n" cx="410" cy="150" r="6"/>
-    <circle class="n" cx="760" cy="200" r="5"/><circle class="n" cx="1120" cy="220" r="5"/>
-    <circle class="n" cx="300" cy="380" r="6"/><circle class="n" cx="220" cy="560" r="5"/>
-    <circle class="n" cx="420" cy="620" r="6"/><circle class="n" cx="680" cy="540" r="5"/>
-    <circle class="n" cx="1060" cy="560" r="5"/><circle class="n" cx="240" cy="210" r="5"/>
-    <circle class="n-lit pulse" cx="470" cy="450" r="8"/>
-    <circle class="n-lit" cx="560" cy="260" r="6" opacity=".7"/>
-    <circle class="n-lit pulse" cx="950" cy="290" r="7" style="animation-delay:1.4s;"/>
-  </svg>
-  <div class="hero-stage">
-    <div class="hero-tag"><i>THE DESK</i> by MindCraft</div>
-    <h1><span>Never work</span><span class="accent">alone.</span></h1>
-    <div class="sub">Office hours from your room.</div>
-    <div class="hero-actions">
-      <a class="btn primary" href="#start">Claim your desk</a>
-      <a class="btn soft" href="#night">Hear Maya's night ↓</a>
+<!-- ================= STORY: graph spine, scroll down zooms in ================= -->
+<section class="epic" id="story">
+  <div class="epic-sticky" id="epicPin">
+    <div class="epic-wait" id="epicWait">The map is waking up</div>
+    <div class="epic-graph" id="epicGraph"></div>
+    <div class="epic-fog" aria-hidden="true"></div>
+    <div class="epic-pages">
+      <article class="epic-page epic-open is-on" data-beat="0">
+        <div class="epic-open-copy">
+          <p class="epic-k">The Desk</p>
+          <h1>Never work <em>alone.</em></h1>
+          <p class="epic-line">Office hours from your room.</p>
+          <p class="epic-cue">Scroll down. The map comes to you.</p>
+        </div>
+      </article>
+      <article class="epic-page epic-left" data-beat="1">
+        <div class="epic-card">
+          <p class="epic-k">2:00 AM</p>
+          <h2 class="serif" style="font-family:var(--serif);font-style:italic;font-weight:500;">Question 14. Fifth time through.</h2>
+          <p class="epic-line">The symbols dissolve. You switch tabs. Anything that feels like knowing.</p>
+        </div>
+      </article>
+      <article class="epic-page epic-right" data-beat="2">
+        <div class="epic-card">
+          <p class="epic-k">The verdict</p>
+          <h2>You were never <em>bad</em> at this.</h2>
+          <p class="epic-line">You were working alone. That is a broken workflow. Not a broken brain.</p>
+        </div>
+      </article>
+      <article class="epic-page" data-beat="3">
+        <div class="epic-card">
+          <p class="epic-k">The crossing</p>
+          <h2>Then someone walks <em>in.</em></h2>
+          <p class="epic-line">Same page. Same night. A person who has done this is suddenly in the room.</p>
+        </div>
+      </article>
+      <article class="epic-page epic-left" data-beat="4">
+        <div class="epic-card">
+          <p class="epic-k">Map</p>
+          <h2>There it is. The map just <em>changed.</em></h2>
+          <p class="epic-line">Fog lifts where you actually clicked. Gold is the next thing you can learn.</p>
+          <div class="epic-actions">
+            <a class="btn primary" href="sims/zpd/">Move the frontier</a>
+          </div>
+        </div>
+      </article>
+      <article class="epic-page" data-beat="5">
+        <div class="epic-card paper">
+          <p class="epic-k">Jesse</p>
+          <h2>Press to talk.</h2>
+          <p class="epic-line">The page is already here. Say the next sentence.</p>
+          <div class="jesse-press" style="min-height:0;padding:18px 0 0;background:none;">
+            <button class="jesse-disc" type="button" id="jessePressDemo">Press</button>
+            <div class="hint" id="jessePressHint">One button. Dead center.</div>
+          </div>
+        </div>
+      </article>
+      <article class="epic-page epic-right" data-beat="6">
+        <div class="epic-card">
+          <p class="epic-k">Create</p>
+          <h2>A book about what you <em>love.</em></h2>
+          <p class="epic-line">Name a passion. Jesse asks what a friend needs first. Your name on the spine.</p>
+          <div class="epic-actions">
+            <a class="btn primary" href="#start">Claim your desk</a>
+            <a class="btn soft" href="#tutors">Find a mentor</a>
+          </div>
+        </div>
+      </article>
     </div>
-  </div>
-  <div class="hero-below">
-    <div class="scroll-cue"><span>a lamp. a page. a person.</span><i>↓</i></div>
-  </div>
-</header>
-
-<section class="night" id="night">
-  <img src="img/mkt/mkt-maya-lamp.jpg" alt="A student at a desk at 2am, lamp on an open notebook">
-  <div class="night-copy">
-    <p class="serif">Question 14. Fifth time through. The symbols dissolve.</p>
-    <p class="land">You were never bad at this. You were working alone.</p>
+    <ol class="epic-ticks" id="epicTicks" aria-hidden="true">
+      <li class="on"></li><li></li><li></li><li></li><li></li><li></li><li></li>
+    </ol>
   </div>
 </section>
 
@@ -608,239 +725,6 @@
       </ul>
       <nav class="intro-social" id="introSocial" aria-label="Find MindCraft out there"></nav>
       <p class="data-yours">Your record stays yours. Export it. Delete it. We never sell it.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ================= REEL - the flagship scroll sequence ================= -->
-<section class="reel" id="reel">
-  <div class="wrap">
-    <div class="reel-intro">
-      <div class="kicker" style="justify-content:center;">The desk, mid-session</div>
-      <h2 class="h2 reveal">Watch the fog lift.</h2>
-    </div>
-  </div>
-  <div class="reel-pin" id="reelPin">
-    <div class="reel-stage" id="reelStage">
-      <div class="reel-frame" data-i="0">
-        <div class="reel-shot"><img src="img/app/desk-workspace-live.jpg" alt="The Desk: a memo transcribing while the map sits beside it" loading="eager"></div>
-        <div class="reel-cap"><span class="reel-tag">The Desk</span><h3>One board. The night stops scattering.</h3><p>Notes, map, and a person you can call. Not six tabs.</p></div>
-      </div>
-      <div class="reel-frame" data-i="1">
-        <div class="reel-shot live">
-          <iframe title="Zone of Proximal Development Explorer" src="sims/zpd/?embed=1" loading="lazy"></iframe>
-          <a class="sim-open" href="sims/zpd/">Open larger</a>
-        </div>
-        <div class="reel-cap"><span class="reel-tag">Solver</span><h3>Click the gold. The frontier moves.</h3><p>That moving ring is the next thing you can actually learn. Not a red X.</p></div>
-      </div>
-      <div class="reel-frame" data-i="2">
-        <div class="reel-shot live">
-          <iframe title="Dan McCreary learning graph in 3D" src="sims/graph/" loading="lazy"></iframe>
-          <a class="sim-open" href="sims/graph/">Spin it · open full</a>
-        </div>
-        <div class="reel-cap"><span class="reel-tag">Map</span><h3>400 concepts. Drag to spin.</h3><p>Click a node. See what it rests on. The map is the lesson.</p></div>
-      </div>
-      <div class="reel-frame" data-i="3">
-        <div class="reel-shot">
-          <div class="jesse-press" style="width:100%;height:100%;min-height:0;">
-            <div class="who">Jesse</div>
-            <h3>Press to talk.</h3>
-            <p>The page is already here. Say the next sentence.</p>
-            <button class="jesse-disc" type="button" onclick="location.href='#resume'">Press</button>
-            <div class="hint">Centered. One move.</div>
-          </div>
-        </div>
-        <div class="reel-cap"><span class="reel-tag">Ask</span><h3>One button. In the middle.</h3><p>Not a prompt bar. Not a corner hold. Press. Talk. The work moves.</p></div>
-      </div>
-      <div class="reel-frame" data-i="4">
-        <div class="reel-shot">
-          <div class="book-studio" id="reelBook" style="width:100%;height:100%;">
-            <aside class="book-rail">
-              <div class="tiny">Chapters</div>
-              <button class="book-ch on" type="button"><b>Ch 1</b><span>Why we fall</span></button>
-              <button class="book-ch" type="button"><b>Ch 2</b><span>Speed</span></button>
-              <button class="book-ch" type="button"><b>Ch 3</b><span>Your first ollie</span></button>
-            </aside>
-            <div class="book-main">
-              <div class="book-page">
-                <div class="k">Your book · Skate physics</div>
-                <h4>The board left the ground. The math was already in the air.</h4>
-                <p>Start with what you love. Jesse asks what a friend needs first. You talk. A chapter appears. Your name on the spine.</p>
-              </div>
-              <div class="book-ask">
-                <button class="jesse-disc" type="button" onclick="location.href='#author'">Press</button>
-                <div class="guide">What should a friend understand after this page?</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="reel-cap"><span class="reel-tag">Create</span><h3>A book about what you love.</h3><p>Not a blank deck. Four questions. Then a spine with your name.</p></div>
-      </div>
-      <div class="reel-dots" id="reelDots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i></div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= PROBLEM ================= -->
-<section class="problem" id="problem">
-  <div class="wrap">
-    <div class="kicker reveal">The verdict</div>
-    <h2 class="h2 reveal">They described a moment. <span class="serif">You heard a verdict.</span></h2>
-    <div class="chaos-grid">
-      <div class="chaos reveal" style="--tilt:-1.1deg;"><span class="tag">2:00 AM</span><h3>Question 14. Again.</h3></div>
-      <div class="chaos reveal" style="--tilt:.8deg;"><span class="tag">THE DECK</span><h3>Six blank frames. Title rewritten four times.</h3></div>
-      <div class="chaos reveal" style="--tilt:-.6deg;"><span class="tag">THE CHAT</span><h3>Partners went quiet around dinner.</h3></div>
-      <div class="chaos reveal" style="--tilt:1deg;"><span class="tag">THE ARMOR</span><h3>Giving up is not weakness. It is cover.</h3></div>
-    </div>
-    <p class="punchline reveal">That is not a broken brain. That is a broken workflow.</p>
-    <p class="turn reveal">The Desk rebuilds the room.</p>
-  </div>
-</section>
-
-<section class="night together" id="together">
-  <img src="img/mkt/mkt-desk-together.jpg" alt="A student and a mentor at the same desk, looking at the same page">
-  <div class="night-copy">
-    <p class="serif">Then someone who has done this walks in.</p>
-    <p class="land">Same page. Same night. Not alone.</p>
-  </div>
-</section>
-
-<!-- ================= CAPABILITIES ================= -->
-<section class="caps stage-desk" id="capabilities">
-  <div class="wrap">
-    <div class="kicker reveal">Talk · See · Make</div>
-    <h2 class="h2 reveal">Three moves. <span class="serif">One desk.</span></h2>
-    <div class="caps-grid three">
-      <a class="cap reveal" href="#resume">
-        <div class="glyph" style="background:var(--amber);">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#241505" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="7"/><path d="M12 9v3l2 1.4"/></svg>
-        </div>
-        <h3>Talk</h3>
-        <p>Press Jesse. The page is already in the room.</p>
-      </a>
-      <a class="cap reveal" href="sims/zpd/">
-        <div class="glyph" style="background:var(--lime);">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#0a1006" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.6"/><path d="M12 4v3M12 17v3M4 12h3M17 12h3"/></svg>
-        </div>
-        <h3>See</h3>
-        <p>Click gold. The next thing you can learn lights up.</p>
-      </a>
-      <a class="cap reveal" href="#author">
-        <div class="glyph" style="background:var(--violet);">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#160f2c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h9l4 4v12H6z"/><path d="M15 4v4h4"/></svg>
-        </div>
-        <h3>Make</h3>
-        <p>A book about what you love. Your name on the spine.</p>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ================= RESUME HELP - flagship ================= -->
-<section class="resume" id="resume">
-  <div class="wrap">
-    <div class="resume-grid">
-      <div>
-        <div class="kicker reveal">Ask · Jesse</div>
-        <h2 class="h2 reveal">Say what you did. Hear it back in your voice.</h2>
-        <p class="lede reveal">Press the disc. Talk. It never invents an employer.</p>
-        <div class="hero-actions reveal" style="margin-top:26px;">
-          <a class="btn primary" href="#start">Try Resume Help</a>
-        </div>
-      </div>
-      <div class="reveal">
-        <div class="resume-shot">
-          <div class="bar"><i></i><i></i><i></i><span>the desk · jesse</span></div>
-          <div class="jesse-press">
-            <div class="who">Jesse</div>
-            <h3>Hi. I'm Jesse.</h3>
-            <p>Press to talk. I'll stay with the page in front of you.</p>
-            <button class="jesse-disc" type="button" id="jessePressDemo">Press</button>
-            <div class="hint" id="jessePressHint">One button. Dead center.</div>
-          </div>
-        </div>
-        <p class="resume-cap">On the desk. Not a tab you forget to open.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= CREATE A BOOK - students as authors ================= -->
-<section class="resume" id="author">
-  <div class="wrap">
-    <div class="resume-grid">
-      <div class="reveal">
-        <div class="resume-shot">
-          <div class="bar"><i></i><i></i><i></i><span>the desk · your book</span></div>
-          <div class="book-studio" id="bookStudio">
-            <aside class="book-rail">
-              <div class="tiny">Chapters</div>
-              <button class="book-ch on" type="button" data-ch="0"><b>Ch 1</b><span id="ch0">Why we fall</span></button>
-              <button class="book-ch" type="button" data-ch="1"><b>Ch 2</b><span id="ch1">Speed</span></button>
-              <button class="book-ch" type="button" data-ch="2"><b>Ch 3</b><span id="ch2">Your first ollie</span></button>
-            </aside>
-            <div class="book-main">
-              <div class="book-passions" id="bookPassions">
-                <button type="button" class="on" data-book="skate">Skate</button>
-                <button type="button" data-book="bake">Baking</button>
-                <button type="button" data-book="piano">Piano</button>
-                <button type="button" data-book="photo">Photos</button>
-              </div>
-              <div class="book-page">
-                <div class="k" id="bookKicker">Your book · Skate physics</div>
-                <h4 id="bookTitle">The board left the ground. The math was already in the air.</h4>
-                <p id="bookBody">Start with the feeling. Then name the rule that made it possible. A friend should be able to try this after one page.</p>
-              </div>
-              <div class="book-ask">
-                <button class="jesse-disc" type="button" id="bookPress">Press</button>
-                <div class="guide" id="bookGuide">What should a friend understand after this page?</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <p class="resume-cap">Your Binder. Your name. Nobody else's.</p>
-      </div>
-      <div>
-        <div class="kicker reveal">Create · Your book</div>
-        <h2 class="h2 reveal">Name a passion. <span class="serif">Leave with a book.</span></h2>
-        <p class="lede reveal">Jesse asks four questions. You talk. Chapters appear in order.</p>
-        <div class="scan-points reveal" style="margin-top:22px;">
-          <div class="scan-point"><span class="pip">1</span><p>What do you love enough to explain?</p></div>
-          <div class="scan-point"><span class="pip">2</span><p>What must a friend already know?</p></div>
-          <div class="scan-point"><span class="pip">3</span><p>Talk page one. A picture if words fail.</p></div>
-          <div class="scan-point"><span class="pip">4</span><p>Your name on the spine.</p></div>
-        </div>
-        <div class="hero-actions reveal" style="margin-top:26px;">
-          <a class="btn primary" href="#start">Start your book</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= EVIDENCE LAYER - data ownership ================= -->
-<section class="resume" id="record">
-  <div class="wrap">
-    <div class="resume-grid">
-      <div>
-        <div class="kicker reveal">The Evidence Layer · Your Record</div>
-        <h2 class="h2 reveal">Every session becomes evidence. <span class="serif">The evidence stays yours.</span></h2>
-        <p class="lede reveal">Inspect it. Export it. Delete it. We never own the record.</p>
-        <div class="swap-card reveal">
-          <div class="swap-row before"><span class="swap-tag">BEFORE</span><p>Six apps. Each holds a slice of you.</p></div>
-          <div class="swap-row after"><span class="swap-tag">AFTER</span><p>One living map. Your name on it.</p></div>
-        </div>
-        <div class="hero-actions reveal" style="margin-top:26px;">
-          <a class="btn primary" href="#start">See your map</a>
-        </div>
-      </div>
-      <div class="reveal">
-        <div class="resume-shot">
-          <div class="bar"><i></i><i></i><i></i><span>the desk · field desk</span></div>
-          <iframe title="Dan McCreary learning graph in 3D" src="sims/graph/" style="width:100%;height:420px;border:0;display:block;background:#080e14;" loading="lazy"></iframe>
-        </div>
-        <p class="resume-cap">Spin the open graph. Export stays yours.</p>
-      </div>
     </div>
   </div>
 </section>
@@ -889,7 +773,7 @@
         <div class="kicker reveal">The Open Learning Archive</div>
         <h2 class="h2 reveal">Some ideas need a picture, <span class="serif">not a paragraph.</span></h2>
         <p class="lede reveal">Drag a variable. Watch the idea move. That is often the whole click.</p>
-        <div class="archive-credit reveal">113 free, open intelligent textbooks, written and freely shared by learning-graph researcher <a href="https://www.linkedin.com/in/danmccreary/" target="_blank" rel="noopener noreferrer">Dan McCreary</a>. MindCraft didn't write any of it. We're just making it easier to find. No login. No paywall.</div>
+        <div class="archive-credit reveal">113 free open textbooks. No login. No paywall. Drag a variable and the idea moves.</div>
         <div class="archive-stats reveal">
           <div class="as"><b>389</b><span>MicroSims in one Health Education book alone</span></div>
           <div class="as"><b>173</b><span>interactive sims in AI Assisted Geometry</span></div>
@@ -1089,6 +973,7 @@
 </footer>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="https://cdn.jsdelivr.net/npm/3d-force-graph@1.73.3/dist/3d-force-graph.min.js"></script>
 <script src="https://unpkg.com/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://unpkg.com/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
@@ -1138,55 +1023,125 @@
   nav.addEventListener('focusin', () => nav.classList.remove('is-hidden'));
   updateNav();
 
-  // ---------- Reel: GSAP ScrollTrigger pinned crossfade (desktop only) ----------
+  // ---------- Epic graph: scroll down zooms in, pages pop ----------
   (function(){
-    const stage = document.getElementById('reelStage');
-    const pin = document.getElementById('reelPin');
-    if (!stage || !pin) return;
-    const canPin = !prefersReduced && window.gsap && window.ScrollTrigger && window.matchMedia('(min-width:900px)').matches;
-    if (!canPin) return;
+    const root = document.getElementById('story');
+    const el = document.getElementById('epicGraph');
+    const wait = document.getElementById('epicWait');
+    const fog = document.querySelector('.epic-fog');
+    const ticks = Array.from(document.querySelectorAll('#epicTicks li'));
+    const pages = Array.from(document.querySelectorAll('.epic-page'));
+    if (!root || !el || !window.ForceGraph3D) return;
 
-    gsap.registerPlugin(ScrollTrigger);
-    stage.classList.add('is-pinned');
-    const frames = Array.from(stage.querySelectorAll('.reel-frame'));
-    const dots = Array.from(document.querySelectorAll('#reelDots i'));
-    gsap.set(frames, { opacity:0, scale:.97, y:26 });
-    gsap.set(frames[0], { opacity:1, scale:1, y:0 });
-    frames[0].classList.add('is-active');
+    const COLORS = {
+      FOUND:'#4fd1c5', DEPEND:'#7c6bc4', TAXON:'#2f8f5b', QUAL:'#c4f547',
+      EDUF:'#f2b84b', LSCI:'#c4922a', PERS:'#e6d37a', AI:'#2a9d8f',
+      ASSESS:'#4ea3f0', VISCORE:'#8ec8f0', VISLAYOUT:'#e05a5a', VISTOOLS:'#9b2c2c',
+      DATA:'#9b7ed9', TEXTBOOK:'#6b4fc4', LMS:'#8a4fd4', SKILL:'#f07ab8'
+    };
+    const BEATS = [0, 0.13, 0.27, 0.41, 0.55, 0.70, 0.84];
+    let graph = null;
+    let controls = null;
 
-    function setActive(i){
-      dots.forEach((d, di) => d.classList.toggle('on', di === i));
-      frames.forEach((f, fi) => f.classList.toggle('is-active', fi === i));
+    function beatIndex(p){
+      let i = 0;
+      for (let b = 0; b < BEATS.length; b++) if (p >= BEATS[b] - 0.01) i = b;
+      return i;
+    }
+    function showBeat(i){
+      pages.forEach((pg, idx) => pg.classList.toggle('is-on', idx === i));
+      ticks.forEach((t, idx) => t.classList.toggle('on', idx === i));
+    }
+    function applyCam(p){
+      if (!graph) return;
+      const dist = 1180 - p * 1110;
+      const ang = p * Math.PI * 0.85;
+      const r = 36 + (1 - p) * 130;
+      graph.cameraPosition({
+        x: Math.sin(ang) * r,
+        y: 10 + p * 38,
+        z: Math.max(58, dist)
+      }, { x:0, y:0, z:0 });
+      const cam = graph.camera && graph.camera();
+      if (cam){
+        cam.fov = 58 - p * 16;
+        cam.updateProjectionMatrix();
+      }
+      if (fog) fog.style.opacity = String(0.52 + p * 0.42);
+      if (controls){
+        controls.autoRotate = p < 0.92;
+        controls.autoRotateSpeed = 0.32 * (1 - p);
+      }
+    }
+    function onProgress(p){
+      applyCam(p);
+      showBeat(beatIndex(p));
+    }
+    function loadGraphData(){
+      return fetch('data/learning-graph.json')
+        .then(r => { if (!r.ok) throw new Error('local'); return r.json(); })
+        .catch(() => fetch('https://raw.githubusercontent.com/dmccreary/learning-graphs/master/docs/learning-graph/learning-graph.json')
+          .then(r => { if (!r.ok) throw new Error('graph'); return r.json(); }));
     }
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: pin,
-        start: 'top top+=80',
-        // 85%/frame, then 70%/frame, both still held the pin for 4-5 full
-        // viewport-heights - still read as scroll-jacking even with a fast
-        // crossfade. 55%/frame (330% total) is the shortest dwell that still
-        // lands the crossfade and lets the caption register before advancing.
-        end: '+=' + (frames.length * 55) + '%',
-        // .7 stacked with Lenis's own smoothing (see above) to double-lag the
-        // crossfade behind the actual scroll input; .4 still smooths out
-        // trackpad jitter but tracks the pointer closely enough to not feel
-        // detached from it.
-        scrub: .4,
-        pin: true,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-      }
-    });
-    frames.forEach((f, i) => {
-      if (i === 0){ tl.to({}, { duration:.7 }); return; }
-      const prev = frames[i-1];
-      tl.to(prev, { opacity:0, scale:1.02, y:-22, duration:.45, ease:'power1.inOut' }, i-1+0.55)
-        .fromTo(f, { opacity:0, scale:.97, y:26 }, { opacity:1, scale:1, y:0, duration:.45, ease:'power1.inOut' }, i-1+0.55)
-        .call(setActive, [i], i-1+0.55)
-        .to({}, { duration:.6 });
-    });
-    ScrollTrigger.addEventListener('refreshInit', () => {});
+    loadGraphData()
+      .then(data => {
+        const nodes = (data.nodes || []).map(n => ({
+          id: n.id, name: n.label, group: n.group, color: COLORS[n.group] || '#8aa4b0'
+        }));
+        const links = (data.edges || []).map(e => ({ source: e.from, target: e.to }));
+        if (wait) wait.remove();
+        graph = ForceGraph3D({ controlType:'orbit' })(el)
+          .graphData({ nodes, links })
+          .backgroundColor('#05070a')
+          .nodeLabel(n => n.name)
+          .nodeColor(n => n.color)
+          .nodeRelSize(3.4)
+          .linkColor(() => 'rgba(196,245,71,.20)')
+          .linkOpacity(0.32)
+          .showNavInfo(false)
+          .enableNodeDrag(false)
+          .enableNavigationControls(true)
+          .warmupTicks(90)
+          .cooldownTicks(80);
+        controls = graph.controls && graph.controls();
+        if (controls){
+          if ('enableZoom' in controls) controls.enableZoom = false;
+          if ('noZoom' in controls) controls.noZoom = true;
+          if ('enablePan' in controls) controls.enablePan = false;
+          controls.autoRotate = true;
+          controls.autoRotateSpeed = 0.32;
+        }
+        applyCam(0);
+        if (window.ScrollTrigger) {
+          try { ScrollTrigger.refresh(); } catch (e) {}
+        }
+      })
+      .catch(() => { if (wait) wait.textContent = 'The map will load when the network is ready.'; });
+
+    if (prefersReduced){
+      showBeat(0);
+      return;
+    }
+    if (window.gsap && window.ScrollTrigger){
+      gsap.registerPlugin(ScrollTrigger);
+      ScrollTrigger.create({
+        trigger: root,
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 0.55,
+        onUpdate: self => onProgress(self.progress)
+      });
+    } else {
+      const onScroll = () => {
+        const r = root.getBoundingClientRect();
+        const total = root.offsetHeight - window.innerHeight;
+        const p = total <= 0 ? 0 : Math.min(1, Math.max(0, -r.top / total));
+        onProgress(p);
+      };
+      addEventListener('scroll', onScroll, { passive:true });
+      onScroll();
+    }
   })();
 
   // ---------- Live mentor map (Leaflet) ----------
