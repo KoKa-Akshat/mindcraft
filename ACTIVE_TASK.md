@@ -4,6 +4,10 @@
 
 ---
 
+## Archive RAG in the shelf (2026-08-15)
+
+Caption boxes stay one size. No extra sub-line. Archive shelf is wider. Close is a link to the full page. Search asks the books and loads the chapter plus a MicroSim in the same box.
+
 ## Full 3D raccoon lattice (2026-08-15)
 
 The claim-desk mascot is a dense 3D volume now, not a floating 2D scatter. It turns slowly. Still not pressable.

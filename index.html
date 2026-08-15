@@ -329,9 +329,9 @@
     display:flex; align-items:flex-end; justify-content:space-between; gap:22px;
   }
   .jesse-story-copy{flex:1; min-width:0;}
-  .jesse-story-copy .cta-lattice-kicker{margin-bottom:8px;}
-  .jesse-story-copy h2{transition:opacity .42s ease;}
+  .jesse-story-copy h2{min-height:2.3em; transition:opacity .42s ease;}
   .jesse-story-copy h2.is-out{opacity:0;}
+  #jesseLiveCard{width:min(760px,100%); min-height:280px;}
   .jesse-press{
     min-height:420px; display:flex; flex-direction:column; align-items:center; justify-content:center;
     text-align:center; padding:48px 28px 40px; background:
@@ -457,10 +457,9 @@
 
   /* ---------- Archive ---------- */
   .archive{background:var(--field);}
-  .archive-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:clamp(32px,5vw,72px); align-items:center;}
-  .archive-credit{ margin-top:22px; padding:15px 18px; border:1px solid var(--edge); border-radius:16px; background:var(--field-2); font-size:15px; font-weight:400; color:var(--chalk); max-width:520px; line-height:1.45; min-height:74px; transition:opacity .42s ease; }
+  .archive-grid{display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(24px,4vw,56px); align-items:center;}
+  .archive-credit{ margin-top:22px; padding:16px 18px; border:1px solid var(--edge); border-radius:16px; background:var(--field-2); font-size:16px; font-weight:400; color:var(--chalk); max-width:520px; line-height:1.4; min-height:64px; transition:opacity .42s ease; }
   .archive-credit.is-out{opacity:0;}
-  .archive-credit .cta-lattice-kicker{margin-bottom:6px;}
   .archive-row{
     display:flex; align-items:center; justify-content:space-between; gap:22px;
     margin:26px 0 6px; flex-wrap:wrap;
@@ -489,7 +488,7 @@
   .af4{top:140px; left:32%; transform:rotate(-3deg); z-index:1;}
   .archive-box{
     display:none; flex-direction:column;
-    height:min(72vh, 640px); min-height:420px;
+    height:min(78vh, 740px); min-height:460px;
     border:1px solid var(--edge); border-radius:22px; overflow:hidden;
     background:var(--field-2); box-shadow:0 30px 80px rgba(0,0,0,.35);
   }
@@ -504,26 +503,36 @@
     display:grid; gap:8px; align-content:start;
   }
   .abook{
-    display:flex; align-items:center; gap:12px;
+    display:flex; align-items:center; gap:12px; width:100%;
     padding:10px 12px; border-radius:14px;
     border:1px solid var(--edge); background:#0b1116;
+    text-align:left; cursor:pointer; font:inherit; color:inherit;
   }
   .abook:hover{border-color:rgba(196,245,71,.35);}
   .abook img{
     width:42px; height:62px; object-fit:cover; border-radius:4px;
     flex:none; background:var(--field-3);
   }
-  .abook b{display:block; font-size:14px; font-weight:600; color:var(--chalk); line-height:1.25;}
-  .abook em{display:block; margin-top:3px; font-style:normal; font-size:12px; color:var(--chalk-faint);}
-  .archive-grid.is-open{align-items:stretch;}
+  .abook b{display:block; font-size:15px; font-weight:600; color:var(--chalk); line-height:1.25;}
+  .archive-grid.is-open{align-items:stretch; grid-template-columns:minmax(0,.68fr) minmax(0,1.32fr);}
   .archive-grid.is-open .archive-stack{display:none;}
   .archive-grid.is-open .archive-box{display:flex;}
   .archive-grid.is-open .archive-inline-search{margin-top:0; max-width:none;}
+  .alesson{padding:6px 4px 8px; display:grid; gap:12px;}
+  .alesson-reply{font-family:var(--serif); font-style:italic; font-size:17px; line-height:1.4; color:var(--chalk);}
+  .alesson-book{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--lime);}
+  .alesson h3{font-size:clamp(20px,2.2vw,28px); letter-spacing:-.03em; color:var(--chalk); line-height:1.15;}
+  .alesson-quote{font-size:14px; line-height:1.55; color:var(--chalk-dim);}
+  .alesson-sim{
+    width:100%; height:min(42vh, 360px); border:1px solid var(--edge);
+    border-radius:14px; background:#05070a;
+  }
+  .alesson .btn{justify-self:start;}
   @media (max-width:900px){
-    .archive-grid{grid-template-columns:1fr;}
+    .archive-grid, .archive-grid.is-open{grid-template-columns:1fr;}
     .archive-stack{height:260px; margin-top:8px;}
     .af{width:160px;}
-    .archive-box{height:min(70vh, 560px);}
+    .archive-box{height:min(74vh, 640px);}
   }
 
   /* ---------- Pricing ---------- */
@@ -593,6 +602,7 @@
     font-family:var(--serif); font-style:italic;
     font-size:clamp(17px,2vw,23px); line-height:1.35; color:#f4f1ea;
     text-shadow:0 2px 18px rgba(0,0,0,.72);
+    min-height:3.2em;
     transition:opacity .42s ease;
   }
   .cta-lattice-cap.is-out{opacity:0;}
@@ -810,9 +820,7 @@
           <p class="epic-k">Jesse</p>
           <div class="jesse-story-row">
             <div class="jesse-story-copy">
-              <p class="cta-lattice-kicker" id="jesseCapKicker">Create</p>
               <h2 id="jesseLiveTitle">An interactive lesson on fractals.</h2>
-              <p class="epic-line" id="jesseLiveLead">The captions tell the story. Press only if you want to talk.</p>
               <p class="jesse-live-words" id="jesseLiveWords" aria-live="polite"></p>
               <p class="jesse-reply" id="jesseLiveReply"></p>
             </div>
@@ -896,10 +904,7 @@
         <div class="kicker reveal">The Open Learning Archive</div>
         <h2 class="h2 reveal">Some ideas need a picture, <span class="serif">not a paragraph.</span></h2>
         <p class="lede reveal">Drag a variable. Watch the idea move. That is often the whole click.</p>
-        <div class="archive-credit reveal" id="archiveCaption">
-          <span class="cta-lattice-kicker">Create</span>
-          An interactive lesson on fractals.
-        </div>
+        <div class="archive-credit reveal" id="archiveCaption">An interactive lesson on fractals.</div>
         <div class="archive-row reveal">
           <ul class="archive-bullets">
             <li>389 sims in one health book</li>
@@ -911,7 +916,7 @@
         <div class="archive-inline-search reveal" id="archiveInlineSearch">
           <div class="ais-bar">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.6" y2="16.6"/></svg>
-            <input type="text" id="aisInput" placeholder="Try “calculus,” “graph databases,” “biology”…" autocomplete="off" aria-label="Search the archive">
+            <input type="text" id="aisInput" placeholder="Ask the shelf. Try calculus, limits, fractals…" autocomplete="off" aria-label="Ask the archive">
           </div>
         </div>
       </div>
@@ -926,7 +931,7 @@
           <div class="archive-box-head" id="archiveBoxHead"></div>
           <div class="archive-box-meta">
             <span id="archiveCount">113 books</span>
-            <button class="btn soft" type="button" id="archiveCloseBtn" style="min-height:36px;padding:0 12px;font-size:12px;">Close</button>
+            <a class="btn soft" href="dans-archive.html" id="archivePageLink" style="min-height:36px;padding:0 12px;font-size:12px;">Open the full page</a>
           </div>
           <div class="archive-shelf" id="archiveShelf"></div>
         </div>
@@ -1053,10 +1058,7 @@
     <div class="cta-split reveal">
       <aside class="cta-lattice-box" aria-hidden="true">
         <canvas class="cta-lattice" id="ctaLattice"></canvas>
-        <p class="cta-lattice-cap" id="ctaLatticeCaption">
-          <span class="cta-lattice-kicker">Create</span>
-          An interactive lesson on fractals.
-        </p>
+        <p class="cta-lattice-cap" id="ctaLatticeCaption">An interactive lesson on fractals.</p>
       </aside>
       <div class="ctaband">
       <h2>Never work <em>alone</em> again.</h2>
@@ -1146,7 +1148,7 @@
       const b = beats[n % beats.length];
       if (kicker) kicker.textContent = b.k;
       if (title) title.textContent = b.t;
-      if (box) box.innerHTML = '<span class="cta-lattice-kicker">' + b.k + '</span>' + b.t;
+      if (box) box.textContent = b.t;
     }
     show(0);
     if (prefersReduced || beats.length < 2) return { pause:function(){}, resume:function(){} };
@@ -1354,7 +1356,7 @@
     function paintCaption(n){
       if (!caption) return;
       const b = beats[n % beats.length];
-      caption.innerHTML = '<span class="cta-lattice-kicker">' + b.k + '</span>' + b.t;
+      caption.textContent = b.t;
     }
     paintCaption(0);
     if (caption && !prefersReduced){
@@ -1730,7 +1732,7 @@
     if (email) void captureLead({ email, name, role:'tutor_apply', source:'apply_tutor', note, page:'#start', _honey: document.querySelector('#applyFormTutor [name="_honey"]')?.value || '' });
   });
 
-  // ---------- Archive: click opens a scrollable book box on the right ----------
+  // ---------- Archive shelf + RAG lesson in the same box ----------
   (function(){
     const stage = document.getElementById('archiveStage');
     const copy = document.getElementById('archiveCopy');
@@ -1741,11 +1743,14 @@
     const shelf = document.getElementById('archiveShelf');
     const count = document.getElementById('archiveCount');
     const openBtn = document.getElementById('archiveBrowseBtn');
-    const closeBtn = document.getElementById('archiveCloseBtn');
     if (!stage || !search || !input || !box || !head || !shelf || !openBtn) return;
 
+    const RAG = 'https://mindcraft-webhook.vercel.app/api/archive-rag';
+    const STOP = { the:1, and:1, for:1, with:1, that:1, this:1, from:1, what:1, how:1, why:1, are:1, was:1, can:1, you:1, your:1, about:1, into:1, book:1, page:1, open:1, show:1, tell:1, please:1, jesse:1 };
     let books = null;
+    let chunks = null;
     let loading = false;
+    let asking = false;
 
     function escapeHtml(s){
       return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -1753,24 +1758,112 @@
     function coverSrc(b){
       return b.cover || ('img/dans-covers/' + encodeURIComponent(b.slug) + '.jpg');
     }
-    function render(q){
+    function tokens(s){
+      return String(s).toLowerCase().replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter(function(w){ return w.length > 2 && !STOP[w]; });
+    }
+    function simSrc(url){
+      if (!url) return '';
+      if (/main\.html$/i.test(url)) return url;
+      return url.replace(/\/?$/, '/') + 'main.html';
+    }
+    function retrieve(query, limit){
+      const q = tokens(query);
+      if (!chunks || !q.length) return [];
+      const scored = [];
+      for (let i = 0; i < chunks.length; i++){
+        const c = chunks[i];
+        const title = (c.bookTitle + ' ' + c.pageTitle + ' ' + (c.location || '')).toLowerCase();
+        const body = String(c.quote || '').toLowerCase();
+        let score = 0;
+        for (let t = 0; t < q.length; t++){
+          const w = q[t];
+          if (title.indexOf(w) >= 0) score += 4;
+          if (body.indexOf(w) >= 0) score += 1;
+          if (String(c.bookSlug || '').replace(/-/g, ' ').indexOf(w) >= 0) score += 2;
+        }
+        if (c.simUrl) score += 1.5;
+        if (score > 0) scored.push(Object.assign({ score: score }, c));
+      }
+      scored.sort(function(a, b){ return b.score - a.score; });
+      const seen = {};
+      const out = [];
+      for (let i = 0; i < scored.length && out.length < (limit || 3); i++){
+        if (seen[scored[i].pageUrl]) continue;
+        seen[scored[i].pageUrl] = 1;
+        out.push(scored[i]);
+      }
+      return out;
+    }
+    function enrich(hits){
+      if (!chunks || !hits) return hits || [];
+      return hits.map(function(h){
+        if (h.simUrl) return h;
+        const match = chunks.find(function(c){ return c.pageUrl === h.pageUrl && c.simUrl; })
+          || chunks.find(function(c){ return c.bookSlug === h.bookSlug && c.simUrl; });
+        return match ? Object.assign({}, h, { simUrl: match.simUrl }) : h;
+      });
+    }
+    function pickHit(hits){
+      if (!hits || !hits.length) return null;
+      return hits.find(function(h){ return h.simUrl; }) || hits[0];
+    }
+    function showLesson(hit, reply){
+      const sim = simSrc(hit.simUrl);
+      shelf.innerHTML =
+        '<div class="alesson">' +
+          (reply ? '<p class="alesson-reply">' + escapeHtml(reply) + '</p>' : '') +
+          '<p class="alesson-book">' + escapeHtml(hit.bookTitle) + '</p>' +
+          '<h3>' + escapeHtml(hit.pageTitle) + '</h3>' +
+          '<p class="alesson-quote">' + escapeHtml(hit.quote) + '</p>' +
+          (sim ? '<iframe class="alesson-sim" src="' + escapeHtml(sim) + '" title="Lesson" loading="lazy" referrerpolicy="no-referrer"></iframe>' : '') +
+          '<a class="btn primary" href="' + escapeHtml(hit.pageUrl) + '" target="_blank" rel="noopener">Open this page</a>' +
+        '</div>';
+      if (count) count.textContent = hit.bookTitle;
+    }
+    function renderShelf(q){
       if (!books) return;
       const needle = (q || '').toLowerCase();
       const matches = needle
-        ? books.filter(b => (b.title + ' ' + b.description + ' ' + b.subject).toLowerCase().includes(needle))
+        ? books.filter(function(b){ return (b.title + ' ' + b.description + ' ' + b.subject).toLowerCase().indexOf(needle) >= 0; })
         : books;
       if (count) count.textContent = matches.length + (needle ? ' match' : ' books');
       if (!matches.length){
-        shelf.innerHTML = '<div class="ais-empty">No match. Try a broader word.</div>';
+        shelf.innerHTML = '<div class="ais-empty">No match. Ask another way, or browse the list.</div>';
         return;
       }
       shelf.innerHTML = matches.map(function(b){
-        return '<a class="abook" href="' + escapeHtml(b.url) + '" target="_blank" rel="noopener">' +
+        return '<button class="abook" type="button" data-slug="' + escapeHtml(b.slug) + '">' +
           '<img src="' + escapeHtml(coverSrc(b)) + '" alt="" width="42" height="62" loading="lazy">' +
-          '<span><b>' + escapeHtml(b.title) + '</b><em>' + escapeHtml(b.subject) + '</em></span></a>';
+          '<span><b>' + escapeHtml(b.title) + '</b></span></button>';
       }).join('');
     }
-    function load(){
+    function ask(q){
+      const query = String(q || '').trim();
+      if (!query){ renderShelf(''); return; }
+      if (asking) return;
+      asking = true;
+      openBox();
+      shelf.innerHTML = '<div class="ais-empty">Opening the page.</div>';
+      if (count) count.textContent = 'Reading';
+      const remote = fetch(RAG, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: query })
+      }).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; });
+      Promise.all([loadChunks(), remote]).then(function(pair){
+        asking = false;
+        const data = pair[1];
+        const hits = enrich((data && data.hits && data.hits.length) ? data.hits : retrieve(query, 3));
+        const hit = pickHit(hits);
+        if (!hit){
+          renderShelf(query);
+          return;
+        }
+        const reply = (data && data.reply) ? data.reply : ('I opened ' + hit.bookTitle + ' at ' + hit.pageTitle + '.');
+        showLesson(hit, reply.replace(/\u2014/g, '-'));
+      });
+    }
+    function loadBooks(){
       if (books || loading) return Promise.resolve(books);
       loading = true;
       shelf.innerHTML = '<div class="ais-empty">Opening the shelf.</div>';
@@ -1779,13 +1872,20 @@
         .then(function(data){
           books = data.books || [];
           loading = false;
-          render(input.value.trim());
+          renderShelf(input.value.trim());
           return books;
         })
         .catch(function(){
           loading = false;
           shelf.innerHTML = '<div class="ais-empty">Could not load the archive right now.</div>';
         });
+    }
+    function loadChunks(){
+      if (chunks) return Promise.resolve(chunks);
+      return fetch('data/dans-archive-chunks.json?v=a1')
+        .then(function(r){ if (!r.ok) throw new Error('chunks'); return r.json(); })
+        .then(function(data){ chunks = data.chunks || []; return chunks; })
+        .catch(function(){ chunks = []; return chunks; });
     }
     function openBox(){
       if (stage.classList.contains('is-open')) return;
@@ -1794,7 +1894,8 @@
       head.appendChild(search);
       openBtn.setAttribute('aria-expanded', 'true');
       openBtn.textContent = 'Close the shelf';
-      load();
+      loadBooks();
+      loadChunks();
       input.focus();
     }
     function closeBox(){
@@ -1809,8 +1910,22 @@
       if (stage.classList.contains('is-open')) closeBox();
       else openBox();
     });
-    if (closeBtn) closeBtn.addEventListener('click', closeBox);
-    input.addEventListener('input', function(){ render(input.value.trim()); });
+    input.addEventListener('input', function(){
+      if (!asking) renderShelf(input.value.trim());
+    });
+    input.addEventListener('keydown', function(e){
+      if (e.key !== 'Enter') return;
+      e.preventDefault();
+      ask(input.value);
+    });
+    shelf.addEventListener('click', function(e){
+      const row = e.target.closest('.abook');
+      if (!row) return;
+      const slug = row.getAttribute('data-slug');
+      const book = (books || []).find(function(b){ return b.slug === slug; });
+      if (!book) return;
+      ask(book.title);
+    });
     input.addEventListener('focus', function(){
       if (!stage.classList.contains('is-open') && input.value.trim()) openBox();
     });
@@ -1826,7 +1941,6 @@
     const words = document.getElementById('jesseLiveWords');
     const replyEl = document.getElementById('jesseLiveReply');
     const jesseCaps = playCaptions({
-      kicker: document.getElementById('jesseCapKicker'),
       title: document.getElementById('jesseLiveTitle')
     });
     if (!disc || !hint || !card || !words) return;
