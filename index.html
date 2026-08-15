@@ -416,13 +416,11 @@
 
   /* ---------- Tutors ---------- */
   .tutors{background:var(--field-1); border-top:1px solid var(--edge); border-bottom:1px solid var(--edge);}
-  .tutor-head .h2{max-width:24ch;}
-  .tutor-caption{
-    margin-top:20px; max-width:46ch;
-    font-family:var(--serif); font-style:italic; font-weight:500;
-    font-size:clamp(16px,1.8vw,20px); line-height:1.45; color:var(--chalk-dim);
-  }
+  .tutor-head .h2{max-width:none; white-space:nowrap;}
   .tutor-quote{ position:relative; margin-top:22px; max-width:52ch; padding:0; border:0; background:none; }
+  @media (max-width:720px){
+    .tutor-head .h2{white-space:normal; font-size:clamp(28px,8vw,40px);}
+  }
   .tutor-quote p{font-family:var(--serif); font-style:italic; font-size:clamp(17px,1.8vw,21px); line-height:1.4; color:var(--chalk);}
   .tutor-quote p em{font-style:italic; color:var(--lime);}
   .tutor-duo{ margin:38px auto 0; display:grid; grid-template-columns:1.1fr 1fr; gap:16px; width:100%; padding:14px; border-radius:26px; border:1px solid var(--edge); background:var(--field-2); box-shadow:var(--shadow); }
@@ -896,8 +894,6 @@
     <div class="tutor-head">
       <div class="kicker reveal">Real people, on call</div>
       <h2 class="h2 reveal">Someone who has done this <span class="serif">walks in.</span></h2>
-      <p class="lede reveal">They open your map before hello. The hour goes to the click, not the detective work. First session free.</p>
-      <p class="tutor-caption reveal">Show the page. A mentor who remembers junior year. Book tonight.</p>
       <blockquote class="tutor-quote reveal"><p>MindCraft is not software instead of people. It is software that <em>makes the people better.</em></p></blockquote>
     </div>
     <div class="tutor-duo reveal" id="tutorLive">

@@ -4,6 +4,10 @@
 
 ---
 
+## Mentor headline one line (2026-08-15)
+
+Tutors: "Someone who has done this walks in." stays on one line. The only sub line is the MindCraft software quote.
+
 ## Archive neat + page still scrolls (2026-08-15)
 
 Left column is a clean stack: caption, three stats on a rule, then the button. Opening the shelf no longer locks the website. Wheel over the box moves the books. Wheel outside the box scrolls the page. Visit the page stays.
