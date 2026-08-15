@@ -4,6 +4,10 @@
 
 ---
 
+## Full 3D raccoon lattice (2026-08-15)
+
+The claim-desk mascot is a dense 3D volume now, not a floating 2D scatter. It turns slowly. Still not pressable.
+
 ## Archive opens in place (2026-08-15)
 
 Browse the archive no longer leaves the page. It opens a rectangular box on the right, moves search to the top, and lets you scroll the books there.
