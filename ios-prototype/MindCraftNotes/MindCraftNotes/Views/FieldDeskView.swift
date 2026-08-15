@@ -3357,6 +3357,28 @@ struct FieldDeskView: View {
         if args.contains("--ui-testing-field-desk-add") {
             DispatchQueue.main.asyncAfter(deadline: .now() + 8.0) { showAddPanel = true }
         }
+        // Straight to a populated Gmail box - real OAuth isn't available in
+        // this environment, so this exercises the digest/archive UI against
+        // seeded messages instead of a live inbox fetch. The digest call
+        // itself still hits the real deployed webhook (no seam there) -
+        // this only bypasses Google Sign-In.
+        if args.contains("--ui-testing-gmail-digest") {
+            GmailClient.shared.seedForTesting(messages: [
+                GmailClient.Message(
+                    id: "1", threadId: "t1", from: "Ms. Park", fromEmail: "park@school.edu",
+                    subject: "Quadratic problem set due Friday",
+                    snippet: "Please submit problems 1-20 by Friday 3pm. Late work not accepted.",
+                    dateLabel: "Mon", rfcMessageId: ""
+                ),
+                GmailClient.Message(
+                    id: "2", threadId: "t2", from: "Dr. Nguyen", fromEmail: "nguyen@school.edu",
+                    subject: "Lab groups posted",
+                    snippet: "Check the portal for your assigned lab group for the titration experiment.",
+                    dateLabel: "Tue", rfcMessageId: ""
+                ),
+            ])
+            showGmailBox = true
+        }
     }
 }
 

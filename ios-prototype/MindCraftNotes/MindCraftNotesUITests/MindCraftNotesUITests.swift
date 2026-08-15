@@ -1473,6 +1473,60 @@ final class MindCraftNotesUITests: XCTestCase {
         XCUIDevice.shared.orientation = .portrait
     }
 
+    /// Real Gmail read already existed (GmailClient.fetchInbox) - the
+    /// missing piece was AI-summarizing it into the dashboard. This hits
+    /// the REAL deployed /api/gmail-digest webhook (no server-side mock),
+    /// same integration-test tolerance as other AI-backed flows in this
+    /// file - only Google Sign-In itself is bypassed
+    /// (`--ui-testing-gmail-digest` seeds GmailClient.messages directly,
+    /// since this environment has no real Google account to sign into).
+    func testGmailDigestSummarizesSeededInbox() {
+        let app = XCUIApplication()
+        app.launchArguments = ["--ui-testing-in-memory", "--ui-testing-skip-auth", "--ui-testing-gmail-digest"]
+        app.launch()
+        XCUIDevice.shared.orientation = .landscapeLeft
+
+        // Not fieldDeskModeToggle first, unlike other Field Desk tests -
+        // showGmailBox fires synchronously in wireUITesting()'s .onAppear,
+        // and deskOverlayChromeBlocked deliberately hides the top chrome
+        // (mode toggle included) the whole time the Gmail box is open. That
+        // control genuinely never appears in this flow; waiting on it here
+        // timed out for real on a first attempt before this fix.
+        let bootText = app.staticTexts["Your workspace is starting up"]
+        if bootText.waitForExistence(timeout: 10) { _ = bootText.waitForNonExistence(timeout: 90) }
+
+        // FieldDeskView's call site re-applies its own
+        // .accessibilityIdentifier("fieldDeskGmailOverlay") on top of
+        // GmailWorkflowBoxView - the outer one wins for the root element
+        // (confirmed via a full tree dump), so "gmailWorkflowRoot" (set
+        // inside GmailWorkflowBoxView.body) never actually surfaces here.
+        // Nested elements that carry their own distinct identifier
+        // (gmailConnectButton, gmailDigestRefresh, etc.) are unaffected -
+        // this is different from the .compositingGroup() clobbering bug
+        // fixed earlier this session, which took out EVERY descendant.
+        XCTAssertTrue(app.descendants(matching: .any)["fieldDeskGmailOverlay"].waitForExistence(timeout: 40),
+                      "expected the Gmail box to open with seeded messages")
+
+        // Auto-summarize only fires on a messages CHANGE after mount
+        // (.onChange) - seeding happens before the view mounts, so this
+        // test exercises the manual refresh path instead of relying on
+        // that timing, which real usage (fetchInbox after a real OAuth
+        // connect) doesn't have to worry about.
+        let refresh = app.buttons["gmailDigestRefresh"]
+        XCTAssertTrue(refresh.waitForExistence(timeout: 5), "expected the digest refresh control")
+        refresh.tap()
+
+        let headline = app.staticTexts["gmailDigestHeadline"]
+        XCTAssertTrue(headline.waitForExistence(timeout: 20), "expected a real digest headline from the webhook")
+        XCTAssertFalse(headline.label.isEmpty, "expected non-empty headline text")
+        attachScreenshot(app, name: "gmail_digest")
+
+        XCTAssertTrue(app.buttons["gmailArchiveToDrive"].waitForExistence(timeout: 3),
+                      "expected the Archive to Drive control once a digest exists")
+
+        XCUIDevice.shared.orientation = .portrait
+    }
+
     /// Minimize/reconnect: collapsing Scheduling Workflows should NOT close
     /// it (that's a separate, existing control) - it should shrink to a
     /// reconnectable chip on the desk, same treatment as the ACT stage's

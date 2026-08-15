@@ -59,7 +59,26 @@ final class GmailClient: ObservableObject {
 
     var isConnected: Bool { hasGmailScope }
 
+    /// Set once by `seedForTesting`, so `refreshScopeStatus()` (called from
+    /// `GmailWorkflowBoxView.onAppear` right after a seed, among other
+    /// places) doesn't immediately stomp the seeded scope back to false -
+    /// there's genuinely no real `GIDSignIn` user in this environment, so
+    /// the normal "no user -> no scope" path would otherwise always win.
+    private var isSeededForTesting = false
+
+    /// Test-only seam, gated to `--ui-testing-in-memory` (never reachable
+    /// in a real launch): this environment can't provide a real signed-in
+    /// Google account, so a UI test that needs to exercise the inbox/digest
+    /// UI has no other way to get `messages` populated.
+    func seedForTesting(messages: [Message]) {
+        guard ProcessInfo.processInfo.arguments.contains("--ui-testing-in-memory") else { return }
+        isSeededForTesting = true
+        hasGmailScope = true
+        self.messages = messages
+    }
+
     func refreshScopeStatus() {
+        guard !isSeededForTesting else { return }
         guard let user = GIDSignIn.sharedInstance.currentUser else {
             hasGmailScope = false
             hasCalendarScope = false

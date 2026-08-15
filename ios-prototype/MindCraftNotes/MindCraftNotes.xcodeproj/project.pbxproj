@@ -99,6 +99,8 @@
 		D5JOBOSSHELL01A2B3C4 /* JobOSShellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5JOBOSSHELL01A2B3C4 /* JobOSShellView.swift */; };
 		D61E1093C9F9476A8193B4BD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473BF2A15353473E8B559067 /* ContentView.swift */; };
 		D6GMAILCLIENT01A2B3C4 /* GmailClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6GMAILCLIENT01A2B3C4 /* GmailClient.swift */; };
+		D6GMAILDIGESTCL01A2B3 /* GmailDigestClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6GMAILDIGESTCL01A2B3 /* GmailDigestClient.swift */; };
+		D6GMAILDIGESTST01A2B3 /* GmailDigestStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6GMAILDIGESTST01A2B3 /* GmailDigestStore.swift */; };
 		D6DRIVECLIENT01A2B3C4 /* DriveClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DRIVECLIENT01A2B3C4 /* DriveClient.swift */; };
 		D701D0CAFA36FDCD398C790B /* storyArt in Resources */ = {isa = PBXBuildFile; fileRef = 6C6EE743854CB1274F574739 /* storyArt */; };
 		D7GMAILBOXVW01A2B3C4 /* GmailWorkflowBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7GMAILBOXVW01A2B3C4 /* GmailWorkflowBoxView.swift */; };
@@ -212,6 +214,8 @@
 		C4JOBOSSTORE01A2B3C4 /* JobOSStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobOSStore.swift; sourceTree = "<group>"; };
 		C5JOBOSSHELL01A2B3C4 /* JobOSShellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobOSShellView.swift; sourceTree = "<group>"; };
 		C6GMAILCLIENT01A2B3C4 /* GmailClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GmailClient.swift; sourceTree = "<group>"; };
+		C6GMAILDIGESTCL01A2B3 /* GmailDigestClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GmailDigestClient.swift; sourceTree = "<group>"; };
+		C6GMAILDIGESTST01A2B3 /* GmailDigestStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GmailDigestStore.swift; sourceTree = "<group>"; };
 		C6DRIVECLIENT01A2B3C4 /* DriveClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriveClient.swift; sourceTree = "<group>"; };
 		C7GMAILBOXVW01A2B3C4 /* GmailWorkflowBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GmailWorkflowBoxView.swift; sourceTree = "<group>"; };
 		C804A39BF276CEEBF088A65C /* actToc.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = actToc.json; sourceTree = "<group>"; };
@@ -339,6 +343,8 @@
 				DA7262B1A341CC17EEC08DFE /* LiveSessionClient.swift */,
 				B19B01C1A6E7F8091B2C3D4E /* AgentMailClient.swift */,
 				C6GMAILCLIENT01A2B3C4 /* GmailClient.swift */,
+				C6GMAILDIGESTCL01A2B3 /* GmailDigestClient.swift */,
+				C6GMAILDIGESTST01A2B3 /* GmailDigestStore.swift */,
 				C6DRIVECLIENT01A2B3C4 /* DriveClient.swift */,
 				C9DESKASKCLIENT01A2 /* DeskAskClient.swift */,
 				C9BOOTMOTIV01A2B3C4 /* BootMotivationClient.swift */,
@@ -676,6 +682,8 @@
 				FC08164293A4B5C6D7E8F91A /* FieldDeskStore.swift in Sources */,
 				A19B01C1A6E7F8091B2C3D4E /* AgentMailClient.swift in Sources */,
 				D6GMAILCLIENT01A2B3C4 /* GmailClient.swift in Sources */,
+				D6GMAILDIGESTCL01A2B3 /* GmailDigestClient.swift in Sources */,
+				D6GMAILDIGESTST01A2B3 /* GmailDigestStore.swift in Sources */,
 				D6DRIVECLIENT01A2B3C4 /* DriveClient.swift in Sources */,
 				D9DESKASKCLIENT01A2 /* DeskAskClient.swift in Sources */,
 				D9BOOTMOTIV01A2B3C4 /* BootMotivationClient.swift in Sources */,

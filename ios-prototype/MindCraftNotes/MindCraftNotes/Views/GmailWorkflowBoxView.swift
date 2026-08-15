@@ -13,6 +13,9 @@ struct GmailWorkflowBoxView: View {
     var startWithTopReply: Bool = false
 
     @StateObject private var client = GmailClient.shared
+    @StateObject private var digestClient = GmailDigestClient.shared
+    @StateObject private var digestStore = GmailDigestStore.shared
+    @StateObject private var drive = DriveClient.shared
     /// Matches the desk screenshot size the student set (≈438×359 on iPad).
     @State private var boardSize = CGSize(width: 440, height: 360)
     @State private var boardOrigin = CGPoint(x: 0, y: 48)
@@ -94,6 +97,13 @@ struct GmailWorkflowBoxView: View {
             }
             .onChange(of: client.messages) { _, msgs in
                 openTopReplyIfNeeded(msgs)
+                guard !msgs.isEmpty else { return }
+                Task {
+                    await digestClient.summarize(msgs)
+                    if let digest = digestClient.digest {
+                        digestStore.save(digest, messageCount: msgs.count)
+                    }
+                }
             }
         }
         .sheet(item: $selected) { msg in
@@ -110,6 +120,7 @@ struct GmailWorkflowBoxView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 14) {
                     if client.hasGmailScope {
+                        digestSection
                         inboxSection
                     } else {
                         setupSection
@@ -265,6 +276,99 @@ struct GmailWorkflowBoxView: View {
                 .frame(width: 22, height: 22)
                 .background(Circle().fill(Color(gmHex: "c4f547")))
             content()
+        }
+    }
+
+    /// AI triage of the current inbox batch - real Gmail read (already
+    /// existed), the missing "summarize it" step. Auto-runs whenever
+    /// `client.messages` changes (see .onChange above); the refresh button
+    /// here is for re-running against the same batch without a full
+    /// inbox reload. Persisted per-student via `GmailDigestStore` so this
+    /// isn't just an ephemeral in-memory read - and archived into the
+    /// student's OWN Drive (not MindCraft's backend) via "Archive to Drive",
+    /// a durable data store outside this app entirely.
+    private var digestSection: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                Text("Digest")
+                    .font(.system(size: 12, weight: .heavy, design: .rounded))
+                    .foregroundColor(Color(gmHex: "8a8478"))
+                Spacer()
+                if digestClient.isBusy {
+                    ProgressView().scaleEffect(0.7)
+                } else if !client.messages.isEmpty {
+                    Button {
+                        Task {
+                            await digestClient.summarize(client.messages)
+                            if let digest = digestClient.digest {
+                                digestStore.save(digest, messageCount: client.messages.count)
+                            }
+                        }
+                    } label: {
+                        Image(systemName: "sparkles")
+                            .font(.system(size: 13, weight: .bold))
+                            .foregroundColor(Color(gmHex: "247a4d"))
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityIdentifier("gmailDigestRefresh")
+                }
+            }
+
+            if let digest = digestClient.digest {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(digest.headline)
+                        .font(.system(size: 13, weight: .semibold, design: .rounded))
+                        .foregroundColor(Color(gmHex: "1c1a17"))
+                        .fixedSize(horizontal: false, vertical: true)
+                        .accessibilityIdentifier("gmailDigestHeadline")
+
+                    ForEach(digest.actionItems) { item in
+                        HStack(alignment: .top, spacing: 8) {
+                            Circle().fill(Color(gmHex: "c1121f")).frame(width: 6, height: 6).padding(.top, 5)
+                            VStack(alignment: .leading, spacing: 1) {
+                                Text(item.subject)
+                                    .font(.system(size: 12, weight: .bold, design: .rounded))
+                                    .lineLimit(1)
+                                if !item.why.isEmpty {
+                                    Text(item.why)
+                                        .font(.system(size: 11, weight: .medium, design: .rounded))
+                                        .foregroundColor(Color(gmHex: "8a8478"))
+                                }
+                            }
+                        }
+                    }
+                    if !digest.fyi.isEmpty {
+                        Text("\(digest.fyi.count) more, routine")
+                            .font(.system(size: 11, weight: .medium, design: .rounded))
+                            .foregroundColor(Color(gmHex: "8a8478"))
+                    }
+                }
+                .padding(12)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(RoundedRectangle(cornerRadius: 12).fill(Color.white))
+                .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color(gmHex: "d9d2c5"), lineWidth: 1))
+
+                Button {
+                    Task { await drive.archiveEmails(client.messages, digest: digestClient.digest) }
+                } label: {
+                    Text(drive.isArchiving ? "Archiving…" : "Archive to Drive")
+                        .font(.system(size: 12, weight: .bold, design: .rounded))
+                        .foregroundColor(Color(gmHex: "247a4d"))
+                }
+                .buttonStyle(.plain)
+                .disabled(drive.isArchiving)
+                .accessibilityIdentifier("gmailArchiveToDrive")
+
+                if let err = drive.lastError {
+                    Text(err)
+                        .font(.system(size: 11, weight: .medium, design: .rounded))
+                        .foregroundColor(Color(gmHex: "b42318"))
+                }
+            } else if digestClient.isBusy {
+                Text("Summarizing…")
+                    .font(.system(size: 12, weight: .medium, design: .rounded))
+                    .foregroundColor(Color(gmHex: "8a8478"))
+            }
         }
     }
 
