@@ -325,11 +325,26 @@
   .resume-shot .bar span{margin-left:8px; font-family:var(--mono); font-size:10.5px; color:var(--chalk-faint); letter-spacing:.06em; text-transform:uppercase;}
   .resume-shot img{width:100%; display:block;}
   .resume-cap{margin-top:16px; font-size:12.5px; color:var(--chalk-faint); font-weight:400; max-width:420px;}
+  .jesse-story-row{
+    display:flex; align-items:flex-end; justify-content:space-between; gap:22px;
+  }
+  .jesse-story-copy{flex:1; min-width:0;}
+  .jesse-story-copy .cta-lattice-kicker{margin-bottom:8px;}
+  .jesse-story-copy h2{transition:opacity .42s ease;}
+  .jesse-story-copy h2.is-out{opacity:0;}
   .jesse-press{
     min-height:420px; display:flex; flex-direction:column; align-items:center; justify-content:center;
     text-align:center; padding:48px 28px 40px; background:
       radial-gradient(circle at 50% 42%, rgba(196,245,71,.16), transparent 42%),
       #f4efe6;
+  }
+  .jesse-press-side{
+    flex:none; min-height:0; padding:0; background:none; align-items:center;
+  }
+  .jesse-press-side .jesse-disc{margin:0 0 10px;}
+  @media (max-width:560px){
+    .jesse-story-row{flex-direction:column; align-items:stretch;}
+    .jesse-press-side{align-items:flex-end; align-self:flex-end;}
   }
   .jesse-press .who{font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#247a4d; margin-bottom:12px;}
   .jesse-press h3{font-size:clamp(28px,3vw,36px); color:#143a2e; margin-bottom:8px;}
@@ -443,11 +458,21 @@
   /* ---------- Archive ---------- */
   .archive{background:var(--field);}
   .archive-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:clamp(32px,5vw,72px); align-items:center;}
-  .archive-credit{ margin-top:22px; padding:15px 18px; border:1px solid var(--edge); border-radius:16px; background:var(--field-2); font-size:13px; font-weight:400; color:var(--chalk-dim); max-width:520px; line-height:1.55; }
-  .archive-credit a{color:var(--lime); text-decoration:underline; text-decoration-color:rgba(196,245,71,.35); text-underline-offset:2px;}
-  .archive-stats{display:flex; gap:clamp(20px,3vw,44px); flex-wrap:wrap; margin:26px 0 6px;}
-  .as b{display:block; font-family:"Space Grotesk",sans-serif; font-size:clamp(28px,3.2vw,38px); letter-spacing:-.02em; color:var(--lime); line-height:1; font-weight:700;}
-  .as span{display:block; margin-top:7px; font-size:12px; font-weight:400; color:var(--chalk-faint); max-width:170px; line-height:1.35;}
+  .archive-credit{ margin-top:22px; padding:15px 18px; border:1px solid var(--edge); border-radius:16px; background:var(--field-2); font-size:15px; font-weight:400; color:var(--chalk); max-width:520px; line-height:1.45; min-height:74px; transition:opacity .42s ease; }
+  .archive-credit.is-out{opacity:0;}
+  .archive-credit .cta-lattice-kicker{margin-bottom:6px;}
+  .archive-row{
+    display:flex; align-items:center; justify-content:space-between; gap:22px;
+    margin:26px 0 6px; flex-wrap:wrap;
+  }
+  .archive-bullets{list-style:none; display:grid; gap:8px; flex:1; min-width:220px; margin:0;}
+  .archive-bullets li{
+    font-size:15px; font-weight:500; color:var(--chalk); line-height:1.3;
+    padding-left:16px; position:relative; white-space:nowrap;
+  }
+  .archive-bullets li::before{content:"•"; position:absolute; left:0; color:var(--lime);}
+  .archive-row .btn{flex:none; margin-left:auto;}
+  @media (max-width:560px){ .archive-bullets li{white-space:normal;} }
   .archive-inline-search{margin-top:26px; max-width:480px;}
   .ais-bar{ display:flex; align-items:center; gap:10px; padding:13px 16px; border-radius:14px; background:var(--field-2); border:1px solid var(--edge); }
   .ais-bar svg{flex:none; opacity:.5;}
@@ -749,13 +774,18 @@
       <article class="epic-page" data-beat="5">
         <div class="epic-card paper" id="jesseLiveCard">
           <p class="epic-k">Jesse</p>
-          <h2 id="jesseLiveTitle">Press to talk.</h2>
-          <p class="epic-line" id="jesseLiveLead">The page is already here. Say the next sentence.</p>
-          <p class="jesse-live-words" id="jesseLiveWords" aria-live="polite"></p>
-          <p class="jesse-reply" id="jesseLiveReply"></p>
-          <div class="jesse-press" style="min-height:0;padding:18px 0 0;background:none;">
-            <button class="jesse-disc" type="button" id="jessePressDemo" aria-pressed="false">Press</button>
-            <div class="hint" id="jessePressHint">Press. Speak. Jesse writes it, then answers.</div>
+          <div class="jesse-story-row">
+            <div class="jesse-story-copy">
+              <p class="cta-lattice-kicker" id="jesseCapKicker">Create</p>
+              <h2 id="jesseLiveTitle">An interactive lesson on fractals.</h2>
+              <p class="epic-line" id="jesseLiveLead">The captions tell the story. Press only if you want to talk.</p>
+              <p class="jesse-live-words" id="jesseLiveWords" aria-live="polite"></p>
+              <p class="jesse-reply" id="jesseLiveReply"></p>
+            </div>
+            <div class="jesse-press jesse-press-side">
+              <button class="jesse-disc" type="button" id="jessePressDemo" aria-pressed="false">Press</button>
+              <div class="hint" id="jessePressHint">Optional. Speak and Jesse writes.</div>
+            </div>
           </div>
         </div>
       </article>
@@ -832,13 +862,16 @@
         <div class="kicker reveal">The Open Learning Archive</div>
         <h2 class="h2 reveal">Some ideas need a picture, <span class="serif">not a paragraph.</span></h2>
         <p class="lede reveal">Drag a variable. Watch the idea move. That is often the whole click.</p>
-        <div class="archive-credit reveal">113 free open textbooks. No login. No paywall. Drag a variable and the idea moves.</div>
-        <div class="archive-stats reveal">
-          <div class="as"><b>389</b><span>MicroSims in one Health Education book alone</span></div>
-          <div class="as"><b>173</b><span>interactive sims in AI Assisted Geometry</span></div>
-          <div class="as"><b>113</b><span>full open textbooks, free, no login</span></div>
+        <div class="archive-credit reveal" id="archiveCaption">
+          <span class="cta-lattice-kicker">Create</span>
+          An interactive lesson on fractals.
         </div>
-        <div class="hero-actions reveal" style="margin-top:6px;">
+        <div class="archive-row reveal">
+          <ul class="archive-bullets">
+            <li>389 sims in one health book</li>
+            <li>173 geometry sims you can drag</li>
+            <li>113 textbooks. Free. No login.</li>
+          </ul>
           <a class="btn primary" href="dans-archive.html">Browse the archive →</a>
         </div>
         <div class="archive-inline-search reveal" id="archiveInlineSearch">
@@ -1052,6 +1085,47 @@
 <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 <script>
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const STORY_BEATS = [
+    { k:'Create', t:'An interactive lesson on fractals.' },
+    { k:'Inbox', t:'Pull my emails. Draft the replies I should send.' },
+    { k:'Resume', t:'Say what you did. Jesse writes it clean.' },
+    { k:'Map', t:'The map just changed. Gold is the next move.' },
+    { k:'Notes', t:'The page is already here. Keep going.' }
+  ];
+  function playCaptions(opts){
+    const kicker = opts.kicker;
+    const title = opts.title;
+    const box = opts.box;
+    const beats = opts.beats || STORY_BEATS;
+    let i = 0;
+    let paused = false;
+    function show(n){
+      const b = beats[n % beats.length];
+      if (kicker) kicker.textContent = b.k;
+      if (title) title.textContent = b.t;
+      if (box) box.innerHTML = '<span class="cta-lattice-kicker">' + b.k + '</span>' + b.t;
+    }
+    show(0);
+    if (prefersReduced || beats.length < 2) return { pause:function(){}, resume:function(){} };
+    const fadeEl = title || box;
+    setInterval(function(){
+      if (paused) return;
+      if (fadeEl) fadeEl.classList.add('is-out');
+      setTimeout(function(){
+        if (paused){
+          if (fadeEl) fadeEl.classList.remove('is-out');
+          return;
+        }
+        i = (i + 1) % beats.length;
+        show(i);
+        if (fadeEl) fadeEl.classList.remove('is-out');
+      }, 420);
+    }, 3400);
+    return {
+      pause: function(){ paused = true; },
+      resume: function(){ paused = false; }
+    };
+  }
 
   // ---------- Smooth scroll (Lenis) - skipped under reduced motion ----------
   let lenis = null;
@@ -1590,6 +1664,8 @@
     input.addEventListener('input', () => render(input.value.trim()));
   })();
 
+  playCaptions({ box: document.getElementById('archiveCaption') });
+
   // ---------- Jesse press: live transcribe, then Jesse speaks ----------
   (function(){
     const disc = document.getElementById('jessePressDemo');
@@ -1597,6 +1673,10 @@
     const card = document.getElementById('jesseLiveCard');
     const words = document.getElementById('jesseLiveWords');
     const replyEl = document.getElementById('jesseLiveReply');
+    const jesseCaps = playCaptions({
+      kicker: document.getElementById('jesseCapKicker'),
+      title: document.getElementById('jesseLiveTitle')
+    });
     if (!disc || !hint || !card || !words) return;
 
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -1658,6 +1738,7 @@
       const kept = Boolean(finalText.trim());
       words.classList.toggle('is-on', kept);
       card.classList.toggle('has-words', kept);
+      if (!kept) jesseCaps.resume();
     }
     function finishTurn(){
       wantListen = false;
@@ -1719,6 +1800,7 @@
       finalText = '';
       if (!SR){
         hint.textContent = 'This browser cannot hear you. Type here, then press again.';
+        jesseCaps.pause();
         words.classList.add('is-on');
         card.classList.add('has-words');
         words.setAttribute('contenteditable', 'true');
@@ -1737,6 +1819,7 @@
       }
       wantListen = true;
       listening = true;
+      jesseCaps.pause();
       disc.classList.add('is-hot');
       disc.textContent = 'Stop';
       disc.setAttribute('aria-pressed', 'true');

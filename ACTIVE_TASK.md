@@ -4,6 +4,10 @@
 
 ---
 
+## Jesse + archive auto captions (2026-08-15)
+
+Jesse story card plays workflow captions (fractals, inbox drafts, resume, map, notes). Press sits on the right and is optional. Archive credit cycles the same captions. Archive bullets are one line. Browse sits to the right of the bullets.
+
 ## Family + institutional value (2026-08-15)
 
 Pricing cards now speak parent and teacher: one record / one class dashboard, custom homework (AI drafts, teacher decides), a way through the AI noise. Prices unchanged.
