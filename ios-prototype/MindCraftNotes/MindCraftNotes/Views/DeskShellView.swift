@@ -157,6 +157,20 @@ struct DeskShellView: View {
                 .padding(.bottom, 18)
                 .accessibilityIdentifier("hubPageBackToDesk")
             }
+            // Attached HERE, not on the outer body - callButton (which sets
+            // showCheckIn) lives inside this fullScreenCover's content.
+            // SwiftUI silently no-ops a .sheet() declared on an ancestor
+            // OUTSIDE the currently-presented fullScreenCover's own hosted
+            // hierarchy: showCheckIn correctly flipped true (confirmed no
+            // crash), but no sheet ever appeared - the real bug behind
+            // MasteryCheckInSheet being unreachable, not the callButton
+            // action itself (that part was already fixed to call showCheckIn
+            // instead of showFriends, restoring web parity with hubCall.js).
+            .sheet(isPresented: $showCheckIn) {
+                MasteryCheckInSheet(store: goalStore) { message in
+                    flashHub(message)
+                }
+            }
         }
         .onAppear {
             // Start loading Jesse immediately under the boot slide.
@@ -207,11 +221,6 @@ struct DeskShellView: View {
                             Button("Close") { showFindTutor = false }
                         }
                     }
-            }
-        }
-        .sheet(isPresented: $showCheckIn) {
-            MasteryCheckInSheet(store: goalStore) { message in
-                flashHub(message)
             }
         }
         .fullScreenCover(isPresented: $showFriends) {
@@ -468,7 +477,7 @@ struct DeskShellView: View {
     /// `.hub-call` - compact phone next to Manage (mastery strip removed).
     private var callButton: some View {
         Button {
-            showFriends = true
+            showCheckIn = true
         } label: {
             Image(systemName: "phone.fill")
                 .font(.system(size: 14, weight: .medium))
