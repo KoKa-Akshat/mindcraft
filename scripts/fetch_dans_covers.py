@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Download each book's official cover, or draw a unique series cover."""
+"""Download official covers. Do not overwrite photographed hardcovers.
+
+HARDCOVER_LOCK: skip slugs that already have a photographed cover.
+"""
 
 from __future__ import annotations
 
@@ -363,7 +366,27 @@ def cover_with_logo(book: dict, logo: Image.Image) -> Image.Image:
     return base
 
 
+HARDCOVER_LOCK = {
+    "algebra-1", "biology", "calculus", "chemistry", "circuits", "computer-science",
+    "fft-benchmarking", "beginning-electronics", "geometry-course", "hydroponics",
+    "linear-algebra", "learning-micropython", "intro-to-physics-course",
+    "learning-python", "quantum-computing", "raspberry-pi-stem",
+    "trigonometric-functions", "asl-book", "ai-racing-league", "blockchain",
+    "clan-macquarrie", "clocks-and-watches", "conversational-ai", "dakota-textbook",
+    "umn-senior-design", "Digital-Transformation-with-AI-Spring-2026",
+    "GED-Science-prep", "genai-arch-patterns", "chatgpt-for-teachers",
+    "graph-data-modeling-course", "graph-lms", "graph-rag", "intro-to-graph",
+    "i-book-v1", "Intelligent_Textbook", "ir-textbook", "ee-microsims",
+    "neurodiversity-course", "ojibwe-textbook", "mini-mba-for-startups",
+    "pre-calc", "robot-day", "seizure-safe-schools", "signal-processing",
+    "spectrum-analyzer", "stem-robots", "us-geography",
+}
+
+
 def resolve_book(book: dict) -> tuple[dict, Image.Image, str]:
+    locked = OUT_MARKETING / f"{book['slug']}.jpg"
+    if book["slug"] in HARDCOVER_LOCK and locked.exists():
+        return book, Image.open(locked).convert("RGB"), "hardcover"
     logo = None
     for url in candidates(book):
         data = fetch(url)
