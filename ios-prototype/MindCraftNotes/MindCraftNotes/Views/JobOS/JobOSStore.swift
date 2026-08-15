@@ -283,25 +283,64 @@ final class JobOSStore: ObservableObject {
     }
 
     func addContact(name: String, company: String, profileUrl: String, bestAsk: String) {
-        let n = name.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !n.isEmpty else { flash("Name required"); return }
+        upsertContact(
+            JobOSContact(
+                id: "crm_\(UUID().uuidString.prefix(8))",
+                name: name,
+                company: company,
+                role: "",
+                location: "",
+                warmth: "Macalester network",
+                status: "Not Contacted",
+                profileUrl: profileUrl,
+                bestAsk: bestAsk,
+                notes: "",
+                nextFollowUp: nil
+            )
+        )
+    }
+
+    /// Merge CRM rows by name+company. Never marks outreach sent.
+    @discardableResult
+    func upsertContact(_ incoming: JobOSContact) -> Bool {
+        let n = incoming.name.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !n.isEmpty else { flash("Name required"); return false }
+        let company = incoming.company.trimmingCharacters(in: .whitespacesAndNewlines)
+        if let i = state.contacts.firstIndex(where: {
+            $0.name.localizedCaseInsensitiveCompare(n) == .orderedSame
+                && $0.company.localizedCaseInsensitiveCompare(company) == .orderedSame
+        }) {
+            var row = state.contacts[i]
+            if !incoming.role.isEmpty { row.role = incoming.role }
+            if !incoming.location.isEmpty { row.location = incoming.location }
+            if !incoming.warmth.isEmpty { row.warmth = incoming.warmth }
+            if !incoming.profileUrl.isEmpty { row.profileUrl = incoming.profileUrl }
+            if !incoming.bestAsk.isEmpty { row.bestAsk = incoming.bestAsk }
+            if !incoming.notes.isEmpty { row.notes = incoming.notes }
+            state.contacts[i] = row
+            log("crm", "Updated · \(n) · \(company)")
+            save()
+            flash("Updated contact · \(n)")
+            return false
+        }
         let item = JobOSContact(
-            id: "crm_\(UUID().uuidString.prefix(8))",
+            id: incoming.id.isEmpty ? "crm_\(UUID().uuidString.prefix(8))" : incoming.id,
             name: n,
             company: company,
-            role: "",
-            location: "",
-            warmth: "Macalester network",
-            status: "Not Contacted",
-            profileUrl: profileUrl,
-            bestAsk: bestAsk,
-            notes: "",
-            nextFollowUp: nil
+            role: incoming.role,
+            location: incoming.location,
+            warmth: incoming.warmth,
+            status: incoming.status.isEmpty ? "Not Contacted" : incoming.status,
+            profileUrl: incoming.profileUrl,
+            bestAsk: incoming.bestAsk,
+            notes: incoming.notes,
+            nextFollowUp: incoming.nextFollowUp
         )
         state.contacts.insert(item, at: 0)
-        log("add_contact", n)
+        log("add_contact", "\(n) · \(company)")
         save()
         flash("Contact added · \(n)")
+        return true
     }
 
     /// Daily Sync stub - agent not mounted yet. Logs note + rebuilds a

@@ -1,0 +1,96 @@
+{
+  "title": "Macalester Job OS — operator CRM",
+  "school": "Macalester College",
+  "lastSyncedAt": "2026-08-15",
+  "source": "Cloud agent CRM (Excel Command Center not on this VM; iOS student seed stays empty)",
+  "roles": [
+    {
+      "id": "role_augeo",
+      "rank": 1,
+      "actionLane": "Network First",
+      "company": "Augeo",
+      "role": "Summer intern / local tech (verify cycle)",
+      "location": "St. Paul, MN (2561 Territorial Road)",
+      "fitScore": 82,
+      "eligibility": "Plausible — local HQ, Macalester intern history; no intern posting live",
+      "deadline": null,
+      "applied": false,
+      "dateApplied": null,
+      "contacts": "Deven (verify); David Kristal; Huldah Cooper (Phillips)",
+      "processStatus": "Not Started",
+      "nextAction": "Confirm intern cycle with Huldah; do not cold-email the CEO.",
+      "roleUrl": "",
+      "careerUrl": "https://recruiting.paylocity.com/recruiting/jobs/All/bbb7ef82-fe4e-45d2-acc1-c18505da0567/Augeo-Affinity-Marketing",
+      "why": "St. Paul loyalty/engagement shop. Macalester has placed into Augeo/Kigo internships before (Huldah ran intern recruiting). Live board 2026-08-15 has no intern listing; Kigo Product Leader is live but senior (5–7yr).",
+      "resumeReady": false,
+      "coverLetterReady": false,
+      "liveStatus": "Verify posting",
+      "lastChecked": "2026-08-15"
+    }
+  ],
+  "contacts": [
+    {
+      "id": "crm_augeo_deven",
+      "name": "Deven",
+      "company": "Augeo",
+      "role": "",
+      "location": "St. Paul, MN",
+      "warmth": "Named by Akshat — identity not verified on public leadership page",
+      "status": "Not Contacted",
+      "profileUrl": "",
+      "bestAsk": "Verify full name + title on LinkedIn before any note.",
+      "notes": "First name only. Not listed on augeomarketing.com/company/leadership as of 2026-08-15. Do not invent a last name.",
+      "nextFollowUp": null
+    },
+    {
+      "id": "crm_augeo_kristal",
+      "name": "David Kristal",
+      "company": "Augeo",
+      "role": "Founder, CEO & Co-Chairman",
+      "location": "St. Paul, MN",
+      "warmth": "Cold executive — intro via People, not a first ping",
+      "status": "Not Contacted",
+      "profileUrl": "https://www.linkedin.com/in/david-kristal-47490a/",
+      "bestAsk": "Do not cold-ask the CEO for an intern seat. If an intro happens, 15-min local-builder / AI-loyalty curiosity — not a job ask.",
+      "notes": "User said “David Crystal”; public spelling is Kristal. Leadership bio: https://www.augeomarketing.com/company/leadership/david-kristal Also Executive Chairman of Kigo.",
+      "nextFollowUp": null
+    },
+    {
+      "id": "crm_augeo_huldah",
+      "name": "Huldah Cooper",
+      "company": "Augeo",
+      "role": "Vice President, People",
+      "location": "St. Paul, MN",
+      "warmth": "Macalester intern pipeline — she is the intern-program owner",
+      "status": "Not Contacted",
+      "profileUrl": "https://www.linkedin.com/in/huldah-c-ab5521184/",
+      "bestAsk": "Short note: Macalester student, local, ask how 2027 intern recruiting runs and who owns Kigo/tech intern seats.",
+      "notes": "User said “Hulda Phillips”. LinkedIn is Huldah C.; site lists Huldah Cooper. Macalester intern Alhareth Ali publicly thanked “Huldah Philips” for the 2024 Augeo/Kigo SWE intern process. Joined Augeo 2021. Bio: https://www.augeomarketing.com/company/leadership/huldah-cooper",
+      "nextFollowUp": null
+    }
+  ],
+  "queue": [
+    {
+      "id": "q_augeo_huldah",
+      "rank": 1,
+      "type": "Outreach",
+      "whoWhat": "Huldah Cooper · Augeo",
+      "why": "VP People; Macalester intern pipeline",
+      "nextStep": "Draft 15-min intern-cycle note. Do not mark sent until you actually send.",
+      "link": "https://www.linkedin.com/in/huldah-c-ab5521184/",
+      "due": "NEXT",
+      "done": false
+    },
+    {
+      "id": "q_augeo_deven",
+      "rank": 2,
+      "type": "Prep",
+      "whoWhat": "Deven · Augeo",
+      "why": "Identity not verified",
+      "nextStep": "Find last name + LinkedIn. Then add URL here.",
+      "link": "",
+      "due": "NEXT",
+      "done": false
+    }
+  ]
+}
