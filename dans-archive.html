@@ -216,7 +216,7 @@
     <p class="lede" style="margin-top:22px;">
       Or ask Jesse. Same call as the resume workflow. He opens the exact page.
     </p>
-    <a class="lb-visit" href="https://mindcraft-93858.web.app/desk-os/workflows/archive/?v=a2" style="margin-top:10px;width:fit-content;">Ask Jesse on the archive →</a>
+    <a class="lb-visit" href="https://mindcraft-93858.web.app/desk-os/workflows/archive/?v=a3" style="margin-top:10px;width:fit-content;">Ask Jesse on the archive →</a>
   </section>
 
   <div class="ask-bar">
@@ -305,7 +305,7 @@
   const askCountEl = document.getElementById('askCount');
   const statRowEl = document.getElementById('statRow');
 
-  fetch('data/dansArchive.json')
+  fetch('data/dansArchive.json?v=c1')
     .then(r => r.json())
     .then(data => {
       ALL = data.books.map((b, i) => Object.assign({}, b, { category: categoryFor(b.subject), id: i }));
@@ -364,7 +364,7 @@
       const big = i % 11 === 0 ? ' big' : '';
       const color = swatchFor(b.title);
       const art = b.cover
-        ? `<img class="cover-art" src="${escapeHtml(b.cover)}" alt="">`
+        ? `<img class="cover-art" src="${escapeHtml(b.cover)}" alt="${escapeHtml(b.title)}">`
         : `<div class="swatch" style="background:${color}">${initials(b.title)}</div>`;
       return `
         <div class="frame${big}" data-id="${b.id}" tabindex="0" role="button" aria-label="Open ${escapeHtml(b.title)}">
@@ -427,7 +427,7 @@
     lbDesc.textContent = b.description;
     lbStats.textContent = b.stats || '';
     lbVisit.href = b.url;
-    document.getElementById('lbAsk').href = 'https://mindcraft-93858.web.app/desk-os/workflows/archive/?v=a2&q=' + encodeURIComponent(b.title);
+    document.getElementById('lbAsk').href = 'https://mindcraft-93858.web.app/desk-os/workflows/archive/?v=a3&q=' + encodeURIComponent(b.title);
     lbCounter.textContent = `${lbIndex + 1} of ${filtered.length}`;
     lbPrev.disabled = lbIndex <= 0;
     lbNext.disabled = lbIndex >= filtered.length - 1;

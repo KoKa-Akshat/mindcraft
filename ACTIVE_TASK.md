@@ -6,10 +6,10 @@
 
 ## Archive RAG · Jesse on Dan’s books (2026-08-14)
 
-Try: **https://mindcraft-93858.web.app/desk-os/workflows/archive/?v=a2**  
+Try: **https://mindcraft-93858.web.app/desk-os/workflows/archive/?v=a3**  
 Catalogue covers: **https://joinmindcraft.com/dans-archive.html** (after CI)
 
-- 16 generated covers in `img/dans-covers/` + proto `workflows/archive/covers/`
+- **113 unique covers** — official art from each book site when it exists (`img/cover.png`), series plate for the rest. Refresh: `python3 scripts/fetch_dans_covers.py`
 - Same call as resume (hold, 5s beat, Samantha/Ava). Page box is opaque cream.
 - Agent: `POST https://mindcraft-webhook.vercel.app/api/archive-rag` + on-device `chunks.json` (chapter excerpts + 22 live MicroSim URLs)
 - Study plan: Jesse asks time (15 / 45 / 2h / week) then interest, then lays story-boxes (mustard/teal/magenta/olive/lavender/forest/lime)

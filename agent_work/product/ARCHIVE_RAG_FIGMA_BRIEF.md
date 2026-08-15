@@ -2,7 +2,7 @@
 
 **Product:** The Desk by MindCraft  
 **Surface:** Open Learning Archive agent (Jesse, voice-first, exact-page fetch)  
-**Try:** https://mindcraft-93858.web.app/desk-os/workflows/archive/?v=a2  
+**Try:** https://mindcraft-93858.web.app/desk-os/workflows/archive/?v=a3  
 **Catalogue:** https://joinmindcraft.com/dans-archive.html  
 **Canon:** `BRAND_BOOK.md` · resume glass tokens in `RESUME_AGENT_FIGMA_BRIEF.md`
 
@@ -65,8 +65,6 @@ Client also loads `chunks.json` and retrieves locally if the webhook is stale.
 
 ---
 
-## Covers (first shelf)
+## Covers (all 113)
 
-Generated as a series: cream / forest / one lime accent, photographed as real hardcovers.
-
-`img/dans-covers/*.jpg` — also copied into the proto at `workflows/archive/covers/`.
+Each book has its own cover at `img/dans-covers/{slug}.jpg` (copied to `workflows/archive/covers/`). Prefer the official `img/cover.png` from the book site. Logos and missing art get a cream/forest series plate. Refresh with `python3 scripts/fetch_dans_covers.py`.
