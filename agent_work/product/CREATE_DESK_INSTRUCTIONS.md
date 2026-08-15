@@ -1,18 +1,40 @@
 # The Desk · Create / Work canvas — crystal-clear instructions
 
 **Status:** spec only. Do not invent extra pages. Do not open Flows as a new route.  
-**Names:** the agent is **Jesse** everywhere. Never Jack. Never Jill.  
+**Names:** the agent is **Jesse** everywhere. Never Jack. Never Jill. (The PDF still says Jack. Replace it.)  
 **Voice:** full-duplex conversation. No hold-to-talk. No press-to-talk. Talk like a ChatGPT voice session: you speak, Jesse answers, work happens in the background.  
 **Transcription:** the existing Otter-style live transcript (“oatmeal”) is the notes rail.  
-**Source of truth for box sizes:** `Presentation Screen.pdf` **page 4** = default desk. **Page 5** = desk after a right-hand tab opens.
+**Do not touch** `FieldDeskView` (Claude’s iOS lane). This spec is for the web Desk / Create canvas (`desk.html` / `agent_work/product/desk_os` / studio Create board).
 
-Do not touch `FieldDeskView` (Claude’s lane). This spec is for the web Desk / Create canvas (`desk.html` / `agent_work/product/desk_os` / studio Create board).
+---
+
+## Source of truth
+
+The attached Canva file is in the repo:
+
+| File | What it is |
+|---|---|
+| `agent_work/product/presentation_screen/Presentation_Screen.pdf` | 5-page landscape Canva, **1440×810**, author Akshat Koirala |
+| `agent_work/product/presentation_screen/page-1.png` … `page-5.png` | 2× renders (**2880×1620**). Divide by 2 to get artboard px. |
+| `agent_work/product/presentation_screen/MEASUREMENTS.json` | Machine-readable boxes below |
+
+**Which page is which**
+
+| PDF page | Screen |
+|---|---|
+| **1** | Create · Presentation (Jesse rail idle) |
+| **2** | Create · Presentation (call live: Transcription + Storyboards) |
+| **3** | Create · GDoc (same chrome as page 1, center labeled GDOC) |
+| **4** | **Work canvas default** — five photo tiles + one bottom pill |
+| **5** | **Work canvas + right rail** — tiles shrink and slide left; Memo (or Flows / Jesse) appears |
+
+All boxes below are in **1440×810** artboard pixels. Implement as **percentages of the iPad page**, not as a second website.
 
 ---
 
 ## 0. How the product is supposed to feel
 
-A student on a bus opens The Desk and makes a real presentation, GDoc, or memo with Jesse in the room. The canvas is one iPad page. Things **slide and shrink**. Nothing opens “somewhere below the fold.” Nothing is a new website.
+A student on a bus opens The Desk and makes a real presentation, GDoc, or memo with Jesse in the room. The canvas is **one iPad page**. Things **slide and shrink**. Nothing opens “somewhere below the fold.” Nothing is a new website.
 
 ---
 
@@ -48,104 +70,137 @@ This landing stays.
 
 ## 2. Work canvas — the iPad page (PDF page 4)
 
-Clicking **Desk** opens **one** landscape page. Treat page 4 as a measured layout, not a mood board.
+Clicking **Desk** opens **one** landscape page. White dotted-grid desk. Five photo cards + one bottom pill. Treat page 4 as a **measured layout**, not a mood board.
 
-### 2.1 Default tiles (exact positions and sizes)
+### 2.1 Default tiles (measured)
 
-These five tiles sit on the page at the **page-4 sizes**. If a service is not connected, show the **same tile** with a placeholder sign (empty / “Connect”), never a missing hole.
+Labels sit **above** each card, bold black sans, left-aligned to the card.
 
-| Tile | Required | If not connected |
+If a service is not connected, show the **same box** with a placeholder (“Connect”), never a missing hole.
+
+| Tile | Box (x0,y0)–(x1,y1) | Size | Role |
+|---|---|---|---|
+| **Binder** (center hero) | (492, 61)–(997, 629) | **505×568** | Tall portrait. Click **opens / pulls the binder down on this page**. Must not sit dead. |
+| **Intel** (top left) | (81, 118)–(457, 345) | **376×227** | Compact landscape. **Not** a wide horizontal strip. |
+| **Moodle** (bottom left) | (115, 378)–(430, 600) | **315×222** | Landscape under Intel. |
+| **Email Summaries** (top right) | (1033, 107)–(1414, 319) | **381×212** | Landscape. |
+| **GCal** (bottom right) | (1032, 343)–(1425, 629) | **392×286** | Taller than Email. Bottom aligns with Binder. |
+
+**Forbidden:** inventing a new Intel design that is “ugly and too horizontally long.” Match **376×227**.
+
+Rounded corners + light drop shadow, like physical cards on a desk.
+
+### 2.2 Bottom dock — one pill, two fillings
+
+Every PDF page draws the **same charcoal pill**. Use that **size and position** everywhere:
+
+| | Box | Size |
 |---|---|---|
-| **Intel** | Yes. Compact card. **Not** a wide horizontal strip. Height and width match page 4. | Placeholder sign |
-| **Binder** | Yes. Same size as page 4. Clicking Binder **pulls the binder down / open on this page**. It must not stay glued as a dead box. | Placeholder |
-| **Email summaries** | Yes. Same size as page 4. | Placeholder |
-| **Moodle** | Yes. Same size as page 4. | Placeholder |
-| **GCal** | Yes. Same size as page 4. | Placeholder |
+| Combined dock | (96, 632)–(1417, 728) | **1321×96** |
 
-**Forbidden:** inventing a new Intel design that is “ugly and too horizontally long.” Match the PDF box.
+**Do not ship two bars.** No floating `+`. No second Ask bar above this pill.
 
-### 2.2 Bottom dock (replace the current mess)
+**What goes inside the pill depends on the screen:**
 
-One **combined toolbar** under the tiles. Not two stacked toolbars. Not a random floating `+`.
-
-**Dock, left → right:**
-
-`Binder` · `Calendar` · `Memo` · `Gmail` · `Flows` · search field (merged into this same bar)
+| Screen | Fill the pill with |
+|---|---|
+| **Work canvas** (pages 4–5) | `Binder` · `Calendar` · `Memo` · `Gmail` · `Flows` · search field. The PDF still shows “Ask AI” here because Canva reused the Create dock. **Do not copy that.** AI does not live on the Work canvas. |
+| **Create** (pages 1–3) | paperclip · `Ask AI…` text field · mic · waveform. Voice or type. Transcript = instructions to Jesse. |
 
 Rules:
 
-- **No plus button** on the canvas.
-- Search is **inside** this dock, not a second bar above it.
-- Ask / AI is **not** a second competing toolbar on the Work canvas. AI lives in Create (section 3–4) and in the Jesse rail (section 5).
+- Search is **inside** the Work dock, not a second bar above it.
 - The whole Work page must be **easy to pan / move**. The student can drag the board. Nothing should open off-screen.
 
-### 2.3 Adding something (PDF page 5)
+### 2.3 Adding something (PDF page 5) — the only transition
 
-When the student adds a note, opens a flow, or opens a Create tab:
+When the student opens Memo, Flows, or Jesse from the Work dock:
 
-1. Every page-4 tile **shrinks**.
+1. Every page-4 tile **shrinks to ~85%**.
 2. The whole cluster **slides left**.
-3. A **right-hand tab / rail** appears in the space that opened.
-4. The **same combined dock** stays under the tiles.
+3. A **~200 px right rail** opens.
+4. The **same dock pill** stays at the bottom.
 
-This is the only layout transition on the Work canvas. Reuse it for Memo, Flows, and Jesse.
+Measured page-5 boxes:
+
+| Tile | Box | Size | vs page 4 |
+|---|---|---|---|
+| Binder | (425, 54)–(853, 578) | **428×524** | ~85% wide, shifted left |
+| Intel | (76, 103)–(395, 295) | **319×192** | ~85% |
+| Moodle | (106, 323)–(373, 511) | **267×188** | ~85% |
+| Email Summaries | (884, 93)–(1206, 273) | **322×180** | ~85% |
+| GCal | (884, 295)–(1216, 620) | **332×325** | shifted into the new column |
+| **Memo (right rail)** | (1231, 193)–(1429, 387) | **199×194** | new |
+| Dock | same as page 4 | **1321×96** | does not move |
+
+Reuse this transition for Memo, Flows, and Jesse. Do not invent a second motion.
 
 ---
 
-## 3. Create · Presentation (PDF slides 1–2, Jack → Jesse)
+## 3. Create · Presentation (PDF pages 1–2)
 
 Click **Presentation** on the Work canvas.
 
-**Do not** spawn a slide deck under the fold. **Do not** only open the keyboard. Open the **Create screen**, centered.
+**Do not** spawn a slide deck under the fold. **Do not** only open the keyboard. Open the **Create screen**, centered on the iPad page.
 
-### 3.1 Default Create · Presentation
+### 3.1 Default / Jesse rail idle (page 1)
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                         [slide]                             │
-│                    large, centered                          │
-├───────────────┬─────────────────────────────┬───────────────┤
-│  tools /      │     combined AI bar         │  Jesse rail   │
-│  add slide    │     voice or type           │  (not Jack)   │
-└───────────────┴─────────────────────────────┴───────────────� or type           │  (not Jack)   │
-└───────────────┴─────────────────────────────┴───────────────┘
-```
+| Piece | Box | Size |
+|---|---|---|
+| **Slide** (left) | (96, 53)–(936, 546) | **840×493** |
+| **Jesse rail** (right) | (988, 53)–(1364, 597) | **376×544** |
+| **Phone FAB** (top left) | (0, 8)–(63, 70) | **~63×62** |
+| **Create dock** | (96, 632)–(1417, 728) | **1321×96** |
 
-- Center = the live slide (slide 1, then + slide).
-- Bottom = **one** AI toolbar: type **or** talk. Transcript goes to Jesse as instructions.
-- Left = tools to add / change slides (and later: notes). Not “stickers / music / looks.”
-- Right = **Jesse call box**. One **Call** button. Fluent back-and-forth. No hold-to-talk.
-- Remove the **video placeholder**. That belongs only if we are in a real people-call (section 3.3).
+Jesse rail contents (PDF says Jack — use **Jesse**):
+
+- Face icon
+- Voice bubble / last clip
+- Chat: “Hi Akshat, Jesse here.”
+- Black pill: **Jump on a call with Jesse**
+- Small text: **or continue in chat**
+
+Center = the live slide (slide 1, then + slide).  
+Left tools (when we add them) = add / change slides. **Not** stickers / music / looks.  
+Remove the **empty video placeholder** on solo create. Video is only for friends-on-a-call (section 3.3).
 
 While you talk, Jesse’s words and yours transcribe. The model treats the transcript as **instructions** and edits the slide in the background.
 
-### 3.2 While talking — page-5 shift
+### 3.2 Call live (page 2)
 
-When the call is live:
+The slide stays. Two rails replace the idle Jesse box:
 
-1. The slide **moves left** (same shrink-and-slide as page 5).
-2. AI toolbar **stays**.
-3. A **notes rail** appears (the Otter / “oatmeal” transcript) capturing the conversation into notes.
+| Piece | Box | Size |
+|---|---|---|
+| **Slide** | (30, 74)–(870, 567) | **840×493** |
+| **Transcription** (center) | (898, 103)–(1198, 555) | **~300×452** |
+| **Storyboards** (right) | (1225, 74)–(1421, 555) | **~196×481** |
+| Create dock | same pill | **1321×96** |
+
+Transcription = the Otter / “oatmeal” notes rail.  
+Storyboards = vertical thumbs of slide frames.
 
 ### 3.3 Friends on a call
 
-Same Create screen. Students can hop on a call together, transcribe with the same Otter rail, and work the presentation. Video is for **this** case only, not as an empty placeholder on solo create.
+Same Create screen. Students can hop on a call together, transcribe with the same Otter rail, and work the presentation. Video is for **this** case only.
 
 ---
 
-## 4. Create · GDoc
+## 4. Create · GDoc (PDF page 3)
 
-Click **GDoc**.
+Click **GDoc**. Same chrome as page 1. The center card is labeled **GDOC**.
 
-Same Create screen pattern as Presentation:
+| Piece | Box | Size |
+|---|---|---|
+| **Doc** (left) | (96, 53)–(936, 546) | **840×493** |
+| **Jesse rail** (right) | (988, 53)–(1364, 597) | **376×544** |
+| Phone FAB | same as page 1 | **~63×62** |
+| Create dock | same pill | **1321×96** |
 
-- **Center:** the Google Doc (or our doc surface). Occupies the screen. No mystery scroll-to-nowhere panel.
-- **Bottom:** the same combined AI toolbar (voice or type → transcript → instructions).
-- **Left / floating utilities:** tools that help the doc (not a video placeholder).
-- **Right:** Jesse call box, same as Presentation.
-- Live call → doc shifts left → transcript notes rail appears.
+The doc must be **on the canvas**, not under the fold.  
+If Google is not connected, show the **same layout** with a Connect placeholder in the center.
 
-If Google is not connected, show the **same layout** with a Connect placeholder in the center. Never open the doc off-canvas.
+Live call → same page-2 shift: doc stays left, transcript notes rail appears.
 
 ---
 
@@ -168,14 +223,14 @@ Do **not** navigate to `/workflows` or a new section.
 On the Work canvas, do the **page-5** move:
 
 - Tiles shrink and slide left.
-- The **right rail** (the slot that used to show Binder / Calendar / Memo chrome) now lists **workflows**: Resume, Archive, Apply, Book, … whatever is in the market.
+- The **right rail** now lists **workflows**: Resume, Archive, Apply, Book, … whatever is in the market.
 
 ### 6.2 Click a workflow (example: Resume)
 
 Still no new page.
 
 1. Keep the page-5 left shift.
-2. Open **Jesse’s rail on the right**, same visual language as Presentation slide 1 (the Jesse box).
+2. Open **Jesse’s rail on the right**, same visual language as Presentation page 1.
 3. That rail is the workflow.
 
 **Resume, first time:** Jesse starts a fluent call and walks LinkedIn / Drive setup.  
@@ -200,13 +255,11 @@ If the model API is not wired yet, still ship the **UI**: Call, live transcript,
 
 ---
 
-## 8. Bugs that must die (current Work canvas)
-
-These are acceptance tests, not vibes.
+## 8. Bugs that must die (acceptance tests)
 
 1. **Binder** click opens / pulls Binder on this page. It does not sit there dead.
-2. **Intel** matches page-4 proportions. Not a long ugly strip.
-3. **Ask AI toolbar + the bar above it** become **one** dock (section 2.2).
+2. **Intel** is **376×227**, not a long ugly strip.
+3. **Ask AI toolbar + the bar above it** become **one** dock pill (section 2.2).
 4. **GDoc** opens the Create screen, centered. Not below the fold. Not unreachable.
 5. **Presentation** opens the Create screen, centered. Not “just the keyboard.”
 6. **No random plus** floating on the canvas.

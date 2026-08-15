@@ -4,6 +4,16 @@
 
 ---
 
+## Create / Work canvas spec (2026-08-15)
+
+PDF found and measured. Spec only — do not build until asked.
+
+- Instructions: `agent_work/product/CREATE_DESK_INSTRUCTIONS.md`
+- PDF + page PNGs + boxes: `agent_work/product/presentation_screen/`
+- Draft PR: https://github.com/KoKa-Akshat/mindcraft/pull/12
+- Locks: Jesse not Jack, full-duplex voice, Flows = right rail (not a route), page-4 tile sizes, page-5 shrink-and-slide
+- Do not touch `FieldDeskView`
+
 ## Archive RAG · Jesse on Dan’s books (2026-08-14)
 
 Try: **https://mindcraft-93858.web.app/desk-os/workflows/archive/?v=a3**  
