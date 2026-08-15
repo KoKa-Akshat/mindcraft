@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-15 — Researcher tick: Part CLII Path-conditioned dual blame tests (SAFE-PATHBLAME)
+
+**Tick type:** Researcher (UTC hour 21; hour%6≠0; researcher count since synthesizer v1.19 = 1 → Researcher)  
+**Chapter written:** `chapters/152_path_conditioned_dual_blame_selection_vs_quality.md` (Part CLII)  
+**Claim examined:** Whether higher raw repair/discord on dual (or inherit_sample) vs single (or inherit_solo) is **selection** (harder tickets routed to dual) vs **quality failure** — and what ops law prevents Dual Shame boards from killing good triage.
+
+**Doctrine proposed (provisional):** **SAFE-PATHBLAME** — densifies SAFE-REPAIRSTRAT × SAFE-DUALRATE × SAFE-CAPPLAN (+ TMPTRUST/REVOKE) + Bickel stratification / Berkson–Hernán–Elwert selection / Austin propensity aide / Kane IUA: path×stratum tables before blame; promote-time risk strata; selection_explained vs quality_signal labels — no Dual Shame Score™. Experiment family **PATHBLAME-***.
+
+**Evidence spine (verified citations):** Bickel, Hammel, & O’Connell (1975); Berkson (1946); Hernán, Hernández-Díaz, & Robins (2004); Elwert & Winship (2014); Austin (2011); Kane (2013).
+
+**Claim killed (this tick):** Dual Shame Score™ / unconditioned dual-vs-single quality rankings / Propensity Theater™ brand / hospital case-mix cosplay ACT ads / κ-as-blame-verdict / complete-visual from blame packaging (provisional kill #106 until synthesizer).
+
+**Experiments:** PATHBLAME-1…5 + PATHBLAME-QUAL.
+
+**Next researcher id:** **153** (Contract SME panel seal onboarding & parallel-run gates). Researcher count since v1.19 synthesizer: **2**. Unfinished queue was <3 after 152 → promoted 155–157 stubs into NEXT_LAB.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-15 — Researcher tick: Part CLI Template-trust revoke & sample-dual cadence (SAFE-REVOKE)
 
 **Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch151 never written → prefer Researcher per rotation; researcher count since synthesizer v1.19 = 0 → Researcher)  
