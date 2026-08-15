@@ -3036,9 +3036,26 @@ struct FieldDeskView: View {
                     .tracking(0.8)
                     .foregroundColor(Color(fdHex: "8a8478"))
 
-                Text("Drop Binder, Gmail, Calendar, Notes, Memo, Connect, Intel onto Jesse’s — drag to move.")
+                Text("Drop Binder, Calendar, Memo, Gmail onto Jesse’s — drag to move.")
                     .font(.system(size: 12, weight: .medium, design: .rounded))
                     .foregroundColor(Color(fdHex: "8a8478"))
+
+                // Flows leads the panel now, ahead of the individual desk
+                // cards - real, already-working infrastructure
+                // (WorkflowLibraryView/showWorkflowLibrary, previously only
+                // reachable from the classic work desk's own Workflows
+                // button), just given a second, more obvious entry point
+                // here.
+                addMenuRow(
+                    title: "Flows",
+                    subtitle: "Resume, Archive, Book, Apply Today",
+                    system: "bolt.fill",
+                    enabled: true
+                ) {
+                    showAddPanel = false
+                    showWorkflowLibrary = true
+                }
+                .accessibilityIdentifier("fieldDeskAddFlows")
 
                 addMenuRow(
                     title: "Binder",
@@ -3051,16 +3068,6 @@ struct FieldDeskView: View {
                 .accessibilityIdentifier("fieldDeskAddBinder")
 
                 addMenuRow(
-                    title: "Gmail",
-                    subtitle: placedWidgets.contains(.gmail) ? "Already on desk" : "Inbox card",
-                    system: "envelope.fill",
-                    enabled: true
-                ) {
-                    placeWidget(.gmail)
-                }
-                .accessibilityIdentifier("fieldDeskAddGmail")
-
-                addMenuRow(
                     title: "Calendar",
                     subtitle: placedWidgets.contains(.calendar) ? "Already on desk" : "Your week card",
                     system: "calendar",
@@ -3071,16 +3078,6 @@ struct FieldDeskView: View {
                 .accessibilityIdentifier("fieldDeskAddCalendar")
 
                 addMenuRow(
-                    title: "Transcribe Notes",
-                    subtitle: placedWidgets.contains(.notes) ? "Already on desk" : "Live transcribe card",
-                    system: "waveform",
-                    enabled: true
-                ) {
-                    placeWidget(.notes)
-                }
-                .accessibilityIdentifier("fieldDeskAddNotes")
-
-                addMenuRow(
                     title: "Memo",
                     subtitle: placedWidgets.contains(.memo) ? "Already on desk" : "Quick note card",
                     system: "note.text",
@@ -3089,6 +3086,26 @@ struct FieldDeskView: View {
                     placeWidget(.memo)
                 }
                 .accessibilityIdentifier("fieldDeskAddMemo")
+
+                addMenuRow(
+                    title: "Gmail",
+                    subtitle: placedWidgets.contains(.gmail) ? "Already on desk" : "Inbox card",
+                    system: "envelope.fill",
+                    enabled: true
+                ) {
+                    placeWidget(.gmail)
+                }
+                .accessibilityIdentifier("fieldDeskAddGmail")
+
+                addMenuRow(
+                    title: "Transcribe Notes",
+                    subtitle: placedWidgets.contains(.notes) ? "Already on desk" : "Live transcribe card",
+                    system: "waveform",
+                    enabled: true
+                ) {
+                    placeWidget(.notes)
+                }
+                .accessibilityIdentifier("fieldDeskAddNotes")
 
                 addMenuRow(
                     title: "Gdoc",

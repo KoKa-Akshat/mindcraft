@@ -12,16 +12,23 @@ struct DeskWhiteboardCard: View {
         var points: [CGPoint]
     }
 
+    private enum Mode { case type, draw }
+
     @State private var title = "Untitled board"
     @State private var note = ""
     @State private var strokes: [Stroke] = []
     @State private var live: Stroke?
     @State private var tool: Tool = .pen
-    /// Defaults to finger-allowed - this card is "type + finger scribble" by
-    /// design (see the type doc comment above), unlike QuestionView's canvas
-    /// which defaults to the stricter .pencilOnly. The toggle exists so a
-    /// student holding an Apple Pencil can opt into real palm rejection
-    /// instead of a resting palm adding stray marks.
+    @State private var mode: Mode = .type
+    /// Starts finger-allowed (this card is "type + finger scribble" by
+    /// design), but the FIRST real Apple Pencil touch (`touch.type == .pencil`,
+    /// threaded up from StrokeTouchCaptureView's onBegan) flips this to
+    /// .pencilOnly for the rest of the card's life and stays there - a
+    /// student writing with a Pencil got their resting palm registered as
+    /// stray marks by default, and needed to already know about the manual
+    /// toggle below to fix it. Once real pencil use is seen, assume it's the
+    /// input method being used from then on, same as how Notes/GoodNotes
+    /// behave. The manual toggle still exists for switching back.
     @State private var palmRejectionMode: PalmRejectionMode = .anyInput
 
     var body: some View {
@@ -31,39 +38,59 @@ struct DeskWhiteboardCard: View {
                     .font(.system(size: 13, weight: .heavy, design: .rounded))
                     .foregroundColor(Color(boardHex: "143a2e"))
                 Spacer(minLength: 0)
-                Button {
-                    palmRejectionMode = palmRejectionMode == .pencilOnly ? .anyInput : .pencilOnly
-                } label: {
-                    Image(systemName: palmRejectionMode == .pencilOnly ? "pencil.tip.crop.circle.badge.plus" : "hand.draw")
-                        .font(.system(size: 11, weight: .bold))
-                        .foregroundColor(Color(boardHex: "143a2e").opacity(0.65))
-                        .frame(width: 28, height: 28)
-                        .background(Circle().fill(Color(boardHex: "f3f0ea")))
+
+                Picker("Mode", selection: $mode) {
+                    Text("Type").tag(Mode.type)
+                    Text("Draw").tag(Mode.draw)
                 }
-                .buttonStyle(.plain)
-                .accessibilityIdentifier("deskWhiteboardPalmToggle")
-                .accessibilityLabel(palmRejectionMode == .pencilOnly ? "Pencil only" : "Pencil + finger")
-                ForEach(Tool.allCases, id: \.self) { t in
-                    Button { tool = t } label: {
-                        Image(systemName: icon(for: t))
+                .pickerStyle(.segmented)
+                .frame(width: 120)
+                .accessibilityIdentifier("deskWhiteboardModePicker")
+
+                if mode == .draw {
+                    Button {
+                        palmRejectionMode = palmRejectionMode == .pencilOnly ? .anyInput : .pencilOnly
+                    } label: {
+                        Image(systemName: palmRejectionMode == .pencilOnly ? "pencil.tip.crop.circle.badge.plus" : "hand.draw")
                             .font(.system(size: 11, weight: .bold))
-                            .foregroundColor(tool == t ? Color(boardHex: "0c1207") : Color(boardHex: "143a2e").opacity(0.55))
+                            .foregroundColor(Color(boardHex: "143a2e").opacity(0.65))
                             .frame(width: 28, height: 28)
-                            .background(
-                                Circle().fill(tool == t ? Color(boardHex: "c4f547") : Color(boardHex: "f3f0ea"))
-                            )
+                            .background(Circle().fill(Color(boardHex: "f3f0ea")))
                     }
                     .buttonStyle(.plain)
+                    .accessibilityIdentifier("deskWhiteboardPalmToggle")
+                    .accessibilityLabel(palmRejectionMode == .pencilOnly ? "Pencil only" : "Pencil + finger")
+                    ForEach(Tool.allCases, id: \.self) { t in
+                        Button { tool = t } label: {
+                            Image(systemName: icon(for: t))
+                                .font(.system(size: 11, weight: .bold))
+                                .foregroundColor(tool == t ? Color(boardHex: "0c1207") : Color(boardHex: "143a2e").opacity(0.55))
+                                .frame(width: 28, height: 28)
+                                .background(
+                                    Circle().fill(tool == t ? Color(boardHex: "c4f547") : Color(boardHex: "f3f0ea"))
+                                )
+                        }
+                        .buttonStyle(.plain)
+                    }
                 }
             }
 
-            TextEditor(text: $note)
-                .font(.system(size: 12, weight: .semibold, design: .rounded))
-                .scrollContentBackground(.hidden)
-                .frame(minHeight: 36, maxHeight: 54)
-                .padding(8)
-                .background(RoundedRectangle(cornerRadius: 10).fill(Color(boardHex: "f7f5f0")))
-
+            if mode == .type {
+                // Full-size real typing surface - previously this was a
+                // 36-54pt sliver squeezed above the drawing canvas, easy to
+                // miss and too small to actually write in like a real doc.
+                TextEditor(text: $note)
+                    .font(.system(size: 15, weight: .medium, design: .rounded))
+                    .scrollContentBackground(.hidden)
+                    .padding(10)
+                    .background(RoundedRectangle(cornerRadius: 12).fill(Color(boardHex: "f7f5f0")))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .strokeBorder(Color(boardHex: "143a2e").opacity(0.10), lineWidth: 1)
+                    )
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .accessibilityIdentifier("deskWhiteboardTypeEditor")
+            } else {
             ZStack {
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
                     .fill(Color(boardHex: "fbfaf7"))
@@ -83,7 +110,10 @@ struct DeskWhiteboardCard: View {
                     // touch-type-aware capture view instead.
                     StrokeTouchCaptureView(
                         palmRejectionMode: palmRejectionMode,
-                        onBegan: { point in
+                        onBegan: { point, isPencil in
+                            if isPencil && palmRejectionMode != .pencilOnly {
+                                palmRejectionMode = .pencilOnly
+                            }
                             live = Stroke(tool: tool, points: [point])
                         },
                         onMoved: { point in
@@ -126,6 +156,7 @@ struct DeskWhiteboardCard: View {
                     .allowsHitTesting(false)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
         }
         .padding(12)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
@@ -178,7 +209,7 @@ struct DeskWhiteboardCard: View {
 /// itself unaware this is UIKit underneath.
 private struct StrokeTouchCaptureView: UIViewRepresentable {
     var palmRejectionMode: PalmRejectionMode
-    var onBegan: (CGPoint) -> Void
+    var onBegan: (CGPoint, Bool) -> Void
     var onMoved: (CGPoint) -> Void
     var onEnded: () -> Void
 
@@ -202,7 +233,7 @@ private struct StrokeTouchCaptureView: UIViewRepresentable {
 
     final class TouchView: UIView {
         var palmRejectionMode: PalmRejectionMode = .anyInput
-        var onBegan: ((CGPoint) -> Void)?
+        var onBegan: ((CGPoint, Bool) -> Void)?
         var onMoved: ((CGPoint) -> Void)?
         var onEnded: (() -> Void)?
         private weak var activeTouch: UITouch?
@@ -211,7 +242,7 @@ private struct StrokeTouchCaptureView: UIViewRepresentable {
             guard activeTouch == nil, let touch = touches.first else { return }
             if palmRejectionMode == .pencilOnly && touch.type != .pencil { return }
             activeTouch = touch
-            onBegan?(touch.location(in: self))
+            onBegan?(touch.location(in: self), touch.type == .pencil)
         }
 
         override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
