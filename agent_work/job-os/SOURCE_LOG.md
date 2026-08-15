@@ -1,12 +1,10 @@
 # Job OS Source_Log
 
-## 2026-08-15 — Augeo CRM add
+## 2026-08-15 — LinkedIn graph + Augeo job card
 
-- Intake: add Deven, David Crystal, Hulda Phillips as Augeo contacts. Not applied.
-- Resolved:
-  - **David Kristal** (user: Crystal) — Founder, CEO & Co-Chairman. LinkedIn `david-kristal-47490a`.
-  - **Huldah Cooper** (user: Hulda Phillips) — VP People. LinkedIn `huldah-c-ab5521184`. Macalester intern Alhareth Ali publicly thanked “Huldah Philips” for the 2024 Kigo SWE intern process.
-  - **Deven** — first name only. Not on Augeo leadership page. Left as verify-first, no invented last name.
-- Pipeline: Augeo row = Network First / Not Started / Verify posting. No intern listing live on Paylocity 2026-08-15. Did not mark Applied.
-- Store: `agent_work/job-os/owner-state.json` (cloud operator CRM). Excel Command Center not on this VM. iOS `macalesterApplySeed.json` left empty on purpose so students never get this tracker.
-- Blocker: Deven identity.
+- Why Hareth was missing: Connect LinkedIn only stored a profile URL. No graph, no company match, no past-employer alias. Augeo CRM was typed names only.
+- Fix: LinkedIn graph (CSV / paste) + alias family Augeo↔Kigo + job card shows every field and the match rule.
+- **Alhareth Ali (Hareth)** — 1st degree (you said so). Past: Kigo / Augeo 2024 intern. [linkedin.com/in/alharethali](https://www.linkedin.com/in/alharethali)
+- **Devan Grose** — the “Deven” row. Hareth’s mentor. Staff SWE Kigo 2023–2024. [linkedin.com/in/devangrose](https://www.linkedin.com/in/devangrose)
+- Huldah Cooper + David Kristal unchanged. Nothing marked Applied.
+- iOS: ••• → Load Augeo design example to see Hareth on the job. Or import Connections.csv and add `past:Kigo,Augeo` on Hareth’s line (LinkedIn’s CSV is current-company only).

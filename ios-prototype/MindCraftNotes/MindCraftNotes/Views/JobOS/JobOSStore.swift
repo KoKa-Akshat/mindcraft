@@ -8,10 +8,12 @@ import Combine
 final class JobOSStore: ObservableObject {
     /// v2 drops the old personal campus seed that was auto-loaded into v1.
     private static let stateKey = "deskOs.jobOs.state.v2"
+    private static let graphKey = "deskOs.jobOs.linkedinGraph.v1"
     private static let legacyStateKey = "deskOs.jobOs.state"
     private static let uiTesting = ProcessInfo.processInfo.arguments.contains("--ui-testing-in-memory")
 
     @Published private(set) var state: JobOSState
+    @Published private(set) var graph: JobOSLinkedInGraph
     @Published private(set) var loadError: String?
     @Published var toast: String?
 
@@ -30,6 +32,7 @@ final class JobOSStore: ObservableObject {
             state = Self.emptyStarter()
             loadError = "macalesterApplySeed.json missing from bundle"
         }
+        graph = Self.loadGraph() ?? .empty
     }
 
     /// Board unlocks after resume upload + LinkedIn connect.
@@ -161,6 +164,7 @@ final class JobOSStore: ObservableObject {
         state.assets[i].detail = url
         state.assets[i].markedAt = JobOSTime.isoNow()
         log("linkedin", "Connected · \(url)")
+        graph.profileUrl = url
         save()
         flash("LinkedIn connected")
     }
@@ -247,13 +251,17 @@ final class JobOSStore: ObservableObject {
         lane: String,
         fit: Int,
         url: String,
-        why: String
+        why: String,
+        deadline: String? = nil,
+        careerUrl: String? = nil
     ) {
         let c = company.trimmingCharacters(in: .whitespacesAndNewlines)
         let r = role.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !c.isEmpty, !r.isEmpty else { flash("Company + role required"); return }
         let nextRank = (state.roles.map(\.rank).max() ?? 0) + 1
-        let item = JobOSRole(
+        let due = deadline?.trimmingCharacters(in: .whitespacesAndNewlines)
+        let careers = careerUrl?.trimmingCharacters(in: .whitespacesAndNewlines)
+        var item = JobOSRole(
             id: "role_\(UUID().uuidString.prefix(8))",
             rank: nextRank,
             actionLane: lane,
@@ -262,24 +270,39 @@ final class JobOSStore: ObservableObject {
             location: location,
             fitScore: fit,
             eligibility: fit >= 88 ? "Strong" : (fit >= 80 ? "Plausible" : "Verify Requirements"),
-            deadline: nil,
+            deadline: (due?.isEmpty == false) ? due : nil,
             applied: false,
             dateApplied: nil,
             contacts: "",
             processStatus: "Not Started",
             nextAction: "Open listing and confirm requirements.",
             roleUrl: url,
-            careerUrl: url,
+            careerUrl: (careers?.isEmpty == false) ? (careers ?? url) : url,
             why: why.isEmpty ? "Added from Macalester Job OS." : why,
             resumeReady: state.assets.contains { $0.kind == "resume" && $0.status == "ready" },
             coverLetterReady: false,
             liveStatus: url.isEmpty ? "Verify posting" : "Live signal",
             lastChecked: JobOSTime.dayStamp()
         )
+        item.contacts = JobOSReachOutBuilder.namesLine(reachOuts(for: item))
         state.roles.append(item)
-        log("add_role", "\(c) · \(r)")
+        log("add_role", "\(c) · \(r) · reach-out \(item.contacts.isEmpty ? "none" : item.contacts)")
         save()
-        flash("Added · \(c)")
+        flash(item.contacts.isEmpty ? "Added · \(c)" : "Added · \(c) · \(item.contacts)")
+    }
+
+    func reachOuts(for role: JobOSRole) -> [JobOSReachOut] {
+        JobOSReachOutBuilder.build(role: role, graph: graph, crm: state.contacts)
+    }
+
+    func role(id: String) -> JobOSRole? {
+        state.roles.first { $0.id == id }
+    }
+
+    func refreshReachOutLabels() {
+        for i in state.roles.indices {
+            state.roles[i].contacts = JobOSReachOutBuilder.namesLine(reachOuts(for: state.roles[i]))
+        }
     }
 
     func addContact(name: String, company: String, profileUrl: String, bestAsk: String) {
@@ -318,6 +341,7 @@ final class JobOSStore: ObservableObject {
             if !incoming.bestAsk.isEmpty { row.bestAsk = incoming.bestAsk }
             if !incoming.notes.isEmpty { row.notes = incoming.notes }
             state.contacts[i] = row
+            refreshReachOutLabels()
             log("crm", "Updated · \(n) · \(company)")
             save()
             flash("Updated contact · \(n)")
@@ -337,10 +361,159 @@ final class JobOSStore: ObservableObject {
             nextFollowUp: incoming.nextFollowUp
         )
         state.contacts.insert(item, at: 0)
+        refreshReachOutLabels()
         log("add_contact", "\(n) · \(company)")
         save()
         flash("Contact added · \(n)")
         return true
+    }
+
+    func importLinkedInConnections(text: String, source: String) {
+        let parsed = JobOSLinkedInImport.parseCSV(text)
+        guard !parsed.isEmpty else {
+            flash("No people found. Use Connections.csv or Name | Company | Title | URL | past:Augeo")
+            return
+        }
+        var added = 0
+        for person in parsed {
+            let exists = graph.people.contains {
+                (!$0.profileUrl.isEmpty && $0.profileUrl.caseInsensitiveCompare(person.profileUrl) == .orderedSame)
+                    || $0.displayName.localizedCaseInsensitiveCompare(person.displayName) == .orderedSame
+            }
+            if exists {
+                if let i = graph.people.firstIndex(where: {
+                    $0.displayName.localizedCaseInsensitiveCompare(person.displayName) == .orderedSame
+                }) {
+                    var row = graph.people[i]
+                    if !person.currentCompany.isEmpty { row.currentCompany = person.currentCompany }
+                    if !person.currentTitle.isEmpty { row.currentTitle = person.currentTitle }
+                    if !person.profileUrl.isEmpty { row.profileUrl = person.profileUrl }
+                    if !person.pastCompanies.isEmpty { row.pastCompanies = person.pastCompanies }
+                    if !person.school.isEmpty { row.school = person.school }
+                    graph.people[i] = row
+                }
+                continue
+            }
+            graph.people.insert(person, at: 0)
+            added += 1
+        }
+        graph.importedAt = JobOSTime.isoNow()
+        graph.source = source
+        refreshReachOutLabels()
+        log("linkedin_graph", "Imported \(parsed.count) · new \(added) · source \(source)")
+        save()
+        flash("LinkedIn graph · \(graph.people.count) people")
+    }
+
+    func upsertLinkedInPerson(_ person: JobOSLinkedInPerson) {
+        if let i = graph.people.firstIndex(where: {
+            $0.displayName.localizedCaseInsensitiveCompare(person.displayName) == .orderedSame
+        }) {
+            graph.people[i] = person
+        } else {
+            graph.people.insert(person, at: 0)
+        }
+        refreshReachOutLabels()
+        save()
+    }
+
+    /// Explicit design load — not a silent seed. Does not mark Applied.
+    func loadAugeoDesignExample() {
+        markResumeUploaded(fileName: "Design example resume")
+        connectLinkedIn(profileUrl: "https://www.linkedin.com/in/")
+        upsertLinkedInPerson(
+            JobOSLinkedInPerson(
+                id: "li_alhareth",
+                displayName: "Alhareth Ali",
+                firstName: "Alhareth",
+                lastName: "Ali",
+                profileUrl: "https://www.linkedin.com/in/alharethali",
+                currentCompany: "Chamfr",
+                currentTitle: "AI/ML Intern",
+                pastCompanies: ["Kigo", "Augeo"],
+                school: "Macalester College",
+                connectedOn: nil,
+                degree: "1st",
+                notes: "You said Hareth is a 1st-degree connection. 2024 Augeo internship, SWE on Kigo. LinkedIn export would only show Chamfr unless past: is added."
+            )
+        )
+        upsertContact(
+            JobOSContact(
+                id: "crm_augeo_hareth",
+                name: "Alhareth Ali",
+                company: "Augeo",
+                role: "Software Engineer intern, Kigo (2024)",
+                location: "St. Paul, MN",
+                warmth: "LinkedIn 1st · Macalester · interned on Kigo",
+                status: "Not Contacted",
+                profileUrl: "https://www.linkedin.com/in/alharethali",
+                bestAsk: "How did the 2024 intern cycle actually run, and who should I write first?",
+                notes: "Also goes by Hareth. Thanked Huldah Philips and Devan Grose publicly.",
+                nextFollowUp: nil
+            )
+        )
+        upsertContact(
+            JobOSContact(
+                id: "crm_augeo_devan",
+                name: "Devan Grose",
+                company: "Kigo",
+                role: "Staff Software Engineer (Kigo, 2023–2024)",
+                location: "Seattle / St. Paul",
+                warmth: "Named as Deven — Hareth’s intern mentor",
+                status: "Not Contacted",
+                profileUrl: "https://www.linkedin.com/in/devangrose",
+                bestAsk: "If you still talk to the Kigo/Augeo eng team, who owns intern hiring?",
+                notes: "User said Deven. Public spelling Devan Grose. Mentored Alhareth Ali. Left Kigo Dec 2024.",
+                nextFollowUp: nil
+            )
+        )
+        upsertContact(
+            JobOSContact(
+                id: "crm_augeo_huldah",
+                name: "Huldah Cooper",
+                company: "Augeo",
+                role: "Vice President, People",
+                location: "St. Paul, MN",
+                warmth: "Macalester intern pipeline — intern-program owner",
+                status: "Not Contacted",
+                profileUrl: "https://www.linkedin.com/in/huldah-c-ab5521184/",
+                bestAsk: "How 2027 intern recruiting runs, and who owns Kigo/tech intern seats.",
+                notes: "User said Hulda Phillips. LinkedIn Huldah C. Site: Huldah Cooper.",
+                nextFollowUp: nil
+            )
+        )
+        upsertContact(
+            JobOSContact(
+                id: "crm_augeo_kristal",
+                name: "David Kristal",
+                company: "Augeo",
+                role: "Founder, CEO & Co-Chairman",
+                location: "St. Paul, MN",
+                warmth: "Cold executive — intro via People, not a first ping",
+                status: "Not Contacted",
+                profileUrl: "https://www.linkedin.com/in/david-kristal-47490a/",
+                bestAsk: "Do not cold-ask the CEO for an intern seat.",
+                notes: "User said David Crystal. Public spelling Kristal.",
+                nextFollowUp: nil
+            )
+        )
+        if !state.roles.contains(where: { $0.company.localizedCaseInsensitiveCompare("Augeo") == .orderedSame }) {
+            addRole(
+                company: "Augeo",
+                role: "Summer intern / local tech (verify cycle)",
+                location: "St. Paul, MN",
+                lane: "Network First",
+                fit: 82,
+                url: "",
+                why: "St. Paul loyalty/engagement shop. Kigo is an Augeo company — Hareth interned there. No intern listing live on 2026-08-15.",
+                deadline: nil,
+                careerUrl: "https://recruiting.paylocity.com/recruiting/jobs/All/bbb7ef82-fe4e-45d2-acc1-c18505da0567/Augeo-Affinity-Marketing"
+            )
+        }
+        refreshReachOutLabels()
+        log("design_example", "Loaded Augeo example. Not Applied. Hareth is 1st-degree via Kigo/Augeo alias + past employer.")
+        save()
+        flash("Augeo example loaded · Hareth should appear on the job")
     }
 
     /// Daily Sync stub - agent not mounted yet. Logs note + rebuilds a
@@ -456,7 +629,8 @@ final class JobOSStore: ObservableObject {
     func clearBoard() {
         let fresh = Self.loadBundleSeed() ?? Self.emptyStarter()
         state = fresh
-        log("reset", "Cleared Apply today board")
+        graph = .empty
+        log("reset", "Cleared Apply today board + LinkedIn graph")
         save()
         flash("Board cleared · upload to start")
     }
@@ -488,6 +662,7 @@ final class JobOSStore: ObservableObject {
 
     private func save() {
         Self.persist(state)
+        Self.persistGraph(graph)
         // Firestore stub - agent mount will push users/{uid}/jobOS/state.
         // Intentionally no network write yet (honest local-first).
     }
@@ -521,10 +696,22 @@ final class JobOSStore: ObservableObject {
         UserDefaults.standard.set(data, forKey: stateKey)
     }
 
+    private static func persistGraph(_ graph: JobOSLinkedInGraph) {
+        guard !uiTesting else { return }
+        guard let data = try? JSONEncoder().encode(graph) else { return }
+        UserDefaults.standard.set(data, forKey: graphKey)
+    }
+
     private static func loadSaved() -> JobOSState? {
         guard !uiTesting else { return nil }
         guard let data = UserDefaults.standard.data(forKey: stateKey) else { return nil }
         return try? JSONDecoder().decode(JobOSState.self, from: data)
+    }
+
+    private static func loadGraph() -> JobOSLinkedInGraph? {
+        guard !uiTesting else { return nil }
+        guard let data = UserDefaults.standard.data(forKey: graphKey) else { return nil }
+        return try? JSONDecoder().decode(JobOSLinkedInGraph.self, from: data)
     }
 
     private static func loadBundleSeed() -> JobOSState? {

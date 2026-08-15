@@ -82,7 +82,18 @@ struct JobOSShellView: View {
             }
         }
         .sheet(item: $openRole) { role in
-            roleDetail(role).presentationDetents([.medium, .large])
+            JobOSRoleDetailView(
+                store: store,
+                roleId: role.id,
+                onClose: { openRole = nil },
+                onLogApplied: {
+                    openRole = nil
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        confirmApplyId = role.id
+                    }
+                }
+            )
+            .presentationDetents([.large])
         }
         .sheet(isPresented: $showAddRole) { AddRoleSheet(store: store) }
         .sheet(isPresented: $showAddContact) { AddContactSheet(store: store) }
@@ -98,7 +109,7 @@ struct JobOSShellView: View {
             .presentationDetents([.medium, .large])
         }
         .sheet(isPresented: $showLinkedInSheet) {
-            LinkedInConnectSheet(store: store).presentationDetents([.medium])
+            LinkedInConnectSheet(store: store).presentationDetents([.medium, .large])
         }
         .sheet(isPresented: $showWritingSheet) {
             WritingReadySheet(store: store).presentationDetents([.medium])
@@ -278,6 +289,9 @@ struct JobOSShellView: View {
                         store.disconnectLinkedIn()
                     }
                 }
+                Button("Load Augeo design example", systemImage: "person.2") {
+                    store.loadAugeoDesignExample()
+                }
                 Button("Clear board", systemImage: "trash", role: .destructive) {
                     store.clearBoard()
                 }
@@ -441,7 +455,7 @@ struct JobOSShellView: View {
             }
 
             HStack(spacing: 6) {
-                ForEach(["Role", "Comp", "Apply by", "Contacts", "Resume", "CL"], id: \.self) { title in
+                ForEach(["Role", "Comp", "Apply by", "Reach out", "Resume", "CL"], id: \.self) { title in
                     Text(title)
                         .font(.system(size: 10, weight: .heavy, design: .rounded))
                         .foregroundColor(Color(jobHex: "8a8478"))
@@ -519,7 +533,7 @@ struct JobOSShellView: View {
                                     .font(.system(size: 10, weight: .semibold, design: .rounded))
                             }
                             cell {
-                                Text(role.contacts.isEmpty ? "-" : role.contacts)
+                                Text(reachOutCell(role))
                                     .font(.system(size: 10, weight: .medium, design: .rounded))
                                     .lineLimit(2)
                             }
@@ -575,8 +589,7 @@ struct JobOSShellView: View {
         case "resume": showResumeImporter = true
         case "writing": showWritingSheet = true
         case "link_linkedin":
-            if asset.status == "ready" { store.disconnectLinkedIn() }
-            else { showLinkedInSheet = true }
+            showLinkedInSheet = true
         default:
             linkDraftId = asset.id
             linkDraftURL = asset.status == "ready" ? asset.detail : ""
@@ -588,7 +601,7 @@ struct JobOSShellView: View {
         case "resume": return asset.detail
         case "writing": return "Samples ready"
         default:
-            if asset.id == "link_linkedin" { return "Connected · tap to remove" }
+            if asset.id == "link_linkedin" { return "Connected · tap to add people" }
             return "Linked"
         }
     }
@@ -602,56 +615,9 @@ struct JobOSShellView: View {
         }
     }
 
-    private func roleDetail(_ role: JobOSRole) -> some View {
-        NavigationStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 14) {
-                    Text(role.role)
-                        .font(.system(size: 22, weight: .bold, design: .rounded))
-                    Text("\(role.company) · \(role.location)")
-                        .foregroundColor(.secondary)
-                    Text(role.why)
-                        .font(.system(size: 14, weight: .medium, design: .rounded))
-                    Text("Next · \(role.nextAction)")
-                        .font(.system(size: 14, weight: .semibold, design: .rounded))
-                    if !role.applied {
-                        Button {
-                            openRole = nil
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                                confirmApplyId = role.id
-                            }
-                        } label: {
-                            Text("I applied - log it")
-                                .font(.system(size: 15, weight: .bold, design: .rounded))
-                                .foregroundColor(Color(jobHex: "0c1207"))
-                                .frame(maxWidth: .infinity)
-                                .padding(.vertical, 12)
-                                .background(RoundedRectangle(cornerRadius: 12).fill(Color(jobHex: "c4f547")))
-                        }
-                        .buttonStyle(.plain)
-                    }
-                    if let url = URL(string: role.roleUrl), !role.roleUrl.isEmpty {
-                        Link(destination: url) {
-                            Label("Open role posting", systemImage: "arrow.up.right.square")
-                                .font(.system(size: 15, weight: .bold, design: .rounded))
-                                .foregroundColor(Color(jobHex: "0c1207"))
-                                .frame(maxWidth: .infinity)
-                                .padding(.vertical, 12)
-                                .background(RoundedRectangle(cornerRadius: 12).fill(Color(jobHex: "9fd6ac")))
-                        }
-                    }
-                }
-                .padding(20)
-            }
-            .background(Color(jobHex: "f7f3ee"))
-            .navigationTitle(role.company)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Close") { openRole = nil }
-                }
-            }
-        }
+    private func reachOutCell(_ role: JobOSRole) -> String {
+        let line = JobOSReachOutBuilder.namesLine(store.reachOuts(for: role))
+        return line.isEmpty ? "—" : line
     }
 }
 
@@ -661,39 +627,114 @@ private struct LinkedInConnectSheet: View {
     @ObservedObject var store: JobOSStore
     @Environment(\.dismiss) private var dismiss
     @State private var url = ""
+    @State private var paste = ""
+    @State private var showCSV = false
 
     var body: some View {
         NavigationStack {
-            VStack(alignment: .leading, spacing: 14) {
-                Text("Connect LinkedIn")
-                    .font(.system(size: 22, weight: .bold, design: .rounded))
-                Text("Paste your profile URL. We don’t scrape. This marks the box ready and unlocks roles.")
-                    .font(.system(size: 13, weight: .medium, design: .rounded))
-                    .foregroundColor(Color(jobHex: "8a8478"))
-                TextField("https://www.linkedin.com/in/…", text: $url)
-                    .textInputAutocapitalization(.never)
-                    .keyboardType(.URL)
-                    .padding(12)
-                    .background(RoundedRectangle(cornerRadius: 12).fill(Color.white))
-                    .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color(jobHex: "d9d2c5")))
-                Button {
-                    store.connectLinkedIn(profileUrl: url)
-                    dismiss()
-                } label: {
-                    Text("Connect")
-                        .font(.system(size: 15, weight: .bold, design: .rounded))
-                        .foregroundColor(Color(jobHex: "0c1207"))
+            ScrollView {
+                VStack(alignment: .leading, spacing: 16) {
+                    Text("LinkedIn")
+                        .font(.system(size: 22, weight: .bold, design: .rounded))
+                    Text("OpenID cannot see your connections or Experience. We do not scrape. Profile URL unlocks the board. People come from a Connections.csv or a paste.")
+                        .font(.system(size: 13, weight: .medium, design: .rounded))
+                        .foregroundColor(Color(jobHex: "8a8478"))
+
+                    Text("1. Your profile")
+                        .font(.system(size: 12, weight: .heavy, design: .rounded))
+                        .foregroundColor(Color(jobHex: "8a8478"))
+                    TextField("https://www.linkedin.com/in/…", text: $url)
+                        .textInputAutocapitalization(.never)
+                        .keyboardType(.URL)
+                        .padding(12)
+                        .background(RoundedRectangle(cornerRadius: 12).fill(Color.white))
+                        .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color(jobHex: "d9d2c5")))
+                    Button {
+                        store.connectLinkedIn(profileUrl: url)
+                    } label: {
+                        Text("Save profile URL")
+                            .font(.system(size: 15, weight: .bold, design: .rounded))
+                            .foregroundColor(Color(jobHex: "0c1207"))
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 12)
+                            .background(RoundedRectangle(cornerRadius: 14).fill(Color(jobHex: "c4f547")))
+                    }
+                    .buttonStyle(.plain)
+
+                    Text("2. People you can reach")
+                        .font(.system(size: 12, weight: .heavy, design: .rounded))
+                        .foregroundColor(Color(jobHex: "8a8478"))
+                    Text("LinkedIn → Settings → Data privacy → Get a copy of your data → Connections. The official CSV only has current Company. Add past:Kigo,Augeo on a paste line if they interned there.")
+                        .font(.system(size: 12, weight: .medium, design: .rounded))
+                        .foregroundColor(Color(jobHex: "8a8478"))
+                    Text("On this desk: \(store.graph.people.count) people")
+                        .font(.system(size: 13, weight: .semibold, design: .rounded))
+
+                    Button { showCSV = true } label: {
+                        Text("Import Connections.csv")
+                            .font(.system(size: 15, weight: .bold, design: .rounded))
+                            .foregroundColor(Color(jobHex: "0c1207"))
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 12)
+                            .background(RoundedRectangle(cornerRadius: 14).fill(Color(jobHex: "9fd6ac")))
+                    }
+                    .buttonStyle(.plain)
+
+                    Text("Or paste")
+                        .font(.system(size: 12, weight: .heavy, design: .rounded))
+                        .foregroundColor(Color(jobHex: "8a8478"))
+                    Text("Name | Current company | Title | https://linkedin.com/in/… | past:OldCo,ParentCo | school:Your campus")
+                        .font(.system(size: 11, weight: .medium, design: .rounded))
+                        .foregroundColor(Color(jobHex: "8a8478"))
+                    TextEditor(text: $paste)
+                        .frame(minHeight: 88)
+                        .scrollContentBackground(.hidden)
+                        .padding(10)
+                        .background(RoundedRectangle(cornerRadius: 12).fill(Color.white))
+                    Button {
+                        store.importLinkedInConnections(text: paste, source: "paste")
+                        paste = ""
+                    } label: {
+                        Text("Add pasted people")
+                            .font(.system(size: 15, weight: .bold, design: .rounded))
+                            .foregroundColor(Color(jobHex: "0c1207"))
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 12)
+                            .background(RoundedRectangle(cornerRadius: 14).fill(Color(jobHex: "c4f547")))
+                    }
+                    .buttonStyle(.plain)
+
+                    Button("Done") { dismiss() }
+                        .font(.system(size: 14, weight: .bold, design: .rounded))
                         .frame(maxWidth: .infinity)
-                        .padding(.vertical, 14)
-                        .background(RoundedRectangle(cornerRadius: 14).fill(Color(jobHex: "c4f547")))
                 }
-                .buttonStyle(.plain)
-                Spacer()
+                .padding(20)
             }
-            .padding(20)
             .background(Color(jobHex: "f7f3ee"))
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } }
+                ToolbarItem(placement: .cancellationAction) { Button("Close") { dismiss() } }
+            }
+            .fileImporter(
+                isPresented: $showCSV,
+                allowedContentTypes: [.commaSeparatedText, .plainText, .text],
+                allowsMultipleSelection: false
+            ) { result in
+                switch result {
+                case .success(let urls):
+                    guard let url = urls.first else { return }
+                    let got = url.startAccessingSecurityScopedResource()
+                    defer { if got { url.stopAccessingSecurityScopedResource() } }
+                    if let text = try? String(contentsOf: url, encoding: .utf8) {
+                        store.importLinkedInConnections(text: text, source: "csv")
+                    } else {
+                        store.flash("Couldn’t read that file")
+                    }
+                case .failure:
+                    store.flash("Couldn’t open that file")
+                }
+            }
+            .onAppear {
+                if url.isEmpty { url = store.graph.profileUrl }
             }
         }
     }
@@ -828,6 +869,8 @@ private struct AddRoleSheet: View {
     @State private var role = ""
     @State private var location = ""
     @State private var url = ""
+    @State private var career = ""
+    @State private var deadline = ""
     @State private var why = ""
     @State private var lane = "Apply Now"
     @State private var fit = 85
@@ -838,7 +881,10 @@ private struct AddRoleSheet: View {
                 TextField("Company", text: $company)
                 TextField("Role", text: $role)
                 TextField("Location", text: $location)
+                TextField("Apply by (date or blank)", text: $deadline)
                 TextField("Role URL", text: $url)
+                    .textInputAutocapitalization(.never)
+                TextField("Careers URL", text: $career)
                     .textInputAutocapitalization(.never)
                 Picker("Action lane", selection: $lane) {
                     ForEach(store.state.actionLanes, id: \.self) { Text($0).tag($0) }
@@ -854,7 +900,8 @@ private struct AddRoleSheet: View {
                     Button("Add") {
                         store.addRole(
                             company: company, role: role, location: location,
-                            lane: lane, fit: fit, url: url, why: why
+                            lane: lane, fit: fit, url: url, why: why,
+                            deadline: deadline, careerUrl: career
                         )
                         dismiss()
                     }
@@ -896,7 +943,7 @@ private struct AddContactSheet: View {
     }
 }
 
-private extension Color {
+extension Color {
     init(jobHex hex: String) {
         let cleaned = hex.hasPrefix("#") ? String(hex.dropFirst()) : hex
         var value: UInt64 = 0

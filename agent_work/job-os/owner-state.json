@@ -2,7 +2,20 @@
   "title": "Macalester Job OS — operator CRM",
   "school": "Macalester College",
   "lastSyncedAt": "2026-08-15",
-  "source": "Cloud agent CRM (Excel Command Center not on this VM; iOS student seed stays empty)",
+  "source": "Cloud agent CRM. LinkedIn graph is first-degree import, not OpenID.",
+  "linkedinConnections": [
+    {
+      "id": "li_alhareth",
+      "displayName": "Alhareth Ali",
+      "profileUrl": "https://www.linkedin.com/in/alharethali",
+      "currentCompany": "Chamfr",
+      "currentTitle": "AI/ML Intern",
+      "pastCompanies": ["Kigo", "Augeo"],
+      "school": "Macalester College",
+      "degree": "1st",
+      "notes": "Akshat said Hareth is a connection. 2024 Augeo internship, SWE on Kigo. Publicly thanked Huldah Philips and Devan Grose."
+    }
+  ],
   "roles": [
     {
       "id": "role_augeo",
@@ -15,32 +28,52 @@
       "eligibility": "Plausible — local HQ, Macalester intern history; no intern posting live",
       "deadline": null,
       "applied": false,
-      "dateApplied": null,
-      "contacts": "Deven (verify); David Kristal; Huldah Cooper (Phillips)",
+      "contacts": "Alhareth Ali · Devan Grose · Huldah Cooper · David Kristal",
       "processStatus": "Not Started",
-      "nextAction": "Confirm intern cycle with Huldah; do not cold-email the CEO.",
+      "nextAction": "Write Hareth first. Then Huldah for the intern cycle. Do not cold-email the CEO.",
       "roleUrl": "",
       "careerUrl": "https://recruiting.paylocity.com/recruiting/jobs/All/bbb7ef82-fe4e-45d2-acc1-c18505da0567/Augeo-Affinity-Marketing",
-      "why": "St. Paul loyalty/engagement shop. Macalester has placed into Augeo/Kigo internships before (Huldah ran intern recruiting). Live board 2026-08-15 has no intern listing; Kigo Product Leader is live but senior (5–7yr).",
-      "resumeReady": false,
-      "coverLetterReady": false,
+      "why": "St. Paul loyalty/engagement shop. Kigo is an Augeo company. Hareth interned there in 2024. Live board 2026-08-15 has no intern listing.",
       "liveStatus": "Verify posting",
       "lastChecked": "2026-08-15"
     }
   ],
   "contacts": [
     {
-      "id": "crm_augeo_deven",
-      "name": "Deven",
+      "id": "crm_augeo_hareth",
+      "name": "Alhareth Ali",
       "company": "Augeo",
-      "role": "",
+      "role": "Software Engineer intern, Kigo (2024)",
       "location": "St. Paul, MN",
-      "warmth": "Named by Akshat — identity not verified on public leadership page",
+      "warmth": "LinkedIn 1st · Macalester · interned on Kigo",
       "status": "Not Contacted",
-      "profileUrl": "",
-      "bestAsk": "Verify full name + title on LinkedIn before any note.",
-      "notes": "First name only. Not listed on augeomarketing.com/company/leadership as of 2026-08-15. Do not invent a last name.",
-      "nextFollowUp": null
+      "profileUrl": "https://www.linkedin.com/in/alharethali",
+      "bestAsk": "How did the 2024 intern cycle actually run, and who should I write first?",
+      "notes": "Also Hareth. Current role Chamfr. Past Kigo/Augeo is why he matches this job."
+    },
+    {
+      "id": "crm_augeo_devan",
+      "name": "Devan Grose",
+      "company": "Kigo",
+      "role": "Staff Software Engineer (Kigo, 2023–2024)",
+      "location": "Seattle / St. Paul",
+      "warmth": "Named as Deven — Hareth’s intern mentor",
+      "status": "Not Contacted",
+      "profileUrl": "https://www.linkedin.com/in/devangrose",
+      "bestAsk": "If you still talk to the Kigo/Augeo eng team, who owns intern hiring?",
+      "notes": "User said Deven. Public spelling Devan Grose. Left Kigo Dec 2024."
+    },
+    {
+      "id": "crm_augeo_huldah",
+      "name": "Huldah Cooper",
+      "company": "Augeo",
+      "role": "Vice President, People",
+      "location": "St. Paul, MN",
+      "warmth": "Macalester intern pipeline — intern-program owner",
+      "status": "Not Contacted",
+      "profileUrl": "https://www.linkedin.com/in/huldah-c-ab5521184/",
+      "bestAsk": "How 2027 intern recruiting runs, and who owns Kigo/tech intern seats.",
+      "notes": "User said Hulda Phillips. LinkedIn Huldah C. Site: Huldah Cooper."
     },
     {
       "id": "crm_augeo_kristal",
@@ -51,46 +84,8 @@
       "warmth": "Cold executive — intro via People, not a first ping",
       "status": "Not Contacted",
       "profileUrl": "https://www.linkedin.com/in/david-kristal-47490a/",
-      "bestAsk": "Do not cold-ask the CEO for an intern seat. If an intro happens, 15-min local-builder / AI-loyalty curiosity — not a job ask.",
-      "notes": "User said “David Crystal”; public spelling is Kristal. Leadership bio: https://www.augeomarketing.com/company/leadership/david-kristal Also Executive Chairman of Kigo.",
-      "nextFollowUp": null
-    },
-    {
-      "id": "crm_augeo_huldah",
-      "name": "Huldah Cooper",
-      "company": "Augeo",
-      "role": "Vice President, People",
-      "location": "St. Paul, MN",
-      "warmth": "Macalester intern pipeline — she is the intern-program owner",
-      "status": "Not Contacted",
-      "profileUrl": "https://www.linkedin.com/in/huldah-c-ab5521184/",
-      "bestAsk": "Short note: Macalester student, local, ask how 2027 intern recruiting runs and who owns Kigo/tech intern seats.",
-      "notes": "User said “Hulda Phillips”. LinkedIn is Huldah C.; site lists Huldah Cooper. Macalester intern Alhareth Ali publicly thanked “Huldah Philips” for the 2024 Augeo/Kigo SWE intern process. Joined Augeo 2021. Bio: https://www.augeomarketing.com/company/leadership/huldah-cooper",
-      "nextFollowUp": null
-    }
-  ],
-  "queue": [
-    {
-      "id": "q_augeo_huldah",
-      "rank": 1,
-      "type": "Outreach",
-      "whoWhat": "Huldah Cooper · Augeo",
-      "why": "VP People; Macalester intern pipeline",
-      "nextStep": "Draft 15-min intern-cycle note. Do not mark sent until you actually send.",
-      "link": "https://www.linkedin.com/in/huldah-c-ab5521184/",
-      "due": "NEXT",
-      "done": false
-    },
-    {
-      "id": "q_augeo_deven",
-      "rank": 2,
-      "type": "Prep",
-      "whoWhat": "Deven · Augeo",
-      "why": "Identity not verified",
-      "nextStep": "Find last name + LinkedIn. Then add URL here.",
-      "link": "",
-      "due": "NEXT",
-      "done": false
+      "bestAsk": "Do not cold-ask the CEO for an intern seat.",
+      "notes": "User said David Crystal. Public spelling Kristal."
     }
   ]
 }
