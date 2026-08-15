@@ -1,0 +1,1021 @@
+{
+  "books": [
+    {
+      "slug": "quantum-computing",
+      "title": "A Skeptic's Guide to Quantum Computing",
+      "subject": "Physics/Technology",
+      "description": "Evidence-based interactive intelligent textbook examining why quantum computing may never be economically viable.",
+      "stats": "241 concepts · 17 chapters · 52 MicroSims · 271K words",
+      "url": "https://dmccreary.github.io/quantum-computing/",
+      "cover": "covers/quantum-computing.jpg"
+    },
+    {
+      "slug": "geometry-course",
+      "title": "AI Assisted Geometry",
+      "subject": "Mathematics",
+      "description": "Interactive textbook for high-school geometry using MicroSims.",
+      "stats": "200 concepts · 12 chapters · 173 MicroSims",
+      "url": "https://dmccreary.github.io/geometry-course",
+      "cover": "covers/geometry-course.jpg"
+    },
+    {
+      "slug": "data-science-course",
+      "title": "AI Based Data Science with Python",
+      "subject": "Computer Science",
+      "description": "Course helping undergraduates learn data science with Python.",
+      "stats": "300 concepts · 14 chapters · 20 MicroSims",
+      "url": "https://dmccreary.github.io/data-science-course",
+      "cover": "covers/data-science-course.jpg"
+    },
+    {
+      "slug": "circuits",
+      "title": "AI Circuits Course",
+      "subject": "Engineering",
+      "description": "Learn electronic circuits with AI-powered simulations and knowledge graphs.",
+      "stats": "300 concepts · 16 chapters · 75 MicroSims",
+      "url": "https://dmccreary.github.io/circuits/",
+      "cover": "covers/circuits.jpg"
+    },
+    {
+      "slug": "ai-persona-testing",
+      "title": "AI Persona Testing",
+      "subject": "AI/Technology",
+      "description": "Interactive textbook covering testing methods for AI personas.",
+      "stats": "400 concepts · 20 chapters · 82 MicroSims",
+      "url": "https://dmccreary.github.io/ai-persona-testing/",
+      "cover": "covers/ai-persona-testing.jpg"
+    },
+    {
+      "slug": "ai-strategy-for-education",
+      "title": "AI Strategy for Education",
+      "subject": "Education/AI",
+      "description": "Deployment of AI strategy in K-12 and higher education.",
+      "stats": "221 concepts · 13 chapters · 1 MicroSim",
+      "url": "https://dmccreary.github.io/ai-strategy-for-education/",
+      "cover": "covers/ai-strategy-for-education.jpg"
+    },
+    {
+      "slug": "infographics",
+      "title": "Interactive Infographics with AI",
+      "subject": "Design/Education",
+      "description": "Guide for designing interactive infographic MicroSims.",
+      "stats": "350 concepts · 14 chapters · 81 MicroSims",
+      "url": "https://dmccreary.github.io/infographics/",
+      "cover": "covers/infographics.jpg"
+    },
+    {
+      "slug": "ai-racing-league",
+      "title": "AI Racing League",
+      "subject": "Robotics/AI",
+      "description": "Teaching AI and machine learning using RC cars with Raspberry Pi.",
+      "stats": "35K words · 19 glossary terms",
+      "url": "https://dmccreary.github.io/ai-racing-league",
+      "cover": "covers/ai-racing-league.jpg"
+    },
+    {
+      "slug": "algebra-1",
+      "title": "Algebra I",
+      "subject": "Mathematics",
+      "description": "Introductory algebra course with interactive simulations.",
+      "stats": "200 concepts · 13 chapters · 13 MicroSims",
+      "url": "https://dmccreary.github.io/algebra-1",
+      "cover": "covers/algebra-1.jpg"
+    },
+    {
+      "slug": "atam",
+      "title": "Architecture Tradeoff Analysis Method (ATAM)",
+      "subject": "Software Engineering",
+      "description": "Method for evaluating software architectures, for senior undergraduates and graduates.",
+      "stats": "350 concepts · 18 chapters · 1 MicroSim",
+      "url": "https://dmccreary.github.io/atam/",
+      "cover": "covers/atam.jpg"
+    },
+    {
+      "slug": "biology",
+      "title": "Biology: An Interactive Course",
+      "subject": "Life Sciences",
+      "description": "Interactive textbook for advanced high school biology with college credit exam focus.",
+      "stats": "380 concepts · 20 chapters · 86 MicroSims",
+      "url": "https://dmccreary.github.io/biology/",
+      "cover": "covers/biology.jpg"
+    },
+    {
+      "slug": "calculus",
+      "title": "Calculus",
+      "subject": "Mathematics",
+      "description": "Interactive Calculus textbook covering AB and BC curricula.",
+      "stats": "380 concepts · 23 chapters · 123 MicroSims",
+      "url": "https://dmccreary.github.io/calculus",
+      "cover": "covers/calculus.jpg"
+    },
+    {
+      "slug": "chemistry",
+      "title": "Chemistry",
+      "subject": "Chemistry",
+      "description": "Interactive chemistry textbook for college-credit high school students.",
+      "stats": "500 concepts · 18 chapters · 46 MicroSims",
+      "url": "https://dmccreary.github.io/chemistry/",
+      "cover": "covers/chemistry.jpg"
+    },
+    {
+      "slug": "asl-book",
+      "title": "ASL Book",
+      "subject": "Language",
+      "description": "Intelligent textbook on American Sign Language.",
+      "stats": "200 concepts · 2 MicroSims",
+      "url": "https://Olufsonc-hub.github.io/asl-book/",
+      "cover": "covers/asl-book.jpg"
+    },
+    {
+      "slug": "automating-instructional-design",
+      "title": "Automating Instructional Design",
+      "subject": "Education/AI",
+      "description": "Hands-on guide to automating instructional design tasks using AI.",
+      "stats": "200 concepts · 13 chapters · 91 MicroSims",
+      "url": "https://dmccreary.github.io/automating-instructional-design/",
+      "cover": "covers/automating-instructional-design.jpg"
+    },
+    {
+      "slug": "ancient-history",
+      "title": "Ancient History",
+      "subject": "History",
+      "description": "Interactive intelligent textbook covering ancient world history from cosmic origins.",
+      "stats": "297 concepts · 16 chapters · 1 MicroSim",
+      "url": "https://dmccreary.github.io/ancient-history/",
+      "cover": "covers/ancient-history.jpg"
+    },
+    {
+      "slug": "beginning-electronics",
+      "title": "Beginning Electronics with AI",
+      "subject": "Engineering",
+      "description": "Course helping junior/high school students learn electronics basics.",
+      "stats": "9 MicroSims · 21K words",
+      "url": "https://dmccreary.github.io/beginning-electronics",
+      "cover": "covers/beginning-electronics.jpg"
+    },
+    {
+      "slug": "bioinformatics",
+      "title": "Bioinformatics",
+      "subject": "Biology/Bioinformatics",
+      "description": "Interactive textbook covering sequence analysis, structural biology, and network analysis.",
+      "stats": "480 concepts · 16 chapters · 55 MicroSims",
+      "url": "https://dmccreary.github.io/bioinformatics/",
+      "cover": "covers/bioinformatics.jpg"
+    },
+    {
+      "slug": "blockchain",
+      "title": "Blockchain: A Skeptic's Guide to Trust Technologies",
+      "subject": "Technology",
+      "description": "Interactive examination of blockchain, cost analysis, and architecture tradeoffs.",
+      "stats": "200 concepts · 20 chapters · 34 MicroSims",
+      "url": "https://dmccreary.github.io/blockchain/",
+      "cover": "covers/blockchain.jpg"
+    },
+    {
+      "slug": "agents-course",
+      "title": "Building AI Agents with Python",
+      "subject": "Computer Science/AI",
+      "description": "Creating intelligent agents with Python and LLMs.",
+      "stats": "5 MicroSims · 27K words",
+      "url": "https://dmccreary.github.io/agents-course/",
+      "cover": "covers/agents-course.jpg"
+    },
+    {
+      "slug": "clan-macquarrie",
+      "title": "Clan MacQuarrie",
+      "subject": "History/Culture",
+      "description": "Educational resources on Scottish clan system history.",
+      "stats": "5 MicroSims · 54K words",
+      "url": "https://dmccreary.github.io/clan-macquarrie/",
+      "cover": "covers/clan-macquarrie.jpg"
+    },
+    {
+      "slug": "claude-skills",
+      "title": "Claude Skills for Intelligent Textbooks",
+      "subject": "AI/Education",
+      "description": "Collection of skills and techniques using Claude AI.",
+      "stats": "200 concepts · 17 chapters · 93 MicroSims",
+      "url": "https://dmccreary.github.io/claude-skills/",
+      "cover": "covers/claude-skills.jpg"
+    },
+    {
+      "slug": "clocks-and-watches",
+      "title": "Clocks and Watches with AI",
+      "subject": "Engineering/Design",
+      "description": "Designing and building digital clocks using breadboards and microcontrollers.",
+      "stats": "12 MicroSims · 53K words",
+      "url": "https://dmccreary.github.io/clocks-and-watches",
+      "cover": "covers/clocks-and-watches.jpg"
+    },
+    {
+      "slug": "context-graph",
+      "title": "Context Graph: How Organizations Use LLMs Cost Effectively",
+      "subject": "AI/Enterprise",
+      "description": "Enterprise graph structures for optimizing LLM prompt efficiency.",
+      "stats": "496 concepts · 22 chapters · 46 MicroSims",
+      "url": "https://dmccreary.github.io/context-graph/",
+      "cover": "covers/context-graph.jpg"
+    },
+    {
+      "slug": "control-systems",
+      "title": "Control Systems",
+      "subject": "Engineering",
+      "description": "Upper-division course on classical control theory and feedback systems.",
+      "stats": "300 concepts · 16 chapters · 6 MicroSims",
+      "url": "https://dmccreary.github.io/control-systems",
+      "cover": "covers/control-systems.jpg"
+    },
+    {
+      "slug": "conversational-ai",
+      "title": "Conversational AI",
+      "subject": "AI/Computer Science",
+      "description": "College-level course on creating chatbots using NLP and LLMs.",
+      "stats": "200 concepts · 14 chapters · 8 MicroSims",
+      "url": "https://dmccreary.github.io/conversational-ai",
+      "cover": "covers/conversational-ai.jpg"
+    },
+    {
+      "slug": "computer-science",
+      "title": "Computer Science with Python",
+      "subject": "Computer Science",
+      "description": "Interactive textbook for college credit computer science.",
+      "stats": "400 concepts · 20 chapters · 121 MicroSims",
+      "url": "https://dmccreary.github.io/computer-science",
+      "cover": "covers/computer-science.jpg"
+    },
+    {
+      "slug": "cybersecurity",
+      "title": "Cybersecurity: Foundations, Practice, and Professional Responsibility",
+      "subject": "Cybersecurity",
+      "description": "ABET-aligned textbook covering cryptography and network defense.",
+      "stats": "390 concepts · 16 chapters · 1 MicroSim",
+      "url": "https://dmccreary.github.io/cybersecurity/",
+      "cover": "covers/cybersecurity.jpg"
+    },
+    {
+      "slug": "dakota-textbook",
+      "title": "Dakhotiyapi — Beginning Dakota Language",
+      "subject": "Language/Culture",
+      "description": "Introductory Dakota language course paired with cultural history.",
+      "stats": "8 chapters · 6 games · 39K words",
+      "url": "https://milesclawson.github.io/dakota-textbook/",
+      "cover": "covers/dakota-textbook.jpg"
+    },
+    {
+      "slug": "deep-learning-course",
+      "title": "Deep Learning with AI",
+      "subject": "AI/Computer Science",
+      "description": "Undergraduate deep learning course with practical applications.",
+      "stats": "12 MicroSims · 9 stories · 45K words",
+      "url": "https://dmccreary.github.io/deep-learning-course",
+      "cover": "covers/deep-learning-course.jpg"
+    },
+    {
+      "slug": "digital-citizenship",
+      "title": "Digital Citizenship: Building Safe, Kind and Balanced Lives Online",
+      "subject": "Digital Literacy/Ethics",
+      "description": "Interactive textbook for grades 5-9 aligned to ISTE standards.",
+      "stats": "265 concepts · 17 chapters · 8 MicroSims",
+      "url": "https://dmccreary.github.io/digital-citizenship/",
+      "cover": "covers/digital-citizenship.jpg"
+    },
+    {
+      "slug": "umn-senior-design",
+      "title": "Digital Design With Programmable Logic",
+      "subject": "Engineering",
+      "description": "Digital design course focusing on FPGAs.",
+      "stats": "",
+      "url": "https://mcbasken.github.io/umn-senior-design/",
+      "cover": "covers/umn-senior-design.jpg"
+    },
+    {
+      "slug": "digital-electronics",
+      "title": "Digital Electronics with AI",
+      "subject": "Engineering",
+      "description": "Undergraduate course using breadboards and logic gates.",
+      "stats": "300 concepts · 15 chapters · 8 MicroSims",
+      "url": "https://dmccreary.github.io/digital-electronics",
+      "cover": "covers/digital-electronics.jpg"
+    },
+    {
+      "slug": "Digital-Transformation-with-AI-Spring-2026",
+      "title": "Digital Transformation 2.0 with Generative AI",
+      "subject": "Business/AI",
+      "description": "Graduate course exploring how generative AI reshapes business.",
+      "stats": "200 concepts · 11 chapters · 34 MicroSims",
+      "url": "https://yarmoluk.github.io/Digital-Transformation-with-AI-Spring-2026/",
+      "cover": "covers/Digital-Transformation-with-AI-Spring-2026.jpg"
+    },
+    {
+      "slug": "economics-course",
+      "title": "Economics Course",
+      "subject": "Economics",
+      "description": "Interactive economics textbook covering micro/macroeconomics and personal finance.",
+      "stats": "206 concepts · 14 chapters · 81 MicroSims",
+      "url": "https://dmccreary.github.io/economics-course/",
+      "cover": "covers/economics-course.jpg"
+    },
+    {
+      "slug": "ecology",
+      "title": "Ecology: Systems Thinking for a Changing Planet",
+      "subject": "Biology/Environmental Science",
+      "description": "Interactive textbook on ecosystems and environmental policy.",
+      "stats": "380 concepts · 17 chapters · 83 MicroSims",
+      "url": "https://dmccreary.github.io/ecology/",
+      "cover": "covers/ecology.jpg"
+    },
+    {
+      "slug": "english-language-arts",
+      "title": "English Language Arts",
+      "subject": "Language Arts",
+      "description": "Interactive textbook covering Common Core ELA curriculum.",
+      "stats": "295 concepts · 17 chapters · 21 MicroSims",
+      "url": "https://dmccreary.github.io/english-language-arts",
+      "cover": "covers/english-language-arts.jpg"
+    },
+    {
+      "slug": "ethics-course",
+      "title": "Ethics in Modern Society",
+      "subject": "Philosophy/Ethics",
+      "description": "Ethical issues backed by critical thinking and data science.",
+      "stats": "250 concepts · 9 chapters · 14 MicroSims",
+      "url": "https://dmccreary.github.io/ethics-course",
+      "cover": "covers/ethics-course.jpg"
+    },
+    {
+      "slug": "fluid-power-systems",
+      "title": "Fluid Power Systems",
+      "subject": "Engineering/Technology",
+      "description": "Interactive textbook for technicians in HVAC and hydraulics.",
+      "stats": "12 chapters · 3 MicroSims · 12K words",
+      "url": "https://dmccreary.github.io/fluid-power-systems/",
+      "cover": "covers/fluid-power-systems.jpg"
+    },
+    {
+      "slug": "food-science",
+      "title": "Food Science for 9th Grade",
+      "subject": "Science/Food",
+      "description": "Year-long textbook exploring chemistry, biology, and physics of food.",
+      "stats": "241 concepts · 15 chapters · 31 MicroSims",
+      "url": "https://dmccreary.github.io/food-science",
+      "cover": "covers/food-science.jpg"
+    },
+    {
+      "slug": "forensic-science",
+      "title": "Forensic Science",
+      "subject": "Science/Criminal Justice",
+      "description": "Interactive textbook covering trace evidence and digital forensics.",
+      "stats": "278 concepts · 19 chapters · 38 MicroSims",
+      "url": "https://dmccreary.github.io/forensic-science/",
+      "cover": "covers/forensic-science.jpg"
+    },
+    {
+      "slug": "GED-Science-prep",
+      "title": "GED Science Prep",
+      "subject": "Science",
+      "description": "Intelligent textbook for GED Science test preparation.",
+      "stats": "12K words · 7 MicroSims",
+      "url": "https://camgross.github.io/GED-Science-prep/",
+      "cover": "covers/GED-Science-prep.jpg"
+    },
+    {
+      "slug": "genai-arch-patterns",
+      "title": "Generative AI Architecture Patterns",
+      "subject": "Software Architecture/AI",
+      "description": "Guide for software architects using generative AI.",
+      "stats": "3 MicroSims · 1 story · 17K words",
+      "url": "https://dmccreary.github.io/genai-arch-patterns",
+      "cover": "covers/genai-arch-patterns.jpg"
+    },
+    {
+      "slug": "chatgpt-for-teachers",
+      "title": "Generative AI for Teachers",
+      "subject": "Education/AI",
+      "description": "Resources helping teachers use generative AI for instruction.",
+      "stats": "19K words · 100 MicroSims",
+      "url": "https://coderdojotc.github.io/chatgpt-for-teachers",
+      "cover": "covers/chatgpt-for-teachers.jpg"
+    },
+    {
+      "slug": "cmm-for-genai",
+      "title": "Generative AI Strategy",
+      "subject": "Business/AI",
+      "description": "Guide for business leaders implementing AI strategy.",
+      "stats": "7K words · 3 MicroSims",
+      "url": "https://dmccreary.github.io/cmm-for-genai",
+      "cover": "covers/cmm-for-genai.jpg"
+    },
+    {
+      "slug": "genetics",
+      "title": "Genetics: Analysis, Genomics, and Modern Inference",
+      "subject": "Biology/Genetics",
+      "description": "Interactive textbook on genetic analysis and genomics.",
+      "stats": "450 concepts · 18 chapters · 58 MicroSims",
+      "url": "https://dmccreary.github.io/genetics/",
+      "cover": "covers/genetics.jpg"
+    },
+    {
+      "slug": "graph-algorithms",
+      "title": "Graph Algorithms with AI",
+      "subject": "Computer Science",
+      "description": "MicroSims for learning graph algorithms using JavaScript.",
+      "stats": "17 MicroSims · 32K words",
+      "url": "https://dmccreary.github.io/graph-algorithms",
+      "cover": "covers/graph-algorithms.jpg"
+    },
+    {
+      "slug": "graph-data-modeling-course",
+      "title": "Graph Data Modeling with AI",
+      "subject": "Database/Computer Science",
+      "description": "MicroSims for graph data modeling across various domains.",
+      "stats": "259 concepts · 26 chapters · 5 MicroSims",
+      "url": "https://dmccreary.github.io/graph-data-modeling-course",
+      "cover": "covers/graph-data-modeling-course.jpg"
+    },
+    {
+      "slug": "graph-lms",
+      "title": "Graph Learning Management Systems",
+      "subject": "Education Technology/AI",
+      "description": "How graphs are used to build AI learning management systems.",
+      "stats": "6 MicroSims · 25K words",
+      "url": "https://dmccreary.github.io/graph-lms",
+      "cover": "covers/graph-lms.jpg"
+    },
+    {
+      "slug": "graph-neural-networks-textbook",
+      "title": "Graph Neural Networks",
+      "subject": "Computer Science/AI",
+      "description": "Comprehensive textbook on Graph Neural Networks for graduate students.",
+      "stats": "300 concepts · 27 chapters · 37 MicroSims",
+      "url": "https://AnvithPothula.github.io/graph-neural-networks-textbook/",
+      "cover": "covers/graph-neural-networks-textbook.jpg"
+    },
+    {
+      "slug": "graph-rag",
+      "title": "GraphRAG",
+      "subject": "AI/Database",
+      "description": "Online course teaching concepts around GraphRAG.",
+      "stats": "8K words · 33 glossary terms",
+      "url": "https://dmccreary.github.io/graph-rag",
+      "cover": "covers/graph-rag.jpg"
+    },
+    {
+      "slug": "health-education",
+      "title": "Health Education",
+      "subject": "Health/Wellness",
+      "description": "Interactive textbook for K-12 aligned to Minnesota health standards.",
+      "stats": "609 concepts · 68 chapters · 389 MicroSims",
+      "url": "https://dmccreary.github.io/health-education/",
+      "cover": "covers/health-education.jpg"
+    },
+    {
+      "slug": "hydroponics",
+      "title": "Hydroponics: From Mason Jar to Vertical Farm",
+      "subject": "Agriculture/Science",
+      "description": "Interactive textbook on hydroponic plant systems.",
+      "stats": "500 concepts · 21 chapters · 30 MicroSims",
+      "url": "https://dmccreary.github.io/hydroponics",
+      "cover": "covers/hydroponics.jpg"
+    },
+    {
+      "slug": "information-systems",
+      "title": "Information Systems",
+      "subject": "Computer Science/Business",
+      "description": "ABET-aligned textbook on information systems for college students.",
+      "stats": "580 concepts · 25 chapters · 44 MicroSims",
+      "url": "https://dmccreary.github.io/information-systems/",
+      "cover": "covers/information-systems.jpg"
+    },
+    {
+      "slug": "intelligent-textbooks",
+      "title": "Intelligent Textbooks",
+      "subject": "Education Technology",
+      "description": "Tutorial for building intelligent textbooks using mkdocs-material.",
+      "stats": "31 MicroSims · 1 story · 86K words",
+      "url": "https://dmccreary.github.io/intelligent-textbooks",
+      "cover": "covers/intelligent-textbooks.jpg"
+    },
+    {
+      "slug": "3d-printing-course",
+      "title": "Introduction to 3D Printing",
+      "subject": "Engineering/Design",
+      "description": "Interactive textbook on 3D printing design and manufacturing.",
+      "stats": "292 concepts · 16 chapters · 46 MicroSims",
+      "url": "https://dmccreary.github.io/3d-printing-course/",
+      "cover": "covers/3d-printing-course.jpg"
+    },
+    {
+      "slug": "intro-to-graph",
+      "title": "Introduction to Graph Databases",
+      "subject": "Database/Computer Science",
+      "description": "Interactive textbook covering graph thinking and data modeling.",
+      "stats": "200 concepts · 13 chapters · 7 MicroSims",
+      "url": "https://dmccreary.github.io/intro-to-graph",
+      "cover": "covers/intro-to-graph.jpg"
+    },
+    {
+      "slug": "i-book-v1",
+      "title": "Introduction to Microcontrollers with PIC24",
+      "subject": "Engineering",
+      "description": "Introduction to microcontrollers using PIC24 platform.",
+      "stats": "",
+      "url": "https://irvinggsea.github.io/i-book-v1/",
+      "cover": "covers/i-book-v1.jpg"
+    },
+    {
+      "slug": "Intelligent_Textbook",
+      "title": "Introduction to Operating Systems",
+      "subject": "Computer Science",
+      "description": "Fundamentals of operating systems including process management.",
+      "stats": "30 concepts · 10 chapters · 7 MicroSims",
+      "url": "https://btlepak.github.io/Intelligent_Textbook/",
+      "cover": "covers/Intelligent_Textbook.jpg"
+    },
+    {
+      "slug": "intro-to-physics-course",
+      "title": "Introduction to Physics",
+      "subject": "Physics",
+      "description": "Year-long intro physics course with motion and energy.",
+      "stats": "200 concepts · 13 chapters · 104 MicroSims",
+      "url": "https://dmccreary.github.io/intro-to-physics-course",
+      "cover": "covers/intro-to-physics-course.jpg"
+    },
+    {
+      "slug": "public-health",
+      "title": "Introduction to Public Health",
+      "subject": "Public Health",
+      "description": "Interactive textbook covering five CEPH core public health domains.",
+      "stats": "500 concepts · 20 chapters · 59 MicroSims",
+      "url": "https://dmccreary.github.io/public-health",
+      "cover": "covers/public-health.jpg"
+    },
+    {
+      "slug": "inverting-the-impossible",
+      "title": "Inverting the Impossible",
+      "subject": "Innovation/Systems Thinking",
+      "description": "Systematic thinking for innovation and problem-solving.",
+      "stats": "200 concepts · 12 chapters · 12 MicroSims",
+      "url": "https://dhquimby.github.io/inverting-the-impossible/",
+      "cover": "covers/inverting-the-impossible.jpg"
+    },
+    {
+      "slug": "ir-textbook",
+      "title": "Investor Relations",
+      "subject": "Business/Finance",
+      "description": "Executive-level course on AI-powered investor relations.",
+      "stats": "298 concepts · 15 chapters · 5 MicroSims",
+      "url": "https://dberglu.github.io/ir-textbook/",
+      "cover": "covers/ir-textbook.jpg"
+    },
+    {
+      "slug": "it-management-graph",
+      "title": "IT Management with Graphs",
+      "subject": "Technology/Business",
+      "description": "IT management using graph databases and ITIL principles.",
+      "stats": "200 concepts · 12 chapters · 65 MicroSims",
+      "url": "https://dmccreary.github.io/it-management-graph",
+      "cover": "covers/it-management-graph.jpg"
+    },
+    {
+      "slug": "learning-graphs",
+      "title": "Learning Graphs",
+      "subject": "Education Technology",
+      "description": "Creation and maintenance of learning graphs with visualization.",
+      "stats": "8 MicroSims · 33K words",
+      "url": "https://dmccreary.github.io/learning-graphs",
+      "cover": "covers/learning-graphs.jpg"
+    },
+    {
+      "slug": "learning-linux",
+      "title": "Learning Linux",
+      "subject": "Computer Science",
+      "description": "Comprehensive 15-week course teaching Linux fundamentals.",
+      "stats": "550 concepts · 27 chapters · 14 MicroSims",
+      "url": "https://dmccreary.github.io/learning-linux/",
+      "cover": "covers/learning-linux.jpg"
+    },
+    {
+      "slug": "learning-micropython",
+      "title": "Learning MicroPython with AI",
+      "subject": "Programming/Robotics",
+      "description": "Course helping kids learn MicroPython on microcontrollers.",
+      "stats": "3 MicroSims · 81K words",
+      "url": "https://dmccreary.github.io/learning-micropython",
+      "cover": "covers/learning-micropython.jpg"
+    },
+    {
+      "slug": "learning-python",
+      "title": "Learning Python",
+      "subject": "Computer Science",
+      "description": "Resources for teaching Python to students from 5th grade onward.",
+      "stats": "450 concepts · 38 chapters · 31 MicroSims",
+      "url": "https://dmccreary.github.io/learning-python/",
+      "cover": "covers/learning-python.jpg"
+    },
+    {
+      "slug": "learning-record-store",
+      "title": "Learning Record Store",
+      "subject": "Education Technology",
+      "description": "Intelligent textbook on Learning Record Stores and xAPI.",
+      "stats": "578 concepts · 32 chapters · 131 MicroSims",
+      "url": "https://dmccreary.github.io/learning-record-store/",
+      "cover": "covers/learning-record-store.jpg"
+    },
+    {
+      "slug": "learning-sciences",
+      "title": "Learning Sciences for Intelligent Textbook Design",
+      "subject": "Education/Learning Science",
+      "description": "Textbook on seven domains of learning science for textbook authoring.",
+      "stats": "230 concepts · 15 chapters · 65 MicroSims",
+      "url": "https://dmccreary.github.io/learning-sciences/",
+      "cover": "covers/learning-sciences.jpg"
+    },
+    {
+      "slug": "raspberry-pi-stem",
+      "title": "Learning STEM with Raspberry Pi Hardware",
+      "subject": "STEM/Technology",
+      "description": "Interactive textbook using Raspberry Pi for STEM education.",
+      "stats": "531 concepts · 20 chapters · 99 MicroSims",
+      "url": "https://dmccreary.github.io/raspberry-pi-stem/",
+      "cover": "covers/raspberry-pi-stem.jpg"
+    },
+    {
+      "slug": "linear-algebra",
+      "title": "Linear Algebra for AI and Machine Learning",
+      "subject": "Mathematics/AI",
+      "description": "College-level course bridging abstract algebra with AI applications.",
+      "stats": "300 concepts · 15 chapters · 126 MicroSims",
+      "url": "https://dmccreary.github.io/linear-algebra",
+      "cover": "covers/linear-algebra.jpg"
+    },
+    {
+      "slug": "machine-learning-textbook",
+      "title": "Machine Learning: Algorithms and Applications",
+      "subject": "Computer Science/AI",
+      "description": "Comprehensive textbook on machine learning for undergraduates.",
+      "stats": "103K words · 18 MicroSims",
+      "url": "https://anvithpothula.github.io/machine-learning-textbook/",
+      "cover": "covers/machine-learning-textbook.jpg"
+    },
+    {
+      "slug": "functions",
+      "title": "Mathematics Functions",
+      "subject": "Mathematics",
+      "description": "Interactive textbook on functions and mathematical modeling.",
+      "stats": "208 concepts · 13 chapters · 29 MicroSims",
+      "url": "https://dmccreary.github.io/functions/",
+      "cover": "covers/functions.jpg"
+    },
+    {
+      "slug": "mccreary-heritage",
+      "title": "McCreary Family Heritage",
+      "subject": "History/Culture",
+      "description": "Educational resources on Scottish, Irish, and immigration history.",
+      "stats": "8 MicroSims · 2 stories · 53K words",
+      "url": "https://dmccreary.github.io/mccreary-heritage/",
+      "cover": "covers/mccreary-heritage.jpg"
+    },
+    {
+      "slug": "search-microsims",
+      "title": "MicroSim Search",
+      "subject": "Education Technology",
+      "description": "Client-side faceted search system for educational MicroSims.",
+      "stats": "200 concepts · 15 chapters · 58 MicroSims",
+      "url": "https://dmccreary.github.io/search-microsims/",
+      "cover": "covers/search-microsims.jpg"
+    },
+    {
+      "slug": "microsims",
+      "title": "MicroSims",
+      "subject": "Education Technology",
+      "description": "Showcase for creating MicroSims using JavaScript and p5.js.",
+      "stats": "242 concepts · 14 chapters · 115 MicroSims",
+      "url": "https://dmccreary.github.io/microsims",
+      "cover": "covers/microsims.jpg"
+    },
+    {
+      "slug": "ee-microsims",
+      "title": "MicroSims for Electrical Engineering",
+      "subject": "Engineering",
+      "description": "11 MicroSims created by EE students using p5.js.",
+      "stats": "12 MicroSims",
+      "url": "https://kenn0727.github.io/ee-microsims",
+      "cover": "covers/ee-microsims.jpg"
+    },
+    {
+      "slug": "modeling-healthcare-data",
+      "title": "Modeling Healthcare Data with Graphs",
+      "subject": "Healthcare/Technology",
+      "description": "Textbook on graph-based healthcare data modeling.",
+      "stats": "200 concepts · 12 chapters · 9 MicroSims",
+      "url": "https://dmccreary.github.io/modeling-healthcare-data",
+      "cover": "covers/modeling-healthcare-data.jpg"
+    },
+    {
+      "slug": "moss",
+      "title": "Moss",
+      "subject": "Biology/Environmental Science",
+      "description": "Interactive textbook exploring biology and ecology of moss.",
+      "stats": "400 concepts · 20 chapters · 31 MicroSims",
+      "url": "https://dmccreary.github.io/moss/",
+      "cover": "covers/moss.jpg"
+    },
+    {
+      "slug": "moving-rainbow",
+      "title": "Moving Rainbow",
+      "subject": "STEM/Programming",
+      "description": "Projects using colorful LED strips for computational thinking.",
+      "stats": "4 chapters · 12 MicroSims · 58K words",
+      "url": "https://dmccreary.github.io/moving-rainbow",
+      "cover": "covers/moving-rainbow.jpg"
+    },
+    {
+      "slug": "networking",
+      "title": "Networking and Communication",
+      "subject": "Computer Science",
+      "description": "ABET-aligned textbook on networking foundations and protocols.",
+      "stats": "338 concepts · 16 chapters · 1 MicroSim",
+      "url": "https://dmccreary.github.io/networking/",
+      "cover": "covers/networking.jpg"
+    },
+    {
+      "slug": "neurodiversity-course",
+      "title": "Neurodiversity Course",
+      "subject": "Education/Diversity",
+      "description": "Course on neurodiversity awareness and inclusion strategies.",
+      "stats": "",
+      "url": "https://dmccreary.github.io/neurodiversity-course/",
+      "cover": "covers/neurodiversity-course.jpg"
+    },
+    {
+      "slug": "organizational-analytics",
+      "title": "Organizational Analytics with AI",
+      "subject": "Business/AI",
+      "description": "Textbook on using graph databases and AI for HR data insights.",
+      "stats": "200 concepts · 15 chapters · 71 MicroSims",
+      "url": "https://dmccreary.github.io/organizational-analytics",
+      "cover": "covers/organizational-analytics.jpg"
+    },
+    {
+      "slug": "ojibwe-textbook",
+      "title": "Ojibwemowin — Beginning Ojibwe Language",
+      "subject": "Language/Culture",
+      "description": "Introductory Ojibwe language course with cultural history.",
+      "stats": "8 chapters · 6 games · 31K words",
+      "url": "https://milesclawson.github.io/ojibwe-textbook/",
+      "cover": "covers/ojibwe-textbook.jpg"
+    },
+    {
+      "slug": "mini-mba-for-startups",
+      "title": "Ole Cup Entrepreneurship",
+      "subject": "Business/Entrepreneurship",
+      "description": "Guide for St. Olaf students through entrepreneurship pitch competition.",
+      "stats": "200 concepts · 15 chapters · 1 MicroSim",
+      "url": "https://dmccreary.github.io/mini-mba-for-startups/",
+      "cover": "covers/mini-mba-for-startups.jpg"
+    },
+    {
+      "slug": "personal-finance",
+      "title": "Personal Finance",
+      "subject": "Finance/Economics",
+      "description": "Textbook helping high school students learn personal finance.",
+      "stats": "200 concepts · 12 chapters · 17 MicroSims",
+      "url": "https://dmccreary.github.io/personal-finance/",
+      "cover": "covers/personal-finance.jpg"
+    },
+    {
+      "slug": "pre-calc",
+      "title": "Pre-Calculus",
+      "subject": "Mathematics",
+      "description": "Interactive textbook preparing high school students for advanced math.",
+      "stats": "307 concepts · 23 chapters · 1 MicroSim",
+      "url": "https://dmccreary.github.io/pre-calc/",
+      "cover": "covers/pre-calc.jpg"
+    },
+    {
+      "slug": "prompt-class",
+      "title": "Prompt Engineering Class",
+      "subject": "AI/Computer Science",
+      "description": "Hands-on labs covering lists, diagrams, and data visualization.",
+      "stats": "9K words · 23 glossary terms",
+      "url": "https://dmccreary.github.io/prompt-class",
+      "cover": "covers/prompt-class.jpg"
+    },
+    {
+      "slug": "psychology",
+      "title": "Psychology",
+      "subject": "Psychology",
+      "description": "AP-level intelligent textbook for high school psychology exam prep.",
+      "stats": "387 concepts · 16 chapters · 6 MicroSims",
+      "url": "https://dmccreary.github.io/psychology/",
+      "cover": "covers/psychology.jpg"
+    },
+    {
+      "slug": "reading-for-kindergarten",
+      "title": "Reading for Kindergarten",
+      "subject": "Language Arts",
+      "description": "Intelligent textbook for teaching kindergarten reading skills.",
+      "stats": "195 concepts · 11 chapters · 25 MicroSims",
+      "url": "https://dmccreary.github.io/reading-for-kindergarten/",
+      "cover": "covers/reading-for-kindergarten.jpg"
+    },
+    {
+      "slug": "fft-benchmarking",
+      "title": "Real-Time DSP on a $5 Microcontroller",
+      "subject": "Engineering/Signal Processing",
+      "description": "Takes college students from FFT theory to the oscilloscope, running real Fast Fourier Transforms on a $5 Raspberry Pi Pico 2 and teaching them to honestly benchmark what they built.",
+      "stats": "574 concepts · 27 chapters · 62 MicroSims · 16 graphic-novel stories · 270 quiz questions · 370K words",
+      "url": "https://dmccreary.github.io/fft-benchmarking/",
+      "cover": "covers/fft-benchmarking.jpg"
+    },
+    {
+      "slug": "robot-day",
+      "title": "Robot Day",
+      "subject": "STEM/Robotics",
+      "description": "Resources for single-day STEM events with hands-on robot projects.",
+      "stats": "26K words",
+      "url": "https://dmccreary.github.io/robot-day",
+      "cover": "covers/robot-day.jpg"
+    },
+    {
+      "slug": "robot-faces",
+      "title": "Robot Faces",
+      "subject": "Robotics/Design",
+      "description": "Resources for teaching robotics students to draw expressive displays.",
+      "stats": "293 concepts · 16 chapters · 47 MicroSims",
+      "url": "https://dmccreary.github.io/robot-faces/",
+      "cover": "covers/robot-faces.jpg"
+    },
+    {
+      "slug": "seizure-safe-schools",
+      "title": "Seizure-Safe Schools",
+      "subject": "Health/Education",
+      "description": "Plain-language textbook on epilepsy and seizure safety in schools.",
+      "stats": "7 chapters · 1 MicroSim · 6K words",
+      "url": "https://edanmn.github.io/",
+      "cover": "covers/seizure-safe-schools.jpg"
+    },
+    {
+      "slug": "right-database",
+      "title": "Selecting the Right Database",
+      "subject": "Computer Science/Architecture",
+      "description": "Textbook on database selection using ATAM methodology.",
+      "stats": "254 concepts · 16 chapters · 5 MicroSims",
+      "url": "https://dmccreary.github.io/right-database/",
+      "cover": "covers/right-database.jpg"
+    },
+    {
+      "slug": "semiconductor-physics-course",
+      "title": "Semiconductor Physics Course",
+      "subject": "Physics",
+      "description": "College-level semiconductor physics with interactive simulations.",
+      "stats": "600 concepts · 22 chapters · 2 MicroSims",
+      "url": "https://dmccreary.github.io/semiconductor-physics-course",
+      "cover": "covers/semiconductor-physics-course.jpg"
+    },
+    {
+      "slug": "signal-processing",
+      "title": "Signal Processing",
+      "subject": "Engineering",
+      "description": "Undergraduate signal processing course with interactive simulations.",
+      "stats": "200 concepts · 15 chapters · 34 MicroSims",
+      "url": "https://dmccreary.github.io/signal-processing",
+      "cover": "covers/signal-processing.jpg"
+    },
+    {
+      "slug": "spectrum-analyzer",
+      "title": "Spectrum Analyzer",
+      "subject": "Engineering/Technology",
+      "description": "Tutorial for building a spectrum analyzer using Raspberry Pi Pico.",
+      "stats": "5 MicroSims · 17K words",
+      "url": "https://dmccreary.github.io/spectrum-analyzer/",
+      "cover": "covers/spectrum-analyzer.jpg"
+    },
+    {
+      "slug": "statistics-course",
+      "title": "Statistics",
+      "subject": "Mathematics/Statistics",
+      "description": "Interactive statistics textbook with college credit focus.",
+      "stats": "300 concepts · 19 chapters · 111 MicroSims",
+      "url": "https://dmccreary.github.io/statistics-course/",
+      "cover": "covers/statistics-course.jpg"
+    },
+    {
+      "slug": "stem-classroom-admin",
+      "title": "STEM Classroom Administration",
+      "subject": "Education/STEM",
+      "description": "Guide for teachers setting up and administering STEM classrooms.",
+      "stats": "16K words · 64 glossary terms",
+      "url": "https://dmccreary.github.io/stem-classroom-admin/",
+      "cover": "covers/stem-classroom-admin.jpg"
+    },
+    {
+      "slug": "stem-robots",
+      "title": "STEM Robots",
+      "subject": "STEM/Robotics",
+      "description": "Robotics using Raspberry Pi RP2040 for computational thinking.",
+      "stats": "5 MicroSims · 28K words",
+      "url": "https://dmccreary.github.io/stem-robots",
+      "cover": "covers/stem-robots.jpg"
+    },
+    {
+      "slug": "systems-thinking",
+      "title": "Systems Thinking in the Age of AI",
+      "subject": "Systems Thinking/AI",
+      "description": "Interactive resources for teaching systems thinking.",
+      "stats": "13 MicroSims · 7 stories · 120K words",
+      "url": "https://dmccreary.github.io/systems-thinking",
+      "cover": "covers/systems-thinking.jpg"
+    },
+    {
+      "slug": "theory-of-knowledge",
+      "title": "Theory of Knowledge",
+      "subject": "Philosophy/Education",
+      "description": "Interactive textbook for IB Theory of Knowledge course.",
+      "stats": "275 concepts · 16 chapters · 69 MicroSims",
+      "url": "https://dmccreary.github.io/theory-of-knowledge/",
+      "cover": "covers/theory-of-knowledge.jpg"
+    },
+    {
+      "slug": "token-efficiency",
+      "title": "Token Efficiency",
+      "subject": "AI/Technology",
+      "description": "Textbook on measuring and reducing generative AI costs.",
+      "stats": "475 concepts · 20 chapters · 44 MicroSims",
+      "url": "https://dmccreary.github.io/token-efficiency/",
+      "cover": "covers/token-efficiency.jpg"
+    },
+    {
+      "slug": "tracking-ai-course",
+      "title": "Tracking AI",
+      "subject": "AI/Business",
+      "description": "Course on tracking AI progress for strategy consulting.",
+      "stats": "250 concepts · 29 MicroSims · 6 stories",
+      "url": "https://dmccreary.github.io/tracking-ai-course",
+      "cover": "covers/tracking-ai-course.jpg"
+    },
+    {
+      "slug": "trigonometric-functions",
+      "title": "Trigonometric Functions",
+      "subject": "Mathematics",
+      "description": "Foundational course on angles and triangles in mathematics.",
+      "stats": "200 concepts",
+      "url": "https://stage03.iowerx.com:8443/",
+      "cover": "covers/trigonometric-functions.jpg"
+    },
+    {
+      "slug": "Dementia",
+      "title": "Understanding Dementia",
+      "subject": "Healthcare/Medicine",
+      "description": "Interactive textbook on dementia for patients and caregivers.",
+      "stats": "200 concepts · 15 chapters · 21 MicroSims",
+      "url": "https://rtanler.github.io/Dementia/",
+      "cover": "covers/Dementia.jpg"
+    },
+    {
+      "slug": "unicorns",
+      "title": "Unicorns and Other Mythical Beasts",
+      "subject": "Satire/Education",
+      "description": "Satirical textbook about unicorns and AI hype.",
+      "stats": "140 concepts · 19 chapters · 32 MicroSims",
+      "url": "https://dmccreary.github.io/unicorns/",
+      "cover": "covers/unicorns.jpg"
+    },
+    {
+      "slug": "us-geography",
+      "title": "US Geography",
+      "subject": "Geography",
+      "description": "Interactive geography for grades 3-6 with clickable maps.",
+      "stats": "200 concepts · 12 chapters · 33 MicroSims",
+      "url": "https://dmccreary.github.io/us-geography",
+      "cover": "covers/us-geography.jpg"
+    },
+    {
+      "slug": "us-history",
+      "title": "U.S. History",
+      "subject": "History",
+      "description": "Interactive AP-level textbook covering major U.S. historical eras.",
+      "stats": "450 concepts · 21 chapters · 37 MicroSims",
+      "url": "https://dmccreary.github.io/us-history",
+      "cover": "covers/us-history.jpg"
+    },
+    {
+      "slug": "us-government",
+      "title": "US Government",
+      "subject": "Government/Political Science",
+      "description": "Interactive textbook aligned with AP US Government curriculum.",
+      "stats": "200 concepts · 12 chapters · 23 MicroSims",
+      "url": "https://dmccreary.github.io/us-government/",
+      "cover": "covers/us-government.jpg"
+    },
+    {
+      "slug": "xapi-course",
+      "title": "xAPI for Intelligent Textbooks",
+      "subject": "Education Technology",
+      "description": "Interactive textbook on the xAPI standard for learning systems — how events become evidence.",
+      "stats": "250 concepts · 14 chapters · 50 MicroSims",
+      "url": "https://dmccreary.github.io/xapi-course/",
+      "cover": "covers/xapi-course.jpg"
+    }
+  ]
+}

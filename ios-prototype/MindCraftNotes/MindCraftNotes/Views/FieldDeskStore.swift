@@ -1,3 +1,4 @@
+import CoreGraphics
 import Foundation
 import UniformTypeIdentifiers
 
@@ -95,6 +96,10 @@ final class FieldDeskStore: ObservableObject {
     private static let connectKey = "deskOs.connect"
     private static let eventsKey = "deskOs.calendarEvents"
     private static let mailKey = "deskOs.mailItems"
+    private static let layoutWidgetsKey = "deskOs.layoutWidgets"
+    private static let layoutOffsetsKey = "deskOs.layoutOffsets"
+    private static let layoutSizesKey = "deskOs.layoutSizes"
+    private static let layoutFocusKey = "deskOs.layoutFocus"
     private static let uiTesting = ProcessInfo.processInfo.arguments.contains("--ui-testing-in-memory")
 
     @Published private(set) var items: [FiledItem] = []
@@ -103,6 +108,16 @@ final class FieldDeskStore: ObservableObject {
     @Published private(set) var connectAt: [String: String] = [:]
     @Published private(set) var events: [CalendarEvent] = []
     @Published private(set) var mail: [MailItem] = []
+    /// Native card layout on Field Desk (Work mode) - which cards are placed,
+    /// where, and at what size. Kept as plain String/CGSize here (not
+    /// FieldDeskView's own `DeskCardID`/`PlaceableWidget`, both private to
+    /// that file) - FieldDeskView converts via `.rawValue` on save and
+    /// `init?(rawValue:)` on restore. Previously dead @State that reset to
+    /// empty on every relaunch; this is what makes it survive a restart.
+    @Published private(set) var layoutWidgets: [String] = []
+    @Published private(set) var layoutOffsets: [String: CGSize] = [:]
+    @Published private(set) var layoutSizes: [String: CGSize] = [:]
+    @Published private(set) var layoutFocus: String?
 
     init() {
         items = Self.decode([FiledItem].self, key: Self.itemsKey) ?? []
@@ -114,6 +129,32 @@ final class FieldDeskStore: ObservableObject {
         }
         events = Self.decode([CalendarEvent].self, key: Self.eventsKey) ?? []
         mail = Self.decode([MailItem].self, key: Self.mailKey) ?? []
+        layoutWidgets = Self.decode([String].self, key: Self.layoutWidgetsKey) ?? []
+        layoutOffsets = Self.decode([String: CGSize].self, key: Self.layoutOffsetsKey) ?? [:]
+        layoutSizes = Self.decode([String: CGSize].self, key: Self.layoutSizesKey) ?? [:]
+        layoutFocus = Self.decode(String.self, key: Self.layoutFocusKey)
+    }
+
+    /// Called on every commit (drag end, resize end, card placed/closed) -
+    /// each of those is already a discrete, infrequent user action, not a
+    /// per-frame gesture update, so no debouncing is needed here.
+    func saveLayout(widgets: [String], offsets: [String: CGSize], sizes: [String: CGSize], focus: String?) {
+        layoutWidgets = widgets
+        layoutOffsets = offsets
+        layoutSizes = sizes
+        layoutFocus = focus
+        Self.encode(widgets, key: Self.layoutWidgetsKey)
+        Self.encode(offsets, key: Self.layoutOffsetsKey)
+        Self.encode(sizes, key: Self.layoutSizesKey)
+        if let focus {
+            Self.encode(focus, key: Self.layoutFocusKey)
+        } else if !Self.uiTesting {
+            UserDefaults.standard.removeObject(forKey: Self.layoutFocusKey)
+        }
+    }
+
+    func clearLayout() {
+        saveLayout(widgets: [], offsets: [:], sizes: [:], focus: nil)
     }
 
     func connector(id: String) -> Connector? {
@@ -292,6 +333,7 @@ final class FieldDeskStore: ObservableObject {
         Self.encode(connectAt, key: Self.connectKey)
         Self.encode(events, key: Self.eventsKey)
         Self.encode(mail, key: Self.mailKey)
+        clearLayout()
     }
 
     static func guessCoursePublic(from text: String) -> String {

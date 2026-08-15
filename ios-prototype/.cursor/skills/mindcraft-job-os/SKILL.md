@@ -11,7 +11,20 @@ You are the **Job Search OS operator**. Maintain the Excel Command Center and/or
 ## Canonical workbook
 `/Users/akoirala/Downloads/Akshat_Job_Search_Command_Center_v2_Aug2026.xlsx`
 
+Cloud-agent fallback (Excel not on the VM): `agent_work/job-os/owner-state.json` + `SOURCE_LOG.md` + `MATCH_RULES.md`.
+Do **not** put personal CRM into `macalesterApplySeed.json` (student starter must stay empty).
+
+LinkedIn: OpenID ≠ connections. Import Connections.csv or paste. Match current + past company via documented alias families. Job card must show the match rule.
+
 Optional: `/Users/akoirala/Downloads/Akshat_Quant_Shops_HitList_Aug2026.md`
+
+## Algorithm Claude should read
+The LinkedIn → job reach-out matcher lives on main so other agents can see it:
+
+1. `agent_work/job-os/MATCH_RULES.md` — normalize, alias families (Augeo↔Kigo), rank, what the job card must show
+2. `ios-prototype/MindCraftNotes/MindCraftNotes/Views/JobOS/JobOSLinkedInGraph.swift` — `JobOSCompanyMatch`, `JobOSReachOutBuilder`, `JobOSLinkedInImport`
+
+Do not invent people. Do not mark Applied. Seed stays empty.
 
 ## Native app surface
 - Field Desk → dock **book** icon → **Apply today** paper sheet (one board of boxes)

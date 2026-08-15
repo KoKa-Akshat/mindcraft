@@ -41,6 +41,11 @@ struct DeskShellView: View {
     @StateObject private var goalStore = DeskGoalStore()
     @StateObject private var tutorClient = TutorDirectoryClient()
     @StateObject private var workflowStore = WorkflowMarketStore()
+    // App-lifetime Jesse voice session (see JesseCallSession.swift's doc
+    // comment) - owned here, not inside whichever screen starts a call, so
+    // navigating away from that screen never ends an in-progress call.
+    @StateObject private var jesseCall = JesseCallSession()
+    @State private var showJesseCallSheet = false
     /// Classic desk boot slide → Field Desk (primary after login).
     @State private var showBoot = true
     @State private var showWorkDesk = false
@@ -100,6 +105,7 @@ struct DeskShellView: View {
                 )
                 .environmentObject(studentStore)
                 .environmentObject(authService)
+                .environmentObject(jesseCall)
                 // Keep fully opaque under the boot — near-zero opacity makes WKWebView flash white.
                 .allowsHitTesting(!showBoot)
             }
@@ -117,6 +123,30 @@ struct DeskShellView: View {
                 .transition(.opacity)
                 .zIndex(20)
             }
+
+            // Sibling of FieldDeskView, not nested inside it - see
+            // JesseCallPill's own doc comment for why. Renders above
+            // everything else in this ZStack regardless of which Field Desk
+            // overlay is currently showing.
+            VStack {
+                HStack {
+                    Spacer()
+                    JesseCallPill(call: jesseCall) { showJesseCallSheet = true }
+                }
+                Spacer()
+            }
+            .zIndex(90)
+            .allowsHitTesting(jesseCall.isActive)
+        }
+        .sheet(isPresented: $showJesseCallSheet) {
+            JesseCallSheetView(
+                call: jesseCall,
+                onClose: { showJesseCallSheet = false },
+                onEnd: {
+                    jesseCall.end()
+                    showJesseCallSheet = false
+                }
+            )
         }
         .background(Color(shellHex: "0f1f18").ignoresSafeArea())
         .animation(.easeInOut(duration: 0.45), value: showBoot)
@@ -156,6 +186,20 @@ struct DeskShellView: View {
                 .buttonStyle(.plain)
                 .padding(.bottom, 18)
                 .accessibilityIdentifier("hubPageBackToDesk")
+            }
+            // Attached HERE, not on the outer body - callButton (which sets
+            // showCheckIn) lives inside this fullScreenCover's content.
+            // SwiftUI silently no-ops a .sheet() declared on an ancestor
+            // OUTSIDE the currently-presented fullScreenCover's own hosted
+            // hierarchy: showCheckIn correctly flipped true (confirmed no
+            // crash), but no sheet ever appeared - the real bug behind
+            // MasteryCheckInSheet being unreachable, not the callButton
+            // action itself (that part was already fixed to call showCheckIn
+            // instead of showFriends, restoring web parity with hubCall.js).
+            .sheet(isPresented: $showCheckIn) {
+                MasteryCheckInSheet(store: goalStore) { message in
+                    flashHub(message)
+                }
             }
         }
         .onAppear {
@@ -207,11 +251,6 @@ struct DeskShellView: View {
                             Button("Close") { showFindTutor = false }
                         }
                     }
-            }
-        }
-        .sheet(isPresented: $showCheckIn) {
-            MasteryCheckInSheet(store: goalStore) { message in
-                flashHub(message)
             }
         }
         .fullScreenCover(isPresented: $showFriends) {
@@ -468,7 +507,7 @@ struct DeskShellView: View {
     /// `.hub-call` - compact phone next to Manage (mastery strip removed).
     private var callButton: some View {
         Button {
-            showFriends = true
+            showCheckIn = true
         } label: {
             Image(systemName: "phone.fill")
                 .font(.system(size: 14, weight: .medium))

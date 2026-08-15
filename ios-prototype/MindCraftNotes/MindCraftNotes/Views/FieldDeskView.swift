@@ -87,6 +87,10 @@ struct FieldDeskView: View {
     @State private var gmailStartReconnect = false
     @State private var gmailOpenTopReply = false
     @State private var showActFieldBook = false
+    /// Real nav-intent target ("study quadratic equations" via Ask The Desk
+    /// -> `study_concept` action) - threaded into `DashboardView` so it
+    /// opens straight to that concept's chapter instead of just the roadmap.
+    @State private var pendingStudyConceptId: String?
     @State private var showDocCook = false
     @StateObject private var workflowMarket = WorkflowMarketStore()
     @State private var showImporter = false
@@ -103,8 +107,18 @@ struct FieldDeskView: View {
     @State private var activeGuideId: String?
     @State private var openEntry: FieldDeskStore.FiledItem?
 
+    /// Desk-level pan/zoom for the native card layer (Work mode). Committed
+    /// values; `liveDeskPan`/`liveDeskZoom` below are the in-flight gesture
+    /// deltas, kept separate via @GestureState so they auto-reset to
+    /// identity when the gesture ends - no manual baseline bookkeeping
+    /// needed here the way cardMoveGesture needed it, since there's no
+    /// minimumDistance threshold on this gesture to pop past.
     @State private var scale: CGFloat = 1
     @State private var pan = CGSize.zero
+    @GestureState private var liveDeskPan: CGSize = .zero
+    @GestureState private var liveDeskZoom: CGFloat = 1
+    private let deskMinZoom: CGFloat = 0.6
+    private let deskMaxZoom: CGFloat = 2.0
 
     /// Per-card layout (drag + resize).
     @State private var cardOffsets: [DeskCardID: CGSize] = [:]
@@ -234,6 +248,8 @@ struct FieldDeskView: View {
         actStageMaximized = false
         focusedCard = nil
         placedWidgets.removeAll()
+        pan = .zero
+        scale = 1
         if let flashMessage { flash(flashMessage) }
     }
 
@@ -265,9 +281,66 @@ struct FieldDeskView: View {
         }
         showAddPanel = false
         flash("Placed · \(widget.rawValue)")
+        saveDeskLayout()
     }
 
-    /// Full-screen sheets that hide logo + mode toggle too.
+    /// Persists the current card layout to `FieldDeskStore` so it survives a
+    /// relaunch. Called after every discrete layout-changing action (place,
+    /// close, drag-end, resize-end) - none of those fire per-frame, so no
+    /// debouncing is needed.
+    private func saveDeskLayout() {
+        store.saveLayout(
+            widgets: placedWidgets.map(\.rawValue),
+            offsets: Dictionary(uniqueKeysWithValues: cardOffsets.map { ($0.key.rawValue, $0.value) }),
+            sizes: Dictionary(uniqueKeysWithValues: cardSizes.map { ($0.key.rawValue, $0.value) }),
+            focus: focusedCard?.rawValue
+        )
+    }
+
+    /// Inverse of `saveDeskLayout()`, run once on appear. Re-derives
+    /// `PlaceableWidget`/`DeskCardID` from their raw string values (both are
+    /// private to this file, so `FieldDeskStore` only ever sees plain
+    /// strings) and mirrors `placeWidget`'s per-widget side effects
+    /// (showBinderPanel/showConnectPanel/showIntelPanel + binderOpen) so a
+    /// restored card behaves exactly as if it had just been placed, not a
+    /// partial state that only happens to render.
+    private func restoreDeskLayout() {
+        placedWidgets = Set(store.layoutWidgets.compactMap(PlaceableWidget.init(rawValue:)))
+        cardOffsets = Dictionary(uniqueKeysWithValues: store.layoutOffsets.compactMap { key, value in
+            DeskCardID(rawValue: key).map { ($0, value) }
+        })
+        cardSizes = Dictionary(uniqueKeysWithValues: store.layoutSizes.compactMap { key, value in
+            DeskCardID(rawValue: key).map { ($0, value) }
+        })
+        cardDrag = [:]
+        focusedCard = store.layoutFocus.flatMap(DeskCardID.init(rawValue:))
+        if placedWidgets.contains(.binder) {
+            showBinderPanel = true
+            binderOpen = true
+        }
+        if placedWidgets.contains(.connect) { showConnectPanel = true }
+        if placedWidgets.contains(.intel) { showIntelPanel = true }
+    }
+
+    /// ⚠️ GUARDRAIL - read before adding a new full-screen overlay to
+    /// `body`'s top-level ZStack (an `if show___ { ... .zIndex(N) }` block
+    /// like ActFieldBook/GmailBox/ApplyToday/etc. below): add its flag HERE
+    /// too, or it silently inherits two real, already-hit bugs instead of
+    /// working correctly:
+    ///   1. Top chrome (logo/mode-toggle/sign-out) won't hide behind it.
+    ///   2. WORSE - `deskBackgroundPanZoomLayer`'s full-screen touch catcher
+    ///      (`fieldDeskPanZoomCatcher`, a raw UIKit `PassThroughOverlay`)
+    ///      stays active underneath your new overlay and silently eats
+    ///      every touch meant for it, even though it paints correctly on
+    ///      top. This exact bug independently hit the Add panel, the
+    ///      Binder card, and the ACT Field Book popup this session (three
+    ///      separate "button exists in the tree, isHittable: false"
+    ///      failures, three separate diagnoses) before this property was
+    ///      wired in as the ONE shared guard for both consumers - see the
+    ///      `panZoomCatcherBlocked` line in `body` and `floatDockBlocked`
+    ///      right below. Both read THIS property; a new overlay flag added
+    ///      only to its own `if` block and nowhere else WILL reproduce that
+    ///      failure again.
     private var deskOverlayChromeBlocked: Bool {
         showActFieldBook
             || showGmailBox
@@ -281,6 +354,9 @@ struct FieldDeskView: View {
     }
 
     /// Jesse kitchen Ask/dock only — Work/Create own their own prompt bars.
+    /// Also feeds `panZoomCatcherBlocked` in `body` - see the guardrail
+    /// comment on `deskOverlayChromeBlocked` above before adding a new
+    /// overlay case to either this or that property.
     private var floatDockBlocked: Bool {
         deskOverlayChromeBlocked || showStandaloneDesk || showCreateStudio
     }
@@ -390,11 +466,40 @@ struct FieldDeskView: View {
                     .accessibilityIdentifier("fieldDeskJessePortal")
                 }
 
-                // PassThrough claims only the exact card rects; empty space → Jesse.
+                // Claims the whole screen now, not just card rects - empty
+                // space needs to receive the pan/zoom gesture too, not fall
+                // through to the Jesse Kitchen WebView underneath. SwiftUI's
+                // own hit-testing (which correctly accounts for the
+                // scaleEffect/offset pan/zoom transform) decides card vs.
+                // background from here, not this UIKit-level rect check.
+                //
+                // BUT: a full-screen claim is a raw UIKit view sitting on top
+                // of whatever's actually in front in the real view hierarchy
+                // - it doesn't know about later SwiftUI siblings like the Add
+                // panel or the connect guide, which render above it with no
+                // (or a lower) zIndex and would otherwise still be visible
+                // but silently untouchable, confirmed via a failing UI test
+                // ("not hittable") before landing this guard. Claim nothing
+                // while any of those plain SwiftUI overlays is up, so
+                // touches reach them through the normal SwiftUI path.
+                //
+                // This is every `if show___ { ... }` sibling below that
+                // renders above this zIndex(20) - reusing floatDockBlocked
+                // (already the "something big is covering the screen"
+                // signal used to hide the dock) rather than hand-maintaining
+                // a second, easy-to-forget copy of the same list. Found via
+                // a second real instance of this bug class: showActFieldBook
+                // wasn't in the original ad-hoc guard, so the ACT Field Book
+                // popup's own Contents roadmap was silently unhittable
+                // underneath this catcher (confirmed via a full
+                // accessibility-tree dump - the button existed with the
+                // right identifier, just never received touches).
                 if deskChromeLive {
-                    PassThroughOverlay(solidRects: activeCardRects(viewport: viewport)) {
-                        deskCardsLayer(viewport: viewport)
-                            .frame(width: viewport.width, height: viewport.height, alignment: .topLeading)
+                    let panZoomCatcherBlocked = floatDockBlocked || showAddPanel || activeGuideId != nil || polkaProgress > 0.001
+                    PassThroughOverlay(
+                        solidRects: panZoomCatcherBlocked ? [] : [CGRect(origin: .zero, size: viewport)]
+                    ) {
+                        deskBackgroundPanZoomLayer(viewport: viewport)
                     }
                     .frame(width: viewport.width, height: viewport.height)
                     .zIndex(20)
@@ -561,9 +666,31 @@ struct FieldDeskView: View {
                         .zIndex(95)
                 }
 
+                // ⚠️ Adding another full-screen `if show___ { ... .zIndex(N) }`
+                // overlay below this point (or anywhere above)? Add its flag
+                // to `deskOverlayChromeBlocked` (and `floatDockBlocked` if it
+                // should also suppress the bottom dock) a few dozen lines up
+                // in this file - see the guardrail comment there. Skipping
+                // this is silent: the overlay still paints correctly on top,
+                // it just won't receive touches, because the pan/zoom
+                // catcher a few blocks above (`panZoomCatcherBlocked`) will
+                // keep claiming the full screen underneath it.
+
                 if showAddPanel {
-                    Color.black.opacity(0.45).onTapGesture { showAddPanel = false }
-                    addPanel.frame(maxWidth: min(440, viewport.width - 80))
+                    // Needs an explicit zIndex above the Jesse Kitchen WebView
+                    // (zIndex 1) - that WebView is a raw UIKit view, and its
+                    // real hit-test position doesn't track pure-SwiftUI
+                    // siblings the way visual paint order does. Without this,
+                    // the panel painted correctly on top but silently
+                    // swallowed every touch to the WebView underneath
+                    // (confirmed via a full accessibility-tree dump showing
+                    // every row - Close included - reporting isHittable:
+                    // false). Same pattern as connectGuide below.
+                    ZStack {
+                        Color.black.opacity(0.45).onTapGesture { showAddPanel = false }
+                        addPanel.frame(maxWidth: min(440, viewport.width - 80))
+                    }
+                    .zIndex(70)
                 }
 
                 if let guideId = activeGuideId, let connector = store.connector(id: guideId) {
@@ -597,10 +724,10 @@ struct FieldDeskView: View {
                     .allowsHitTesting(false)
                     .frame(width: 1, height: 1).position(x: 4, y: 4)
 
-                Text(verbatim: String(format: "%.0f,%.0f", pan.width, pan.height))
+                Text(verbatim: String(format: "%.0f,%.0f,%.2f", pan.width, pan.height, scale))
                     .font(.system(size: 1)).foregroundColor(.clear)
                     .accessibilityIdentifier("fieldDeskPanOffset")
-                    .accessibilityValue(String(format: "%.0f,%.0f", pan.width, pan.height))
+                    .accessibilityValue(String(format: "%.0f,%.0f,%.2f", pan.width, pan.height, scale))
                     .allowsHitTesting(false)
                     .frame(width: 1, height: 1).position(x: 8, y: 8)
             }
@@ -757,11 +884,15 @@ struct FieldDeskView: View {
         .animation(.easeInOut(duration: 0.2), value: activeGuideId)
         .animation(.easeInOut(duration: 0.25), value: workMode)
         .onAppear {
-            // Land in Jesse’s empty — work desk starts blank; place from +.
+            // clearDeskCards() resets panels/mode/pan-zoom to a clean base
+            // state (harmless here since a fresh view instance already
+            // starts there); restoreDeskLayout() immediately after brings
+            // back whatever cards were actually placed/positioned/sized last
+            // session, from FieldDeskStore - previously this just stayed
+            // wiped (see PROTOTYPE_STATUS.md/the rebuild brief: window state
+            // wasn't persisted across restarts at all).
             clearDeskCards()
-            cardOffsets = [:]
-            cardDrag = [:]
-            cardSizes = [:]
+            restoreDeskLayout()
             showTopChrome = false
             showBottomChrome = false
             wireUITesting()
@@ -958,44 +1089,82 @@ struct FieldDeskView: View {
 
     // MARK: - Desk cards on Jesse’s (individual hit targets)
 
-    /// Exact frames of every visible card — the ONLY places the overlay
-    /// claims touches. Must stay in sync with `deskCardsLayer` layout.
-    private func activeCardRects(viewport: CGSize) -> [CGRect] {
-        let points = deskPoints(for: viewport)
-        var rects: [CGRect] = []
-        func add(_ id: DeskCardID) {
-            let size = cardSizes[id] ?? defaultSizes[id] ?? CGSize(width: 200, height: 160)
-            let base = points[id] ?? .zero
-            let settled = cardOffsets[id] ?? .zero
-            let live = cardDrag[id] ?? .zero
-            rects.append(
-                CGRect(
-                    x: base.x + settled.width + live.width,
-                    y: base.y + settled.height + live.height,
-                    width: size.width,
-                    height: size.height
+    /// One-finger drag on empty space pans the desk; pinch zooms it. Standard
+    /// SwiftUI ZStack hit-testing means a touch that starts on a card still
+    /// goes to that card's own gesture first (topmost view at that point
+    /// wins) - this only fires when nothing else claimed the touch.
+    /// minimumDistance:1, not the default 10, for the same reason
+    /// cardMoveGesture cares about it: a bigger threshold pops the desk by
+    /// that many points the instant the gesture is recognized.
+    private var deskPanZoomGesture: some Gesture {
+        let drag = DragGesture(minimumDistance: 1)
+            .updating($liveDeskPan) { value, state, _ in state = value.translation }
+            .onEnded { value in
+                pan.width += value.translation.width
+                pan.height += value.translation.height
+            }
+        let zoom = MagnificationGesture()
+            .updating($liveDeskZoom) { value, state, _ in state = value }
+            .onEnded { value in
+                withAnimation(.easeOut(duration: 0.2)) {
+                    scale = min(deskMaxZoom, max(deskMinZoom, scale * value))
+                }
+            }
+        return drag.simultaneously(with: zoom)
+    }
+
+    private var deskIsPannedOrZoomed: Bool {
+        pan != .zero || abs(scale - 1) > 0.01
+    }
+
+    private func resetDeskPanZoom() {
+        withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
+            pan = .zero
+            scale = 1
+        }
+    }
+
+    /// Empty-space gesture catcher behind the cards, and the pan/zoom
+    /// transform applied to the cards themselves - the catcher stays fixed
+    /// full-screen so it keeps receiving gestures regardless of the current
+    /// transform; only the content underneath visually moves/scales.
+    private func deskBackgroundPanZoomLayer(viewport: CGSize) -> some View {
+        ZStack(alignment: .topLeading) {
+            Color.clear
+                .contentShape(Rectangle())
+                .frame(width: viewport.width, height: viewport.height)
+                .gesture(deskPanZoomGesture)
+                // simultaneousGesture, not another .gesture() - a second
+                // .gesture() call replaces the first outright in SwiftUI,
+                // which would silently kill panning/zooming instead of
+                // adding double-tap-to-fit alongside it.
+                .simultaneousGesture(
+                    TapGesture(count: 2).onEnded { resetDeskPanZoom() }
                 )
-                // Cover the title capsule above and the resize grip edge.
-                .insetBy(dx: -14, dy: -16)
-            )
+                .accessibilityIdentifier("fieldDeskPanZoomCatcher")
+
+            deskCardsLayer(viewport: viewport)
+                .frame(width: viewport.width, height: viewport.height, alignment: .topLeading)
+                .scaleEffect(scale * liveDeskZoom, anchor: .center)
+                .offset(x: pan.width + liveDeskPan.width, y: pan.height + liveDeskPan.height)
+
+            if deskIsPannedOrZoomed {
+                Button(action: resetDeskPanZoom) {
+                    Image(systemName: "arrow.up.left.and.down.right.magnifyingglass")
+                        .font(.system(size: 14, weight: .bold))
+                        .foregroundColor(Color(fdHex: "0c1207"))
+                        .frame(width: 40, height: 40)
+                        .background(Circle().fill(Color.white.opacity(0.94)))
+                        .shadow(color: .black.opacity(0.25), radius: 10, y: 4)
+                }
+                .buttonStyle(.plain)
+                .padding(.top, 64)
+                .padding(.leading, 16)
+                .accessibilityIdentifier("fieldDeskRecenter")
+                .accessibilityLabel("Recenter desk")
+            }
         }
-        if placedWidgets.contains(.binder) || showBinderPanel { add(.binder) }
-        if placedWidgets.contains(.gmail) { add(.gmail) }
-        if placedWidgets.contains(.calendar) { add(.calendar) }
-        if placedWidgets.contains(.notes) { add(.notes) }
-        if placedWidgets.contains(.memo) { add(.memo) }
-        if placedWidgets.contains(.gdoc) { add(.gdoc) }
-        if placedWidgets.contains(.slides) { add(.slides) }
-        if placedWidgets.contains(.intel) || showIntelPanel { add(.intel) }
-        if placedWidgets.contains(.connect) || showConnectPanel { add(.connect) }
-        if showActStage && !actStageMaximized {
-            rects.append(CGRect(x: 1100, y: 160, width: 220, height: 110).insetBy(dx: -12, dy: -12))
-        }
-        // The Workflows chip is NOT in this list - it's a top-level sibling
-        // now (see body's own showSchedulingWorkflows block), not part of
-        // deskCardsLayer, so it isn't part of this layer's own collision
-        // math either.
-        return rects
+        .frame(width: viewport.width, height: viewport.height, alignment: .topLeading)
     }
 
     /// Cards laid out top-leading + offset (not `.position`) so hit bounds match the card.
@@ -1398,6 +1567,25 @@ struct FieldDeskView: View {
             if focused { cornerResizeGrip(for: id) }
         }
         .contentShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+        // No wrapper .accessibilityIdentifier on this composited view -
+        // confirmed (Binder card, then this one) that combining
+        // .compositingGroup() with an identifier here clobbers every nested
+        // control's own identifier in the exposed accessibility tree (full
+        // tree dump showed Close/tool buttons/text fields all reporting the
+        // SAME wrapper identifier instead of their own). The invisible
+        // marker below carries "card exists at id X" instead, since it's a
+        // leaf with no identified children of its own to clobber.
+        .overlay(alignment: .topLeading) {
+            // Fills the card's own bounds (not a tiny point) so
+            // `coordinate(withNormalizedOffset:)` against this marker still
+            // maps onto the real card area, matching what callers got from
+            // the old wrapper identifier.
+            Text(verbatim: "card")
+                .font(.system(size: 1)).foregroundColor(.clear)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .accessibilityIdentifier("fieldDeskCard_\(id.rawValue)")
+                .allowsHitTesting(false)
+        }
         .compositingGroup()
         // Apple-style pick-up lift: subtle scale + deeper shadow while the
         // card is actively being dragged, spring-settles back on release.
@@ -1413,7 +1601,6 @@ struct FieldDeskView: View {
             x: base.x + settled.width + live.width + size.width / 2,
             y: base.y + settled.height + live.height + size.height / 2
         )
-        .accessibilityIdentifier("fieldDeskCard_\(id.rawValue)")
     }
 
     @ViewBuilder
@@ -1460,7 +1647,12 @@ struct FieldDeskView: View {
             x: base.x + settled.width + live.width + size.width / 2,
             y: base.y + settled.height + live.height + size.height / 2
         )
-        .accessibilityIdentifier("fieldDeskRepositoryCard")
+        // No wrapper identifier here - the Binder card's own nested content
+        // (ACT Field Book, filed items) needs its own distinct identifiers,
+        // and a wrapper one clobbers every one of them in the accessibility
+        // tree (confirmed via a full tree dump: Close, ACT Field Book, and
+        // the resize grip all reported the same identifier). Same lesson
+        // already applied to ArchiveWorkflowView/BookWorkflowView.
     }
 
     private func closeDeskPanel(_ id: DeskCardID) {
@@ -1488,6 +1680,7 @@ struct FieldDeskView: View {
             placedWidgets.remove(.slides)
         }
         if focusedCard == id { focusedCard = nil }
+        saveDeskLayout()
     }
 
     private func cardMoveGesture(_ id: DeskCardID) -> some Gesture {
@@ -1531,6 +1724,7 @@ struct FieldDeskView: View {
                     height: prev.height + effective.height
                 )
                 cardDrag[id] = .zero
+                saveDeskLayout()
             }
     }
 
@@ -1571,6 +1765,7 @@ struct FieldDeskView: View {
                     withAnimation(.spring(response: 0.32, dampingFraction: 0.75)) {
                         resizingCard = nil
                     }
+                    saveDeskLayout()
                 }
         )
         .accessibilityIdentifier("fieldDeskResize_\(id.rawValue)")
@@ -1599,9 +1794,10 @@ struct FieldDeskView: View {
                 DashboardView(embeddedInDesk: true, onDeskHome: {
                     // Already on the dash stage — Home means dash Home tab
                     // (handled inside DashboardView when embedded).
-                })
+                }, pendingConceptId: pendingStudyConceptId)
                     .environmentObject(studentStore)
                     .environmentObject(authService)
+                    .onDisappear { pendingStudyConceptId = nil }
             }
             .frame(width: w, height: h)
             .background(
@@ -3180,6 +3376,17 @@ struct FieldDeskView: View {
                 if let line = action.payload?.trimmingCharacters(in: .whitespacesAndNewlines), !line.isEmpty {
                     store.prependIntel(line)
                 }
+            case "study_concept":
+                if let conceptId = action.payload?.trimmingCharacters(in: .whitespacesAndNewlines), !conceptId.isEmpty {
+                    pendingStudyConceptId = conceptId
+                    showBlankPage = false
+                    showGmailBox = false
+                    showApplyToday = false
+                    showDocCook = false
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        showActFieldBook = true
+                    }
+                }
             default:
                 break
             }
@@ -3208,6 +3415,28 @@ struct FieldDeskView: View {
         }
         if args.contains("--ui-testing-field-desk-add") {
             DispatchQueue.main.asyncAfter(deadline: .now() + 8.0) { showAddPanel = true }
+        }
+        // Straight to a populated Gmail box - real OAuth isn't available in
+        // this environment, so this exercises the digest/archive UI against
+        // seeded messages instead of a live inbox fetch. The digest call
+        // itself still hits the real deployed webhook (no seam there) -
+        // this only bypasses Google Sign-In.
+        if args.contains("--ui-testing-gmail-digest") {
+            GmailClient.shared.seedForTesting(messages: [
+                GmailClient.Message(
+                    id: "1", threadId: "t1", from: "Ms. Park", fromEmail: "park@school.edu",
+                    subject: "Quadratic problem set due Friday",
+                    snippet: "Please submit problems 1-20 by Friday 3pm. Late work not accepted.",
+                    dateLabel: "Mon", rfcMessageId: ""
+                ),
+                GmailClient.Message(
+                    id: "2", threadId: "t2", from: "Dr. Nguyen", fromEmail: "nguyen@school.edu",
+                    subject: "Lab groups posted",
+                    snippet: "Check the portal for your assigned lab group for the titration experiment.",
+                    dateLabel: "Tue", rfcMessageId: ""
+                ),
+            ])
+            showGmailBox = true
         }
     }
 }

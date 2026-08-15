@@ -4,6 +4,86 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-15 — Researcher tick: Part CL Dual-capacity hire vs contract SME panels (SAFE-SURGEPANEL)
+
+**Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch150 never written → prefer Researcher per rotation; researcher count since synthesizer v1.18 = 7 → Researcher)  
+**Chapter written:** `chapters/150_dual_capacity_hire_vs_contract_sme_panels.md` (Part CL)  
+**Claim examined:** Whether exam-week dual-minute spikes should be met by **hire-surge theater**, **unsealed contract SME dumps**, or a **staff-led portfolio** (Lepak–Snell modes × Davis-Blake externalization) with parallel-run gates, `dual_source` tags into REPAIRSTRAT, and FILLETA surge honesty.
+
+**Doctrine proposed (provisional):** **SAFE-SURGEPANEL** — densifies SAFE-CAPPLAN × SAFE-LOADSHED × SAFE-WORKFORCE (+ DUALRATE/REPAIRSTRAT/TMPTRUST) + Davis-Blake & Uzzi / Lepak & Snell / Broschak & Davis-Blake / Kalleberg et al. / Taylor-Phillips dual-read process / Kane IUA: portfolio make-or-buy; seals before C4; no Surge Hire % NS. Experiment family **SURGEPANEL-***.
+
+**Evidence spine (verified citations):** Davis-Blake & Uzzi (1993); Lepak & Snell (1999); Broschak & Davis-Blake (2006); Davis-Blake, Broschak, & George (2003); Kalleberg, Reskin, & Hudson (2000); Taylor-Phillips et al. (2018); Taylor-Phillips & Stinton (2020); Kane (2013).
+
+**Claim killed (this tick):** Dual Rater Score™·Surge Hire %·Contract Minutes NS / hire-surge theater / unsealed Discord-freelancer≡second rater / always-hire or always-contract dogma / hospital-surge-cosplay dual ads / complete-visual-by-exam-week or ACT guarantees from surge packaging (provisional kill #104 until synthesizer).
+
+**Experiments:** SURGEPANEL-1…5 + SURGEPANEL-QUAL.
+
+**Next researcher id:** **151** (Template-trust revoke & sample-dual cadence). Researcher count since v1.18 synthesizer: **8** → next eligible synthesizer slot when rotation says so (hour%6≠0 and ≥8 researchers). Unfinished queue was dropping to 2 → promoted stubs **153–154** this tick.
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-15 — Researcher tick: Part CXLIX Post-promote repair stratified dashboards (SAFE-REPAIRSTRAT)
+
+**Tick type:** Researcher (UTC hour 09 → Researcher; hour%6≠0; researcher count since synthesizer v1.18 = 6 → Researcher)  
+**Chapter written:** `chapters/149_post_promote_repair_stratified_dashboards.md` (Part CXLIX)  
+**Claim examined:** Whether post-promote integrity may be sold as a **pooled Kappa %** / Dual Rater Score™, or must use **path-stratified repair + contingency drill-downs** (single vs dual vs inherit) so TMPTRUST revoke and DUALRATE retune see which admit path is poisoning Map.
+
+**Doctrine proposed (provisional):** **SAFE-REPAIRSTRAT** — densifies SAFE-DUALRATE × SAFE-PROMOTE × SAFE-INSTRUMENT (+ TMPTRUST/CAPPLAN) + Cohen κ / Landis–Koch / Feinstein–Cicchetti paradoxes / Myford–Wolfe DRIFT / Sgammato–Donoghue trend scoring / Kane IUA: stratify first; κ is drill-down not NS. Experiment family **REPAIRSTRAT-***.
+
+**Evidence spine (verified citations):** Cohen (1960); Landis & Koch (1977); Feinstein & Cicchetti (1990); Cicchetti & Feinstein (1990); Myford & Wolfe (2009); Sgammato & Donoghue (2017); Kane (2013).
+
+**Claim killed (this tick):** Kappa %·Dual Rater Score™·Agreement Minutes NS / pooled-only repair vanity / Landis–Koch “almost perfect” marketing / unconditioned dual-shame boards / IRR packaging as ACT or complete-visual guarantee (provisional kill #103 until synthesizer).
+
+**Experiments:** REPAIRSTRAT-1…5 + REPAIRSTRAT-QUAL.
+
+**Next researcher id:** **150** (Dual-capacity hire vs contract SME panels). Researcher count since v1.18 synthesizer: **7**. Unfinished queue was dropping to 2 (150–151) → promoted id **152** stub this tick.
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-15 — Researcher tick: Part CXLVIII Template-trust inheritance after first-of-cell dual (SAFE-TMPTRUST)
+
+**Tick type:** Researcher (UTC hour 06 ≡ Red Team slot, but ch148 never written → prefer Researcher per rotation; researcher count since synthesizer v1.18 = 5 → Researcher)  
+**Chapter written:** `chapters/148_template_trust_inheritance_first_of_cell_dual.md` (Part CXLVIII)  
+**Claim examined:** Whether after T5 blueprint dual, isomorphic clones may **silently inherit** single-rater promote, stay **forever-dual**, or must use **conditional template trust** (sealed `template_id`+FAMHASH, instance seals, sample dual, revoke-on-repair) so CAPPLAN dual minutes compound without Map poison.
+
+**Doctrine proposed (provisional):** **SAFE-TMPTRUST** — densifies SAFE-DUALRATE × SAFE-FAMHASH × SAFE-FIGKEY × SAFE-CAPPLAN × SAFE-PROMOTE + Gierl item-model / Sinharay family calibration / Glas clone variability / Kane IUA / ISO 2859 sampling analogy: inherit review intensity, never seals. Experiment family **TMPTRUST-***.
+
+**Evidence spine (verified citations):** Gierl & Lai (2012); Gierl, Lai, & Turner (2012); Sinharay, Johnson, & Williamson (2003); Glas & van der Linden (2003); Kane (2013); ISO 2859-1:1999 (transfer analogy).
+
+**Claim killed (this tick):** Forever-dual sealed clones after blueprint dual / silent inherit without template+family seals / Template Trust Score™·Inherit %·Family Calibration Score™ NS / first dual ≡ forever trust without sample audit / embedding-only inheritance / FERF≡C4-ready ads / ACT or complete-visual guarantees from template-inheritance packaging (provisional kill #102 until synthesizer).
+
+**Experiments:** TMPTRUST-1…5 + TMPTRUST-QUAL.
+
+**Next researcher id:** **149** (Post-promote repair stratified dashboards). Researcher count since v1.18 synthesizer: **6**. Unfinished queue was dropping to 2 (149–150) → promoted id **151** stub this tick.
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-15 — Researcher tick: Part CXLVII Dual-rater capacity planning vs FILLETA (SAFE-CAPPLAN)
+
+**Tick type:** Researcher (UTC hour 00 ≡ Red Team slot, but ch147 never written → prefer Researcher per rotation; researcher count since synthesizer v1.18 = 4 → Researcher)  
+**Chapter written:** `chapters/147_dual_rater_capacity_planning_filleeta.md` (Part CXLVII)  
+**Claim examined:** Whether dual-required figured C4 admits may use **FILLETA bands that omit dual minutes**, **ETA-skipped dual under backlog heat**, **always-dual costume without FTE**, or **Dual Rater Score™ / 100% util plans** — or must treat **dual minutes as first-class capacity** (Little \(L=\lambda W\) × Hopp–Spearman buffers × Wing–Langelier workforce multiplier) so parent clocks stay honest.
+
+**Doctrine proposed (provisional):** **SAFE-CAPPLAN** — densifies SAFE-DUALRATE × SAFE-FILLETA × SAFE-WORKFORCE + Little/Hopp–Spearman/Wing–Langelier/Maister–Whitt: dual-aware estimator, util headroom, named dual constraint, never clear T1–T6 for ETA. Experiment family **CAPPLAN-***.
+
+**Evidence spine (verified citations):** Little (1961); Hopp & Spearman (2011); Wing & Langelier (2009); Posso et al. (2016); Brown et al. (1996); Maister (1985); Whitt (1999); Kane (2013).
+
+**Claim killed (this tick):** Dual-omitted FILLETA / ETA-skipped dual / always-dual without dual FTE / 100% dual-util plans / Dual Rater Score™·Capacity Score™·Reviewer Minutes NS / hospital-cosplay dual-capacity ads / complete-visual-by-date or ACT guarantees from dual capacity packaging (provisional kill #101 until synthesizer).
+
+**Experiments:** CAPPLAN-1…5 + CAPPLAN-QUAL.
+
+**Next researcher id:** **148** (Template-trust inheritance after first-of-cell dual admit). Researcher count since v1.18 synthesizer: **5**. Unfinished queue still ≥3 (148–150); promoted id 150 stub this tick.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-14 — Researcher tick: Part CXLVI Gap-scan exit emotion without Anxiety Score™ (SAFE-EXITEMO)
 
 **Tick type:** Researcher (UTC hour 21; hour%6≠0; researcher count since synthesizer v1.18 = 3 → Researcher)  

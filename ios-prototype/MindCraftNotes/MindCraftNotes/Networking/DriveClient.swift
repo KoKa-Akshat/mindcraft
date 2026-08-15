@@ -12,7 +12,19 @@ final class DriveClient: ObservableObject {
     static let shared = DriveClient()
 
     static let driveReadonly = "https://www.googleapis.com/auth/drive.readonly"
+    /// Narrowest write scope that still lets the app manage its own
+    /// archive file - grants access only to files/folders THIS app
+    /// creates, never the student's other Drive content (unlike the
+    /// broad `drive` scope). Separate from `driveReadonly`, which only
+    /// ever reads inside the student-curated "The Desk" folder below -
+    /// mixing an app-written archive into that folder would be confusing
+    /// for a student who put it together themselves.
+    static let driveFile = "https://www.googleapis.com/auth/drive.file"
     static let folderNames = ["The Desk", "MindCraft Desk"]
+    /// Dedicated, app-owned folder for the mail archive - distinct from
+    /// the read-only "The Desk" folder above.
+    static let archiveFolderName = "MindCraft Mail Archive"
+    static let archiveFileName = "mail_archive.json"
     static let enableURL = URL(
         string: "https://console.developers.google.com/apis/api/drive.googleapis.com/overview?project=1024068467805"
     )!
@@ -28,6 +40,8 @@ final class DriveClient: ObservableObject {
     @Published private(set) var folderName: String?
     @Published private(set) var isBusy = false
     @Published private(set) var hasDriveScope = false
+    @Published private(set) var hasDriveFileScope = false
+    @Published private(set) var isArchiving = false
     @Published var lastError: String?
     @Published var enableApiURL: URL?
     @Published var toast: String?
@@ -39,9 +53,12 @@ final class DriveClient: ObservableObject {
     func refreshScopeStatus() {
         guard let user = GIDSignIn.sharedInstance.currentUser else {
             hasDriveScope = false
+            hasDriveFileScope = false
             return
         }
-        hasDriveScope = (user.grantedScopes ?? []).contains { $0.lowercased().contains("drive") }
+        let scopes = (user.grantedScopes ?? []).map { $0.lowercased() }
+        hasDriveScope = scopes.contains { $0.contains("drive") }
+        hasDriveFileScope = scopes.contains { $0.contains("drive.file") || $0.contains("auth/drive ") || $0 == "https://www.googleapis.com/auth/drive" }
     }
 
     func connectAndReadFolder() async -> [DeskFile] {
@@ -134,6 +151,147 @@ final class DriveClient: ObservableObject {
         return out
     }
 
+    // MARK: - Mail archive (student's own Drive as a durable data store)
+
+    struct ArchivedEmail: Codable {
+        var date: String
+        var from: String
+        var subject: String
+        var snippet: String
+        var why: String
+    }
+
+    /// Appends `messages` (already-fetched inbox previews, paired with the
+    /// AI digest's per-message reasoning where available) to a single
+    /// growing JSON log in a dedicated, app-owned Drive folder - "the
+    /// emails... like a data moat in their own Google Drive": durable,
+    /// student-owned, outside MindCraft's own backend. Requests
+    /// `drive.file` the first time (separate from `driveReadonly`, which
+    /// this feature doesn't need at all - archiving doesn't read "The
+    /// Desk" folder). Read-modify-write, not a true API-level append:
+    /// `drive.file` scope only ever sees files this app itself created, so
+    /// reading the existing archive back to merge new entries in is safe
+    /// and always available to a session that holds the scope.
+    @discardableResult
+    func archiveEmails(_ messages: [GmailClient.Message], digest: GmailDigestClient.Digest?) async -> Bool {
+        lastError = nil
+        refreshScopeStatus()
+        guard let presenter = Self.topViewController() else {
+            lastError = "Couldn't open Google permission sheet."
+            return false
+        }
+
+        isArchiving = true
+        defer { isArchiving = false }
+
+        do {
+            if !hasDriveFileScope {
+                _ = try await Self.signIn(from: presenter, scopes: [Self.driveFile])
+                refreshScopeStatus()
+                if !hasDriveFileScope, let user = GIDSignIn.sharedInstance.currentUser {
+                    _ = try await Self.addScopes([Self.driveFile], user: user, from: presenter)
+                    refreshScopeStatus()
+                }
+            }
+            guard hasDriveFileScope else {
+                lastError = "Google didn't share Drive write access. Tap again and allow The Desk."
+                return false
+            }
+            guard let user = GIDSignIn.sharedInstance.currentUser else {
+                lastError = "Google session missing."
+                return false
+            }
+            let token = try await Self.refreshUser(user).accessToken.tokenString
+
+            let why: [String: String] = Dictionary(
+                uniqueKeysWithValues: ((digest?.actionItems ?? []) + (digest?.fyi ?? [])).map { ($0.subject, $0.why) }
+            )
+            let newEntries = messages.map {
+                ArchivedEmail(date: $0.dateLabel, from: $0.from, subject: $0.subject, snippet: $0.snippet, why: why[$0.subject] ?? "")
+            }
+
+            let folderId = try await findOrCreateFolder(name: Self.archiveFolderName, token: token)
+            let (fileId, existing) = try await findOrCreateArchiveFile(in: folderId, token: token)
+
+            // Dedupe on (from, subject, date) so re-archiving the same
+            // fetched inbox (e.g. a second "Archive to Drive" tap) doesn't
+            // pile up duplicate entries.
+            var seen = Set(existing.map { "\($0.from)|\($0.subject)|\($0.date)" })
+            var merged = existing
+            for entry in newEntries {
+                let key = "\(entry.from)|\(entry.subject)|\(entry.date)"
+                guard !seen.contains(key) else { continue }
+                seen.insert(key)
+                merged.append(entry)
+            }
+
+            let data = try JSONEncoder().encode(merged)
+            try await Self.uploadMedia(fileId: fileId, data: data, token: token)
+            flash("Archived \(newEntries.count) email\(newEntries.count == 1 ? "" : "s") to Drive")
+            return true
+        } catch {
+            if Self.isCancel(error) { return false }
+            lastError = "Couldn't archive to Drive right now."
+            return false
+        }
+    }
+
+    private func findOrCreateFolder(name: String, token: String) async throws -> String {
+        let q = "name='\(name)' and mimeType='application/vnd.google-apps.folder' and trashed=false"
+        if let url = Self.filesURL(query: q, fields: "files(id,name)") {
+            let json = try await Self.getJSON(url: url, token: token)
+            if let row = (json["files"] as? [[String: Any]])?.first, let id = row["id"] as? String {
+                return id
+            }
+        }
+        let created = try await Self.postJSON(
+            url: URL(string: "https://www.googleapis.com/drive/v3/files")!,
+            token: token,
+            body: ["name": name, "mimeType": "application/vnd.google-apps.folder"]
+        )
+        guard let id = created["id"] as? String else {
+            throw NSError(domain: "DriveClient", code: -1, userInfo: [NSLocalizedDescriptionKey: "Couldn't create archive folder"])
+        }
+        return id
+    }
+
+    /// Returns the file id and its currently-stored entries (empty if the
+    /// file was just created).
+    private func findOrCreateArchiveFile(in folderId: String, token: String) async throws -> (String, [ArchivedEmail]) {
+        let q = "name='\(Self.archiveFileName)' and '\(folderId)' in parents and trashed=false"
+        if let url = Self.filesURL(query: q, fields: "files(id,name)") {
+            let json = try await Self.getJSON(url: url, token: token)
+            if let row = (json["files"] as? [[String: Any]])?.first, let id = row["id"] as? String {
+                let mediaURL = URL(string: "https://www.googleapis.com/drive/v3/files/\(id)?alt=media")!
+                let text = (try? await Self.getText(url: mediaURL, token: token)) ?? ""
+                let existing = (try? JSONDecoder().decode([ArchivedEmail].self, from: Data(text.utf8))) ?? []
+                return (id, existing)
+            }
+        }
+        let created = try await Self.postJSON(
+            url: URL(string: "https://www.googleapis.com/drive/v3/files")!,
+            token: token,
+            body: ["name": Self.archiveFileName, "parents": [folderId], "mimeType": "application/json"]
+        )
+        guard let id = created["id"] as? String else {
+            throw NSError(domain: "DriveClient", code: -1, userInfo: [NSLocalizedDescriptionKey: "Couldn't create archive file"])
+        }
+        return (id, [])
+    }
+
+    private static func uploadMedia(fileId: String, data: Data, token: String) async throws {
+        var req = URLRequest(url: URL(string: "https://www.googleapis.com/upload/drive/v3/files/\(fileId)?uploadType=media")!)
+        req.httpMethod = "PATCH"
+        req.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        req.httpBody = data
+        let (respData, resp) = try await URLSession.shared.data(for: req)
+        if let http = resp as? HTTPURLResponse, !(200...299).contains(http.statusCode) {
+            let body = String(data: respData, encoding: .utf8) ?? ""
+            throw NSError(domain: "DriveClient", code: http.statusCode, userInfo: [NSLocalizedDescriptionKey: "Upload failed \(body.prefix(120))"])
+        }
+    }
+
     private func extractText(id: String, name: String, mime: String, token: String) async throws -> String {
         if mime == "application/vnd.google-apps.document" {
             let url = URL(string: "https://www.googleapis.com/drive/v3/files/\(id)/export?mimeType=text/plain")!
@@ -218,6 +376,21 @@ final class DriveClient: ObservableObject {
     private static func getText(url: URL, token: String) async throws -> String {
         let data = try await getData(url: url, token: token)
         return String(data: data, encoding: .utf8) ?? ""
+    }
+
+    private static func postJSON(url: URL, token: String, body: [String: Any]) async throws -> [String: Any] {
+        var req = URLRequest(url: url)
+        req.httpMethod = "POST"
+        req.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        req.httpBody = try JSONSerialization.data(withJSONObject: body)
+        let (data, resp) = try await URLSession.shared.data(for: req)
+        if let http = resp as? HTTPURLResponse, !(200...299).contains(http.statusCode) {
+            let respBody = String(data: data, encoding: .utf8) ?? ""
+            throw NSError(domain: "DriveClient", code: http.statusCode, userInfo: [NSLocalizedDescriptionKey: "HTTP \(http.statusCode) \(respBody.prefix(160))"])
+        }
+        if data.isEmpty { return [:] }
+        return (try JSONSerialization.jsonObject(with: data)) as? [String: Any] ?? [:]
     }
 
     private static func getData(url: URL, token: String) async throws -> Data {

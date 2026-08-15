@@ -16,10 +16,14 @@ import Anthropic from '@anthropic-ai/sdk'
 import { setCors } from '../cors'
 import { loadHistory, saveExchange } from '../conversationStore'
 import { verifyToken } from '../verifyToken'
+import concepts from '../../data/concepts.json'
 
 const client = new Anthropic()
 const MODEL = 'claude-sonnet-4-20250514'
 const MAX_ITERATIONS = 4
+
+const CONCEPTS = concepts as { id: string; label: string }[]
+const CONCEPT_IDS = CONCEPTS.map((c) => c.id)
 
 type DeskActionType =
   | 'open_gmail'
@@ -28,6 +32,7 @@ type DeskActionType =
   | 'open_connect'
   | 'refresh_calendar'
   | 'prepend_intel'
+  | 'study_concept'
 
 interface DeskAction {
   type: DeskActionType
@@ -100,9 +105,10 @@ function deskConversationId(studentId: string): string {
 }
 
 function buildSystemPrompt(): string {
+  const conceptList = CONCEPTS.map((c) => `${c.id} (${c.label})`).join(', ')
   return `You are the MindCraft Desk Operator. Students ask you from Ask MindCraft on Field Desk / Dash.
 
-Personality: calm, practical, short. Help them run their desk (calendar, mail, connect, apply, binder, intel, Moodle).
+Personality: calm, practical, short. Help them run their desk (calendar, mail, connect, apply, binder, intel, Moodle, and studying a topic).
 Never use em dashes. Never say you are an AI.
 Keep replies to 1-3 short sentences.
 When you use desk facts, say where they came from (from your calendar, from intel, from binder).
@@ -117,6 +123,7 @@ Tools:
 - recommend_workflow: pick the best next workflow from linked connectors, file a short intel tip, and optionally open the right surface.
 - propose_action: open Gmail, Apply today, Connect, or refresh calendar.
 - note_for_intel: file one short useful line into intel.
+- propose_study_concept: open a real ACT concept chapter. The ONLY valid concept ids are: ${conceptList}.
 
 Rules:
 - Do not invent emails, binder files, or calendar events that are not in desk context.
@@ -124,7 +131,8 @@ Rules:
 - If few connectors are linked, recommend which one to connect next and why.
 - Prefer recommend_workflow when the student asks what to do, how to organize, or how to use linked tools.
 - Prefer actions over long instructions when the student wants to open something.
-- If they ask to open top mail / draft a reply / ready response to send: use propose_action open_gmail_top_reply.`
+- If they ask to open top mail / draft a reply / ready response to send: use propose_action open_gmail_top_reply.
+- If the student says something like "I want to study X" or "help me with X": if X clearly matches one of the real concept ids/labels above, call propose_study_concept with that exact id. If it's ambiguous or doesn't match anything real (MindCraft only covers ACT math right now, not every topic), do NOT guess. Ask one short clarifying question instead, or say plainly that topic isn't in the ACT concept set yet.`
 }
 
 const TOOLS: Anthropic.Messages.Tool[] = [
@@ -192,6 +200,21 @@ const TOOLS: Anthropic.Messages.Tool[] = [
       required: ['line'],
     },
   },
+  {
+    name: 'propose_study_concept',
+    description: 'Open a real ACT concept chapter the student asked to study or get help with.',
+    input_schema: {
+      type: 'object',
+      properties: {
+        conceptId: {
+          type: 'string',
+          enum: CONCEPT_IDS,
+          description: 'The exact concept id from the valid list in the system prompt - never invented.',
+        },
+      },
+      required: ['conceptId'],
+    },
+  },
 ]
 
 function sliceContext(ctx: DeskContext, focus = 'all') {
@@ -214,12 +237,35 @@ function sliceContext(ctx: DeskContext, focus = 'all') {
   return { intel, binder, calendar, connected, openSurface: ctx.openSurface || 'desk', workflows }
 }
 
+/** Real ids only, never a guess: every word in the concept's own id/label
+ * (3+ chars) must appear in the message. A student saying "study fractals"
+ * (not a real MindCraft concept) correctly matches nothing here rather than
+ * grabbing the closest-sounding real concept. */
+function matchConcept(message: string): { id: string; label: string } | null {
+  const s = message.toLowerCase()
+  for (const c of CONCEPTS) {
+    const words = `${c.id.replace(/_/g, ' ')} ${c.label}`
+      .toLowerCase()
+      .split(/[^a-z0-9]+/)
+      .filter((w) => w.length > 2)
+    if (words.length && words.every((w) => s.includes(w))) return c
+  }
+  return null
+}
+
 function keywordFallback(message: string, ctx: DeskContext): { reply: string; actions: DeskAction[] } {
   const s = message.toLowerCase()
   const actions: DeskAction[] = []
   const cal = (ctx.calendarEvents || []).slice(0, 4)
   const intel = (ctx.intelLines || []).slice(0, 3)
 
+  if (/study|practice|help me with|work on/.test(s)) {
+    const concept = matchConcept(message)
+    if (concept) {
+      actions.push({ type: 'study_concept', payload: concept.id })
+      return { reply: `Opening ${concept.label}.`, actions }
+    }
+  }
   if (/mail|gmail|inbox|email/.test(s)) {
     if (/reply|response|send|top|ready/.test(s)) {
       actions.push({ type: 'open_gmail_top_reply' })
@@ -332,6 +378,15 @@ async function runDeskLoop(
             result = JSON.stringify({ ok: true, type })
           } else {
             result = JSON.stringify({ ok: false, error: 'unknown action' })
+          }
+        } else if (block.name === 'propose_study_concept') {
+          const conceptId = String(input.conceptId || '')
+          const match = CONCEPTS.find((c) => c.id === conceptId)
+          if (match) {
+            actions.push({ type: 'study_concept', payload: match.id })
+            result = JSON.stringify({ ok: true, concept: match })
+          } else {
+            result = JSON.stringify({ ok: false, error: 'not a real concept id, do not guess' })
           }
         } else if (block.name === 'note_for_intel') {
           const line = String(input.line || '')

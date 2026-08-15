@@ -2,56 +2,7 @@
 (() => {
   const WEBHOOK = 'https://mindcraft-webhook.vercel.app/api/archive-rag';
   const WAIT_MS = 4000;
-  const SHELF = [
-    { slug: 'circuits', title: 'AI Circuits Course', subject: 'Engineering', cover: 'covers/circuits.jpg',
-      description: 'Learn electronic circuits with AI-powered simulations and knowledge graphs.',
-      stats: '300 concepts · 16 chapters · 75 MicroSims' },
-    { slug: 'calculus', title: 'Calculus', subject: 'Mathematics', cover: 'covers/calculus.jpg',
-      description: 'Interactive Calculus textbook covering AB and BC curricula.',
-      stats: '380 concepts · 23 chapters · 123 MicroSims' },
-    { slug: 'fft-benchmarking', title: 'Real-Time DSP on a $5 Microcontroller', subject: 'Engineering', cover: 'covers/dsp.jpg',
-      description: 'FFT theory to the oscilloscope on a Raspberry Pi Pico 2.',
-      stats: '574 concepts · 27 chapters · 62 MicroSims' },
-    { slug: 'learning-micropython', title: 'Learning MicroPython with AI', subject: 'Programming', cover: 'covers/micropython.jpg',
-      description: 'Kids learn MicroPython on real chips.',
-      stats: '3 MicroSims · 81K words' },
-    { slug: 'raspberry-pi-stem', title: 'Learning STEM with Raspberry Pi Hardware', subject: 'STEM', cover: 'covers/raspberry-pi.jpg',
-      description: 'Raspberry Pi as a STEM classroom.',
-      stats: '531 concepts · 20 chapters · 99 MicroSims' },
-    { slug: 'beginning-electronics', title: 'Beginning Electronics with AI', subject: 'Engineering', cover: 'covers/electronics.jpg',
-      description: 'Electronics basics for junior and high school.',
-      stats: '9 MicroSims · 21K words' },
-    { slug: 'biology', title: 'Biology: An Interactive Course', subject: 'Life Sciences', cover: 'covers/biology.jpg',
-      description: 'Advanced high school biology with college-credit focus.',
-      stats: '380 concepts · 20 chapters · 86 MicroSims' },
-    { slug: 'chemistry', title: 'Chemistry', subject: 'Chemistry', cover: 'covers/chemistry.jpg',
-      description: 'College-credit chemistry with interactive simulations.',
-      stats: '500 concepts · 18 chapters · 46 MicroSims' },
-    { slug: 'intro-to-physics-course', title: 'Introduction to Physics', subject: 'Physics', cover: 'covers/physics.jpg',
-      description: 'Motion and energy for a year-long intro course.',
-      stats: '200 concepts · 13 chapters · 104 MicroSims' },
-    { slug: 'learning-python', title: 'Learning Python', subject: 'Computer Science', cover: 'covers/python.jpg',
-      description: 'Python from fifth grade onward.',
-      stats: '450 concepts · 38 chapters · 31 MicroSims' },
-    { slug: 'computer-science', title: 'Computer Science with Python', subject: 'Computer Science', cover: 'covers/computer-science.jpg',
-      description: 'College-credit computer science.',
-      stats: '400 concepts · 20 chapters · 121 MicroSims' },
-    { slug: 'quantum-computing', title: "A Skeptic's Guide to Quantum Computing", subject: 'Physics', cover: 'covers/quantum.jpg',
-      description: 'Why quantum computing may never be economically viable.',
-      stats: '241 concepts · 17 chapters · 52 MicroSims' },
-    { slug: 'linear-algebra', title: 'Linear Algebra for AI and Machine Learning', subject: 'Mathematics', cover: 'covers/linear-algebra.jpg',
-      description: 'Abstract algebra bridged to AI.',
-      stats: '300 concepts · 15 chapters · 126 MicroSims' },
-    { slug: 'algebra-1', title: 'Algebra I', subject: 'Mathematics', cover: 'covers/algebra.jpg',
-      description: 'Introductory algebra with interactive simulations.',
-      stats: '200 concepts · 13 chapters · 13 MicroSims' },
-    { slug: 'geometry-course', title: 'AI Assisted Geometry', subject: 'Mathematics', cover: 'covers/geometry.jpg',
-      description: 'High-school geometry using MicroSims.',
-      stats: '200 concepts · 12 chapters · 173 MicroSims' },
-    { slug: 'hydroponics', title: 'Hydroponics: From Mason Jar to Vertical Farm', subject: 'Agriculture', cover: 'covers/hydroponics.jpg',
-      description: 'Hydroponic plant systems, mason jar to farm.',
-      stats: '500 concepts · 21 chapters · 30 MicroSims' },
-  ];
+  let SHELF = [];
   const STOP = new Set(['the','and','for','with','that','this','from','what','how','why','are','was','can','you','your','about','into','book','page','open','show','tell','please','jesse','plan','study']);
   const TIME_LABEL = { 15: '15 minutes', 45: '45 minutes', 120: '2 hours', week: 'this week' };
   const TONES = ['mustard', 'teal', 'magenta', 'olive', 'lavender', 'forest', 'lime'];
@@ -292,7 +243,12 @@
       const res = await fetch(WEBHOOK, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text, minutes: plan.minutes, interest: plan.interest }),
+        body: JSON.stringify({
+          message: text,
+          minutes: plan.minutes,
+          interest: plan.interest,
+          studentWeakness: window.__mcWeakness || null,
+        }),
       });
       if (res.ok) {
         const data = await res.json();
@@ -366,10 +322,17 @@
     btn.addEventListener('pointerleave', stop);
   }
 
+  function visibleShelf() {
+    const q = (($('shelfSearch') || {}).value || '').trim().toLowerCase();
+    if (!q) return SHELF;
+    return SHELF.filter((b) => (b.title + ' ' + b.subject + ' ' + b.description).toLowerCase().includes(q));
+  }
+
   function renderShelf() {
-    $('shelfGrid').innerHTML = SHELF.map((b) => `
+    const rows = visibleShelf();
+    $('shelfGrid').innerHTML = rows.map((b) => `
       <button class="tcard" type="button" data-slug="${esc(b.slug)}">
-        <img src="${esc(b.cover)}" alt="">
+        <img src="${esc(b.cover)}" alt="${esc(b.title)}" onerror="this.style.background='#efe8d8'">
         <div class="body">
           <div class="cat">${esc(b.subject)}</div>
           <h2>${esc(b.title)}</h2>
@@ -426,11 +389,16 @@
   });
   bindHold($('recBtn'));
   bindHold($('callRec'));
-  renderShelf();
+  if ($('shelfSearch')) $('shelfSearch').addEventListener('input', renderShelf);
 
-  fetch('./chunks.json').then((r) => r.json()).then((data) => {
-    chunks = data.chunks || [];
+  Promise.all([
+    fetch('./books.json?v=c1').then((r) => r.json()).catch(() => ({ books: [] })),
+    fetch('./chunks.json').then((r) => r.json()).catch(() => ({ chunks: [] })),
+  ]).then(([booksData, chunkData]) => {
+    SHELF = booksData.books || [];
+    chunks = chunkData.chunks || [];
+    renderShelf();
     const q = new URLSearchParams(location.search).get('q');
     if (q) ask(q);
-  }).catch(() => {});
+  });
 })();

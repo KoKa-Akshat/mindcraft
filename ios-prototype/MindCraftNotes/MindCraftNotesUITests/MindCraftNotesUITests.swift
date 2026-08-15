@@ -16,6 +16,22 @@ import XCTest
 /// genuine pencil-vs-palm disambiguation on physical hardware. That needs
 /// a real device and is explicitly out of scope here (see
 /// PROTOTYPE_STATUS.md).
+///
+/// A known, understood source of cross-test flakiness in a FULL suite run
+/// (not a product bug): `--ui-testing-in-memory` only forces Core Data
+/// in-memory - it does not clear UserDefaults or other on-disk app state
+/// between tests, since `xcodebuild test` reuses the same app install
+/// across the whole run rather than reinstalling per test. Confirmed twice
+/// (testChapterViewLandscapeHasNoTextImageOverlap and
+/// testPracticeSessionChecksAnswerAndAttemptsToSaveOutcome, both real
+/// Dashboard/Contents navigation tests): failed in a full-suite run,
+/// failed again back-to-back after another test ran first, then passed
+/// cleanly every time when run alone against a freshly-uninstalled app
+/// (`xcrun simctl uninstall <device> com.mindcraft.notes.prototype.akshat`
+/// first). Real students never accumulate dozens of automated test runs
+/// in one install, so this isn't a real product bug - if a test in this
+/// class fails only in a full-suite run but passes solo after a fresh
+/// uninstall, that's this, not a regression.
 final class MindCraftNotesUITests: XCTestCase {
     override func setUpWithError() throws {
         continueAfterFailure = false
@@ -72,16 +88,6 @@ final class MindCraftNotesUITests: XCTestCase {
         start.press(forDuration: 0.05, thenDragTo: end)
     }
 
-    /// Waits for the stroke count label to read something other than
-    /// `notValue`, giving PencilKit's delegate callback and the SwiftUI
-    /// state update a moment to land instead of asserting immediately.
-    private func waitForStrokeCountLabel(_ app: XCUIApplication, toNotEqual notValue: String) {
-        let label = app.staticTexts["strokeCountLabel"]
-        let predicate = NSPredicate(format: "label != %@", notValue)
-        let expectation = XCTNSPredicateExpectation(predicate: predicate, object: label)
-        _ = XCTWaiter().wait(for: [expectation], timeout: 5)
-    }
-
     func testQuestionOneRendersWithRealBankContent() {
         let app = launchApp()
         // This is the LaTeXDisplayText-rendered form of eedi_37's raw bank
@@ -120,8 +126,22 @@ final class MindCraftNotesUITests: XCTestCase {
         app.buttons["Pencil + finger"].tap()
         dragAcrossCanvas(app)
 
-        waitForStrokeCountLabel(app, toNotEqual: "0 strokes")
-        XCTAssertNotEqual(strokeLabel.label, "0 strokes", "a touch must draw once Pencil + finger mode is selected")
+        // The floating toolbar (strokeCountLabel lives inside it) auto-hides
+        // itself the moment strokeCount > 0 - real, deliberate UX
+        // (QuestionView.writingModule's onChange(of: strokeCount), doc
+        // comment: "First strokes = working - tuck tools away for canvas
+        // room") - so its disappearance IS the proof a stroke landed, not
+        // something to route around. Reading the label's TEXT after drawing
+        // turned out not reliably possible: the value update and the hide
+        // are driven by the same state change and land in the same render
+        // pass, so there is no window where "correct value, still visible"
+        // exists to catch - confirmed via a full accessibility-tree dump
+        // (strokeCountLabel fully absent, everything else present) and
+        // three different reveal techniques (a targeted canvas drag - which
+        // also draws more ink and re-triggers the same hide, self-
+        // defeating in .anyInput mode; app.swipeDown(); a Q2/Q1 round trip),
+        // none of which ever caught a visible non-zero value.
+        XCTAssertTrue(strokeLabel.waitForNonExistence(timeout: 5), "toolbar should auto-hide once a real stroke lands in Pencil + finger mode")
     }
 
     func testDrawingPersistsAcrossQuestionSwitch() {
@@ -130,24 +150,22 @@ final class MindCraftNotesUITests: XCTestCase {
         app.buttons["Pencil + finger"].tap()
         dragAcrossCanvas(app)
 
+        // See testAnyInputModeAcceptsSimulatedTouch's comment - the
+        // toolbar's disappearance IS the proof a stroke landed.
         let strokeLabel = app.staticTexts["strokeCountLabel"]
-        waitForStrokeCountLabel(app, toNotEqual: "0 strokes")
-        let drawnValue = strokeLabel.label
-        XCTAssertNotEqual(drawnValue, "0 strokes")
+        XCTAssertTrue(strokeLabel.waitForNonExistence(timeout: 5), "toolbar should auto-hide once the first stroke lands")
 
         // Switching questions tears down and recreates the PKCanvasView
-        // (see CanvasView's .id(question.id)), so restoring the same
-        // count after switching away and back proves the round trip went
-        // through Core Data, not just an in-memory SwiftUI value that
-        // happened to survive.
+        // (see CanvasView's .id(question.id)) and reloads its drawing from
+        // Core Data. Q2 is untouched (starts empty), so its toolbar stays
+        // visible; switching back to Q1 should reload the just-drawn stroke
+        // and auto-hide again the same way a fresh draw would - if
+        // persistence silently dropped the stroke, Q1's reload would find 0
+        // strokes and its toolbar would stay visible instead of hiding.
         app.buttons["Q2"].tap()
-        XCTAssertTrue(app.staticTexts["strokeCountLabel"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["strokeCountLabel"].waitForExistence(timeout: 5), "expected Q2's toolbar visible - it starts with no ink")
         app.buttons["Q1"].tap()
-
-        let predicate = NSPredicate(format: "label == %@", drawnValue)
-        let expectation = XCTNSPredicateExpectation(predicate: predicate, object: strokeLabel)
-        let result = XCTWaiter().wait(for: [expectation], timeout: 5)
-        XCTAssertEqual(result, .completed, "drawing should be restored from Core Data after switching back to Q1")
+        XCTAssertTrue(app.staticTexts["strokeCountLabel"].waitForNonExistence(timeout: 5), "drawing should be restored from Core Data after switching back to Q1 - toolbar should auto-hide again")
     }
 
     /// Attaches a screenshot to the test result (`.keepAlways`, extracted
@@ -278,22 +296,92 @@ final class MindCraftNotesUITests: XCTestCase {
     // save. The success path needs a real signed-in account and is verified
     // separately (see the written status doc), not by this automated test.
 
-    private func launchDashboardApp() -> XCUIApplication {
+    /// Same boot wait as `launchDashboardApp`, stopping at Field Desk chrome
+    /// itself rather than tapping through to the ACT Field Book - for tests
+    /// that only need the Field Desk dock, not Dashboard content.
+    private func launchFieldDeskApp(extraArgs: [String] = []) -> XCUIApplication {
         let app = XCUIApplication()
-        app.launchArguments = ["--ui-testing-in-memory", "--ui-testing-skip-auth"]
+        app.launchArguments = ["--ui-testing-in-memory", "--ui-testing-skip-auth"] + extraArgs
         app.launch()
-        // Round 9, Brick 1 (DESK_OS_NATIVE_BRIEF.md): DashboardView is no
-        // longer AuthGate's direct post-login destination - the new
-        // DeskShellView is, with Dashboard reachable as its "ACT Field
-        // Book" instance card. Every existing test in this file was written
-        // against "launchDashboardApp() returns straight to Dashboard
-        // content," so tap through here rather than touch every individual
-        // test - keeps this helper's contract stable for its 14 existing
-        // callers instead of silently changing behavior under them.
-        let actFieldBook = app.buttons["deskInstance_actFieldBook"]
-        if actFieldBook.waitForExistence(timeout: 10) {
-            actFieldBook.tap()
-        }
+        XCUIDevice.shared.orientation = .landscapeLeft
+        XCTAssertTrue(app.buttons["fieldDeskModeToggle"].waitForExistence(timeout: 40), "expected Field Desk chrome after cold load")
+        let bootText = app.staticTexts["Your workspace is starting up"]
+        if bootText.exists { _ = bootText.waitForNonExistence(timeout: 90) }
+        return app
+    }
+
+    /// The actual architectural claim being tested: a Jesse call started
+    /// while one screen is up must still be there after dismissing that
+    /// screen's own UI, because `JesseCallSession` lives once at
+    /// `DeskShellView`'s root, not inside whichever view started the call.
+    /// Real STT/TTS can't be driven by an automated test (no simulator
+    /// microphone), so `--ui-testing-jesse-call` seeds an already-active
+    /// call with a fixed transcript (mirrors `--ui-testing-force-map`) -
+    /// this test is about the persistence claim, not the audio layer.
+    func testJesseCallPillPersistsAfterDismissingCallSheet() {
+        let app = launchFieldDeskApp(extraArgs: ["--ui-testing-jesse-call"])
+
+        let pill = app.buttons["jesseCallPill"]
+        XCTAssertTrue(pill.waitForExistence(timeout: 10), "expected the Jesse call pill to render at the Field Desk root")
+        pill.tap()
+
+        XCTAssertTrue(app.staticTexts["Can you help me with quadratic equations?"].waitForExistence(timeout: 10), "expected the seeded transcript to show in the call sheet")
+
+        let closeButton = app.buttons["Close"]
+        XCTAssertTrue(closeButton.waitForExistence(timeout: 5))
+        closeButton.tap()
+
+        // The real test: after closing the SHEET (not ending the call), the
+        // pill - and the call it represents - is still there.
+        XCTAssertTrue(pill.waitForExistence(timeout: 5), "expected the call pill to survive dismissing the call sheet")
+        pill.tap()
+        XCTAssertTrue(app.staticTexts["Can you help me with quadratic equations?"].waitForExistence(timeout: 5), "expected the same transcript, not a reset call")
+
+        app.buttons["jesseCallEnd"].tap()
+        XCTAssertTrue(pill.waitForNonExistence(timeout: 5), "expected the pill to disappear once the call actually ends")
+    }
+
+    private func launchDashboardApp(extraArgs: [String] = []) -> XCUIApplication {
+        let app = XCUIApplication()
+        app.launchArguments = ["--ui-testing-in-memory", "--ui-testing-skip-auth"] + extraArgs
+        app.launch()
+        XCUIDevice.shared.orientation = .landscapeLeft
+        // "Classic desk boot slide -> Field Desk (primary after login)"
+        // superseded Brick 1's hub-grid landing screen at some point after
+        // this helper was written: there is no `deskInstance_actFieldBook`
+        // card anymore (or any hub grid) at boot - DeskShellView.body now
+        // mounts FieldDeskView directly under the boot slide (see its
+        // `showWorkDesk`/`showBoot` state). Confirmed by grepping the whole
+        // app source: that identifier does not exist anywhere. The real
+        // current path to Dashboard content is Field Desk's Binder panel -
+        // ACT Field Book is a card inside it now
+        // (`fieldDeskBinderInstance_act_main`, FieldDeskView's `binderBody`),
+        // not a boot-time instance card. Every existing test in this file
+        // was written against "launchDashboardApp() returns straight to
+        // Dashboard content," so tap all the way through here rather than
+        // touch every individual test.
+        XCTAssertTrue(app.buttons["fieldDeskModeToggle"].waitForExistence(timeout: 40), "expected Field Desk chrome after cold load")
+        let bootText = app.staticTexts["Your workspace is starting up"]
+        if bootText.exists { _ = bootText.waitForNonExistence(timeout: 90) }
+
+        // Reveal the bottom dock (swipe up from the bottom edge, same
+        // gesture testFieldDeskPanZoomsAndRecenters uses), open the + Add
+        // panel, and place a Binder card so its ACT Field Book row exists.
+        let bottomEdge = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.98))
+        let midScreen = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.55))
+        bottomEdge.press(forDuration: 0.05, thenDragTo: midScreen)
+
+        let addButton = app.buttons["fieldDeskAdd"]
+        XCTAssertTrue(addButton.waitForExistence(timeout: 8), "expected + Add dock icon")
+        addButton.tap()
+
+        let addBinder = app.buttons["fieldDeskAddBinder"]
+        XCTAssertTrue(addBinder.waitForExistence(timeout: 5), "expected Binder row in the add panel")
+        addBinder.tap()
+
+        let actFieldBook = app.buttons["fieldDeskBinderInstance_act_main"]
+        XCTAssertTrue(actFieldBook.waitForExistence(timeout: 5), "expected ACT Field Book card in the Binder panel")
+        actFieldBook.tap()
         // DashboardView shows the once-per-session notebook CoverView the
         // first time it mounts in the process (`CoverSession.alreadySeen`,
         // real product behavior - opening the ACT Field Book instance IS
@@ -620,6 +708,56 @@ final class MindCraftNotesUITests: XCTestCase {
         }
     }
 
+    /// First real coverage for the Map tab (`KnowledgeMapView`) - previously
+    /// zero UI tests touched it. Uses `--ui-testing-force-map`
+    /// (`KnowledgeGraphClient.seedMockGraph`) to seed a small real
+    /// prerequisite chain instead of depending on a signed-in account's
+    /// backend data: `linear_equations` mastered unlocks `quadratic_equations`
+    /// (in progress), `systems_of_linear_equations` (struggling), and
+    /// `functions_basics` (untouched but ZPD-ready, since its only
+    /// prerequisite is mastered) - while `polynomial_functions` and
+    /// `derivatives` stay untouched-and-locked (their prerequisite chain
+    /// isn't mastered yet). Confirms both the new ready/locked legend entry
+    /// and that tapping "See path" actually reveals route steps on the
+    /// mocked ready node, not just that the button exists.
+    func testKnowledgeMapShowsZPDReadyVsLockedAndRevealsPath() {
+        let app = launchDashboardApp(extraArgs: ["--ui-testing-force-map"])
+
+        let mapTab = app.buttons.matching(NSPredicate(format: "label == %@", "Map")).firstMatch
+        XCTAssertTrue(mapTab.waitForExistence(timeout: 15), "expected the Map tab pill")
+        mapTab.tap()
+
+        let readyLegend = app.staticTexts["Ready to learn"]
+        XCTAssertTrue(readyLegend.waitForExistence(timeout: 10), "expected the new ZPD-ready legend entry")
+
+        let readyNode = app.buttons["mapNode_functions_basics"]
+        XCTAssertTrue(readyNode.waitForExistence(timeout: 10), "expected the mocked ZPD-ready node")
+        XCTAssertTrue(waitUntilHittable(readyNode), "ZPD-ready node should be hittable")
+        readyNode.tap()
+        attachScreenshot(app, name: "map_ready_node_selected")
+
+        let seePath = app.buttons["mapSeePath"]
+        XCTAssertTrue(seePath.waitForExistence(timeout: 5), "expected the See path button on the detail panel")
+        seePath.tap()
+
+        XCTAssertTrue(app.staticTexts["Your Next Route"].waitForExistence(timeout: 10), "expected the route panel to open")
+        // The mock reason text is unique to `RouteClient.plotRoute`'s
+        // `--ui-testing-force-map` seam, so finding it actually proves the
+        // route resolved and rendered - not just that some other element
+        // sharing a concept's name happens to be on screen elsewhere (the
+        // canvas node label for `linear_equations` would have satisfied a
+        // plain "Linear Equations" text search regardless of whether the
+        // route panel worked at all).
+        XCTAssertTrue(app.staticTexts["This is your target. Focus your practice here."].waitForExistence(timeout: 10), "expected the mocked route to resolve and show the target step's reason")
+        // The reveal task steps roughly every 0.26s per step; give the
+        // 2-step mock time to fully animate in before screenshotting.
+        Thread.sleep(forTimeInterval: 1.0)
+        attachScreenshot(app, name: "map_route_panel_revealed")
+
+        let lockedNode = app.buttons["mapNode_derivatives"]
+        XCTAssertTrue(lockedNode.waitForExistence(timeout: 5), "expected the mocked locked node")
+    }
+
     /// Real practice-session interaction: pick a choice, check the answer,
     /// and confirm the app actually attempts to record the outcome (see
     /// this section's class-level doc comment above for why the
@@ -629,6 +767,7 @@ final class MindCraftNotesUITests: XCTestCase {
         let app = launchDashboardApp()
         let node = app.buttons["conceptNode_fractions_decimals"]
         XCTAssertTrue(node.waitForExistence(timeout: 15))
+        XCTAssertTrue(waitUntilHittable(node), "fractions_decimals Contents dot should become hittable")
         node.tap()
         advanceToLastChapterPage(app)
         tapBeginPracticeThroughFormulaCard(app)
@@ -752,13 +891,29 @@ final class MindCraftNotesUITests: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments = ["--ui-testing-in-memory", "--ui-testing-skip-auth"]
         app.launch()
+        XCUIDevice.shared.orientation = .landscapeLeft
 
-        // Since Brick 1 the desk shell IS the launch surface - there is no
-        // cover before the hub (the notebook cover now lives inside the
-        // ACT Field Book instance, dismissed below after the tap).
-        let actFieldBook = app.buttons["deskInstance_actFieldBook"]
-        XCTAssertTrue(actFieldBook.waitForExistence(timeout: 10), "expected the desk shell's ACT Field Book instance card after boot")
+        // Superseded Brick 1's hub-grid boot screen - Field Desk is now the
+        // direct launch surface (see launchDashboardApp's doc comment), and
+        // ACT Field Book is a card inside its Binder panel, not a boot-time
+        // instance card.
+        XCTAssertTrue(app.buttons["fieldDeskModeToggle"].waitForExistence(timeout: 40), "expected Field Desk chrome after cold load")
+        let bootText = app.staticTexts["Your workspace is starting up"]
+        if bootText.exists { _ = bootText.waitForNonExistence(timeout: 90) }
         attachScreenshot(app, name: "desk_shell_before_tap")
+
+        let bottomEdge = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.98))
+        let midScreen = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.55))
+        bottomEdge.press(forDuration: 0.05, thenDragTo: midScreen)
+        let addButton = app.buttons["fieldDeskAdd"]
+        XCTAssertTrue(addButton.waitForExistence(timeout: 8), "expected + Add dock icon")
+        addButton.tap()
+        let addBinder = app.buttons["fieldDeskAddBinder"]
+        XCTAssertTrue(addBinder.waitForExistence(timeout: 5), "expected Binder row in the add panel")
+        addBinder.tap()
+
+        let actFieldBook = app.buttons["fieldDeskBinderInstance_act_main"]
+        XCTAssertTrue(actFieldBook.waitForExistence(timeout: 5), "expected ACT Field Book card in the Binder panel")
 
         actFieldBook.tap()
 
@@ -797,6 +952,18 @@ final class MindCraftNotesUITests: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments = ["--ui-testing-in-memory", "--ui-testing-skip-auth"]
         app.launch()
+        XCUIDevice.shared.orientation = .landscapeLeft
+
+        // Superseded Brick 1's hub-as-landing-screen: the hub (tutors map +
+        // workflow market + instance grid) now only opens as a fullScreenCover
+        // from Field Desk's "The Desk · Manage" wordmark
+        // (`fieldDeskLogoManage` -> posts .mcOpenHubFromDesk -> showHubPage).
+        XCTAssertTrue(app.buttons["fieldDeskModeToggle"].waitForExistence(timeout: 40), "expected Field Desk chrome after cold load")
+        let bootText = app.staticTexts["Your workspace is starting up"]
+        if bootText.exists { _ = bootText.waitForNonExistence(timeout: 90) }
+        let manageWordmark = app.buttons["fieldDeskLogoManage"]
+        XCTAssertTrue(manageWordmark.waitForExistence(timeout: 8), "expected The Desk · Manage wordmark on Field Desk")
+        manageWordmark.tap()
 
         // Round 27 hub: greeting → instances (no mastery/SET GOAL strip).
         // Call lives next to Manage; Tutors / Workflow are collapsible tabs.
@@ -804,8 +971,8 @@ final class MindCraftNotesUITests: XCTestCase {
         XCTAssertTrue(callButton.waitForExistence(timeout: 10), "expected Call next to Manage on the desk hub")
         XCTAssertFalse(app.staticTexts["Start your mastery check-in"].exists,
                        "no bubble copy next to the Call button")
-        XCTAssertTrue(app.buttons["deskHubManage"].waitForExistence(timeout: 3),
-                      "expected Settings next to The Desk wordmark")
+        XCTAssertTrue(app.buttons["deskHubHome"].waitForExistence(timeout: 3),
+                      "expected the house (Open The Desk) control next to The Desk wordmark")
         let deskWordmark = app.staticTexts["deskHubWordmark"]
         XCTAssertTrue(deskWordmark.waitForExistence(timeout: 3) || app.staticTexts["The Desk"].exists,
                       "expected The Desk hub wordmark")
@@ -1141,6 +1308,435 @@ final class MindCraftNotesUITests: XCTestCase {
 
         XCTAssertFalse(app.buttons["bookWorkflowBack"].waitForExistence(timeout: 3), "expected book workflow closed")
         XCTAssertTrue(app.buttons["fieldDeskWorkflows"].waitForExistence(timeout: 5), "expected dock control back")
+        XCUIDevice.shared.orientation = .portrait
+    }
+
+    /// Job OS "Apply today" LinkedIn match algorithm, end to end, exercising
+    /// the actual worked example from `agent_work/job-os/MATCH_RULES.md`:
+    /// Alhareth Ali's LinkedIn export only shows his *current* company
+    /// (Chamfr) — the CSV format has no past-employer column at all — so he
+    /// only shows up on an Augeo role once `past:Kigo,Augeo` is added via a
+    /// paste line, and the resulting card must show an honest "alias family"
+    /// match rule rather than a silent/black-box match. A second imported
+    /// person (Wells Fargo) is a negative control: unrelated companies must
+    /// never show up as a false match.
+    ///
+    /// `UIDocumentPickerViewController` (the real CSV file picker) can't be
+    /// driven from XCUITest, so `--ui-testing-job-os-seed` (JobOSShellView's
+    /// `seedForUITestingIfNeeded`) bypasses only that one step by calling the
+    /// real `store.importLinkedInConnections(text:source:)` — the same
+    /// `JobOSLinkedInImport.parseCSV` code path a real file import uses —
+    /// against a realistic Connections.csv fixture (Notes: preamble, real
+    /// header order). Every other step below (past-company paste, LinkedIn
+    /// URL connect, add role, opening the role, reading the reach-out card)
+    /// is real UI interaction, not seeded.
+    func testJobOSLinkedInImportMatchesAugeoAliasFamily() {
+        let app = launchFieldDeskApp(extraArgs: ["--ui-testing-job-os-seed"])
+
+        let bottomEdge = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.98))
+        let midScreen = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.55))
+        bottomEdge.press(forDuration: 0.05, thenDragTo: midScreen)
+
+        let workflowsButton = app.buttons["fieldDeskWorkflows"]
+        XCTAssertTrue(workflowsButton.waitForExistence(timeout: 8), "expected Workflows dock icon")
+        workflowsButton.press(forDuration: 0.7)
+
+        let applyTodayRow = app.buttons["workflowOpen_applyToday"]
+        XCTAssertTrue(applyTodayRow.waitForExistence(timeout: 5), "expected Apply today row in workflow library")
+        applyTodayRow.tap()
+
+        // `jobOSRoot`'s identifier sits on a plain GeometryReader/ZStack
+        // chain, which (per FieldDeskView's own documented caveat on
+        // archiveWorkflowRoot/schedulingWorkflows) doesn't reliably
+        // materialize as its own queryable element — wait on a real leaf
+        // control instead, same as those other tests do.
+        let linkedInAsset = app.buttons["jobOSAsset_link_linkedin"]
+        XCTAssertTrue(linkedInAsset.waitForExistence(timeout: 10), "expected the Apply today board to open with a Connect LinkedIn box")
+        linkedInAsset.tap()
+
+        let desk2People = app.staticTexts.matching(NSPredicate(format: "label CONTAINS[c] %@", "2 people")).firstMatch
+        XCTAssertTrue(desk2People.waitForExistence(timeout: 5), "expected the real CSV parser to have imported both seeded rows (Alhareth Ali + Jordan Rivera)")
+
+        // Connect the LinkedIn profile URL live (real UI, no file picker involved).
+        let urlField = app.textFields["jobOSLinkedInURLField"]
+        XCTAssertTrue(urlField.waitForExistence(timeout: 5))
+        urlField.tap()
+        urlField.typeText("https://www.linkedin.com/in/testuser")
+        app.buttons["jobOSLinkedInURLSave"].tap()
+
+        // Add Alhareth's past-company history the honest way the spec
+        // describes: the CSV can't carry it, so it comes from a paste line.
+        let pasteField = app.textViews["jobOSLinkedInPasteField"]
+        XCTAssertTrue(pasteField.waitForExistence(timeout: 5))
+        pasteField.tap()
+        pasteField.typeText("Alhareth Ali | Chamfr | AI/ML Intern | https://www.linkedin.com/in/alharethali | past:Kigo,Augeo")
+        app.buttons["jobOSLinkedInPasteSubmit"].tap()
+
+        app.buttons["jobOSLinkedInDone"].tap()
+
+        // Add the Augeo role through the real Add role form.
+        let addRoleButton = app.buttons["jobOSAddRoleButton"]
+        XCTAssertTrue(addRoleButton.waitForExistence(timeout: 5), "expected board to be ready (resume + LinkedIn connected)")
+        addRoleButton.tap()
+
+        let companyField = app.textFields["jobOSAddRoleCompany"]
+        XCTAssertTrue(companyField.waitForExistence(timeout: 5))
+        companyField.tap()
+        companyField.typeText("Augeo")
+        let roleField = app.textFields["jobOSAddRoleRole"]
+        roleField.tap()
+        roleField.typeText("Software Engineering Intern")
+        app.buttons["jobOSAddRoleSubmit"].tap()
+
+        // Open the role card that was just added.
+        let roleRow = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "jobOSRole_")).firstMatch
+        XCTAssertTrue(roleRow.waitForExistence(timeout: 5), "expected the new Augeo role row on the board")
+        roleRow.tap()
+
+        // The role detail sheet lists reach-outs with an explicit match rule.
+        let matchRuleValue = app.staticTexts.matching(
+            NSPredicate(format: "label CONTAINS[c] %@ AND label CONTAINS[c] %@", "alias family", "augeo")
+        ).firstMatch
+        XCTAssertTrue(matchRuleValue.waitForExistence(timeout: 8), "expected an 'alias family (...augeo...)' match rule on the Augeo role card")
+        attachScreenshot(app, name: "job_os_augeo_match")
+
+        XCTAssertTrue(app.staticTexts["Alhareth Ali"].waitForExistence(timeout: 3), "expected Alhareth Ali to be matched via his past Kigo/Augeo employer")
+        XCTAssertTrue(matchRuleValue.label.lowercased().contains("kigo"), "expected the match rule to name Kigo, the alias that actually bridged Chamfr -> Augeo: \(matchRuleValue.label)")
+
+        // Negative control: Jordan Rivera (Wells Fargo, unrelated company)
+        // must never show up as a false match on the Augeo role.
+        XCTAssertFalse(app.staticTexts["Jordan Rivera"].exists, "unrelated LinkedIn connection (Wells Fargo) must not match the Augeo role")
+
+        XCUIDevice.shared.orientation = .portrait
+    }
+
+    /// Desk-level pan/zoom (Work mode, empty-space drag/pinch): place a real
+    /// card via the + panel, confirm dragging empty space moves the whole
+    /// desk (not the card), pinch changes zoom, and the recenter control
+    /// appears and resets both back to identity. fieldDeskPanOffset already
+    /// existed as an accessibility probe reading real pan/scale state - this
+    /// is the first test to actually exercise it, since pan/scale were dead
+    /// @State (declared, never wired to a gesture) before this change.
+    func testFieldDeskPanZoomsAndRecenters() {
+        let app = XCUIApplication()
+        app.launchArguments = ["--ui-testing-in-memory", "--ui-testing-skip-auth"]
+        app.launch()
+        XCUIDevice.shared.orientation = .landscapeLeft
+
+        XCTAssertTrue(app.buttons["fieldDeskModeToggle"].waitForExistence(timeout: 40), "expected Field Desk chrome after cold load")
+        let bootText = app.staticTexts["Your workspace is starting up"]
+        if bootText.exists { _ = bootText.waitForNonExistence(timeout: 90) }
+
+        let bottomEdge = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.98))
+        let midScreen = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.55))
+        bottomEdge.press(forDuration: 0.05, thenDragTo: midScreen)
+
+        let addButton = app.buttons["fieldDeskAdd"]
+        XCTAssertTrue(addButton.waitForExistence(timeout: 8), "expected + Add dock icon")
+        addButton.tap()
+
+        let addGmail = app.buttons["fieldDeskAddGmail"]
+        XCTAssertTrue(addGmail.waitForExistence(timeout: 5), "expected Gmail row in the add panel")
+        attachScreenshot(app, name: "add_panel_open")
+        addGmail.tap()
+
+        // .any, not .buttons - the card wrapper carries no accessibility
+        // identifier itself (see movableCard's doc comment: an identifier on
+        // that composited view clobbers every nested control's own), so
+        // "the card exists" is proven by a small invisible marker Text
+        // instead, same technique as fieldDeskPanOffset/fieldDeskWindow.
+        let card = app.descendants(matching: .any)["fieldDeskCard_gmail"]
+        XCTAssertTrue(card.waitForExistence(timeout: 5), "expected Gmail card placed on the desk")
+
+        let panProbe = app.descendants(matching: .any)["fieldDeskPanOffset"]
+        XCTAssertTrue(panProbe.waitForExistence(timeout: 3), "expected pan/zoom probe")
+        let before = (panProbe.value as? String) ?? ""
+        XCTAssertEqual(before, "0,0,1.00", "expected identity pan/zoom before any gesture")
+
+        // Drag a patch of empty desk space (top-right corner, away from
+        // where the Gmail card lands) - this must pan the desk, not the card.
+        let emptyStart = app.coordinate(withNormalizedOffset: CGVector(dx: 0.85, dy: 0.15))
+        let emptyEnd = app.coordinate(withNormalizedOffset: CGVector(dx: 0.55, dy: 0.45))
+        emptyStart.press(forDuration: 0.05, thenDragTo: emptyEnd)
+
+        let afterPan = (panProbe.value as? String) ?? ""
+        XCTAssertNotEqual(afterPan, "0,0,1.00", "expected pan to move away from identity after an empty-space drag")
+        XCTAssertTrue(card.exists, "expected the Gmail card to survive a desk pan (still placed, not dismissed)")
+
+        let recenter = app.buttons["fieldDeskRecenter"]
+        XCTAssertTrue(recenter.waitForExistence(timeout: 3), "expected recenter control once panned away from identity")
+        attachScreenshot(app, name: "field_desk_panned")
+        recenter.tap()
+
+        // Recenter animates - poll briefly rather than asserting the instant
+        // after tapping.
+        let recentered = NSPredicate(format: "value == %@", "0,0,1.00")
+        let expectation = XCTNSPredicateExpectation(predicate: recentered, object: panProbe)
+        let result = XCTWaiter().wait(for: [expectation], timeout: 3)
+        XCTAssertEqual(result, .completed, "expected pan/zoom to return to identity after recenter")
+        XCTAssertFalse(app.buttons["fieldDeskRecenter"].waitForExistence(timeout: 2), "expected recenter control to hide once back at identity")
+
+        XCUIDevice.shared.orientation = .portrait
+    }
+
+    /// Double-tap-to-fit: a quicker shortcut to the same reset the Recenter
+    /// button already does, added onto the empty-space pan/zoom catcher via
+    /// `.simultaneousGesture` (not a second `.gesture()`, which would have
+    /// silently replaced pan/zoom instead of adding alongside it).
+    func testFieldDeskDoubleTapResetsPanZoom() {
+        let app = XCUIApplication()
+        app.launchArguments = ["--ui-testing-in-memory", "--ui-testing-skip-auth"]
+        app.launch()
+        XCUIDevice.shared.orientation = .landscapeLeft
+
+        XCTAssertTrue(app.buttons["fieldDeskModeToggle"].waitForExistence(timeout: 40), "expected Field Desk chrome after cold load")
+        let bootText = app.staticTexts["Your workspace is starting up"]
+        if bootText.exists { _ = bootText.waitForNonExistence(timeout: 90) }
+
+        let bottomEdge = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.98))
+        let midScreen = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.55))
+        bottomEdge.press(forDuration: 0.05, thenDragTo: midScreen)
+
+        let addButton = app.buttons["fieldDeskAdd"]
+        XCTAssertTrue(addButton.waitForExistence(timeout: 8), "expected + Add dock icon")
+        addButton.tap()
+        let addGmail = app.buttons["fieldDeskAddGmail"]
+        XCTAssertTrue(addGmail.waitForExistence(timeout: 5), "expected Gmail row in the add panel")
+        addGmail.tap()
+        XCTAssertTrue(app.descendants(matching: .any)["fieldDeskCard_gmail"].waitForExistence(timeout: 5),
+                      "expected the Gmail card placed on the desk")
+
+        let panProbe = app.descendants(matching: .any)["fieldDeskPanOffset"]
+        XCTAssertTrue(panProbe.waitForExistence(timeout: 3), "expected pan/zoom probe")
+
+        let emptyStart = app.coordinate(withNormalizedOffset: CGVector(dx: 0.85, dy: 0.15))
+        let emptyEnd = app.coordinate(withNormalizedOffset: CGVector(dx: 0.55, dy: 0.45))
+        emptyStart.press(forDuration: 0.05, thenDragTo: emptyEnd)
+        let afterPan = panProbe.value as? String ?? ""
+        XCTAssertNotEqual(afterPan, "0,0,1.00", "expected pan to move away from identity after an empty-space drag")
+
+        // Double-tap empty space to fit/reset. Two sequential
+        // coordinate.tap() calls aren't tight enough in time to register as
+        // a real double-tap to SwiftUI's TapGesture(count: 2) - .doubleTap()
+        // on the catcher ELEMENT itself uses XCUITest's own synthesized
+        // double-tap timing instead (confirmed: the coordinate-pair version
+        // timed out waiting for a reset that never happened).
+        let catcher = app.descendants(matching: .any)["fieldDeskPanZoomCatcher"]
+        XCTAssertTrue(catcher.waitForExistence(timeout: 3), "expected the pan/zoom catcher")
+        catcher.doubleTap()
+
+        let recentered = NSPredicate(format: "value == %@", "0,0,1.00")
+        let expectation = XCTNSPredicateExpectation(predicate: recentered, object: panProbe)
+        let result = XCTWaiter().wait(for: [expectation], timeout: 3)
+        XCTAssertEqual(result, .completed, "expected double-tap on empty space to reset pan/zoom to identity")
+
+        XCUIDevice.shared.orientation = .portrait
+    }
+
+    /// The Gdoc/whiteboard desk card had no Pencil-vs-finger separation at
+    /// all before this round (a hand-rolled Canvas + DragGesture(minimumDistance: 0)
+    /// that drew for any touch, unlike QuestionView's real PKCanvasView).
+    /// Verifies the new StrokeTouchCaptureView actually gates on touch type:
+    /// a simulated (non-pencil) drag draws in the default "Pencil + finger"
+    /// mode, then draws nothing new once switched to "Pencil only" - the
+    /// same proof pattern testPencilOnlyModeRejectsSimulatedTouch/
+    /// testAnyInputModeAcceptsSimulatedTouch already established for the
+    /// real PencilKit canvas (Simulator touches are never genuine pencil
+    /// touches, so pencilOnly must reject every one of them).
+    func testWhiteboardCardPencilOnlySeparation() {
+        let app = XCUIApplication()
+        app.launchArguments = ["--ui-testing-in-memory", "--ui-testing-skip-auth"]
+        app.launch()
+        XCUIDevice.shared.orientation = .landscapeLeft
+
+        XCTAssertTrue(app.buttons["fieldDeskModeToggle"].waitForExistence(timeout: 40), "expected Field Desk chrome after cold load")
+        let bootText = app.staticTexts["Your workspace is starting up"]
+        if bootText.exists { _ = bootText.waitForNonExistence(timeout: 90) }
+
+        let bottomEdge = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.98))
+        let midScreen = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.55))
+        bottomEdge.press(forDuration: 0.05, thenDragTo: midScreen)
+
+        let addButton = app.buttons["fieldDeskAdd"]
+        XCTAssertTrue(addButton.waitForExistence(timeout: 8), "expected + Add dock icon")
+        addButton.tap()
+        let addGdoc = app.buttons["fieldDeskAddGdoc"]
+        XCTAssertTrue(addGdoc.waitForExistence(timeout: 5), "expected Gdoc row in the add panel")
+        addGdoc.tap()
+
+        // .any, not .buttons - see testFieldDeskPanZoomsAndRecenters's
+        // comment on the same pattern (movableCard's wrapper carries no
+        // identifier of its own now).
+        let card = app.descendants(matching: .any)["fieldDeskCard_gdoc"]
+        XCTAssertTrue(card.waitForExistence(timeout: 5), "expected the Gdoc/whiteboard card placed on the desk")
+
+        let strokeProbe = app.descendants(matching: .any)["deskWhiteboardStrokeCount"]
+        XCTAssertTrue(strokeProbe.waitForExistence(timeout: 5), "expected the whiteboard's stroke-count probe")
+        XCTAssertEqual(strokeProbe.value as? String, "0 strokes", "expected an empty board before any touch")
+
+        // Default mode is "Pencil + finger" - a plain simulated touch should draw.
+        let boardStart = card.coordinate(withNormalizedOffset: CGVector(dx: 0.3, dy: 0.7))
+        let boardEnd = card.coordinate(withNormalizedOffset: CGVector(dx: 0.7, dy: 0.85))
+        boardStart.press(forDuration: 0.05, thenDragTo: boardEnd)
+
+        let afterFirstDrag = NSPredicate(format: "value != %@", "0 strokes")
+        let firstExpectation = XCTNSPredicateExpectation(predicate: afterFirstDrag, object: strokeProbe)
+        XCTAssertEqual(XCTWaiter().wait(for: [firstExpectation], timeout: 3), .completed,
+                       "expected a stroke after a simulated touch in Pencil + finger mode")
+        let drawnValue = strokeProbe.value as? String ?? ""
+
+        // Switch to Pencil only - every touch this test can inject is still
+        // a plain finger-type touch (see class doc), so nothing new should draw.
+        let palmToggle = app.buttons["deskWhiteboardPalmToggle"]
+        XCTAssertTrue(palmToggle.waitForExistence(timeout: 3), "expected the palm-rejection toggle")
+        palmToggle.tap()
+
+        boardStart.press(forDuration: 0.05, thenDragTo: boardEnd)
+        RunLoop.current.run(until: Date().addingTimeInterval(0.8))
+        XCTAssertEqual(strokeProbe.value as? String, drawnValue,
+                       "a simulated non-pencil touch must not draw once Pencil only is selected")
+
+        XCUIDevice.shared.orientation = .portrait
+    }
+
+    /// Window state (which cards are placed, where, at what size) previously
+    /// reset to blank on every launch by design (`.onAppear` unconditionally
+    /// called `clearDeskCards()` then re-zeroed cardOffsets/cardSizes) - one
+    /// of the rebuild brief's named gaps ("Window state isn't persisted
+    /// across restarts at all currently"). Verifies the fix end to end with
+    /// a real terminate+relaunch, not just that FieldDeskStore's encode/decode
+    /// round-trips in isolation. Deliberately does NOT pass
+    /// `--ui-testing-in-memory` - that flag makes FieldDeskStore's UserDefaults
+    /// read/write a no-op (see its `uiTesting` guard), which would make this
+    /// test pass even if persistence were completely broken.
+    func testFieldDeskCardLayoutPersistsAcrossRelaunch() {
+        let app = XCUIApplication()
+        app.launchArguments = ["--ui-testing-skip-auth"]
+        app.launch()
+        XCUIDevice.shared.orientation = .landscapeLeft
+
+        XCTAssertTrue(app.buttons["fieldDeskModeToggle"].waitForExistence(timeout: 40), "expected Field Desk chrome after cold load")
+        let bootText = app.staticTexts["Your workspace is starting up"]
+        if bootText.exists { _ = bootText.waitForNonExistence(timeout: 90) }
+
+        let bottomEdge = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.98))
+        let midScreen = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.55))
+        bottomEdge.press(forDuration: 0.05, thenDragTo: midScreen)
+
+        let addButton = app.buttons["fieldDeskAdd"]
+        XCTAssertTrue(addButton.waitForExistence(timeout: 8), "expected + Add dock icon")
+        addButton.tap()
+        let addMemo = app.buttons["fieldDeskAddMemo"]
+        XCTAssertTrue(addMemo.waitForExistence(timeout: 5), "expected Memo row in the add panel")
+        addMemo.tap()
+
+        let card = app.descendants(matching: .any)["fieldDeskCard_memo"]
+        XCTAssertTrue(card.waitForExistence(timeout: 5), "expected the Memo card placed on the desk")
+
+        // Drag it by a known amount - proves an actual position survives,
+        // not just "a card exists somewhere" (which a bug that placed every
+        // restored card back at its default origin could still satisfy).
+        // Start point must be relative to the CARD itself (its title-bar
+        // area, where cardMoveGesture is live), not the whole app window -
+        // an app-relative start coordinate can miss the card entirely if it
+        // isn't centered on screen, which silently no-ops the drag instead
+        // of failing loudly (caught by inspecting the actual on-disk
+        // UserDefaults plist after a first attempt: cardOffsets came back
+        // an empty "{}", proving the drag never landed at all).
+        let dragStart = card.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.15))
+        let dragEnd = app.coordinate(withNormalizedOffset: CGVector(dx: 0.7, dy: 0.6))
+        dragStart.press(forDuration: 0.1, thenDragTo: dragEnd)
+        // cardMoveGesture's release spring (response 0.32, dampingFraction
+        // 0.75) needs more than 600ms to fully settle - a first attempt at
+        // 600ms captured the "before" frame mid-overshoot, 10pt off the
+        // true rest position on the Y axis.
+        RunLoop.current.run(until: Date().addingTimeInterval(1.5))
+        let frameBeforeRelaunch = card.frame
+        attachScreenshot(app, name: "layout_before_relaunch")
+
+        app.terminate()
+        app.launch()
+        XCUIDevice.shared.orientation = .landscapeLeft
+        XCTAssertTrue(app.buttons["fieldDeskModeToggle"].waitForExistence(timeout: 40), "expected Field Desk chrome after relaunch")
+        let bootTextAgain = app.staticTexts["Your workspace is starting up"]
+        if bootTextAgain.exists { _ = bootTextAgain.waitForNonExistence(timeout: 90) }
+
+        let restoredCard = app.descendants(matching: .any)["fieldDeskCard_memo"]
+        XCTAssertTrue(restoredCard.waitForExistence(timeout: 8), "expected the Memo card to still be placed after a full relaunch")
+        attachScreenshot(app, name: "layout_after_relaunch")
+        let frameAfterRelaunch = restoredCard.frame
+        // Accuracy 15, not a tight pixel match: a real, small (~10pt), fixed
+        // gap remains between the pre- and post-relaunch Y reading even at a
+        // 1.5s settle wait - confirmed via a direct read of the on-disk
+        // UserDefaults plist that the persisted offset itself round-trips
+        // exactly (`{"memo":[260.5,368.5]}` in, same value read back), so
+        // this isn't a lost-data bug. What matters here is "the card comes
+        // back near where it was left," not "reset to its ~200pt-away
+        // default spot" - accuracy 15 easily tells those two apart.
+        XCTAssertEqual(frameAfterRelaunch.origin.x, frameBeforeRelaunch.origin.x, accuracy: 15,
+                       "expected the card's X position to survive a relaunch")
+        XCTAssertEqual(frameAfterRelaunch.origin.y, frameBeforeRelaunch.origin.y, accuracy: 15,
+                       "expected the card's Y position to survive a relaunch")
+
+        // Clean up so the next run of this test (or any other test that
+        // lands on a fresh desk) starts from an empty layout again - this
+        // test intentionally writes to REAL UserDefaults.
+        let closeButton = app.buttons["fieldDeskCardClose_Memo"]
+        if closeButton.waitForExistence(timeout: 3) { closeButton.tap() }
+        XCUIDevice.shared.orientation = .portrait
+    }
+
+    /// Real Gmail read already existed (GmailClient.fetchInbox) - the
+    /// missing piece was AI-summarizing it into the dashboard. This hits
+    /// the REAL deployed /api/gmail-digest webhook (no server-side mock),
+    /// same integration-test tolerance as other AI-backed flows in this
+    /// file - only Google Sign-In itself is bypassed
+    /// (`--ui-testing-gmail-digest` seeds GmailClient.messages directly,
+    /// since this environment has no real Google account to sign into).
+    func testGmailDigestSummarizesSeededInbox() {
+        let app = XCUIApplication()
+        app.launchArguments = ["--ui-testing-in-memory", "--ui-testing-skip-auth", "--ui-testing-gmail-digest"]
+        app.launch()
+        XCUIDevice.shared.orientation = .landscapeLeft
+
+        // Not fieldDeskModeToggle first, unlike other Field Desk tests -
+        // showGmailBox fires synchronously in wireUITesting()'s .onAppear,
+        // and deskOverlayChromeBlocked deliberately hides the top chrome
+        // (mode toggle included) the whole time the Gmail box is open. That
+        // control genuinely never appears in this flow; waiting on it here
+        // timed out for real on a first attempt before this fix.
+        let bootText = app.staticTexts["Your workspace is starting up"]
+        if bootText.waitForExistence(timeout: 10) { _ = bootText.waitForNonExistence(timeout: 90) }
+
+        // FieldDeskView's call site re-applies its own
+        // .accessibilityIdentifier("fieldDeskGmailOverlay") on top of
+        // GmailWorkflowBoxView - the outer one wins for the root element
+        // (confirmed via a full tree dump), so "gmailWorkflowRoot" (set
+        // inside GmailWorkflowBoxView.body) never actually surfaces here.
+        // Nested elements that carry their own distinct identifier
+        // (gmailConnectButton, gmailDigestRefresh, etc.) are unaffected -
+        // this is different from the .compositingGroup() clobbering bug
+        // fixed earlier this session, which took out EVERY descendant.
+        XCTAssertTrue(app.descendants(matching: .any)["fieldDeskGmailOverlay"].waitForExistence(timeout: 40),
+                      "expected the Gmail box to open with seeded messages")
+
+        // Auto-summarize only fires on a messages CHANGE after mount
+        // (.onChange) - seeding happens before the view mounts, so this
+        // test exercises the manual refresh path instead of relying on
+        // that timing, which real usage (fetchInbox after a real OAuth
+        // connect) doesn't have to worry about.
+        let refresh = app.buttons["gmailDigestRefresh"]
+        XCTAssertTrue(refresh.waitForExistence(timeout: 5), "expected the digest refresh control")
+        refresh.tap()
+
+        let headline = app.staticTexts["gmailDigestHeadline"]
+        XCTAssertTrue(headline.waitForExistence(timeout: 20), "expected a real digest headline from the webhook")
+        XCTAssertFalse(headline.label.isEmpty, "expected non-empty headline text")
+        attachScreenshot(app, name: "gmail_digest")
+
+        XCTAssertTrue(app.buttons["gmailArchiveToDrive"].waitForExistence(timeout: 3),
+                      "expected the Archive to Drive control once a digest exists")
+
         XCUIDevice.shared.orientation = .portrait
     }
 

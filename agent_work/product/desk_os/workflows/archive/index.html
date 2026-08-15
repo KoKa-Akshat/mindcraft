@@ -112,6 +112,12 @@
   }
   .tcard:active{transform:scale(.985)}
   .tcard img{width:100%; aspect-ratio:3/4; object-fit:cover; display:block; background:#efe8d8}
+  .shelf-search{
+    width:100%; border:1.5px solid var(--line); background:var(--cream);
+    padding:12px 14px; font:700 14px/1.2 "Nunito Sans",sans-serif; color:var(--ink);
+    margin:0 0 12px;
+  }
+  .shelf-search:focus{outline:2px solid var(--leaf); outline-offset:2px}
   .tcard .body{padding:16px 16px 18px}
   .tcard .cat{font-size:10px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#687468; margin:0 0 6px}
   .tcard h2{font-family:"Fredoka",sans-serif; font-size:20px; line-height:1.15; margin:0 0 8px; color:var(--ink)}
@@ -225,7 +231,8 @@
 
     <section class="screen" id="shelf">
       <h1>The shelf.</h1>
-      <p class="lede">Open a book. Jesse can still make a plan from here.</p>
+      <p class="lede">113 textbooks. Each one has its own cover. Open a book — Jesse can still make a plan from here.</p>
+      <input class="shelf-search" id="shelfSearch" type="search" placeholder="Search the 113 books…" autocomplete="off">
       <div class="shelf" id="shelfGrid"></div>
       <button class="btn fill" id="shelfPlan" type="button">Make a study plan</button>
     </section>
@@ -275,7 +282,7 @@
   <div class="think" id="think" hidden data-glass="bar"><b>Jesse is reading</b></div>
 
 <script src="../glass.js"></script>
-<script src="./boxes.js?v=a2"></script>
-<script src="./agent.js?v=a2"></script>
+<script src="./boxes.js?v=a3"></script>
+<script src="./agent.js?v=a3"></script>
 </body>
 </html>

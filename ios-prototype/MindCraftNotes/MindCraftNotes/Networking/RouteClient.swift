@@ -55,6 +55,19 @@ enum RouteClient {
     private static let baseURL = "https://joinmindcraft-mindcraft-ml.hf.space"
 
     static func plotRoute(targetConceptId: String) async -> [RouteStep]? {
+        // Test-only seam, same shape as `KnowledgeGraphClient.seedMockGraph`
+        // - this call needs a real Firebase ID token, which the
+        // `--ui-testing-skip-auth` harness deliberately doesn't have (see
+        // that flag's own doc comment), so without this the "See path"
+        // reveal animation could never be exercised by an automated test,
+        // only the button's mere existence.
+        if ProcessInfo.processInfo.arguments.contains("--ui-testing-force-map") {
+            try? await Task.sleep(nanoseconds: 300_000_000) // real network calls aren't instant either - let the loading state actually show
+            return [
+                RouteStep(conceptId: "linear_equations", reason: "Already mastered - the foundation this rests on.", isTarget: false),
+                RouteStep(conceptId: targetConceptId, reason: "This is your target. Focus your practice here.", isTarget: true),
+            ]
+        }
         guard let user = Auth.auth().currentUser,
               let token = try? await user.getIDToken(),
               let url = URL(string: "\(baseURL)/recommend")

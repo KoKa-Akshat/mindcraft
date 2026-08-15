@@ -208,6 +208,14 @@
         {
           "source": "/index.html",
           "headers": [{ "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }]
+        },
+        {
+          "source": "/dans-archive.html",
+          "headers": [{ "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }]
+        },
+        {
+          "source": "/data/**",
+          "headers": [{ "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }]
         }
       ]
     }

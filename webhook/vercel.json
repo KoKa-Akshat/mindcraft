@@ -1,6 +1,5 @@
 {
   "functions": {
-    "api/calendly.ts": { "maxDuration": 10 },
     "api/fireflies.ts": { "maxDuration": 30 },
     "api/generate-summary.ts": { "maxDuration": 30 },
     "api/cron-fireflies.ts": { "maxDuration": 60 },
@@ -11,7 +10,8 @@
     "api/jarvis.ts": { "maxDuration": 60 },
     "api/agent-check-in.ts": { "maxDuration": 15 },
     "api/transcribe-scratch.ts": { "maxDuration": 30 },
-    "api/app-actions.ts": { "maxDuration": 60 }
+    "api/app-actions.ts": { "maxDuration": 60 },
+    "api/tts.ts": { "maxDuration": 60, "includeFiles": "node_modules/kokoro-js/voices/*.bin" }
   },
   "rewrites": [
     { "source": "/api/create-classroom", "destination": "/api/app-actions?action=create-classroom" },
@@ -22,6 +22,7 @@
     { "source": "/api/delete-session", "destination": "/api/app-actions?action=delete-session" },
     { "source": "/api/publish-summary", "destination": "/api/app-actions?action=publish-summary" },
     { "source": "/api/register-calendly", "destination": "/api/app-actions?action=register-calendly" },
+    { "source": "/api/calendly", "destination": "/api/app-actions?action=calendly-webhook" },
     { "source": "/api/concept-graph", "destination": "/api/app-actions?action=concept-graph" },
     { "source": "/api/parse-homework", "destination": "/api/app-actions?action=parse-homework" },
     { "source": "/api/spark-experience", "destination": "/api/app-actions?action=spark-experience" },
@@ -32,7 +33,8 @@
     { "source": "/api/desk-ask", "destination": "/api/app-actions?action=desk-ask" },
     { "source": "/api/resume-agent", "destination": "/api/app-actions?action=resume-agent" },
     { "source": "/api/archive-rag", "destination": "/api/app-actions?action=archive-rag" },
-    { "source": "/api/book-agent", "destination": "/api/app-actions?action=book-agent" }
+    { "source": "/api/book-agent", "destination": "/api/app-actions?action=book-agent" },
+    { "source": "/api/gmail-digest", "destination": "/api/app-actions?action=gmail-digest" }
   ],
   "crons": [
     { "path": "/api/cron-fireflies", "schedule": "0 6 * * *" },

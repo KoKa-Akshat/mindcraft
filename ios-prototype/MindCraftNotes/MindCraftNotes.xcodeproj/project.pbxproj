@@ -18,6 +18,10 @@
 		11DF2394C1B5D24E677DC1E1 /* TutorDirectoryClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD38C7392605523E1A10E7F6 /* TutorDirectoryClient.swift */; };
 		1F9E043A15C0940CA4A9CDB5 /* PolynomialExpression.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16F5501162A4F865EFC69C0 /* PolynomialExpression.swift */; };
 		20FE9273DBB5C8611FB6D861 /* RouteClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FECBAC947388E48E0524B2D /* RouteClient.swift */; };
+		D7JESSECALL01A2B3 /* JesseCallSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7JESSECALL01A2B3 /* JesseCallSession.swift */; };
+		D0KOKOROTTS01A2 /* KokoroTTSClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0KOKOROTTS01A2 /* KokoroTTSClient.swift */; };
+		D8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift */; };
+		D9JESSEOVERLAY01A2 /* JesseCallOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9JESSEOVERLAY01A2 /* JesseCallOverlay.swift */; };
 		2ED5A15418DF8B11D28A484D /* KnowledgeMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037C287CDFB7C16477B6DBF0 /* KnowledgeMapView.swift */; };
 		2F77E6F02BAEAA94951E8376 /* conceptIcons in Resources */ = {isa = PBXBuildFile; fileRef = F36436A531016328ECDE0C4D /* conceptIcons */; };
 		45DD6448870A218F1EA9A065 /* ConceptGraphLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAB6A727D2FD6844F72EAF7 /* ConceptGraphLoader.swift */; };
@@ -97,8 +101,12 @@
 		D3JOBOSMODEL01A2B3C4 /* JobOSModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3JOBOSMODEL01A2B3C4 /* JobOSModels.swift */; };
 		D4JOBOSSTORE01A2B3C4 /* JobOSStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4JOBOSSTORE01A2B3C4 /* JobOSStore.swift */; };
 		D5JOBOSSHELL01A2B3C4 /* JobOSShellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5JOBOSSHELL01A2B3C4 /* JobOSShellView.swift */; };
+		D6JOBOSGRAPH01A2B3C4 /* JobOSLinkedInGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6JOBOSGRAPH01A2B3C4 /* JobOSLinkedInGraph.swift */; };
+		D7JOBOSDETAIL01A2B3 /* JobOSRoleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7JOBOSDETAIL01A2B3 /* JobOSRoleDetailView.swift */; };
 		D61E1093C9F9476A8193B4BD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473BF2A15353473E8B559067 /* ContentView.swift */; };
 		D6GMAILCLIENT01A2B3C4 /* GmailClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6GMAILCLIENT01A2B3C4 /* GmailClient.swift */; };
+		D6GMAILDIGESTCL01A2B3 /* GmailDigestClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6GMAILDIGESTCL01A2B3 /* GmailDigestClient.swift */; };
+		D6GMAILDIGESTST01A2B3 /* GmailDigestStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6GMAILDIGESTST01A2B3 /* GmailDigestStore.swift */; };
 		D6DRIVECLIENT01A2B3C4 /* DriveClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DRIVECLIENT01A2B3C4 /* DriveClient.swift */; };
 		D701D0CAFA36FDCD398C790B /* storyArt in Resources */ = {isa = PBXBuildFile; fileRef = 6C6EE743854CB1274F574739 /* storyArt */; };
 		D7GMAILBOXVW01A2B3C4 /* GmailWorkflowBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7GMAILBOXVW01A2B3C4 /* GmailWorkflowBoxView.swift */; };
@@ -167,6 +175,10 @@
 		6A270692D86516903DC8773D /* SVGImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGImageView.swift; sourceTree = "<group>"; };
 		6C6EE743854CB1274F574739 /* storyArt */ = {isa = PBXFileReference; lastKnownFileType = folder; path = storyArt; sourceTree = "<group>"; };
 		6FECBAC947388E48E0524B2D /* RouteClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteClient.swift; sourceTree = "<group>"; };
+		C7JESSECALL01A2B3 /* JesseCallSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JesseCallSession.swift; sourceTree = "<group>"; };
+		C0KOKOROTTS01A2 /* KokoroTTSClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KokoroTTSClient.swift; sourceTree = "<group>"; };
+		C8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveRagClient.swift; sourceTree = "<group>"; };
+		C9JESSEOVERLAY01A2 /* JesseCallOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JesseCallOverlay.swift; sourceTree = "<group>"; };
 		7028A09FF6E145FFCC90FF6A /* MyScriptRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyScriptRecognizer.swift; sourceTree = "<group>"; };
 		788775E6F0E0DB324F25E292 /* WorkPracticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkPracticeView.swift; sourceTree = "<group>"; };
 		789E888BA344DB5E76A0F09C /* ConceptChapterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConceptChapterView.swift; sourceTree = "<group>"; };
@@ -211,7 +223,11 @@
 		C3JOBOSMODEL01A2B3C4 /* JobOSModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobOSModels.swift; sourceTree = "<group>"; };
 		C4JOBOSSTORE01A2B3C4 /* JobOSStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobOSStore.swift; sourceTree = "<group>"; };
 		C5JOBOSSHELL01A2B3C4 /* JobOSShellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobOSShellView.swift; sourceTree = "<group>"; };
+		C6JOBOSGRAPH01A2B3C4 /* JobOSLinkedInGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobOSLinkedInGraph.swift; sourceTree = "<group>"; };
+		C7JOBOSDETAIL01A2B3 /* JobOSRoleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobOSRoleDetailView.swift; sourceTree = "<group>"; };
 		C6GMAILCLIENT01A2B3C4 /* GmailClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GmailClient.swift; sourceTree = "<group>"; };
+		C6GMAILDIGESTCL01A2B3 /* GmailDigestClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GmailDigestClient.swift; sourceTree = "<group>"; };
+		C6GMAILDIGESTST01A2B3 /* GmailDigestStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GmailDigestStore.swift; sourceTree = "<group>"; };
 		C6DRIVECLIENT01A2B3C4 /* DriveClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriveClient.swift; sourceTree = "<group>"; };
 		C7GMAILBOXVW01A2B3C4 /* GmailWorkflowBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GmailWorkflowBoxView.swift; sourceTree = "<group>"; };
 		C804A39BF276CEEBF088A65C /* actToc.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = actToc.json; sourceTree = "<group>"; };
@@ -339,11 +355,16 @@
 				DA7262B1A341CC17EEC08DFE /* LiveSessionClient.swift */,
 				B19B01C1A6E7F8091B2C3D4E /* AgentMailClient.swift */,
 				C6GMAILCLIENT01A2B3C4 /* GmailClient.swift */,
+				C6GMAILDIGESTCL01A2B3 /* GmailDigestClient.swift */,
+				C6GMAILDIGESTST01A2B3 /* GmailDigestStore.swift */,
 				C6DRIVECLIENT01A2B3C4 /* DriveClient.swift */,
 				C9DESKASKCLIENT01A2 /* DeskAskClient.swift */,
 				C9BOOTMOTIV01A2B3C4 /* BootMotivationClient.swift */,
 				C9FRIENDSTORE01A2B3 /* FriendsStore.swift */,
 				C9QCALINVITE01A2B3C4 /* QCalInvite.swift */,
+				C7JESSECALL01A2B3 /* JesseCallSession.swift */,
+				C8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift */,
+				C0KOKOROTTS01A2 /* KokoroTTSClient.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -408,6 +429,7 @@
 				C9SCHEDWORKF01A2B3C4 /* SchedulingWorkflowsView.swift */,
 				C9OPENARCHIVE01A2B3C4 /* OpenLearningArchiveView.swift */,
 				C9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift */,
+				C9JESSEOVERLAY01A2 /* JesseCallOverlay.swift */,
 				C9BOOKWORKF01A2B3C4 /* BookWorkflowView.swift */,
 				C9FRIENDSVIEW01A2B3 /* FriendsView.swift */,
 			);
@@ -462,6 +484,8 @@
 				C3JOBOSMODEL01A2B3C4 /* JobOSModels.swift */,
 				C4JOBOSSTORE01A2B3C4 /* JobOSStore.swift */,
 				C5JOBOSSHELL01A2B3C4 /* JobOSShellView.swift */,
+				C6JOBOSGRAPH01A2B3C4 /* JobOSLinkedInGraph.swift */,
+				C7JOBOSDETAIL01A2B3 /* JobOSRoleDetailView.swift */,
 			);
 			path = JobOS;
 			sourceTree = "<group>";
@@ -642,6 +666,10 @@
 				644D81C7CC9F5FDE773C3A27 /* AltDiagramSplitter.swift in Sources */,
 				45DD6448870A218F1EA9A065 /* ConceptGraphLoader.swift in Sources */,
 				20FE9273DBB5C8611FB6D861 /* RouteClient.swift in Sources */,
+				D7JESSECALL01A2B3 /* JesseCallSession.swift in Sources */,
+				D0KOKOROTTS01A2 /* KokoroTTSClient.swift in Sources */,
+				D8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift in Sources */,
+				D9JESSEOVERLAY01A2 /* JesseCallOverlay.swift in Sources */,
 				0488FF0AF1C04DCCB33C8ED2 /* OutcomeClient.swift in Sources */,
 				0FB945513AC3BD9B9D898CF2 /* SVGImageView.swift in Sources */,
 				6CB3A318117BA59DFBAFB2B7 /* StoryArtLoader.swift in Sources */,
@@ -672,10 +700,14 @@
 				D5JOBOSSHELL01A2B3C4 /* JobOSShellView.swift in Sources */,
 				D4JOBOSSTORE01A2B3C4 /* JobOSStore.swift in Sources */,
 				D3JOBOSMODEL01A2B3C4 /* JobOSModels.swift in Sources */,
+				D6JOBOSGRAPH01A2B3C4 /* JobOSLinkedInGraph.swift in Sources */,
+				D7JOBOSDETAIL01A2B3 /* JobOSRoleDetailView.swift in Sources */,
 				E1F7A5318293A4C5D6E7F809 /* ActFieldChrome.swift in Sources */,
 				FC08164293A4B5C6D7E8F91A /* FieldDeskStore.swift in Sources */,
 				A19B01C1A6E7F8091B2C3D4E /* AgentMailClient.swift in Sources */,
 				D6GMAILCLIENT01A2B3C4 /* GmailClient.swift in Sources */,
+				D6GMAILDIGESTCL01A2B3 /* GmailDigestClient.swift in Sources */,
+				D6GMAILDIGESTST01A2B3 /* GmailDigestStore.swift in Sources */,
 				D6DRIVECLIENT01A2B3C4 /* DriveClient.swift in Sources */,
 				D9DESKASKCLIENT01A2 /* DeskAskClient.swift in Sources */,
 				D9BOOTMOTIV01A2B3C4 /* BootMotivationClient.swift in Sources */,

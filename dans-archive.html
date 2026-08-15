@@ -2,343 +2,474 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Open Learning Archive · The Desk by MindCraft</title>
-<meta name="description" content="113 free, open intelligent textbooks — learning graphs, MicroSims, and AI-assisted courses across math, science, engineering, and more. Browse and open any of them, free, no login.">
+<meta name="description" content="113 free, open intelligent textbooks: learning graphs, MicroSims, and AI-assisted courses across math, science, engineering, and more. Browse and open any of them, free, no login.">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <link rel="canonical" href="https://joinmindcraft.com/dans-archive.html">
+<meta name="theme-color" content="#07090c">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="MindCraft">
 <meta property="og:url" content="https://joinmindcraft.com/dans-archive.html">
 <meta property="og:title" content="Open Learning Archive · The Desk by MindCraft">
 <meta property="og:description" content="113 free, open intelligent textbooks. Browse and open any of them, free, no login.">
+<meta property="og:image" content="https://joinmindcraft.com/img/dans-covers/calculus.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Open Learning Archive · The Desk by MindCraft">
+<meta name="twitter:description" content="113 free, open intelligent textbooks. Browse and open any of them, free, no login.">
+<meta name="twitter:image" content="https://joinmindcraft.com/img/dans-covers/calculus.jpg">
 <link rel="icon" type="image/png" href="img/favicon-raccoon.png">
 <link rel="apple-touch-icon" href="img/favicon-raccoon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito+Sans:wght@600;700;800;900;1000&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800;900&family=Source+Serif+4:ital,wght@1,500;1,600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#143a2e; --leaf:#247a4d; --leaf2:#5fb779;
-    --lime:#c4f547; --gold:#f5d348;
-    --cream:#fff8e9; --paper:#fffdf7;
-    --stakes:#c1121f; --muted:#687468; --line:rgba(20,58,46,.14);
-    --shadow:0 24px 70px rgba(29,84,54,.14);
+    --field:#07090c; --field-1:#0a0e13; --field-2:#0e141b; --field-3:#131b24;
+    --edge:rgba(245,245,244,.09); --edge-soft:rgba(245,245,244,.05);
+    --chalk:#f5f5f4; --chalk-dim:rgba(245,245,244,.68); --chalk-faint:rgba(245,245,244,.42);
+    --lime:#c4f547; --lime-ink:#0a1006;
+    --stakes:#e0394a; --stakes-dim:rgba(224,57,74,.14);
+    --blue:#6c8cff; --navy:#1d3a8a;
+    --violet:#a78bfa; --teal:#4fd1c5; --amber:#f2b84b; --rose:#ff8f9b; --sky:#7dd3fc; --slate:#c7cdd6;
+    --shadow:0 30px 90px rgba(0,0,0,.5);
     --ease:cubic-bezier(.16,1,.3,1);
+    --serif:"Source Serif 4",Georgia,serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
   body{
-    font-family:"Nunito Sans", system-ui, sans-serif; background:var(--cream);
-    color:var(--ink); -webkit-font-smoothing:antialiased;
+    font-family:"Inter", system-ui, sans-serif; background:var(--field);
+    color:var(--chalk); overflow-x:hidden; -webkit-font-smoothing:antialiased;
+    -webkit-tap-highlight-color:transparent;
   }
   a{color:inherit; text-decoration:none;}
   img{display:block; max-width:100%;}
-  .wrap{max-width:1240px; margin:0 auto; padding:0 clamp(20px,4vw,48px);}
-  h1,h2,h3{font-family:"Fredoka","Nunito Sans",sans-serif; font-weight:700; letter-spacing:-.03em; line-height:1.05;}
-  .serif{font-family:"DM Serif Display",Georgia,serif; font-weight:400;}
+  button{font-family:inherit;}
+  .wrap{max-width:1200px; margin:0 auto; padding:0 clamp(20px,4vw,48px);}
+  .wrap-wide{max-width:1480px; margin:0 auto; padding:0 clamp(20px,4vw,48px);}
+  h1,h2,h3{font-family:"Space Grotesk","Inter",sans-serif; font-weight:700; letter-spacing:-.03em; line-height:1.04;}
+  .kicker{
+    display:flex; align-items:center; gap:10px; margin-bottom:18px;
+    font-family:var(--mono); font-size:11.5px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--chalk-faint);
+  }
+  .kicker::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--lime); box-shadow:0 0 12px rgba(196,245,71,.7); flex:none;}
+  .lede{font-size:clamp(15.5px,1.4vw,17.5px); font-weight:400; line-height:1.62; color:var(--chalk-dim); max-width:600px;}
+
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    min-height:50px; padding:0 24px; border-radius:14px; border:1px solid var(--edge);
+    font-size:13px; font-weight:600; letter-spacing:.01em;
+    cursor:pointer; transition:transform .25s var(--ease), box-shadow .25s var(--ease), background .2s var(--ease), border-color .2s var(--ease);
+    background:transparent; color:var(--chalk);
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn.primary{background:var(--lime); color:var(--lime-ink); border-color:var(--lime); box-shadow:0 16px 36px rgba(196,245,71,.18);}
+  .btn.primary:hover{box-shadow:0 20px 46px rgba(196,245,71,.28);}
+  .btn.soft{background:rgba(245,245,244,.04); border-color:var(--edge);}
+  .btn.soft:hover{background:rgba(245,245,244,.08);}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important;}
+  }
 
   /* ---------- Nav ---------- */
   .nav{
-    position:sticky; top:0; z-index:50;
+    position:fixed; z-index:80;
+    top:max(14px, env(safe-area-inset-top, 0px));
+    left:max(14px, env(safe-area-inset-left, 0px));
+    right:max(14px, env(safe-area-inset-right, 0px));
     display:flex; align-items:center; justify-content:space-between; gap:16px;
-    padding:16px clamp(20px,4vw,48px);
-    background:rgba(255,253,247,.92);
-    -webkit-backdrop-filter:blur(16px); backdrop-filter:blur(16px);
-    border-bottom:1px solid var(--line);
+    padding:10px 10px 10px 18px; border:1px solid var(--edge); border-radius:999px;
+    background:rgba(7,9,12,.72);
+    -webkit-backdrop-filter:blur(18px); backdrop-filter:blur(18px);
+    box-shadow:0 20px 60px rgba(0,0,0,.4);
   }
-  .brand{display:flex; align-items:center; gap:10px; font-weight:1000; font-size:15px;}
-  .brand img{border-radius:8px;}
-  .nav-links{display:flex; align-items:center; gap:22px; font-size:13.5px; font-weight:800;}
-  .nav-links a{opacity:.75; transition:opacity .2s;}
-  .nav-links a:hover{opacity:1;}
-  .nav-links .home{opacity:1; padding:9px 16px; border-radius:999px; background:var(--ink); color:#fff;}
+  .brand{ display:inline-flex; align-items:center; gap:9px; font-family:"Space Grotesk",sans-serif; font-size:16px; font-weight:600; letter-spacing:-.02em; color:var(--chalk); }
+  .brand img{ width:28px; height:28px; object-fit:contain; display:block; }
+  .visually-hidden{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+  .nav-links{display:flex; align-items:center; gap:2px;}
+  .nav-links a{ padding:10px 14px; border-radius:999px; font-size:12.5px; font-weight:500; color:var(--chalk-dim); transition:background .2s var(--ease), color .2s var(--ease); }
+  .nav-links a:hover{background:rgba(245,245,244,.07); color:var(--chalk);}
+  .nav-links .join{background:var(--lime); color:var(--lime-ink); font-weight:700; margin-left:6px;}
+  .nav-links .join:hover{background:#d8ff72;}
+  @media (max-width:640px){ .nav-links a:not(.join):not(.current){display:none;} }
+
+  .reveal{opacity:0; transform:translateY(20px); transition:opacity .7s var(--ease), transform .7s var(--ease);}
+  .reveal.in{opacity:1; transform:none;}
 
   /* ---------- Hero ---------- */
-  .hero{padding:clamp(48px,7vw,84px) 0 clamp(28px,4vw,44px);}
-  .kicker{
-    display:inline-flex; align-items:center; gap:8px; margin-bottom:16px;
-    font-size:11px; font-weight:1000; letter-spacing:.16em; text-transform:uppercase; color:var(--leaf);
+  .hero{
+    position:relative; padding:clamp(128px,16vh,168px) 0 clamp(240px,24vw,290px); overflow:hidden;
+    background:
+      radial-gradient(ellipse 60% 50% at 82% 8%, rgba(108,140,255,.13), transparent 58%),
+      radial-gradient(ellipse 50% 45% at 6% 90%, rgba(196,245,71,.07), transparent 55%),
+      linear-gradient(180deg, #05070a 0%, #070a0e 60%, #05070a 100%);
   }
-  .kicker::before{content:"●"; color:var(--lime); -webkit-text-stroke:1px var(--ink);}
-  .hero h1{font-size:clamp(36px,6vw,60px); max-width:760px;}
-  .hero .lede{margin-top:16px; font-size:17px; font-weight:700; line-height:1.6; color:var(--muted); max-width:660px;}
-  .credit{
-    margin-top:22px; padding:14px 18px; border:1px solid var(--line); border-radius:16px;
-    background:var(--paper); font-size:13.5px; font-weight:700; color:var(--ink);
-    max-width:660px; line-height:1.55;
+  .hero-shelf{
+    position:absolute; inset:auto 0 -40px 0; height:200px; display:flex; align-items:flex-end;
+    gap:20px; padding:0 clamp(20px,4vw,48px); opacity:.34; pointer-events:none;
+    -webkit-mask-image:linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent),
+      linear-gradient(0deg, transparent, #000 55%);
+    -webkit-mask-composite:source-in; mask-composite:intersect;
+    mask-image:linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent),
+      linear-gradient(0deg, transparent, #000 55%);
+    mask-composite:intersect;
   }
-  .credit a{color:var(--leaf); text-decoration:underline; text-decoration-color:rgba(36,122,77,.35); text-underline-offset:2px;}
-  .stat-row{display:flex; gap:22px; margin-top:26px; flex-wrap:wrap;}
-  .stat-row div{font-size:12px; font-weight:1000; letter-spacing:.04em; text-transform:uppercase; color:var(--muted);}
-  .stat-row b{display:block; font-family:"Fredoka",sans-serif; font-size:26px; color:var(--ink); letter-spacing:-.02em;}
+  .hero-shelf img{
+    flex:none; width:118px; aspect-ratio:2/3; object-fit:cover; border-radius:8px;
+    border:1px solid rgba(245,245,244,.12); box-shadow:0 20px 40px rgba(0,0,0,.5);
+    filter:saturate(.7) brightness(.72);
+  }
+  .hero-shelf img:nth-child(odd){transform:translateY(-14px) rotate(-2.5deg);}
+  .hero-shelf img:nth-child(even){transform:translateY(4px) rotate(2deg);}
+  @media (max-width:760px){
+    .hero-shelf{display:none;}
+    .hero{padding-bottom:clamp(48px,8vw,64px);}
+  }
+  .hero-copy{position:relative; z-index:2; max-width:700px;}
+  .hero h1{font-size:clamp(38px,6vw,68px); color:var(--chalk);}
+  .hero h1 span{display:block;}
+  .hero h1 .accent{color:var(--lime);}
+  .hero .lede{margin-top:18px;}
+  .archive-credit{
+    margin-top:24px; padding:15px 18px; border:1px solid var(--edge); border-radius:16px;
+    background:var(--field-2); font-size:13px; font-weight:400; color:var(--chalk-dim);
+    max-width:600px; line-height:1.58;
+  }
+  .archive-credit a{color:var(--lime); text-decoration:underline; text-decoration-color:rgba(196,245,71,.35); text-underline-offset:2px;}
+  .hero-stats{display:flex; gap:clamp(20px,3.4vw,44px); flex-wrap:wrap; margin:30px 0 6px;}
+  .hs b{display:block; font-family:"Space Grotesk",sans-serif; font-size:clamp(26px,3vw,36px); letter-spacing:-.02em; color:var(--lime); line-height:1; font-weight:700; font-variant-numeric:tabular-nums;}
+  .hs span{display:block; margin-top:8px; font-size:12px; font-weight:400; color:var(--chalk-faint); max-width:170px; line-height:1.35;}
+  .hero-actions{display:flex; flex-wrap:wrap; gap:12px; margin-top:30px;}
 
-  /* ---------- Ask/search bar ---------- */
-  .ask-bar{
-    position:sticky; top:66px; z-index:40; margin:22px 0 6px;
-    display:flex; align-items:center; gap:10px; padding:8px 8px 8px 18px;
-    background:var(--ink); border-radius:999px; box-shadow:0 16px 40px rgba(20,58,46,.22);
+  /* ---------- Toolbar (search + filters) ---------- */
+  .toolbar-zone{position:sticky; top:12px; z-index:60; padding-top:8px;}
+  .toolbar{
+    display:flex; flex-direction:column; gap:14px; padding:16px clamp(16px,2.4vw,22px);
+    border:1px solid var(--edge); border-radius:22px; background:rgba(10,14,19,.86);
+    -webkit-backdrop-filter:blur(20px); backdrop-filter:blur(20px); box-shadow:0 24px 60px rgba(0,0,0,.4);
   }
-  .ask-bar svg{flex:none; opacity:.7;}
-  .ask-bar input{
-    flex:1; background:none; border:none; outline:none; color:#fff;
-    font-family:"Nunito Sans",sans-serif; font-size:15px; font-weight:700;
+  .search-row{display:flex; align-items:center; gap:12px;}
+  .search-bar{
+    flex:1; display:flex; align-items:center; gap:11px; padding:13px 18px; border-radius:14px;
+    background:var(--field-2); border:1px solid var(--edge); transition:border-color .2s var(--ease);
   }
-  .ask-bar input::placeholder{color:rgba(255,255,255,.5);}
-  .ask-count{flex:none; padding:8px 16px; border-radius:999px; background:var(--lime); color:var(--ink); font-size:12px; font-weight:1000; white-space:nowrap;}
+  .search-bar:focus-within{border-color:rgba(196,245,71,.45);}
+  .search-bar svg{flex:none; opacity:.55;}
+  .search-bar input{
+    flex:1; min-width:0; background:none; border:none; outline:none; color:var(--chalk);
+    font-family:"Inter",sans-serif; font-size:15px; font-weight:400;
+  }
+  .search-bar input::placeholder{color:var(--chalk-faint);}
+  .result-count{
+    flex:none; padding:9px 16px; border-radius:999px; background:rgba(196,245,71,.1);
+    border:1px solid rgba(196,245,71,.25); color:var(--lime); font-size:11.5px; font-weight:700;
+    letter-spacing:.02em; white-space:nowrap; font-variant-numeric:tabular-nums;
+  }
+  .chip-row{display:flex; flex-wrap:wrap; gap:8px;}
+  .chip{
+    display:inline-flex; align-items:center; gap:7px; padding:8px 14px 8px 11px; border-radius:999px;
+    border:1px solid var(--edge); background:rgba(245,245,244,.03); color:var(--chalk-dim);
+    font-size:12px; font-weight:600; letter-spacing:.01em; cursor:pointer;
+    transition:border-color .2s var(--ease), background .2s var(--ease), color .2s var(--ease);
+  }
+  .chip .dot{width:7px; height:7px; border-radius:50%; flex:none; background:var(--chip-color, var(--chalk-faint));}
+  .chip .n{color:var(--chalk-faint); font-variant-numeric:tabular-nums;}
+  .chip:hover{border-color:rgba(245,245,244,.24); color:var(--chalk);}
+  .chip.active{background:rgba(245,245,244,.1); border-color:rgba(245,245,244,.3); color:var(--chalk);}
+  .chip.active .n{color:var(--chalk-dim);}
+  .chip.all.active{background:var(--lime); border-color:var(--lime); color:var(--lime-ink);}
+  .chip.all.active .n{color:rgba(10,16,6,.65);}
+  .chip.all.active .dot{display:none;}
 
-  .filters{display:flex; flex-wrap:wrap; gap:8px; margin:18px 0 8px;}
-  .filter-chip{
-    padding:8px 14px; border-radius:999px; border:1.5px solid var(--line); background:var(--paper);
-    font-size:12.5px; font-weight:900; cursor:pointer; transition:all .15s var(--ease); color:var(--ink);
+  /* ---------- Grid ---------- */
+  .browse{padding:clamp(38px,5vw,54px) 0 0;}
+  .book-grid{
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(212px, 1fr)); gap:26px;
+    padding:30px 0 100px;
   }
-  .filter-chip:hover{border-color:var(--leaf);}
-  .filter-chip.active{background:var(--ink); color:#fff; border-color:var(--ink);}
+  @media (max-width:600px){ .book-grid{grid-template-columns:repeat(2,1fr); gap:14px; padding:24px 0 80px;} }
 
-  /* ---------- Gallery ---------- */
-  .gallery{
-    display:grid; grid-template-columns:repeat(auto-fill, minmax(240px, 1fr));
-    gap:22px; padding:28px 0 90px;
+  .book-card{
+    position:relative; display:flex; flex-direction:column; border-radius:20px; overflow:hidden;
+    background:var(--field-2); border:1px solid var(--edge); cursor:pointer;
+    transition:transform .28s var(--ease), box-shadow .28s var(--ease), border-color .28s var(--ease);
   }
-  .frame{
-    position:relative; background:#fffdf8; border:1.5px solid #1c1a17;
-    cursor:pointer; display:flex; flex-direction:column; padding:0;
-    box-shadow:0 10px 24px rgba(20,58,46,.08);
-    transition:transform .22s var(--ease), box-shadow .22s var(--ease);
+  .book-card:hover, .book-card:focus-visible{
+    transform:translateY(-6px); border-color:rgba(245,245,244,.22); box-shadow:0 26px 60px rgba(0,0,0,.5);
   }
-  .frame:hover{transform:translateY(-6px); box-shadow:0 18px 40px rgba(20,58,46,.14);}
-  .frame.big{grid-column:span 2;}
-  @media (max-width:640px){ .frame.big{grid-column:span 1;} }
+  .book-card:focus-visible{outline:2px solid var(--lime); outline-offset:3px;}
+  .bc-cover{position:relative; aspect-ratio:2/3; overflow:hidden; background:var(--field-3);}
+  .bc-cover img{width:100%; height:100%; object-fit:cover; display:block; transition:transform .5s var(--ease);}
+  .book-card:hover .bc-cover img{transform:scale(1.045);}
+  .bc-open{
+    position:absolute; top:10px; right:10px; width:30px; height:30px; border-radius:10px;
+    display:flex; align-items:center; justify-content:center; background:rgba(7,9,12,.72);
+    border:1px solid rgba(245,245,244,.16); color:var(--chalk); font-size:13px;
+    opacity:0; transform:translateY(-4px); transition:opacity .22s var(--ease), transform .22s var(--ease);
+    -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
+  }
+  .book-card:hover .bc-open, .book-card:focus-visible .bc-open{opacity:1; transform:none;}
+  .bc-body{display:flex; flex-direction:column; flex:1; padding:15px 16px 16px; gap:7px;}
+  .bc-subject{display:flex; align-items:center; gap:7px; font-family:var(--mono); font-size:9.5px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--chalk-faint);}
+  .bc-subject .dot{width:6px; height:6px; border-radius:50%; flex:none; background:var(--chip-color, var(--chalk-faint));}
+  .bc-title{font-size:15.5px; font-weight:600; letter-spacing:-.01em; line-height:1.26; color:var(--chalk);
+    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;}
+  .bc-desc{font-size:12px; line-height:1.5; color:var(--chalk-dim); font-weight:400; flex:1;
+    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;}
+  .bc-stats{margin-top:2px; font-family:var(--mono); font-size:10px; font-weight:500; color:var(--chalk-faint); letter-spacing:.01em;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
 
-  .mat{
-    background:#fffdf8; padding:16px 16px 18px; flex:1;
-    display:flex; flex-direction:column;
-  }
-  .cover-art{
-    width:100%; aspect-ratio:3/4; object-fit:cover; display:block;
-    background:#efe8d8; margin:0;
-  }
-  .swatch{
-    width:38px; height:38px; border-radius:9px; margin:16px 16px 0;
-    display:flex; align-items:center; justify-content:center;
-    font-family:"Fredoka",sans-serif; font-weight:700; font-size:15px; color:#fff;
-  }
-  .frame.big .swatch{width:48px; height:48px; font-size:19px;}
-  .lb-cover{
-    width:min(180px,40%); aspect-ratio:3/4; object-fit:cover; border-radius:10px;
-    margin:0 0 18px; box-shadow:0 12px 28px rgba(20,30,20,.18);
-  }
-  .card-subject{font-size:10px; font-weight:1000; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-bottom:6px;}
-  .card-title{font-family:"Fredoka",sans-serif; font-weight:700; font-size:16px; letter-spacing:-.015em; line-height:1.22; margin-bottom:8px;}
-  .frame.big .card-title{font-size:22px;}
-  .card-desc{font-size:12.5px; line-height:1.5; color:var(--muted); flex:1; font-weight:600;
-    display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;}
-  .frame.big .card-desc{-webkit-line-clamp:5; font-size:13.5px;}
-  .card-stats{margin-top:12px; font-size:10.5px; font-weight:800; color:var(--leaf); letter-spacing:.01em;}
-
-  .empty-state{grid-column:1/-1; text-align:center; padding:70px 20px; color:var(--muted); font-weight:700;}
+  .empty-state{grid-column:1/-1; text-align:center; padding:90px 20px; color:var(--chalk-dim);}
+  .empty-state p{font-size:15px; margin-bottom:18px;}
 
   /* ---------- Lightbox ---------- */
   .lightbox{
-    position:fixed; inset:0; z-index:100; background:rgba(8,14,20,.86);
-    display:none; align-items:center; justify-content:center; padding:24px;
-    -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
+    position:fixed; inset:0; z-index:100; background:rgba(4,5,7,.82);
+    display:none; align-items:center; justify-content:center; padding:22px;
+    -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
   }
   .lightbox.open{display:flex;}
   .lb-box{
-    position:relative; width:min(640px, 100%); max-height:88vh; overflow-y:auto;
-    background:var(--paper); border-radius:26px; padding:clamp(28px,4vw,44px);
-    box-shadow:0 40px 100px rgba(0,0,0,.5);
+    position:relative; width:min(760px, 100%); max-height:88vh; overflow-y:auto;
+    background:var(--field-2); border:1px solid var(--edge); border-radius:26px;
+    padding:clamp(26px,3.6vw,42px); box-shadow:0 50px 120px rgba(0,0,0,.6);
+    display:grid; grid-template-columns:200px 1fr; gap:clamp(24px,3vw,36px);
   }
+  @media (max-width:640px){ .lb-box{grid-template-columns:1fr; padding:24px 20px;} }
   .lb-close{
-    position:absolute; top:18px; right:18px; width:38px; height:38px; border-radius:12px;
-    background:var(--cream); border:1px solid var(--line); display:flex; align-items:center; justify-content:center;
-    cursor:pointer; font-size:16px; font-weight:900;
+    position:absolute; top:16px; right:16px; width:36px; height:36px; border-radius:11px;
+    background:rgba(245,245,244,.06); border:1px solid var(--edge); display:flex; align-items:center; justify-content:center;
+    cursor:pointer; font-size:15px; font-weight:600; color:var(--chalk); z-index:2;
   }
-  .lb-swatch{width:52px; height:52px; border-radius:14px; margin-bottom:18px; display:flex; align-items:center; justify-content:center; font-family:"Fredoka",sans-serif; font-weight:700; font-size:20px; color:#fff;}
-  .lb-subject{font-size:11px; font-weight:1000; letter-spacing:.1em; text-transform:uppercase; color:var(--leaf); margin-bottom:8px;}
-  .lb-title{font-size:clamp(24px,3.4vw,34px); margin-bottom:14px; max-width:520px;}
-  .lb-desc{font-size:15.5px; line-height:1.65; color:var(--ink); font-weight:600; margin-bottom:18px;}
-  .lb-stats{font-size:12.5px; font-weight:800; color:var(--muted); margin-bottom:26px; line-height:1.6;}
-  .lb-actions{display:flex; align-items:center; gap:12px; flex-wrap:wrap;}
-  .lb-visit{
-    display:inline-flex; align-items:center; gap:8px; padding:13px 22px; border-radius:999px;
-    background:var(--ink); color:#fff; font-size:13px; font-weight:1000; letter-spacing:.03em;
-  }
-  .lb-visit:hover{background:var(--leaf);}
+  .lb-close:hover{background:rgba(245,245,244,.12);}
+  .lb-cover{width:100%; aspect-ratio:2/3; object-fit:cover; border-radius:14px; box-shadow:0 20px 44px rgba(0,0,0,.5); border:1px solid var(--edge);}
+  .lb-main{min-width:0; display:flex; flex-direction:column;}
+  .lb-subject{display:flex; align-items:center; gap:8px; font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--chalk-faint); margin-bottom:10px;}
+  .lb-subject .dot{width:7px; height:7px; border-radius:50%; flex:none; background:var(--chip-color, var(--chalk-faint));}
+  .lb-title{font-size:clamp(22px,2.8vw,30px); margin-bottom:14px; max-width:34ch; padding-right:34px;}
+  .lb-desc{font-size:14.5px; line-height:1.62; color:var(--chalk-dim); font-weight:400; margin-bottom:16px;}
+  .lb-stats{font-family:var(--mono); font-size:12px; font-weight:500; color:var(--chalk-faint); margin-bottom:24px; line-height:1.6;}
+  .lb-actions{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:auto;}
   .lb-nav{display:flex; gap:8px; margin-left:auto;}
   .lb-nav button{
-    width:42px; height:42px; border-radius:12px; border:1.5px solid var(--line); background:var(--cream);
-    cursor:pointer; font-size:16px; font-weight:900; color:var(--ink);
+    width:38px; height:38px; border-radius:11px; border:1px solid var(--edge); background:rgba(245,245,244,.04);
+    cursor:pointer; font-size:14px; font-weight:600; color:var(--chalk);
   }
-  .lb-nav button:hover{border-color:var(--leaf);}
+  .lb-nav button:hover:not(:disabled){border-color:rgba(245,245,244,.28);}
   .lb-nav button:disabled{opacity:.3; cursor:default;}
-  .lb-counter{font-size:11.5px; font-weight:900; color:var(--muted); margin-top:16px; text-align:center;}
+  .lb-counter{font-family:var(--mono); font-size:11px; font-weight:500; color:var(--chalk-faint); margin-top:16px;}
 
-  /* ---------- Footer ---------- */
-  footer{border-top:1px solid var(--line); padding:32px 0 60px; margin-top:20px;}
-  .foot-note{font-size:12.5px; color:var(--muted); font-weight:700; line-height:1.6; max-width:600px;}
-  .foot-note a{color:var(--leaf); text-decoration:underline; text-underline-offset:2px;}
+  /* ---------- Back to top ---------- */
+  .top-btn{
+    position:fixed; right:22px; bottom:22px; z-index:70; width:46px; height:46px; border-radius:50%;
+    background:rgba(10,14,19,.86); border:1px solid var(--edge); color:var(--chalk);
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+    -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px); box-shadow:0 16px 40px rgba(0,0,0,.4);
+    opacity:0; transform:translateY(10px); pointer-events:none;
+    transition:opacity .25s var(--ease), transform .25s var(--ease), border-color .2s var(--ease);
+  }
+  .top-btn.show{opacity:1; transform:none; pointer-events:auto;}
+  .top-btn:hover{border-color:rgba(196,245,71,.4);}
 
-  .visually-hidden{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0);}
+  footer{background:var(--field); border-top:1px solid var(--edge); padding:40px 0 52px; color:var(--chalk-faint); font-size:13px; font-weight:400;}
+  .foot-row{display:flex; align-items:center; gap:22px; flex-wrap:wrap;}
+  .foot-links{display:flex; gap:18px; margin-left:auto; flex-wrap:wrap;}
+  .foot-links a:hover{color:var(--chalk);}
+  .foot-note{margin-top:16px; padding-top:16px; border-top:1px solid var(--edge); font-size:12.5px; line-height:1.6; max-width:640px;}
+  .foot-note a{color:var(--chalk-dim); text-decoration:underline; text-underline-offset:2px;}
+  .foot-note a:hover{color:var(--chalk);}
 </style>
 </head>
 <body>
 
 <nav class="nav">
   <a class="brand" href="index.html">
-    <img src="img/raccoon-logo.png" alt="" width="30" height="30">
-    <span>MindCraft</span>
+    <img src="img/raccoon-logo.png" alt="" width="28" height="28">
+    <span class="visually-hidden">MindCraft</span>
+    <span aria-hidden="true">MindCraft</span>
   </a>
   <div class="nav-links">
-    <a href="index.html#learns">How it learns</a>
-    <a href="index.html" class="home">← Back to The Desk</a>
+    <a href="index.html">The Desk</a>
+    <a href="blog.html">Blog</a>
+    <a class="join" href="index.html#start">Claim your desk</a>
   </div>
 </nav>
 
-<div class="wrap">
-  <section class="hero">
-    <div class="kicker">Free · Open · No login</div>
-    <h1>Open Learning Archive</h1>
-    <p class="lede">
-      113 free, open intelligent textbooks — math, science, engineering, AI,
-      history, language, and more — each one built with real learning graphs,
-      interactive MicroSims, and a knowledge structure that could tell you
-      exactly where you got stuck. Explore any of them, free, no account needed.
-    </p>
-    <div class="credit">
-      Every textbook here was created by <a href="https://www.linkedin.com/in/danmccreary/" target="_blank" rel="noopener noreferrer">Dan McCreary</a>,
-      shared freely on his own sites as open Level&nbsp;2.9 intelligent textbooks. MindCraft
-      didn't make any of this — we're just making it easier to find and browse. Full
-      original catalog: <a href="https://dmccreary.github.io/intelligent-textbooks/case-studies/" target="_blank" rel="noopener noreferrer">dmccreary.github.io</a>.
+<header class="hero">
+  <div class="hero-shelf" id="heroShelf" aria-hidden="true"></div>
+  <div class="wrap hero-copy">
+    <div class="kicker reveal">The Open Learning Archive</div>
+    <h1 class="reveal"><span>The whole shelf,</span><span class="accent">unlocked.</span></h1>
+    <p class="lede reveal">113 free, open intelligent textbooks: math, science, engineering, AI, history, language, and more. Each one built with a real learning graph and simulations you can actually touch. No login, no paywall. Just open a book.</p>
+    <div class="archive-credit reveal">
+      Every book here was written and freely shared by learning-graph researcher <a href="https://www.linkedin.com/in/danmccreary/" target="_blank" rel="noopener noreferrer">Dan McCreary</a>, on his own sites, as open intelligent textbooks. MindCraft didn't write any of it. We're just making it easier to find and browse. Full original catalog at <a href="https://dmccreary.github.io/intelligent-textbooks/case-studies/" target="_blank" rel="noopener noreferrer">dmccreary.github.io</a>.
     </div>
-    <div class="stat-row" id="statRow"></div>
-    <p class="lede" style="margin-top:22px;">
-      Or ask Jesse. Same call as the resume workflow. He opens the exact page.
-    </p>
-    <a class="lb-visit" href="https://mindcraft-93858.web.app/desk-os/workflows/archive/?v=a2" style="margin-top:10px;width:fit-content;">Ask Jesse on the archive →</a>
-  </section>
-
-  <div class="ask-bar">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.6" y2="16.6"/></svg>
-    <input type="text" id="searchInput" placeholder="Search or ask for a subject — “calculus”, “graph databases”, “dementia”…" autocomplete="off">
-    <span class="ask-count" id="askCount">113 books</span>
+    <div class="hero-stats reveal" id="statRow"></div>
+    <div class="hero-actions reveal">
+      <a class="btn primary" href="https://mindcraft-93858.web.app/desk-os/workflows/archive/?v=a3">Ask Jesse for a starting point</a>
+      <a class="btn soft" href="#browse">Browse all 113 ↓</a>
+    </div>
   </div>
+</header>
 
-  <div class="filters" id="filters"></div>
-
-  <div class="gallery" id="gallery" aria-live="polite"></div>
-</div>
-
-    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
-  <div class="lb-box">
-    <button class="lb-close" id="lbClose" aria-label="Close">✕</button>
-    <img class="lb-cover" id="lbCover" alt="" hidden>
-    <div class="lb-swatch" id="lbSwatch"></div>
-    <div class="lb-subject" id="lbSubject"></div>
-    <h2 class="lb-title" id="lbTitle"></h2>
-    <p class="lb-desc" id="lbDesc"></p>
-    <div class="lb-stats" id="lbStats"></div>
-    <div class="lb-actions">
-      <a class="lb-visit" id="lbVisit" href="#" target="_blank" rel="noopener noreferrer">Open textbook →</a>
-      <a class="lb-visit" id="lbAsk" href="#" style="background:transparent;color:var(--ink);border:1.5px solid var(--line);">Ask Jesse</a>
-      <div class="lb-nav">
-        <button id="lbPrev" aria-label="Previous">←</button>
-        <button id="lbNext" aria-label="Next">→</button>
+<main>
+  <div class="toolbar-zone">
+    <div class="wrap-wide">
+      <div class="toolbar" id="browse">
+        <div class="search-row">
+          <div class="search-bar">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.6" y2="16.6"/></svg>
+            <input type="text" id="searchInput" placeholder="Search all 113 books: try “calculus,” “graph databases,” “dementia”…" autocomplete="off" aria-label="Search the archive">
+          </div>
+          <span class="result-count" id="resultCount">113 books</span>
+        </div>
+        <div class="chip-row" id="chipRow" role="group" aria-label="Filter by subject"></div>
       </div>
     </div>
-    <div class="lb-counter" id="lbCounter"></div>
+  </div>
+
+  <section class="browse">
+    <div class="wrap-wide">
+      <div class="book-grid" id="grid" aria-live="polite"></div>
+    </div>
+  </section>
+</main>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Book details">
+  <div class="lb-box">
+    <button class="lb-close" id="lbClose" aria-label="Close">✕</button>
+    <img class="lb-cover" id="lbCover" alt="">
+    <div class="lb-main">
+      <div class="lb-subject"><span class="dot" id="lbDot"></span><span id="lbSubject"></span></div>
+      <h2 class="lb-title" id="lbTitle"></h2>
+      <p class="lb-desc" id="lbDesc"></p>
+      <div class="lb-stats" id="lbStats"></div>
+      <div class="lb-actions">
+        <a class="btn primary" id="lbVisit" href="#" target="_blank" rel="noopener noreferrer">Open textbook ↗</a>
+        <a class="btn soft" id="lbAsk" href="#">Ask Jesse about this book</a>
+        <div class="lb-nav">
+          <button id="lbPrev" aria-label="Previous book">←</button>
+          <button id="lbNext" aria-label="Next book">→</button>
+        </div>
+      </div>
+      <div class="lb-counter" id="lbCounter"></div>
+    </div>
   </div>
 </div>
+
+<button class="top-btn" id="topBtn" aria-label="Back to top">↑</button>
 
 <footer>
   <div class="wrap">
+    <div class="foot-row">
+      <span>© MindCraft · joinmindcraft@gmail.com</span>
+      <div class="foot-links">
+        <a href="index.html">The Desk</a>
+        <a href="blog.html">Blog</a>
+        <a href="index.html#pricing">Pricing</a>
+        <a href="mailto:joinmindcraft@gmail.com">Email</a>
+      </div>
+    </div>
     <p class="foot-note">
-      © MindCraft · Textbook content, titles, and descriptions belong to their
-      respective authors (primarily <a href="https://www.linkedin.com/in/danmccreary/" target="_blank" rel="noopener noreferrer">Dan McCreary</a>) and
-      are linked here, not rehosted. Questions or corrections:
-      <a href="mailto:joinmindcraft@gmail.com">joinmindcraft@gmail.com</a>.
+      Textbook content, titles, and descriptions belong to their original authors, primarily
+      <a href="https://www.linkedin.com/in/danmccreary/" target="_blank" rel="noopener noreferrer">Dan McCreary</a>,
+      and are linked here, not rehosted. Questions or corrections: <a href="mailto:joinmindcraft@gmail.com">joinmindcraft@gmail.com</a>.
     </p>
   </div>
 </footer>
 
 <script>
 (function(){
-  const SWATCHES = ['#247a4d','#1d3a8a','#c1121f','#744056','#c9963f','#4f8a8b','#7d6fa8','#c96a7e','#5fb779','#d3a900'];
   const CATEGORY_RULES = [
-    { label: 'Math', test: s => /mathemat|calculus|algebra|geometry|trigonom|statistics|functions|linear algebra/i.test(s) },
-    { label: 'Computer Science / AI', test: s => /computer science|\bai\b|artificial|machine learning|deep learning|graph neural|generative|llm|conversational|agents|prompt/i.test(s) },
-    { label: 'Engineering', test: s => /engineering|circuits|electronics|robotics|3d printing|fluid power|signal|dsp|semiconductor|microcontroller/i.test(s) },
-    { label: 'Science', test: s => /physics|chemistry|biology|ecology|genetics|bioinformatics|forensic|food science|public health|healthcare|medicine/i.test(s) },
-    { label: 'Business', test: s => /business|finance|economics|entrepreneur|investor|organizational/i.test(s) },
-    { label: 'History / Culture', test: s => /history|culture|heritage/i.test(s) },
-    { label: 'Language', test: s => /language/i.test(s) },
-    { label: 'Education Tech', test: s => /education technology|education\/ai|learning science|digital literacy/i.test(s) },
-    { label: 'Other', test: () => true },
+    { label: 'Math', color: 'var(--lime)', test: s => /mathemat|calculus|algebra|geometry|trigonom|statistics|functions|linear algebra/i.test(s) },
+    { label: 'Computer Science & AI', color: 'var(--blue)', test: s => /computer science|\bai\b|artificial|machine learning|deep learning|graph neural|generative|llm|conversational|agents|prompt|cybersecurity|programming|software|database|\bstem\b/i.test(s) },
+    { label: 'Engineering', color: 'var(--amber)', test: s => /engineering|circuits|electronics|robotics|3d printing|fluid power|signal|dsp|semiconductor|microcontroller|systems thinking/i.test(s) },
+    { label: 'Science', color: 'var(--teal)', test: s => /physics|chemistry|biology|ecology|genetics|bioinformatics|forensic|food|public health|healthcare|medicine|health|science|life sciences|agriculture|psychology/i.test(s) },
+    { label: 'Business', color: 'var(--violet)', test: s => /business|finance|economics|entrepreneur|investor|organizational/i.test(s) },
+    { label: 'History & Society', color: 'var(--rose)', test: s => /history|culture|heritage|geography|government|political/i.test(s) },
+    { label: 'Language', color: 'var(--sky)', test: s => /language/i.test(s) },
+    { label: 'Education & Learning', color: 'var(--slate)', test: s => /education|learning science|digital literacy/i.test(s) },
+    { label: 'Other', color: 'var(--chalk-faint)', test: () => true },
   ];
 
   function categoryFor(subject){
-    for (const rule of CATEGORY_RULES) if (rule.test(subject)) return rule.label;
-    return 'Other';
-  }
-  function swatchFor(str){
-    let h = 0;
-    for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) >>> 0;
-    return SWATCHES[h % SWATCHES.length];
-  }
-  function initials(title){
-    const words = title.replace(/[^a-zA-Z0-9 ]/g, ' ').split(/\s+/).filter(Boolean);
-    return ((words[0]||'')[0] + (words[1]||'')[0]).toUpperCase();
+    for (const rule of CATEGORY_RULES) if (rule.test(subject)) return rule;
+    return CATEGORY_RULES[CATEGORY_RULES.length - 1];
   }
   function escapeHtml(s){
-    return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   }
+  function coverSrc(b){ return 'img/dans-covers/' + encodeURIComponent(b.slug) + '.jpg?v=d1'; }
 
   let ALL = [];
   let filtered = [];
   let activeCategory = 'All';
   let lbIndex = -1;
 
-  const galleryEl = document.getElementById('gallery');
-  const filtersEl = document.getElementById('filters');
+  const gridEl = document.getElementById('grid');
+  const chipRowEl = document.getElementById('chipRow');
   const searchEl = document.getElementById('searchInput');
-  const askCountEl = document.getElementById('askCount');
+  const resultCountEl = document.getElementById('resultCount');
   const statRowEl = document.getElementById('statRow');
+  const heroShelfEl = document.getElementById('heroShelf');
 
-  fetch('data/dansArchive.json')
+  fetch('data/dansArchive.json?v=d1')
     .then(r => r.json())
     .then(data => {
-      ALL = data.books.map((b, i) => Object.assign({}, b, { category: categoryFor(b.subject), id: i }));
-      buildStats(data);
-      buildFilters();
+      ALL = data.books.map((b, i) => {
+        const cat = categoryFor(b.subject);
+        return Object.assign({}, b, { category: cat.label, categoryColor: cat.color, id: i });
+      });
+      buildStats();
+      buildShelf();
+      buildChips();
       applyFilters();
       const openParam = new URLSearchParams(location.search).get('open');
       if (openParam !== null && ALL[+openParam]) openLightbox(+openParam);
     })
     .catch(() => {
-      galleryEl.innerHTML = '<div class="empty-state">Couldn\'t load the archive right now. Try refreshing.</div>';
+      gridEl.innerHTML = '<div class="empty-state"><p>The archive did not load. Try refreshing.</p></div>';
     });
 
-  function buildStats(data){
-    const cats = new Set(ALL.map(b => b.category)).size;
+  function buildStats(){
     statRowEl.innerHTML = `
-      <div><b>${ALL.length}</b>Textbooks</div>
-      <div><b>${cats}</b>Subject areas</div>
-      <div><b>$0</b>Cost</div>
+      <div class="hs"><b>${ALL.length}</b><span>free, open intelligent textbooks</span></div>
+      <div class="hs"><b>389</b><span>MicroSims in one Health Education book alone</span></div>
+      <div class="hs"><b>173</b><span>interactive sims in AI Assisted Geometry</span></div>
+      <div class="hs"><b>$0</b><span>cost, ever. No login required.</span></div>
     `;
   }
 
-  function buildFilters(){
-    const cats = ['All', ...CATEGORY_RULES.map(r => r.label)];
-    const present = new Set(ALL.map(b => b.category));
-    filtersEl.innerHTML = cats
-      .filter(c => c === 'All' || present.has(c))
-      .map(c => `<button class="filter-chip${c==='All'?' active':''}" data-cat="${escapeHtml(c)}">${escapeHtml(c)}</button>`)
-      .join('');
-    filtersEl.querySelectorAll('.filter-chip').forEach(btn => {
+  function buildShelf(){
+    if (!heroShelfEl) return;
+    const picks = ['quantum-computing','geometry-course','circuits','biology','calculus','health-education','blockchain','ancient-history','chemistry','agents-course','robot-faces','asl-book'];
+    const books = picks.map(slug => ALL.find(b => b.slug === slug)).filter(Boolean);
+    heroShelfEl.innerHTML = books.map(b => `<img src="${coverSrc(b)}" alt="" loading="lazy">`).join('');
+  }
+
+  function buildChips(){
+    const counts = new Map();
+    ALL.forEach(b => counts.set(b.category, (counts.get(b.category) || 0) + 1));
+    const cats = CATEGORY_RULES.filter(r => counts.get(r.label));
+    const chips = [{ label: 'All', color: null, count: ALL.length, all: true }]
+      .concat(cats.map(r => ({ label: r.label, color: r.color, count: counts.get(r.label) })));
+    chipRowEl.innerHTML = chips.map(c => `
+      <button class="chip${c.all ? ' all' : ''}${activeCategory === c.label ? ' active' : ''}" data-cat="${escapeHtml(c.label)}" style="${c.color ? '--chip-color:' + c.color : ''}" aria-pressed="${activeCategory === c.label}">
+        ${c.color ? '<span class="dot"></span>' : ''}${escapeHtml(c.label)} <span class="n">${c.count}</span>
+      </button>`).join('');
+    chipRowEl.querySelectorAll('.chip').forEach(btn => {
       btn.addEventListener('click', () => {
         activeCategory = btn.dataset.cat;
-        filtersEl.querySelectorAll('.filter-chip').forEach(b => b.classList.toggle('active', b === btn));
+        chipRowEl.querySelectorAll('.chip').forEach(b => {
+          const on = b === btn;
+          b.classList.toggle('active', on);
+          b.setAttribute('aria-pressed', on);
+        });
         applyFilters();
       });
     });
@@ -351,34 +482,43 @@
       const matchesQ = !q || (b.title + ' ' + b.description + ' ' + b.subject).toLowerCase().includes(q);
       return matchesCat && matchesQ;
     });
-    askCountEl.textContent = `${filtered.length} book${filtered.length === 1 ? '' : 's'}`;
-    renderGallery();
+    resultCountEl.textContent = filtered.length === ALL.length
+      ? `${ALL.length} books`
+      : `${filtered.length} of ${ALL.length}`;
+    renderGrid();
   }
 
-  function renderGallery(){
+  function renderGrid(){
     if (!filtered.length) {
-      galleryEl.innerHTML = '<div class="empty-state">No textbooks match that search. Try a broader term.</div>';
+      gridEl.innerHTML = '<div class="empty-state"><p>No books match that search. Try a broader word, or clear the filter.</p><button class="btn soft" id="clearFilters">Clear filters</button></div>';
+      const clearBtn = document.getElementById('clearFilters');
+      if (clearBtn) clearBtn.addEventListener('click', () => {
+        searchEl.value = '';
+        activeCategory = 'All';
+        chipRowEl.querySelectorAll('.chip').forEach(b => {
+          const on = b.dataset.cat === 'All';
+          b.classList.toggle('active', on);
+          b.setAttribute('aria-pressed', on);
+        });
+        applyFilters();
+      });
       return;
     }
-    galleryEl.innerHTML = filtered.map((b, i) => {
-      const big = i % 11 === 0 ? ' big' : '';
-      const color = swatchFor(b.title);
-      const art = b.cover
-        ? `<img class="cover-art" src="${escapeHtml(b.cover)}" alt="">`
-        : `<div class="swatch" style="background:${color}">${initials(b.title)}</div>`;
-      return `
-        <div class="frame${big}" data-id="${b.id}" tabindex="0" role="button" aria-label="Open ${escapeHtml(b.title)}">
-          ${art}
-          <div class="mat">
-            <div class="card-subject">${escapeHtml(b.subject)}</div>
-            <div class="card-title">${escapeHtml(b.title)}</div>
-            <div class="card-desc">${escapeHtml(b.description)}</div>
-            ${b.stats ? `<div class="card-stats">${escapeHtml(b.stats)}</div>` : ''}
-          </div>
-        </div>`;
-    }).join('');
+    gridEl.innerHTML = filtered.map((b, i) => `
+      <article class="book-card" data-id="${b.id}" tabindex="0" role="button" aria-label="Open ${escapeHtml(b.title)}" style="--chip-color:${b.categoryColor}">
+        <div class="bc-cover">
+          <img src="${coverSrc(b)}" alt="${escapeHtml(b.title)} cover" loading="${i < 6 ? 'eager' : 'lazy'}">
+          <span class="bc-open" aria-hidden="true">↗</span>
+        </div>
+        <div class="bc-body">
+          <div class="bc-subject"><span class="dot"></span>${escapeHtml(b.category)}</div>
+          <div class="bc-title">${escapeHtml(b.title)}</div>
+          <div class="bc-desc">${escapeHtml(b.description)}</div>
+          ${b.stats ? `<div class="bc-stats">${escapeHtml(b.stats)}</div>` : ''}
+        </div>
+      </article>`).join('');
 
-    galleryEl.querySelectorAll('.frame').forEach(el => {
+    gridEl.querySelectorAll('.book-card').forEach(el => {
       el.addEventListener('click', () => openLightbox(parseInt(el.dataset.id, 10)));
       el.addEventListener('keydown', e => {
         if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(parseInt(el.dataset.id, 10)); }
@@ -390,44 +530,41 @@
 
   // ---------- Lightbox ----------
   const lightboxEl = document.getElementById('lightbox');
-  const lbSwatch = document.getElementById('lbSwatch');
+  const lbCover = document.getElementById('lbCover');
+  const lbDot = document.getElementById('lbDot');
   const lbSubject = document.getElementById('lbSubject');
   const lbTitle = document.getElementById('lbTitle');
   const lbDesc = document.getElementById('lbDesc');
   const lbStats = document.getElementById('lbStats');
   const lbVisit = document.getElementById('lbVisit');
+  const lbAsk = document.getElementById('lbAsk');
   const lbCounter = document.getElementById('lbCounter');
   const lbPrev = document.getElementById('lbPrev');
   const lbNext = document.getElementById('lbNext');
+  let lastFocused = null;
 
   function openLightbox(bookId){
     const idx = filtered.findIndex(b => b.id === bookId);
     if (idx === -1) return;
     lbIndex = idx;
+    lastFocused = document.activeElement;
     renderLightbox();
     lightboxEl.classList.add('open');
+    history.replaceState(null, '', '?open=' + bookId);
+    document.getElementById('lbClose').focus();
   }
   function renderLightbox(){
     const b = filtered[lbIndex];
     if (!b) return;
-    const coverEl = document.getElementById('lbCover');
-    if (b.cover) {
-      coverEl.src = b.cover;
-      coverEl.hidden = false;
-      lbSwatch.style.display = 'none';
-    } else {
-      coverEl.hidden = true;
-      coverEl.removeAttribute('src');
-      lbSwatch.style.display = '';
-      lbSwatch.style.background = swatchFor(b.title);
-      lbSwatch.textContent = initials(b.title);
-    }
-    lbSubject.textContent = b.subject;
+    lbCover.src = coverSrc(b);
+    lbCover.alt = b.title + ' cover';
+    lbDot.style.setProperty('--chip-color', b.categoryColor);
+    lbSubject.textContent = b.category + ' · ' + b.subject;
     lbTitle.textContent = b.title;
     lbDesc.textContent = b.description;
     lbStats.textContent = b.stats || '';
     lbVisit.href = b.url;
-    document.getElementById('lbAsk').href = 'https://mindcraft-93858.web.app/desk-os/workflows/archive/?v=a2&q=' + encodeURIComponent(b.title);
+    lbAsk.href = 'https://mindcraft-93858.web.app/desk-os/workflows/archive/?v=a3&q=' + encodeURIComponent(b.title);
     lbCounter.textContent = `${lbIndex + 1} of ${filtered.length}`;
     lbPrev.disabled = lbIndex <= 0;
     lbNext.disabled = lbIndex >= filtered.length - 1;
@@ -435,12 +572,15 @@
   function closeLightbox(){
     lightboxEl.classList.remove('open');
     lbIndex = -1;
+    history.replaceState(null, '', location.pathname);
+    if (lastFocused && lastFocused.focus) lastFocused.focus();
   }
   function step(delta){
     const next = lbIndex + delta;
     if (next < 0 || next >= filtered.length) return;
     lbIndex = next;
     renderLightbox();
+    history.replaceState(null, '', '?open=' + filtered[lbIndex].id);
   }
 
   document.getElementById('lbClose').addEventListener('click', closeLightbox);
@@ -454,6 +594,21 @@
     else if (e.key === 'ArrowLeft') step(-1);
     else if (e.key === 'ArrowRight') step(1);
   });
+
+  // ---------- Reveal on scroll ----------
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold:.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  if (prefersReduced) document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+
+  // ---------- Back to top ----------
+  const topBtn = document.getElementById('topBtn');
+  addEventListener('scroll', () => {
+    topBtn.classList.toggle('show', (window.scrollY || 0) > 700);
+  }, { passive: true });
+  topBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: prefersReduced ? 'auto' : 'smooth' }));
 })();
 </script>
 
