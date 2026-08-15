@@ -64,14 +64,9 @@ struct ActInstanceShellView: View {
 
     private var topBar: some View {
         HStack(spacing: 10) {
-            VStack(alignment: .leading, spacing: 2) {
-                Text("ACT Field Book")
-                    .font(.system(size: 16, weight: .bold, design: .rounded))
-                    .foregroundColor(.white.opacity(0.92))
-                Text("dash + notes · house stays on dash · minimize → Binder")
-                    .font(.system(size: 11, weight: .medium, design: .rounded))
-                    .foregroundColor(.white.opacity(0.45))
-            }
+            Text("ACT Field Book")
+                .font(.system(size: 16, weight: .bold, design: .rounded))
+                .foregroundColor(.white.opacity(0.92))
             Spacer(minLength: 0)
             Button {
                 withAnimation(.easeInOut(duration: 0.2)) { showNotes.toggle() }
@@ -142,33 +137,29 @@ struct ActInstanceShellView: View {
         )
     }
 
+    // One real toolbar, not two stacked ones: this used to lead with three
+    // Map/Work/Notes chips - two permanently disabled ("dash owns tabs," so
+    // they never did anything) and the third a redundant second Notes
+    // toggle duplicating `topBar`'s real one. Just the Ask bar now; the tab
+    // navigation that actually works lives in `DashboardView` above this.
     private var toolsStrip: some View {
-        HStack(spacing: 10) {
-            toolChip(system: "map", label: "Map") // decorative - dash owns tabs
-            toolChip(system: "pencil.line", label: "Work")
-            toolChip(system: "note.text", label: "Notes") {
-                withAnimation { showNotes = true }
-            }
-            Spacer(minLength: 0)
-            HStack(spacing: 8) {
-                TextField("Ask this page…", text: $askDraft)
-                    .textFieldStyle(.plain)
-                    .font(.system(size: 13, weight: .medium, design: .rounded))
-                    .foregroundColor(.white.opacity(0.9))
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 9)
-                    .background(Capsule().fill(Color.white.opacity(0.08)))
-                Button("Ask") {
-                    askDraft = ""
-                }
-                .font(.system(size: 12, weight: .bold, design: .rounded))
-                .foregroundColor(Color(actShellHex: "0c1207"))
-                .padding(.horizontal, 14)
+        HStack(spacing: 8) {
+            TextField("Ask this page…", text: $askDraft)
+                .textFieldStyle(.plain)
+                .font(.system(size: 13, weight: .medium, design: .rounded))
+                .foregroundColor(.white.opacity(0.9))
+                .padding(.horizontal, 12)
                 .padding(.vertical, 9)
-                .background(Capsule().fill(Color(actShellHex: "c4f547")))
-                .buttonStyle(.plain)
+                .background(Capsule().fill(Color.white.opacity(0.08)))
+            Button("Ask") {
+                askDraft = ""
             }
-            .frame(maxWidth: 420)
+            .font(.system(size: 12, weight: .bold, design: .rounded))
+            .foregroundColor(Color(actShellHex: "0c1207"))
+            .padding(.horizontal, 14)
+            .padding(.vertical, 9)
+            .background(Capsule().fill(Color(actShellHex: "c4f547")))
+            .buttonStyle(.plain)
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 10)
@@ -181,25 +172,6 @@ struct ActInstanceShellView: View {
                 )
         )
         .accessibilityIdentifier("actInstanceTools")
-    }
-
-    private func toolChip(system: String, label: String, action: (() -> Void)? = nil) -> some View {
-        Button {
-            action?()
-        } label: {
-            HStack(spacing: 6) {
-                Image(systemName: system)
-                Text(label)
-            }
-            .font(.system(size: 12, weight: .bold, design: .rounded))
-            .foregroundColor(.white.opacity(0.85))
-            .padding(.horizontal, 12)
-            .padding(.vertical, 8)
-            .background(Capsule().fill(Color.white.opacity(0.08)))
-        }
-        .buttonStyle(.plain)
-        .disabled(action == nil)
-        .opacity(action == nil ? 0.55 : 1)
     }
 }
 

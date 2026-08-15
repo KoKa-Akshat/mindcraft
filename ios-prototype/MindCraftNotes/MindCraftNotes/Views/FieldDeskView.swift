@@ -187,7 +187,11 @@ struct FieldDeskView: View {
             .calendar: CGSize(width: 260, height: 220),
             .connect: CGSize(width: 340, height: 300),
             .binder: CGSize(width: 300, height: 380),
-            .intel: CGSize(width: 340, height: 220),
+            // Intel's content (`intelBody`) is a vertical list of up to 6
+            // short lines - 340x220 was wide enough to leave the right side
+            // mostly empty while cramping the list vertically. Narrower and
+            // taller matches what's actually inside it.
+            .intel: CGSize(width: 260, height: 300),
             .gmail: CGSize(width: 260, height: 200),
             .notes: CGSize(width: 260, height: 200),
             .gdoc: CGSize(width: 480, height: 420),
@@ -204,7 +208,10 @@ struct FieldDeskView: View {
             .memo: CGPoint(x: midX, y: 64),
             .connect: CGPoint(x: right, y: 70),
             .calendar: CGPoint(x: midX + 40, y: max(220, viewport.height * 0.38)),
-            .intel: CGPoint(x: 24, y: max(420, viewport.height - 280)),
+            // Buffer grown to match Intel's new 300pt height (was tuned for
+            // the old 220pt card) so the taller card doesn't run past the
+            // bottom edge.
+            .intel: CGPoint(x: 24, y: max(340, viewport.height - 360)),
             .gmail: CGPoint(x: right, y: max(360, viewport.height - 320)),
             .notes: CGPoint(x: midX, y: max(400, viewport.height - 260)),
             .gdoc: CGPoint(x: midX + 90, y: 110),
