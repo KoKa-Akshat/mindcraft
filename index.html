@@ -3,20 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>The Desk by MindCraft · Never work alone</title>
-<meta name="description" content="MindCraft: never work alone. The Desk pairs a workspace that learns how you learn with real college mentors, so whatever you're stuck on, a person meets you there. Free during early access.">
+<title>The Desk by MindCraft — Never work alone.</title>
+<meta name="description" content="Office hours from your room. Bring what you're working on and get unstuck with a college mentor who's done it before, on a workspace that learns how you learn. Free during early access.">
 <meta name="keywords" content="The Desk, MindCraft, ACT math, student desk, knowledge graph, tutoring, resume help, college mentors, learning OS, open textbooks">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <link rel="canonical" href="https://joinmindcraft.com/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="MindCraft">
 <meta property="og:url" content="https://joinmindcraft.com/">
-<meta property="og:title" content="The Desk by MindCraft · Never work alone">
-<meta property="og:description" content="A workspace that learns how you learn, and real college mentors who meet you where you're stuck. Free during early access.">
+<meta property="og:title" content="The Desk by MindCraft — Never work alone.">
+<meta property="og:description" content="Office hours from your room. A workspace that learns how you learn, and mentors who walk in already knowing where you left off.">
 <meta property="og:image" content="https://joinmindcraft.com/img/app/reel-map.webp">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="The Desk by MindCraft · Never work alone">
-<meta name="twitter:description" content="A workspace that learns how you learn, and real college mentors who meet you where you're stuck. Free during early access.">
+<meta name="twitter:title" content="The Desk by MindCraft — Never work alone.">
+<meta name="twitter:description" content="Office hours from your room. A workspace that learns how you learn, and mentors who walk in already knowing where you left off.">
 <meta name="twitter:image" content="https://joinmindcraft.com/img/app/reel-map.webp">
 <script type="application/ld+json">
 {
@@ -26,7 +26,7 @@
   "applicationCategory": "EducationalApplication",
   "operatingSystem": "Web, iPadOS",
   "url": "https://joinmindcraft.com/",
-  "description": "The Desk by MindCraft learns how each student learns, builds dynamic lessons across subjects, and brings in human mentors with context.",
+  "description": "Office hours from your room. Bring what you're working on and get unstuck with a college mentor who's done it before, on a workspace that learns how you learn. Free during early access.",
   "offers": {
     "@type": "Offer",
     "price": "0",
@@ -45,7 +45,7 @@
 <link rel="apple-touch-icon" href="img/favicon-raccoon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800;900&family=Source+Serif+4:ital,wght@1,500;1,600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 <style>
   :root{
@@ -58,7 +58,7 @@
     --violet:#a78bfa; --teal:#4fd1c5; --amber:#f2b84b;
     --shadow:0 30px 90px rgba(0,0,0,.5);
     --ease:cubic-bezier(.16,1,.3,1);
-    --serif:"Source Serif 4",Georgia,serif;
+    --serif:"DM Serif Display",Georgia,serif;
     --mono:"IBM Plex Mono",ui-monospace,monospace;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
@@ -150,7 +150,7 @@
     letter-spacing:.04em; animation:rise .9s var(--ease) both;
   }
   .hero-tag i{font-style:normal; background:var(--lime); color:var(--lime-ink); border-radius:999px; padding:3px 9px; font-size:10px; font-weight:700; letter-spacing:.08em;}
-  .hero h1{ font-size:clamp(46px,7.4vw,92px); color:var(--chalk); animation:rise .9s .05s var(--ease) both; }
+  .hero h1{ font-size:clamp(52px,9vw,120px); color:var(--chalk); animation:rise .9s .05s var(--ease) both; }
   .hero h1 span{display:block;}
   .hero h1 .accent{color:var(--lime);}
   .hero .sub{ margin-top:14px; font-family:"Space Grotesk",sans-serif; font-size:clamp(19px,2.4vw,27px); font-weight:500; color:var(--chalk-dim); animation:rise .9s .1s var(--ease) both; }
@@ -228,49 +228,31 @@
     .reel-stage.is-pinned .reel-dots{display:none;}
   }
 
-  /* ---------- Problem ---------- */
-  .problem{background:var(--field);}
-  .chaos-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:48px;}
-  @media (max-width:900px){.chaos-grid{grid-template-columns:repeat(2,1fr);}}
-  @media (max-width:520px){.chaos-grid{grid-template-columns:1fr;}}
-  .chaos{ border-radius:20px; padding:22px; border:1px solid var(--edge); background:var(--field-2); transform:rotate(var(--tilt,0deg)); transition:transform .3s var(--ease), border-color .3s var(--ease); }
-  .chaos:hover{transform:rotate(0deg) translateY(-4px); border-color:rgba(245,245,244,.22);}
-  .chaos .tag{ display:inline-block; font-family:var(--mono); font-size:10px; font-weight:600; letter-spacing:.08em; color:var(--stakes); background:var(--stakes-dim); border-radius:999px; padding:4px 10px; margin-bottom:14px; }
-  .chaos h3{font-size:17px; font-weight:600; line-height:1.25; color:var(--chalk-dim); letter-spacing:-.01em;}
-  .punchline{ margin-top:46px; max-width:680px; font-family:var(--serif); font-size:clamp(20px,2.3vw,25px); line-height:1.4; color:var(--chalk); border-left:2px solid var(--lime); padding-left:22px; }
-  .turn{margin-top:34px; font-size:15px; color:var(--chalk-faint); font-weight:500;}
-
-  /* ---------- Capabilities ---------- */
-  .caps{background:var(--field-1); border-top:1px solid var(--edge); border-bottom:1px solid var(--edge);}
-  .caps-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:48px;}
-  .cap{ background:var(--field-2); border:1px solid var(--edge); border-radius:22px; padding:26px; transition:transform .25s var(--ease), border-color .25s var(--ease); }
-  .cap:hover{transform:translateY(-4px); border-color:rgba(245,245,244,.2);}
-  .cap .glyph{width:42px; height:42px; border-radius:12px; display:grid; place-items:center; margin-bottom:18px;}
-  .cap .glyph svg{width:21px; height:21px;}
-  .cap h3{font-size:18px; font-weight:600; margin-bottom:8px; letter-spacing:-.01em;}
-  .cap p{font-size:13.5px; font-weight:400; color:var(--chalk-dim); line-height:1.55;}
-  @media (max-width:900px){.caps-grid{grid-template-columns:repeat(2,1fr);}}
-  @media (max-width:560px){.caps-grid{grid-template-columns:1fr;}}
-
-  /* ---------- Resume flagship ---------- */
-  .resume{background:var(--field);}
-  .resume-grid{display:grid; grid-template-columns:1.02fr .98fr; gap:clamp(32px,5vw,72px); align-items:center;}
-  @media (max-width:860px){.resume-grid{grid-template-columns:1fr;}}
-  .resume-badge{ display:inline-flex; align-items:center; gap:8px; margin-top:24px; padding:9px 16px; border-radius:999px; background:rgba(196,245,71,.1); border:1px solid rgba(196,245,71,.28); color:var(--lime); font-size:12.5px; font-weight:600; }
-  .swap-card{ margin-top:26px; border-radius:18px; border:1px solid var(--edge); background:var(--field-2); overflow:hidden; }
-  .swap-row{padding:18px 20px; display:flex; gap:14px; align-items:flex-start;}
-  .swap-row + .swap-row{border-top:1px solid var(--edge);}
-  .swap-tag{flex:none; font-family:var(--mono); font-size:10px; font-weight:600; letter-spacing:.08em; padding:4px 9px; border-radius:6px; margin-top:2px;}
-  .swap-row.before .swap-tag{background:rgba(224,57,74,.14); color:#ff8f9b;}
-  .swap-row.after .swap-tag{background:rgba(196,245,71,.14); color:var(--lime);}
-  .swap-row p{font-size:14.5px; line-height:1.5; color:var(--chalk-dim); font-weight:400;}
-  .swap-row.after p{color:var(--chalk); font-weight:500;}
-  .resume-shot{ border-radius:22px; overflow:hidden; border:1px solid var(--edge); box-shadow:var(--shadow); background:var(--field-2); }
-  .resume-shot .bar{display:flex; align-items:center; gap:6px; padding:12px 16px; border-bottom:1px solid var(--edge);}
-  .resume-shot .bar i{width:9px; height:9px; border-radius:50%; background:rgba(245,245,244,.14);}
-  .resume-shot .bar span{margin-left:8px; font-family:var(--mono); font-size:10.5px; color:var(--chalk-faint); letter-spacing:.06em; text-transform:uppercase;}
-  .resume-shot img{width:100%; display:block;}
-  .resume-cap{margin-top:16px; font-size:12.5px; color:var(--chalk-faint); font-weight:400; max-width:420px;}
+  /* ---------- Verdict / moat / Katha beats ---------- */
+  .alone,.moat,.solver-beat{background:var(--field);}
+  .alone{padding-top:clamp(72px,8vw,110px);}
+  .verdict-word{border-bottom:2px solid var(--stakes); padding-bottom:1px;}
+  .beat-still{
+    margin-top:48px; border-radius:22px; overflow:hidden; border:1px solid var(--edge);
+    box-shadow:var(--shadow); background:#04060a;
+  }
+  .beat-still img{width:100%; height:clamp(220px,36vw,420px); object-fit:cover; display:block;}
+  .voices{display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-top:22px;}
+  .voices span{
+    font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+    padding:7px 12px; border-radius:999px; border:1px solid var(--edge); color:var(--chalk-dim);
+  }
+  .katha-line{
+    font-family:var(--serif); font-style:italic; font-weight:400;
+    font-size:clamp(22px,3vw,34px); line-height:1.35; color:var(--chalk); max-width:34ch;
+  }
+  .flame-sign{
+    display:flex; align-items:center; gap:10px; margin:18px 0 28px;
+    font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#ff8f9b;
+  }
+  .flame-sign i{width:8px; height:8px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); background:var(--stakes); box-shadow:0 0 16px rgba(224,57,74,.55);}
+  .solver-grid{display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(28px,5vw,64px); align-items:center;}
+  @media (max-width:860px){.solver-grid{grid-template-columns:1fr;}}
 
   /* ---------- Tutors ---------- */
   .tutors{background:var(--field-1); border-top:1px solid var(--edge); border-bottom:1px solid var(--edge);}
@@ -340,33 +322,6 @@
   .af4{top:140px; left:32%; transform:rotate(-3deg); z-index:1;}
   @media (max-width:900px){ .archive-grid{grid-template-columns:1fr;} .archive-stack{height:260px; margin-top:8px;} .af{width:160px;} }
 
-  /* ---------- Pricing ---------- */
-  .pricing{background:var(--field-1); border-top:1px solid var(--edge); border-bottom:1px solid var(--edge);}
-  .pricing-lede-row{display:grid; grid-template-columns:1.3fr .7fr; gap:clamp(24px,4vw,48px); align-items:start; margin-bottom:16px;}
-  .seats-chip{ display:inline-flex; align-items:center; gap:8px; padding:12px 16px; border-radius:14px; background:rgba(224,57,74,.08); border:1px solid rgba(224,57,74,.25); font-size:12.5px; font-weight:500; color:#ff8f9b; }
-  .seats-chip b{font-weight:700; color:#ffb2ba;}
-  .price-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:44px;}
-  .price-card{ background:var(--field-2); border:1px solid var(--edge); border-radius:22px; padding:26px 22px; display:flex; flex-direction:column; transition:transform .25s var(--ease), border-color .25s var(--ease); }
-  .price-card.feature{border-color:rgba(196,245,71,.35); background:linear-gradient(180deg, rgba(196,245,71,.05), var(--field-2) 40%);}
-  .price-card:hover{transform:translateY(-4px);}
-  .price-card .tier-chip{display:inline-block; margin-bottom:16px; padding:4px 11px; border-radius:999px; font-family:var(--mono); font-size:9.5px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; width:fit-content;}
-  .price-card.free .tier-chip{background:rgba(245,245,244,.08); color:var(--chalk-dim);}
-  .price-card.feature .tier-chip{background:var(--lime); color:var(--lime-ink);}
-  .price-card.family .tier-chip{background:rgba(108,140,255,.12); color:var(--blue);}
-  .price-card.inst .tier-chip{background:rgba(245,245,244,.06); color:var(--chalk-faint);}
-  .price-card h3{font-size:19px; font-weight:600; margin-bottom:4px; letter-spacing:-.01em;}
-  .price-card .price{font-family:"Space Grotesk",sans-serif; font-size:clamp(24px,2.6vw,30px); font-weight:700; letter-spacing:-.02em; margin:6px 0 16px; color:var(--chalk);}
-  .price-card .price small{font-size:13px; font-weight:500; color:var(--chalk-faint);}
-  .price-card ul{list-style:none; display:grid; gap:9px; margin-bottom:18px; flex:1;}
-  .price-card li{font-size:12.5px; line-height:1.45; color:var(--chalk-dim); font-weight:400; padding-left:16px; position:relative;}
-  .price-card li::before{content:"\2022"; position:absolute; left:0; color:var(--chalk-faint);}
-  .price-card.feature li::before{color:var(--lime);}
-  .price-card.inst{opacity:.68; border-style:dashed;}
-  .price-card.inst:hover{transform:none;}
-  .price-foot{margin-top:26px; font-size:12px; color:var(--chalk-faint); font-weight:400; max-width:640px; line-height:1.5;}
-  @media (max-width:980px){ .price-grid{grid-template-columns:repeat(2,1fr);} .pricing-lede-row{grid-template-columns:1fr;} }
-  @media (max-width:560px){ .price-grid{grid-template-columns:1fr;} }
-
   /* ---------- FAQ ---------- */
   .faq{background:var(--field);}
   .faq-list{margin-top:44px; max-width:800px; display:grid; gap:10px;}
@@ -430,11 +385,9 @@
     <span aria-hidden="true">MindCraft</span>
   </a>
   <div class="nav-links">
-    <a href="#reel">Product</a>
-    <a href="#resume">Resume Help</a>
-    <a href="#tutors">Mentors</a>
+    <a href="#desk">The Desk</a>
+    <a href="#mentors">Mentors</a>
     <a href="dans-archive.html">Archive</a>
-    <a href="#pricing">Pricing</a>
     <a class="join" href="#start">Claim your desk</a>
   </div>
 </nav>
@@ -460,23 +413,22 @@
     <circle class="n-lit pulse" cx="950" cy="290" r="7" style="animation-delay:1.4s;"/>
   </svg>
   <div class="hero-stage">
-    <div class="hero-tag"><i>NEW</i> The Desk by MindCraft, out of the lab</div>
+    <div class="hero-tag">The Desk by MindCraft · early access</div>
     <h1><span>Never work</span><span class="accent">alone.</span></h1>
     <div class="sub">Office hours from your room.</div>
-    <p class="lead">Bring whatever's stuck: a proof, an essay, a gap you can't quite name. The Desk learns how you learn and builds the next step; a real mentor walks in already knowing where you left off.</p>
+    <p class="lead">Bring what you're working on: a proof, an essay, a gap you can't name yet. The Desk holds the work. A mentor who has done the thing walks in already knowing where you left off.</p>
     <div class="hero-actions">
       <a class="btn primary" href="#start">Claim your desk</a>
-      <a class="btn soft" href="#reel">See it work ↓</a>
+      <a class="btn soft" href="#desk">Watch the desk work ↓</a>
     </div>
   </div>
   <div class="hero-below">
     <div class="hero-trust">
-      <div class="trust"><b>Learns your patterns</b><span>beyond right or wrong</span></div>
-      <div class="trust"><b>Real college mentors</b><span>context before hello</span></div>
+      <div class="trust"><b>Real mentors</b><span>context before hello</span></div>
       <div class="trust"><b>Your record stays yours</b><span>exportable, deletable</span></div>
-      <div class="trust"><b>Free right now</b><span>a few seats remain</span></div>
+      <div class="trust"><b>Free in early access</b><span>invitation only</span></div>
     </div>
-    <div class="scroll-cue"><span>scroll to watch the desk work</span><i>↓</i></div>
+    <div class="scroll-cue"><span>watch the desk work</span><i>↓</i></div>
   </div>
 </header>
 
@@ -492,37 +444,48 @@
         <li><img src="img/logos/uwc.png" alt="United World Colleges"></li>
       </ul>
       <nav class="intro-social" id="introSocial" aria-label="Find MindCraft out there"></nav>
-      <p class="data-yours">Your data stays yours. Mail, Drive, and notes live in accounts you already own. The Desk reads the folder you choose, never the rest, never to sell.</p>
     </div>
   </div>
 </section>
 
 <!-- ================= REEL - the flagship scroll sequence ================= -->
-<section class="reel" id="reel">
+<section class="alone" id="alone">
+  <div class="wrap">
+    <div class="kicker reveal">The <span class="verdict-word">verdict</span></div>
+    <h2 class="h2 reveal">You were never bad at the work. You were working alone.</h2>
+    <p class="lede reveal">Somebody, somewhere back, decided you weren't the kind of person who's good at this. They described a moment; you heard a verdict. Here's what actually happened: you were alone with something hard, and nobody who understood it was in the room.</p>
+    <figure class="beat-still reveal">
+      <img src="img/mkt/mkt-hero-lamp.jpg" alt="A desk at night. One lamp. One point of light.">
+    </figure>
+  </div>
+</section>
+
+<section class="reel" id="desk">
   <div class="wrap">
     <div class="reel-intro">
-      <div class="kicker" style="justify-content:center;">Scroll to watch it work</div>
-      <h2 class="h2 reveal">One desk. Six real screens.</h2>
-      <p class="lede reveal">Not a mockup: the actual, currently-shipped app. Keep scrolling; each frame below is real, running software.</p>
+      <div class="kicker" style="justify-content:center;">The Desk · say it and it moves</div>
+      <h2 class="h2 reveal">Speak. The desk moves.</h2>
+      <p class="lede reveal">Jesse is the voice of the desk, not a chatbot in a costume. A hand on the workspace itself. Say the thing, and the right surface slides forward with your work already on it.</p>
+      <div class="voices" aria-label="Voice options"><span>Heart</span><span>Bella</span><span>Michael</span></div>
     </div>
   </div>
   <div class="reel-pin" id="reelPin">
     <div class="reel-stage" id="reelStage">
       <div class="reel-frame" data-i="0">
         <div class="reel-shot contain"><img src="img/app/reel-field-desk.webp" alt="Field Desk: Jesse's Kitchen, a pinned memo, and the ACT map, all on one desk" loading="eager"></div>
-        <div class="reel-cap"><span class="reel-tag">Field Desk</span><h3>Open the desk. Everything's already there.</h3><p>Jesse's Kitchen, your pinned memos, and your map, live on one board. Not six tabs.</p></div>
+        <div class="reel-cap"><span class="reel-tag">“Jesse, open my desk.”</span><h3>Everything's already there.</h3><p>Your pinned memos, your map, your books, live on one board. Not six tabs.</p></div>
       </div>
       <div class="reel-frame" data-i="1">
         <div class="reel-shot"><img src="img/app/reel-notes.webp" alt="Notes: story-framed Warm-up chapters, including Fractions and Decimals, Ratios and Proportions, Order of Operations" loading="lazy"></div>
-        <div class="reel-cap"><span class="reel-tag">Notes</span><h3>Every chapter opens as a scene, not a slide.</h3><p>Drop a worksheet and it's filed, named, and framed as a story worth reading, not a drill sheet.</p></div>
+        <div class="reel-cap"><span class="reel-tag">“Take this down.”</span><h3>Every chapter opens as a scene.</h3><p>Drop a worksheet and it's filed, named, and framed as a story worth reading.</p></div>
       </div>
       <div class="reel-frame" data-i="2">
         <div class="reel-shot"><img src="img/app/reel-solver.webp" alt="Solver: a fractions practice question with a historical story panel and a pencil-input graphing tool" loading="lazy"></div>
-        <div class="reel-cap"><span class="reel-tag">Solver</span><h3>Practice that adapts, inside the story.</h3><p>The next problem is chosen because of the last one, with the math frozen and the world wrapped around it.</p></div>
+        <div class="reel-cap"><span class="reel-tag">“Scan my gaps.”</span><h3>The next problem is chosen, not random.</h3><p>The math is frozen; the world wraps around it. Each challenge exists because of the last one.</p></div>
       </div>
       <div class="reel-frame" data-i="3">
         <div class="reel-shot"><img src="img/app/reel-map.webp" alt="Map: a glowing knowledge graph showing ready-to-learn and locked concepts, with a route panel open" loading="lazy"></div>
-        <div class="reel-cap"><span class="reel-tag">Map</span><h3>Watch your knowledge graph light up.</h3><p>Every concept you've touched, glowing or locked. Ready-to-learn nodes surface before you ask, with the exact route to your next one.</p></div>
+        <div class="reel-cap"><span class="reel-tag">“Show me the map.”</span><h3>Watch your knowledge light up.</h3><p>Every concept you've touched, glowing or locked, with the route to your next one.</p></div>
       </div>
       <div class="reel-frame" data-i="4">
         <div class="reel-shot"><div class="reel-covers">
@@ -531,129 +494,25 @@
           <img src="img/dans-covers/fft-benchmarking.jpg" alt="Real-Time DSP on a $5 Microcontroller, an open intelligent textbook" loading="lazy">
           <img src="img/dans-covers/learning-micropython.jpg" alt="Learning MicroPython with AI, an open intelligent textbook" loading="lazy">
         </div></div>
-        <div class="reel-cap"><span class="reel-tag">Archive</span><h3>113 free, open intelligent textbooks.</h3><p>Touch a variable and watch the concept move. No login, no paywall, just open a book.</p></div>
+        <div class="reel-cap"><span class="reel-tag">“Find me a book on calculus.”</span><h3>113 open books, no login.</h3><p>Touch a variable and watch the concept move.</p></div>
       </div>
       <div class="reel-frame" data-i="5">
-        <div class="reel-shot"><img src="img/app/reel-create.webp" alt="Create studio: a story mid-edit with Jesse's prompt bar, media panel, captions, and music" loading="lazy"></div>
-        <div class="reel-cap"><span class="reel-tag">Create</span><h3>Turn an idea into a video, scene by scene.</h3><p>Ask Jesse to edit it, drop in music, and ship it. Right beside you, not in a separate app.</p></div>
+        <div class="reel-shot"><img src="img/app/reel-resume.webp" alt="The Desk workflows: resume, archive, apply, by voice" loading="lazy"></div>
+        <div class="reel-cap"><span class="reel-tag">“Build my resume.”</span><h3>Resume, archive, apply, by voice.</h3><p>Paste a LinkedIn, answer two questions, ship a resume that sounds like you. Apply Today lives one command away.</p></div>
       </div>
       <div class="reel-dots" id="reelDots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
     </div>
   </div>
 </section>
 
-<!-- ================= PROBLEM ================= -->
-<section class="problem" id="problem">
-  <div class="wrap">
-    <div class="kicker reveal">The problem</div>
-    <h2 class="h2 reveal">Six apps. Forty-seven screenshots. <span class="serif">Zero system.</span></h2>
-    <div class="chaos-grid">
-      <div class="chaos reveal" style="--tilt:-1.1deg;"><span class="tag">CAMERA ROLL</span><h3>Worksheet photos, page 3 of ??</h3></div>
-      <div class="chaos reveal" style="--tilt:.8deg;"><span class="tag">DOWNLOADS</span><h3>study_guide_final_v2_ACTUAL.pdf</h3></div>
-      <div class="chaos reveal" style="--tilt:-.6deg;"><span class="tag">THE PLANNER</span><h3>Started strong in September</h3></div>
-      <div class="chaos reveal" style="--tilt:1deg;"><span class="tag">11:40 PM</span><h3>Flashcards for the wrong chapter</h3></div>
-    </div>
-    <p class="punchline reveal">The problem was never you. Your knowledge never had an operating system. Right now the only thing connecting it is a person doing it by hand: you, a parent, a tutor, at midnight.</p>
-    <p class="turn reveal">The Desk wants that job.</p>
-  </div>
-</section>
-
-<!-- ================= CAPABILITIES ================= -->
-<section class="caps" id="capabilities">
-  <div class="wrap">
-    <div class="kicker reveal">Where it shows up</div>
-    <h2 class="h2 reveal">One desk. <span class="serif">Six ways in.</span></h2>
-    <p class="lede reveal">Notes, Solver, and Map are the core three. Around them, a real workspace: someone to ask, a resume to build, a mentor to book.</p>
-    <div class="caps-grid">
-      <div class="cap reveal">
-        <div class="glyph" style="background:var(--teal);">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#04211d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h9l4 4v12H6z"/><path d="M15 4v4h4"/><path d="M9 12.5h6M9 16h4"/></svg>
-        </div>
-        <h3>Notes</h3>
-        <p>Drop a worksheet, a link, or a photo and it lands on your desk, named, dated, and framed as a story.</p>
-      </div>
-      <div class="cap reveal">
-        <div class="glyph" style="background:var(--blue);">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#050915" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l5-6 4 3 6-8"/><circle cx="19" cy="6" r="1.6" fill="#050915" stroke="none"/></svg>
-        </div>
-        <h3>Solver</h3>
-        <p>Finds the exact gap in math or the ACT, then builds the lesson that closes it, not just the next answer.</p>
-      </div>
-      <div class="cap reveal">
-        <div class="glyph" style="background:var(--lime);">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#0a1006" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.6"/><path d="M12 4v3M12 17v3M4 12h3M17 12h3"/></svg>
-        </div>
-        <h3>Map</h3>
-        <p>Your knowledge graph, lit or locked. Ready-to-learn concepts glow before you ask what's next.</p>
-      </div>
-      <div class="cap reveal">
-        <div class="glyph" style="background:var(--amber);">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#241505" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="m12.5 6.5 6 5.5-6 5.5"/></svg>
-        </div>
-        <h3>Ask</h3>
-        <p>Jesse knows what you're working on. Bring it whatever's stuck, right from the desk. Resume included.</p>
-      </div>
-      <div class="cap reveal">
-        <div class="glyph" style="background:var(--violet);">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#160f2c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="5"/><path d="M10 9l6 3-6 3z"/></svg>
-        </div>
-        <h3>Create</h3>
-        <p>Turn an idea into a video or a short book, scene by scene, with Jesse right beside you.</p>
-      </div>
-      <div class="cap reveal">
-        <div class="glyph" style="background:#ff8f9b;">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#2a0509" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="9" r="4"/><path d="M3 20c1.4-3.6 4-5.4 7-5.4s5.6 1.8 7 5.4"/><circle cx="18.5" cy="6.5" r="2" fill="#2a0509" stroke="none"/></svg>
-        </div>
-        <h3>Find a mentor</h3>
-        <p>Real college mentors, searchable near you. Book one the moment you're stuck. First session's free.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= RESUME HELP - flagship ================= -->
-<section class="resume" id="resume">
-  <div class="wrap">
-    <div class="resume-grid">
-      <div>
-        <div class="kicker reveal">Ask · Resume Help</div>
-        <h2 class="h2 reveal">Paste a LinkedIn. Get a resume that sounds like you.</h2>
-        <p class="lede reveal">Ask reads a LinkedIn paste, an uploaded resume, or the Drive folder you already keep, and pulls out real roles, real bullets, real projects. It never invents an employer, and it doesn't bury you in questions. Just the two that actually matter.</p>
-        <div class="resume-badge reveal">Worth the subscription on its own</div>
-        <div class="swap-card reveal">
-          <div class="swap-row before"><span class="swap-tag">BEFORE</span><p>"Worked at the campus paper"</p></div>
-          <div class="swap-row after"><span class="swap-tag">AFTER</span><p>Copyedited a 12-page weekly paper for 3,000 student readers. Cut publish-day errors in half.</p></div>
-        </div>
-        <div class="hero-actions reveal" style="margin-top:26px;">
-          <a class="btn primary" href="#start">Try Resume Help</a>
-        </div>
-      </div>
-      <div class="reveal">
-        <div class="resume-shot">
-          <div class="bar"><i></i><i></i><i></i><span>the desk · workflows</span></div>
-          <img src="img/app/reel-resume.webp" alt="The Desk's Workflows library: Resume builder (Jesse, voice, LinkedIn, Drive folder), Open Learning Archive, Create a book, Apply today" loading="lazy">
-        </div>
-        <p class="resume-cap">Resume Help lives right on the desk next to Apply Today and the Archive, not a separate app to remember to open.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= TUTORS ================= -->
-<section class="tutors" id="tutors">
+<!-- ================= MENTORS ================= -->
+<section class="tutors" id="mentors">
   <div class="wrap">
     <div class="tutor-head">
-      <div class="kicker reveal">Real people, on call</div>
-      <h2 class="h2 reveal">Find a mentor near you, <span class="serif">for anything.</span></h2>
-      <p class="lede reveal">High-achieving students from some of the top U.S. colleges. They open your map before hello, so the hour goes to teaching, not catching up. First session free.</p>
-      <div class="tutor-head-row">
-        <div class="scan-points">
-          <div class="scan-point reveal"><span class="pip">1</span><p>Homework, tests, confidence, whatever is stuck.</p></div>
-          <div class="scan-point reveal"><span class="pip">2</span><p>Real college mentors who still remember junior year.</p></div>
-          <div class="scan-point reveal"><span class="pip">3</span><p>Search near you. Book in minutes.</p></div>
-        </div>
-        <blockquote class="tutor-quote reveal"><p>MindCraft is not software instead of people. It is software that <em>makes the people better.</em></p></blockquote>
-      </div>
+      <div class="kicker reveal">Reach</div>
+      <h2 class="h2 reveal">A university, in your room.</h2>
+      <p class="lede reveal">The people, tools, and workspace of a campus, office hours included, wherever your desk happens to be. Mentors are college students who have done the thing you're stuck on, and they open your map before they say hello. The hour goes to getting you unstuck, not to detective work.</p>
+      <blockquote class="tutor-quote reveal" style="margin-top:24px;max-width:36ch;"><p>Software notices the pattern. <em>A person notices you.</em></p></blockquote>
     </div>
     <div class="tutor-duo reveal" id="tutorLive">
       <div class="tutor-pane map">
@@ -669,29 +528,28 @@
       </div>
     </div>
     <div class="tutor-actions reveal">
-      <a class="btn primary ext" href="https://mindcraft-93858.web.app/find-a-tutor" target="_blank" rel="noopener">Find a mentor</a>
-      <a class="btn soft" href="#start" data-apply="tutor">Apply to tutor</a>
+      <a class="btn soft ext" href="https://mindcraft-93858.web.app/find-a-tutor" target="_blank" rel="noopener">Find a mentor</a>
+      <a class="btn soft" href="#start" data-apply="tutor">Apply to mentor</a>
     </div>
   </div>
 </section>
 
 <!-- ================= ARCHIVE ================= -->
-<section class="archive" id="archive">
+<section class="archive" id="authors">
   <div class="wrap">
     <div class="archive-grid">
       <div>
         <div class="kicker reveal">The Open Learning Archive</div>
-        <h2 class="h2 reveal">Some ideas need a picture, <span class="serif">not a paragraph.</span></h2>
-        <p class="lede reveal">Every book in the archive pairs a concept with a simulation you can actually touch: drag a variable, and watch the idea move before anyone explains it in words. That's not a nice-to-have. For visual learners, kinesthetic learners, and neurodivergent students of every kind, it's often the whole difference between confusion and the click.</p>
-        <div class="archive-credit reveal">113 free, open intelligent textbooks, written and freely shared by learning-graph researcher <a href="https://www.linkedin.com/in/danmccreary/" target="_blank" rel="noopener noreferrer">Dan McCreary</a>. MindCraft didn't write any of it. We're just making it easier to find. No login. No paywall.</div>
+        <h2 class="h2 reveal">Enter as a reader. Leave as an author.</h2>
+        <p class="lede reveal">Every lesson on the Desk is a book you walk into, and the chapters you finish become yours: written in your words, saved in your library, yours to keep. Start in the Open Learning Archive: 113 free, open intelligent textbooks with simulations you can actually touch. No login. No paywall. Just open a book.</p>
+        <div class="archive-credit reveal">The archive collects open textbooks written and freely shared by learning-graph researcher <a href="https://www.linkedin.com/in/danmccreary/" target="_blank" rel="noopener noreferrer">Dan McCreary</a>. MindCraft didn't write any of them. We're making them easier to find.</div>
         <div class="archive-stats reveal">
           <div class="as"><b>389</b><span>MicroSims in one Health Education book alone</span></div>
           <div class="as"><b>173</b><span>interactive sims in AI Assisted Geometry</span></div>
           <div class="as"><b>113</b><span>full open textbooks, free, no login</span></div>
         </div>
         <div class="hero-actions reveal" style="margin-top:6px;">
-          <a class="btn primary" href="dans-archive.html">Browse the archive →</a>
-          <a class="btn soft" href="https://mindcraft-93858.web.app/desk-os/workflows/archive/?v=a3">Ask Jesse for a plan →</a>
+          <a class="btn soft" href="dans-archive.html">Browse the archive →</a>
         </div>
         <div class="archive-inline-search reveal" id="archiveInlineSearch">
           <div class="ais-bar">
@@ -711,107 +569,59 @@
   </div>
 </section>
 
-<!-- ================= PRICING ================= -->
-<section class="pricing" id="pricing">
+<section class="moat" id="map">
   <div class="wrap">
-    <div class="pricing-lede-row">
+    <div class="kicker reveal">Your record</div>
+    <h2 class="h2 reveal">Your map is your moat.</h2>
+    <p class="lede reveal">Every session, note, and challenge becomes evidence, and the evidence becomes a map of how you actually learn. In a world where AI can fake the answer, that map is proof only you can build, and it belongs to you. It lives in the Drive folder you pick and the mail you already own. Export it or delete it any day. It is never sold.</p>
+    <figure class="beat-still reveal">
+      <img src="img/mkt/mkt-map-constellation.jpg" alt="A knowledge map as a constellation: navy edges, lime nodes, one gap burning.">
+    </figure>
+  </div>
+</section>
+
+<section class="solver-beat" id="solver">
+  <div class="wrap">
+    <div class="solver-grid">
       <div>
-        <div class="kicker reveal">Pricing · Early access</div>
-        <h2 class="h2 reveal">Free right now. Here's exactly why.</h2>
-        <p class="lede reveal">MindCraft is invitation-based while we build with a small group of students, families, and mentors. That's not a permanent freebie, it's the actual trade. You help us build this right and tell us what's missing; the record you build stays yours either way.</p>
+        <div class="kicker reveal">The deepest room · Solver</div>
+        <p class="katha-line reveal">The flood took the field markers in the night, and by morning forty farmers stand at the water's edge, each one certain his land was bigger than this.</p>
+        <div class="flame-sign reveal"><i></i> A Katha story</div>
+        <h2 class="h2 reveal">Math is where we dug first.</h2>
+        <p class="lede reveal">Solver is the Desk's deepest room: a gap scan that finds the exact concept where math lost you, and Katha stories that give you a reason to go back for it. The ACT is our proving ground, not our ceiling. The same engine is learning to go this deep on everything else you bring.</p>
       </div>
-      <div class="seats-chip reveal">A few seats remain this round. <b>Apply for a seat →</b></div>
+      <figure class="beat-still reveal">
+        <img src="img/mkt/mkt-katha-flood.jpg" alt="A Katha still: flood at dawn, one figure at the water's edge.">
+      </figure>
     </div>
-    <div class="price-grid">
-      <div class="price-card free reveal">
-        <span class="tier-chip">Now</span>
-        <h3>Free</h3>
-        <div class="price">$0</div>
-        <ul>
-          <li>Workspace: notes, project boards</li>
-          <li>Rate-limited AI tools</li>
-          <li>Browse and apply to mentors</li>
-          <li>One intro mentor session</li>
-        </ul>
-        <a class="btn soft" href="#start" data-apply="student">Apply for a seat</a>
-      </div>
-      <div class="price-card feature reveal">
-        <span class="tier-chip">Coming as we leave early access</span>
-        <h3>Individual · Plus</h3>
-        <div class="price">$12–15<small>/mo</small></div>
-        <ul>
-          <li>Unlimited AI tools</li>
-          <li>Priority mentor matching</li>
-          <li>One mentor-session credit every month</li>
-          <li>Unlimited storage for notes, decks, projects</li>
-        </ul>
-        <a class="btn primary" href="#start" data-apply="student">Get early access</a>
-      </div>
-      <div class="price-card family reveal">
-        <span class="tier-chip">Add-on</span>
-        <h3>Family</h3>
-        <div class="price">+$10<small>/mo</small></div>
-        <ul>
-          <li>Weekly report from the same mastery graph Solver uses</li>
-          <li>Exact weak concepts, not just a grade</li>
-          <li>Suggested next sessions</li>
-          <li>A receipt of what actually improved</li>
-        </ul>
-        <a class="btn soft" href="#start" data-apply="student">Ask about Family</a>
-      </div>
-      <div class="price-card inst reveal">
-        <span class="tier-chip">Later</span>
-        <h3>Institutional</h3>
-        <div class="price">$8–15<small>/seat/yr</small></div>
-        <ul>
-          <li>Bulk seats for a school or program</li>
-          <li>Admin dashboard</li>
-          <li>Aggregate, non-identifying insight</li>
-          <li>For campuses already using MindCraft organically</li>
-        </ul>
-      </div>
-    </div>
-    <p class="price-foot reveal">These are current draft ranges, not a locked-in rate card. The numbers move a little as we leave early access, and pricing decided with real students and mentors beats pricing guessed at a whiteboard. Whatever changes, we say it plainly, and early members hear first.</p>
   </div>
 </section>
 
 <!-- ================= FAQ ================= -->
 <section class="faq" id="faq">
   <div class="wrap">
-    <div class="kicker reveal">Questions, answered</div>
-    <h2 class="h2 reveal">The stuff everyone asks first.</h2>
+    <div class="kicker reveal">Asked first, answered plainly</div>
+    <h2 class="h2 reveal">The skeptic's five.</h2>
     <div class="faq-list reveal">
       <details>
-        <summary>Why is The Desk free right now?</summary>
-        <p>We're inviting a small group in first, so pricing and the mentor marketplace get built around real use, not guesses. A few seats remain each round. Apply and we'll tell you where you land. It's early access, not a permanent freebie.</p>
+        <summary>Is this just another tutoring app?</summary>
+        <p>No. Tutoring apps sell hours; we built the room the work happens in. Office hours from your room means you bring what you're working on, any subject, any kind of work, and a mentor who's done it before meets you inside it. Math is our deepest room, not our whole house.</p>
       </details>
       <details>
-        <summary>What happens to my account when it's not free anymore?</summary>
-        <p>Early members hear first, and get first pick of what a paid plan looks like before it's public. Your notes, your map, your record: those stay yours regardless of what tier you're on.</p>
+        <summary>Will it just do my homework for me?</summary>
+        <p>No. The Desk gets you unstuck; it doesn't hand out answers. Solver walks you through the step and asks you questions back, and mentors do the same. The goal is the version of you that stops needing help, not a dependency with a subscription.</p>
       </details>
       <details>
-        <summary>Is this just another planner or AI homework bot?</summary>
-        <p>No. Planners hold what you type. Chat bots answer tonight and forget tomorrow. The Desk is an operating system for your work: file it, map it, practice it, prove it transferred, then brief a human mentor.</p>
+        <summary>Who owns my data?</summary>
+        <p>You do, structurally, not as a promise buried in a policy. Your files live in the Drive folder you pick and the mail you already own; your knowledge map is exportable and deletable any day. Nothing is sold, ever.</p>
       </details>
       <details>
-        <summary>What can I drop on the desk?</summary>
-        <p>Photos, PDFs, docs, screenshots, scans of handwritten work. If it's school, it has a home here.</p>
+        <summary>Why is it free right now?</summary>
+        <p>Early access is invitation-based, and we're building pricing with a small group of real students and mentors instead of guessing at a whiteboard. That's the trade: you help us build it right, and whatever changes, early members hear first. Your record stays yours on any tier.</p>
       </details>
       <details>
-        <summary>Where do my files go?</summary>
-        <p>Into your private binder. Your files stay yours, we never sell your data, and you can delete anything anytime.</p>
-      </details>
-      <details>
-        <summary>Does it do my homework for me?</summary>
-        <p>No. Solver walks you through steps and asks you questions back. The Desk makes you faster, not fake.</p>
-      </details>
-      <details>
-        <summary>Who are the mentors?</summary>
-        <p>Real college students who remember exactly what junior year felt like. They open your map before the session, so the hour goes to teaching instead of detective work. Your first session is free.</p>
-      </details>
-      <details>
-        <summary>Is it only for the ACT?</summary>
-        <p>It's built for the road to the ACT, but the binder, the planner, Resume Help, and story practice work all year for regular classwork too.</p>
+        <summary>Is it only for math and the ACT?</summary>
+        <p>Math is where we dug first, and the ACT is our proving ground, the gap scan and story-driven practice go deepest there. But the desk itself holds notes, books, a resume builder, and mentors for whatever you bring. The ceiling is a lot higher than one test.</p>
       </details>
     </div>
   </div>
@@ -821,12 +631,12 @@
 <section class="cta" id="start">
   <div class="wrap">
     <div class="ctaband reveal">
-      <h2>Let MindCraft learn with you. <em>Start with one goal.</em></h2>
-      <p>A few seats remain this round. We'll build your first map, find the right starting point, and stay close enough to notice when you need a person.</p>
+      <h2>Claim your desk.</h2>
+      <p>Early access is invitation-based: a small group of students, families, and mentors, a few seats per round. It's free while we build this right, and the record you build stays yours either way. Apply, and a real human replies within 48 hours.</p>
       <p class="apply-done" id="applyDone" hidden>Got it. A real human replies within 48 hours.</p>
       <div class="cta-row" role="tablist" aria-label="Choose an application type">
-        <button class="btn primary" type="button" id="applyTabStudent" role="tab" aria-selected="true">Sign up as a student</button>
-        <button class="btn soft" type="button" id="applyTabTutor" role="tab" aria-selected="false">Apply as a tutor</button>
+        <button class="btn primary" type="button" id="applyTabStudent" role="tab" aria-selected="true">Apply for a seat</button>
+        <button class="btn soft" type="button" id="applyTabTutor" role="tab" aria-selected="false">Apply to mentor</button>
       </div>
       <div class="apply-stage" id="applyStage" data-state="student">
         <form class="apply-form" id="applyFormStudent" action="https://formsubmit.co/joinmindcraft@gmail.com" method="POST">
@@ -842,7 +652,7 @@
             <div class="field"><label for="grade">Grade</label><select id="grade" name="grade" required><option value="">Select grade</option><option>6th</option><option>7th</option><option>8th</option><option>9th</option><option>10th</option><option>11th</option><option>12th</option><option>ACT prep</option></select></div>
             <div class="field full"><label for="goal">What should feel easier?</label><textarea id="goal" name="goal" placeholder="Confidence, ACT math, algebra, a resume, study skills..." required></textarea></div>
           </div>
-          <button class="btn primary apply-submit" type="submit">Build my learning map</button>
+          <button class="btn primary apply-submit" type="submit">Claim your desk</button>
           <p class="apply-note">Sends to joinmindcraft@gmail.com. We reply within 48 hours.</p>
         </form>
         <form class="apply-form" id="applyFormTutor" action="https://formsubmit.co/joinmindcraft@gmail.com" method="POST">
@@ -870,15 +680,14 @@
 <footer>
   <div class="wrap">
     <div class="foot-row">
-      <span>© MindCraft · joinmindcraft@gmail.com</span>
+      <span>MindCraft — Never work alone.</span>
       <div class="foot-links">
         <a href="blog.html">Blog</a>
         <a href="dans-archive.html">Open Archive</a>
-        <a href="#pricing">Pricing</a>
         <a href="mailto:joinmindcraft@gmail.com">Email</a>
       </div>
     </div>
-    <div class="mock-note">Built for the weeks before a test, and for whatever's stuck after that.</div>
+    <div class="mock-note">Built for whatever you're working on at 11pm.</div>
   </div>
 </footer>
 
