@@ -1532,7 +1532,12 @@ struct FieldDeskView: View {
             x: base.x + settled.width + live.width + size.width / 2,
             y: base.y + settled.height + live.height + size.height / 2
         )
-        .accessibilityIdentifier("fieldDeskRepositoryCard")
+        // No wrapper identifier here - the Binder card's own nested content
+        // (ACT Field Book, filed items) needs its own distinct identifiers,
+        // and a wrapper one clobbers every one of them in the accessibility
+        // tree (confirmed via a full tree dump: Close, ACT Field Book, and
+        // the resize grip all reported the same identifier). Same lesson
+        // already applied to ArchiveWorkflowView/BookWorkflowView.
     }
 
     private func closeDeskPanel(_ id: DeskCardID) {

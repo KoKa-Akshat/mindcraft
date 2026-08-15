@@ -282,18 +282,43 @@ final class MindCraftNotesUITests: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments = ["--ui-testing-in-memory", "--ui-testing-skip-auth"]
         app.launch()
-        // Round 9, Brick 1 (DESK_OS_NATIVE_BRIEF.md): DashboardView is no
-        // longer AuthGate's direct post-login destination - the new
-        // DeskShellView is, with Dashboard reachable as its "ACT Field
-        // Book" instance card. Every existing test in this file was written
-        // against "launchDashboardApp() returns straight to Dashboard
-        // content," so tap through here rather than touch every individual
-        // test - keeps this helper's contract stable for its 14 existing
-        // callers instead of silently changing behavior under them.
-        let actFieldBook = app.buttons["deskInstance_actFieldBook"]
-        if actFieldBook.waitForExistence(timeout: 10) {
-            actFieldBook.tap()
-        }
+        XCUIDevice.shared.orientation = .landscapeLeft
+        // "Classic desk boot slide -> Field Desk (primary after login)"
+        // superseded Brick 1's hub-grid landing screen at some point after
+        // this helper was written: there is no `deskInstance_actFieldBook`
+        // card anymore (or any hub grid) at boot - DeskShellView.body now
+        // mounts FieldDeskView directly under the boot slide (see its
+        // `showWorkDesk`/`showBoot` state). Confirmed by grepping the whole
+        // app source: that identifier does not exist anywhere. The real
+        // current path to Dashboard content is Field Desk's Binder panel -
+        // ACT Field Book is a card inside it now
+        // (`fieldDeskBinderInstance_act_main`, FieldDeskView's `binderBody`),
+        // not a boot-time instance card. Every existing test in this file
+        // was written against "launchDashboardApp() returns straight to
+        // Dashboard content," so tap all the way through here rather than
+        // touch every individual test.
+        XCTAssertTrue(app.buttons["fieldDeskModeToggle"].waitForExistence(timeout: 40), "expected Field Desk chrome after cold load")
+        let bootText = app.staticTexts["Your workspace is starting up"]
+        if bootText.exists { _ = bootText.waitForNonExistence(timeout: 90) }
+
+        // Reveal the bottom dock (swipe up from the bottom edge, same
+        // gesture testFieldDeskPanZoomsAndRecenters uses), open the + Add
+        // panel, and place a Binder card so its ACT Field Book row exists.
+        let bottomEdge = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.98))
+        let midScreen = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.55))
+        bottomEdge.press(forDuration: 0.05, thenDragTo: midScreen)
+
+        let addButton = app.buttons["fieldDeskAdd"]
+        XCTAssertTrue(addButton.waitForExistence(timeout: 8), "expected + Add dock icon")
+        addButton.tap()
+
+        let addBinder = app.buttons["fieldDeskAddBinder"]
+        XCTAssertTrue(addBinder.waitForExistence(timeout: 5), "expected Binder row in the add panel")
+        addBinder.tap()
+
+        let actFieldBook = app.buttons["fieldDeskBinderInstance_act_main"]
+        XCTAssertTrue(actFieldBook.waitForExistence(timeout: 5), "expected ACT Field Book card in the Binder panel")
+        actFieldBook.tap()
         // DashboardView shows the once-per-session notebook CoverView the
         // first time it mounts in the process (`CoverSession.alreadySeen`,
         // real product behavior - opening the ACT Field Book instance IS
@@ -752,13 +777,29 @@ final class MindCraftNotesUITests: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments = ["--ui-testing-in-memory", "--ui-testing-skip-auth"]
         app.launch()
+        XCUIDevice.shared.orientation = .landscapeLeft
 
-        // Since Brick 1 the desk shell IS the launch surface - there is no
-        // cover before the hub (the notebook cover now lives inside the
-        // ACT Field Book instance, dismissed below after the tap).
-        let actFieldBook = app.buttons["deskInstance_actFieldBook"]
-        XCTAssertTrue(actFieldBook.waitForExistence(timeout: 10), "expected the desk shell's ACT Field Book instance card after boot")
+        // Superseded Brick 1's hub-grid boot screen - Field Desk is now the
+        // direct launch surface (see launchDashboardApp's doc comment), and
+        // ACT Field Book is a card inside its Binder panel, not a boot-time
+        // instance card.
+        XCTAssertTrue(app.buttons["fieldDeskModeToggle"].waitForExistence(timeout: 40), "expected Field Desk chrome after cold load")
+        let bootText = app.staticTexts["Your workspace is starting up"]
+        if bootText.exists { _ = bootText.waitForNonExistence(timeout: 90) }
         attachScreenshot(app, name: "desk_shell_before_tap")
+
+        let bottomEdge = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.98))
+        let midScreen = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.55))
+        bottomEdge.press(forDuration: 0.05, thenDragTo: midScreen)
+        let addButton = app.buttons["fieldDeskAdd"]
+        XCTAssertTrue(addButton.waitForExistence(timeout: 8), "expected + Add dock icon")
+        addButton.tap()
+        let addBinder = app.buttons["fieldDeskAddBinder"]
+        XCTAssertTrue(addBinder.waitForExistence(timeout: 5), "expected Binder row in the add panel")
+        addBinder.tap()
+
+        let actFieldBook = app.buttons["fieldDeskBinderInstance_act_main"]
+        XCTAssertTrue(actFieldBook.waitForExistence(timeout: 5), "expected ACT Field Book card in the Binder panel")
 
         actFieldBook.tap()
 
@@ -797,6 +838,18 @@ final class MindCraftNotesUITests: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments = ["--ui-testing-in-memory", "--ui-testing-skip-auth"]
         app.launch()
+        XCUIDevice.shared.orientation = .landscapeLeft
+
+        // Superseded Brick 1's hub-as-landing-screen: the hub (tutors map +
+        // workflow market + instance grid) now only opens as a fullScreenCover
+        // from Field Desk's "The Desk · Manage" wordmark
+        // (`fieldDeskLogoManage` -> posts .mcOpenHubFromDesk -> showHubPage).
+        XCTAssertTrue(app.buttons["fieldDeskModeToggle"].waitForExistence(timeout: 40), "expected Field Desk chrome after cold load")
+        let bootText = app.staticTexts["Your workspace is starting up"]
+        if bootText.exists { _ = bootText.waitForNonExistence(timeout: 90) }
+        let manageWordmark = app.buttons["fieldDeskLogoManage"]
+        XCTAssertTrue(manageWordmark.waitForExistence(timeout: 8), "expected The Desk · Manage wordmark on Field Desk")
+        manageWordmark.tap()
 
         // Round 27 hub: greeting → instances (no mastery/SET GOAL strip).
         // Call lives next to Manage; Tutors / Workflow are collapsible tabs.
@@ -804,8 +857,8 @@ final class MindCraftNotesUITests: XCTestCase {
         XCTAssertTrue(callButton.waitForExistence(timeout: 10), "expected Call next to Manage on the desk hub")
         XCTAssertFalse(app.staticTexts["Start your mastery check-in"].exists,
                        "no bubble copy next to the Call button")
-        XCTAssertTrue(app.buttons["deskHubManage"].waitForExistence(timeout: 3),
-                      "expected Settings next to The Desk wordmark")
+        XCTAssertTrue(app.buttons["deskHubHome"].waitForExistence(timeout: 3),
+                      "expected the house (Open The Desk) control next to The Desk wordmark")
         let deskWordmark = app.staticTexts["deskHubWordmark"]
         XCTAssertTrue(deskWordmark.waitForExistence(timeout: 3) || app.staticTexts["The Desk"].exists,
                       "expected The Desk hub wordmark")
