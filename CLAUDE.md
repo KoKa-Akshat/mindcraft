@@ -574,8 +574,11 @@ Hard-won lessons, all confirmed empirically this session, not assumed:
   Work canvas from `Presentation Screen.pdf` pages 4–5: cream dotted grid,
   measured 1440×810 tile boxes, page-5 shrink/slide when Memo or Flows
   opens. Dock is Binder · Calendar · Memo · Gmail · Flows · search (not
-  Ask AI). Reached via `+` → Dashboard or `+` → Flows. Deliberately a
-  *separate* screen from the free-drag desk cards, not a reskin of them.
+  Ask AI). Reached via **Work**, kitchen Projects/desk, `+` → Dashboard, or
+  `+` → Flows. Do not send Work to `StandaloneDeskView` / deskweb Field
+  Binder (split FLOWS · BINDER · CALENDAR + Ask AI) — that is the old
+  web desk. Deliberately a *separate* screen from the free-drag desk cards,
+  not a reskin of them.
   **Layout rule (2026-08-15):** GeometryReader is the root; the board is
   a hard `frame` centered by ZStack (not `.position()` on the board).
   Tiles may still `.position()` inside that frame, same as CreateCanvasView.
