@@ -455,10 +455,22 @@ struct FieldDeskView: View {
                 // (or a lower) zIndex and would otherwise still be visible
                 // but silently untouchable, confirmed via a failing UI test
                 // ("not hittable") before landing this guard. Claim nothing
-                // while either of those plain dimmed-modal siblings is up,
-                // so touches reach them through the normal SwiftUI path.
+                // while any of those plain SwiftUI overlays is up, so
+                // touches reach them through the normal SwiftUI path.
+                //
+                // This is every `if show___ { ... }` sibling below that
+                // renders above this zIndex(20) - reusing floatDockBlocked
+                // (already the "something big is covering the screen"
+                // signal used to hide the dock) rather than hand-maintaining
+                // a second, easy-to-forget copy of the same list. Found via
+                // a second real instance of this bug class: showActFieldBook
+                // wasn't in the original ad-hoc guard, so the ACT Field Book
+                // popup's own Contents roadmap was silently unhittable
+                // underneath this catcher (confirmed via a full
+                // accessibility-tree dump - the button existed with the
+                // right identifier, just never received touches).
                 if deskChromeLive {
-                    let panZoomCatcherBlocked = showAddPanel || activeGuideId != nil
+                    let panZoomCatcherBlocked = floatDockBlocked || showAddPanel || activeGuideId != nil || polkaProgress > 0.001
                     PassThroughOverlay(
                         solidRects: panZoomCatcherBlocked ? [] : [CGRect(origin: .zero, size: viewport)]
                     ) {

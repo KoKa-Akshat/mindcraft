@@ -16,6 +16,22 @@ import XCTest
 /// genuine pencil-vs-palm disambiguation on physical hardware. That needs
 /// a real device and is explicitly out of scope here (see
 /// PROTOTYPE_STATUS.md).
+///
+/// A known, understood source of cross-test flakiness in a FULL suite run
+/// (not a product bug): `--ui-testing-in-memory` only forces Core Data
+/// in-memory - it does not clear UserDefaults or other on-disk app state
+/// between tests, since `xcodebuild test` reuses the same app install
+/// across the whole run rather than reinstalling per test. Confirmed twice
+/// (testChapterViewLandscapeHasNoTextImageOverlap and
+/// testPracticeSessionChecksAnswerAndAttemptsToSaveOutcome, both real
+/// Dashboard/Contents navigation tests): failed in a full-suite run,
+/// failed again back-to-back after another test ran first, then passed
+/// cleanly every time when run alone against a freshly-uninstalled app
+/// (`xcrun simctl uninstall <device> com.mindcraft.notes.prototype.akshat`
+/// first). Real students never accumulate dozens of automated test runs
+/// in one install, so this isn't a real product bug - if a test in this
+/// class fails only in a full-suite run but passes solo after a fresh
+/// uninstall, that's this, not a regression.
 final class MindCraftNotesUITests: XCTestCase {
     override func setUpWithError() throws {
         continueAfterFailure = false
@@ -654,6 +670,7 @@ final class MindCraftNotesUITests: XCTestCase {
         let app = launchDashboardApp()
         let node = app.buttons["conceptNode_fractions_decimals"]
         XCTAssertTrue(node.waitForExistence(timeout: 15))
+        XCTAssertTrue(waitUntilHittable(node), "fractions_decimals Contents dot should become hittable")
         node.tap()
         advanceToLastChapterPage(app)
         tapBeginPracticeThroughFormulaCard(app)
