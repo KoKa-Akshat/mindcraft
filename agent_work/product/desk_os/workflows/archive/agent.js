@@ -292,7 +292,12 @@
       const res = await fetch(WEBHOOK, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text, minutes: plan.minutes, interest: plan.interest }),
+        body: JSON.stringify({
+          message: text,
+          minutes: plan.minutes,
+          interest: plan.interest,
+          studentWeakness: window.__mcWeakness || null,
+        }),
       });
       if (res.ok) {
         const data = await res.json();

@@ -102,6 +102,10 @@ Rules:
 - If the hits are weak, say so and still offer the closest page.
 - Credit Dan. These are his books. We link out. We do not rehost.
 - Student data stays on their device. This call does not store the question.
+- If STUDENT_WEAKNESS is present, you may gently tie your answer to it when
+  it genuinely fits (e.g. "that page also leans on X, which you've been
+  finding tricky lately"). Never force it into an unrelated answer, never
+  state a score or diagnose the student, at most one soft clause.
 
 Return ONLY JSON:
 {"reply":"...","hitUrls":["https://..."]}`
@@ -172,13 +176,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method === 'OPTIONS') return res.status(200).end()
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' })
 
-  const body = (req.body || {}) as { message?: string }
+  const body = (req.body || {}) as {
+    message?: string
+    studentWeakness?: { conceptId?: string; label?: string }
+  }
   const message = clip(body.message, 400).trim()
   if (!message) return res.status(400).json({ error: 'No message' })
+
+  const weaknessLabel = clip(body.studentWeakness?.label, 80).trim()
+  const studentWeakness = weaknessLabel
+    ? { conceptId: clip(body.studentWeakness?.conceptId, 80).trim(), label: weaknessLabel }
+    : null
 
   const hits = retrieve(message, 3)
   const user = JSON.stringify({
     message,
+    studentWeakness,
     hits: hits.map((h) => ({
       bookTitle: h.bookTitle,
       pageTitle: h.pageTitle,
