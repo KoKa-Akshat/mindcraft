@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Open Learning Archive · The Desk by MindCraft</title>
 <meta name="description" content="113 free, open intelligent textbooks — learning graphs, MicroSims, and AI-assisted courses across math, science, engineering, and more. Browse and open any of them, free, no login.">
@@ -305,7 +307,7 @@
   const askCountEl = document.getElementById('askCount');
   const statRowEl = document.getElementById('statRow');
 
-  fetch('data/dansArchive.json?v=c1')
+  fetch('data/dansArchive.json?v=c2')
     .then(r => r.json())
     .then(data => {
       ALL = data.books.map((b, i) => Object.assign({}, b, { category: categoryFor(b.subject), id: i }));
@@ -362,10 +364,8 @@
     }
     galleryEl.innerHTML = filtered.map((b, i) => {
       const big = i % 11 === 0 ? ' big' : '';
-      const color = swatchFor(b.title);
-      const art = b.cover
-        ? `<img class="cover-art" src="${escapeHtml(b.cover)}" alt="${escapeHtml(b.title)}">`
-        : `<div class="swatch" style="background:${color}">${initials(b.title)}</div>`;
+      const coverSrc = 'img/dans-covers/' + encodeURIComponent(b.slug) + '.jpg?v=c2';
+      const art = `<img class="cover-art" src="${coverSrc}" alt="${escapeHtml(b.title)}">`;
       return `
         <div class="frame${big}" data-id="${b.id}" tabindex="0" role="button" aria-label="Open ${escapeHtml(b.title)}">
           ${art}
@@ -411,17 +411,9 @@
     const b = filtered[lbIndex];
     if (!b) return;
     const coverEl = document.getElementById('lbCover');
-    if (b.cover) {
-      coverEl.src = b.cover;
-      coverEl.hidden = false;
-      lbSwatch.style.display = 'none';
-    } else {
-      coverEl.hidden = true;
-      coverEl.removeAttribute('src');
-      lbSwatch.style.display = '';
-      lbSwatch.style.background = swatchFor(b.title);
-      lbSwatch.textContent = initials(b.title);
-    }
+    coverEl.src = 'img/dans-covers/' + encodeURIComponent(b.slug) + '.jpg?v=c2';
+    coverEl.hidden = false;
+    lbSwatch.style.display = 'none';
     lbSubject.textContent = b.subject;
     lbTitle.textContent = b.title;
     lbDesc.textContent = b.description;
