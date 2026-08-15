@@ -1,9 +1,13 @@
 # ml/mindcraft_graph/firestore_adapter.py
 
+import logging
 import os
+from datetime import datetime
 
 from google.cloud import firestore
-from datetime import datetime
+from mindcraft_graph.engine.edge_weights import EdgeState
+from mindcraft_graph.engine.student_graph import PersonalGraph
+from mindcraft_graph.models.affective_state import AffectiveState
 from mindcraft_graph.models.events import SessionEvent
 from mindcraft_graph.models.ingredient import (
     BridgeConfidence,
@@ -11,10 +15,6 @@ from mindcraft_graph.models.ingredient import (
     IngredientStudentState,
     ensure_posterior,
 )
-from mindcraft_graph.models.affective_state import AffectiveState
-from mindcraft_graph.models.student_state import StudentState, ConceptMastery
-from mindcraft_graph.engine.student_graph import PersonalGraph
-from mindcraft_graph.engine.edge_weights import EdgeState
 from mindcraft_graph.models.learning_world import (
     AgentSkill,
     ExecutionTrace,
@@ -22,6 +22,7 @@ from mindcraft_graph.models.learning_world import (
     MemoryRecord,
     ReflexionRecord,
 )
+from mindcraft_graph.models.student_state import ConceptMastery, StudentState
 
 # The student data lives in the Firebase project mindcraft-93858 (the frontend +
 # webhook write there). On Cloud Run, a bare firestore.Client() would resolve to
@@ -31,6 +32,7 @@ from mindcraft_graph.models.learning_world import (
 FIRESTORE_PROJECT = os.getenv("FIRESTORE_PROJECT") or "mindcraft-93858"
 
 db = firestore.Client(project=FIRESTORE_PROJECT)
+logger = logging.getLogger(__name__)
 
 
 def _to_naive(ts):
@@ -75,6 +77,10 @@ def load_student_events(student_id: str, limit: int = 500) -> list[SessionEvent]
                 duration_minutes=float(data.get("durationMinutes", 30)),
                 timestamp=_to_naive(data.get("timestamp", datetime.now())),
                 exposure_weight=float(data.get("exposureWeight", 1.0)),
+                misconceptions={
+                    str(key): int(value)
+                    for key, value in (data.get("misconceptions") or {}).items()
+                },
             ))
 
         return events
@@ -112,6 +118,7 @@ def append_interactions(student_id: str, events, source: str) -> int:
             "durationMinutes": event.duration_minutes,
             "timestamp": event.timestamp,
             "exposureWeight": event.exposure_weight,
+            "misconceptions": event.misconceptions,
             "source": source,
         })
     return len(events)
@@ -162,7 +169,9 @@ def append_attempt_observations(student_id: str, observations: list[dict], now: 
     return len(observations)
 
 
-def load_attempt_observations(student_id: str, limit: int = 2000) -> list[dict]:
+def load_attempt_observations(
+    student_id: str, limit: int = 2000, dedupe: bool = True
+) -> list[dict]:
     """Read per-question attempt observations in ascending timestamp order.
 
     Returns plain dicts (the harness's replay source) — not SessionEvents, since
@@ -191,8 +200,29 @@ def load_attempt_observations(student_id: str, limit: int = 2000) -> list[dict]:
                 "error_type": d.get("errorType"),
                 "timestamp": _to_naive(d.get("timestamp", datetime.now())),
             })
-        return out
+        if not dedupe:
+            return out
+
+        seen: set[tuple[str, str, float]] = set()
+        deduped = []
+        for row in out:
+            question_id = row["question_id"]
+            if question_id is None:
+                deduped.append(row)
+                continue
+            key = (row["student_id"], question_id, row["correct"])
+            if key not in seen:
+                seen.add(key)
+                deduped.append(row)
+        collapsed = len(out) - len(deduped)
+        logger.info(
+            "Collapsed %d duplicate attempt observations for student %s",
+            collapsed,
+            student_id,
+        )
+        return deduped
     except Exception:
+        logger.exception("Failed to load attempt observations for student %s", student_id)
         return []
 
 

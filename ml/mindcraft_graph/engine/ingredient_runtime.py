@@ -823,7 +823,11 @@ def aggregate_to_concept_mastery(
     graph: IngredientGraph,
 ) -> float:
     """
-    Aggregate ingredient-level mastery back into a concept-level score.
+    Compute a concept outcome from ingredient mastery without mutating state.
+
+    Callers must record the result as a low-weight ``SessionEvent``.  Concept
+    mastery is rebuilt from the interaction log, so writing it here would be a
+    transient second source of truth that disappears on the next rebuild.
     """
     ingredients = graph.get_concept_ingredients(concept_id)
     if not ingredients:

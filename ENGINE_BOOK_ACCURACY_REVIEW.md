@@ -224,36 +224,72 @@ session's deploy fixed.** Re-measure in a week rather than theorizing further.
 
 ---
 
-## 3.1 NEW — sessions are being shredded into single questions (August regression)
+## 3.1 NEW — completed sessions are re-submitted, duplicating evidence
 
-Found while sizing a move to session-level prediction. Grouping observations by
-`(student_id, timestamp)` — one `/record-outcomes` call stamps every row with the
-same `now`, so this is a faithful session proxy:
+> Supersedes an earlier draft of this section, which framed this as an August
+> "session fragmentation regression." That was wrong: the singleton-shaped
+> August rows are a *symptom*, and the underlying problem spans every month.
 
-| month | singleton sessions | multi-question sessions |
-|---|---|---|
-| 2026-06 | 4 | 17 |
-| 2026-07 | 0 | 12 |
-| **2026-08** | **25** | **2** |
+Duplicate = the same `(student, question, outcome)` written more than once.
 
-June and July batched normally. **August is almost entirely one question per
-call.** This is new breakage, not legacy data.
+| | |
+|---|---|
+| Redundant observation rows | **60 of 211 — 28.4%** |
+| …by month | June 46 · July 14 · August 28 (**not** an August regression) |
+| Genuine re-attempts (same question, *different* outcome) | only 10 |
+| Redundant `interactions` events (`source=practice`) | **53 of 115 — 46%** |
+| Worst | `fn-3-6` ×11 · `eedi_1612` ×10 · `fractions_decimals outcome=0.7` folded 10× in one day |
 
-Two consequences, both live:
+Intervals between repeats are human-scale (89 min, 41 min, 103 min…), so this is
+not a retry loop or a re-render — it is a person returning to the app.
 
-1. **Mastery moves per question, not per session.** Each singleton becomes its
-   own full-weight `SessionEvent` (`exposure_weight=1.0`), so the aggregation
-   design in `/record-outcomes` — "one continuous-score event per node, scored
-   k/N over the session" — is being bypassed. A 10-question session that should
-   fold as one `7/10` event now folds as ten separate 1.0/0.0 events.
-2. **It blocks session-level validation.** 60 sessions clears
-   `MIN_ATTEMPTS = 50`, but 29 are singletons and only 18 have ≥3 questions, so
-   aggregating mostly relabels question-level noise rather than reducing it.
+### The mechanism (each link verified in code)
 
-**Find this before any session-level harness work.** Likely cause is the client
-POSTing each answer as it is submitted instead of batching at session end;
-`Practice.tsx` has several `recordOutcomes` call sites (≈1021, 1392, 2942) and
-one of them plausibly changed behavior in August.
+1. `finishSession` (`Practice.tsx:1370`) posts `resultsSnapshot.map(...)` — the
+   **entire** session's results, every time it fires, not just new answers.
+2. It sets `pPhase = 'complete'` and **never clears the draft** (`clearPracticeDraft`
+   is called at 1213/1557, not from `finishSession`).
+3. The persist effect (`~760`) skips only `'onboard'` and `'path'` — so a draft
+   **is saved at `pPhase: 'complete'`**, carrying the full `results`,
+   `questions`, `qIndex`, and `selectedIndices`.
+4. `restorePracticeDraft` (`534`) passes `'complete'` straight through, restoring
+   the finished session with all state intact.
+
+Any interaction that re-reaches `finishSession` from that restored state
+re-posts the whole set. **The one link not yet closed is the exact user action
+that re-fires it** — that needs instrumenting, not more code reading.
+
+### Why this matters more than it looks
+
+**Production:** mastery is `σ(−2.0 + 0.8·log(evidence+1) + 1.5·avg_outcome + …)`.
+Ten duplicate folds move `log(evidence+1)` from 0.69 → 2.40, roughly **+1.37 on
+the logit** from evidence the student never produced. The engine believes it has
+10× the evidence it has.
+
+**Testing — and this is the counterintuitive part:** duplicates make calibration
+look *better* than it is. The replay folds the same outcome repeatedly, dragging
+mastery toward that outcome, so the next prediction of that same outcome scores
+well. It is self-reinforcing. Removing them makes the picture worse:
+
+| | obs | sessions | Brier | constant baseline |
+|---|---|---|---|---|
+| Raw | 211 | 60 | 0.2964 | 0.2470 |
+| **Deduped** | **151** | **30** | **0.3221** | **0.2495** |
+
+The gap to baseline widens from 0.049 to **0.073**. §2's overconfidence finding
+is understated, not overstated.
+
+### Direct consequence for the per-attempt → per-session move
+
+**After dedup there are only 30 sessions — below `MIN_ATTEMPTS = 50`.** Session-
+level calibration would return `INSUFFICIENT_DATA` on today's data. The
+reconciliation is still the right design (it matches what production folds), but
+it needs either more volume or a lower threshold, and dedup has to land first
+either way — otherwise sessions are counted twice and the metric flatters itself.
+
+**Dedup key for the ETL:** `(student_id, question_id, correct)`, keep earliest
+timestamp. Genuine re-attempts survive, since those carry a different outcome
+(10 cases).
 
 ---
 
