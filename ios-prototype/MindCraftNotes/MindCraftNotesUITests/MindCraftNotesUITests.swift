@@ -88,16 +88,6 @@ final class MindCraftNotesUITests: XCTestCase {
         start.press(forDuration: 0.05, thenDragTo: end)
     }
 
-    /// Waits for the stroke count label to read something other than
-    /// `notValue`, giving PencilKit's delegate callback and the SwiftUI
-    /// state update a moment to land instead of asserting immediately.
-    private func waitForStrokeCountLabel(_ app: XCUIApplication, toNotEqual notValue: String) {
-        let label = app.staticTexts["strokeCountLabel"]
-        let predicate = NSPredicate(format: "label != %@", notValue)
-        let expectation = XCTNSPredicateExpectation(predicate: predicate, object: label)
-        _ = XCTWaiter().wait(for: [expectation], timeout: 5)
-    }
-
     func testQuestionOneRendersWithRealBankContent() {
         let app = launchApp()
         // This is the LaTeXDisplayText-rendered form of eedi_37's raw bank
@@ -136,8 +126,22 @@ final class MindCraftNotesUITests: XCTestCase {
         app.buttons["Pencil + finger"].tap()
         dragAcrossCanvas(app)
 
-        waitForStrokeCountLabel(app, toNotEqual: "0 strokes")
-        XCTAssertNotEqual(strokeLabel.label, "0 strokes", "a touch must draw once Pencil + finger mode is selected")
+        // The floating toolbar (strokeCountLabel lives inside it) auto-hides
+        // itself the moment strokeCount > 0 - real, deliberate UX
+        // (QuestionView.writingModule's onChange(of: strokeCount), doc
+        // comment: "First strokes = working - tuck tools away for canvas
+        // room") - so its disappearance IS the proof a stroke landed, not
+        // something to route around. Reading the label's TEXT after drawing
+        // turned out not reliably possible: the value update and the hide
+        // are driven by the same state change and land in the same render
+        // pass, so there is no window where "correct value, still visible"
+        // exists to catch - confirmed via a full accessibility-tree dump
+        // (strokeCountLabel fully absent, everything else present) and
+        // three different reveal techniques (a targeted canvas drag - which
+        // also draws more ink and re-triggers the same hide, self-
+        // defeating in .anyInput mode; app.swipeDown(); a Q2/Q1 round trip),
+        // none of which ever caught a visible non-zero value.
+        XCTAssertTrue(strokeLabel.waitForNonExistence(timeout: 5), "toolbar should auto-hide once a real stroke lands in Pencil + finger mode")
     }
 
     func testDrawingPersistsAcrossQuestionSwitch() {
@@ -146,24 +150,22 @@ final class MindCraftNotesUITests: XCTestCase {
         app.buttons["Pencil + finger"].tap()
         dragAcrossCanvas(app)
 
+        // See testAnyInputModeAcceptsSimulatedTouch's comment - the
+        // toolbar's disappearance IS the proof a stroke landed.
         let strokeLabel = app.staticTexts["strokeCountLabel"]
-        waitForStrokeCountLabel(app, toNotEqual: "0 strokes")
-        let drawnValue = strokeLabel.label
-        XCTAssertNotEqual(drawnValue, "0 strokes")
+        XCTAssertTrue(strokeLabel.waitForNonExistence(timeout: 5), "toolbar should auto-hide once the first stroke lands")
 
         // Switching questions tears down and recreates the PKCanvasView
-        // (see CanvasView's .id(question.id)), so restoring the same
-        // count after switching away and back proves the round trip went
-        // through Core Data, not just an in-memory SwiftUI value that
-        // happened to survive.
+        // (see CanvasView's .id(question.id)) and reloads its drawing from
+        // Core Data. Q2 is untouched (starts empty), so its toolbar stays
+        // visible; switching back to Q1 should reload the just-drawn stroke
+        // and auto-hide again the same way a fresh draw would - if
+        // persistence silently dropped the stroke, Q1's reload would find 0
+        // strokes and its toolbar would stay visible instead of hiding.
         app.buttons["Q2"].tap()
-        XCTAssertTrue(app.staticTexts["strokeCountLabel"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["strokeCountLabel"].waitForExistence(timeout: 5), "expected Q2's toolbar visible - it starts with no ink")
         app.buttons["Q1"].tap()
-
-        let predicate = NSPredicate(format: "label == %@", drawnValue)
-        let expectation = XCTNSPredicateExpectation(predicate: predicate, object: strokeLabel)
-        let result = XCTWaiter().wait(for: [expectation], timeout: 5)
-        XCTAssertEqual(result, .completed, "drawing should be restored from Core Data after switching back to Q1")
+        XCTAssertTrue(app.staticTexts["strokeCountLabel"].waitForNonExistence(timeout: 5), "drawing should be restored from Core Data after switching back to Q1 - toolbar should auto-hide again")
     }
 
     /// Attaches a screenshot to the test result (`.keepAlways`, extracted
