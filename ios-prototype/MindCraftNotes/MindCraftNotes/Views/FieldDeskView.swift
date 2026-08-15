@@ -53,6 +53,9 @@ struct FieldDeskView: View {
     @State private var workMode = false
     /// Native Projects menu (Binder / Intel / … + Go Back) — not the vending cat screen.
     @State private var showProjectsPanel = false
+    /// Fixed-tile dashboard grid (`DeskGridDashboardView`) - PDF-referenced
+    /// layout, distinct from the free-drag desk cards below.
+    @State private var showDeskGridDashboard = false
     /// Projects screen — Malevolent Shrine project card; tap → work area.
     @State private var showProjectsScreen = false
     /// Shrine → Gen-Z captions → workspace starting → work desk.
@@ -187,7 +190,11 @@ struct FieldDeskView: View {
             .calendar: CGSize(width: 260, height: 220),
             .connect: CGSize(width: 340, height: 300),
             .binder: CGSize(width: 300, height: 380),
-            .intel: CGSize(width: 340, height: 220),
+            // Intel's content (`intelBody`) is a vertical list of up to 6
+            // short lines - 340x220 was wide enough to leave the right side
+            // mostly empty while cramping the list vertically. Narrower and
+            // taller matches what's actually inside it.
+            .intel: CGSize(width: 260, height: 300),
             .gmail: CGSize(width: 260, height: 200),
             .notes: CGSize(width: 260, height: 200),
             .gdoc: CGSize(width: 480, height: 420),
@@ -204,7 +211,10 @@ struct FieldDeskView: View {
             .memo: CGPoint(x: midX, y: 64),
             .connect: CGPoint(x: right, y: 70),
             .calendar: CGPoint(x: midX + 40, y: max(220, viewport.height * 0.38)),
-            .intel: CGPoint(x: 24, y: max(420, viewport.height - 280)),
+            // Buffer grown to match Intel's new 300pt height (was tuned for
+            // the old 220pt card) so the taller card doesn't run past the
+            // bottom edge.
+            .intel: CGPoint(x: 24, y: max(340, viewport.height - 360)),
             .gmail: CGPoint(x: right, y: max(360, viewport.height - 320)),
             .notes: CGPoint(x: midX, y: max(400, viewport.height - 260)),
             .gdoc: CGPoint(x: midX + 90, y: 110),
@@ -351,6 +361,7 @@ struct FieldDeskView: View {
             || showProjectsPanel
             || showProjectsScreen
             || showWorkflowLibrary
+            || showDeskGridDashboard
     }
 
     /// Jesse kitchen Ask/dock only — Work/Create own their own prompt bars.
@@ -524,6 +535,23 @@ struct FieldDeskView: View {
                     .transition(.opacity)
                     .zIndex(65)
                     .accessibilityIdentifier("fieldDeskActNotesPopup")
+                }
+
+                if showDeskGridDashboard {
+                    DeskGridDashboardView(
+                        onOpenBinder: {
+                            showDeskGridDashboard = false
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+                                withAnimation(.easeInOut(duration: 0.2)) {
+                                    showActFieldBook = true
+                                }
+                            }
+                        },
+                        onClose: { showDeskGridDashboard = false }
+                    )
+                    .transition(.opacity)
+                    .zIndex(70)
+                    .accessibilityIdentifier("fieldDeskGridDashboardOverlay")
                 }
 
                 if showApplyToday {
@@ -1532,6 +1560,8 @@ struct FieldDeskView: View {
             flash("Doc · blank page")
         case .gmail:
             placeWidget(.gmail)
+        case .dashboard:
+            showDeskGridDashboard = true
         }
     }
 
@@ -1656,30 +1686,41 @@ struct FieldDeskView: View {
     }
 
     private func closeDeskPanel(_ id: DeskCardID) {
-        switch id {
-        case .intel:
-            showIntelPanel = false
-            placedWidgets.remove(.intel)
-        case .connect:
-            showConnectPanel = false
-            placedWidgets.remove(.connect)
-        case .binder:
-            showBinderPanel = false
-            placedWidgets.remove(.binder)
-        case .calendar:
-            placedWidgets.remove(.calendar)
-        case .memo:
-            placedWidgets.remove(.memo)
-        case .gmail:
-            placedWidgets.remove(.gmail)
-        case .notes:
-            placedWidgets.remove(.notes)
-        case .gdoc:
-            placedWidgets.remove(.gdoc)
-        case .slides:
-            placedWidgets.remove(.slides)
+        withAnimation(.easeInOut(duration: 0.22)) {
+            switch id {
+            case .intel:
+                showIntelPanel = false
+                placedWidgets.remove(.intel)
+            case .connect:
+                showConnectPanel = false
+                placedWidgets.remove(.connect)
+            case .binder:
+                showBinderPanel = false
+                placedWidgets.remove(.binder)
+            case .calendar:
+                placedWidgets.remove(.calendar)
+            case .memo:
+                placedWidgets.remove(.memo)
+            case .gmail:
+                placedWidgets.remove(.gmail)
+            case .notes:
+                placedWidgets.remove(.notes)
+            case .gdoc:
+                placedWidgets.remove(.gdoc)
+            case .slides:
+                placedWidgets.remove(.slides)
+            }
+            if focusedCard == id { focusedCard = nil }
+            // Closing is a real reset, not a hide - a card dragged far off
+            // canvas (no clamping on `cardMoveGesture`, so it's easy to drag
+            // one past the visible bounds and strand it there) used to stay
+            // stranded at that same offset forever, even across close and a
+            // fresh re-place, since only `placedWidgets`/the show-flags were
+            // ever cleared here. Re-placing a card should always land it back
+            // at `deskPoints(for:)`'s default position.
+            cardOffsets[id] = nil
+            cardSizes[id] = nil
         }
-        if focusedCard == id { focusedCard = nil }
         saveDeskLayout()
     }
 
@@ -2995,9 +3036,26 @@ struct FieldDeskView: View {
                     .tracking(0.8)
                     .foregroundColor(Color(fdHex: "8a8478"))
 
-                Text("Drop Binder, Gmail, Calendar, Notes, Memo, Connect, Intel onto Jesse’s — drag to move.")
+                Text("Drop Binder, Calendar, Memo, Gmail onto Jesse’s — drag to move.")
                     .font(.system(size: 12, weight: .medium, design: .rounded))
                     .foregroundColor(Color(fdHex: "8a8478"))
+
+                // Flows leads the panel now, ahead of the individual desk
+                // cards - real, already-working infrastructure
+                // (WorkflowLibraryView/showWorkflowLibrary, previously only
+                // reachable from the classic work desk's own Workflows
+                // button), just given a second, more obvious entry point
+                // here.
+                addMenuRow(
+                    title: "Flows",
+                    subtitle: "Resume, Archive, Book, Apply Today",
+                    system: "bolt.fill",
+                    enabled: true
+                ) {
+                    showAddPanel = false
+                    showWorkflowLibrary = true
+                }
+                .accessibilityIdentifier("fieldDeskAddFlows")
 
                 addMenuRow(
                     title: "Binder",
@@ -3010,16 +3068,6 @@ struct FieldDeskView: View {
                 .accessibilityIdentifier("fieldDeskAddBinder")
 
                 addMenuRow(
-                    title: "Gmail",
-                    subtitle: placedWidgets.contains(.gmail) ? "Already on desk" : "Inbox card",
-                    system: "envelope.fill",
-                    enabled: true
-                ) {
-                    placeWidget(.gmail)
-                }
-                .accessibilityIdentifier("fieldDeskAddGmail")
-
-                addMenuRow(
                     title: "Calendar",
                     subtitle: placedWidgets.contains(.calendar) ? "Already on desk" : "Your week card",
                     system: "calendar",
@@ -3030,16 +3078,6 @@ struct FieldDeskView: View {
                 .accessibilityIdentifier("fieldDeskAddCalendar")
 
                 addMenuRow(
-                    title: "Transcribe Notes",
-                    subtitle: placedWidgets.contains(.notes) ? "Already on desk" : "Live transcribe card",
-                    system: "waveform",
-                    enabled: true
-                ) {
-                    placeWidget(.notes)
-                }
-                .accessibilityIdentifier("fieldDeskAddNotes")
-
-                addMenuRow(
                     title: "Memo",
                     subtitle: placedWidgets.contains(.memo) ? "Already on desk" : "Quick note card",
                     system: "note.text",
@@ -3048,6 +3086,26 @@ struct FieldDeskView: View {
                     placeWidget(.memo)
                 }
                 .accessibilityIdentifier("fieldDeskAddMemo")
+
+                addMenuRow(
+                    title: "Gmail",
+                    subtitle: placedWidgets.contains(.gmail) ? "Already on desk" : "Inbox card",
+                    system: "envelope.fill",
+                    enabled: true
+                ) {
+                    placeWidget(.gmail)
+                }
+                .accessibilityIdentifier("fieldDeskAddGmail")
+
+                addMenuRow(
+                    title: "Transcribe Notes",
+                    subtitle: placedWidgets.contains(.notes) ? "Already on desk" : "Live transcribe card",
+                    system: "waveform",
+                    enabled: true
+                ) {
+                    placeWidget(.notes)
+                }
+                .accessibilityIdentifier("fieldDeskAddNotes")
 
                 addMenuRow(
                     title: "Gdoc",
@@ -3088,6 +3146,17 @@ struct FieldDeskView: View {
                     placeWidget(.intel)
                 }
                 .accessibilityIdentifier("fieldDeskAddWakeJesse")
+
+                addMenuRow(
+                    title: "Dashboard",
+                    subtitle: "Intel · Binder · Moodle · Email · Gcal, one view",
+                    system: "square.grid.2x2.fill",
+                    enabled: true
+                ) {
+                    showAddPanel = false
+                    showDeskGridDashboard = true
+                }
+                .accessibilityIdentifier("fieldDeskAddDashboard")
 
                 if placedWidgets.contains(.memo) {
                     VStack(alignment: .leading, spacing: 8) {

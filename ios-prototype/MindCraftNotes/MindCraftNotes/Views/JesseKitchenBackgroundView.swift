@@ -15,6 +15,9 @@ enum KitchenDeskAction: String {
     case gcal
     /// Polka vending screen tapped — enter the standalone Desk.
     case openDesk
+    /// Fixed-tile dashboard (`DeskGridDashboardView`) — native-only entry,
+    /// not driven by anything in the web Kitchen bridge.
+    case dashboard
 }
 
 /// Live Jesse’s Kitchen as the Field Desk space — full-bleed WebGL, auto-entered.

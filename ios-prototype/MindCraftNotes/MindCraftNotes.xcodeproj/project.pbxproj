@@ -68,6 +68,7 @@
 		A79B07C7A6E7F8091B2C3D4E /* DeskInstanceChrome.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79B07C7A6E7F8091B2C3D4E /* DeskInstanceChrome.swift */; };
 		A89B08C8A6E7F8091B2C3D4E /* SpeechCaptureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89B08C8A6E7F8091B2C3D4E /* SpeechCaptureController.swift */; };
 		A8AC7157E11A0001B2C3D4E5 /* ActInstanceShellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8AC7157E11A0001B2C3D4E5 /* ActInstanceShellView.swift */; };
+		A0DESKGRID001A2E /* DeskGridDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DESKGRID001A2E /* DeskGridDashboardView.swift */; };
 		A8BFBB951F764F03AE79B888 /* DrawingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B50609A6CA341D392B5BC37 /* DrawingStore.swift */; };
 		A99B09C9A6E7F8091B2C3D4E /* DeskPanCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99B09C9A6E7F8091B2C3D4E /* DeskPanCanvas.swift */; };
 		B2C50496636E2ED7186E0232 /* DiagnosticGateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9818B2D6693B4381129CB08 /* DiagnosticGateView.swift */; };
@@ -209,6 +210,7 @@
 		B79B07C7A6E7F8091B2C3D4E /* DeskInstanceChrome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskInstanceChrome.swift; sourceTree = "<group>"; };
 		B89B08C8A6E7F8091B2C3D4E /* SpeechCaptureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechCaptureController.swift; sourceTree = "<group>"; };
 		B8AC7157E11A0001B2C3D4E5 /* ActInstanceShellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActInstanceShellView.swift; sourceTree = "<group>"; };
+		B0DESKGRID001A2E /* DeskGridDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskGridDashboardView.swift; sourceTree = "<group>"; };
 		B99B09C9A6E7F8091B2C3D4E /* DeskPanCanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskPanCanvas.swift; sourceTree = "<group>"; };
 		C0BLANKPAGE01A2B3C4D5E6F7 /* BlankDeskPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlankDeskPageView.swift; sourceTree = "<group>"; };
 		C1MACAPPLY01A2B3C4D5E6F7 /* MacalesterApplyWorkflowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacalesterApplyWorkflowView.swift; sourceTree = "<group>"; };
@@ -424,6 +426,7 @@
 				B59B05C5A6E7F8091B2C3D4E /* TestInstanceView.swift */,
 				B79B07C7A6E7F8091B2C3D4E /* DeskInstanceChrome.swift */,
 				B8AC7157E11A0001B2C3D4E5 /* ActInstanceShellView.swift */,
+				B0DESKGRID001A2E /* DeskGridDashboardView.swift */,
 				B89B08C8A6E7F8091B2C3D4E /* SpeechCaptureController.swift */,
 				B99B09C9A6E7F8091B2C3D4E /* DeskPanCanvas.swift */,
 				C9SCHEDWORKF01A2B3C4 /* SchedulingWorkflowsView.swift */,
@@ -724,6 +727,7 @@
 				A59B05C5A6E7F8091B2C3D4E /* TestInstanceView.swift in Sources */,
 				A79B07C7A6E7F8091B2C3D4E /* DeskInstanceChrome.swift in Sources */,
 				A8AC7157E11A0001B2C3D4E5 /* ActInstanceShellView.swift in Sources */,
+				A0DESKGRID001A2E /* DeskGridDashboardView.swift in Sources */,
 				A89B08C8A6E7F8091B2C3D4E /* SpeechCaptureController.swift in Sources */,
 				A99B09C9A6E7F8091B2C3D4E /* DeskPanCanvas.swift in Sources */,
 			);

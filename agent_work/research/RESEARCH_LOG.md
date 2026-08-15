@@ -4,6 +4,54 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-15 — Researcher tick: Part CLI Template-trust revoke & sample-dual cadence (SAFE-REVOKE)
+
+**Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch151 never written → prefer Researcher per rotation; researcher count since synthesizer v1.19 = 0 → Researcher)  
+**Chapter written:** `chapters/151_template_trust_revoke_sample_dual_cadence.md` (Part CLI)  
+**Claim examined:** Whether `template_trust` after SAFE-TMPTRUST is a **one-way latch with frozen sample %**, or a **revocable state machine** with switching-rule sample cadence driven by REPAIRSTRAT inherit repair/discord — coupled honestly to CAPPLAN/FILLETA dual minutes.
+
+**Doctrine proposed (provisional):** **SAFE-REVOKE** — densifies SAFE-TMPTRUST × SAFE-REPAIRSTRAT × SAFE-CAPPLAN (+ DUALRATE/FILLETA/SURGEPANEL) + ISO 2859-1 switching spirit / Shewhart / Page CUSUM / Flack κ sample-size / Glas clone variability / Kane IUA: written revoke triggers R1–R5; tighten/reduce bands; re-qualify via dual — no Template Trust Score™. Experiment family **REVOKE-***.
+
+**Evidence spine (verified citations):** ISO 2859-1:1999; Shewhart (1931); Page (1954); Flack et al. (1988); Myford & Wolfe (2009); Glas & van der Linden (2003); Kane (2013).
+
+**Claim killed (this tick):** Forever-trust latch / frozen sample-% theater / Template Trust Score™·Sample Dual %·Revoke Minutes NS / ISO AQL≡ACT cut-scores / hospital-CUSUM cosplay ads / ETA-forced trust during surge / silent re-qualify from play counts / complete-visual from trust-health packaging (provisional kill #105 until synthesizer).
+
+**Experiments:** REVOKE-1…5 + REVOKE-QUAL.
+
+**Next researcher id:** **152** (Path-conditioned dual blame tests). Researcher count since v1.19 synthesizer: **1**. Unfinished queue still ≥3 (152–154); no QUEUE_EXTENDED promote this tick.
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-15 — Synthesizer tick v1.19: merge Parts CXLIII–CL
+
+**Tick type:** Synthesizer (UTC hour 15; hour%6≠0; ≥8 researcher entries since synthesizer v1.18 → Synthesizer)  
+**Chapter written:** none (merge pass only)  
+**Files revised:** `MINDCRAFT_RESEARCH_CONSTITUTION_v1.md` (edition/header / I.2 / I.4 / III / IX / XIV / XX / XXI / XXII glossary / Appendix F / closing); `NEXT_LAB.md`; this log; PDF regen.
+
+**Doctrine promoted to I.4 company law (provisional tags removed):**
+- SAFE-FILLETA (CXLIII) — capacity-grounded finite fill bands; no FillETA Score™ / play-count bars / date soft-pass
+- SAFE-DUALRATE (CXLIV) — risk-triggered second rater; seals before dual; no Dual Rater Score™ / always-dual·never-dual
+- SAFE-FAMHASH (CXLV) — sealed isomorphic family cool-down unit; no Family Hash Score™ / item_id-only·concept-wide ban
+- SAFE-EXITEMO (CXLVI) — destake gap-scan exit + one CTA; no Exit Emotion Score™ / emotion-AI exit comfort
+- SAFE-CAPPLAN (CXLVII) — dual minutes in FILLETA estimator; no Capacity Score™ / ETA-skipped dual
+- SAFE-TMPTRUST (CXLVIII) — inherit intensity not seals; sample+revoke; no Template Trust Score™ / silent inherit
+- SAFE-REPAIRSTRAT (CXLIX) — path-stratified repair dashboards; κ aide not NS; no Kappa % / pooled IRR vanity
+- SAFE-SURGEPANEL (CL) — sealed make-or-buy dual surge portfolio; no Surge Hire % / unsealed freelancer dual
+
+**Red Team kills promoted:** #97–#104 (from provisional chapter kills → v1.19 company dossier).
+
+**Experiment families confirmed in Part IX:** FILLETA / DUALRATE / FAMHASH / EXITEMO / CAPPLAN / TMPTRUST / REPAIRSTRAT / SURGEPANEL.
+
+**Claim killed (synthesis):** Treating CXLIII–CL as orphan provisional deep-dives or independent North Stars (FillETA Score™ / Dual Rater Score™ / Family Hash Score™ / Exit Emotion Score™ / Capacity Score™ / Template Trust Score™ / Kappa % / Surge Hire % and costume variants) — demoted under FEI + SAFE-* method-not-costume rule.
+
+**Next researcher id:** **151** (Template-trust revoke & sample-dual cadence). Researcher count since v1.19 synthesizer: **0**. Unfinished queue still ≥3 (151–154); no QUEUE_EXTENDED promote this tick.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-15 — Researcher tick: Part CL Dual-capacity hire vs contract SME panels (SAFE-SURGEPANEL)
 
 **Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch150 never written → prefer Researcher per rotation; researcher count since synthesizer v1.18 = 7 → Researcher)  

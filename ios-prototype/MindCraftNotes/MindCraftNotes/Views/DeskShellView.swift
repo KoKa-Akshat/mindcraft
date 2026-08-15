@@ -335,6 +335,8 @@ struct DeskShellView: View {
                         .padding(.top, 22)
                     workflowMarketSection
                         .padding(.bottom, 12)
+
+                    hubSignOutFooter
                 }
                 // Pull content left toward the logo / wordmark.
                 .padding(.leading, 14)
@@ -386,29 +388,49 @@ struct DeskShellView: View {
                             .foregroundColor(ShellColor.ink.opacity(0.55))
                     }
                 }
-                // House next to name → Field Desk (tutors + workflows stay on this hub).
+                // Next to name → back to Jesse's (Field Desk). Was a bare
+                // house glyph - read as "does nothing" in testing even
+                // though it's wired correctly, because nothing about it said
+                // "Jesse" specifically. A text label fixes the affordance
+                // without touching the (already-correct) navigation.
                 Button {
                     fieldDeskRoute = .plain
                 } label: {
-                    Image(systemName: "house.fill")
-                        .font(.system(size: 14, weight: .semibold))
-                        .foregroundColor(ShellColor.ink)
-                        .frame(width: 44, height: 44)
-                        .background(Circle().fill(ShellColor.brandGreen.opacity(0.22)))
+                    HStack(spacing: 6) {
+                        Image(systemName: "house.fill")
+                            .font(.system(size: 13, weight: .semibold))
+                        Text("Jesse's")
+                            .font(.system(size: 13, weight: .bold, design: .rounded))
+                    }
+                    .foregroundColor(ShellColor.ink)
+                    .padding(.horizontal, 14)
+                    .frame(height: 40)
+                    .background(Capsule().fill(ShellColor.brandGreen.opacity(0.22)))
                 }
                 .buttonStyle(.plain)
                 .accessibilityIdentifier("deskHubHome")
-                .accessibilityLabel("Open The Desk")
+                .accessibilityLabel("Back to Jesse's")
             }
-            Button("Sign out") { authService.signOut() }
-                .font(.system(size: 12, weight: .bold, design: .rounded))
-                .foregroundColor(ShellColor.ink.opacity(0.75))
-                .padding(.horizontal, 12)
-                .padding(.vertical, 6)
-                .background(Capsule().stroke(ShellColor.ink.opacity(0.25), lineWidth: 1))
-                .accessibilityIdentifier("deskShellSignOut")
         }
         .padding(.bottom, 14)
+    }
+
+    /// Sign out, moved off the primary nav row - it shouldn't share visual
+    /// weight with "back to Jesse's." Sits under the Workflow Market section,
+    /// the last thing on the hub page.
+    private var hubSignOutFooter: some View {
+        HStack {
+            Spacer()
+            Button("Sign out") { authService.signOut() }
+                .font(.system(size: 12, weight: .bold, design: .rounded))
+                .foregroundColor(ShellColor.ink.opacity(0.55))
+                .padding(.horizontal, 14)
+                .padding(.vertical, 8)
+                .background(Capsule().stroke(ShellColor.ink.opacity(0.2), lineWidth: 1))
+                .accessibilityIdentifier("deskShellSignOut")
+            Spacer()
+        }
+        .padding(.top, 26)
     }
 
     /// Plain section heading, always visible - no collapse/expand toolbar.

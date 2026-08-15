@@ -145,9 +145,9 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 148 | Template-trust inheritance after first-of-cell dual admit | SAFE-DUALRATE × SAFE-FAMHASH/FIGKEY; when isomorphic clones may single-rater promote | **DONE** (2026-08-15) — Part CXLVIII / SAFE-TMPTRUST |
 | 149 | Post-promote repair stratified dashboards (single vs dual) | SAFE-DUALRATE × SAFE-PROMOTE/INSTRUMENT; ops IRR without Kappa % NS | **DONE** (2026-08-15) — Part CXLIX / SAFE-REPAIRSTRAT |
 | 150 | Dual-capacity hire vs contract SME panels under exam-week spikes | SAFE-CAPPLAN × SAFE-LOADSHED/WORKFORCE; surge dual without Dual Rater Score™ | **DONE** (2026-08-15) — Part CL / SAFE-SURGEPANEL |
-| — | *(150 complete; 151 is next)* | | |
-| 151 | Template-trust revoke & sample-dual cadence under repair spikes | SAFE-TMPTRUST × SAFE-REPAIR/CAPPLAN; tighten/revoke without Template Trust Score™ | **NEXT** |
-| 152 | Path-conditioned dual blame tests (selection vs quality) | SAFE-REPAIRSTRAT × SAFE-DUALRATE/CAPPLAN; risk-adjusted path tables without Dual Shame Score™ | queued |
+| — | **Synthesizer v1.19** | Merge CXLIII–CL SAFE-* into core OS I.4 / XIV / IX / XXI | **DONE** (2026-08-15 UTC 15) |
+| 151 | Template-trust revoke & sample-dual cadence under repair spikes | SAFE-TMPTRUST × SAFE-REPAIR/CAPPLAN; tighten/revoke without Template Trust Score™ | **DONE** (2026-08-15) — Part CLI / SAFE-REVOKE |
+| 152 | Path-conditioned dual blame tests (selection vs quality) | SAFE-REPAIRSTRAT × SAFE-DUALRATE/CAPPLAN; risk-adjusted path tables without Dual Shame Score™ | **NEXT** |
 | 153 | Contract SME panel seal onboarding & parallel-run gates | SAFE-SURGEPANEL × SAFE-FIGKEY/DUALRATE; ramp before C4 authority without Parallel Score™ | queued |
 | 154 | Post-spike dual demobilization without fidelity cliff | SAFE-SURGEPANEL × SAFE-WORKFORCE/REPAIRSTRAT; end panel without invent-work or repair spike | queued |
 
@@ -261,3 +261,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any forever-dual on sealed isomorphic clones after blueprint dual / silent inherit without template+family seals / Template Trust Score™·Inherit %·Family Calibration Score™ NS / first dual ≡ forever trust without sample audit / embedding-only inheritance / FERF≡C4-ready ads / ACT or complete-visual guarantees from template-inheritance packaging (Part CXLVIII / SAFE-TMPTRUST)
 - Any Kappa % / Dual Rater Score™ / Agreement Minutes NS / pooled-only post-promote repair vanity / Landis–Koch “almost perfect” marketing band / unconditioned dual-shame boards / mammography-cosplay IRR heroes / ACT or complete-visual guarantees from IRR packaging (Part CXLIX / SAFE-REPAIRSTRAT)
 - Any Dual Rater Score™ / Surge Hire % / Contract Minutes NS / hire-surge theater / unsealed Discord-freelancer≡second rater / always-hire or always-contract dogma / hospital-surge-cosplay dual ads / complete-visual-by-exam-week or ACT guarantees from surge packaging (Part CL / SAFE-SURGEPANEL)
+- Any forever-trust latch after blueprint / frozen sample-% theater / Template Trust Score™·Sample Dual %·Revoke Minutes NS / ISO AQL tables as ACT cut-scores / hospital-CUSUM cosplay QA ads / ETA-forced trust during surge / silent re-qualify from play counts / complete-visual from trust-health packaging (Part CLI / SAFE-REVOKE)

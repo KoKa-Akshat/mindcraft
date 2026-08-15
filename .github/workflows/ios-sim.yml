@@ -19,7 +19,12 @@ concurrency:
 
 jobs:
   build-and-test:
-    runs-on: macos-15
+    # macos-15 only ships Xcode 16.x (iOS 18 SDK max) - FieldDeskView.swift's
+    # fdGlass() references glassEffect (iOS 26 SDK, added 2026-08-14,
+    # abb67b954), correctly guarded at runtime with #available(iOS 26.0, *)
+    # but that can't help when the SDK doesn't declare the symbol at all.
+    # macos-26 (GA as of the 2026-02-26 GitHub changelog) ships Xcode 26.x.
+    runs-on: macos-26
     timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4

@@ -21,6 +21,10 @@
   };
   let suggestedRoles = [];
   let thinking = false;
+  // Call screen only - true from "Jump on a call" until End, gates the
+  // listen -> reply -> speak -> listen auto-loop below so it can't keep
+  // firing after the call has ended.
+  let callActive = false;
 
   const wave = $('meetWave');
   for (let i = 0; i < 18; i++) {
@@ -50,12 +54,12 @@
     return voices.sort((a, b) => rank(a) - rank(b))[0] || null;
   }
 
-  function speak(text) {
+  function speak(text, onDone) {
     speechSynthesis.cancel();
     const voice = pickVoice();
     const parts = String(text || '').split(/(?<=[.?!])\s+/).filter(Boolean);
     const play = (i) => {
-      if (i >= parts.length) return;
+      if (i >= parts.length) { if (onDone) onDone(); return; }
       const u = new SpeechSynthesisUtterance(parts[i]);
       u.rate = 0.92;
       u.pitch = 1.02;
@@ -75,7 +79,11 @@
     el.hidden = !on;
     if (label) el.querySelector('b').textContent = label;
     $('meetStatus').textContent = on ? 'Reading' : 'Ready to listen';
-    document.querySelectorAll('[data-glass="orb"]').forEach((n) => n.classList.toggle('hot', on));
+    if ($('callStatus')) $('callStatus').textContent = on ? 'Jesse is thinking…' : 'Friendly. Guided. Your words.';
+    document.querySelectorAll('[data-glass="orb"]').forEach((n) => {
+      n.classList.toggle('hot', on);
+      n.disabled = on;
+    });
     glass();
   }
 
@@ -213,7 +221,12 @@
     applyDraft(data.draft);
     suggestedRoles = data.suggestedRoles || [];
     const reply = data.reply;
-    speak(reply);
+    // On the call screen, keep the conversation going hands-free once
+    // Jesse's done talking - the whole point of tap-to-talk over hold-to-
+    // talk is not needing to reach for the button for every single turn.
+    // Tapping callRec mid-reply still interrupts (speechSynthesis.cancel()
+    // at the top of speak() handles that).
+    speak(reply, () => { if (callActive) listenForCall(); });
     if ($('call').classList.contains('on')) sayLog('j', reply);
     if ((data.actions || []).some((a) => a.type === 'open_apply')) openApply();
     if (data.readyToApply) $('applyBtn').hidden = false;
@@ -299,25 +312,30 @@
   };
 
   let rec = null;
-  async function listen(button, onText) {
+  // statusEl defaults to meetStatus for recBtn's own call site below;
+  // callRec passes callStatus instead - the two screens don't share one
+  // status label.
+  async function listen(button, onText, statusEl) {
+    const status = statusEl || $('meetStatus');
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SR) {
       const fake = prompt('Type what you would say');
       if (fake) onText(fake);
       return;
     }
+    if (rec) { stopListen(); return; }
     const r = new SR();
     r.lang = 'en-US';
     r.interimResults = false;
     button.classList.add('hot');
     wave.classList.remove('off');
-    $('meetStatus').textContent = 'Listening';
+    if (status) status.textContent = 'Listening…';
     glass();
     r.onresult = (e) => onText(e.results[0][0].transcript);
     r.onend = () => {
       button.classList.remove('hot');
       wave.classList.add('off');
-      if (!thinking) $('meetStatus').textContent = 'Ready to listen';
+      if (!thinking && status) status.textContent = status === $('meetStatus') ? 'Ready to listen' : 'Friendly. Guided. Your words.';
       rec = null;
       glass();
     };
@@ -326,6 +344,16 @@
   }
   function stopListen() { if (rec) try { rec.stop(); } catch (_) {} }
 
+  // Tap to start a turn, same tap to cut it short - SpeechRecognition
+  // already silence-detects the end of an utterance on its own
+  // (interimResults is off, so onresult only fires once it has a final
+  // transcript), so nothing has to be held down for it to work. Previously
+  // this was pointerdown/pointerup (real push-to-talk) on both recBtn (the
+  // one-shot "tell me about yourself" recorder on the meet screen, kept as
+  // a quick hold since it's a single dictation, not a conversation) and
+  // callRec (the actual live call, where "hold this button the whole time
+  // you're talking" was the friction point - a real back-and-forth needs
+  // tap-once-and-talk).
   $('recBtn').addEventListener('pointerdown', (e) => {
     e.preventDefault();
     listen($('recBtn'), (text) => {
@@ -333,11 +361,23 @@
       askJesse(text);
     });
   });
-  ['pointerup', 'pointercancel', 'pointerleave'].forEach((ev) => {
-    $('recBtn').addEventListener(ev, stopListen);
-    $('callRec').addEventListener(ev, stopListen);
-  });
+  $('recBtn').addEventListener('pointerup', stopListen);
+  $('recBtn').addEventListener('pointercancel', stopListen);
+  $('recBtn').addEventListener('pointerleave', stopListen);
+
+  function listenForCall() {
+    if (!callActive || thinking) return;
+    listen($('callRec'), (text) => {
+      sayLog('you', text);
+      if (/connect drive/i.test(text)) { connectDriveWeb(); return; }
+      if (/linkedin/i.test(text) && !state.linkedinUrl) { $('liSheet').hidden = false; glass(); return; }
+      askJesse(text);
+    }, $('callStatus'));
+  }
+  $('callRec').addEventListener('click', listenForCall);
+
   $('callBtn').addEventListener('click', () => {
+    callActive = true;
     show('call');
     $('log').innerHTML = '';
     askJesse('Hi Jesse. Start the call. Help me build my resume.');
@@ -447,18 +487,11 @@
   });
   $('deskCall').addEventListener('click', () => $('callBtn').click());
   $('endCall').addEventListener('click', () => {
+    callActive = false;
+    stopListen();
     speechSynthesis.cancel();
     show('desk');
     renderResume();
-  });
-  $('callRec').addEventListener('pointerdown', (e) => {
-    e.preventDefault();
-    listen($('callRec'), (text) => {
-      sayLog('you', text);
-      if (/connect drive/i.test(text)) { connectDriveWeb(); return; }
-      if (/linkedin/i.test(text) && !state.linkedinUrl) { $('liSheet').hidden = false; glass(); return; }
-      askJesse(text);
-    });
   });
   document.querySelectorAll('[data-say]').forEach((btn) => {
     btn.addEventListener('click', () => {
