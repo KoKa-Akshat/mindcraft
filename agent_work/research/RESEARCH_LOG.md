@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-15 — Researcher tick: Part CLI Template-trust revoke & sample-dual cadence (SAFE-REVOKE)
+
+**Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch151 never written → prefer Researcher per rotation; researcher count since synthesizer v1.19 = 0 → Researcher)  
+**Chapter written:** `chapters/151_template_trust_revoke_sample_dual_cadence.md` (Part CLI)  
+**Claim examined:** Whether `template_trust` after SAFE-TMPTRUST is a **one-way latch with frozen sample %**, or a **revocable state machine** with switching-rule sample cadence driven by REPAIRSTRAT inherit repair/discord — coupled honestly to CAPPLAN/FILLETA dual minutes.
+
+**Doctrine proposed (provisional):** **SAFE-REVOKE** — densifies SAFE-TMPTRUST × SAFE-REPAIRSTRAT × SAFE-CAPPLAN (+ DUALRATE/FILLETA/SURGEPANEL) + ISO 2859-1 switching spirit / Shewhart / Page CUSUM / Flack κ sample-size / Glas clone variability / Kane IUA: written revoke triggers R1–R5; tighten/reduce bands; re-qualify via dual — no Template Trust Score™. Experiment family **REVOKE-***.
+
+**Evidence spine (verified citations):** ISO 2859-1:1999; Shewhart (1931); Page (1954); Flack et al. (1988); Myford & Wolfe (2009); Glas & van der Linden (2003); Kane (2013).
+
+**Claim killed (this tick):** Forever-trust latch / frozen sample-% theater / Template Trust Score™·Sample Dual %·Revoke Minutes NS / ISO AQL≡ACT cut-scores / hospital-CUSUM cosplay ads / ETA-forced trust during surge / silent re-qualify from play counts / complete-visual from trust-health packaging (provisional kill #105 until synthesizer).
+
+**Experiments:** REVOKE-1…5 + REVOKE-QUAL.
+
+**Next researcher id:** **152** (Path-conditioned dual blame tests). Researcher count since v1.19 synthesizer: **1**. Unfinished queue still ≥3 (152–154); no QUEUE_EXTENDED promote this tick.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-15 — Synthesizer tick v1.19: merge Parts CXLIII–CL
 
 **Tick type:** Synthesizer (UTC hour 15; hour%6≠0; ≥8 researcher entries since synthesizer v1.18 → Synthesizer)  
