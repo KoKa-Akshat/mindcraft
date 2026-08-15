@@ -35,18 +35,19 @@ SERIF_SM = ImageFont.truetype("/usr/share/fonts/truetype/liberation/LiberationSe
 SANS = ImageFont.truetype("/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf", 16)
 SANS_B = ImageFont.truetype("/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf", 15)
 
+# Desk brand inks on cream linen. Accent is lime/gold only as a hairline.
 PALETTES = {
-    "math": ((20, 58, 46), (196, 245, 71), (247, 241, 227)),
-    "cs": ((29, 58, 138), (196, 245, 71), (247, 241, 227)),
-    "eng": ((116, 64, 86), (245, 211, 72), (247, 241, 227)),
-    "sci": ((36, 122, 77), (196, 245, 71), (247, 241, 227)),
-    "life": ((43, 92, 58), (180, 210, 90), (247, 241, 227)),
-    "biz": ((201, 150, 63), (20, 58, 46), (247, 241, 227)),
-    "hist": ((116, 64, 86), (245, 211, 72), (247, 241, 227)),
-    "lang": ((125, 111, 168), (247, 241, 227), (247, 241, 227)),
-    "health": ((193, 18, 31), (247, 241, 227), (247, 241, 227)),
-    "ai": ((29, 58, 138), (196, 245, 71), (247, 241, 227)),
-    "other": ((20, 58, 46), (196, 245, 71), (247, 241, 227)),
+    "math": ((20, 58, 46), (196, 245, 71), (255, 248, 233)),
+    "cs": ((26, 61, 54), (196, 245, 71), (255, 248, 233)),
+    "eng": ((20, 58, 46), (196, 245, 71), (255, 248, 233)),
+    "sci": ((36, 122, 77), (196, 245, 71), (255, 248, 233)),
+    "life": ((36, 122, 77), (196, 245, 71), (255, 248, 233)),
+    "biz": ((122, 100, 32), (245, 211, 72), (255, 248, 233)),
+    "hist": ((92, 58, 50), (245, 211, 72), (255, 248, 233)),
+    "lang": ((36, 48, 68), (196, 245, 71), (255, 248, 233)),
+    "health": ((26, 92, 74), (196, 245, 71), (255, 248, 233)),
+    "ai": ((20, 58, 46), (196, 245, 71), (255, 248, 233)),
+    "other": ((20, 58, 46), (196, 245, 71), (255, 248, 233)),
 }
 
 
@@ -366,26 +367,10 @@ def cover_with_logo(book: dict, logo: Image.Image) -> Image.Image:
     return base
 
 
-HARDCOVER_LOCK = {
-    "algebra-1", "biology", "calculus", "chemistry", "circuits", "computer-science",
-    "fft-benchmarking", "beginning-electronics", "geometry-course", "hydroponics",
-    "linear-algebra", "learning-micropython", "intro-to-physics-course",
-    "learning-python", "quantum-computing", "raspberry-pi-stem",
-    "trigonometric-functions", "asl-book", "ai-racing-league", "blockchain",
-    "clan-macquarrie", "clocks-and-watches", "conversational-ai", "dakota-textbook",
-    "umn-senior-design", "Digital-Transformation-with-AI-Spring-2026",
-    "GED-Science-prep", "genai-arch-patterns", "chatgpt-for-teachers",
-    "graph-data-modeling-course", "graph-lms", "graph-rag", "intro-to-graph",
-    "i-book-v1", "Intelligent_Textbook", "ir-textbook", "ee-microsims",
-    "neurodiversity-course", "ojibwe-textbook", "mini-mba-for-startups",
-    "pre-calc", "robot-day", "seizure-safe-schools", "signal-processing",
-    "spectrum-analyzer", "stem-robots", "us-geography",
-}
-
-
 def resolve_book(book: dict) -> tuple[dict, Image.Image, str]:
     locked = OUT_MARKETING / f"{book['slug']}.jpg"
-    if book["slug"] in HARDCOVER_LOCK and locked.exists():
+    # Never overwrite a finished hardcover series plate.
+    if locked.exists() and locked.stat().st_size > 30_000:
         return book, Image.open(locked).convert("RGB"), "hardcover"
     logo = None
     for url in candidates(book):

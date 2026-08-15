@@ -307,7 +307,7 @@
   const askCountEl = document.getElementById('askCount');
   const statRowEl = document.getElementById('statRow');
 
-  fetch('data/dansArchive.json?v=c4')
+  fetch('data/dansArchive.json?v=c5')
     .then(r => r.json())
     .then(data => {
       ALL = data.books.map((b, i) => Object.assign({}, b, { category: categoryFor(b.subject), id: i }));
@@ -364,7 +364,7 @@
     }
     galleryEl.innerHTML = filtered.map((b, i) => {
       const big = i % 11 === 0 ? ' big' : '';
-      const coverSrc = 'img/dans-covers/' + encodeURIComponent(b.slug) + '.jpg?v=c4';
+      const coverSrc = 'img/dans-covers/' + encodeURIComponent(b.slug) + '.jpg?v=c5';
       const art = `<img class="cover-art" src="${coverSrc}" alt="${escapeHtml(b.title)}">`;
       return `
         <div class="frame${big}" data-id="${b.id}" tabindex="0" role="button" aria-label="Open ${escapeHtml(b.title)}">
@@ -411,7 +411,7 @@
     const b = filtered[lbIndex];
     if (!b) return;
     const coverEl = document.getElementById('lbCover');
-    coverEl.src = 'img/dans-covers/' + encodeURIComponent(b.slug) + '.jpg?v=c4';
+    coverEl.src = 'img/dans-covers/' + encodeURIComponent(b.slug) + '.jpg?v=c5';
     coverEl.hidden = false;
     lbSwatch.style.display = 'none';
     lbSubject.textContent = b.subject;
