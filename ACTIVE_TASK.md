@@ -4,6 +4,38 @@
 
 ---
 
+## Jesse talk + claim lattice (2026-08-15)
+
+Press to talk asks for the mic, writes words live, then Jesse speaks back. Claim desk sits on a cream card beside a spinning 3D lattice box.
+
+## Share thumbnail (2026-08-15)
+
+Link previews use the first story panel (graph + Never work alone), not the old reel-map still.
+
+## Pricing lock (2026-08-15)
+
+Plus is $12/mo (the unit-economics number). Family stays +$10. Institutional is $12/seat/yr. No draft ranges on the page.
+
+## Archive keep it simple (2026-08-15)
+
+Removed Ask Jesse for a plan / starting point / this book from the marketing archive and dans-archive.html. Browse and open the book only.
+
+## Mentor strip polish (2026-08-15)
+
+College marks are larger and in color. Tutor bullets are one caption line. Names and booking type are serif / sentence case.
+
+## Jesse live transcribe (2026-08-15)
+
+Press on the Jesse story card live-transcribes as you speak (Web Speech API). Words replace the headline. Chrome/Safari. Tap again to stop.
+
+## Marketing sims + book studio (2026-08-15)
+
+joinmindcraft.com is one hero story: the colored 3D graph is the spine. Scroll down zooms in. Pages pop (night, verdict, walk in, map, Jesse, book). No researcher name on the chrome. Mentors, archive, pricing, apply forms stay below.
+
+## Marketing elevate (2026-08-15)
+
+joinmindcraft.com: less copy, Maya's night, then someone walks in. Reel uses real Desk stills plus short writing. No em dashes. Brand Book §1/§2/§5. Forms and mentor map kept.
+
 ## Field Desk Create / Work canvas (2026-08-15)
 
 Native iOS, not `app/public/desk-os`. Source of truth: `CLAUDE.md` iOS section + `agent_work/product/field_desk_create_redesign_2026-08-15/BRIEF.md`.

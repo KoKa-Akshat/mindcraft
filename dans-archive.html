@@ -311,8 +311,7 @@
     </div>
     <div class="hero-stats reveal" id="statRow"></div>
     <div class="hero-actions reveal">
-      <a class="btn primary" href="https://mindcraft-93858.web.app/desk-os/workflows/archive/?v=a3">Ask Jesse for a starting point</a>
-      <a class="btn soft" href="#browse">Browse all 113 ↓</a>
+      <a class="btn primary" href="#browse">Browse all 113 ↓</a>
     </div>
   </div>
 </header>
@@ -351,7 +350,6 @@
       <div class="lb-stats" id="lbStats"></div>
       <div class="lb-actions">
         <a class="btn primary" id="lbVisit" href="#" target="_blank" rel="noopener noreferrer">Open textbook ↗</a>
-        <a class="btn soft" id="lbAsk" href="#">Ask Jesse about this book</a>
         <div class="lb-nav">
           <button id="lbPrev" aria-label="Previous book">←</button>
           <button id="lbNext" aria-label="Next book">→</button>
@@ -537,7 +535,6 @@
   const lbDesc = document.getElementById('lbDesc');
   const lbStats = document.getElementById('lbStats');
   const lbVisit = document.getElementById('lbVisit');
-  const lbAsk = document.getElementById('lbAsk');
   const lbCounter = document.getElementById('lbCounter');
   const lbPrev = document.getElementById('lbPrev');
   const lbNext = document.getElementById('lbNext');
@@ -564,7 +561,6 @@
     lbDesc.textContent = b.description;
     lbStats.textContent = b.stats || '';
     lbVisit.href = b.url;
-    lbAsk.href = 'https://mindcraft-93858.web.app/desk-os/workflows/archive/?v=a3&q=' + encodeURIComponent(b.title);
     lbCounter.textContent = `${lbIndex + 1} of ${filtered.length}`;
     lbPrev.disabled = lbIndex <= 0;
     lbNext.disabled = lbIndex >= filtered.length - 1;

@@ -18,8 +18,9 @@ struct CreateCanvasView: View {
 
     @State private var askText = ""
     @State private var slides: [CreateSlide] = [
-        CreateSlide(title: "Untitled deck", body: "Your first point goes here."),
-        CreateSlide(title: "Next beat", body: "Add what you want the room to remember."),
+        CreateSlide(title: "You were never bad at this.", body: "You were working alone. The page was hard because nobody who had done it was in the room."),
+        CreateSlide(title: "Office hours from your room.", body: "Show the actual page. Someone who has done this walks in already knowing where you left off."),
+        CreateSlide(title: "The map just changed.", body: "Every session becomes evidence. The evidence stays yours. Inspect it. Export it. Delete it."),
     ]
     @State private var slideIndex = 0
     @State private var docText = ""
