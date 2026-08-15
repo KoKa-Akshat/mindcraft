@@ -18,6 +18,9 @@
 		11DF2394C1B5D24E677DC1E1 /* TutorDirectoryClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD38C7392605523E1A10E7F6 /* TutorDirectoryClient.swift */; };
 		1F9E043A15C0940CA4A9CDB5 /* PolynomialExpression.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16F5501162A4F865EFC69C0 /* PolynomialExpression.swift */; };
 		20FE9273DBB5C8611FB6D861 /* RouteClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FECBAC947388E48E0524B2D /* RouteClient.swift */; };
+		D7JESSECALL01A2B3 /* JesseCallSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7JESSECALL01A2B3 /* JesseCallSession.swift */; };
+		D8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift */; };
+		D9JESSEOVERLAY01A2 /* JesseCallOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9JESSEOVERLAY01A2 /* JesseCallOverlay.swift */; };
 		2ED5A15418DF8B11D28A484D /* KnowledgeMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037C287CDFB7C16477B6DBF0 /* KnowledgeMapView.swift */; };
 		2F77E6F02BAEAA94951E8376 /* conceptIcons in Resources */ = {isa = PBXBuildFile; fileRef = F36436A531016328ECDE0C4D /* conceptIcons */; };
 		45DD6448870A218F1EA9A065 /* ConceptGraphLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAB6A727D2FD6844F72EAF7 /* ConceptGraphLoader.swift */; };
@@ -171,6 +174,9 @@
 		6A270692D86516903DC8773D /* SVGImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGImageView.swift; sourceTree = "<group>"; };
 		6C6EE743854CB1274F574739 /* storyArt */ = {isa = PBXFileReference; lastKnownFileType = folder; path = storyArt; sourceTree = "<group>"; };
 		6FECBAC947388E48E0524B2D /* RouteClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteClient.swift; sourceTree = "<group>"; };
+		C7JESSECALL01A2B3 /* JesseCallSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JesseCallSession.swift; sourceTree = "<group>"; };
+		C8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveRagClient.swift; sourceTree = "<group>"; };
+		C9JESSEOVERLAY01A2 /* JesseCallOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JesseCallOverlay.swift; sourceTree = "<group>"; };
 		7028A09FF6E145FFCC90FF6A /* MyScriptRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyScriptRecognizer.swift; sourceTree = "<group>"; };
 		788775E6F0E0DB324F25E292 /* WorkPracticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkPracticeView.swift; sourceTree = "<group>"; };
 		789E888BA344DB5E76A0F09C /* ConceptChapterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConceptChapterView.swift; sourceTree = "<group>"; };
@@ -354,6 +360,8 @@
 				C9BOOTMOTIV01A2B3C4 /* BootMotivationClient.swift */,
 				C9FRIENDSTORE01A2B3 /* FriendsStore.swift */,
 				C9QCALINVITE01A2B3C4 /* QCalInvite.swift */,
+				C7JESSECALL01A2B3 /* JesseCallSession.swift */,
+				C8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -418,6 +426,7 @@
 				C9SCHEDWORKF01A2B3C4 /* SchedulingWorkflowsView.swift */,
 				C9OPENARCHIVE01A2B3C4 /* OpenLearningArchiveView.swift */,
 				C9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift */,
+				C9JESSEOVERLAY01A2 /* JesseCallOverlay.swift */,
 				C9BOOKWORKF01A2B3C4 /* BookWorkflowView.swift */,
 				C9FRIENDSVIEW01A2B3 /* FriendsView.swift */,
 			);
@@ -654,6 +663,9 @@
 				644D81C7CC9F5FDE773C3A27 /* AltDiagramSplitter.swift in Sources */,
 				45DD6448870A218F1EA9A065 /* ConceptGraphLoader.swift in Sources */,
 				20FE9273DBB5C8611FB6D861 /* RouteClient.swift in Sources */,
+				D7JESSECALL01A2B3 /* JesseCallSession.swift in Sources */,
+				D8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift in Sources */,
+				D9JESSEOVERLAY01A2 /* JesseCallOverlay.swift in Sources */,
 				0488FF0AF1C04DCCB33C8ED2 /* OutcomeClient.swift in Sources */,
 				0FB945513AC3BD9B9D898CF2 /* SVGImageView.swift in Sources */,
 				6CB3A318117BA59DFBAFB2B7 /* StoryArtLoader.swift in Sources */,

@@ -296,6 +296,51 @@ final class MindCraftNotesUITests: XCTestCase {
     // save. The success path needs a real signed-in account and is verified
     // separately (see the written status doc), not by this automated test.
 
+    /// Same boot wait as `launchDashboardApp`, stopping at Field Desk chrome
+    /// itself rather than tapping through to the ACT Field Book - for tests
+    /// that only need the Field Desk dock, not Dashboard content.
+    private func launchFieldDeskApp(extraArgs: [String] = []) -> XCUIApplication {
+        let app = XCUIApplication()
+        app.launchArguments = ["--ui-testing-in-memory", "--ui-testing-skip-auth"] + extraArgs
+        app.launch()
+        XCUIDevice.shared.orientation = .landscapeLeft
+        XCTAssertTrue(app.buttons["fieldDeskModeToggle"].waitForExistence(timeout: 40), "expected Field Desk chrome after cold load")
+        let bootText = app.staticTexts["Your workspace is starting up"]
+        if bootText.exists { _ = bootText.waitForNonExistence(timeout: 90) }
+        return app
+    }
+
+    /// The actual architectural claim being tested: a Jesse call started
+    /// while one screen is up must still be there after dismissing that
+    /// screen's own UI, because `JesseCallSession` lives once at
+    /// `DeskShellView`'s root, not inside whichever view started the call.
+    /// Real STT/TTS can't be driven by an automated test (no simulator
+    /// microphone), so `--ui-testing-jesse-call` seeds an already-active
+    /// call with a fixed transcript (mirrors `--ui-testing-force-map`) -
+    /// this test is about the persistence claim, not the audio layer.
+    func testJesseCallPillPersistsAfterDismissingCallSheet() {
+        let app = launchFieldDeskApp(extraArgs: ["--ui-testing-jesse-call"])
+
+        let pill = app.buttons["jesseCallPill"]
+        XCTAssertTrue(pill.waitForExistence(timeout: 10), "expected the Jesse call pill to render at the Field Desk root")
+        pill.tap()
+
+        XCTAssertTrue(app.staticTexts["Can you help me with quadratic equations?"].waitForExistence(timeout: 10), "expected the seeded transcript to show in the call sheet")
+
+        let closeButton = app.buttons["Close"]
+        XCTAssertTrue(closeButton.waitForExistence(timeout: 5))
+        closeButton.tap()
+
+        // The real test: after closing the SHEET (not ending the call), the
+        // pill - and the call it represents - is still there.
+        XCTAssertTrue(pill.waitForExistence(timeout: 5), "expected the call pill to survive dismissing the call sheet")
+        pill.tap()
+        XCTAssertTrue(app.staticTexts["Can you help me with quadratic equations?"].waitForExistence(timeout: 5), "expected the same transcript, not a reset call")
+
+        app.buttons["jesseCallEnd"].tap()
+        XCTAssertTrue(pill.waitForNonExistence(timeout: 5), "expected the pill to disappear once the call actually ends")
+    }
+
     private func launchDashboardApp(extraArgs: [String] = []) -> XCUIApplication {
         let app = XCUIApplication()
         app.launchArguments = ["--ui-testing-in-memory", "--ui-testing-skip-auth"] + extraArgs

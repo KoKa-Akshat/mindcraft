@@ -9,6 +9,8 @@ import WebKit
 struct ArchiveWorkflowView: View {
     var onClose: () -> Void
 
+    @EnvironmentObject private var jesseCall: JesseCallSession
+
     // Real `/recommend` (mode: exam) weakness signal - same source
     // DashboardView's "today's spark" badge reads (`RouteClient.fetchExamProfile()`).
     // Threaded into the web agent as soft context only: the deterministic
@@ -28,22 +30,44 @@ struct ArchiveWorkflowView: View {
             Color(red: 244 / 255, green: 239 / 255, blue: 230 / 255).ignoresSafeArea()
             ArchiveWorkflowWebView(weakness: weakness)
                 .ignoresSafeArea()
-            Button(action: onClose) {
-                Text("Done")
-                    .font(.system(size: 13, weight: .heavy, design: .rounded))
-                    .foregroundColor(Color(red: 20 / 255, green: 58 / 255, blue: 46 / 255))
-                    .padding(.horizontal, 14)
-                    .padding(.vertical, 10)
-                    .background(Capsule().fill(Color.white.opacity(0.94)))
+            HStack(spacing: 8) {
+                // Native call - genuinely separate from the WKWebView's own
+                // "meet" screen (JS Web Speech API, dies with this view).
+                // This one keeps running via JesseCallSession even after
+                // Done is tapped.
+                Button(action: startCall) {
+                    Label(jesseCall.isActive ? "On call" : "Call Jesse", systemImage: "phone.fill")
+                        .font(.system(size: 13, weight: .heavy, design: .rounded))
+                        .foregroundColor(Color(red: 20 / 255, green: 58 / 255, blue: 46 / 255))
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 10)
+                        .background(Capsule().fill(jesseCall.isActive ? Color(red: 196 / 255, green: 245 / 255, blue: 71 / 255) : Color.white.opacity(0.94)))
+                }
+                .buttonStyle(.plain)
+                .disabled(jesseCall.isActive)
+                .accessibilityIdentifier("archiveCallJesse")
+
+                Button(action: onClose) {
+                    Text("Done")
+                        .font(.system(size: 13, weight: .heavy, design: .rounded))
+                        .foregroundColor(Color(red: 20 / 255, green: 58 / 255, blue: 46 / 255))
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 10)
+                        .background(Capsule().fill(Color.white.opacity(0.94)))
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("archiveWorkflowBack")
+                .accessibilityLabel("Done")
             }
-            .buttonStyle(.plain)
             .padding(.top, 12)
             .padding(.trailing, 16)
-            .accessibilityIdentifier("archiveWorkflowBack")
-            .accessibilityLabel("Done")
         }
         .statusBarHidden(true)
         .task { await loadWeakness() }
+    }
+
+    private func startCall() {
+        jesseCall.begin(context: "archive", studentWeakness: weakness.map { (conceptId: $0.id, label: $0.label) })
     }
 
     /// Doesn't block or delay the web view's own load - resolves in the
