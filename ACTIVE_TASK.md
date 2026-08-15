@@ -4,6 +4,10 @@
 
 ---
 
+## Marketing sims + book studio (2026-08-15)
+
+joinmindcraft.com reel: live ZPD (`sims/zpd/` iframes Dan's explorer), 3D graph (`sims/graph/` from his public JSON), Jesse press centered, Create is a guided hobby-book studio. Caps cut to Talk / See / Make. Credit Dan, no partnership. Figma MCP still unauth → `agent_work/product/CREATE_BOOK_FIGMA_BRIEF.md`.
+
 ## Marketing elevate (2026-08-15)
 
 joinmindcraft.com: less copy, Maya's night, then someone walks in. Reel uses real Desk stills plus short writing. No em dashes. Brand Book §1/§2/§5. Forms and mentor map kept.

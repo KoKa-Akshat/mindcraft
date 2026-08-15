@@ -251,6 +251,14 @@
   .reel-cap p{font-size:13.5px; line-height:1.5; color:var(--chalk-dim); font-weight:400;}
   .reel-covers{ display:grid; grid-template-columns:1fr 1fr; gap:2px; width:100%; height:100%; }
   .reel-covers img{width:100%; height:100%; object-fit:cover; display:block;}
+  .reel-shot.live{align-items:stretch;}
+  .reel-shot.live iframe{width:100%; height:100%; border:0; background:#080e14;}
+  .sim-open{
+    position:absolute; left:12px; bottom:12px; z-index:2;
+    padding:8px 12px; border-radius:999px; background:rgba(8,14,20,.78);
+    border:1px solid rgba(196,245,71,.35); color:var(--lime);
+    font-size:11px; font-weight:700; letter-spacing:.04em; text-transform:uppercase;
+  }
   .reel-dots{display:none; justify-content:center; gap:8px; margin-top:22px;}
   .reel-dots i{width:6px; height:6px; border-radius:50%; background:rgba(245,245,244,.2); transition:background .3s, transform .3s;}
   .reel-dots i.on{background:var(--lime); transform:scale(1.5);}
@@ -288,7 +296,9 @@
   /* ---------- Capabilities ---------- */
   .caps{background:var(--field-1); border-top:1px solid var(--edge); border-bottom:1px solid var(--edge);}
   .caps-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:48px;}
+  .caps-grid.three{max-width:980px;}
   .cap{ background:var(--field-2); border:1px solid var(--edge); border-radius:22px; padding:26px; transition:transform .25s var(--ease), border-color .25s var(--ease); }
+  a.cap{display:block; color:inherit;}
   .cap:hover{transform:translateY(-4px); border-color:rgba(245,245,244,.2);}
   .stage-desk .cap:hover{border-color:rgba(20,58,46,.28);}
   .cap .glyph{width:42px; height:42px; border-radius:12px; display:grid; place-items:center; margin-bottom:18px;}
@@ -317,6 +327,58 @@
   .resume-shot .bar span{margin-left:8px; font-family:var(--mono); font-size:10.5px; color:var(--chalk-faint); letter-spacing:.06em; text-transform:uppercase;}
   .resume-shot img{width:100%; display:block;}
   .resume-cap{margin-top:16px; font-size:12.5px; color:var(--chalk-faint); font-weight:400; max-width:420px;}
+  .jesse-press{
+    min-height:420px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding:48px 28px 40px; background:
+      radial-gradient(circle at 50% 42%, rgba(196,245,71,.16), transparent 42%),
+      #f4efe6;
+  }
+  .jesse-press .who{font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#247a4d; margin-bottom:12px;}
+  .jesse-press h3{font-size:clamp(28px,3vw,36px); color:#143a2e; margin-bottom:8px;}
+  .jesse-press p{font-size:15px; color:rgba(20,58,46,.7); max-width:28ch;}
+  .jesse-disc{
+    width:112px; height:112px; margin:28px 0 14px; border:0; border-radius:50%;
+    background:var(--lime); color:var(--lime-ink); font:700 13px/1 "Space Grotesk",sans-serif;
+    letter-spacing:.08em; text-transform:uppercase; cursor:pointer;
+    box-shadow:0 16px 40px rgba(196,245,71,.35);
+  }
+  .jesse-disc:focus{outline:3px solid #143a2e; outline-offset:4px;}
+  .jesse-press .hint{font-size:12px; color:rgba(20,58,46,.5);}
+  .book-studio{
+    display:grid; grid-template-columns:148px 1fr; min-height:460px;
+    background:#f7f5f0; color:#143a2e;
+    background-image:radial-gradient(rgba(20,58,46,.12) 1px, transparent 1px);
+    background-size:18px 18px;
+  }
+  .book-rail{padding:18px 12px; border-right:1px solid rgba(20,58,46,.12); background:rgba(255,255,255,.55);}
+  .book-rail .tiny{font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:rgba(20,58,46,.45); margin-bottom:12px;}
+  .book-ch{width:100%; text-align:left; border:0; background:transparent; padding:10px 8px; border-radius:10px; cursor:pointer; color:#143a2e;}
+  .book-ch b{display:block; font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:rgba(20,58,46,.45);}
+  .book-ch span{display:block; font-size:13px; font-weight:600; margin-top:2px;}
+  .book-ch.on{background:#143a2e; color:#f7f5f0;}
+  .book-ch.on b{color:rgba(196,245,71,.85);}
+  .book-main{display:flex; flex-direction:column; min-width:0;}
+  .book-passions{display:flex; flex-wrap:wrap; gap:8px; padding:14px 16px 0;}
+  .book-passions button{
+    border:1px solid rgba(20,58,46,.16); background:#fff; color:#143a2e;
+    border-radius:999px; padding:7px 12px; font-size:12px; font-weight:600; cursor:pointer;
+  }
+  .book-passions button.on{background:var(--lime); border-color:var(--lime); color:var(--lime-ink);}
+  .book-page{
+    margin:14px 16px 0; flex:1; background:#fff; border:1px solid rgba(20,58,46,.12);
+    border-radius:16px; padding:22px 22px 16px; min-height:180px;
+  }
+  .book-page .k{font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#247a4d;}
+  .book-page h4{font-family:var(--serif); font-style:italic; font-weight:600; font-size:22px; margin:8px 0 12px; color:#143a2e;}
+  .book-page p{font-size:14px; line-height:1.55; color:rgba(20,58,46,.78);}
+  .book-ask{padding:8px 16px 16px; text-align:center;}
+  .book-ask .jesse-disc{width:88px; height:88px; margin:10px auto 8px;}
+  .book-ask .guide{font-size:13px; color:rgba(20,58,46,.62);}
+  @media (max-width:640px){
+    .book-studio{grid-template-columns:1fr;}
+    .book-rail{display:flex; gap:8px; overflow:auto; border-right:0; border-bottom:1px solid rgba(20,58,46,.12);}
+    .book-ch{min-width:120px;}
+  }
 
   /* ---------- Tutors ---------- */
   .tutors{background:var(--field-1); border-top:1px solid var(--edge); border-bottom:1px solid var(--edge);}
@@ -565,31 +627,56 @@
         <div class="reel-cap"><span class="reel-tag">The Desk</span><h3>One board. The night stops scattering.</h3><p>Notes, map, and a person you can call. Not six tabs.</p></div>
       </div>
       <div class="reel-frame" data-i="1">
-        <div class="reel-shot"><img src="img/story-linear-equations.jpg" alt="A story chapter: linear equations as a real place, not a worksheet" loading="lazy"></div>
-        <div class="reel-cap"><span class="reel-tag">Notes</span><h3>Every chapter opens as a scene.</h3><p>The math stays frozen. The world wraps around it.</p></div>
+        <div class="reel-shot live">
+          <iframe title="Zone of Proximal Development Explorer" src="https://dmccreary.github.io/learning-graphs/sims/zpd-explorer/main.html" loading="lazy"></iframe>
+          <a class="sim-open" href="sims/zpd/">Click it · open full</a>
+        </div>
+        <div class="reel-cap"><span class="reel-tag">Solver</span><h3>Click the gold. The frontier moves.</h3><p>That moving ring is the next thing you can actually learn. Not a red X.</p></div>
       </div>
       <div class="reel-frame" data-i="2">
-        <div class="reel-shot"><img src="img/app/reel-solver.webp" alt="Solver: a story-framed problem with a pencil graph" loading="lazy"></div>
-        <div class="reel-cap"><span class="reel-tag">Solver</span><h3>Miss it. The current moves. Try again.</h3><p>No red X. The world just tells you the truth.</p></div>
+        <div class="reel-shot live">
+          <iframe title="Dan McCreary learning graph in 3D" src="sims/graph/" loading="lazy"></iframe>
+          <a class="sim-open" href="sims/graph/">Spin it · open full</a>
+        </div>
+        <div class="reel-cap"><span class="reel-tag">Map</span><h3>400 concepts. Drag to spin.</h3><p>Click a node. See what it rests on. The map is the lesson.</p></div>
       </div>
       <div class="reel-frame" data-i="3">
-        <div class="reel-shot"><img src="img/app/reel-map.webp" alt="The Map on The Desk: one concept lit, the rest still in fog" loading="lazy"></div>
-        <div class="reel-cap"><span class="reel-tag">Map</span><h3>There it is. The map just changed.</h3><p>Fog lifts where you actually clicked. Nothing is graded. Nothing is red.</p></div>
+        <div class="reel-shot">
+          <div class="jesse-press" style="width:100%;height:100%;min-height:0;">
+            <div class="who">Jesse</div>
+            <h3>Press to talk.</h3>
+            <p>The page is already here. Say the next sentence.</p>
+            <button class="jesse-disc" type="button" onclick="location.href='#resume'">Press</button>
+            <div class="hint">Centered. One move.</div>
+          </div>
+        </div>
+        <div class="reel-cap"><span class="reel-tag">Ask</span><h3>One button. In the middle.</h3><p>Not a prompt bar. Not a corner hold. Press. Talk. The work moves.</p></div>
       </div>
       <div class="reel-frame" data-i="4">
-        <div class="reel-shot"><div class="reel-covers">
-          <img src="img/dans-covers/calculus.jpg" alt="Calculus, an open intelligent textbook" loading="lazy">
-          <img src="img/dans-covers/biology.jpg" alt="Biology: An Interactive Course, an open intelligent textbook" loading="lazy">
-          <img src="img/dans-covers/fft-benchmarking.jpg" alt="Real-Time DSP on a $5 Microcontroller, an open intelligent textbook" loading="lazy">
-          <img src="img/dans-covers/learning-micropython.jpg" alt="Learning MicroPython with AI, an open intelligent textbook" loading="lazy">
-        </div></div>
-        <div class="reel-cap"><span class="reel-tag">Archive</span><h3>Open a book. Touch the idea.</h3><p>113 free textbooks. No login. Drag a variable and watch it move.</p></div>
+        <div class="reel-shot">
+          <div class="book-studio" id="reelBook" style="width:100%;height:100%;">
+            <aside class="book-rail">
+              <div class="tiny">Chapters</div>
+              <button class="book-ch on" type="button"><b>Ch 1</b><span>Why we fall</span></button>
+              <button class="book-ch" type="button"><b>Ch 2</b><span>Speed</span></button>
+              <button class="book-ch" type="button"><b>Ch 3</b><span>Your first ollie</span></button>
+            </aside>
+            <div class="book-main">
+              <div class="book-page">
+                <div class="k">Your book · Skate physics</div>
+                <h4>The board left the ground. The math was already in the air.</h4>
+                <p>Start with what you love. Jesse asks what a friend needs first. You talk. A chapter appears. Your name on the spine.</p>
+              </div>
+              <div class="book-ask">
+                <button class="jesse-disc" type="button" onclick="location.href='#author'">Press</button>
+                <div class="guide">What should a friend understand after this page?</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="reel-cap"><span class="reel-tag">Create</span><h3>A book about what you love.</h3><p>Not a blank deck. Four questions. Then a spine with your name.</p></div>
       </div>
-      <div class="reel-frame" data-i="5">
-        <div class="reel-shot"><img src="img/app/create-studio-live.png" alt="Create studio: a story mid-edit with Jesse in the prompt bar" loading="lazy"></div>
-        <div class="reel-cap"><span class="reel-tag">Create</span><h3>Talk it through. Ship the page.</h3><p>Jesse is on the rail. The slide stays in the room with you.</p></div>
-      </div>
-      <div class="reel-dots" id="reelDots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="reel-dots" id="reelDots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i></div>
     </div>
   </div>
 </section>
@@ -621,51 +708,30 @@
 <!-- ================= CAPABILITIES ================= -->
 <section class="caps stage-desk" id="capabilities">
   <div class="wrap">
-    <div class="kicker reveal">Notes · Solver · Map</div>
-    <h2 class="h2 reveal">Three doors. <span class="serif">One desk.</span></h2>
-    <div class="caps-grid">
-      <div class="cap reveal">
-        <div class="glyph" style="background:var(--teal);">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#04211d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h9l4 4v12H6z"/><path d="M15 4v4h4"/><path d="M9 12.5h6M9 16h4"/></svg>
+    <div class="kicker reveal">Talk · See · Make</div>
+    <h2 class="h2 reveal">Three moves. <span class="serif">One desk.</span></h2>
+    <div class="caps-grid three">
+      <a class="cap reveal" href="#resume">
+        <div class="glyph" style="background:var(--amber);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#241505" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="7"/><path d="M12 9v3l2 1.4"/></svg>
         </div>
-        <h3>Notes</h3>
-        <p>Drop the page. It lands named, dated, and inside a story.</p>
-      </div>
-      <div class="cap reveal">
-        <div class="glyph" style="background:var(--blue);">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#050915" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l5-6 4 3 6-8"/><circle cx="19" cy="6" r="1.6" fill="#050915" stroke="none"/></svg>
-        </div>
-        <h3>Solver</h3>
-        <p>Finds the gap. Builds the next step. Never just the next answer.</p>
-      </div>
-      <div class="cap reveal">
+        <h3>Talk</h3>
+        <p>Press Jesse. The page is already in the room.</p>
+      </a>
+      <a class="cap reveal" href="sims/zpd/">
         <div class="glyph" style="background:var(--lime);">
           <svg viewBox="0 0 24 24" fill="none" stroke="#0a1006" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.6"/><path d="M12 4v3M12 17v3M4 12h3M17 12h3"/></svg>
         </div>
-        <h3>Map</h3>
-        <p>Lit or locked. Ready-to-learn glows before you ask.</p>
-      </div>
-      <div class="cap reveal">
-        <div class="glyph" style="background:var(--amber);">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#241505" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="m12.5 6.5 6 5.5-6 5.5"/></svg>
-        </div>
-        <h3>Ask</h3>
-        <p>Jesse already sees the page. Talk. The work moves.</p>
-      </div>
-      <div class="cap reveal">
+        <h3>See</h3>
+        <p>Click gold. The next thing you can learn lights up.</p>
+      </a>
+      <a class="cap reveal" href="#author">
         <div class="glyph" style="background:var(--violet);">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#160f2c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="5"/><path d="M10 9l6 3-6 3z"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#160f2c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h9l4 4v12H6z"/><path d="M15 4v4h4"/></svg>
         </div>
-        <h3>Create</h3>
-        <p>A slide. A book. Your name on the spine.</p>
-      </div>
-      <div class="cap reveal">
-        <div class="glyph" style="background:#ff8f9b;">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#2a0509" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="9" r="4"/><path d="M3 20c1.4-3.6 4-5.4 7-5.4s5.6 1.8 7 5.4"/><circle cx="18.5" cy="6.5" r="2" fill="#2a0509" stroke="none"/></svg>
-        </div>
-        <h3>Find a mentor</h3>
-        <p>A real person. Your map open before hello. First hour free.</p>
-      </div>
+        <h3>Make</h3>
+        <p>A book about what you love. Your name on the spine.</p>
+      </a>
     </div>
   </div>
 </section>
@@ -675,24 +741,25 @@
   <div class="wrap">
     <div class="resume-grid">
       <div>
-        <div class="kicker reveal">Ask · Resume Help</div>
-        <h2 class="h2 reveal">Paste a LinkedIn. Sound like yourself.</h2>
-        <p class="lede reveal">Real roles. Real bullets. It never invents an employer.</p>
-        <div class="resume-badge reveal">Worth the subscription on its own</div>
-        <div class="swap-card reveal">
-          <div class="swap-row before"><span class="swap-tag">BEFORE</span><p>"Worked at the campus paper"</p></div>
-          <div class="swap-row after"><span class="swap-tag">AFTER</span><p>Copyedited a 12-page weekly paper for 3,000 student readers. Cut publish-day errors in half.</p></div>
-        </div>
+        <div class="kicker reveal">Ask · Jesse</div>
+        <h2 class="h2 reveal">Say what you did. Hear it back in your voice.</h2>
+        <p class="lede reveal">Press the disc. Talk. It never invents an employer.</p>
         <div class="hero-actions reveal" style="margin-top:26px;">
           <a class="btn primary" href="#start">Try Resume Help</a>
         </div>
       </div>
       <div class="reveal">
         <div class="resume-shot">
-          <div class="bar"><i></i><i></i><i></i><span>the desk · resume help</span></div>
-          <img src="img/app/reel-resume.webp" alt="Resume Help: Jesse ready to listen, hold the recorder to build a resume that sounds like you" loading="lazy">
+          <div class="bar"><i></i><i></i><i></i><span>the desk · jesse</span></div>
+          <div class="jesse-press">
+            <div class="who">Jesse</div>
+            <h3>Hi. I'm Jesse.</h3>
+            <p>Press to talk. I'll stay with the page in front of you.</p>
+            <button class="jesse-disc" type="button" id="jessePressDemo">Press</button>
+            <div class="hint" id="jessePressHint">One button. Dead center.</div>
+          </div>
         </div>
-        <p class="resume-cap">On the desk. Not another tab to remember.</p>
+        <p class="resume-cap">On the desk. Not a tab you forget to open.</p>
       </div>
     </div>
   </div>
@@ -704,19 +771,44 @@
     <div class="resume-grid">
       <div class="reveal">
         <div class="resume-shot">
-          <div class="bar"><i></i><i></i><i></i><span>the desk · create studio</span></div>
-          <img src="img/app/create-studio-live.png" alt="Create studio: a story mid-edit, Jesse's own prompt bar asking how to edit it, media and captions panels open" loading="lazy">
+          <div class="bar"><i></i><i></i><i></i><span>the desk · your book</span></div>
+          <div class="book-studio" id="bookStudio">
+            <aside class="book-rail">
+              <div class="tiny">Chapters</div>
+              <button class="book-ch on" type="button" data-ch="0"><b>Ch 1</b><span id="ch0">Why we fall</span></button>
+              <button class="book-ch" type="button" data-ch="1"><b>Ch 2</b><span id="ch1">Speed</span></button>
+              <button class="book-ch" type="button" data-ch="2"><b>Ch 3</b><span id="ch2">Your first ollie</span></button>
+            </aside>
+            <div class="book-main">
+              <div class="book-passions" id="bookPassions">
+                <button type="button" class="on" data-book="skate">Skate</button>
+                <button type="button" data-book="bake">Baking</button>
+                <button type="button" data-book="piano">Piano</button>
+                <button type="button" data-book="photo">Photos</button>
+              </div>
+              <div class="book-page">
+                <div class="k" id="bookKicker">Your book · Skate physics</div>
+                <h4 id="bookTitle">The board left the ground. The math was already in the air.</h4>
+                <p id="bookBody">Start with the feeling. Then name the rule that made it possible. A friend should be able to try this after one page.</p>
+              </div>
+              <div class="book-ask">
+                <button class="jesse-disc" type="button" id="bookPress">Press</button>
+                <div class="guide" id="bookGuide">What should a friend understand after this page?</div>
+              </div>
+            </div>
+          </div>
         </div>
-        <p class="resume-cap">Every book stays in your own Binder. Nobody else's name goes on it.</p>
+        <p class="resume-cap">Your Binder. Your name. Nobody else's.</p>
       </div>
       <div>
-        <div class="kicker reveal">Create · Write Your Own Book</div>
-        <h2 class="h2 reveal">Talk it out. <span class="serif">Leave with a book.</span></h2>
-        <p class="lede reveal">Jesse turns the call into chapters. Your name on the spine. Nobody else's.</p>
-        <div class="resume-badge reveal">You made something. It's yours.</div>
-        <div class="swap-card reveal">
-          <div class="swap-row before"><span class="swap-tag">BEFORE</span><p>A folder of half-finished notes nobody else will ever read.</p></div>
-          <div class="swap-row after"><span class="swap-tag">AFTER</span><p>Chapter 3. Published. In your own words.</p></div>
+        <div class="kicker reveal">Create · Your book</div>
+        <h2 class="h2 reveal">Name a passion. <span class="serif">Leave with a book.</span></h2>
+        <p class="lede reveal">Jesse asks four questions. You talk. Chapters appear in order.</p>
+        <div class="scan-points reveal" style="margin-top:22px;">
+          <div class="scan-point"><span class="pip">1</span><p>What do you love enough to explain?</p></div>
+          <div class="scan-point"><span class="pip">2</span><p>What must a friend already know?</p></div>
+          <div class="scan-point"><span class="pip">3</span><p>Talk page one. A picture if words fail.</p></div>
+          <div class="scan-point"><span class="pip">4</span><p>Your name on the spine.</p></div>
         </div>
         <div class="hero-actions reveal" style="margin-top:26px;">
           <a class="btn primary" href="#start">Start your book</a>
@@ -745,9 +837,9 @@
       <div class="reveal">
         <div class="resume-shot">
           <div class="bar"><i></i><i></i><i></i><span>the desk · field desk</span></div>
-          <img src="img/mkt/mkt-click-map.jpg" alt="A knowledge map lighting up, one node flaring lime" loading="lazy">
+          <iframe title="Dan McCreary learning graph in 3D" src="sims/graph/" style="width:100%;height:420px;border:0;display:block;background:#080e14;" loading="lazy"></iframe>
         </div>
-        <p class="resume-cap">The click stays on the map. You can take it with you.</p>
+        <p class="resume-cap">Spin the open graph. Export stays yours.</p>
       </div>
     </div>
   </div>
@@ -1292,6 +1384,90 @@
         .catch(() => { results.innerHTML = '<div class="ais-empty">Couldn\'t load the archive right now.</div>'; });
     }, { once: true });
     input.addEventListener('input', () => render(input.value.trim()));
+  })();
+
+  // ---------- Jesse press (demo) + book studio ----------
+  (function(){
+    const disc = document.getElementById('jessePressDemo');
+    const hint = document.getElementById('jessePressHint');
+    if (disc && hint){
+      disc.addEventListener('click', () => {
+        hint.textContent = 'Listening. Say what you actually did.';
+        disc.textContent = '…';
+        setTimeout(() => { disc.textContent = 'Press'; hint.textContent = 'Got it. I will keep your words.'; }, 1600);
+      });
+    }
+    const BOOKS = {
+      skate: {
+        kicker: 'Your book · Skate physics',
+        chapters: ['Why we fall', 'Speed', 'Your first ollie'],
+        pages: [
+          ['The board left the ground. The math was already in the air.', 'Start with the feeling. Then name the rule that made it possible.'],
+          ['Faster is a force, not a vibe.', 'What has to be true before the wheels leave the ground?'],
+          ['Now you try. One page. One trick.', 'A friend should land this after they read you.']
+        ]
+      },
+      bake: {
+        kicker: 'Your book · Kitchen chemistry',
+        chapters: ['Heat', 'The wait', 'A loaf you can give'],
+        pages: [
+          ['Yeast is alive. That is the whole plot.', 'What does a friend need to know before they touch the dough?'],
+          ['Time is an ingredient.', 'Say what happens if they rush it.'],
+          ['Your name on the recipe card.', 'Write the last page as if someone will bake it tonight.']
+        ]
+      },
+      piano: {
+        kicker: 'Your book · First songs',
+        chapters: ['The shape of a hand', 'A phrase', 'Play it for someone'],
+        pages: [
+          ['Five fingers. One honest note.', 'What must they feel before they chase speed?'],
+          ['A song is a sentence.', 'Talk the first four bars like a story.'],
+          ['Leave the room different.', 'Whose living room is this for?']
+        ]
+      },
+      photo: {
+        kicker: 'Your book · Light you kept',
+        chapters: ['The window', 'A face', 'The one you print'],
+        pages: [
+          ['Light hits first. Then you decide.', 'What do you refuse to crop out?'],
+          ['People change when they know you see them.', 'Describe the photo you almost deleted.'],
+          ['Print it. Write why.', 'This page is the caption on the back.']
+        ]
+      }
+    };
+    const root = document.getElementById('bookStudio');
+    if (!root) return;
+    let book = 'skate';
+    let ch = 0;
+    const kicker = document.getElementById('bookKicker');
+    const title = document.getElementById('bookTitle');
+    const body = document.getElementById('bookBody');
+    const guide = document.getElementById('bookGuide');
+    const chEls = [document.getElementById('ch0'), document.getElementById('ch1'), document.getElementById('ch2')];
+    function paint(){
+      const b = BOOKS[book];
+      kicker.textContent = b.kicker;
+      chEls.forEach((el, i) => { if (el) el.textContent = b.chapters[i]; });
+      title.textContent = b.pages[ch][0];
+      body.textContent = b.pages[ch][1];
+      guide.textContent = 'What should a friend understand after this page?';
+      root.querySelectorAll('.book-ch').forEach((btn, i) => btn.classList.toggle('on', i === ch));
+      root.querySelectorAll('#bookPassions button').forEach(btn => btn.classList.toggle('on', btn.dataset.book === book));
+    }
+    document.getElementById('bookPassions')?.addEventListener('click', e => {
+      const btn = e.target.closest('button[data-book]');
+      if (!btn) return;
+      book = btn.dataset.book;
+      ch = 0;
+      paint();
+    });
+    root.querySelectorAll('.book-ch').forEach(btn => {
+      btn.addEventListener('click', () => { ch = +btn.dataset.ch; paint(); });
+    });
+    document.getElementById('bookPress')?.addEventListener('click', () => {
+      guide.textContent = 'Listening. Tell me the next sentence like a friend is in the room.';
+    });
+    paint();
   })();
 </script>
 </body>
