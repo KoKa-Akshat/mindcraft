@@ -4,6 +4,10 @@
 
 ---
 
+## Archive keep it simple (2026-08-15)
+
+Removed Ask Jesse for a plan / starting point / this book from the marketing archive and dans-archive.html. Browse and open the book only.
+
 ## Mentor strip polish (2026-08-15)
 
 College marks are larger and in color. Tutor bullets are one caption line. Names and booking type are serif / sentence case.
