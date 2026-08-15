@@ -4,6 +4,10 @@
 
 ---
 
+## Share thumbnail (2026-08-15)
+
+Link previews use the first story panel (graph + Never work alone), not the old reel-map still.
+
 ## Pricing lock (2026-08-15)
 
 Plus is $12/mo (the unit-economics number). Family stays +$10. Institutional is $12/seat/yr. No draft ranges on the page.
