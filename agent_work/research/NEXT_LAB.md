@@ -145,7 +145,7 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 148 | Template-trust inheritance after first-of-cell dual admit | SAFE-DUALRATE × SAFE-FAMHASH/FIGKEY; when isomorphic clones may single-rater promote | **DONE** (2026-08-15) — Part CXLVIII / SAFE-TMPTRUST |
 | 149 | Post-promote repair stratified dashboards (single vs dual) | SAFE-DUALRATE × SAFE-PROMOTE/INSTRUMENT; ops IRR without Kappa % NS | **DONE** (2026-08-15) — Part CXLIX / SAFE-REPAIRSTRAT |
 | 150 | Dual-capacity hire vs contract SME panels under exam-week spikes | SAFE-CAPPLAN × SAFE-LOADSHED/WORKFORCE; surge dual without Dual Rater Score™ | **DONE** (2026-08-15) — Part CL / SAFE-SURGEPANEL |
-| — | *(150 complete; 151 is next)* | | |
+| — | **Synthesizer v1.19** | Merge CXLIII–CL SAFE-* into core OS I.4 / XIV / IX / XXI | **DONE** (2026-08-15 UTC 15) |
 | 151 | Template-trust revoke & sample-dual cadence under repair spikes | SAFE-TMPTRUST × SAFE-REPAIR/CAPPLAN; tighten/revoke without Template Trust Score™ | **NEXT** |
 | 152 | Path-conditioned dual blame tests (selection vs quality) | SAFE-REPAIRSTRAT × SAFE-DUALRATE/CAPPLAN; risk-adjusted path tables without Dual Shame Score™ | queued |
 | 153 | Contract SME panel seal onboarding & parallel-run gates | SAFE-SURGEPANEL × SAFE-FIGKEY/DUALRATE; ramp before C4 authority without Parallel Score™ | queued |

@@ -165,53 +165,95 @@ The full backend chain is intact — I traced every hop:
 `misconception_id`) → `serve.py:851` (forwards it) → `firestore_adapter:158`
 (persists it). None of these drop it.
 
-### The bug: a null distractor entry shadows the working fallback
+### RETRACTED — this was reported as a bug and is not one
 
-`questionBank.ts:54–74`:
+> **An earlier version of this review claimed `resolveChoiceEvidence`
+> (`questionBank.ts:54–74`) had a shadowing bug, because a distractor entry with
+> a `null` `misconception_id` returns early instead of falling through to the
+> question-level flat id. It recommended "fix" `if (entry?.misconception_id)`.
+> **That change would corrupt the mastery graph. Do not make it.** The
+> retraction and the reason are below.**
 
-```ts
-const entry = q.distractor_taxonomy?.find(d => d.choice_index === selectedIndex)
-if (entry) {
-  return { selectedChoiceIndex, misconceptionId: entry.misconception_id, ... }  // ← may be null
-}
-if (q.misconception_id) {                       // ← the fallback that would have worked
-  return { selectedChoiceIndex, misconceptionId: q.misconception_id }
-}
-```
-
-In the Eedi data, each question has 3 distractor entries but **only one carries a
-real `misconception_id`**; the other two are explicitly `null`:
+The coverage numbers are real:
 
 | | count |
 |---|---|
 | Total distractor entries | 4,524 |
 | With a `misconception_id` | 1,508 (33.3%) |
 | **`null`** | **3,016 (66.7%)** |
-| Questions carrying a usable flat `misconception_id` | 1,508 (**all of them**) |
-| Questions where a null entry shadows that usable id | **1,508** |
+| Questions carrying a flat `misconception_id` | 1,508 |
 
-Because `entry` is truthy, the function returns early with `misconceptionId:
-null` and **never reaches the flat fallback that would have resolved it.**
-Verified against real data (`eedi_1612`):
+But the flat id is **not** a question-level property that the null entries are
+"missing." `scripts/ingest_eedi.py` walks the wrong choices in order, takes the
+**first** one that has a misconception in the Eedi source, and `break`s:
 
+```python
+for i, col in enumerate(['MisconceptionAId', ..., 'MisconceptionDId']):
+    if i == correct_idx: continue
+    if pd.notna(mid_val):
+        misc_id_minted = mint_misconception_id(concept_id, misc_name)
+        break        # ← the flat id belongs to ONE specific wrong choice
 ```
-choice 0 -> misc: mis_fractions_decimals__believes_subtraction_commutative  ✅
-choice 1 -> misc: None   ← flat id exists, shadowed
-choice 3 -> misc: None   ← flat id exists, shadowed
-```
 
-**Impact: ~2 of every 3 wrong answers silently lose their misconception tag.**
-Fix is one condition (`if (entry?.misconception_id)`). Lane: Product
-(`app/src/lib/questionBank.ts` — C5 seam, behavior-only change).
+`distractor_taxonomy` was added later (`3521f49f`), attaching that real id to its
+matching `choice_index` and synthesizing filler entries — generic `error_type`,
+`"Alternative error: …"` prose, `misconception_id: null` — for the other two
+wrong choices.
 
-### That bug alone doesn't explain 1/211
+So per question there are 3 wrong choices: **1 genuinely labeled, 2
+placeholders**, and the flat field duplicates the genuine one. Falling through to
+it when the student picked a *placeholder* distractor would tag them with a
+misconception belonging to a choice **they did not select** — fabricated evidence
+of exactly the kind C4's hide-correctness rule exists to prevent.
 
-18 wrong answers with a recorded choice index sit on `eedi_*` questions. The
-shadowing bug predicts ~6 should still have carried a tag. We got 1. The
-remainder is best explained by deployment lag — the HF Space ran pre-`79a85424`
-code (which introduced both fields) for most of that window, and **that is
-exactly what today's deploy fixed.** Worth re-measuring in a week rather than
-theorizing further.
+**The current code is correct: it declines to guess.**
+
+What remains true is a **data coverage ceiling, not a logic defect**: ~2/3 of
+wrong answers legitimately have no misconception to record, because Eedi only
+ever labeled one distractor per question. Closing that means labeling the other
+distractors (LLM or manual pass over `distractor_taxonomy`) — it is a data
+workstream, not a frontend fix.
+
+### Why the observed rate is 1/211 rather than ~1/3
+
+18 wrong answers with a recorded choice index sit on `eedi_*` questions, so with
+correct behavior roughly a third (~6) should carry a tag. We saw 1. Best
+explanation is deployment lag — the HF Space ran pre-`79a85424` code (which
+introduced both fields) for most of that window, and **that is what this
+session's deploy fixed.** Re-measure in a week rather than theorizing further.
+
+---
+
+## 3.1 NEW — sessions are being shredded into single questions (August regression)
+
+Found while sizing a move to session-level prediction. Grouping observations by
+`(student_id, timestamp)` — one `/record-outcomes` call stamps every row with the
+same `now`, so this is a faithful session proxy:
+
+| month | singleton sessions | multi-question sessions |
+|---|---|---|
+| 2026-06 | 4 | 17 |
+| 2026-07 | 0 | 12 |
+| **2026-08** | **25** | **2** |
+
+June and July batched normally. **August is almost entirely one question per
+call.** This is new breakage, not legacy data.
+
+Two consequences, both live:
+
+1. **Mastery moves per question, not per session.** Each singleton becomes its
+   own full-weight `SessionEvent` (`exposure_weight=1.0`), so the aggregation
+   design in `/record-outcomes` — "one continuous-score event per node, scored
+   k/N over the session" — is being bypassed. A 10-question session that should
+   fold as one `7/10` event now folds as ten separate 1.0/0.0 events.
+2. **It blocks session-level validation.** 60 sessions clears
+   `MIN_ATTEMPTS = 50`, but 29 are singletons and only 18 have ≥3 questions, so
+   aggregating mostly relabels question-level noise rather than reducing it.
+
+**Find this before any session-level harness work.** Likely cause is the client
+POSTing each answer as it is submitted instead of batching at session end;
+`Practice.tsx` has several `recordOutcomes` call sites (≈1021, 1392, 2942) and
+one of them plausibly changed behavior in August.
 
 ---
 
@@ -281,8 +323,10 @@ Ordered by evidence, not preference. Each step makes the next measurable.
 **Now — unblock honest measurement (small, no decisions owed)**
 1. Log the swallowed exceptions (`firestore_adapter.py:195, :225`). *Lane:
    Engine.* Two outages hidden, both expensive.
-2. Fix the distractor shadowing bug — `if (entry?.misconception_id)`. *Lane:
-   Product.* Recovers ~2/3 of misconception evidence going forward.
+2. ~~Fix the distractor shadowing bug.~~ **Retracted — not a bug, and the
+   proposed change would fabricate evidence.** See §3. The real item is a *data*
+   one: label the 3,016 placeholder distractor entries so the other two wrong
+   choices per question carry genuine misconceptions. *Lane: Engine (data).*
 3. Add both `attempt_observations` index shapes to `firestore.indexes.json` so
    the ASC index isn't a snowflake that exists only because I created it by
    hand today. *Lane: Engine.* **Done** in this commit — `firestore.indexes.json`
