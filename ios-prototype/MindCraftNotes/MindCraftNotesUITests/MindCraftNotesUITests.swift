@@ -1227,7 +1227,12 @@ final class MindCraftNotesUITests: XCTestCase {
         attachScreenshot(app, name: "add_panel_open")
         addGmail.tap()
 
-        let card = app.buttons["fieldDeskCard_gmail"]
+        // .any, not .buttons - the card wrapper carries no accessibility
+        // identifier itself (see movableCard's doc comment: an identifier on
+        // that composited view clobbers every nested control's own), so
+        // "the card exists" is proven by a small invisible marker Text
+        // instead, same technique as fieldDeskPanOffset/fieldDeskWindow.
+        let card = app.descendants(matching: .any)["fieldDeskCard_gmail"]
         XCTAssertTrue(card.waitForExistence(timeout: 5), "expected Gmail card placed on the desk")
 
         let panProbe = app.descendants(matching: .any)["fieldDeskPanOffset"]
@@ -1258,6 +1263,159 @@ final class MindCraftNotesUITests: XCTestCase {
         XCTAssertEqual(result, .completed, "expected pan/zoom to return to identity after recenter")
         XCTAssertFalse(app.buttons["fieldDeskRecenter"].waitForExistence(timeout: 2), "expected recenter control to hide once back at identity")
 
+        XCUIDevice.shared.orientation = .portrait
+    }
+
+    /// The Gdoc/whiteboard desk card had no Pencil-vs-finger separation at
+    /// all before this round (a hand-rolled Canvas + DragGesture(minimumDistance: 0)
+    /// that drew for any touch, unlike QuestionView's real PKCanvasView).
+    /// Verifies the new StrokeTouchCaptureView actually gates on touch type:
+    /// a simulated (non-pencil) drag draws in the default "Pencil + finger"
+    /// mode, then draws nothing new once switched to "Pencil only" - the
+    /// same proof pattern testPencilOnlyModeRejectsSimulatedTouch/
+    /// testAnyInputModeAcceptsSimulatedTouch already established for the
+    /// real PencilKit canvas (Simulator touches are never genuine pencil
+    /// touches, so pencilOnly must reject every one of them).
+    func testWhiteboardCardPencilOnlySeparation() {
+        let app = XCUIApplication()
+        app.launchArguments = ["--ui-testing-in-memory", "--ui-testing-skip-auth"]
+        app.launch()
+        XCUIDevice.shared.orientation = .landscapeLeft
+
+        XCTAssertTrue(app.buttons["fieldDeskModeToggle"].waitForExistence(timeout: 40), "expected Field Desk chrome after cold load")
+        let bootText = app.staticTexts["Your workspace is starting up"]
+        if bootText.exists { _ = bootText.waitForNonExistence(timeout: 90) }
+
+        let bottomEdge = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.98))
+        let midScreen = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.55))
+        bottomEdge.press(forDuration: 0.05, thenDragTo: midScreen)
+
+        let addButton = app.buttons["fieldDeskAdd"]
+        XCTAssertTrue(addButton.waitForExistence(timeout: 8), "expected + Add dock icon")
+        addButton.tap()
+        let addGdoc = app.buttons["fieldDeskAddGdoc"]
+        XCTAssertTrue(addGdoc.waitForExistence(timeout: 5), "expected Gdoc row in the add panel")
+        addGdoc.tap()
+
+        // .any, not .buttons - see testFieldDeskPanZoomsAndRecenters's
+        // comment on the same pattern (movableCard's wrapper carries no
+        // identifier of its own now).
+        let card = app.descendants(matching: .any)["fieldDeskCard_gdoc"]
+        XCTAssertTrue(card.waitForExistence(timeout: 5), "expected the Gdoc/whiteboard card placed on the desk")
+
+        let strokeProbe = app.descendants(matching: .any)["deskWhiteboardStrokeCount"]
+        XCTAssertTrue(strokeProbe.waitForExistence(timeout: 5), "expected the whiteboard's stroke-count probe")
+        XCTAssertEqual(strokeProbe.value as? String, "0 strokes", "expected an empty board before any touch")
+
+        // Default mode is "Pencil + finger" - a plain simulated touch should draw.
+        let boardStart = card.coordinate(withNormalizedOffset: CGVector(dx: 0.3, dy: 0.7))
+        let boardEnd = card.coordinate(withNormalizedOffset: CGVector(dx: 0.7, dy: 0.85))
+        boardStart.press(forDuration: 0.05, thenDragTo: boardEnd)
+
+        let afterFirstDrag = NSPredicate(format: "value != %@", "0 strokes")
+        let firstExpectation = XCTNSPredicateExpectation(predicate: afterFirstDrag, object: strokeProbe)
+        XCTAssertEqual(XCTWaiter().wait(for: [firstExpectation], timeout: 3), .completed,
+                       "expected a stroke after a simulated touch in Pencil + finger mode")
+        let drawnValue = strokeProbe.value as? String ?? ""
+
+        // Switch to Pencil only - every touch this test can inject is still
+        // a plain finger-type touch (see class doc), so nothing new should draw.
+        let palmToggle = app.buttons["deskWhiteboardPalmToggle"]
+        XCTAssertTrue(palmToggle.waitForExistence(timeout: 3), "expected the palm-rejection toggle")
+        palmToggle.tap()
+
+        boardStart.press(forDuration: 0.05, thenDragTo: boardEnd)
+        RunLoop.current.run(until: Date().addingTimeInterval(0.8))
+        XCTAssertEqual(strokeProbe.value as? String, drawnValue,
+                       "a simulated non-pencil touch must not draw once Pencil only is selected")
+
+        XCUIDevice.shared.orientation = .portrait
+    }
+
+    /// Window state (which cards are placed, where, at what size) previously
+    /// reset to blank on every launch by design (`.onAppear` unconditionally
+    /// called `clearDeskCards()` then re-zeroed cardOffsets/cardSizes) - one
+    /// of the rebuild brief's named gaps ("Window state isn't persisted
+    /// across restarts at all currently"). Verifies the fix end to end with
+    /// a real terminate+relaunch, not just that FieldDeskStore's encode/decode
+    /// round-trips in isolation. Deliberately does NOT pass
+    /// `--ui-testing-in-memory` - that flag makes FieldDeskStore's UserDefaults
+    /// read/write a no-op (see its `uiTesting` guard), which would make this
+    /// test pass even if persistence were completely broken.
+    func testFieldDeskCardLayoutPersistsAcrossRelaunch() {
+        let app = XCUIApplication()
+        app.launchArguments = ["--ui-testing-skip-auth"]
+        app.launch()
+        XCUIDevice.shared.orientation = .landscapeLeft
+
+        XCTAssertTrue(app.buttons["fieldDeskModeToggle"].waitForExistence(timeout: 40), "expected Field Desk chrome after cold load")
+        let bootText = app.staticTexts["Your workspace is starting up"]
+        if bootText.exists { _ = bootText.waitForNonExistence(timeout: 90) }
+
+        let bottomEdge = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.98))
+        let midScreen = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.55))
+        bottomEdge.press(forDuration: 0.05, thenDragTo: midScreen)
+
+        let addButton = app.buttons["fieldDeskAdd"]
+        XCTAssertTrue(addButton.waitForExistence(timeout: 8), "expected + Add dock icon")
+        addButton.tap()
+        let addMemo = app.buttons["fieldDeskAddMemo"]
+        XCTAssertTrue(addMemo.waitForExistence(timeout: 5), "expected Memo row in the add panel")
+        addMemo.tap()
+
+        let card = app.descendants(matching: .any)["fieldDeskCard_memo"]
+        XCTAssertTrue(card.waitForExistence(timeout: 5), "expected the Memo card placed on the desk")
+
+        // Drag it by a known amount - proves an actual position survives,
+        // not just "a card exists somewhere" (which a bug that placed every
+        // restored card back at its default origin could still satisfy).
+        // Start point must be relative to the CARD itself (its title-bar
+        // area, where cardMoveGesture is live), not the whole app window -
+        // an app-relative start coordinate can miss the card entirely if it
+        // isn't centered on screen, which silently no-ops the drag instead
+        // of failing loudly (caught by inspecting the actual on-disk
+        // UserDefaults plist after a first attempt: cardOffsets came back
+        // an empty "{}", proving the drag never landed at all).
+        let dragStart = card.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.15))
+        let dragEnd = app.coordinate(withNormalizedOffset: CGVector(dx: 0.7, dy: 0.6))
+        dragStart.press(forDuration: 0.1, thenDragTo: dragEnd)
+        // cardMoveGesture's release spring (response 0.32, dampingFraction
+        // 0.75) needs more than 600ms to fully settle - a first attempt at
+        // 600ms captured the "before" frame mid-overshoot, 10pt off the
+        // true rest position on the Y axis.
+        RunLoop.current.run(until: Date().addingTimeInterval(1.5))
+        let frameBeforeRelaunch = card.frame
+        attachScreenshot(app, name: "layout_before_relaunch")
+
+        app.terminate()
+        app.launch()
+        XCUIDevice.shared.orientation = .landscapeLeft
+        XCTAssertTrue(app.buttons["fieldDeskModeToggle"].waitForExistence(timeout: 40), "expected Field Desk chrome after relaunch")
+        let bootTextAgain = app.staticTexts["Your workspace is starting up"]
+        if bootTextAgain.exists { _ = bootTextAgain.waitForNonExistence(timeout: 90) }
+
+        let restoredCard = app.descendants(matching: .any)["fieldDeskCard_memo"]
+        XCTAssertTrue(restoredCard.waitForExistence(timeout: 8), "expected the Memo card to still be placed after a full relaunch")
+        attachScreenshot(app, name: "layout_after_relaunch")
+        let frameAfterRelaunch = restoredCard.frame
+        // Accuracy 15, not a tight pixel match: a real, small (~10pt), fixed
+        // gap remains between the pre- and post-relaunch Y reading even at a
+        // 1.5s settle wait - confirmed via a direct read of the on-disk
+        // UserDefaults plist that the persisted offset itself round-trips
+        // exactly (`{"memo":[260.5,368.5]}` in, same value read back), so
+        // this isn't a lost-data bug. What matters here is "the card comes
+        // back near where it was left," not "reset to its ~200pt-away
+        // default spot" - accuracy 15 easily tells those two apart.
+        XCTAssertEqual(frameAfterRelaunch.origin.x, frameBeforeRelaunch.origin.x, accuracy: 15,
+                       "expected the card's X position to survive a relaunch")
+        XCTAssertEqual(frameAfterRelaunch.origin.y, frameBeforeRelaunch.origin.y, accuracy: 15,
+                       "expected the card's Y position to survive a relaunch")
+
+        // Clean up so the next run of this test (or any other test that
+        // lands on a fresh desk) starts from an empty layout again - this
+        // test intentionally writes to REAL UserDefaults.
+        let closeButton = app.buttons["fieldDeskCardClose_Memo"]
+        if closeButton.waitForExistence(timeout: 3) { closeButton.tap() }
         XCUIDevice.shared.orientation = .portrait
     }
 

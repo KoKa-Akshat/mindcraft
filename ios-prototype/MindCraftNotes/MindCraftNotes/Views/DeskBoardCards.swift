@@ -17,6 +17,12 @@ struct DeskWhiteboardCard: View {
     @State private var strokes: [Stroke] = []
     @State private var live: Stroke?
     @State private var tool: Tool = .pen
+    /// Defaults to finger-allowed - this card is "type + finger scribble" by
+    /// design (see the type doc comment above), unlike QuestionView's canvas
+    /// which defaults to the stricter .pencilOnly. The toggle exists so a
+    /// student holding an Apple Pencil can opt into real palm rejection
+    /// instead of a resting palm adding stray marks.
+    @State private var palmRejectionMode: PalmRejectionMode = .anyInput
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -25,6 +31,18 @@ struct DeskWhiteboardCard: View {
                     .font(.system(size: 13, weight: .heavy, design: .rounded))
                     .foregroundColor(Color(boardHex: "143a2e"))
                 Spacer(minLength: 0)
+                Button {
+                    palmRejectionMode = palmRejectionMode == .pencilOnly ? .anyInput : .pencilOnly
+                } label: {
+                    Image(systemName: palmRejectionMode == .pencilOnly ? "pencil.tip.crop.circle.badge.plus" : "hand.draw")
+                        .font(.system(size: 11, weight: .bold))
+                        .foregroundColor(Color(boardHex: "143a2e").opacity(0.65))
+                        .frame(width: 28, height: 28)
+                        .background(Circle().fill(Color(boardHex: "f3f0ea")))
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("deskWhiteboardPalmToggle")
+                .accessibilityLabel(palmRejectionMode == .pencilOnly ? "Pencil only" : "Pencil + finger")
                 ForEach(Tool.allCases, id: \.self) { t in
                     Button { tool = t } label: {
                         Image(systemName: icon(for: t))
@@ -53,17 +71,25 @@ struct DeskWhiteboardCard: View {
                     for stroke in strokes { draw(stroke, in: &context) }
                     if let live { draw(live, in: &context) }
                 }
-                .gesture(
-                    DragGesture(minimumDistance: 0)
-                        .onChanged { value in
-                            let point = value.location
-                            if live == nil {
-                                live = Stroke(tool: tool, points: [point])
-                            } else {
-                                live?.points.append(point)
-                            }
-                        }
-                        .onEnded { _ in
+                .overlay(
+                    // Plain SwiftUI DragGesture has no notion of touch type
+                    // at all, so distinguishing a real Apple Pencil mark from
+                    // a resting palm/finger has to happen at the UIKit touch
+                    // layer - same reason CanvasView.swift's
+                    // PassthroughCanvasView overrides hitTest instead of
+                    // relying on PKCanvasView.drawingPolicy alone. This card
+                    // doesn't use PencilKit (it has its own lightweight
+                    // pen/marker/eraser model), so it gets its own minimal
+                    // touch-type-aware capture view instead.
+                    StrokeTouchCaptureView(
+                        palmRejectionMode: palmRejectionMode,
+                        onBegan: { point in
+                            live = Stroke(tool: tool, points: [point])
+                        },
+                        onMoved: { point in
+                            live?.points.append(point)
+                        },
+                        onEnded: {
                             if let finished = live {
                                 if tool == .eraser {
                                     strokes.removeAll { stroke in
@@ -79,6 +105,7 @@ struct DeskWhiteboardCard: View {
                             }
                             live = nil
                         }
+                    )
                 )
             }
             .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
@@ -86,12 +113,29 @@ struct DeskWhiteboardCard: View {
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
                     .strokeBorder(Color(boardHex: "143a2e").opacity(0.10), lineWidth: 1)
             )
+            .overlay(alignment: .topLeading) {
+                // Same real-device-testability reason as CanvasView's
+                // strokeCountLabel: the Simulator injects every touch as a
+                // plain finger touch, so a UI test can't visually distinguish
+                // "rejected" from "not tapped yet" - this readable count is
+                // what actually proves palmRejectionMode is doing something.
+                Text("\(strokes.count) strokes")
+                    .font(.system(size: 1)).foregroundColor(.clear)
+                    .accessibilityIdentifier("deskWhiteboardStrokeCount")
+                    .accessibilityValue("\(strokes.count) strokes")
+                    .allowsHitTesting(false)
+            }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .padding(12)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(RoundedRectangle(cornerRadius: 12).fill(Color.white))
-        .accessibilityIdentifier("deskWhiteboardCard")
+        // No wrapper identifier here - confirmed elsewhere in this session
+        // (FieldDeskView's Binder card) that one clobbers every nested
+        // identifier underneath it, which would take out
+        // deskWhiteboardPalmToggle/deskWhiteboardStrokeCount right above.
+        // The outer placed-card wrapper already has its own identifier
+        // (`fieldDeskCard_gdoc`, see FieldDeskView's movableCard).
     }
 
     private func icon(for tool: Tool) -> String {
@@ -122,6 +166,69 @@ struct DeskWhiteboardCard: View {
             )
         case .eraser:
             break
+        }
+    }
+}
+
+/// Minimal UIKit touch-capture layer for `DeskWhiteboardCard`, reusing
+/// `PalmRejectionMode` (see CanvasView.swift) so this card's "Pencil only"
+/// toggle means exactly the same thing there and here. Only tracks a single
+/// touch at a time (this card never needed multi-touch drawing) and reports
+/// begin/move/end as plain SwiftUI-space points, keeping `DeskWhiteboardCard`
+/// itself unaware this is UIKit underneath.
+private struct StrokeTouchCaptureView: UIViewRepresentable {
+    var palmRejectionMode: PalmRejectionMode
+    var onBegan: (CGPoint) -> Void
+    var onMoved: (CGPoint) -> Void
+    var onEnded: () -> Void
+
+    func makeUIView(context: Context) -> TouchView {
+        let view = TouchView()
+        view.backgroundColor = .clear
+        view.isMultipleTouchEnabled = false
+        view.palmRejectionMode = palmRejectionMode
+        view.onBegan = onBegan
+        view.onMoved = onMoved
+        view.onEnded = onEnded
+        return view
+    }
+
+    func updateUIView(_ uiView: TouchView, context: Context) {
+        uiView.palmRejectionMode = palmRejectionMode
+        uiView.onBegan = onBegan
+        uiView.onMoved = onMoved
+        uiView.onEnded = onEnded
+    }
+
+    final class TouchView: UIView {
+        var palmRejectionMode: PalmRejectionMode = .anyInput
+        var onBegan: ((CGPoint) -> Void)?
+        var onMoved: ((CGPoint) -> Void)?
+        var onEnded: (() -> Void)?
+        private weak var activeTouch: UITouch?
+
+        override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+            guard activeTouch == nil, let touch = touches.first else { return }
+            if palmRejectionMode == .pencilOnly && touch.type != .pencil { return }
+            activeTouch = touch
+            onBegan?(touch.location(in: self))
+        }
+
+        override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+            guard let activeTouch, touches.contains(activeTouch) else { return }
+            onMoved?(activeTouch.location(in: self))
+        }
+
+        override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+            guard let activeTouch, touches.contains(activeTouch) else { return }
+            self.activeTouch = nil
+            onEnded?()
+        }
+
+        override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+            guard let activeTouch, touches.contains(activeTouch) else { return }
+            self.activeTouch = nil
+            onEnded?()
         }
     }
 }

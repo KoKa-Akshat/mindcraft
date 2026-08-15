@@ -277,6 +277,45 @@ struct FieldDeskView: View {
         }
         showAddPanel = false
         flash("Placed · \(widget.rawValue)")
+        saveDeskLayout()
+    }
+
+    /// Persists the current card layout to `FieldDeskStore` so it survives a
+    /// relaunch. Called after every discrete layout-changing action (place,
+    /// close, drag-end, resize-end) - none of those fire per-frame, so no
+    /// debouncing is needed.
+    private func saveDeskLayout() {
+        store.saveLayout(
+            widgets: placedWidgets.map(\.rawValue),
+            offsets: Dictionary(uniqueKeysWithValues: cardOffsets.map { ($0.key.rawValue, $0.value) }),
+            sizes: Dictionary(uniqueKeysWithValues: cardSizes.map { ($0.key.rawValue, $0.value) }),
+            focus: focusedCard?.rawValue
+        )
+    }
+
+    /// Inverse of `saveDeskLayout()`, run once on appear. Re-derives
+    /// `PlaceableWidget`/`DeskCardID` from their raw string values (both are
+    /// private to this file, so `FieldDeskStore` only ever sees plain
+    /// strings) and mirrors `placeWidget`'s per-widget side effects
+    /// (showBinderPanel/showConnectPanel/showIntelPanel + binderOpen) so a
+    /// restored card behaves exactly as if it had just been placed, not a
+    /// partial state that only happens to render.
+    private func restoreDeskLayout() {
+        placedWidgets = Set(store.layoutWidgets.compactMap(PlaceableWidget.init(rawValue:)))
+        cardOffsets = Dictionary(uniqueKeysWithValues: store.layoutOffsets.compactMap { key, value in
+            DeskCardID(rawValue: key).map { ($0, value) }
+        })
+        cardSizes = Dictionary(uniqueKeysWithValues: store.layoutSizes.compactMap { key, value in
+            DeskCardID(rawValue: key).map { ($0, value) }
+        })
+        cardDrag = [:]
+        focusedCard = store.layoutFocus.flatMap(DeskCardID.init(rawValue:))
+        if placedWidgets.contains(.binder) {
+            showBinderPanel = true
+            binderOpen = true
+        }
+        if placedWidgets.contains(.connect) { showConnectPanel = true }
+        if placedWidgets.contains(.intel) { showIntelPanel = true }
     }
 
     /// Full-screen sheets that hide logo + mode toggle too.
@@ -798,11 +837,15 @@ struct FieldDeskView: View {
         .animation(.easeInOut(duration: 0.2), value: activeGuideId)
         .animation(.easeInOut(duration: 0.25), value: workMode)
         .onAppear {
-            // Land in Jesse’s empty — work desk starts blank; place from +.
+            // clearDeskCards() resets panels/mode/pan-zoom to a clean base
+            // state (harmless here since a fresh view instance already
+            // starts there); restoreDeskLayout() immediately after brings
+            // back whatever cards were actually placed/positioned/sized last
+            // session, from FieldDeskStore - previously this just stayed
+            // wiped (see PROTOTYPE_STATUS.md/the rebuild brief: window state
+            // wasn't persisted across restarts at all).
             clearDeskCards()
-            cardOffsets = [:]
-            cardDrag = [:]
-            cardSizes = [:]
+            restoreDeskLayout()
             showTopChrome = false
             showBottomChrome = false
             wireUITesting()
@@ -1470,6 +1513,25 @@ struct FieldDeskView: View {
             if focused { cornerResizeGrip(for: id) }
         }
         .contentShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+        // No wrapper .accessibilityIdentifier on this composited view -
+        // confirmed (Binder card, then this one) that combining
+        // .compositingGroup() with an identifier here clobbers every nested
+        // control's own identifier in the exposed accessibility tree (full
+        // tree dump showed Close/tool buttons/text fields all reporting the
+        // SAME wrapper identifier instead of their own). The invisible
+        // marker below carries "card exists at id X" instead, since it's a
+        // leaf with no identified children of its own to clobber.
+        .overlay(alignment: .topLeading) {
+            // Fills the card's own bounds (not a tiny point) so
+            // `coordinate(withNormalizedOffset:)` against this marker still
+            // maps onto the real card area, matching what callers got from
+            // the old wrapper identifier.
+            Text(verbatim: "card")
+                .font(.system(size: 1)).foregroundColor(.clear)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .accessibilityIdentifier("fieldDeskCard_\(id.rawValue)")
+                .allowsHitTesting(false)
+        }
         .compositingGroup()
         // Apple-style pick-up lift: subtle scale + deeper shadow while the
         // card is actively being dragged, spring-settles back on release.
@@ -1485,7 +1547,6 @@ struct FieldDeskView: View {
             x: base.x + settled.width + live.width + size.width / 2,
             y: base.y + settled.height + live.height + size.height / 2
         )
-        .accessibilityIdentifier("fieldDeskCard_\(id.rawValue)")
     }
 
     @ViewBuilder
@@ -1565,6 +1626,7 @@ struct FieldDeskView: View {
             placedWidgets.remove(.slides)
         }
         if focusedCard == id { focusedCard = nil }
+        saveDeskLayout()
     }
 
     private func cardMoveGesture(_ id: DeskCardID) -> some Gesture {
@@ -1608,6 +1670,7 @@ struct FieldDeskView: View {
                     height: prev.height + effective.height
                 )
                 cardDrag[id] = .zero
+                saveDeskLayout()
             }
     }
 
@@ -1648,6 +1711,7 @@ struct FieldDeskView: View {
                     withAnimation(.spring(response: 0.32, dampingFraction: 0.75)) {
                         resizingCard = nil
                     }
+                    saveDeskLayout()
                 }
         )
         .accessibilityIdentifier("fieldDeskResize_\(id.rawValue)")
