@@ -7,6 +7,13 @@ personalized recommendations.
 This repo has several parts:
 - `ml/` — Python ML engine = the `mindcraft-ml` Cloud Run service (concept +
   ingredient recommendation engine, FastAPI). Built by Blake.
+- `ios-prototype/MindCraftNotes/` — **native SwiftUI iPad/iPhone app. Per the
+  most recent product direction, this is THE product** — the React web app
+  (`app/`) is being kept on deliberately as an ML accuracy lab and a Level 3
+  book prototyping surface, not the target student experience going forward.
+  Not yet on the App Store (Apple Developer Program enrollment pending, the
+  user's own account) — Xcode/simulator only for now. See "iOS native app"
+  below.
 - `app/` — React frontend (Vite + TS). Deploys to **Firebase Hosting**
   (`mindcraft-93858.web.app`), not Vercel anymore.
 - `homework/` — a SEPARATE FastAPI service `mindcraft-homework` (LLM/Anthropic
@@ -14,7 +21,8 @@ This repo has several parts:
   homework/practice cards. Stateless (no Firestore). Currently DOWN — Anthropic
   credits exhausted; the frontend falls back to `/recommend-ingredients`.
 - `webhook/` — Vercel serverless functions (session-summary pipeline:
-  Fireflies → Anthropic → ml `/process-summary`).
+  Fireflies → Anthropic → ml `/process-summary`; also the iOS app's own AI
+  endpoints — resume agent, book agent, archive RAG, Gmail digest).
 
 Two ML backends in TWO GCP projects (see Deployment). Cross-boundary bugs touch
 all of this — it lives in one workspace.
@@ -64,11 +72,18 @@ Two lanes own **disjoint** trees. Coordinate before crossing a lane boundary.
 | Lane | Owner | Tree |
 |------|-------|------|
 | **Engine** | Blake | `ml/**`, `webhook/**`, `data/**`, `worlds/**` |
-| **Product** | Akshat | `app/**`, `index.html`, `blog.html`, root marketing files |
+| **Product** | Akshat | `app/**`, `ios-prototype/**`, `index.html`, `blog.html`, root marketing files |
+
+`webhook/**` is Engine-owned infrastructure but Product actively adds
+iOS-facing endpoints to it (see "iOS native app" below) — coordinate there
+even though it's listed under Engine.
 
 Shared seam files (coordinate before changing):
 - `app/src/lib/questionBank.ts` — question shape contract (C5)
 - `app/src/lib/mlApi.ts` — API client
+- `firebase/firestore.rules` — both web and iOS write to the same Firestore
+  project; deploy via the Rules API helper (see Security section), never
+  local `firebase deploy`
 - `CLAUDE.md` — this file
 
 ### Git rules (critical — read every session)
@@ -336,6 +351,131 @@ bare `firestore.Client()` targets the (empty) Cloud Run project — the client i
 pinned to `mindcraft-93858` via env `FIRESTORE_PROJECT`. Firestore returns
 tz-aware datetimes; `firestore_adapter._to_naive()` normalizes them (the engine
 is all naive datetimes — mixing them raises).
+
+---
+
+## iOS native app (`ios-prototype/MindCraftNotes/`)
+
+Native SwiftUI app, Xcode project `MindCraftNotes.xcodeproj`. Source in
+`MindCraftNotes/` (`Views/`, `Networking/`, `Models/`, `Resources/`); UI test
+suite in `MindCraftNotesUITests/MindCraftNotesUITests.swift`. Not yet
+submitted to the App Store — dev/simulator only until Apple Developer
+Program enrollment (the user's own account, pending). Shares the same
+Firestore project (`mindcraft-93858`) and webhook (`mindcraft-webhook.vercel.app`)
+as the web app — see their own Deployment entries below for how those two are
+shipped; this section is iOS-specific.
+
+### Navigation shape
+
+`AuthGate` → `DeskShellView`, which boots straight into `FieldDeskView`
+("Jesse's Kitchen") as the primary landing surface — **not** a hub-grid of
+instance cards, despite older comments/tests in this codebase describing that
+shape (a real architecture change mid-development; stale references to it are
+a common source of confused test failures, not real regressions). The
+instance-card hub (tutors map, workflow market, "Create an instance") is a
+**secondary** page now, reached only via Field Desk's "The Desk · Manage"
+wordmark. "ACT Field Book" (the Contents roadmap / chapters / practice
+session content, i.e. most of what used to be `DashboardView`) is a card
+*inside Field Desk's Binder panel* (`fieldDeskBinderInstance_act_main`), not
+a boot-time destination.
+
+### `FieldDeskView.swift` — the central, highest-risk file
+
+The single biggest file in the app: one `GeometryReader` → `ZStack` with
+~15 conditionally-rendered full-screen overlays (ACT Field Book, Gmail box,
+Apply Today, Scheduling Workflows, Projects panel, Standalone Desk, Create
+Studio, the Add panel, connect guide, …), each its own `@State private var
+show___: Bool` plus an explicit `.zIndex(N)`.
+
+**The recurring bug class (hit independently 4 times in one session — Add
+panel, the Binder card, the shared `movableCard` wrapper, ACT Field Book):**
+a full-screen raw UIKit view sitting underneath a later pure-SwiftUI overlay
+sibling (either the Jesse Kitchen `WKWebView` or the pan/zoom gesture
+catcher, `fieldDeskPanZoomCatcher`) silently swallows every touch meant for
+that overlay, even though the overlay paints correctly on top — the overlay
+*looks* fine and its buttons show up in the accessibility tree, they just
+report `isHittable: false`. Each instance was found the same way: a real UI
+test failure, a full `app.debugDescription` accessibility-tree dump, then
+tracing back to a missing guard. **Guardrail in place**: any new full-screen
+overlay must add its flag to `deskOverlayChromeBlocked` (see its doc comment
+in `FieldDeskView.swift` for the full explanation and a pointer to
+`panZoomCatcherBlocked`) or it will reproduce this bug. A related but
+distinct trap: `.accessibilityIdentifier()` on a `.compositingGroup()`-chained
+wrapper view clobbers every nested control's own identifier (confirmed twice
+— Binder card, `movableCard`); don't put one there if children need their
+own distinct identifiers, use an invisible marker `Text` sized to the
+wrapper's frame instead if a "this card exists" check is needed.
+
+A genuinely open structural question (raised, deliberately deferred): the
+~15 separate `show___` booleans could collapse into one
+`activeOverlay: OverlayKind?` enum, which would eliminate this bug class
+permanently — held off on for now since it touches every overlay's
+open/close call sites in a heavily-tested file; do this as its own reviewed
+change, not a drive-by refactor.
+
+### `Networking/` clients — real integrations, not mocks
+
+- `GmailClient.swift` — the student's own real Gmail (read/send) + Calendar,
+  via Google OAuth (`GIDSignIn`). Distinct from `AgentMailClient.swift`,
+  which creates a brand-new AgentMail inbox — a different feature, don't
+  conflate the two.
+- `DriveClient.swift` — Drive **read**, scoped to a folder named "The Desk"
+  (`drive.readonly`); Drive **write**, a narrower `drive.file` scope (only
+  ever sees files this app itself creates) used to archive the student's
+  mail into their own Drive as a durable record outside MindCraft's backend.
+- `GmailDigestClient.swift` — calls the webhook's `/api/gmail-digest` (AI
+  triage: action-needed vs. routine) with already-fetched `GmailClient`
+  messages.
+- `GmailDigestStore.swift`, `BinderStore.swift`, `FieldDeskStore.swift` —
+  Firestore- and UserDefaults-backed persistence (`deskOs.*` UserDefaults
+  key family; `binder_items`/`email_digests` Firestore collections, rules in
+  `firebase/firestore.rules`).
+
+### Testing (`MindCraftNotesUITests.swift`)
+
+Real on-simulator XCUITest, not unit tests with mocked views. Run via
+`xcodebuild build-for-testing` / `test-without-building` against a booted
+simulator (`xcrun simctl list devices` for the current device id — it's
+environment-specific, don't hardcode one from a prior session).
+
+Hard-won lessons, all confirmed empirically this session, not assumed:
+- **`--ui-testing-in-memory` only forces Core Data in-memory** — it does
+  NOT clear UserDefaults or other on-disk state, and `xcodebuild test` reuses
+  ONE app install across an entire suite run rather than reinstalling per
+  test. If a test fails only in a full-suite run but passes cleanly alone
+  after `xcrun simctl uninstall <device> com.mindcraft.notes.prototype.akshat`,
+  that's cross-test state leakage, not a regression — documented on the test
+  class itself.
+- **Simulator AX-resolution can degrade** (multi-hundred-second timeouts,
+  or "Failed to get matching snapshot" errors unrelated to real app state) —
+  `xcrun simctl shutdown` then `boot` before assuming a real regression.
+  Usually resolves it; if the identical failure reproduces right after a
+  reboot, it's real.
+  - `git stash push -m "..." -- <file>` to isolate one file's changes, rebuild,
+  retest against the unmodified baseline, then `git stash pop` — the reliable
+  way to prove "did my change cause this" versus pre-existing/environmental.
+- A UI element existing in the accessibility tree with `isHittable: false`
+  is almost always the overlay-blocking bug class above, not a timing issue
+  — `waitUntilHittable`'s bounded poll exists for genuine transient-layout
+  races (real, but a different and rarer cause).
+
+### Known gaps
+
+- `showDocCook` (presents `TestInstanceView`, the document→cook McCreary
+  showcase) is dead code — nothing in the current UI sets it to `true`
+  anywhere. `DeskShellView.launchBoundInstance`'s `.testCook` branch (which
+  would set the analogous `showTestInstance`) is equally unreachable, for
+  the same reason: the one caller that invokes `launchBoundInstance` only
+  ever does so for the `.custom` case. Genuinely unreachable, not just an
+  undertested path. (The mastery check-in sheet, `showCheckIn`, had the same
+  shape of bug — orphaned trigger plus a `.sheet` attached outside its
+  presenting `fullScreenCover` — but that one's fixed; don't re-flag it.)
+- Pencil-vs-finger touch separation exists on the Field Desk whiteboard card
+  (`DeskWhiteboardCard`/`StrokeTouchCaptureView`) but not yet on every
+  drawing surface in the app (e.g. `BlankDeskPageView`'s canvas).
+- Window state (placed card positions/sizes) now persists across relaunches
+  (`FieldDeskStore.saveLayout`); this was a real, named gap in the product
+  rebuild brief that's since been closed — don't re-flag it as missing.
 
 ---
 
