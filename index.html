@@ -479,7 +479,7 @@
   .af4{top:140px; left:32%; transform:rotate(-3deg); z-index:1;}
   .archive-box{
     display:none; flex-direction:column;
-    height:min(78vh, 740px); min-height:460px;
+    height:min(78vh, 740px); max-height:min(78vh, 740px); min-height:0;
     border:1px solid var(--edge); border-radius:22px; overflow:hidden;
     background:var(--field-2); box-shadow:0 30px 80px rgba(0,0,0,.35);
   }
@@ -490,10 +490,12 @@
     padding:10px 16px 8px; font-size:12px; color:var(--chalk-faint);
   }
   .archive-shelf{
-    flex:1; min-height:0; overflow:auto; padding:0 14px 16px;
+    flex:1 1 auto; min-height:0; overflow-x:hidden; overflow-y:scroll;
+    padding:0 14px 16px;
     display:grid; grid-template-columns:repeat(auto-fill, minmax(118px, 1fr));
     gap:14px; align-content:start;
     overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
   }
   .archive-shelf.is-lesson{grid-template-columns:1fr;}
   .ahc{
@@ -537,7 +539,7 @@
     .archive-grid, .archive-grid.is-open{grid-template-columns:1fr;}
     .archive-stack{height:260px; margin-top:8px;}
     .af{width:160px;}
-    .archive-box{height:min(74vh, 640px);}
+    .archive-box{height:min(74vh, 640px); max-height:min(74vh, 640px);}
   }
 
   /* ---------- Pricing ---------- */
@@ -937,7 +939,7 @@
             <span id="archiveCount">113 books</span>
             <button class="btn soft" type="button" id="archiveBackBtn" style="min-height:36px;padding:0 12px;font-size:12px;">Go back</button>
           </div>
-          <div class="archive-shelf" id="archiveShelf"></div>
+          <div class="archive-shelf" id="archiveShelf" tabindex="0"></div>
         </div>
       </div>
     </div>
@@ -1934,6 +1936,12 @@
       if (stage.classList.contains('is-open')) closeBox();
       else openBox();
     });
+    shelf.addEventListener('wheel', function(e){
+      if (shelf.scrollHeight <= shelf.clientHeight) return;
+      e.preventDefault();
+      e.stopPropagation();
+      shelf.scrollTop += e.deltaY;
+    }, { passive: false });
     input.addEventListener('input', function(){
       if (!asking) renderShelf(input.value.trim());
     });
