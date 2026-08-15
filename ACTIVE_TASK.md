@@ -4,6 +4,10 @@
 
 ---
 
+## Archive neat + page still scrolls (2026-08-15)
+
+Left column is a clean stack: caption, three stats on a rule, then the button. Opening the shelf no longer locks the website. Wheel over the box moves the books. Wheel outside the box scrolls the page. Visit the page stays.
+
 ## Fractals open the right lesson (2026-08-15)
 
 Ask "fractals" and the shelf opens Koch / Sierpinski from Geometry, not a random DSP sim. While the shelf is open, the lime button is Visit the page, to the full archive. Go back stays.

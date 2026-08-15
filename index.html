@@ -457,43 +457,55 @@
 
   /* ---------- Archive ---------- */
   .archive{background:var(--field);}
-  .archive-grid{display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(24px,4vw,56px); align-items:center;}
-  .archive-credit{ margin-top:22px; padding:16px 18px; border:1px solid var(--edge); border-radius:16px; background:var(--field-2); font-size:16px; font-weight:400; color:var(--chalk); max-width:520px; line-height:1.4; min-height:64px; transition:opacity .42s ease; }
+  .archive-grid{display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr); gap:clamp(28px,4.5vw,64px); align-items:center;}
+  .archive-copy{display:flex; flex-direction:column; align-items:flex-start; max-width:560px;}
+  .archive-copy .h2{margin:10px 0 0;}
+  .archive-copy .lede{margin:14px 0 0; max-width:46ch;}
+  .archive-credit{
+    margin:18px 0 0; padding:0; border:0; background:none;
+    font-family:var(--serif); font-style:italic; font-size:17px; font-weight:400;
+    color:var(--chalk); line-height:1.4; min-height:1.4em; transition:opacity .42s ease;
+  }
   .archive-credit.is-out{opacity:0;}
-  .archive-stats{display:flex; gap:clamp(20px,3vw,44px); flex-wrap:wrap; margin:26px 0 18px;}
-  .as b{display:block; font-family:"Space Grotesk",sans-serif; font-size:clamp(28px,3.2vw,38px); letter-spacing:-.02em; color:var(--lime); line-height:1; font-weight:700;}
-  .as span{display:block; margin-top:7px; font-size:12px; font-weight:400; color:var(--chalk-faint); max-width:170px; line-height:1.35;}
+  .archive-stats{
+    display:grid; grid-template-columns:repeat(3, minmax(0,1fr));
+    gap:18px 20px; width:100%; margin:28px 0 0; padding:18px 0 0;
+    border-top:1px solid var(--edge);
+  }
+  .as b{display:block; font-family:"Space Grotesk",sans-serif; font-size:clamp(26px,3vw,34px); letter-spacing:-.03em; color:var(--lime); line-height:1; font-weight:700;}
+  .as span{display:block; margin-top:8px; font-size:12px; font-weight:400; color:var(--chalk-faint); line-height:1.4;}
+  .archive-actions{display:flex; flex-wrap:wrap; gap:10px; margin-top:24px;}
   .archive-inline-search{margin:0; max-width:none;}
-  .ais-bar{ display:flex; align-items:center; gap:10px; padding:13px 16px; border-radius:14px; background:var(--field-2); border:1px solid var(--edge); }
+  .ais-bar{ display:flex; align-items:center; gap:10px; padding:13px 16px; border-radius:14px; background:var(--field); border:1px solid var(--edge); }
   .ais-bar svg{flex:none; opacity:.5;}
   .ais-bar input{ flex:1; background:none; border:none; outline:none; color:var(--chalk); font-family:"Inter",sans-serif; font-size:14px; font-weight:400; }
   .ais-bar input::placeholder{color:var(--chalk-faint);}
   .ais-empty{font-size:12.5px; font-weight:400; color:var(--chalk-faint); padding:14px 6px;}
-  .archive-pane{position:relative; min-height:340px;}
-  .archive-stack{position:relative; height:340px; transition:opacity .35s var(--ease), transform .35s var(--ease);}
-  .af{ position:absolute; width:200px; border-radius:6px; overflow:hidden; box-shadow:0 20px 50px rgba(0,0,0,.5); border:1px solid var(--edge); }
+  .archive-pane{position:relative; min-height:380px;}
+  .archive-stack{position:relative; height:380px;}
+  .af{ position:absolute; width:188px; border-radius:7px; overflow:hidden; box-shadow:0 18px 40px rgba(0,0,0,.48); border:1px solid var(--edge); }
   .af img{width:100%; aspect-ratio:3/4; object-fit:cover; display:block;}
-  .af1{top:0; left:8%; transform:rotate(-4deg); z-index:4;}
-  .af2{top:36px; left:36%; transform:rotate(3deg); z-index:3;}
-  .af3{top:112px; left:4%; transform:rotate(2.5deg); z-index:2;}
-  .af4{top:140px; left:32%; transform:rotate(-3deg); z-index:1;}
+  .af1{top:8px; left:18%; transform:rotate(-3.5deg); z-index:4;}
+  .af2{top:42px; left:42%; transform:rotate(4deg); z-index:3;}
+  .af3{top:128px; left:8%; transform:rotate(2deg); z-index:2;}
+  .af4{top:168px; left:34%; transform:rotate(-2.5deg); z-index:1;}
   .archive-box{
     display:none; flex-direction:column;
-    height:min(78vh, 740px); max-height:min(78vh, 740px); min-height:0;
-    border:1px solid var(--edge); border-radius:22px; overflow:hidden;
-    background:var(--field-2); box-shadow:0 30px 80px rgba(0,0,0,.35);
+    height:min(72vh, 680px); max-height:min(72vh, 680px); min-height:0;
+    border:1px solid var(--edge); border-radius:20px; overflow:hidden;
+    background:var(--field-2); box-shadow:0 24px 64px rgba(0,0,0,.32);
   }
-  .archive-box-head{flex:none; padding:12px 12px 0;}
+  .archive-box-head{flex:none; padding:14px 14px 0;}
   .archive-box-head .archive-inline-search{margin:0; max-width:none;}
   .archive-box-meta{
     flex:none; display:flex; align-items:center; justify-content:space-between;
-    padding:10px 16px 8px; font-size:12px; color:var(--chalk-faint);
+    padding:12px 16px 10px; font-size:12px; color:var(--chalk-faint);
   }
   .archive-shelf{
     flex:1 1 auto; min-height:0; overflow-x:hidden; overflow-y:scroll;
-    padding:0 14px 16px;
-    display:grid; grid-template-columns:repeat(auto-fill, minmax(118px, 1fr));
-    gap:14px; align-content:start;
+    padding:0 16px 18px;
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(112px, 1fr));
+    gap:16px 12px; align-content:start;
     overscroll-behavior:contain;
     -webkit-overflow-scrolling:touch;
   }
@@ -505,18 +517,18 @@
   .ahc img{
     width:100%; aspect-ratio:2/3; object-fit:cover; display:block;
     border-radius:6px; background:var(--field-3);
-    box-shadow:0 14px 28px rgba(0,0,0,.45); border:1px solid var(--edge);
+    box-shadow:0 12px 24px rgba(0,0,0,.4); border:1px solid var(--edge);
     transition:transform .25s var(--ease), border-color .25s var(--ease);
   }
   .ahc:hover img{border-color:rgba(196,245,71,.4); transform:translateY(-3px);}
   .ahc b{
     display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
-    overflow:hidden; font-size:12.5px; font-weight:600; line-height:1.25; color:var(--chalk);
+    overflow:hidden; font-size:12px; font-weight:600; line-height:1.3; color:var(--chalk);
   }
   .archive-grid.is-open{align-items:stretch;}
   .archive-grid.is-open .archive-stack{display:none;}
   .archive-grid.is-open .archive-box{display:flex;}
-  .alesson{padding:6px 4px 8px; display:grid; gap:12px;}
+  .alesson{padding:4px 2px 8px; display:grid; gap:12px;}
   .alesson-reply{font-family:var(--serif); font-style:italic; font-size:17px; line-height:1.4; color:var(--chalk);}
   .alesson-book{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--lime);}
   .alesson h3{font-size:clamp(20px,2.2vw,28px); letter-spacing:-.03em; color:var(--chalk); line-height:1.15;}
@@ -531,15 +543,20 @@
     letter-spacing:.12em; text-transform:uppercase; color:var(--lime);
   }
   .alesson-sim{
-    display:block; width:100%; height:min(48vh, 420px); border:0;
+    display:block; width:100%; height:min(44vh, 380px); border:0;
     background:#05070a; pointer-events:auto; touch-action:auto;
   }
   .alesson .btn{justify-self:start;}
   @media (max-width:900px){
     .archive-grid, .archive-grid.is-open{grid-template-columns:1fr;}
-    .archive-stack{height:260px; margin-top:8px;}
-    .af{width:160px;}
-    .archive-box{height:min(74vh, 640px); max-height:min(74vh, 640px);}
+    .archive-copy{max-width:none;}
+    .archive-stats{grid-template-columns:1fr 1fr 1fr;}
+    .archive-stack{height:280px; margin-top:4px;}
+    .af{width:148px;}
+    .archive-box{height:min(70vh, 600px); max-height:min(70vh, 600px);}
+  }
+  @media (max-width:560px){
+    .archive-stats{grid-template-columns:1fr; gap:16px;}
   }
 
   /* ---------- Pricing ---------- */
@@ -907,7 +924,7 @@
 <section class="archive" id="archive">
   <div class="wrap">
     <div class="archive-grid" id="archiveStage">
-      <div id="archiveCopy">
+      <div class="archive-copy" id="archiveCopy">
         <div class="kicker reveal">The Open Learning Archive</div>
         <h2 class="h2 reveal">Some ideas need a picture, <span class="serif">not a paragraph.</span></h2>
         <p class="lede reveal">Drag a variable. Watch the idea move. That is often the whole click.</p>
@@ -917,8 +934,10 @@
           <div class="as"><b>173</b><span>interactive sims in AI Assisted Geometry</span></div>
           <div class="as"><b>113</b><span>full open textbooks, free, no login</span></div>
         </div>
-        <button class="btn primary reveal" type="button" id="archiveBrowseBtn" aria-expanded="false" aria-controls="archiveBox">Browse the archive</button>
-        <a class="btn primary" id="archiveVisitBtn" href="dans-archive.html" hidden>Visit the page</a>
+        <div class="archive-actions reveal">
+          <button class="btn primary" type="button" id="archiveBrowseBtn" aria-expanded="false" aria-controls="archiveBox">Browse the archive</button>
+          <a class="btn primary" id="archiveVisitBtn" href="dans-archive.html" hidden>Visit the page</a>
+        </div>
       </div>
       <div class="archive-pane reveal">
         <div class="archive-stack" id="archiveStack" aria-hidden="true">
@@ -1840,11 +1859,6 @@
         '</div>';
       if (count) count.textContent = hit.bookTitle;
       shelf.classList.add('is-lesson');
-      const play = shelf.querySelector('.alesson-play');
-      if (play){
-        play.addEventListener('pointerenter', function(){ pageScroll(false); });
-        play.addEventListener('pointerleave', function(){ pageScroll(false); });
-      }
     }
     function renderShelf(q){
       if (!books) return;
@@ -1927,7 +1941,6 @@
       openBtn.setAttribute('aria-expanded', 'true');
       loadBooks();
       loadChunks();
-      pageScroll(false);
       input.focus();
     }
     function closeBox(){
@@ -1943,11 +1956,12 @@
       if (stage.classList.contains('is-open')) closeBox();
       else openBox();
     });
-    shelf.addEventListener('wheel', function(e){
-      if (shelf.scrollHeight <= shelf.clientHeight) return;
+    box.addEventListener('pointerenter', function(){ pageScroll(false); });
+    box.addEventListener('pointerleave', function(){ pageScroll(true); });
+    box.addEventListener('wheel', function(e){
+      if (shelf.scrollHeight > shelf.clientHeight) shelf.scrollTop += e.deltaY;
       e.preventDefault();
       e.stopPropagation();
-      shelf.scrollTop += e.deltaY;
     }, { passive: false });
     input.addEventListener('input', function(){
       if (!asking) renderShelf(input.value.trim());
