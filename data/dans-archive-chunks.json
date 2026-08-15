@@ -1,7 +1,7 @@
 {
-  "source": "Dan McCreary intelligent textbooks \u2014 one excerpt per chapter from mkdocs search indexes. Original pages remain on dmccreary.github.io. MindCraft does not rehost full books.",
+  "source": "Dan McCreary intelligent textbooks — one excerpt per chapter from mkdocs search indexes. Original pages remain on dmccreary.github.io. MindCraft does not rehost full books.",
   "fetched": "2026-08-14",
-  "chunkCount": 216,
+  "chunkCount": 220,
   "chunks": [
     {
       "bookSlug": "calculus",
@@ -9,7 +9,7 @@
       "pageTitle": "Calculus",
       "location": "",
       "pageUrl": "https://dmccreary.github.io/calculus/",
-      "quote": "A fun simulation-filled interactive intelligent college placement Calculus textbook that is designed to maximize the odds that you will get college credit and have a blast using the textbook. Note AP\u00ae is a registered trademark of the College Board, which is not affiliated with, and does not endorse, this product."
+      "quote": "A fun simulation-filled interactive intelligent college placement Calculus textbook that is designed to maximize the odds that you will get college credit and have a blast using the textbook. Note AP® is a registered trademark of the College Board, which is not affiliated with, and does not endorse, this product."
     },
     {
       "bookSlug": "calculus",
@@ -17,7 +17,7 @@
       "pageTitle": "Why Calculus Matters Now More Than Ever",
       "location": "about/",
       "pageUrl": "https://dmccreary.github.io/calculus/about/",
-      "quote": "Calculus is one of the most widely studied subjects in mathematics education worldwide. Here are some statistics that demonstrate its reach: In the United States (2026 projections): Approximately 800,000 high school students take calculus each year 1 About 700,000 college students enroll in calculus courses annually 2 Over 446,000 students take AP\u00ae Calculus AB and BC exams each year 3 Only 48% of U.S. high schools offer calculus, creating significant access disparities 1"
+      "quote": "Calculus is one of the most widely studied subjects in mathematics education worldwide. Here are some statistics that demonstrate its reach: In the United States (2026 projections): Approximately 800,000 high school students take calculus each year 1 About 700,000 college students enroll in calculus courses annually 2 Over 446,000 students take AP® Calculus AB and BC exams each year 3 Only 48% of U.S. high schools offer calculus, creating significant access disparities 1"
     },
     {
       "bookSlug": "calculus",
@@ -25,7 +25,7 @@
       "pageTitle": "Strategic Guidance for Intelligent Textbooks",
       "location": "appendices/college-credit/",
       "pageUrl": "https://dmccreary.github.io/calculus/appendices/college-credit/",
-      "quote": "A calculus course designed as an intelligent textbook benefits from explicit standards anchoring. Recommended approach: Use the college placement Calculus Course and Exam Description as the primary concept backbone Model college placement BC as a superset graph over college placement AB Mcollege placement each concept node to: college placement learning objectives College Calculus I outcomes MAA conceptual themes Preserve traceability from concept \u2192 assessment \u2192 standard"
+      "quote": "A calculus course designed as an intelligent textbook benefits from explicit standards anchoring. Recommended approach: Use the college placement Calculus Course and Exam Description as the primary concept backbone Model college placement BC as a superset graph over college placement AB Mcollege placement each concept node to: college placement learning objectives College Calculus I outcomes MAA conceptual themes Preserve traceability from concept → assessment → standard"
     },
     {
       "bookSlug": "calculus",
@@ -33,7 +33,7 @@
       "pageTitle": "Framing Concepts Through Delta",
       "location": "appendices/delta/",
       "pageUrl": "https://dmccreary.github.io/calculus/appendices/delta/",
-      "quote": "Calculus Concept Delta Framing Derivative \"How steep is the ground under my wheels right now?\" Derivative = 0 \"Whoa, I'm perfectly level! Something interesting is happening here...\" Positive derivative \"Climbing! Things are looking up!\" (tilts upward happily) Negative derivative \"Wheee, downhill!\" (tilts downward, enjoys the ride) Second derivative \"Am I climbing faster or slower than before?\" Concave up \"This hill is getting steeper\u2014I'm working harder!\" Concave down \"Phew,"
+      "quote": "Calculus Concept Delta Framing Derivative \"How steep is the ground under my wheels right now?\" Derivative = 0 \"Whoa, I'm perfectly level! Something interesting is happening here...\" Positive derivative \"Climbing! Things are looking up!\" (tilts upward happily) Negative derivative \"Wheee, downhill!\" (tilts downward, enjoys the ride) Second derivative \"Am I climbing faster or slower than before?\" Concave up \"This hill is getting steeper—I'm working harder!\" Concave down \"Phew,"
     },
     {
       "bookSlug": "calculus",
@@ -73,7 +73,7 @@
       "pageTitle": "Looking Ahead",
       "location": "chapters/04-continuity/",
       "pageUrl": "https://dmccreary.github.io/calculus/chapters/04-continuity/",
-      "quote": "You now understand what it means for a function to be continuous and how to prove roots exist. In Chapter 5, we'll explore what happens when functions aren't well-behaved\u2014specifically, the world of asymptotes and end behavior. What happens when \\(x\\) or \\(f(x)\\) goes to infinity? Check Your Understanding State the three conditions for continuity at a point \\(c\\). A function has \\(\\lim_{x \\to 3^-} f(x) = 5\\) and \\(\\lim_{x \\to 3^+} f(x) = 5\\), but \\(f(3) = 7\\). Is \\(f\\)"
+      "quote": "You now understand what it means for a function to be continuous and how to prove roots exist. In Chapter 5, we'll explore what happens when functions aren't well-behaved—specifically, the world of asymptotes and end behavior. What happens when \\(x\\) or \\(f(x)\\) goes to infinity? Check Your Understanding State the three conditions for continuity at a point \\(c\\). A function has \\(\\lim_{x \\to 3^-} f(x) = 5\\) and \\(\\lim_{x \\to 3^+} f(x) = 5\\), but \\(f(3) = 7\\). Is \\(f\\)"
     },
     {
       "bookSlug": "calculus",
@@ -129,7 +129,7 @@
       "pageTitle": "Drawing: Reasoning Detective",
       "location": "chapters/01-foundations-of-geometry/",
       "pageUrl": "https://dmccreary.github.io/geometry-course/chapters/01-foundations-of-geometry/",
-      "quote": "Run the Reasoning Detective MicroSim Fullscreen Interactive reasoning challenge game Type: MicroSim (p5.js) Learning Objective: Students will evaluate mathematical statements by applying inductive and deductive reasoning, and create counterexamples to disprove false conjectures. (Bloom's Taxonomy: Evaluating, Creating) Specification: Create an interactive game where students practice inductive reasoning, deductive reasoning, and finding counterexamples. Canvas: 900px \u00d7"
+      "quote": "Run the Reasoning Detective MicroSim Fullscreen Interactive reasoning challenge game Type: MicroSim (p5.js) Learning Objective: Students will evaluate mathematical statements by applying inductive and deductive reasoning, and create counterexamples to disprove false conjectures. (Bloom's Taxonomy: Evaluating, Creating) Specification: Create an interactive game where students practice inductive reasoning, deductive reasoning, and finding counterexamples. Canvas: 900px ×"
     },
     {
       "bookSlug": "geometry-course",
@@ -185,7 +185,7 @@
       "pageTitle": "Drawing: Complete Triangle Centers Explorer",
       "location": "chapters/08-triangle-centers/",
       "pageUrl": "https://dmccreary.github.io/geometry-course/chapters/08-triangle-centers/",
-      "quote": "Complete Triangle Centers Explorer Type: microsim Learning Objective: Students will create understanding by exploring all four triangle centers interactively, discovering relationships and testing hypotheses about center behavior (Bloom's: Creating) Purpose: Provide a comprehensive tool for exploring all four triangle centers simultaneously, allowing students to discover relationships and test the special case of the equilateral triangle. Canvas layout (1000 \u00d7 700 pixels): -"
+      "quote": "Complete Triangle Centers Explorer Type: microsim Learning Objective: Students will create understanding by exploring all four triangle centers interactively, discovering relationships and testing hypotheses about center behavior (Bloom's: Creating) Purpose: Provide a comprehensive tool for exploring all four triangle centers simultaneously, allowing students to discover relationships and test the special case of the equilateral triangle. Canvas layout (1000 × 700 pixels): -"
     },
     {
       "bookSlug": "geometry-course",
@@ -209,7 +209,7 @@
       "pageTitle": "Why This Intelligent Textbook",
       "location": "about/",
       "pageUrl": "https://dmccreary.github.io/fft-benchmarking/about/",
-      "quote": "The Fast Fourier Transform is not a niche academic curiosity \u2014 it was named one of the ten algorithms with the greatest influence on science and engineering in the entire 20th century, alongside Quicksort and the simplex method 1 . Nearly every field that measures a signal over time \u2014 audio, vibration, radio, medical imaging, power quality, seismology \u2014 eventually needs to ask \"what frequencies are hiding in this data?\" The FFT is how that question gets answered fast enough"
+      "quote": "The Fast Fourier Transform is not a niche academic curiosity — it was named one of the ten algorithms with the greatest influence on science and engineering in the entire 20th century, alongside Quicksort and the simplex method 1 . Nearly every field that measures a signal over time — audio, vibration, radio, medical imaging, power quality, seismology — eventually needs to ask \"what frequencies are hiding in this data?\" The FFT is how that question gets answered fast enough"
     },
     {
       "bookSlug": "fft-benchmarking",
@@ -217,7 +217,7 @@
       "pageTitle": "Analysis",
       "location": "appendices/benchmark-comparison/",
       "pageUrl": "https://dmccreary.github.io/fft-benchmarking/appendices/benchmark-comparison/",
-      "quote": "The one apples-to-apples MicroPython comparison is Peter Hinch's micropython-fourier , because it is (a) a real published MicroPython library, (b) hand-written assembler like this project's, and (c) benchmarked on the exact same board (Pico 2 / RP2350). Scaled to 512 points, this project's V9 is about 5\u00d7 faster, and even the unoptimized V0 baseline is about 3.6\u00d7 faster. This is the strongest evidence for the \"faster than most other published MicroPython libraries\" claim."
+      "quote": "The one apples-to-apples MicroPython comparison is Peter Hinch's micropython-fourier , because it is (a) a real published MicroPython library, (b) hand-written assembler like this project's, and (c) benchmarked on the exact same board (Pico 2 / RP2350). Scaled to 512 points, this project's V9 is about 5× faster, and even the unoptimized V0 baseline is about 3.6× faster. This is the strongest evidence for the \"faster than most other published MicroPython libraries\" claim."
     },
     {
       "bookSlug": "fft-benchmarking",
@@ -233,15 +233,15 @@
       "pageTitle": "Chapter Overview",
       "location": "chapters/",
       "pageUrl": "https://dmccreary.github.io/fft-benchmarking/chapters/",
-      "quote": "Hello World: Thonny, MicroPython, and Your First GPIO Program \u2014 22 concepts Know Your Board: ARM Cortex-M Architecture and the Pico 2 \u2014 24 concepts Peripherals: The OLED Display, Buttons, and Deploying Standalone Code \u2014 29 concepts Waves: Amplitude, Frequency, Phase, and Harmonics \u2014 16 concepts Capturing Real Audio: The I2S Microphone \u2014 13 concepts Sampling, Quantization, and Aliasing \u2014 30 concepts Complex Numbers and Wave Superposition \u2014 25 concepts Correlation: Does My"
+      "quote": "Hello World: Thonny, MicroPython, and Your First GPIO Program — 22 concepts Know Your Board: ARM Cortex-M Architecture and the Pico 2 — 24 concepts Peripherals: The OLED Display, Buttons, and Deploying Standalone Code — 29 concepts Waves: Amplitude, Frequency, Phase, and Harmonics — 16 concepts Capturing Real Audio: The I2S Microphone — 13 concepts Sampling, Quantization, and Aliasing — 30 concepts Complex Numbers and Wave Superposition — 25 concepts Correlation: Does My"
     },
     {
       "bookSlug": "fft-benchmarking",
       "bookTitle": "Real-Time DSP on a $5 Microcontroller",
-      "pageTitle": "Your First GPIO Program \u2014 Blinking the Onboard LED",
+      "pageTitle": "Your First GPIO Program — Blinking the Onboard LED",
       "location": "chapters/01-hello-world/",
       "pageUrl": "https://dmccreary.github.io/fft-benchmarking/chapters/01-hello-world/",
-      "quote": "With the REPL and Thonny workflow in hand, it's time for the program every embedded-systems course starts with: making a single LED blink. Before writing it, three pieces of vocabulary need to be in place. A GPIO pin is General Purpose Input/Output \u2014 one of the physical metal legs on the Pico 2 that software can configure to either read a signal coming in or send a signal out, under direct program control. General Purpose IO (GPIO, the same idea at the system level) is what"
+      "quote": "With the REPL and Thonny workflow in hand, it's time for the program every embedded-systems course starts with: making a single LED blink. Before writing it, three pieces of vocabulary need to be in place. A GPIO pin is General Purpose Input/Output — one of the physical metal legs on the Pico 2 that software can configure to either read a signal coming in or send a signal out, under direct program control. General Purpose IO (GPIO, the same idea at the system level) is what"
     },
     {
       "bookSlug": "fft-benchmarking",
@@ -259,7 +259,7 @@
       "pageTitle": "Reading Buttons Without Being Fooled",
       "location": "chapters/03-peripherals/",
       "pageUrl": "https://dmccreary.github.io/fft-benchmarking/chapters/03-peripherals/",
-      "quote": "A display only ever sends information one direction \u2014 the OLED cannot tell your program anything. Getting information the other way, from the physical world into your code, is the job of digital input: configuring a GPIO pin (via Pin(number, Pin.IN) ) to read whatever voltage something else is applying to it, rather than driving a voltage out, the mirror image of the digital output you used to blink an LED in Chapter 1. Left disconnected, a digital input pin does not"
+      "quote": "A display only ever sends information one direction — the OLED cannot tell your program anything. Getting information the other way, from the physical world into your code, is the job of digital input: configuring a GPIO pin (via Pin(number, Pin.IN) ) to read whatever voltage something else is applying to it, rather than driving a voltage out, the mirror image of the digital output you used to blink an LED in Chapter 1. Left disconnected, a digital input pin does not"
     },
     {
       "bookSlug": "fft-benchmarking",
@@ -277,7 +277,7 @@
       "pageTitle": "The I2S Protocol: Three Wires, One Bitstream",
       "location": "chapters/05-capturing-real-audio/",
       "pageUrl": "https://dmccreary.github.io/fft-benchmarking/chapters/05-capturing-real-audio/",
-      "quote": "The INMP441 does not send its digital audio over a single wire the way a simple sensor might. It uses a small, well-defined protocol built specifically for streaming digital audio between chips. The I2S protocol (Inter-IC Sound) is a serial communication standard designed specifically for transmitting digital audio data between chips, using a small, fixed set of signal lines that stay synchronized to each other. I2S was designed decades ago for exactly this job \u2014 moving"
+      "quote": "The INMP441 does not send its digital audio over a single wire the way a simple sensor might. It uses a small, well-defined protocol built specifically for streaming digital audio between chips. The I2S protocol (Inter-IC Sound) is a serial communication standard designed specifically for transmitting digital audio data between chips, using a small, fixed set of signal lines that stay synchronized to each other. I2S was designed decades ago for exactly this job — moving"
     },
     {
       "bookSlug": "fft-benchmarking",
@@ -285,7 +285,7 @@
       "pageTitle": "The Sample Word Format: Bits on the Wire",
       "location": "chapters/06-sampling-quantization-and-aliasing/",
       "pageUrl": "https://dmccreary.github.io/fft-benchmarking/chapters/06-sampling-quantization-and-aliasing/",
-      "quote": "Everything above explains why a captured value looks the way it does. This last section explains exactly how that value is packaged as bits, because the INMP441 microphone from the previous chapter uses a format that is not immediately obvious from the raw bytes alone. The sample word format is the specific arrangement of bits used to represent one audio sample within a fixed-size data word \u2014 how many bits are signal, how many are padding, and where the sign bit lives. The"
+      "quote": "Everything above explains why a captured value looks the way it does. This last section explains exactly how that value is packaged as bits, because the INMP441 microphone from the previous chapter uses a format that is not immediately obvious from the raw bytes alone. The sample word format is the specific arrangement of bits used to represent one audio sample within a fixed-size data word — how many bits are signal, how many are padding, and where the sign bit lives. The"
     },
     {
       "bookSlug": "fft-benchmarking",
@@ -293,7 +293,7 @@
       "pageTitle": "Diagram: Wave Superposition and Beats Simulator",
       "location": "chapters/07-complex-numbers-and-wave-superposition/",
       "pageUrl": "https://dmccreary.github.io/fft-benchmarking/chapters/07-complex-numbers-and-wave-superposition/",
-      "quote": "Wave Superposition and Beats Simulator Type: microsim sim-id: wave-superposition-beats-simulator Library: p5.js Status: Specified Bloom Taxonomy: Analyze Bloom Taxonomy Verb: Examine, compare Learning objective: Let students set the frequency and phase of two independent sine waves, examine the summed waveform, and compare regions of constructive interference, destructive interference, and \u2014 when frequencies are close but unequal \u2014 the resulting beat pattern. Canvas layout:",
+      "quote": "Wave Superposition and Beats Simulator Type: microsim sim-id: wave-superposition-beats-simulator Library: p5.js Status: Specified Bloom Taxonomy: Analyze Bloom Taxonomy Verb: Examine, compare Learning objective: Let students set the frequency and phase of two independent sine waves, examine the summed waveform, and compare regions of constructive interference, destructive interference, and — when frequencies are close but unequal — the resulting beat pattern. Canvas layout:",
       "simId": "wave-superposition-beats-simulator",
       "simUrl": "https://dmccreary.github.io/fft-benchmarking/sims/wave-superposition-beats-simulator/"
     },
@@ -303,7 +303,7 @@
       "pageTitle": "Chapters",
       "location": "",
       "pageUrl": "https://dmccreary.github.io/learning-micropython/",
-      "quote": "The book is organized into 23 chapters that build on one another, covering 485 concepts across Python programming, electronics, sensors, displays, motors, robots, wireless networking, and project design. Chapters 1\u20135 give you the Python and electronics foundation you need; from Chapter 6 onward, every chapter includes working MicroPython programs you can run on a Raspberry Pi Pico. Each chapter also has its own quiz and annotated references. See the full chapter list for"
+      "quote": "The book is organized into 23 chapters that build on one another, covering 485 concepts across Python programming, electronics, sensors, displays, motors, robots, wireless networking, and project design. Chapters 1–5 give you the Python and electronics foundation you need; from Chapter 6 onward, every chapter includes working MicroPython programs you can run on a Raspberry Pi Pico. Each chapter also has its own quiz and annotated references. See the full chapter list for"
     },
     {
       "bookSlug": "learning-micropython",
@@ -407,7 +407,7 @@
       "pageTitle": "Why This Intelligent Textbook",
       "location": "about/",
       "pageUrl": "https://dmccreary.github.io/raspberry-pi-stem/about/",
-      "quote": "Computers used to live behind a screen. Today they blink, spin motors, light up NeoPixel strips, and recognize objects in real time from a board a student can hold in one hand \u2014 and the same computational-thinking skills that light a single LED can, a few chapters later, train a Raspberry Pi 5 to spot a face or classify a sound. Yet most K-12 computing courses never leave the screen, teaching syntax without ever letting a program reach out and touch the physical world. In"
+      "quote": "Computers used to live behind a screen. Today they blink, spin motors, light up NeoPixel strips, and recognize objects in real time from a board a student can hold in one hand — and the same computational-thinking skills that light a single LED can, a few chapters later, train a Raspberry Pi 5 to spot a face or classify a sound. Yet most K-12 computing courses never leave the screen, teaching syntax without ever letting a program reach out and touch the physical world. In"
     },
     {
       "bookSlug": "raspberry-pi-stem",
@@ -415,7 +415,7 @@
       "pageTitle": "Appendices",
       "location": "appendices/",
       "pageUrl": "https://dmccreary.github.io/raspberry-pi-stem/appendices/",
-      "quote": "The appendices provide practical guidance for adapting the course to changing hardware, pricing, and classroom conditions. Teaching STEM During the Raspberry Pi RAM Shortage \u2014 Compare shared Raspberry Pi stations, Pico microcontrollers, refurbished PCs and Macs, and simulation-first lab designs."
+      "quote": "The appendices provide practical guidance for adapting the course to changing hardware, pricing, and classroom conditions. Teaching STEM During the Raspberry Pi RAM Shortage — Compare shared Raspberry Pi stations, Pico microcontrollers, refurbished PCs and Macs, and simulation-first lab designs."
     },
     {
       "bookSlug": "raspberry-pi-stem",
@@ -439,7 +439,7 @@
       "pageTitle": "Debugging Like an Engineer",
       "location": "chapters/01-computational-thinking-debugging/",
       "pageUrl": "https://dmccreary.github.io/raspberry-pi-stem/chapters/01-computational-thinking-debugging/",
-      "quote": "Here's a promise worth making at the start of this book: something you build is going to fail. A wire will be in the wrong pin, a variable will be misspelled, a sensor will read backwards from what you expected. That's not a sign you're bad at this \u2014 it's the normal, expected texture of building anything real, and every maker in this book's target audience, from a first-time student to a working engineer, goes through it constantly. Debugging is the process of finding and"
+      "quote": "Here's a promise worth making at the start of this book: something you build is going to fail. A wire will be in the wrong pin, a variable will be misspelled, a sensor will read backwards from what you expected. That's not a sign you're bad at this — it's the normal, expected texture of building anything real, and every maker in this book's target audience, from a first-time student to a working engineer, goes through it constantly. Debugging is the process of finding and"
     },
     {
       "bookSlug": "raspberry-pi-stem",
@@ -447,7 +447,7 @@
       "pageTitle": "What a Board Really Costs You",
       "location": "chapters/02-choosing-raspberry-pi-product/",
       "pageUrl": "https://dmccreary.github.io/raspberry-pi-stem/chapters/02-choosing-raspberry-pi-product/",
-      "quote": "The price printed on a board's product page is only the starting point. A price tier is a category of hardware grouped by approximate cost \u2014 the same grouping the course description uses to organize this book into five ascending tiers, from a $4 Pico up to a $70-plus AI accelerator setup. Knowing a board's price tier helps you plan a budget quickly, but it hides two things a careful buyer needs to check: whether that price is stable, and what else you'll need to buy"
+      "quote": "The price printed on a board's product page is only the starting point. A price tier is a category of hardware grouped by approximate cost — the same grouping the course description uses to organize this book into five ascending tiers, from a $4 Pico up to a $70-plus AI accelerator setup. Knowing a board's price tier helps you plan a budget quickly, but it hides two things a careful buyer needs to check: whether that price is stable, and what else you'll need to buy"
     },
     {
       "bookSlug": "raspberry-pi-stem",
@@ -475,7 +475,7 @@
       "pageTitle": "Animation Techniques",
       "location": "chapters/05-neopixel-led-art/",
       "pageUrl": "https://dmccreary.github.io/raspberry-pi-stem/chapters/05-neopixel-led-art/",
-      "quote": "A single static color is only the starting point \u2014 the real fun of a NeoPixel strip is making it move. Every animation on a NeoPixel strip is really just a rapid sequence of still images. An animation frame is one single, complete color state of every pixel on the strip, displayed for a brief moment before being replaced by the next frame \u2014 exactly like one frame of a movie. Frame rate is how many animation frames are displayed per second, usually written as frames per"
+      "quote": "A single static color is only the starting point — the real fun of a NeoPixel strip is making it move. Every animation on a NeoPixel strip is really just a rapid sequence of still images. An animation frame is one single, complete color state of every pixel on the strip, displayed for a brief moment before being replaced by the next frame — exactly like one frame of a movie. Frame rate is how many animation frames are displayed per second, usually written as frames per"
     },
     {
       "bookSlug": "raspberry-pi-stem",
@@ -499,7 +499,7 @@
       "pageTitle": "Cover",
       "location": "",
       "pageUrl": "https://dmccreary.github.io/circuits/",
-      "quote": "R\u2081 C\u2081 R\u1d62\u2099 A\u2081 Rf I\u209b R\u2081 V\u2092\u1d64\u209c R\u2082 L\u2081 C\u2081 L\u2082 L\u2082 V\u1d62\u2099 R R R R + \u2212 V\u209b R\u2081 C\u2081 L\u2081 C\u2082 R\u2082 V\u2092\u1d64\u209c R\u1d62 A\u2082 Cf L C Circuits I Interactive Textbook ## Analog and Signal Analysis An interactive EE textbook with simulations, quizzes, and structured learning tools. Covers DC/AC analysis, phasors, filters, op-amps, Fourier series,and audio applications \u2014 from first principles to real-world design. 16 Chapters 50+ MicroSims 160 Quiz Questions 64 Practice Problems [Enter Textbook \u2192](chapters/){"
+      "quote": "R₁ C₁ Rᵢₙ A₁ Rf Iₛ R₁ Vₒᵤₜ R₂ L₁ C₁ L₂ L₂ Vᵢₙ R R R R + − Vₛ R₁ C₁ L₁ C₂ R₂ Vₒᵤₜ Rᵢ A₂ Cf L C Circuits I Interactive Textbook ## Analog and Signal Analysis An interactive EE textbook with simulations, quizzes, and structured learning tools. Covers DC/AC analysis, phasors, filters, op-amps, Fourier series,and audio applications — from first principles to real-world design. 16 Chapters 50+ MicroSims 160 Quiz Questions 64 Practice Problems [Enter Textbook →](chapters/){"
     },
     {
       "bookSlug": "circuits",
@@ -520,7 +520,7 @@
     {
       "bookSlug": "circuits",
       "bookTitle": "AI Circuits Course",
-      "pageTitle": "Chapter 1 \u2014 Electric Charge and Basic Circuit Quantities",
+      "pageTitle": "Chapter 1 — Electric Charge and Basic Circuit Quantities",
       "location": "chapters/01-electric-charge-basic-quantities/",
       "pageUrl": "https://dmccreary.github.io/circuits/chapters/01-electric-charge-basic-quantities/",
       "quote": "Chapter Overview (click to expand) Congratulations! You're about to acquire a superpower that most people will never have. No, you won't be able to fly or read minds, but you *will* be able to look at any electronic device and understand *how it actually works*. That smartphone in your pocket? You'll know what's happening inside. That amplifier pushing sound through your speakers? You'll understand why it does what it does. Think about it: electricity powers almost"
@@ -528,34 +528,34 @@
     {
       "bookSlug": "circuits",
       "bookTitle": "AI Circuits Course",
-      "pageTitle": "Chapter 2 \u2014 Ohm's Law and Basic Circuit Configurations",
+      "pageTitle": "Chapter 2 — Ohm's Law and Basic Circuit Configurations",
       "location": "chapters/02-ohms-law-basic-configurations/",
       "pageUrl": "https://dmccreary.github.io/circuits/chapters/02-ohms-law-basic-configurations/",
-      "quote": "Chapter Overview (click to expand) Welcome to the chapter that unlocks your first real superpower in electrical engineering. If Chapter 1 was about learning the alphabet \u2014 voltage, current, charge \u2014 then this chapter teaches you to speak in complete sentences. And the most important sentence you'll ever learn? **Ohm's Law**. Here's a secret that practicing engineers won't always admit: about 80% of circuit analysis boils down to applying Ohm's Law creatively. Master this"
+      "quote": "Chapter Overview (click to expand) Welcome to the chapter that unlocks your first real superpower in electrical engineering. If Chapter 1 was about learning the alphabet — voltage, current, charge — then this chapter teaches you to speak in complete sentences. And the most important sentence you'll ever learn? **Ohm's Law**. Here's a secret that practicing engineers won't always admit: about 80% of circuit analysis boils down to applying Ohm's Law creatively. Master this"
     },
     {
       "bookSlug": "circuits",
       "bookTitle": "AI Circuits Course",
-      "pageTitle": "Chapter 3 \u2014 Kirchhoff's Laws and Circuit Topology",
+      "pageTitle": "Chapter 3 — Kirchhoff's Laws and Circuit Topology",
       "location": "chapters/03-kirchhoffs-laws-topology/",
       "pageUrl": "https://dmccreary.github.io/circuits/chapters/03-kirchhoffs-laws-topology/",
-      "quote": "Chapter Overview (click to expand) This chapter introduces Kirchhoff's Voltage Law (KVL) and Kirchhoff's Current Law (KCL), the two fundamental conservation laws that govern all electrical circuits. Published by Gustav Kirchhoff in 1845, these laws provide the mathematical framework needed to analyze circuits of any complexity. While Ohm's Law describes the behavior of individual components, Kirchhoff's Laws describe what happens at connections \u2014 where currents meet at nodes"
+      "quote": "Chapter Overview (click to expand) This chapter introduces Kirchhoff's Voltage Law (KVL) and Kirchhoff's Current Law (KCL), the two fundamental conservation laws that govern all electrical circuits. Published by Gustav Kirchhoff in 1845, these laws provide the mathematical framework needed to analyze circuits of any complexity. While Ohm's Law describes the behavior of individual components, Kirchhoff's Laws describe what happens at connections — where currents meet at nodes"
     },
     {
       "bookSlug": "circuits",
       "bookTitle": "AI Circuits Course",
-      "pageTitle": "Chapter 4 \u2014 DC Circuit Analysis Methods",
+      "pageTitle": "Chapter 4 — DC Circuit Analysis Methods",
       "location": "chapters/04-dc-circuit-analysis/",
       "pageUrl": "https://dmccreary.github.io/circuits/chapters/04-dc-circuit-analysis/",
-      "quote": "Chapter Overview (click to expand) Welcome to the chapter where you level up from \"person who can solve circuits\" to \"person who can make circuits *behave*.\" If previous chapters gave you the vocabulary of circuit analysis, this chapter teaches you the rhetorical flourishes \u2014 the elegant shortcuts that practicing engineers use to tame even the most intimidating schematics. Here's a confession from the engineering world: nobody actually wants to write down 47 equations and"
+      "quote": "Chapter Overview (click to expand) Welcome to the chapter where you level up from \"person who can solve circuits\" to \"person who can make circuits *behave*.\" If previous chapters gave you the vocabulary of circuit analysis, this chapter teaches you the rhetorical flourishes — the elegant shortcuts that practicing engineers use to tame even the most intimidating schematics. Here's a confession from the engineering world: nobody actually wants to write down 47 equations and"
     },
     {
       "bookSlug": "circuits",
       "bookTitle": "AI Circuits Course",
-      "pageTitle": "Chapter 5 \u2014 Passive Components: Resistors, Capacitors, and Inductors",
+      "pageTitle": "Chapter 5 — Passive Components: Resistors, Capacitors, and Inductors",
       "location": "chapters/05-passive-components/",
       "pageUrl": "https://dmccreary.github.io/circuits/chapters/05-passive-components/",
-      "quote": "Chapter Overview (click to expand) Welcome to the chapter where circuits get interesting. Up until now, we've been dealing with resistors\u2014components that do one thing: resist. They're the bouncers of the circuit world, limiting current and dissipating energy as heat. Useful, but let's be honest: a little one-dimensional. Now we meet the **capacitor** and the **inductor**\u2014components that *store* energy rather than waste it. These are the circuit equivalents of batteries,"
+      "quote": "Chapter Overview (click to expand) Welcome to the chapter where circuits get interesting. Up until now, we've been dealing with resistors—components that do one thing: resist. They're the bouncers of the circuit world, limiting current and dissipating energy as heat. Useful, but let's be honest: a little one-dimensional. Now we meet the **capacitor** and the **inductor**—components that *store* energy rather than waste it. These are the circuit equivalents of batteries,"
     },
     {
       "bookSlug": "circuits",
@@ -563,20 +563,20 @@
       "pageTitle": "Transient Analysis of RC and RL Circuits",
       "location": "chapters/06-transient-analysis-rc-rl/",
       "pageUrl": "https://dmccreary.github.io/circuits/chapters/06-transient-analysis-rc-rl/",
-      "quote": "Chapter Overview (click to expand) Up until now, we've analyzed circuits in the comfortable world of **steady state** \u2014 where nothing changes with time. Flip a switch, and we assumed everything instantly reached its final value. But reality doesn't work that way. When you flip a switch, circuits don't instantly jump to their new state. They **transition**, following smooth curves that take time to reach their destination. This transition period is the **transient response**,"
+      "quote": "Chapter Overview (click to expand) Up until now, we've analyzed circuits in the comfortable world of **steady state** — where nothing changes with time. Flip a switch, and we assumed everything instantly reached its final value. But reality doesn't work that way. When you flip a switch, circuits don't instantly jump to their new state. They **transition**, following smooth curves that take time to reach their destination. This transition period is the **transient response**,"
     },
     {
       "bookSlug": "circuits",
       "bookTitle": "AI Circuits Course",
-      "pageTitle": "Chapter 7 \u2014 Second-Order RLC Circuits",
+      "pageTitle": "Chapter 7 — Second-Order RLC Circuits",
       "location": "chapters/07-second-order-rlc-circuits/",
       "pageUrl": "https://dmccreary.github.io/circuits/chapters/07-second-order-rlc-circuits/",
-      "quote": "Chapter Overview (click to expand) If first-order RC and RL circuits are like a polite conversation \u2014 one thing leads smoothly to another \u2014 then second-order RLC circuits are like a heated debate. Things can swing back and forth, overshoot their targets, or even oscillate indefinitely. Welcome to the world where circuits get *dramatic*. When both a capacitor and an inductor share the same circuit, energy sloshes back and forth between the electric field of the capacitor and"
+      "quote": "Chapter Overview (click to expand) If first-order RC and RL circuits are like a polite conversation — one thing leads smoothly to another — then second-order RLC circuits are like a heated debate. Things can swing back and forth, overshoot their targets, or even oscillate indefinitely. Welcome to the world where circuits get *dramatic*. When both a capacitor and an inductor share the same circuit, energy sloshes back and forth between the electric field of the capacitor and"
     },
     {
       "bookSlug": "circuits",
       "bookTitle": "AI Circuits Course",
-      "pageTitle": "Chapter 8 \u2014 AC Signals and Sinusoidal Waveforms",
+      "pageTitle": "Chapter 8 — AC Signals and Sinusoidal Waveforms",
       "location": "chapters/08-ac-signals-sinusoidal/",
       "pageUrl": "https://dmccreary.github.io/circuits/chapters/08-ac-signals-sinusoidal/",
       "quote": "Chapter Overview (click to expand) This chapter introduces alternating current (AC) and the sinusoidal waveforms that are fundamental to power systems and signal processing. Students will learn to characterize sinusoids by their amplitude, frequency, period, and phase, and understand the relationships between these parameters. The chapter covers important measurement quantities including peak, peak-to-peak, RMS, and average values. Complex numbers are introduced as the"
@@ -584,10 +584,10 @@
     {
       "bookSlug": "circuits",
       "bookTitle": "AI Circuits Course",
-      "pageTitle": "Chapter 9 \u2014 Phasors and Complex Impedance",
+      "pageTitle": "Chapter 9 — Phasors and Complex Impedance",
       "location": "chapters/09-phasors-complex-impedance/",
       "pageUrl": "https://dmccreary.github.io/circuits/chapters/09-phasors-complex-impedance/",
-      "quote": "Chapter Overview (click to expand) This chapter introduces phasors \u2014 rotating vectors that elegantly represent sinusoidal signals \u2014 and shows how they transform differential equations into algebraic ones. Students will learn about impedance, the AC equivalent of resistance, and how capacitors and inductors create frequency-dependent reactance. The chapter covers the impedance triangle, admittance, and the phasor domain approach to AC circuit analysis. Mastering phasor"
+      "quote": "Chapter Overview (click to expand) This chapter introduces phasors — rotating vectors that elegantly represent sinusoidal signals — and shows how they transform differential equations into algebraic ones. Students will learn about impedance, the AC equivalent of resistance, and how capacitors and inductors create frequency-dependent reactance. The chapter covers the impedance triangle, admittance, and the phasor domain approach to AC circuit analysis. Mastering phasor"
     },
     {
       "bookSlug": "beginning-electronics",
@@ -603,7 +603,7 @@
       "pageTitle": "Chapter Overview",
       "location": "chapters/",
       "pageUrl": "https://dmccreary.github.io/beginning-electronics/chapters/",
-      "quote": "Electricity Basics: Voltage, Current, and Resistance \u2014 This chapter introduces the core electrical quantities that every later chapter depends on: electric current, voltage, resistance, and Ohm's Law, along with basic circuit types and terminal/lead vocabulary. Current, Charge, Units, and Electrical Safety \u2014 Building on Chapter 1, this chapter covers how current actually flows (electron flow vs. Circuit Analysis, Kirchhoff's Laws, and Energy \u2014 This chapter deepens"
+      "quote": "Electricity Basics: Voltage, Current, and Resistance — This chapter introduces the core electrical quantities that every later chapter depends on: electric current, voltage, resistance, and Ohm's Law, along with basic circuit types and terminal/lead vocabulary. Current, Charge, Units, and Electrical Safety — Building on Chapter 1, this chapter covers how current actually flows (electron flow vs. Circuit Analysis, Kirchhoff's Laws, and Energy — This chapter deepens"
     },
     {
       "bookSlug": "beginning-electronics",
@@ -696,7 +696,7 @@
       "pageTitle": "Biology: An Interactive Course",
       "location": "",
       "pageUrl": "https://dmccreary.github.io/biology/",
-      "quote": "An interactive intelligent textbook for Biology, designed for advanced high school students (grades 11\u201312) preparing for the Biology exams that provide college credit. This course covers all eight units suggested by the AP\u00ae College Board \u2014 from the chemistry of macromolecules to the dynamics of ecosystems \u2014 with hands-on simulations, interactive learning graphs, and college placement exam strategies throughout. This course is not associated with The College Board in any way"
+      "quote": "An interactive intelligent textbook for Biology, designed for advanced high school students (grades 11–12) preparing for the Biology exams that provide college credit. This course covers all eight units suggested by the AP® College Board — from the chemistry of macromolecules to the dynamics of ecosystems — with hands-on simulations, interactive learning graphs, and college placement exam strategies throughout. This course is not associated with The College Board in any way"
     },
     {
       "bookSlug": "biology",
@@ -704,7 +704,7 @@
       "pageTitle": "Why Biology Matters Now More Than Ever",
       "location": "about/",
       "pageUrl": "https://dmccreary.github.io/biology/about/",
-      "quote": "Biology sits at the center of today\u2019s most urgent challenges\u2014pandemics, food security, climate resilience, and biotechnology. When you learn to reason like a biologist you gain the ability to analyze complex systems, interpret data, and design experiments that improve lives. This book puts a special focus on critical thinking skills, detecting misinformation and systems thinking. The scale of learners tackling these ideas is enormous: In the United States (2025): More than"
+      "quote": "Biology sits at the center of today’s most urgent challenges—pandemics, food security, climate resilience, and biotechnology. When you learn to reason like a biologist you gain the ability to analyze complex systems, interpret data, and design experiments that improve lives. This book puts a special focus on critical thinking skills, detecting misinformation and systems thinking. The scale of learners tackling these ideas is enormous: In the United States (2025): More than"
     },
     {
       "bookSlug": "biology",
@@ -712,7 +712,7 @@
       "pageTitle": "Chapter Overview",
       "location": "chapters/",
       "pageUrl": "https://dmccreary.github.io/biology/chapters/",
-      "quote": "Unit 1 \u2014 Chemistry of Life Scientific Foundations and Atomic Chemistry \u2014 Introduces the scientific method, experimental design, and statistical reasoning, then lays the atomic and chemical bonding foundations underlying all of biology. Water, pH, and Organic Chemistry \u2014 Explores the life-enabling properties of water, acid-base chemistry and buffers, and the organic functional groups that form the backbone of all biomolecules. Biological Macromolecules \u2014 Examines the four"
+      "quote": "Unit 1 — Chemistry of Life Scientific Foundations and Atomic Chemistry — Introduces the scientific method, experimental design, and statistical reasoning, then lays the atomic and chemical bonding foundations underlying all of biology. Water, pH, and Organic Chemistry — Explores the life-enabling properties of water, acid-base chemistry and buffers, and the organic functional groups that form the backbone of all biomolecules. Biological Macromolecules — Examines the four"
     },
     {
       "bookSlug": "biology",
@@ -740,7 +740,7 @@
       "pageTitle": "The Four Levels of Protein Structure",
       "location": "chapters/03-biological-macromolecules/",
       "pageUrl": "https://dmccreary.github.io/biology/chapters/03-biological-macromolecules/",
-      "quote": "Protein structure is described at four hierarchical levels, each adding a layer of organization: Key Insight: Structure Determines Function The four levels of protein structure are not just a classification scheme \u2014 they describe how the one-dimensional information in a gene (a DNA sequence) becomes a three-dimensional molecular machine. Level 1 (primary structure) encodes all the information needed to determine levels 2, 3, and 4. When we study mutations in Chapter 14, we"
+      "quote": "Protein structure is described at four hierarchical levels, each adding a layer of organization: Key Insight: Structure Determines Function The four levels of protein structure are not just a classification scheme — they describe how the one-dimensional information in a gene (a DNA sequence) becomes a three-dimensional molecular machine. Level 1 (primary structure) encodes all the information needed to determine levels 2, 3, and 4. When we study mutations in Chapter 14, we"
     },
     {
       "bookSlug": "biology",
@@ -756,7 +756,7 @@
       "pageTitle": "Key Connections and Chapter Summary",
       "location": "chapters/05-cell-membranes-and-transport/",
       "pageUrl": "https://dmccreary.github.io/biology/chapters/05-cell-membranes-and-transport/",
-      "quote": "The plasma membrane and its transport mechanisms form the interface between the cell and its environment \u2014 the control point for all of cellular homeostasis: Fluid mosaic model \u2014 the membrane is a dynamic phospholipid bilayer with embedded proteins; fluidity is regulated by fatty acid saturation and cholesterol; integral proteins perform transport, signaling, and structural functions. Selective permeability \u2014 small nonpolar molecules cross freely; large or charged molecules"
+      "quote": "The plasma membrane and its transport mechanisms form the interface between the cell and its environment — the control point for all of cellular homeostasis: Fluid mosaic model — the membrane is a dynamic phospholipid bilayer with embedded proteins; fluidity is regulated by fatty acid saturation and cholesterol; integral proteins perform transport, signaling, and structural functions. Selective permeability — small nonpolar molecules cross freely; large or charged molecules"
     },
     {
       "bookSlug": "biology",
@@ -764,7 +764,7 @@
       "pageTitle": "Key Connections and Chapter Summary",
       "location": "chapters/06-thermodynamics-and-enzymes/",
       "pageUrl": "https://dmccreary.github.io/biology/chapters/06-thermodynamics-and-enzymes/",
-      "quote": "The thermodynamic and enzymatic principles in this chapter are the engine behind every metabolic pathway in Chapters 7 and 8: Thermodynamics \u2014 \\(\\Delta G = \\Delta H - T\\Delta S\\) determines spontaneity; cells harvest free energy from exergonic reactions and use it to drive endergonic reactions. ATP \u2014 the universal energy currency (\\(\\Delta G\u00b0' = -30.5\\) kJ/mol for hydrolysis); couples exergonic and endergonic reactions via phosphate group transfer; regenerated by cellular"
+      "quote": "The thermodynamic and enzymatic principles in this chapter are the engine behind every metabolic pathway in Chapters 7 and 8: Thermodynamics — \\(\\Delta G = \\Delta H - T\\Delta S\\) determines spontaneity; cells harvest free energy from exergonic reactions and use it to drive endergonic reactions. ATP — the universal energy currency (\\(\\Delta G°' = -30.5\\) kJ/mol for hydrolysis); couples exergonic and endergonic reactions via phosphate group transfer; regenerated by cellular"
     },
     {
       "bookSlug": "biology",
@@ -772,7 +772,7 @@
       "pageTitle": "Key Connections and Chapter Summary",
       "location": "chapters/07-photosynthesis/",
       "pageUrl": "https://dmccreary.github.io/biology/chapters/07-photosynthesis/",
-      "quote": "Photosynthesis is the energetic foundation of all life, and its two stages create the molecular link between light energy and the organic chemistry of living cells: Light reactions (thylakoid membrane) \u2014 capture photons at PSII (P680) and PSI (P700); split water (releasing \\(\\ce{O2}\\)); transport electrons through PQ, cytochrome b6f, and plastocyanin; build a proton gradient; synthesize ATP (photophosphorylation) and NADPH Calvin cycle (stroma) \u2014 RuBisCO fixes \\(\\ce{CO2}\\)"
+      "quote": "Photosynthesis is the energetic foundation of all life, and its two stages create the molecular link between light energy and the organic chemistry of living cells: Light reactions (thylakoid membrane) — capture photons at PSII (P680) and PSI (P700); split water (releasing \\(\\ce{O2}\\)); transport electrons through PQ, cytochrome b6f, and plastocyanin; build a proton gradient; synthesize ATP (photophosphorylation) and NADPH Calvin cycle (stroma) — RuBisCO fixes \\(\\ce{CO2}\\)"
     },
     {
       "bookSlug": "biology",
@@ -780,7 +780,7 @@
       "pageTitle": "Summary",
       "location": "chapters/08-cellular-respiration/",
       "pageUrl": "https://dmccreary.github.io/biology/chapters/08-cellular-respiration/",
-      "quote": "Cellular respiration extracts the energy stored in glucose through three coordinated stages: Glycolysis (cytoplasm): glucose \u2192 2 pyruvate; net +2 ATP, +2 NADH; aerobic or anaerobic Pyruvate oxidation (mitochondrial matrix): 2 pyruvate \u2192 2 acetyl-CoA; +2 NADH, \u22122 CO\u2082 Krebs cycle (mitochondrial matrix): 2 acetyl-CoA fully oxidized; +6 NADH, +2 \\(\\ce{FADH2}\\), +2 ATP, \u22124 CO\u2082 ETC + oxidative phosphorylation (inner mitochondrial membrane): electrons from NADH and \\(\\ce{FADH2}\\)"
+      "quote": "Cellular respiration extracts the energy stored in glucose through three coordinated stages: Glycolysis (cytoplasm): glucose → 2 pyruvate; net +2 ATP, +2 NADH; aerobic or anaerobic Pyruvate oxidation (mitochondrial matrix): 2 pyruvate → 2 acetyl-CoA; +2 NADH, −2 CO₂ Krebs cycle (mitochondrial matrix): 2 acetyl-CoA fully oxidized; +6 NADH, +2 \\(\\ce{FADH2}\\), +2 ATP, −4 CO₂ ETC + oxidative phosphorylation (inner mitochondrial membrane): electrons from NADH and \\(\\ce{FADH2}\\)"
     },
     {
       "bookSlug": "biology",
@@ -788,7 +788,7 @@
       "pageTitle": "Summary",
       "location": "chapters/09-cell-signaling-and-feedback/",
       "pageUrl": "https://dmccreary.github.io/biology/chapters/09-cell-signaling-and-feedback/",
-      "quote": "Cell signaling proceeds through three universal stages: Reception: Ligand binds a specific receptor (cell-surface for hydrophilic ligands; intracellular for hydrophobic ligands) Transduction: Signal is relayed and amplified \u2014 through G proteins \u2192 cAMP \u2192 PKA (GPCRs), tyrosine autophosphorylation \u2192 Ras/MAPK (RTKs), or direct nuclear entry (intracellular receptors) Response: Gene expression, enzyme activity, ion flux, or cytoskeletal reorganization Second messengers (cAMP, IP\u2083,"
+      "quote": "Cell signaling proceeds through three universal stages: Reception: Ligand binds a specific receptor (cell-surface for hydrophilic ligands; intracellular for hydrophobic ligands) Transduction: Signal is relayed and amplified — through G proteins → cAMP → PKA (GPCRs), tyrosine autophosphorylation → Ras/MAPK (RTKs), or direct nuclear entry (intracellular receptors) Response: Gene expression, enzyme activity, ion flux, or cytoskeletal reorganization Second messengers (cAMP, IP₃,"
     },
     {
       "bookSlug": "chemistry",
@@ -796,7 +796,7 @@
       "pageTitle": "About the AP Chemistry Interactive Intelligent Textbook",
       "location": "about/",
       "pageUrl": "https://dmccreary.github.io/chemistry/about/",
-      "quote": "Welcome! Hi, I am Catalyst \u2014 your guide through the wild and wonderful world of chemistry. Get it? Catalyst? No? OK, moving on. My job is to help you fall in love with chemistry! I will pop up throughout this textbook to welcome you to each chapter, share tips and encouragement, and help you celebrate when you power through a tough section. Think of me as your personal lab partner \u2014 one who never spills reagents and always knows where the safety goggles are. Although I was"
+      "quote": "Welcome! Hi, I am Catalyst — your guide through the wild and wonderful world of chemistry. Get it? Catalyst? No? OK, moving on. My job is to help you fall in love with chemistry! I will pop up throughout this textbook to welcome you to each chapter, share tips and encouragement, and help you celebrate when you power through a tough section. Think of me as your personal lab partner — one who never spills reagents and always knows where the safety goggles are. Although I was"
     },
     {
       "bookSlug": "chemistry",
@@ -812,7 +812,7 @@
       "pageTitle": "Error Propagation",
       "location": "chapters/01-foundations-of-chemistry/",
       "pageUrl": "https://dmccreary.github.io/chemistry/chapters/01-foundations-of-chemistry/",
-      "quote": "When multiple measurements are combined in a calculation, the uncertainties in each measurement compound to produce uncertainty in the final result. This is called error propagation (also called propagation of uncertainty). In AP Chemistry lab work, every measured quantity has some associated uncertainty \u2014 from the precision of glassware, balances, and thermometers. When those values are added, subtracted, multiplied, or divided, the errors propagate through the calculation."
+      "quote": "When multiple measurements are combined in a calculation, the uncertainties in each measurement compound to produce uncertainty in the final result. This is called error propagation (also called propagation of uncertainty). In AP Chemistry lab work, every measured quantity has some associated uncertainty — from the precision of glassware, balances, and thermometers. When those values are added, subtracted, multiplied, or divided, the errors propagate through the calculation."
     },
     {
       "bookSlug": "chemistry",
@@ -820,7 +820,7 @@
       "pageTitle": "Diagram: Interactive Mass Spectrometer Simulation",
       "location": "chapters/02-atomic-structure-and-mass-spectrometry/",
       "pageUrl": "https://dmccreary.github.io/chemistry/chapters/02-atomic-structure-and-mass-spectrometry/",
-      "quote": "Interactive Mass Spectrometer MicroSim Type: MicroSim sim-id: mass-spectrometer-sim Library: p5.js Status: Specified This interactive MicroSim occupies an 800\u00d7450 px canvas (responsive to window width). The canvas is divided into two panels side by side. The LEFT panel (roughly 55% width) shows a schematic diagram of the mass spectrometer with labeled components drawn in a clean technical style on a dark background (#1a1a2e): (1) Sample inlet \u2014 a small square labeled",
+      "quote": "Interactive Mass Spectrometer MicroSim Type: MicroSim sim-id: mass-spectrometer-sim Library: p5.js Status: Specified This interactive MicroSim occupies an 800×450 px canvas (responsive to window width). The canvas is divided into two panels side by side. The LEFT panel (roughly 55% width) shows a schematic diagram of the mass spectrometer with labeled components drawn in a clean technical style on a dark background (#1a1a2e): (1) Sample inlet — a small square labeled",
       "simId": "mass-spectrometer-sim",
       "simUrl": "https://dmccreary.github.io/chemistry/sims/mass-spectrometer-sim/"
     },
@@ -830,7 +830,7 @@
       "pageTitle": "3.1 From Bohr to Quantum Mechanics: A Story of Two Models",
       "location": "chapters/03-electron-configuration-and-periodic-trends/",
       "pageUrl": "https://dmccreary.github.io/chemistry/chapters/03-electron-configuration-and-periodic-trends/",
-      "quote": "The story of how chemists came to understand electron arrangement begins with a simple but profound observation: heated hydrogen gas does not glow with a continuous rainbow of colors. Instead, it emits light at only a few specific wavelengths \u2014 a handful of discrete lines against a dark background. Explaining this pattern demanded a new kind of physics. In 1913, Danish physicist Niels Bohr proposed a model of the hydrogen atom in which electrons orbit the nucleus only at"
+      "quote": "The story of how chemists came to understand electron arrangement begins with a simple but profound observation: heated hydrogen gas does not glow with a continuous rainbow of colors. Instead, it emits light at only a few specific wavelengths — a handful of discrete lines against a dark background. Explaining this pattern demanded a new kind of physics. In 1913, Danish physicist Niels Bohr proposed a model of the hydrogen atom in which electrons orbit the nucleus only at"
     },
     {
       "bookSlug": "chemistry",
@@ -846,7 +846,7 @@
       "pageTitle": "5.13 Network Covalent Solids: When Covalent Bonds Extend Throughout a Crystal",
       "location": "chapters/05-molecular-geometry-and-polarity/",
       "pageUrl": "https://dmccreary.github.io/chemistry/chapters/05-molecular-geometry-and-polarity/",
-      "quote": "Most covalent compounds exist as individual molecules \u2014 discrete units of a fixed number of atoms held together by covalent bonds, with the molecules themselves interacting through weaker intermolecular forces. But a special category of covalent substances, called network covalent solids, forms enormous three-dimensional lattices in which every atom is covalently bonded to its neighbors in a continuous, repeating network extending throughout the entire crystal. In a network"
+      "quote": "Most covalent compounds exist as individual molecules — discrete units of a fixed number of atoms held together by covalent bonds, with the molecules themselves interacting through weaker intermolecular forces. But a special category of covalent substances, called network covalent solids, forms enormous three-dimensional lattices in which every atom is covalently bonded to its neighbors in a continuous, repeating network extending throughout the entire crystal. In a network"
     },
     {
       "bookSlug": "chemistry",
@@ -854,7 +854,7 @@
       "pageTitle": "Diagram: Ideal Gas Law Interactive Simulator",
       "location": "chapters/06-intermolecular-forces-and-states-of-matter/",
       "pageUrl": "https://dmccreary.github.io/chemistry/chapters/06-intermolecular-forces-and-states-of-matter/",
-      "quote": "Ideal Gas Law Interactive Simulator Type: MicroSim sim-id: ideal-gas-law-simulator Library: p5.js Status: Specified Learning objective: Students will manipulate pressure, volume, temperature, and moles of an ideal gas and observe how changes to one variable affect the others, applying the ideal gas law quantitatively (Bloom L3: Apply \u2014 use the equation; Bloom L4: Analyze \u2014 predict the direction of change). Canvas size: 800 \u00d7 450 px, responsive to window resize. Layout: -",
+      "quote": "Ideal Gas Law Interactive Simulator Type: MicroSim sim-id: ideal-gas-law-simulator Library: p5.js Status: Specified Learning objective: Students will manipulate pressure, volume, temperature, and moles of an ideal gas and observe how changes to one variable affect the others, applying the ideal gas law quantitatively (Bloom L3: Apply — use the equation; Bloom L4: Analyze — predict the direction of change). Canvas size: 800 × 450 px, responsive to window resize. Layout: -",
       "simId": "ideal-gas-law-simulator",
       "simUrl": "https://dmccreary.github.io/chemistry/sims/ideal-gas-law-simulator/"
     },
@@ -864,7 +864,7 @@
       "pageTitle": "Diagram: Interactive Heating Curve Simulator",
       "location": "chapters/07-phase-changes-solutions-and-gas-laws/",
       "pageUrl": "https://dmccreary.github.io/chemistry/chapters/07-phase-changes-solutions-and-gas-laws/",
-      "quote": "Interactive Heating Curve Simulator Type: MicroSim sim-id: heating-curve-simulator Library: p5.js Status: Specified Learning objective: Students will identify the five segments of a heating curve, explain why plateaus occur, and predict how changing the substance or heating rate affects the curve (Bloom L4: Analyze \u2014 differentiate, attribute, and organize data from a dynamic graph). Canvas size: 800 \u00d7 450 px, responsive to window resize. Layout: Left panel (65% width): The",
+      "quote": "Interactive Heating Curve Simulator Type: MicroSim sim-id: heating-curve-simulator Library: p5.js Status: Specified Learning objective: Students will identify the five segments of a heating curve, explain why plateaus occur, and predict how changing the substance or heating rate affects the curve (Bloom L4: Analyze — differentiate, attribute, and organize data from a dynamic graph). Canvas size: 800 × 450 px, responsive to window resize. Layout: Left panel (65% width): The",
       "simId": "heating-curve-simulator",
       "simUrl": "https://dmccreary.github.io/chemistry/sims/heating-curve-simulator/"
     },
@@ -874,7 +874,7 @@
       "pageTitle": "The Half-Reaction Method",
       "location": "chapters/08-chemical-reactions-and-equations/",
       "pageUrl": "https://dmccreary.github.io/chemistry/chapters/08-chemical-reactions-and-equations/",
-      "quote": "Many redox equations are too complex to balance by inspection. The half-reaction method (also called the ion-electron method) divides the overall reaction into two half reactions \u2014 one for oxidation and one for reduction \u2014 balances each separately, then combines them. This method automatically ensures that electrons lost equal electrons gained, satisfying conservation of charge and conservation of mass simultaneously. Balancing a redox equation in acidic solution \u2014"
+      "quote": "Many redox equations are too complex to balance by inspection. The half-reaction method (also called the ion-electron method) divides the overall reaction into two half reactions — one for oxidation and one for reduction — balances each separately, then combines them. This method automatically ensures that electrons lost equal electrons gained, satisfying conservation of charge and conservation of mass simultaneously. Balancing a redox equation in acidic solution —"
     },
     {
       "bookSlug": "chemistry",
@@ -882,7 +882,7 @@
       "pageTitle": "Diagram: Interactive Titration Calculator MicroSim",
       "location": "chapters/09-stoichiometry-titrations-and-analysis/",
       "pageUrl": "https://dmccreary.github.io/chemistry/chapters/09-stoichiometry-titrations-and-analysis/",
-      "quote": "Interactive Titration Calculator \u2014 Acid-Base Titration Type: MicroSim (p5.js interactive calculator) sim-id: titration-calculator Library: p5.js Status: Specified Canvas size: 800\u00d7450px, responsive to window resize. The simulation presents a split layout: left panel (400px) shows sliders and input fields; right panel (400px) shows a live titration curve graph. Left panel controls: - Dropdown to select \"Strong Acid / Strong Base\" or \"Weak Acid / Strong Base\" - Slider:",
+      "quote": "Interactive Titration Calculator — Acid-Base Titration Type: MicroSim (p5.js interactive calculator) sim-id: titration-calculator Library: p5.js Status: Specified Canvas size: 800×450px, responsive to window resize. The simulation presents a split layout: left panel (400px) shows sliders and input fields; right panel (400px) shows a live titration curve graph. Left panel controls: - Dropdown to select \"Strong Acid / Strong Base\" or \"Weak Acid / Strong Base\" - Slider:",
       "simId": "titration-calculator",
       "simUrl": "https://dmccreary.github.io/chemistry/sims/titration-calculator/"
     },
@@ -892,7 +892,7 @@
       "pageTitle": "Diagram: Arrhenius Equation Explorer",
       "location": "chapters/10-reaction-rates-and-rate-laws/",
       "pageUrl": "https://dmccreary.github.io/chemistry/chapters/10-reaction-rates-and-rate-laws/",
-      "quote": "Arrhenius Equation Explorer \u2014 Interactive k vs T and Arrhenius Plot Type: microsim sim-id: arrhenius-equation-explorer Library: p5.js Status: Specified Learning objective: Students will be able to (1) predict how changing Ea and A affects the rate constant at different temperatures (Bloom L3: Apply \u2014 predict, calculate), and (2) explain why reactions with large Ea are more temperature-sensitive (Bloom L4: Analyze \u2014 differentiate, explain). Canvas: 800 px wide \u00d7 450 px tall,",
+      "quote": "Arrhenius Equation Explorer — Interactive k vs T and Arrhenius Plot Type: microsim sim-id: arrhenius-equation-explorer Library: p5.js Status: Specified Learning objective: Students will be able to (1) predict how changing Ea and A affects the rate constant at different temperatures (Bloom L3: Apply — predict, calculate), and (2) explain why reactions with large Ea are more temperature-sensitive (Bloom L4: Analyze — differentiate, explain). Canvas: 800 px wide × 450 px tall,",
       "simId": "arrhenius-equation-explorer",
       "simUrl": "https://dmccreary.github.io/chemistry/sims/arrhenius-equation-explorer/"
     },
@@ -910,7 +910,7 @@
       "pageTitle": "Why This Book Exists",
       "location": "about/",
       "pageUrl": "https://dmccreary.github.io/intro-to-physics-course/about/",
-      "quote": "The story of Michael Faraday captures why I created this textbook. Faraday had no formal mathematical education. Yet his extraordinary ability to visualize the world around him made him one of the greatest physicists in history. His invention of the electric motor and his description of magnetic fields are foundations of modern technology. He combined immense curiosity with a visualization skill he developed from a young age. I've been fortunate to share a similar gift\u2014the"
+      "quote": "The story of Michael Faraday captures why I created this textbook. Faraday had no formal mathematical education. Yet his extraordinary ability to visualize the world around him made him one of the greatest physicists in history. His invention of the electric motor and his description of magnetic fields are foundations of modern technology. He combined immense curiosity with a visualization skill he developed from a young age. I've been fortunate to share a similar gift—the"
     },
     {
       "bookSlug": "intro-to-physics-course",
@@ -950,7 +950,7 @@
       "pageTitle": "Diagram: Action-Reaction Pairs Interactive Diagram",
       "location": "chapters/04-forces-newtons-laws/",
       "pageUrl": "https://dmccreary.github.io/intro-to-physics-course/chapters/04-forces-newtons-laws/",
-      "quote": "Run Fullscreen <summary>Action-Reaction Pairs Specification</summary> **Status:** done Type: infographic Purpose: Help students identify action-reaction pairs in various scenarios and understand why they don't cancel Layout: Grid of six interactive scenarios with toggle functionality Scenario 1: Book on table - Visual: Book resting on table surface - Clickable forces: * Click book \u2192 Highlights two forces: - Action: Earth pulls down on book (weight) - Reaction: Book pulls up"
+      "quote": "Run Fullscreen <summary>Action-Reaction Pairs Specification</summary> **Status:** done Type: infographic Purpose: Help students identify action-reaction pairs in various scenarios and understand why they don't cancel Layout: Grid of six interactive scenarios with toggle functionality Scenario 1: Book on table - Visual: Book resting on table surface - Clickable forces: * Click book → Highlights two forces: - Action: Earth pulls down on book (weight) - Reaction: Book pulls up"
     },
     {
       "bookSlug": "intro-to-physics-course",
@@ -958,7 +958,7 @@
       "pageTitle": "Diagram: Banked Curve Force Analysis Diagram",
       "location": "chapters/05-applications-newtons-laws/",
       "pageUrl": "https://dmccreary.github.io/intro-to-physics-course/chapters/05-applications-newtons-laws/",
-      "quote": "Run Fullscreen Banked Curve Force Analysis Specification Status: done Type: diagram Purpose: Show force decomposition on a vehicle on a banked curve and explain how normal force provides centripetal component Components to show: - Side view of banked curve at angle \u03b8 (30\u00b0) to horizontal - Car (rectangle) on the banked surface - Coordinate system: x-axis horizontal (toward center), y-axis vertical - Normal force N (green arrow) perpendicular to banked surface - Weight mg"
+      "quote": "Run Fullscreen Banked Curve Force Analysis Specification Status: done Type: diagram Purpose: Show force decomposition on a vehicle on a banked curve and explain how normal force provides centripetal component Components to show: - Side view of banked curve at angle θ (30°) to horizontal - Car (rectangle) on the banked surface - Coordinate system: x-axis horizontal (toward center), y-axis vertical - Normal force N (green arrow) perpendicular to banked surface - Weight mg"
     },
     {
       "bookSlug": "intro-to-physics-course",
@@ -982,7 +982,7 @@
       "pageTitle": "Diagram: Real-World Rotational Applications Infographic",
       "location": "chapters/08-rotational-motion/",
       "pageUrl": "https://dmccreary.github.io/intro-to-physics-course/chapters/08-rotational-motion/",
-      "quote": "Real-World Rotational Applications Infographic Type: infographic Purpose: Create a visual summary connecting rotational motion concepts to real-world applications across engineering, sports, and nature. Layout: Grid layout with 12 application boxes arranged in 3 rows \u00d7 4 columns Categories (rows): 1. Engineering & Technology 2. Sports & Recreation 3. Natural Phenomena Each application box contains: - Icon or simple illustration - Application name - Primary rotational concept"
+      "quote": "Real-World Rotational Applications Infographic Type: infographic Purpose: Create a visual summary connecting rotational motion concepts to real-world applications across engineering, sports, and nature. Layout: Grid layout with 12 application boxes arranged in 3 rows × 4 columns Categories (rows): 1. Engineering & Technology 2. Sports & Recreation 3. Natural Phenomena Each application box contains: - Icon or simple illustration - Application name - Primary rotational concept"
     },
     {
       "bookSlug": "intro-to-physics-course",
@@ -998,7 +998,7 @@
       "pageTitle": "Learning Python with Skulpt",
       "location": "",
       "pageUrl": "https://dmccreary.github.io/learning-python/",
-      "quote": "The primary coding environment throughout this textbook is Skulpt \u2014 a JavaScript implementation of Python that runs entirely in your browser. No account, no download, no setup. Every chapter includes one or more inline Skulpt labs where you can: Read a short, working Python program Run it instantly by clicking the Run button Modify it \u2014 change a number, a color, a direction \u2014 and run it again Skulpt supports turtle graphics out of the box, giving students immediate visual"
+      "quote": "The primary coding environment throughout this textbook is Skulpt — a JavaScript implementation of Python that runs entirely in your browser. No account, no download, no setup. Every chapter includes one or more inline Skulpt labs where you can: Read a short, working Python program Run it instantly by clicking the Run button Modify it — change a number, a color, a direction — and run it again Skulpt supports turtle graphics out of the box, giving students immediate visual"
     },
     {
       "bookSlug": "learning-python",
@@ -1006,7 +1006,7 @@
       "pageTitle": "Why This Intelligent Textbook",
       "location": "about/",
       "pageUrl": "https://dmccreary.github.io/learning-python/about/",
-      "quote": "Python is the most popular programming language in the world \u2014 and has been for years. It powers breakthroughs in data science, artificial intelligence, scientific computing, web development, and the Raspberry Pi / Maker community. Yet most beginner Python resources assume either that students already know how to install software, or that they are adult learners comfortable reading reference documentation. Beginning programmers ages 10\u201313 deserve better. In the United States"
+      "quote": "Python is the most popular programming language in the world — and has been for years. It powers breakthroughs in data science, artificial intelligence, scientific computing, web development, and the Raspberry Pi / Maker community. Yet most beginner Python resources assume either that students already know how to install software, or that they are adult learners comfortable reading reference documentation. Beginning programmers ages 10–13 deserve better. In the United States"
     },
     {
       "bookSlug": "learning-python",
@@ -1038,7 +1038,7 @@
       "pageTitle": "Chapter Overview",
       "location": "chapters/",
       "pageUrl": "https://dmccreary.github.io/learning-python/chapters/",
-      "quote": "Welcome to Python and Skulpt \u2014 Meet Monty, run your first print() , write import turtle , and see what's coming. Python Code Structure \u2014 Indentation, code blocks, keywords, whitespace, and named colors. Variables and Numbers \u2014 Storing data with variables, naming rules, integers, floats, and None. Functions and Objects \u2014 Defining functions with def , calling them, and a first look at objects. Drawing with Turtle Graphics \u2014 Your first real turtle programs: movement, turning,"
+      "quote": "Welcome to Python and Skulpt — Meet Monty, run your first print() , write import turtle , and see what's coming. Python Code Structure — Indentation, code blocks, keywords, whitespace, and named colors. Variables and Numbers — Storing data with variables, naming rules, integers, floats, and None. Functions and Objects — Defining functions with def , calling them, and a first look at objects. Drawing with Turtle Graphics — Your first real turtle programs: movement, turning,"
     },
     {
       "bookSlug": "learning-python",
@@ -1046,7 +1046,7 @@
       "pageTitle": "Ways to Run Python",
       "location": "chapters/01-welcome-to-python/",
       "pageUrl": "https://dmccreary.github.io/learning-python/chapters/01-welcome-to-python/",
-      "quote": "Before you write your first line of Python, it helps to know where Python runs. There are several options, and each one has its place in this course. Directly in a Webpage \u2014 We use a powerful library called Skulpt that is built right into this textbook. Skulpt is a version of Python that runs directly inside the web page you are reading right now. Every interactive code box in Chapters 1\u201318 is powered by Skulpt. You do not need to open a new tab, log in, or install anything."
+      "quote": "Before you write your first line of Python, it helps to know where Python runs. There are several options, and each one has its place in this course. Directly in a Webpage — We use a powerful library called Skulpt that is built right into this textbook. Skulpt is a version of Python that runs directly inside the web page you are reading right now. Every interactive code box in Chapters 1–18 is powered by Skulpt. You do not need to open a new tab, log in, or install anything."
     },
     {
       "bookSlug": "learning-python",
@@ -1054,7 +1054,7 @@
       "pageTitle": "Indentation as Syntax",
       "location": "chapters/02-python-code-structure/",
       "pageUrl": "https://dmccreary.github.io/learning-python/chapters/02-python-code-structure/",
-      "quote": "Most programming languages use curly braces { } or the words begin and end to show that lines of code belong together. Python does something different \u2014 it uses indentation: the number of spaces at the start of each line. Indentation means pressing the spacebar (or the Tab key) before a line of code to push it to the right. In Python, indentation is not just for looks \u2014 it is part of the grammar of the language. Python reads the spaces at the start of a line to decide which"
+      "quote": "Most programming languages use curly braces { } or the words begin and end to show that lines of code belong together. Python does something different — it uses indentation: the number of spaces at the start of each line. Indentation means pressing the spacebar (or the Tab key) before a line of code to push it to the right. In Python, indentation is not just for looks — it is part of the grammar of the language. Python reads the spaces at the start of a line to decide which"
     },
     {
       "bookSlug": "learning-python",
@@ -1062,7 +1062,7 @@
       "pageTitle": "What Is a Variable?",
       "location": "chapters/03-variables-and-numbers/",
       "pageUrl": "https://dmccreary.github.io/learning-python/chapters/03-variables-and-numbers/",
-      "quote": "Picture a sticky note on your desk. The front has a name written on it \u2014 like score \u2014 and on the back you write the current value, like 10. Whenever you need to know the score, you flip it over and read it. If the score changes, you erase the old number and write a new one \u2014 but the name on the front stays the same. In Python, a variable works exactly like that sticky note. You create a variable by writing its name, then an equals sign, then the value you want to store. This"
+      "quote": "Picture a sticky note on your desk. The front has a name written on it — like score — and on the back you write the current value, like 10. Whenever you need to know the score, you flip it over and read it. If the score changes, you erase the old number and write a new one — but the name on the front stays the same. In Python, a variable works exactly like that sticky note. You create a variable by writing its name, then an equals sign, then the value you want to store. This"
     },
     {
       "bookSlug": "learning-python",
@@ -1070,7 +1070,7 @@
       "pageTitle": "Objects and Classes: A First Look",
       "location": "chapters/04-functions-and-objects/",
       "pageUrl": "https://dmccreary.github.io/learning-python/chapters/04-functions-and-objects/",
-      "quote": "You are almost ready to meet the turtle module. Before you do, there is one more idea to preview \u2014 not fully explain, just introduce \u2014 because you will see it the moment you start drawing. Python organizes many things as objects. An object is a package that bundles together two kinds of things: Data (called attributes) \u2014 information the object knows about itself Actions (called methods) \u2014 things the object can do The classic example is a turtle on screen. A turtle object"
+      "quote": "You are almost ready to meet the turtle module. Before you do, there is one more idea to preview — not fully explain, just introduce — because you will see it the moment you start drawing. Python organizes many things as objects. An object is a package that bundles together two kinds of things: Data (called attributes) — information the object knows about itself Actions (called methods) — things the object can do The classic example is a turtle on screen. A turtle object"
     },
     {
       "bookSlug": "learning-python",
@@ -1086,7 +1086,7 @@
       "pageTitle": "Arithmetic Operators",
       "location": "chapters/06-math-and-arithmetic/",
       "pageUrl": "https://dmccreary.github.io/learning-python/chapters/06-math-and-arithmetic/",
-      "quote": "An arithmetic operator is a symbol that tells Python to perform a math calculation. You already know four of them from math class: + , - , * , and / . Python adds three more that are especially useful in programming. Here is the complete set: Operator Name Example Result + Addition 10 + 3 13 - Subtraction 10 - 3 7 * Multiplication 10 * 3 30 / Division 10 / 3 3.3333... // Integer Division 10 // 3 3 % Modulo (remainder) 10 % 3 1 ** Exponentiation 10 ** 3 1000 The last three \u2014"
+      "quote": "An arithmetic operator is a symbol that tells Python to perform a math calculation. You already know four of them from math class: + , - , * , and / . Python adds three more that are especially useful in programming. Here is the complete set: Operator Name Example Result + Addition 10 + 3 13 - Subtraction 10 - 3 7 * Multiplication 10 * 3 30 / Division 10 / 3 3.3333... // Integer Division 10 // 3 3 % Modulo (remainder) 10 % 3 1 ** Exponentiation 10 ** 3 1000 The last three —"
     },
     {
       "bookSlug": "quantum-computing",
@@ -1094,7 +1094,7 @@
       "pageTitle": "Quantum Computing - A Skeptic's Guide",
       "location": "",
       "pageUrl": "https://dmccreary.github.io/quantum-computing/",
-      "quote": "Welcome to A Skeptic's Guide to Quantum Computing \u2014 an interactive intelligent textbook for investors, policymakers, students, and anyone who wants to evaluate quantum computing claims with evidence rather than hype. Over $100 billion has been invested in quantum computing worldwide, yet no company has generated a single dollar of commercial return. This book examines why \u2014 tracing the physics barriers, the economics, the cognitive biases, and the sociology of technology"
+      "quote": "Welcome to A Skeptic's Guide to Quantum Computing — an interactive intelligent textbook for investors, policymakers, students, and anyone who wants to evaluate quantum computing claims with evidence rather than hype. Over $100 billion has been invested in quantum computing worldwide, yet no company has generated a single dollar of commercial return. This book examines why — tracing the physics barriers, the economics, the cognitive biases, and the sociology of technology"
     },
     {
       "bookSlug": "quantum-computing",
@@ -1102,7 +1102,7 @@
       "pageTitle": "Why This Book",
       "location": "about/",
       "pageUrl": "https://dmccreary.github.io/quantum-computing/about/",
-      "quote": "Over $100 billion has been invested in quantum computing worldwide, yet no company has produced a single dollar of positive return on investment from quantum computing products or services. Proponents routinely assert that economic viability is \"just a few years away\" \u2014 a claim that has been made, and missed, repeatedly since the 1990s. Despite this track record, most coverage of quantum computing remains relentlessly optimistic. Press releases become breathless headlines."
+      "quote": "Over $100 billion has been invested in quantum computing worldwide, yet no company has produced a single dollar of positive return on investment from quantum computing products or services. Proponents routinely assert that economic viability is \"just a few years away\" — a claim that has been made, and missed, repeatedly since the 1990s. Despite this track record, most coverage of quantum computing remains relentlessly optimistic. Press releases become breathless headlines."
     },
     {
       "bookSlug": "quantum-computing",
@@ -1110,7 +1110,7 @@
       "pageTitle": "Microsoft's Majorana 2 Claims: Nature Critique Analysis",
       "location": "appendices/",
       "pageUrl": "https://dmccreary.github.io/quantum-computing/appendices/",
-      "quote": "A detailed review of Dr. Henry Legg's June 2026 Nature \"Matters Arising\" critique challenging Microsoft's topological qubit paper. Legg identifies basic Python coding errors, a flawed measurement protocol with arbitrary outcomes, and omitted data that resembles noise rather than the claimed Majorana state. This is the third serious public challenge to Microsoft Majorana research after retractions in 2018 and 2021. Rated 9/10 for a technically specific, verifiable critique \u2014"
+      "quote": "A detailed review of Dr. Henry Legg's June 2026 Nature \"Matters Arising\" critique challenging Microsoft's topological qubit paper. Legg identifies basic Python coding errors, a flawed measurement protocol with arbitrary outcomes, and omitted data that resembles noise rather than the claimed Majorana state. This is the third serious public challenge to Microsoft Majorana research after retractions in 2018 and 2021. Rated 9/10 for a technically specific, verifiable critique —"
     },
     {
       "bookSlug": "quantum-computing",
@@ -1118,7 +1118,7 @@
       "pageTitle": "Appendix B: The Physics Breakthroughs Required",
       "location": "appendices/breakthroughs-required/",
       "pageUrl": "https://dmccreary.github.io/quantum-computing/appendices/breakthroughs-required/",
-      "quote": "For quantum computing to become economically viable, all of the following breakthroughs must occur \u2014 not just some: Error rates must decrease by 10-100x across all gate types, simultaneously, on a single platform Qubit counts must increase by 1,000-10,000x while maintaining or improving per-qubit quality Coherence times must increase by 10-100x to allow complex algorithms to complete before quantum information is lost Qubit connectivity must dramatically improve or"
+      "quote": "For quantum computing to become economically viable, all of the following breakthroughs must occur — not just some: Error rates must decrease by 10-100x across all gate types, simultaneously, on a single platform Qubit counts must increase by 1,000-10,000x while maintaining or improving per-qubit quality Coherence times must increase by 10-100x to allow complex algorithms to complete before quantum information is lost Qubit connectivity must dramatically improve or"
     },
     {
       "bookSlug": "quantum-computing",
@@ -1126,7 +1126,7 @@
       "pageTitle": "Appendix A: Overly Optimistic Claims of Quantum Computing",
       "location": "appendices/claims/",
       "pageUrl": "https://dmccreary.github.io/quantum-computing/appendices/claims/",
-      "quote": "Disclaimer All claims below are documented from public sources. Inclusion does not imply dishonesty \u2014 many were made in good faith. The pattern, however, is instructive. Year Claimant Claim What Actually Happened 2007 Geordie Rose, D-Wave \"We've built the world's first commercial quantum computer\" Device was a quantum annealer; no evidence of quantum speedup over classical computers was established for years 2011 D-Wave / Lockheed Martin Sale of D-Wave One implies commercial"
+      "quote": "Disclaimer All claims below are documented from public sources. Inclusion does not imply dishonesty — many were made in good faith. The pattern, however, is instructive. Year Claimant Claim What Actually Happened 2007 Geordie Rose, D-Wave \"We've built the world's first commercial quantum computer\" Device was a quantum annealer; no evidence of quantum speedup over classical computers was established for years 2011 D-Wave / Lockheed Martin Sale of D-Wave One implies commercial"
     },
     {
       "bookSlug": "quantum-computing",
@@ -1134,7 +1134,7 @@
       "pageTitle": "Legitimate Weaknesses",
       "location": "appendices/dyakonov-book/",
       "pageUrl": "https://dmccreary.github.io/quantum-computing/appendices/dyakonov-book/",
-      "quote": "Insufficient engagement with the threshold theorem. This is Dyakonov's most serious intellectual gap. The fault-tolerance threshold theorem does not ignore continuous errors \u2014 it explicitly models gate imprecision, state preparation errors, and decoherence as continuous noise processes, folding them into a unified error budget. As Scott Aaronson has pointed out, Dyakonov's claim that \"no one has any idea how to account for imprecision\" is factually incorrect \u2014 the theorem"
+      "quote": "Insufficient engagement with the threshold theorem. This is Dyakonov's most serious intellectual gap. The fault-tolerance threshold theorem does not ignore continuous errors — it explicitly models gate imprecision, state preparation errors, and decoherence as continuous noise processes, folding them into a unified error budget. As Scott Aaronson has pointed out, Dyakonov's claim that \"no one has any idea how to account for imprecision\" is factually incorrect — the theorem"
     },
     {
       "bookSlug": "quantum-computing",
@@ -1142,7 +1142,7 @@
       "pageTitle": "Relevance to This Textbook",
       "location": "appendices/google-quantum-echo-paper/",
       "pageUrl": "https://dmccreary.github.io/quantum-computing/appendices/google-quantum-echo-paper/",
-      "quote": "This paper illustrates several of the cognitive and institutional biases examined in this course. The Benchmark Slide: The 13,000\u00d7 speedup is real for this specific task. The press release headline drops the qualifier. Readers who see only the headline \u2014 the majority \u2014 receive a systematically inflated picture of where quantum computing stands. The Halo Effect: Nature publication + Google brand + large speedup number causes the caveats to disappear in translation. The"
+      "quote": "This paper illustrates several of the cognitive and institutional biases examined in this course. The Benchmark Slide: The 13,000× speedup is real for this specific task. The press release headline drops the qualifier. Readers who see only the headline — the majority — receive a systematically inflated picture of where quantum computing stands. The Halo Effect: Nature publication + Google brand + large speedup number causes the caveats to disappear in translation. The"
     },
     {
       "bookSlug": "quantum-computing",
@@ -1150,7 +1150,7 @@
       "pageTitle": "Cognitive Biases at Work",
       "location": "appendices/microsoft-rebuttal/",
       "pageUrl": "https://dmccreary.github.io/quantum-computing/appendices/microsoft-rebuttal/",
-      "quote": "This case is a near-perfect illustration of institutional cognitive bias operating at scale. Sunk cost fallacy (Microsoft) Microsoft has invested an estimated $1 billion or more and sixteen years in this specific approach. That creates enormous psychological and organizational pressure to see evidence of progress. Past investment is not a physics argument \u2014 but it powerfully shapes what results a team is motivated to find, report, and defend. Confirmation bias (Microsoft)"
+      "quote": "This case is a near-perfect illustration of institutional cognitive bias operating at scale. Sunk cost fallacy (Microsoft) Microsoft has invested an estimated $1 billion or more and sixteen years in this specific approach. That creates enormous psychological and organizational pressure to see evidence of progress. Past investment is not a physics argument — but it powerfully shapes what results a team is motivated to find, report, and defend. Confirmation bias (Microsoft)"
     },
     {
       "bookSlug": "quantum-computing",
@@ -1158,7 +1158,7 @@
       "pageTitle": "Legitimate Weaknesses",
       "location": "appendices/palmer-limit/",
       "pageUrl": "https://dmccreary.github.io/quantum-computing/appendices/palmer-limit/",
-      "quote": "No experimental evidence yet. As of early 2026, no experiment has confirmed RaQM's predictions. The theory's value depends entirely on its predictions being tested and confirmed. Palmer himself acknowledges this. Superdeterminism is widely rejected. The mainstream physics community is deeply skeptical of superdeterministic theories because they appear to undermine the very possibility of scientific experimentation \u2014 if measurement settings are correlated with hidden"
+      "quote": "No experimental evidence yet. As of early 2026, no experiment has confirmed RaQM's predictions. The theory's value depends entirely on its predictions being tested and confirmed. Palmer himself acknowledges this. Superdeterminism is widely rejected. The mainstream physics community is deeply skeptical of superdeterministic theories because they appear to undermine the very possibility of scientific experimentation — if measurement settings are correlated with hidden"
     },
     {
       "bookSlug": "quantum-computing",
@@ -1174,7 +1174,7 @@
       "pageTitle": "Classical Computing: The Foundation",
       "location": "chapters/01-what-is-quantum-computing/",
       "pageUrl": "https://dmccreary.github.io/quantum-computing/chapters/01-what-is-quantum-computing/",
-      "quote": "To understand what quantum computing promises, we first need to understand what classical computing does \u2014 and where it encounters fundamental limits. A classical computer operates on bits \u2014 binary digits that take the value 0 or 1. Every computation a classical computer performs, from rendering a video game to training a neural network, reduces to manipulating sequences of bits through logical operations (AND, OR, NOT, and their combinations). The power of classical"
+      "quote": "To understand what quantum computing promises, we first need to understand what classical computing does — and where it encounters fundamental limits. A classical computer operates on bits — binary digits that take the value 0 or 1. Every computation a classical computer performs, from rendering a video game to training a neural network, reduces to manipulating sequences of bits through logical operations (AND, OR, NOT, and their combinations). The power of classical"
     },
     {
       "bookSlug": "quantum-computing",
@@ -1190,7 +1190,7 @@
       "pageTitle": "About This Book",
       "location": "",
       "pageUrl": "https://dmccreary.github.io/hydroponics/",
-      "quote": "Hydroponics: From Mason Jar to Vertical Farm is an interactive intelligent textbook for advanced high-school and college students. It bridges the gap between the plant physiology and nutrient chemistry that make hydroponics work and the hands-on builds, automation, and economics that make it scale. The global vertical farming market exceeded $20 billion in 2026 \u2014 and the same science that powers a rooftop commercial farm can be explored for as little as $10 with a mason jar,"
+      "quote": "Hydroponics: From Mason Jar to Vertical Farm is an interactive intelligent textbook for advanced high-school and college students. It bridges the gap between the plant physiology and nutrient chemistry that make hydroponics work and the hands-on builds, automation, and economics that make it scale. The global vertical farming market exceeded $20 billion in 2026 — and the same science that powers a rooftop commercial farm can be explored for as little as $10 with a mason jar,"
     },
     {
       "bookSlug": "hydroponics",
@@ -1198,7 +1198,7 @@
       "pageTitle": "Why This Intelligent Textbook",
       "location": "about/",
       "pageUrl": "https://dmccreary.github.io/hydroponics/about/",
-      "quote": "Hydroponics sits at the intersection of biology, chemistry, engineering, food science, and data science \u2014 and the world needs students fluent in all five at once. Climate stress, urban food deserts, and agricultural water scarcity are converging just as inexpensive sensors, LEDs, and microcontrollers are bringing precision growing within reach of any classroom. The next generation of farmers will not look like the last, and the curriculum that prepares them must be built"
+      "quote": "Hydroponics sits at the intersection of biology, chemistry, engineering, food science, and data science — and the world needs students fluent in all five at once. Climate stress, urban food deserts, and agricultural water scarcity are converging just as inexpensive sensors, LEDs, and microcontrollers are bringing precision growing within reach of any classroom. The next generation of farmers will not look like the last, and the curriculum that prepares them must be built"
     },
     {
       "bookSlug": "hydroponics",
@@ -1206,7 +1206,7 @@
       "pageTitle": "Chapter Overview",
       "location": "chapters/",
       "pageUrl": "https://dmccreary.github.io/hydroponics/chapters/",
-      "quote": "Introduction to Hydroponics \u2014 History, soilless principles, plant life cycle fundamentals, and the scope from mason jar to vertical farm. Root Biology and Nutrient Absorption \u2014 Root anatomy, passive diffusion, active transport, osmosis, xylem/phloem, and root exudate chemistry. Water Transport, Photosynthesis, and Plant Health \u2014 Dissolved oxygen, root rot physiology, and visual deficiency symptom identification. Essential Nutrients: Macro and Micro \u2014 All 17 essential plant"
+      "quote": "Introduction to Hydroponics — History, soilless principles, plant life cycle fundamentals, and the scope from mason jar to vertical farm. Root Biology and Nutrient Absorption — Root anatomy, passive diffusion, active transport, osmosis, xylem/phloem, and root exudate chemistry. Water Transport, Photosynthesis, and Plant Health — Dissolved oxygen, root rot physiology, and visual deficiency symptom identification. Essential Nutrients: Macro and Micro — All 17 essential plant"
     },
     {
       "bookSlug": "hydroponics",
@@ -1214,7 +1214,7 @@
       "pageTitle": "Diagram: History of Hydroponics Timeline",
       "location": "chapters/01-introduction/",
       "pageUrl": "https://dmccreary.github.io/hydroponics/chapters/01-introduction/",
-      "quote": "History of Hydroponics Timeline Type: timeline sim-id: hydroponics-history-timeline Library: vis-timeline Status: Specified Purpose: Show the progression of soilless growing from ancient practice to modern industry, giving students historical context and making the concept of hydroponics feel like part of a long human story rather than a recent invention. Bloom Level: Understand (L2) Bloom Verb: Explain \u2014 students explain why each era advanced the field Time period: 1200 CE",
+      "quote": "History of Hydroponics Timeline Type: timeline sim-id: hydroponics-history-timeline Library: vis-timeline Status: Specified Purpose: Show the progression of soilless growing from ancient practice to modern industry, giving students historical context and making the concept of hydroponics feel like part of a long human story rather than a recent invention. Bloom Level: Understand (L2) Bloom Verb: Explain — students explain why each era advanced the field Time period: 1200 CE",
       "simId": "hydroponics-history-timeline",
       "simUrl": "https://dmccreary.github.io/hydroponics/sims/hydroponics-history-timeline/"
     },
@@ -1224,7 +1224,7 @@
       "pageTitle": "Key Takeaways",
       "location": "chapters/02-root-biology/",
       "pageUrl": "https://dmccreary.github.io/hydroponics/chapters/02-root-biology/",
-      "quote": "Root hair cells vastly increase absorptive surface area. Healthy root hairs are bright white in hydroponic solution; browning signals oxygen deficiency or pathogen attack. Passive diffusion moves ions down their concentration gradient across channel proteins \u2014 no energy required, limited to situations where the gradient favors inward movement. Active transport moves ions against their concentration gradient using ATP-powered pumps \u2014 requires dissolved oxygen at the root"
+      "quote": "Root hair cells vastly increase absorptive surface area. Healthy root hairs are bright white in hydroponic solution; browning signals oxygen deficiency or pathogen attack. Passive diffusion moves ions down their concentration gradient across channel proteins — no energy required, limited to situations where the gradient favors inward movement. Active transport moves ions against their concentration gradient using ATP-powered pumps — requires dissolved oxygen at the root"
     },
     {
       "bookSlug": "hydroponics",
@@ -1232,7 +1232,7 @@
       "pageTitle": "Key Takeaways",
       "location": "chapters/03-water-transport/",
       "pageUrl": "https://dmccreary.github.io/hydroponics/chapters/03-water-transport/",
-      "quote": "Root adaptation to hydroponics produces dense white root hairs in well-oxygenated solution and dual-zone roots (water roots + air roots) in systems with an air gap. Root color is a primary health diagnostic. Dissolved oxygen must stay above 5 mg/L; warm solution (>24\u00b0C) holds less oxygen and increases Pythium risk simultaneously. Root rot (Pythium) progresses from brown root tips to full plant collapse in as little as 24\u201348 hours \u2014 prevention through temperature and aeration"
+      "quote": "Root adaptation to hydroponics produces dense white root hairs in well-oxygenated solution and dual-zone roots (water roots + air roots) in systems with an air gap. Root color is a primary health diagnostic. Dissolved oxygen must stay above 5 mg/L; warm solution (>24°C) holds less oxygen and increases Pythium risk simultaneously. Root rot (Pythium) progresses from brown root tips to full plant collapse in as little as 24–48 hours — prevention through temperature and aeration"
     },
     {
       "bookSlug": "hydroponics",
@@ -1240,7 +1240,7 @@
       "pageTitle": "Key Takeaways",
       "location": "chapters/04-macro-micro-nutrients/",
       "pageUrl": "https://dmccreary.github.io/hydroponics/chapters/04-macro-micro-nutrients/",
-      "quote": "17 essential plant nutrients: three from air and water (C, H, O), six macronutrients from mineral solution (N, P, K, Ca, Mg, S), and eight micronutrients (Fe, Mn, Zn, Cu, B, Mo, Cl, Ni). Macronutrients are required at 50\u2013300 ppm; micronutrients at 0.1\u20135 ppm. Nitrogen builds proteins and chlorophyll; nitrate causes pH to rise; ammonium causes pH to fall. Calcium and boron are immobile and must reach growing tissue continuously via the transpiration stream. Iron deficiency is"
+      "quote": "17 essential plant nutrients: three from air and water (C, H, O), six macronutrients from mineral solution (N, P, K, Ca, Mg, S), and eight micronutrients (Fe, Mn, Zn, Cu, B, Mo, Cl, Ni). Macronutrients are required at 50–300 ppm; micronutrients at 0.1–5 ppm. Nitrogen builds proteins and chlorophyll; nitrate causes pH to rise; ammonium causes pH to fall. Calcium and boron are immobile and must reach growing tissue continuously via the transpiration stream. Iron deficiency is"
     },
     {
       "bookSlug": "hydroponics",
@@ -1248,7 +1248,7 @@
       "pageTitle": "Key Takeaways",
       "location": "chapters/05-nutrient-solution-chemistry/",
       "pageUrl": "https://dmccreary.github.io/hydroponics/chapters/05-nutrient-solution-chemistry/",
-      "quote": "EC (mS/cm) measures total dissolved ion concentration \u2014 the primary tool for monitoring nutrient solution strength; target 1.0\u20132.5 mS/cm for leafy greens, 2.5\u20134.5 mS/cm for fruiting crops. ppm expresses specific element concentrations; the EC-to-ppm conversion factor (0.5 or 0.7) depends on the meter manufacturer. Two-part systems separate calcium and phosphate/sulfate in concentrated form to prevent precipitation; mix Part A first, then Part B, always into bulk water. Raw"
+      "quote": "EC (mS/cm) measures total dissolved ion concentration — the primary tool for monitoring nutrient solution strength; target 1.0–2.5 mS/cm for leafy greens, 2.5–4.5 mS/cm for fruiting crops. ppm expresses specific element concentrations; the EC-to-ppm conversion factor (0.5 or 0.7) depends on the meter manufacturer. Two-part systems separate calcium and phosphate/sulfate in concentrated form to prevent precipitation; mix Part A first, then Part B, always into bulk water. Raw"
     },
     {
       "bookSlug": "hydroponics",
@@ -1256,7 +1256,7 @@
       "pageTitle": "Key Takeaways",
       "location": "chapters/06-passive-basic-active-systems/",
       "pageUrl": "https://dmccreary.github.io/hydroponics/chapters/06-passive-basic-active-systems/",
-      "quote": "Passive systems (Kratky) require no electricity and have zero pump-failure risk; the self-adjusting air gap provides passive oxygenation. DWC offers excellent oxygen delivery from an air stone; single-bucket builds are the best starting point for active hydroponic systems. NFT is the commercial standard for leafy greens \u2014 thin-film channels provide excellent oxygen \u2014 but pump failure kills the crop within an hour. Ebb-and-flow is the most versatile system: periodic"
+      "quote": "Passive systems (Kratky) require no electricity and have zero pump-failure risk; the self-adjusting air gap provides passive oxygenation. DWC offers excellent oxygen delivery from an air stone; single-bucket builds are the best starting point for active hydroponic systems. NFT is the commercial standard for leafy greens — thin-film channels provide excellent oxygen — but pump failure kills the crop within an hour. Ebb-and-flow is the most versatile system: periodic"
     },
     {
       "bookSlug": "hydroponics",
@@ -1264,15 +1264,15 @@
       "pageTitle": "System Cleaning Between Cycles",
       "location": "chapters/07-advanced-systems/",
       "pageUrl": "https://dmccreary.github.io/hydroponics/chapters/07-advanced-systems/",
-      "quote": "Cleaning and sanitizing the entire hydroponic system between crop cycles is one of the most important \u2014 and most commonly skipped \u2014 maintenance tasks. Biofilm, root debris, and mineral scale that accumulate during one cycle become inoculum for pathogens in the next cycle. A complete cleaning protocol between cycles: Harvest all plants and remove root debris from channels, reservoir, and net pots Drain the system completely \u2014 open all drain valves; tilt channels to evacuate"
+      "quote": "Cleaning and sanitizing the entire hydroponic system between crop cycles is one of the most important — and most commonly skipped — maintenance tasks. Biofilm, root debris, and mineral scale that accumulate during one cycle become inoculum for pathogens in the next cycle. A complete cleaning protocol between cycles: Harvest all plants and remove root debris from channels, reservoir, and net pots Drain the system completely — open all drain valves; tilt channels to evacuate"
     },
     {
       "bookSlug": "hydroponics",
       "bookTitle": "Hydroponics: From Mason Jar to Vertical Farm",
-      "pageTitle": "Build 2: 5-Gallon Bucket DWC ($50\u201380)",
+      "pageTitle": "Build 2: 5-Gallon Bucket DWC ($50–80)",
       "location": "chapters/08-diy-school-projects/",
       "pageUrl": "https://dmccreary.github.io/hydroponics/chapters/08-diy-school-projects/",
-      "quote": "Materials list: 1 \u00d7 5-gallon (19L) black HDPE bucket with lid ($5\u20138 at hardware stores) 1 \u00d7 3-inch net pot ($1\u20132) 1 \u00d7 hole saw sized to the net pot (3-inch) for a drill ($8\u201315 if you don't own one) 1 small aquarium air pump (rated 150\u2013400 L/hr) ($10\u201320) 1 meter of airline tubing ($2\u20134) 1 air stone ($2\u20135) Two-part liquid nutrient concentrate pH meter, pH-Up and pH-Down solutions Growing medium (hydroton, 2\u20133 cups) EC/TDS meter (optional but recommended, $15\u201330) Aquarium air"
+      "quote": "Materials list: 1 × 5-gallon (19L) black HDPE bucket with lid ($5–8 at hardware stores) 1 × 3-inch net pot ($1–2) 1 × hole saw sized to the net pot (3-inch) for a drill ($8–15 if you don't own one) 1 small aquarium air pump (rated 150–400 L/hr) ($10–20) 1 meter of airline tubing ($2–4) 1 air stone ($2–5) Two-part liquid nutrient concentrate pH meter, pH-Up and pH-Down solutions Growing medium (hydroton, 2–3 cups) EC/TDS meter (optional but recommended, $15–30) Aquarium air"
     },
     {
       "bookSlug": "hydroponics",
@@ -1280,7 +1280,7 @@
       "pageTitle": "Perlite, Vermiculite, Pumice, and Gravel",
       "location": "chapters/09-growing-media-crops/",
       "pageUrl": "https://dmccreary.github.io/hydroponics/chapters/09-growing-media-crops/",
-      "quote": "Perlite is expanded volcanic glass \u2014 a very lightweight, white, highly porous material. It has almost no water retention (drains immediately) but excellent air porosity. Perlite is used primarily as an amendment mixed with coir or rockwool to increase air porosity in heavy media, or as a standalone medium in run-to-waste drip systems for fast-draining fruiting crops. Perlite is single-use in most applications (it collapses and loses structure after one growing cycle)."
+      "quote": "Perlite is expanded volcanic glass — a very lightweight, white, highly porous material. It has almost no water retention (drains immediately) but excellent air porosity. Perlite is used primarily as an amendment mixed with coir or rockwool to increase air porosity in heavy media, or as a standalone medium in run-to-waste drip systems for fast-draining fruiting crops. Perlite is single-use in most applications (it collapses and loses structure after one growing cycle)."
     },
     {
       "bookSlug": "linear-algebra",
@@ -1288,7 +1288,7 @@
       "pageTitle": "Linear Algebra",
       "location": "",
       "pageUrl": "https://dmccreary.github.io/linear-algebra/",
-      "quote": "Course Description In Linear Algebra, you won\u2019t just learn matrices and vectors\u2014you'll experience them in action. This course empowers undergraduate students in Computer Science and Artificial Intelligence to develop a deep, functional understanding of linear algebra\u2019s essential role in modern technology."
+      "quote": "Course Description In Linear Algebra, you won’t just learn matrices and vectors—you'll experience them in action. This course empowers undergraduate students in Computer Science and Artificial Intelligence to develop a deep, functional understanding of linear algebra’s essential role in modern technology."
     },
     {
       "bookSlug": "linear-algebra",
@@ -1376,7 +1376,7 @@
       "pageTitle": "Putting It All Together",
       "location": "chapters/09-machine-learning-foundations/",
       "pageUrl": "https://dmccreary.github.io/linear-algebra/chapters/09-machine-learning-foundations/",
-      "quote": "Here's a complete machine learning pipeline using these concepts: import numpy as np from sklearn.preprocessing import StandardScaler from sklearn.decomposition import PCA from sklearn.linear_model import Ridge, Lasso # Load data X_train, y_train = load_data() # n\u00d7d feature matrix, n\u00d71 target # Step 1: Standardize features scaler = StandardScaler() X_scaled = scaler.fit_transform(X_train) # Step 2: PCA for dimensionality reduction pca = PCA(n_components=0.95) # Keep 95%"
+      "quote": "Here's a complete machine learning pipeline using these concepts: import numpy as np from sklearn.preprocessing import StandardScaler from sklearn.decomposition import PCA from sklearn.linear_model import Ridge, Lasso # Load data X_train, y_train = load_data() # n×d feature matrix, n×1 target # Step 1: Standardize features scaler = StandardScaler() X_scaled = scaler.fit_transform(X_train) # Step 2: PCA for dimensionality reduction pca = PCA(n_components=0.95) # Keep 95%"
     },
     {
       "bookSlug": "algebra-1",
@@ -1432,7 +1432,7 @@
       "pageTitle": "Summary",
       "location": "chapters/05-factoring-polynomials/",
       "pageUrl": "https://dmccreary.github.io/algebra-1/chapters/05-factoring-polynomials/",
-      "quote": "In this chapter, you've learned powerful factoring techniques that are essential for success in algebra: Factoring Methods: Factoring by GCF: Always the first step\u2014factor out the greatest common factor Factoring trinomials: For \\(x^2 + bx + c\\), find two numbers that multiply to \\(c\\) and add to \\(b\\) Difference of squares: \\(a^2 - b^2 = (a + b)(a - b)\\) Perfect square trinomials: \\(a^2 \\pm 2ab + b^2 = (a \\pm b)^2\\) Factoring by grouping: Group terms and factor out common"
+      "quote": "In this chapter, you've learned powerful factoring techniques that are essential for success in algebra: Factoring Methods: Factoring by GCF: Always the first step—factor out the greatest common factor Factoring trinomials: For \\(x^2 + bx + c\\), find two numbers that multiply to \\(c\\) and add to \\(b\\) Difference of squares: \\(a^2 - b^2 = (a + b)(a - b)\\) Perfect square trinomials: \\(a^2 \\pm 2ab + b^2 = (a \\pm b)^2\\) Factoring by grouping: Group terms and factor out common"
     },
     {
       "bookSlug": "algebra-1",
@@ -1448,7 +1448,7 @@
       "pageTitle": "Applications of Linear Equations and Inequalities",
       "location": "chapters/07-linear-inequalities-and-absolute-value/",
       "pageUrl": "https://dmccreary.github.io/algebra-1/chapters/07-linear-inequalities-and-absolute-value/",
-      "quote": "Inequalities model many real-world situations where there are ranges of acceptable values rather than exact values. Example 1: Temperature Range The temperature in a refrigerator must stay between 35\u00b0F and 40\u00b0F. Write and solve an inequality. Let \\(T\\) = temperature \\(35 \\leq T \\leq 40\\) This is already solved. The temperature must be in the range \\([35, 40]\\). Example 2: Budget Constraint You have $50 to spend on books. Each book costs $12. How many books can you buy? Let"
+      "quote": "Inequalities model many real-world situations where there are ranges of acceptable values rather than exact values. Example 1: Temperature Range The temperature in a refrigerator must stay between 35°F and 40°F. Write and solve an inequality. Let \\(T\\) = temperature \\(35 \\leq T \\leq 40\\) This is already solved. The temperature must be in the range \\([35, 40]\\). Example 2: Budget Constraint You have $50 to spend on books. Each book costs $12. How many books can you buy? Let"
     },
     {
       "bookSlug": "algebra-1",
@@ -1506,7 +1506,7 @@
       "pageTitle": "Key Takeaways",
       "location": "chapters/02-python-fundamentals/",
       "pageUrl": "https://dmccreary.github.io/computer-science/chapters/02-python-fundamentals/",
-      "quote": "The Python REPL lets you experiment interactively; scripts let you save and run programs from files. Comments ( # ) explain your code to humans \u2014 Python ignores them. Variables store values. Use variable assignment ( = ) to create them, and follow variable naming rules (start with a letter/underscore, use snake_case ). Python has four core data types: integers ( int ), floats ( float ), booleans ( bool ), and strings ( str ). Use the type function ( type() ) to check a"
+      "quote": "The Python REPL lets you experiment interactively; scripts let you save and run programs from files. Comments ( # ) explain your code to humans — Python ignores them. Variables store values. Use variable assignment ( = ) to create them, and follow variable naming rules (start with a letter/underscore, use snake_case ). Python has four core data types: integers ( int ), floats ( float ), booleans ( bool ), and strings ( str ). Use the type function ( type() ) to check a"
     },
     {
       "bookSlug": "computer-science",
@@ -1606,7 +1606,7 @@
       "pageTitle": "7. IMU Comparison",
       "location": "appendices/swarm-robots/",
       "pageUrl": "https://dmccreary.github.io/stem-robots/appendices/swarm-robots/",
-      "quote": "The class solders their own sensor boards regularly, so solderless connectors are not a deciding factor here \u2014 cost and library support matter more. Sensor Price (each) Sensor fusion Connector MicroPython support Notes ICM-20948 $14.95 (Adafruit) / ~$18\u201320 (SparkFun) Raw data + onboard DMP (optional) STEMMA QT / Qwiic, solderless Good \u2014 several community libraries Successor to the discontinued MPU-9250; accel/gyro + AK09916 magnetometer in one package. Best balance of price"
+      "quote": "The class solders their own sensor boards regularly, so solderless connectors are not a deciding factor here — cost and library support matter more. Sensor Price (each) Sensor fusion Connector MicroPython support Notes ICM-20948 $14.95 (Adafruit) / ~$18–20 (SparkFun) Raw data + onboard DMP (optional) STEMMA QT / Qwiic, solderless Good — several community libraries Successor to the discontinued MPU-9250; accel/gyro + AK09916 magnetometer in one package. Best balance of price"
     },
     {
       "bookSlug": "stem-robots",
@@ -1622,7 +1622,7 @@
       "pageTitle": "Diagram: Physical Computing Explorer",
       "location": "chapters/01-intro-computational-thinking/",
       "pageUrl": "https://dmccreary.github.io/stem-robots/chapters/01-intro-computational-thinking/",
-      "quote": "Run Physical Computing Explorer Fullscreen Interactive diagram showing inputs, the microcontroller, and outputs forming the sense-decide-act loop Type: MicroSim sim-id: physical-computing-explorer Library: p5.js Status: Specified Learning objective: Students will identify (Bloom L1: Remember) the three layers of a physical computing system \u2014 inputs, processor, and outputs \u2014 and explain (Bloom L2: Understand) how information flows through the sense \u2192 decide \u2192 act loop. Canvas",
+      "quote": "Run Physical Computing Explorer Fullscreen Interactive diagram showing inputs, the microcontroller, and outputs forming the sense-decide-act loop Type: MicroSim sim-id: physical-computing-explorer Library: p5.js Status: Specified Learning objective: Students will identify (Bloom L1: Remember) the three layers of a physical computing system — inputs, processor, and outputs — and explain (Bloom L2: Understand) how information flows through the sense → decide → act loop. Canvas",
       "simId": "physical-computing-explorer",
       "simUrl": "https://dmccreary.github.io/stem-robots/sims/physical-computing-explorer/"
     },
@@ -1632,7 +1632,7 @@
       "pageTitle": "Diagram: Robot Assembly Workflow",
       "location": "chapters/02-hardware-platform-assembly/",
       "pageUrl": "https://dmccreary.github.io/stem-robots/chapters/02-hardware-platform-assembly/",
-      "quote": "Robot Assembly Workflow Type: workflow sim-id: robot-assembly-workflow Library: p5.js Status: Specified Bloom Level: Apply (L3) \u2014 Assemble the Smart Car chassis by following the correct sequence of steps and explain why each step comes before the next. Bloom Verb: Assemble Learning Objective: Students will sequence the eight assembly steps in the correct order and explain the mechanical reason each step precedes the next (e.g., why standoffs must be installed before the",
+      "quote": "Robot Assembly Workflow Type: workflow sim-id: robot-assembly-workflow Library: p5.js Status: Specified Bloom Level: Apply (L3) — Assemble the Smart Car chassis by following the correct sequence of steps and explain why each step comes before the next. Bloom Verb: Assemble Learning Objective: Students will sequence the eight assembly steps in the correct order and explain the mechanical reason each step precedes the next (e.g., why standoffs must be installed before the",
       "simId": "robot-assembly-workflow",
       "simUrl": "https://dmccreary.github.io/stem-robots/sims/robot-assembly-workflow/"
     },
@@ -1642,7 +1642,7 @@
       "pageTitle": "Flashing the Firmware",
       "location": "chapters/03-micropython-dev-environment/",
       "pageUrl": "https://dmccreary.github.io/stem-robots/chapters/03-micropython-dev-environment/",
-      "quote": "Before your board can run MicroPython, you need to install it. The board ships with a different program already on it. We replace that program by copying a special file onto the board. This process is called flashing the firmware. Firmware is permanent software stored in your device's memory. It is the lowest layer of software \u2014 the stuff that runs before anything else. MicroPython's firmware turns a bare RP2040 chip into a Python computer. The file we copy is called a UF2"
+      "quote": "Before your board can run MicroPython, you need to install it. The board ships with a different program already on it. We replace that program by copying a special file onto the board. This process is called flashing the firmware. Firmware is permanent software stored in your device's memory. It is the lowest layer of software — the stuff that runs before anything else. MicroPython's firmware turns a bare RP2040 chip into a Python computer. The file we copy is called a UF2"
     },
     {
       "bookSlug": "stem-robots",
@@ -1650,12 +1650,12 @@
       "pageTitle": "Parameters and Return Values",
       "location": "chapters/04-control-flow-functions/",
       "pageUrl": "https://dmccreary.github.io/stem-robots/chapters/04-control-flow-functions/",
-      "quote": "Functions become much more powerful with parameters \u2014 inputs that the function receives when it is called. A return value is the output the function sends back. Before the code, here is the idea: move_forward needs to know the speed (a number 0\u2013100) and how long to move (in seconds). It uses those inputs and prints what it would do. def move_forward(speed, duration): print(\"Moving at speed\", speed, \"for\", duration, \"seconds.\") # Motor control code goes here in Chapter 7"
+      "quote": "Functions become much more powerful with parameters — inputs that the function receives when it is called. A return value is the output the function sends back. Before the code, here is the idea: move_forward needs to know the speed (a number 0–100) and how long to move (in seconds). It uses those inputs and prints what it would do. def move_forward(speed, duration): print(\"Moving at speed\", speed, \"for\", duration, \"seconds.\") # Motor control code goes here in Chapter 7"
     },
     {
       "bookSlug": "stem-robots",
       "bookTitle": "STEM Robots",
-      "pageTitle": "Dictionaries \u2014 Key-Value Stores",
+      "pageTitle": "Dictionaries — Key-Value Stores",
       "location": "chapters/05-data-structures-modular-code/",
       "pageUrl": "https://dmccreary.github.io/stem-robots/chapters/05-data-structures-modular-code/",
       "quote": "A dictionary stores pairs of keys and values. Instead of accessing data by position (like a list), you access it by name. Dictionaries use curly braces: robot = { \"name\": \"Sparky\", \"speed\": 75, \"is_moving\": True, \"distance_cm\": 30.5 } Access a value with its key in square brackets: print(robot[\"name\"]) # \"Sparky\" print(robot[\"speed\"]) # 75 Update a value the same way: robot[\"speed\"] = 50 robot[\"is_moving\"] = False Add a new key-value pair by simply assigning to a new key:"
@@ -1663,10 +1663,10 @@
     {
       "bookSlug": "stem-robots",
       "bookTitle": "STEM Robots",
-      "pageTitle": "SPI Bus \u2014 High-Speed Serial",
+      "pageTitle": "SPI Bus — High-Speed Serial",
       "location": "chapters/06-electronics-motors-protocols/",
       "pageUrl": "https://dmccreary.github.io/stem-robots/chapters/06-electronics-motors-protocols/",
-      "quote": "The SPI bus (Serial Peripheral Interface) is a second communication protocol for fast, short-distance connections. SPI uses four wires instead of I2C's two: MOSI \u2014 Master Out Slave In (data from microcontroller to device) MISO \u2014 Master In Slave Out (data from device to microcontroller) SCK \u2014 Serial Clock CS \u2014 Chip Select (one per device \u2014 selects which device is active) The table below compares I2C and SPI. Understanding this comparison helps you choose the right bus for a"
+      "quote": "The SPI bus (Serial Peripheral Interface) is a second communication protocol for fast, short-distance connections. SPI uses four wires instead of I2C's two: MOSI — Master Out Slave In (data from microcontroller to device) MISO — Master In Slave Out (data from device to microcontroller) SCK — Serial Clock CS — Chip Select (one per device — selects which device is active) The table below compares I2C and SPI. Understanding this comparison helps you choose the right bus for a"
     },
     {
       "bookSlug": "stem-robots",
@@ -1674,7 +1674,7 @@
       "pageTitle": "Button Debouncing",
       "location": "chapters/07-pwm-motor-speed-actuators/",
       "pageUrl": "https://dmccreary.github.io/stem-robots/chapters/07-pwm-motor-speed-actuators/",
-      "quote": "Physical buttons don't switch cleanly. When you press a button, the metal contacts bounce \u2014 making and breaking contact 5\u201350 times in just a few milliseconds. Without handling this, your interrupt fires 10\u201320 times per press instead of once. Debouncing is the technique of ignoring the extra bounces. The simplest approach for robot code is to record the time of the last interrupt and ignore any new interrupt that arrives within 50\u2013200 ms: from machine import Pin from time"
+      "quote": "Physical buttons don't switch cleanly. When you press a button, the metal contacts bounce — making and breaking contact 5–50 times in just a few milliseconds. Without handling this, your interrupt fires 10–20 times per press instead of once. Debouncing is the technique of ignoring the extra bounces. The simplest approach for robot code is to record the time of the last interrupt and ignore any new interrupt that arrives within 50–200 ms: from machine import Pin from time"
     },
     {
       "bookSlug": "stem-robots",
@@ -1682,7 +1682,7 @@
       "pageTitle": "Sensor Types Overview",
       "location": "chapters/08-sensors-data-input/",
       "pageUrl": "https://dmccreary.github.io/stem-robots/chapters/08-sensors-data-input/",
-      "quote": "A sensor converts a physical quantity \u2014 distance, light, heat, force \u2014 into an electrical signal your microcontroller can read. Sensors are the robot's inputs. Without them, the robot has no awareness of the world around it. Every sensor in this course connects to the microcontroller in one of three ways: Digital output \u2014 the sensor reports one of two states: detected or not detected. Infrared sensors and bump switches work this way. Analog output \u2014 the sensor produces a"
+      "quote": "A sensor converts a physical quantity — distance, light, heat, force — into an electrical signal your microcontroller can read. Sensors are the robot's inputs. Without them, the robot has no awareness of the world around it. Every sensor in this course connects to the microcontroller in one of three ways: Digital output — the sensor reports one of two states: detected or not detected. Infrared sensors and bump switches work this way. Analog output — the sensor produces a"
     },
     {
       "bookSlug": "intelligent-textbooks",
@@ -1706,7 +1706,7 @@
       "pageTitle": "Is There a Sixth R?",
       "location": "appendices/five-rs-of-intelligent-textbooks/",
       "pageUrl": "https://dmccreary.github.io/intelligent-textbooks/appendices/five-rs-of-intelligent-textbooks/",
-      "quote": "The AI era raises a genuinely new question: does agentic content generation require a sixth R \u2014 a freedom the original 5Rs didn't anticipate because it wasn't technically possible in 2014? A few candidates come up naturally: Regenerate \u2014 Recreate the textbook dynamically from reusable agentic skills, rather than hand-editing static text. Reason \u2014 Allow an AI tutor to explain, adapt, and reason about the content on the learner's behalf. Respond \u2014 Personalize instruction and"
+      "quote": "The AI era raises a genuinely new question: does agentic content generation require a sixth R — a freedom the original 5Rs didn't anticipate because it wasn't technically possible in 2014? A few candidates come up naturally: Regenerate — Recreate the textbook dynamically from reusable agentic skills, rather than hand-editing static text. Reason — Allow an AI tutor to explain, adapt, and reason about the content on the learner's behalf. Respond — Personalize instruction and"
     },
     {
       "bookSlug": "intelligent-textbooks",
@@ -1714,7 +1714,7 @@
       "pageTitle": "Narrative anchor character profile: Nell",
       "location": "appendices/nell-character-profile/",
       "pageUrl": "https://dmccreary.github.io/intelligent-textbooks/appendices/nell-character-profile/",
-      "quote": "Nell is the kind of kid who treats learning like an adventure you can hold in your hands. She\u2019s about six or seven, with a tousled bob of chestnut-brown hair and soft bangs that never stay perfectly in place because she\u2019s always in motion\u2014always leaning in, always curious. A small star-shaped hair clip sits near her temple like a tiny badge of optimism: today is a good day to discover something. Her eyes are large and bright, and her smile comes easily\u2014especially when she\u2019s"
+      "quote": "Nell is the kind of kid who treats learning like an adventure you can hold in your hands. She’s about six or seven, with a tousled bob of chestnut-brown hair and soft bangs that never stay perfectly in place because she’s always in motion—always leaning in, always curious. A small star-shaped hair clip sits near her temple like a tiny badge of optimism: today is a good day to discover something. Her eyes are large and bright, and her smile comes easily—especially when she’s"
     },
     {
       "bookSlug": "intelligent-textbooks",
@@ -1770,7 +1770,7 @@
       "pageTitle": "View Full Status",
       "location": "concepts/book-metadata/",
       "pageUrl": "https://dmccreary.github.io/intelligent-textbooks/concepts/book-metadata/",
-      "quote": "$ python src/book_metadata_helper.py status ================================================================================ INTELLIGENT TEXTBOOK STATUS REPORT ================================================================================ Title: My Textbook Title Creator: Author Name Language: en Current Phase: foundation SKILLS STATUS: -------------------------------------------------------------------------------- \u2713 course_description_analyzer: completed (score: 85) \u25cb"
+      "quote": "$ python src/book_metadata_helper.py status ================================================================================ INTELLIGENT TEXTBOOK STATUS REPORT ================================================================================ Title: My Textbook Title Creator: Author Name Language: en Current Phase: foundation SKILLS STATUS: -------------------------------------------------------------------------------- ✓ course_description_analyzer: completed (score: 85) ○"
     },
     {
       "bookSlug": "intelligent-textbooks",
@@ -1779,6 +1779,46 @@
       "location": "concepts/book-metadata/book-metadata-guide/",
       "pageUrl": "https://dmccreary.github.io/intelligent-textbooks/concepts/book-metadata/book-metadata-guide/",
       "quote": "# Glossary Generator Skill ## Execution Steps 1. **Check Prerequisites** ```python from src.book_metadata_helper import BookMetadata metadata = BookMetadata() can_run, reasons = metadata.can_skill_run('glossary_generator') if not can_run: print(\"Prerequisites not met:\") for reason in reasons: print(f\" - {reason}\") exit(1) ``` 2. **Mark as In Progress** ```python metadata.update_skill_status('glossary_generator', 'in_progress') ``` 3. **Generate Glossary** - Read learning"
+    },
+    {
+      "bookSlug": "geometry-course",
+      "bookTitle": "AI Assisted Geometry",
+      "pageTitle": "Koch Fractal",
+      "location": "sims/koch-fractal/",
+      "pageUrl": "https://dmccreary.github.io/geometry-course/sims/koch-fractal/",
+      "quote": "The Koch Fractal is one of the earliest fractal curves. A simple replacement rule, repeated, becomes infinite length and self-similarity. Drag the recursion. Watch the idea move.",
+      "simId": "koch-fractal",
+      "simUrl": "https://dmccreary.github.io/geometry-course/sims/koch-fractal/"
+    },
+    {
+      "bookSlug": "geometry-course",
+      "bookTitle": "AI Assisted Geometry",
+      "pageTitle": "Koch Snowflake",
+      "location": "sims/koch-snowflake/",
+      "pageUrl": "https://dmccreary.github.io/geometry-course/sims/koch-snowflake/",
+      "quote": "Three Koch curves make the snowflake. Recursion adds the bumps. The area stays finite. The edge does not.",
+      "simId": "koch-snowflake",
+      "simUrl": "https://dmccreary.github.io/geometry-course/sims/koch-snowflake/"
+    },
+    {
+      "bookSlug": "geometry-course",
+      "bookTitle": "AI Assisted Geometry",
+      "pageTitle": "Sierpinski Triangle",
+      "location": "sims/sierpinski-triangles/",
+      "pageUrl": "https://dmccreary.github.io/geometry-course/sims/sierpinski-triangles/",
+      "quote": "The Sierpinski triangle is a fractal built by cutting smaller triangles from a larger one. Raise the recursion. The pattern repeats at every scale.",
+      "simId": "sierpinski-triangles",
+      "simUrl": "https://dmccreary.github.io/geometry-course/sims/sierpinski-triangles/"
+    },
+    {
+      "bookSlug": "geometry-course",
+      "bookTitle": "AI Assisted Geometry",
+      "pageTitle": "Barnsley's Fern",
+      "location": "sims/barnsleys-fern/",
+      "pageUrl": "https://dmccreary.github.io/geometry-course/sims/barnsleys-fern/",
+      "quote": "Barnsley's fern is a fractal from four simple maps. Change a parameter. The fern changes with it.",
+      "simId": "barnsleys-fern",
+      "simUrl": "https://dmccreary.github.io/geometry-course/sims/barnsleys-fern/"
     }
   ]
 }

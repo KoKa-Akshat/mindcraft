@@ -918,6 +918,7 @@
           <div class="as"><b>113</b><span>full open textbooks, free, no login</span></div>
         </div>
         <button class="btn primary reveal" type="button" id="archiveBrowseBtn" aria-expanded="false" aria-controls="archiveBox">Browse the archive</button>
+        <a class="btn primary" id="archiveVisitBtn" href="dans-archive.html" hidden>Visit the page</a>
       </div>
       <div class="archive-pane reveal">
         <div class="archive-stack" id="archiveStack" aria-hidden="true">
@@ -1758,6 +1759,7 @@
     const shelf = document.getElementById('archiveShelf');
     const count = document.getElementById('archiveCount');
     const openBtn = document.getElementById('archiveBrowseBtn');
+    const visitBtn = document.getElementById('archiveVisitBtn');
     const backBtn = document.getElementById('archiveBackBtn');
     if (!stage || !input || !box || !shelf || !openBtn) return;
 
@@ -1797,7 +1799,7 @@
           if (body.indexOf(w) >= 0) score += 1;
           if (String(c.bookSlug || '').replace(/-/g, ' ').indexOf(w) >= 0) score += 2;
         }
-        if (c.simUrl) score += 1.5;
+        if (c.simUrl && score >= 4) score += 1.5;
         if (score > 0) scored.push(Object.assign({ score: score }, c));
       }
       scored.sort(function(a, b){ return b.score - a.score; });
@@ -1814,14 +1816,13 @@
       if (!chunks || !hits) return hits || [];
       return hits.map(function(h){
         if (h.simUrl) return h;
-        const match = chunks.find(function(c){ return c.pageUrl === h.pageUrl && c.simUrl; })
-          || chunks.find(function(c){ return c.bookSlug === h.bookSlug && c.simUrl; });
-        return match ? Object.assign({}, h, { simUrl: match.simUrl }) : h;
+        const match = chunks.find(function(c){ return c.pageUrl === h.pageUrl && c.simUrl; });
+        return match ? Object.assign({}, h, { simUrl: match.simUrl, simId: match.simId }) : h;
       });
     }
     function pickHit(hits){
       if (!hits || !hits.length) return null;
-      return hits.find(function(h){ return h.simUrl; }) || hits[0];
+      return hits[0];
     }
     function showLesson(hit, reply){
       const sim = simSrc(hit.simUrl);
@@ -1879,13 +1880,17 @@
       Promise.all([loadChunks(), remote]).then(function(pair){
         asking = false;
         const data = pair[1];
-        const hits = enrich((data && data.hits && data.hits.length) ? data.hits : retrieve(query, 3));
+        const local = retrieve(query, 3);
+        const remote = enrich((data && data.hits) || []);
+        const hits = (local[0] && local[0].score >= 4) ? local : (remote.length ? remote : local);
         const hit = pickHit(hits);
         if (!hit){
           renderShelf(query);
           return;
         }
-        const reply = (data && data.reply) ? data.reply : ('I opened ' + hit.bookTitle + ' at ' + hit.pageTitle + '.');
+        const reply = (local[0] && local[0].score >= 4)
+          ? ('I opened ' + hit.bookTitle + ' at ' + hit.pageTitle + '. Drag a variable. The idea moves.')
+          : ((data && data.reply) ? data.reply : ('I opened ' + hit.bookTitle + ' at ' + hit.pageTitle + '.'));
         showLesson(hit, reply.replace(/\u2014/g, '-'));
       });
     }
@@ -1917,8 +1922,9 @@
       if (stage.classList.contains('is-open')) return;
       stage.classList.add('is-open');
       box.hidden = false;
+      openBtn.hidden = true;
+      if (visitBtn) visitBtn.hidden = false;
       openBtn.setAttribute('aria-expanded', 'true');
-      openBtn.textContent = 'Close the shelf';
       loadBooks();
       loadChunks();
       pageScroll(false);
@@ -1928,8 +1934,9 @@
       if (!stage.classList.contains('is-open')) return;
       stage.classList.remove('is-open');
       box.hidden = true;
+      openBtn.hidden = false;
+      if (visitBtn) visitBtn.hidden = true;
       openBtn.setAttribute('aria-expanded', 'false');
-      openBtn.textContent = 'Browse the archive';
       pageScroll(true);
     }
     openBtn.addEventListener('click', function(){
