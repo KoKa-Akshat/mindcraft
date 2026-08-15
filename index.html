@@ -478,19 +478,53 @@
   .ais-bar svg{flex:none; opacity:.5;}
   .ais-bar input{ flex:1; background:none; border:none; outline:none; color:var(--chalk); font-family:"Inter",sans-serif; font-size:14px; font-weight:400; }
   .ais-bar input::placeholder{color:var(--chalk-faint);}
-  .ais-results{margin-top:10px; display:grid; gap:6px;}
-  .ais-row{ display:flex; align-items:baseline; gap:10px; padding:11px 14px; border-radius:12px; background:var(--field-2); border:1px solid var(--edge); font-size:13px; }
-  .ais-row b{font-weight:600; color:var(--chalk);}
-  .ais-row span{color:var(--chalk-faint); font-weight:400; font-size:11.5px;}
-  .ais-empty{font-size:12.5px; font-weight:400; color:var(--chalk-faint); padding:4px 2px;}
-  .archive-stack{position:relative; height:340px;}
+  .ais-empty{font-size:12.5px; font-weight:400; color:var(--chalk-faint); padding:14px 6px;}
+  .archive-pane{position:relative; min-height:340px;}
+  .archive-stack{position:relative; height:340px; transition:opacity .35s var(--ease), transform .35s var(--ease);}
   .af{ position:absolute; width:200px; border-radius:6px; overflow:hidden; box-shadow:0 20px 50px rgba(0,0,0,.5); border:1px solid var(--edge); }
   .af img{width:100%; aspect-ratio:3/4; object-fit:cover; display:block;}
   .af1{top:0; left:8%; transform:rotate(-4deg); z-index:4;}
   .af2{top:36px; left:36%; transform:rotate(3deg); z-index:3;}
   .af3{top:112px; left:4%; transform:rotate(2.5deg); z-index:2;}
   .af4{top:140px; left:32%; transform:rotate(-3deg); z-index:1;}
-  @media (max-width:900px){ .archive-grid{grid-template-columns:1fr;} .archive-stack{height:260px; margin-top:8px;} .af{width:160px;} }
+  .archive-box{
+    display:none; flex-direction:column;
+    height:min(72vh, 640px); min-height:420px;
+    border:1px solid var(--edge); border-radius:22px; overflow:hidden;
+    background:var(--field-2); box-shadow:0 30px 80px rgba(0,0,0,.35);
+  }
+  .archive-box-head{flex:none; padding:12px 12px 0;}
+  .archive-box-head .archive-inline-search{margin:0; max-width:none;}
+  .archive-box-meta{
+    flex:none; display:flex; align-items:center; justify-content:space-between;
+    padding:10px 16px 8px; font-size:12px; color:var(--chalk-faint);
+  }
+  .archive-shelf{
+    flex:1; min-height:0; overflow:auto; padding:0 12px 14px;
+    display:grid; gap:8px; align-content:start;
+  }
+  .abook{
+    display:flex; align-items:center; gap:12px;
+    padding:10px 12px; border-radius:14px;
+    border:1px solid var(--edge); background:#0b1116;
+  }
+  .abook:hover{border-color:rgba(196,245,71,.35);}
+  .abook img{
+    width:42px; height:62px; object-fit:cover; border-radius:4px;
+    flex:none; background:var(--field-3);
+  }
+  .abook b{display:block; font-size:14px; font-weight:600; color:var(--chalk); line-height:1.25;}
+  .abook em{display:block; margin-top:3px; font-style:normal; font-size:12px; color:var(--chalk-faint);}
+  .archive-grid.is-open{align-items:stretch;}
+  .archive-grid.is-open .archive-stack{display:none;}
+  .archive-grid.is-open .archive-box{display:flex;}
+  .archive-grid.is-open .archive-inline-search{margin-top:0; max-width:none;}
+  @media (max-width:900px){
+    .archive-grid{grid-template-columns:1fr;}
+    .archive-stack{height:260px; margin-top:8px;}
+    .af{width:160px;}
+    .archive-box{height:min(70vh, 560px);}
+  }
 
   /* ---------- Pricing ---------- */
   .pricing{background:var(--field-1); border-top:1px solid var(--edge); border-bottom:1px solid var(--edge);}
@@ -857,8 +891,8 @@
 <!-- ================= ARCHIVE ================= -->
 <section class="archive" id="archive">
   <div class="wrap">
-    <div class="archive-grid">
-      <div>
+    <div class="archive-grid" id="archiveStage">
+      <div id="archiveCopy">
         <div class="kicker reveal">The Open Learning Archive</div>
         <h2 class="h2 reveal">Some ideas need a picture, <span class="serif">not a paragraph.</span></h2>
         <p class="lede reveal">Drag a variable. Watch the idea move. That is often the whole click.</p>
@@ -872,21 +906,30 @@
             <li>173 geometry sims you can drag</li>
             <li>113 textbooks. Free. No login.</li>
           </ul>
-          <a class="btn primary" href="dans-archive.html">Browse the archive →</a>
+          <button class="btn primary" type="button" id="archiveBrowseBtn" aria-expanded="false" aria-controls="archiveBox">Browse the archive</button>
         </div>
         <div class="archive-inline-search reveal" id="archiveInlineSearch">
           <div class="ais-bar">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.6" y2="16.6"/></svg>
-            <input type="text" id="aisInput" placeholder="Try “calculus,” “graph databases,” “biology”…" autocomplete="off">
+            <input type="text" id="aisInput" placeholder="Try “calculus,” “graph databases,” “biology”…" autocomplete="off" aria-label="Search the archive">
           </div>
-          <div class="ais-results" id="aisResults"></div>
         </div>
       </div>
-      <div class="archive-stack reveal" aria-hidden="true">
-        <div class="af af1"><img src="img/dans-covers/calculus.jpg" alt="Calculus" loading="lazy"></div>
-        <div class="af af2"><img src="img/dans-covers/fft-benchmarking.jpg" alt="Real-Time DSP on a $5 Microcontroller" loading="lazy"></div>
-        <div class="af af3"><img src="img/dans-covers/biology.jpg" alt="Biology" loading="lazy"></div>
-        <div class="af af4"><img src="img/dans-covers/learning-micropython.jpg" alt="Learning MicroPython with AI" loading="lazy"></div>
+      <div class="archive-pane reveal">
+        <div class="archive-stack" id="archiveStack" aria-hidden="true">
+          <div class="af af1"><img src="img/dans-covers/calculus.jpg" alt="Calculus" loading="lazy"></div>
+          <div class="af af2"><img src="img/dans-covers/fft-benchmarking.jpg" alt="Real-Time DSP on a $5 Microcontroller" loading="lazy"></div>
+          <div class="af af3"><img src="img/dans-covers/biology.jpg" alt="Biology" loading="lazy"></div>
+          <div class="af af4"><img src="img/dans-covers/learning-micropython.jpg" alt="Learning MicroPython with AI" loading="lazy"></div>
+        </div>
+        <div class="archive-box" id="archiveBox" hidden>
+          <div class="archive-box-head" id="archiveBoxHead"></div>
+          <div class="archive-box-meta">
+            <span id="archiveCount">113 books</span>
+            <button class="btn soft" type="button" id="archiveCloseBtn" style="min-height:36px;padding:0 12px;font-size:12px;">Close</button>
+          </div>
+          <div class="archive-shelf" id="archiveShelf"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -1641,27 +1684,90 @@
     if (email) void captureLead({ email, name, role:'tutor_apply', source:'apply_tutor', note, page:'#start', _honey: document.querySelector('#applyFormTutor [name="_honey"]')?.value || '' });
   });
 
-  // ---------- Archive inline search ----------
+  // ---------- Archive: click opens a scrollable book box on the right ----------
   (function(){
+    const stage = document.getElementById('archiveStage');
+    const copy = document.getElementById('archiveCopy');
+    const search = document.getElementById('archiveInlineSearch');
     const input = document.getElementById('aisInput');
-    const results = document.getElementById('aisResults');
-    if (!input || !results) return;
+    const box = document.getElementById('archiveBox');
+    const head = document.getElementById('archiveBoxHead');
+    const shelf = document.getElementById('archiveShelf');
+    const count = document.getElementById('archiveCount');
+    const openBtn = document.getElementById('archiveBrowseBtn');
+    const closeBtn = document.getElementById('archiveCloseBtn');
+    if (!stage || !search || !input || !box || !head || !shelf || !openBtn) return;
+
     let books = null;
-    function escapeHtml(s){ return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+    let loading = false;
+
+    function escapeHtml(s){
+      return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+    function coverSrc(b){
+      return b.cover || ('img/dans-covers/' + encodeURIComponent(b.slug) + '.jpg');
+    }
     function render(q){
       if (!books) return;
-      if (!q) { results.innerHTML = ''; return; }
-      const needle = q.toLowerCase();
-      const matches = books.map((b, i) => ({ b, i })).filter(({ b }) => (b.title + ' ' + b.description + ' ' + b.subject).toLowerCase().includes(needle)).slice(0, 4);
-      if (!matches.length) { results.innerHTML = '<div class="ais-empty">No match yet. Try a broader word, or browse the full archive.</div>'; return; }
-      results.innerHTML = matches.map(({ b, i }) => `<a class="ais-row" href="dans-archive.html?open=${i}"><b>${escapeHtml(b.title)}</b><span>${escapeHtml(b.subject)}</span></a>`).join('');
+      const needle = (q || '').toLowerCase();
+      const matches = needle
+        ? books.filter(b => (b.title + ' ' + b.description + ' ' + b.subject).toLowerCase().includes(needle))
+        : books;
+      if (count) count.textContent = matches.length + (needle ? ' match' : ' books');
+      if (!matches.length){
+        shelf.innerHTML = '<div class="ais-empty">No match. Try a broader word.</div>';
+        return;
+      }
+      shelf.innerHTML = matches.map(function(b){
+        return '<a class="abook" href="' + escapeHtml(b.url) + '" target="_blank" rel="noopener">' +
+          '<img src="' + escapeHtml(coverSrc(b)) + '" alt="" width="42" height="62" loading="lazy">' +
+          '<span><b>' + escapeHtml(b.title) + '</b><em>' + escapeHtml(b.subject) + '</em></span></a>';
+      }).join('');
     }
-    input.addEventListener('focus', () => {
-      if (books) return;
-      fetch('data/dansArchive.json?v=c1').then(r => r.json()).then(data => { books = data.books; render(input.value.trim()); })
-        .catch(() => { results.innerHTML = '<div class="ais-empty">Couldn\'t load the archive right now.</div>'; });
-    }, { once: true });
-    input.addEventListener('input', () => render(input.value.trim()));
+    function load(){
+      if (books || loading) return Promise.resolve(books);
+      loading = true;
+      shelf.innerHTML = '<div class="ais-empty">Opening the shelf.</div>';
+      return fetch('data/dansArchive.json?v=c1')
+        .then(function(r){ if (!r.ok) throw new Error('archive'); return r.json(); })
+        .then(function(data){
+          books = data.books || [];
+          loading = false;
+          render(input.value.trim());
+          return books;
+        })
+        .catch(function(){
+          loading = false;
+          shelf.innerHTML = '<div class="ais-empty">Could not load the archive right now.</div>';
+        });
+    }
+    function openBox(){
+      if (stage.classList.contains('is-open')) return;
+      stage.classList.add('is-open');
+      box.hidden = false;
+      head.appendChild(search);
+      openBtn.setAttribute('aria-expanded', 'true');
+      openBtn.textContent = 'Close the shelf';
+      load();
+      input.focus();
+    }
+    function closeBox(){
+      if (!stage.classList.contains('is-open')) return;
+      stage.classList.remove('is-open');
+      box.hidden = true;
+      if (copy) copy.appendChild(search);
+      openBtn.setAttribute('aria-expanded', 'false');
+      openBtn.textContent = 'Browse the archive';
+    }
+    openBtn.addEventListener('click', function(){
+      if (stage.classList.contains('is-open')) closeBox();
+      else openBox();
+    });
+    if (closeBtn) closeBtn.addEventListener('click', closeBox);
+    input.addEventListener('input', function(){ render(input.value.trim()); });
+    input.addEventListener('focus', function(){
+      if (!stage.classList.contains('is-open') && input.value.trim()) openBox();
+    });
   })();
 
   playCaptions({ box: document.getElementById('archiveCaption') });
