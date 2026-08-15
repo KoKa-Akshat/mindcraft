@@ -1656,30 +1656,41 @@ struct FieldDeskView: View {
     }
 
     private func closeDeskPanel(_ id: DeskCardID) {
-        switch id {
-        case .intel:
-            showIntelPanel = false
-            placedWidgets.remove(.intel)
-        case .connect:
-            showConnectPanel = false
-            placedWidgets.remove(.connect)
-        case .binder:
-            showBinderPanel = false
-            placedWidgets.remove(.binder)
-        case .calendar:
-            placedWidgets.remove(.calendar)
-        case .memo:
-            placedWidgets.remove(.memo)
-        case .gmail:
-            placedWidgets.remove(.gmail)
-        case .notes:
-            placedWidgets.remove(.notes)
-        case .gdoc:
-            placedWidgets.remove(.gdoc)
-        case .slides:
-            placedWidgets.remove(.slides)
+        withAnimation(.easeInOut(duration: 0.22)) {
+            switch id {
+            case .intel:
+                showIntelPanel = false
+                placedWidgets.remove(.intel)
+            case .connect:
+                showConnectPanel = false
+                placedWidgets.remove(.connect)
+            case .binder:
+                showBinderPanel = false
+                placedWidgets.remove(.binder)
+            case .calendar:
+                placedWidgets.remove(.calendar)
+            case .memo:
+                placedWidgets.remove(.memo)
+            case .gmail:
+                placedWidgets.remove(.gmail)
+            case .notes:
+                placedWidgets.remove(.notes)
+            case .gdoc:
+                placedWidgets.remove(.gdoc)
+            case .slides:
+                placedWidgets.remove(.slides)
+            }
+            if focusedCard == id { focusedCard = nil }
+            // Closing is a real reset, not a hide - a card dragged far off
+            // canvas (no clamping on `cardMoveGesture`, so it's easy to drag
+            // one past the visible bounds and strand it there) used to stay
+            // stranded at that same offset forever, even across close and a
+            // fresh re-place, since only `placedWidgets`/the show-flags were
+            // ever cleared here. Re-placing a card should always land it back
+            // at `deskPoints(for:)`'s default position.
+            cardOffsets[id] = nil
+            cardSizes[id] = nil
         }
-        if focusedCard == id { focusedCard = nil }
         saveDeskLayout()
     }
 

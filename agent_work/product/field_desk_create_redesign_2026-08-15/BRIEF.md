@@ -24,12 +24,18 @@ that several items below likely intersect with.
 **Confirmed good, don't touch:** landing directly on Jesse's Ramen with the call
 button and "The Desk" wordmark visible. This is the right front door.
 
-- **[BUG] "Open Learning Archive" does nothing.** `DeskShellView.swift:579` defines
-  it as a static list entry (`id: "open_archive", name: "Open Learning Archive"`)
-  inside the Workflow Market sheet, but there's no dispatch case anywhere that
-  handles that id when tapped — it's a dead list row. Needs a real tap handler
-  (open `dans-archive.html`-equivalent in-app, or the archive's live URL in a
-  browser sheet).
+- **[VERIFY, CORRECTED] "Open Learning Archive" does nothing — the code says
+  otherwise.** Re-checked after an initial (wrong) read: `DeskShellView.swift:579-585`
+  has a real `action: { showOpenArchive = true }` closure, `showOpenArchive` is a
+  real `@State` wired to a `.fullScreenCover` (`:243-244`) presenting
+  `OpenLearningArchiveView`, which itself is a legitimate `WKWebView` loading the
+  live `joinmindcraft.com/dans-archive.html` with a working "Back to Desk" close
+  button (`OpenLearningArchiveView.swift`, fully read, looks correct end to end).
+  This is NOT a dead link in the code as written. Reproduce on-device before
+  touching it — likely candidates if it still fails: the live network fetch
+  hanging/failing silently with no loading indicator (reads as "does nothing"
+  during the wait), or it's genuinely fine now and was tested against a build
+  from before this was wired.
 - **"Create an instance"** — currently upload-only. Akshat flagged this as
   observed-state, not a complaint. No action unless scope grows later.
 - **Booking page** — exists, works, no complaint.
