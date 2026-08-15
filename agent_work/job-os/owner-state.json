@@ -1,0 +1,91 @@
+{
+  "title": "Macalester Job OS — operator CRM",
+  "school": "Macalester College",
+  "lastSyncedAt": "2026-08-15",
+  "source": "Cloud agent CRM. LinkedIn graph is first-degree import, not OpenID.",
+  "linkedinConnections": [
+    {
+      "id": "li_alhareth",
+      "displayName": "Alhareth Ali",
+      "profileUrl": "https://www.linkedin.com/in/alharethali",
+      "currentCompany": "Chamfr",
+      "currentTitle": "AI/ML Intern",
+      "pastCompanies": ["Kigo", "Augeo"],
+      "school": "Macalester College",
+      "degree": "1st",
+      "notes": "Akshat said Hareth is a connection. 2024 Augeo internship, SWE on Kigo. Publicly thanked Huldah Philips and Devan Grose."
+    }
+  ],
+  "roles": [
+    {
+      "id": "role_augeo",
+      "rank": 1,
+      "actionLane": "Network First",
+      "company": "Augeo",
+      "role": "Summer intern / local tech (verify cycle)",
+      "location": "St. Paul, MN (2561 Territorial Road)",
+      "fitScore": 82,
+      "eligibility": "Plausible — local HQ, Macalester intern history; no intern posting live",
+      "deadline": null,
+      "applied": false,
+      "contacts": "Alhareth Ali · Devan Grose · Huldah Cooper · David Kristal",
+      "processStatus": "Not Started",
+      "nextAction": "Write Hareth first. Then Huldah for the intern cycle. Do not cold-email the CEO.",
+      "roleUrl": "",
+      "careerUrl": "https://recruiting.paylocity.com/recruiting/jobs/All/bbb7ef82-fe4e-45d2-acc1-c18505da0567/Augeo-Affinity-Marketing",
+      "why": "St. Paul loyalty/engagement shop. Kigo is an Augeo company. Hareth interned there in 2024. Live board 2026-08-15 has no intern listing.",
+      "liveStatus": "Verify posting",
+      "lastChecked": "2026-08-15"
+    }
+  ],
+  "contacts": [
+    {
+      "id": "crm_augeo_hareth",
+      "name": "Alhareth Ali",
+      "company": "Augeo",
+      "role": "Software Engineer intern, Kigo (2024)",
+      "location": "St. Paul, MN",
+      "warmth": "LinkedIn 1st · Macalester · interned on Kigo",
+      "status": "Not Contacted",
+      "profileUrl": "https://www.linkedin.com/in/alharethali",
+      "bestAsk": "How did the 2024 intern cycle actually run, and who should I write first?",
+      "notes": "Also Hareth. Current role Chamfr. Past Kigo/Augeo is why he matches this job."
+    },
+    {
+      "id": "crm_augeo_devan",
+      "name": "Devan Grose",
+      "company": "Kigo",
+      "role": "Staff Software Engineer (Kigo, 2023–2024)",
+      "location": "Seattle / St. Paul",
+      "warmth": "Named as Deven — Hareth’s intern mentor",
+      "status": "Not Contacted",
+      "profileUrl": "https://www.linkedin.com/in/devangrose",
+      "bestAsk": "If you still talk to the Kigo/Augeo eng team, who owns intern hiring?",
+      "notes": "User said Deven. Public spelling Devan Grose. Left Kigo Dec 2024."
+    },
+    {
+      "id": "crm_augeo_huldah",
+      "name": "Huldah Cooper",
+      "company": "Augeo",
+      "role": "Vice President, People",
+      "location": "St. Paul, MN",
+      "warmth": "Macalester intern pipeline — intern-program owner",
+      "status": "Not Contacted",
+      "profileUrl": "https://www.linkedin.com/in/huldah-c-ab5521184/",
+      "bestAsk": "How 2027 intern recruiting runs, and who owns Kigo/tech intern seats.",
+      "notes": "User said Hulda Phillips. LinkedIn Huldah C. Site: Huldah Cooper."
+    },
+    {
+      "id": "crm_augeo_kristal",
+      "name": "David Kristal",
+      "company": "Augeo",
+      "role": "Founder, CEO & Co-Chairman",
+      "location": "St. Paul, MN",
+      "warmth": "Cold executive — intro via People, not a first ping",
+      "status": "Not Contacted",
+      "profileUrl": "https://www.linkedin.com/in/david-kristal-47490a/",
+      "bestAsk": "Do not cold-ask the CEO for an intern seat.",
+      "notes": "User said David Crystal. Public spelling Kristal."
+    }
+  ]
+}
