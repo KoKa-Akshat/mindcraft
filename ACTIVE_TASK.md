@@ -4,6 +4,10 @@
 
 ---
 
+## Family + institutional value (2026-08-15)
+
+Pricing cards now speak parent and teacher: one record / one class dashboard, custom homework (AI drafts, teacher decides), a way through the AI noise. Prices unchanged.
+
 ## Claim desk mascot lattice (2026-08-15)
 
 The apply-form left box is no longer a pressable 3D cube. It is the raccoon, drawn as a breathing lime-dot lattice, with workflow captions cycling inside the box (fractals lesson, pull emails / draft replies, resume, map, notes). Pointer events off.
