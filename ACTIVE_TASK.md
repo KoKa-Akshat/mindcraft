@@ -4,6 +4,10 @@
 
 ---
 
+## Archive hardcovers (2026-08-15)
+
+Stats are the old number blocks again. No search on the left, only Browse. Opening the shelf does not stretch the page. Go back replaces Open the full page. Books show as hardcovers.
+
 ## Archive sims are playable (2026-08-15)
 
 The shelf pauses page scroll while it is open. The MicroSim sits in a live play surface so you can drag the lesson in the same box.

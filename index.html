@@ -460,19 +460,10 @@
   .archive-grid{display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(24px,4vw,56px); align-items:center;}
   .archive-credit{ margin-top:22px; padding:16px 18px; border:1px solid var(--edge); border-radius:16px; background:var(--field-2); font-size:16px; font-weight:400; color:var(--chalk); max-width:520px; line-height:1.4; min-height:64px; transition:opacity .42s ease; }
   .archive-credit.is-out{opacity:0;}
-  .archive-row{
-    display:flex; align-items:center; justify-content:space-between; gap:22px;
-    margin:26px 0 6px; flex-wrap:wrap;
-  }
-  .archive-bullets{list-style:none; display:grid; gap:8px; flex:1; min-width:220px; margin:0;}
-  .archive-bullets li{
-    font-size:15px; font-weight:500; color:var(--chalk); line-height:1.3;
-    padding-left:16px; position:relative; white-space:nowrap;
-  }
-  .archive-bullets li::before{content:"•"; position:absolute; left:0; color:var(--lime);}
-  .archive-row .btn{flex:none; margin-left:auto;}
-  @media (max-width:560px){ .archive-bullets li{white-space:normal;} }
-  .archive-inline-search{margin-top:26px; max-width:480px;}
+  .archive-stats{display:flex; gap:clamp(20px,3vw,44px); flex-wrap:wrap; margin:26px 0 18px;}
+  .as b{display:block; font-family:"Space Grotesk",sans-serif; font-size:clamp(28px,3.2vw,38px); letter-spacing:-.02em; color:var(--lime); line-height:1; font-weight:700;}
+  .as span{display:block; margin-top:7px; font-size:12px; font-weight:400; color:var(--chalk-faint); max-width:170px; line-height:1.35;}
+  .archive-inline-search{margin:0; max-width:none;}
   .ais-bar{ display:flex; align-items:center; gap:10px; padding:13px 16px; border-radius:14px; background:var(--field-2); border:1px solid var(--edge); }
   .ais-bar svg{flex:none; opacity:.5;}
   .ais-bar input{ flex:1; background:none; border:none; outline:none; color:var(--chalk); font-family:"Inter",sans-serif; font-size:14px; font-weight:400; }
@@ -499,26 +490,30 @@
     padding:10px 16px 8px; font-size:12px; color:var(--chalk-faint);
   }
   .archive-shelf{
-    flex:1; min-height:0; overflow:auto; padding:0 12px 14px;
-    display:grid; gap:8px; align-content:start;
+    flex:1; min-height:0; overflow:auto; padding:0 14px 16px;
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(118px, 1fr));
+    gap:14px; align-content:start;
     overscroll-behavior:contain;
   }
-  .abook{
-    display:flex; align-items:center; gap:12px; width:100%;
-    padding:10px 12px; border-radius:14px;
-    border:1px solid var(--edge); background:#0b1116;
-    text-align:left; cursor:pointer; font:inherit; color:inherit;
+  .archive-shelf.is-lesson{grid-template-columns:1fr;}
+  .ahc{
+    display:flex; flex-direction:column; gap:8px; padding:0; border:0;
+    background:none; cursor:pointer; font:inherit; color:inherit; text-align:left;
   }
-  .abook:hover{border-color:rgba(196,245,71,.35);}
-  .abook img{
-    width:42px; height:62px; object-fit:cover; border-radius:4px;
-    flex:none; background:var(--field-3);
+  .ahc img{
+    width:100%; aspect-ratio:2/3; object-fit:cover; display:block;
+    border-radius:6px; background:var(--field-3);
+    box-shadow:0 14px 28px rgba(0,0,0,.45); border:1px solid var(--edge);
+    transition:transform .25s var(--ease), border-color .25s var(--ease);
   }
-  .abook b{display:block; font-size:15px; font-weight:600; color:var(--chalk); line-height:1.25;}
-  .archive-grid.is-open{align-items:stretch; grid-template-columns:minmax(0,.68fr) minmax(0,1.32fr);}
+  .ahc:hover img{border-color:rgba(196,245,71,.4); transform:translateY(-3px);}
+  .ahc b{
+    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
+    overflow:hidden; font-size:12.5px; font-weight:600; line-height:1.25; color:var(--chalk);
+  }
+  .archive-grid.is-open{align-items:stretch;}
   .archive-grid.is-open .archive-stack{display:none;}
   .archive-grid.is-open .archive-box{display:flex;}
-  .archive-grid.is-open .archive-inline-search{margin-top:0; max-width:none;}
   .alesson{padding:6px 4px 8px; display:grid; gap:12px;}
   .alesson-reply{font-family:var(--serif); font-style:italic; font-size:17px; line-height:1.4; color:var(--chalk);}
   .alesson-book{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--lime);}
@@ -915,20 +910,12 @@
         <h2 class="h2 reveal">Some ideas need a picture, <span class="serif">not a paragraph.</span></h2>
         <p class="lede reveal">Drag a variable. Watch the idea move. That is often the whole click.</p>
         <div class="archive-credit reveal" id="archiveCaption">An interactive lesson on fractals.</div>
-        <div class="archive-row reveal">
-          <ul class="archive-bullets">
-            <li>389 sims in one health book</li>
-            <li>173 geometry sims you can drag</li>
-            <li>113 textbooks. Free. No login.</li>
-          </ul>
-          <button class="btn primary" type="button" id="archiveBrowseBtn" aria-expanded="false" aria-controls="archiveBox">Browse the archive</button>
+        <div class="archive-stats reveal">
+          <div class="as"><b>389</b><span>MicroSims in one Health Education book alone</span></div>
+          <div class="as"><b>173</b><span>interactive sims in AI Assisted Geometry</span></div>
+          <div class="as"><b>113</b><span>full open textbooks, free, no login</span></div>
         </div>
-        <div class="archive-inline-search reveal" id="archiveInlineSearch">
-          <div class="ais-bar">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.6" y2="16.6"/></svg>
-            <input type="text" id="aisInput" placeholder="Ask the shelf. Try calculus, limits, fractals…" autocomplete="off" aria-label="Ask the archive">
-          </div>
-        </div>
+        <button class="btn primary reveal" type="button" id="archiveBrowseBtn" aria-expanded="false" aria-controls="archiveBox">Browse the archive</button>
       </div>
       <div class="archive-pane reveal">
         <div class="archive-stack" id="archiveStack" aria-hidden="true">
@@ -938,10 +925,17 @@
           <div class="af af4"><img src="img/dans-covers/learning-micropython.jpg" alt="Learning MicroPython with AI" loading="lazy"></div>
         </div>
         <div class="archive-box" id="archiveBox" hidden>
-          <div class="archive-box-head" id="archiveBoxHead"></div>
+          <div class="archive-box-head" id="archiveBoxHead">
+            <div class="archive-inline-search" id="archiveInlineSearch">
+              <div class="ais-bar">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.6" y2="16.6"/></svg>
+                <input type="text" id="aisInput" placeholder="Ask the shelf. Try calculus, limits, fractals…" autocomplete="off" aria-label="Ask the archive">
+              </div>
+            </div>
+          </div>
           <div class="archive-box-meta">
             <span id="archiveCount">113 books</span>
-            <a class="btn soft" href="dans-archive.html" id="archivePageLink" style="min-height:36px;padding:0 12px;font-size:12px;">Open the full page</a>
+            <button class="btn soft" type="button" id="archiveBackBtn" style="min-height:36px;padding:0 12px;font-size:12px;">Go back</button>
           </div>
           <div class="archive-shelf" id="archiveShelf"></div>
         </div>
@@ -1757,15 +1751,13 @@
   // ---------- Archive shelf + RAG lesson in the same box ----------
   (function(){
     const stage = document.getElementById('archiveStage');
-    const copy = document.getElementById('archiveCopy');
-    const search = document.getElementById('archiveInlineSearch');
     const input = document.getElementById('aisInput');
     const box = document.getElementById('archiveBox');
-    const head = document.getElementById('archiveBoxHead');
     const shelf = document.getElementById('archiveShelf');
     const count = document.getElementById('archiveCount');
     const openBtn = document.getElementById('archiveBrowseBtn');
-    if (!stage || !search || !input || !box || !head || !shelf || !openBtn) return;
+    const backBtn = document.getElementById('archiveBackBtn');
+    if (!stage || !input || !box || !shelf || !openBtn) return;
 
     const RAG = 'https://mindcraft-webhook.vercel.app/api/archive-rag';
     const STOP = { the:1, and:1, for:1, with:1, that:1, this:1, from:1, what:1, how:1, why:1, are:1, was:1, can:1, you:1, your:1, about:1, into:1, book:1, page:1, open:1, show:1, tell:1, please:1, jesse:1 };
@@ -1844,6 +1836,7 @@
           '<a class="btn primary" href="' + escapeHtml(hit.pageUrl) + '" target="_blank" rel="noopener">Open this page</a>' +
         '</div>';
       if (count) count.textContent = hit.bookTitle;
+      shelf.classList.add('is-lesson');
       const play = shelf.querySelector('.alesson-play');
       if (play){
         play.addEventListener('pointerenter', function(){ pageScroll(false); });
@@ -1857,14 +1850,15 @@
         ? books.filter(function(b){ return (b.title + ' ' + b.description + ' ' + b.subject).toLowerCase().indexOf(needle) >= 0; })
         : books;
       if (count) count.textContent = matches.length + (needle ? ' match' : ' books');
+      shelf.classList.remove('is-lesson');
       if (!matches.length){
-        shelf.innerHTML = '<div class="ais-empty">No match. Ask another way, or browse the list.</div>';
+        shelf.innerHTML = '<div class="ais-empty">No match. Ask another way, or browse the covers.</div>';
         return;
       }
       shelf.innerHTML = matches.map(function(b){
-        return '<button class="abook" type="button" data-slug="' + escapeHtml(b.slug) + '">' +
-          '<img src="' + escapeHtml(coverSrc(b)) + '" alt="" width="42" height="62" loading="lazy">' +
-          '<span><b>' + escapeHtml(b.title) + '</b></span></button>';
+        return '<button class="ahc" type="button" data-slug="' + escapeHtml(b.slug) + '">' +
+          '<img src="' + escapeHtml(coverSrc(b)) + '" alt="" loading="lazy">' +
+          '<b>' + escapeHtml(b.title) + '</b></button>';
       }).join('');
     }
     function ask(q){
@@ -1921,7 +1915,6 @@
       if (stage.classList.contains('is-open')) return;
       stage.classList.add('is-open');
       box.hidden = false;
-      head.appendChild(search);
       openBtn.setAttribute('aria-expanded', 'true');
       openBtn.textContent = 'Close the shelf';
       loadBooks();
@@ -1933,7 +1926,6 @@
       if (!stage.classList.contains('is-open')) return;
       stage.classList.remove('is-open');
       box.hidden = true;
-      if (copy) copy.appendChild(search);
       openBtn.setAttribute('aria-expanded', 'false');
       openBtn.textContent = 'Browse the archive';
       pageScroll(true);
@@ -1950,8 +1942,16 @@
       e.preventDefault();
       ask(input.value);
     });
+    if (backBtn) backBtn.addEventListener('click', function(){
+      if (shelf.classList.contains('is-lesson')){
+        input.value = '';
+        renderShelf('');
+        return;
+      }
+      closeBox();
+    });
     shelf.addEventListener('click', function(e){
-      const row = e.target.closest('.abook');
+      const row = e.target.closest('.ahc');
       if (!row) return;
       const slug = row.getAttribute('data-slug');
       const book = (books || []).find(function(b){ return b.slug === slug; });
