@@ -4,6 +4,10 @@
 
 ---
 
+## Pricing lock (2026-08-15)
+
+Plus is $12/mo (the unit-economics number). Family stays +$10. Institutional is $12/seat/yr. No draft ranges on the page.
+
 ## Archive keep it simple (2026-08-15)
 
 Removed Ask Jesse for a plan / starting point / this book from the marketing archive and dans-archive.html. Browse and open the book only.
