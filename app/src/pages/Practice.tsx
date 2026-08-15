@@ -86,6 +86,8 @@ const HOMEWORK_API = import.meta.env.VITE_HOMEWORK_API_URL ?? 'http://localhost:
 const SLACK_INVITE = 'https://join.slack.com/t/mindcraftnetwork/shared_invite/zt-3vnl9tmvm-sTq8wFPky0LcOGWcK_COHg'
 const SESSION_LENGTH = 10   // Bloom's mastery: min 10 trials for 80% threshold
 const MAX_SESSION    = 14   // hard cap when re-queuing wrong answers
+const MAX_QUESTION_ATTEMPTS = 3
+const SUBMITTED_SESSION_IDS_LIMIT = 100
 // Early-mastery exit — the shortest route to mastery. Once a student has shown
 // enough first-try evidence (≥ MIN trials, ≥ ACC accuracy, last STREAK all
 // correct) the session ends early and the graph gets the outcomes. Strong
@@ -131,7 +133,11 @@ type PracticeDraft = {
   /** Parallel to results — choice index recorded on each checkAnswer. */
   selectedIndices: number[]
   xp: number
-  requeuedIds: string[]
+  /** Legacy v2 field; read only when migrating an in-flight draft. */
+  requeuedIds?: string[]
+  attemptCounts?: Record<string, number>
+  sessionSubmissionId?: string
+  submittedSessionIds?: string[]
   initialQCount: number
   sessionBridge: BridgeRecommendation | null
   /** C4 — gap-scan question diagnostic hides right/wrong. */
@@ -410,7 +416,10 @@ export default function Practice() {
   const [results,      setResults]      = useState<boolean[]>([])
   const [selectedIndices, setSelectedIndices] = useState<number[]>([])
   const [xp,           setXp]           = useState(0)
-  const [requeuedIds,  setRequeuedIds]  = useState<string[]>([])
+  const [attemptCounts, setAttemptCounts] = useState<Record<string, number>>({})
+  const [sessionSubmissionId, setSessionSubmissionId] = useState<string | null>(null)
+  const [submittedSessionIds, setSubmittedSessionIds] = useState<string[]>([])
+  const submittingSessionIdsRef = useRef(new Set<string>())
   const [initialQCount,setInitialQCount]= useState(0)
   const [sessionBridge,setSessionBridge]= useState<BridgeRecommendation | null>(null)
   const [draftRestored, setDraftRestored] = useState(false)
@@ -498,6 +507,25 @@ export default function Practice() {
     interactedRef.current = selected !== null || checked || typedAnswer.trim().length > 0 || hintsShown > 0
   }, [qIndex, selected, checked, typedAnswer, hintsShown])
 
+  function submittedSessionStorageKey() {
+    return `mindcraft:submitted-practice-sessions:${user.uid}`
+  }
+
+  function readSubmittedSessionIds(): string[] {
+    try {
+      const value = JSON.parse(localStorage.getItem(submittedSessionStorageKey()) ?? '[]')
+      return Array.isArray(value) ? value.filter((id): id is string => typeof id === 'string') : []
+    } catch {
+      return []
+    }
+  }
+
+  function beginSessionSubmission(conceptId: string) {
+    const random = globalThis.crypto?.randomUUID?.() ?? Math.random().toString(36).slice(2)
+    setSessionSubmissionId(`${user.uid}:${missionType ?? 'practice'}:${conceptId}:${Date.now()}:${random}`)
+    setSubmittedSessionIds(readSubmittedSessionIds())
+  }
+
   function clearPracticeDraft(type: MissionType) {
     localStorage.removeItem(practiceDraftKey(user.uid, type))
     setSavedDrafts(prev => { const next = { ...prev }; delete next[type]; return next })
@@ -521,7 +549,8 @@ export default function Practice() {
     setResults([])
     setSelectedIndices([])
     setXp(0)
-    setRequeuedIds([])
+    setAttemptCounts({})
+    setSessionSubmissionId(null)
     setInitialQCount(0)
     setSessionBridge(null)
     setMasteredPathIds(new Set())
@@ -572,7 +601,11 @@ export default function Practice() {
     setResults(Array.isArray(draft.results) ? draft.results : [])
     setSelectedIndices(Array.isArray(draft.selectedIndices) ? draft.selectedIndices : [])
     setXp(draft.xp ?? 0)
-    setRequeuedIds(Array.isArray(draft.requeuedIds) ? draft.requeuedIds : [])
+    setAttemptCounts(draft.attemptCounts ?? Object.fromEntries(
+      (draft.requeuedIds ?? []).map(id => [id, 1]),
+    ))
+    setSessionSubmissionId(draft.sessionSubmissionId ?? null)
+    setSubmittedSessionIds(draft.submittedSessionIds ?? readSubmittedSessionIds())
     setInitialQCount(draft.initialQCount ?? 0)
     setSessionBridge(draft.sessionBridge ?? null)
     setHideCorrectness(draft.hideCorrectness ?? false)
@@ -760,7 +793,7 @@ export default function Practice() {
     if (!draftHydratedRef.current) return
     if (mode !== 'practice') return
     if (!missionType) return            // no active mission → nothing to save
-    if (pPhase === 'onboard' || pPhase === 'path') return
+    if (pPhase === 'onboard' || pPhase === 'path' || pPhase === 'complete') return
     // Only persist once there's something resumable: gap-scan needs assessment
     // concepts; weakness/learn need a target concept.
     const resumable = missionType === 'gapscan'
@@ -789,7 +822,9 @@ export default function Practice() {
       results,
       selectedIndices,
       xp,
-      requeuedIds,
+      attemptCounts,
+      sessionSubmissionId: sessionSubmissionId ?? undefined,
+      submittedSessionIds,
       initialQCount,
       sessionBridge,
       hideCorrectness,
@@ -822,7 +857,9 @@ export default function Practice() {
     results,
     selectedIndices,
     xp,
-    requeuedIds,
+    attemptCounts,
+    sessionSubmissionId,
+    submittedSessionIds,
     initialQCount,
     sessionBridge,
     hideCorrectness,
@@ -990,7 +1027,8 @@ export default function Practice() {
     setResults([])
     setSelectedIndices([])
     setXp(0)
-    setRequeuedIds([])
+    setAttemptCounts({})
+    setSessionSubmissionId(null)
     setInitialQCount(qs.length)
     setLevel(2)
     setPPhase('session')
@@ -1255,8 +1293,9 @@ export default function Practice() {
     setResults([])
     setSelectedIndices([])
     setXp(0)
-    setRequeuedIds([])
+    setAttemptCounts({})
     setInitialQCount(qs.length)
+    beginSessionSubmission(conceptId)
     setEarlyExit(false)
     setPPhase('session')
   }
@@ -1277,8 +1316,9 @@ export default function Practice() {
     setResults([])
     setSelectedIndices([])
     setXp(0)
-    setRequeuedIds([])
+    setAttemptCounts({})
     setInitialQCount(1)
+    beginSessionSubmission(q.conceptId)
     setEarlyExit(false)
     setPPhase('session')
   }
@@ -1336,8 +1376,9 @@ export default function Practice() {
     setResults([])
     setSelectedIndices([])
     setXp(0)
-    setRequeuedIds([])
+    setAttemptCounts({})
     setInitialQCount(qs.length)
+    beginSessionSubmission(slot.conceptId)
     setEarlyExit(false)
     setPPhase('session')
   }
@@ -1367,10 +1408,28 @@ export default function Practice() {
   }
 
   /** Close out a session: mark mastery, feed the graph, show the complete screen. */
-  function finishSession(
+  async function finishSession(
     resultsSnapshot: boolean[],
     indicesSnapshot: number[] = selectedIndices,
+    restartConcept = false,
   ) {
+    const submissionId = sessionSubmissionId
+    const alreadySubmitted = submissionId
+      ? new Set([...readSubmittedSessionIds(), ...submittedSessionIds]).has(submissionId)
+      : false
+    if (submissionId && submittingSessionIdsRef.current.has(submissionId)) return
+
+    if (submissionId && !alreadySubmitted) {
+      submittingSessionIdsRef.current.add(submissionId)
+      const nextSubmitted = [
+        ...readSubmittedSessionIds().filter(id => id !== submissionId),
+        submissionId,
+      ].slice(-SUBMITTED_SESSION_IDS_LIMIT)
+      // Mark before the request so re-entry cannot race a second submission.
+      localStorage.setItem(submittedSessionStorageKey(), JSON.stringify(nextSubmitted))
+      setSubmittedSessionIds(nextSubmitted)
+    }
+
     const passRate = resultsSnapshot.filter(Boolean).length / resultsSnapshot.length
     if (concept && passRate >= 0.8) {
       evictQuestionCache(concept, level, exam || 'General')
@@ -1389,8 +1448,36 @@ export default function Practice() {
         }
         return buildOutcomeFromAnswer(q, correct, indicesSnapshot[i], conceptId, level)
       })
-      void recordOutcomes(user.uid, perQuestion)
+      if (!alreadySubmitted) {
+        const response = await recordOutcomes(user.uid, perQuestion)
+        if (!response) {
+          // A failed/offline request may retry this exact session id.
+          const retryable = readSubmittedSessionIds().filter(id => id !== submissionId)
+          localStorage.setItem(submittedSessionStorageKey(), JSON.stringify(retryable))
+          setSubmittedSessionIds(retryable)
+          if (submissionId) submittingSessionIdsRef.current.delete(submissionId)
+          return
+        }
+      }
       invalidateKnowledgeGraph(user.uid)
+    }
+    if (submissionId) submittingSessionIdsRef.current.delete(submissionId)
+
+    if (restartConcept && concept) {
+      if (weeklyWalkSlots) {
+        beginWeeklySlotSession(weeklyWalkSlots[weeklyWalkIndex])
+      } else if (questions.length === 1) {
+        startBookmarkedSession(questions[0])
+      } else {
+        await startSession(
+          concept,
+          level,
+          sessionBridge ?? undefined,
+          sessionFormat ?? undefined,
+          sessionMisconceptionTarget ?? undefined,
+        )
+      }
+      return
     }
 
     // Weekly Review play-through: more slots queued — advance to the next
@@ -1455,23 +1542,28 @@ export default function Practice() {
     ) {
       setEarlyExit(true)
       setInitialQCount(resultsSnapshot.length)
-      finishSession(resultsSnapshot, indicesSnapshot)
+      void finishSession(resultsSnapshot, indicesSnapshot)
       return
     }
 
     const wasCorrect = resultsSnapshot[qIndex]
+    const attemptCount = (attemptCounts[currentQ.id] ?? 0) + 1
+    setAttemptCounts(prev => ({ ...prev, [currentQ.id]: attemptCount }))
+    if (!wasCorrect && attemptCount >= MAX_QUESTION_ATTEMPTS && !hideCorrectness) {
+      void finishSession(resultsSnapshot, indicesSnapshot, true)
+      return
+    }
     const shouldRequeue = !wasCorrect
-      && !requeuedIds.includes(currentQ.id)
+      && attemptCount < MAX_QUESTION_ATTEMPTS
       && questions.length < MAX_SESSION
       && !hideCorrectness
 
     if (shouldRequeue) {
       setQuestions(prev => [...prev, currentQ])
-      setRequeuedIds(prev => [...prev, currentQ.id])
     }
 
     if (isLast && !shouldRequeue) {
-      finishSession(resultsSnapshot, indicesSnapshot)
+      void finishSession(resultsSnapshot, indicesSnapshot)
     } else {
       setQIndex(i => i + 1)
       setSelected(null)
@@ -1504,7 +1596,8 @@ export default function Practice() {
     // just closes the record silently, wherever the retry happened.
     if (correct && user?.uid) void resolveWrongAnswerNote(user.uid, currentQ.id)
 
-    // Soft wrong (neurodivergent-safe): wiggle + dim, try again — no red buzz, no lock-in.
+    // A wrong answer consumes one of this run's three attempts. Feedback stays
+    // calm, then advanceQuestion requeues the item at the end of the session.
     if (!correct && !hideCorrectness) {
       playTap()
       setWrongCoachLine(coachLineForWrong(currentQ))
@@ -1518,12 +1611,8 @@ export default function Practice() {
           source: 'practice',
         })
       }
-      setEliminatedChoices(prev => (prev.includes(sel!) ? prev : [...prev, sel!]))
       setWiggleChoice(sel)
       window.setTimeout(() => setWiggleChoice(null), 520)
-      setSelected(null)
-      setTypedAnswer('')
-      return
     }
 
     const nextResults = [...results, correct]

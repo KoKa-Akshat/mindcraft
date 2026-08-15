@@ -232,7 +232,9 @@ re-bake or migration across every consumer.*
     their labels, map coordinates, student mastery/strength embeddings + displacement,
     alignment scores, explore ranking. Any change = a deliberate re-bake + axis re-labeling.
     Needs its own build file.
-15. **Bucket C — difficulty has no ranking consumer after `adjusted_strength` was removed.** Two
+15. ~~**Difficulty has no prediction consumer after `adjusted_strength` was removed.**~~
+    Addressed for offline validation by `validation/predictor.py`: ontology population
+    failure and item level now parameterize P(correct). Production ranking remains unchanged. Two
     policy options remain deliberately unbuilt: restore difficulty-weighted strength as
     an explicit ranking input (failure on hard concepts counts less than failure on easy
     ones), or use population failure as the cold-start mastery prior (which moves every

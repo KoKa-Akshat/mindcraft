@@ -63,6 +63,24 @@ def outcome_from(score: float, level: int = 1) -> float:
 # small-denominator guard. Concept events always carry full weight (1.0).
 FORMAT_EXPOSURE_NORM = 5.0   # questions of a format for it to count as full evidence
 
+# Ingredient mastery is inferred indirectly from distractor mappings, so its
+# concept-level aggregate is tertiary evidence rather than a second full vote.
+INGREDIENT_AGGREGATE_EXPOSURE_WEIGHT = 0.15
+
+# Mastery evidence gets weaker when the same item is seen repeatedly.  The
+# attempt-observation log determines the zero-based prior-attempt count.
+REPEAT_EXPOSURE_WEIGHTS = (1.0, 0.4, 0.15)
+REPEAT_EXPOSURE_FLOOR = 0.15
+
+
+def repeat_exposure_weight(attempt_index: int) -> float:
+    """Evidence weight for an item attempt (0=fresh, 1=first repeat)."""
+    if attempt_index < 0:
+        attempt_index = 0
+    if attempt_index < len(REPEAT_EXPOSURE_WEIGHTS):
+        return REPEAT_EXPOSURE_WEIGHTS[attempt_index]
+    return REPEAT_EXPOSURE_FLOOR
+
 
 def format_exposure_weight(count: int) -> float:
     """Sample-weight for a format's session event (in (0, 1])."""

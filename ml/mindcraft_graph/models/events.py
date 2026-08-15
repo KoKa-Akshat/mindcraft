@@ -11,4 +11,7 @@ class SessionEvent(BaseModel):
     effort: float = Field(ge=0, le=1)    # normalized effort/attempts
     duration_minutes: float
     timestamp: datetime
-    exposure_weight: float = 1.0  # primary=1.0, secondary=0.4, tertiary=0.15
+    # Also carries repeat-aware question evidence: fresh=1.0, first repeat=0.4,
+    # later repeats=0.15.  Ingredient misconception counters are independent.
+    exposure_weight: float = Field(default=1.0, ge=0, le=1)
+    misconceptions: dict[str, int] = Field(default_factory=dict)

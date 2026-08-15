@@ -9,7 +9,6 @@ from typing import Literal
 
 from mindcraft_graph.models.concept import Ontology
 from mindcraft_graph.models.ingredient import IngredientOntology
-from mindcraft_graph.models.student_state import ConceptMastery
 from mindcraft_graph.representation import embeddings
 from mindcraft_graph.representation import classification_index as classifier_index
 from mindcraft_graph.representation.student_embeddings import (
@@ -810,36 +809,49 @@ async def record_outcomes_endpoint(req: RecordOutcomesRequest, auth: AuthContext
         append_interactions,
         append_format_interactions,
         append_attempt_observations,
+        load_attempt_observations,
         load_format_events,
         load_student_events,
         save_personal_graph,
     )
     from mindcraft_graph.models.events import SessionEvent
     from mindcraft_graph.engine.update import fold_format_events
-    from mindcraft_graph.config import outcome_from, format_exposure_weight, FORMAT_IDS
+    from mindcraft_graph.config import (
+        FORMAT_IDS,
+        INGREDIENT_AGGREGATE_EXPOSURE_WEIGHT,
+        outcome_from,
+        repeat_exposure_weight,
+    )
 
     valid_concepts = {concept.id for concept in ontology.concepts}
     now = datetime.now()
     recorded: list[str] = []
     skipped: list[str] = []
 
-    # Bucket per-question scores by node; collect per-question observations.
-    by_concept: dict[str, list[float]] = defaultdict(list)
+    # The raw log remains per occurrence (including requeues), while mastery is
+    # collapsed to one, repeat-damped observation per question in this request.
+    prior_attempts: dict[str, int] = defaultdict(int)
+    for previous in load_attempt_observations(req.student_id, limit=10000, dedupe=False):
+        question_id = previous.get("question_id")
+        if question_id:
+            prior_attempts[question_id] += 1
+
+    by_concept: dict[str, list[tuple[float, float]]] = defaultdict(list)
     concept_level: dict[str, int] = {}
-    by_format: dict[str, list[float]] = defaultdict(list)
+    by_format: dict[str, list[tuple[float, float]]] = defaultdict(list)
     format_level: dict[str, int] = {}
     observations: list[dict] = []
+    collapsed: dict[tuple[str, str], tuple[OutcomeItem, float, bool]] = {}
+    occurrence_counts: dict[tuple[str, str], int] = defaultdict(int)
+    misconceptions_by_concept: dict[str, dict[str, int]] = defaultdict(
+        lambda: defaultdict(int)
+    )
     for item in req.outcomes:
         score = item.resolved_score()
         if item.concept_id not in valid_concepts or score is None:
             skipped.append(item.concept_id)
             continue
-        by_concept[item.concept_id].append(score)
-        concept_level[item.concept_id] = max(concept_level.get(item.concept_id, 1), item.level)
         has_format = item.format_id in FORMAT_IDS
-        if has_format:
-            by_format[item.format_id].append(score)
-            format_level[item.format_id] = max(format_level.get(item.format_id, 1), item.level)
         observations.append({
             "concept_id": item.concept_id,
             "format_id": item.format_id if has_format else None,
@@ -851,12 +863,30 @@ async def record_outcomes_endpoint(req: RecordOutcomesRequest, auth: AuthContext
             "misconception_id": item.misconception_id,
             "error_type": item.error_type,
         })
+        if item.misconception_id and score <= 0.0:
+            misconceptions_by_concept[item.concept_id][item.misconception_id] += 1
+        # Null question ids cannot be recognized across calls, so each remains
+        # its own synthetic item. Real question ids collapse to the last outcome
+        # (the student's state after the retry) with the final attempt's weight.
+        collapse_id = item.question_id or f"__anonymous_{len(observations)}"
+        key = (item.concept_id, collapse_id)
+        occurrence_counts[key] += 1
+        collapsed[key] = (item, score, has_format)
         recorded.append(item.concept_id)
+
+    for (concept_id, question_id), (item, score, has_format) in collapsed.items():
+        prior_count = prior_attempts.get(question_id, 0) if item.question_id else 0
+        weight = repeat_exposure_weight(prior_count + occurrence_counts[(concept_id, question_id)] - 1)
+        by_concept[concept_id].append((score, weight))
+        concept_level[concept_id] = max(concept_level.get(concept_id, 1), item.level)
+        if has_format and item.format_id:
+            by_format[item.format_id].append((score, weight))
+            format_level[item.format_id] = max(format_level.get(item.format_id, 1), item.level)
 
     # One aggregated CONCEPT event per concept (k/N, full weight).
     events: list[SessionEvent] = []
-    for cid, scores in by_concept.items():
-        base = outcome_from(mean(scores), concept_level[cid])
+    for cid, scored_weights in by_concept.items():
+        base = outcome_from(mean(score for score, _ in scored_weights), concept_level[cid])
         events.append(SessionEvent(
             student_id=req.student_id,
             concept_id=cid,
@@ -865,18 +895,19 @@ async def record_outcomes_endpoint(req: RecordOutcomesRequest, auth: AuthContext
             effort=0.6 if base < 0 else 0.4,  # strength/displacement only, never mastery
             duration_minutes=3.0,
             timestamp=now,
-            exposure_weight=1.0,
+            exposure_weight=mean(weight for _, weight in scored_weights),
+            misconceptions=dict(misconceptions_by_concept[cid]),
         ))
 
     # One aggregated FORMAT event per format (k/n, sample-weighted).
     format_records: list[dict] = []
-    for fid, scores in by_format.items():
-        base = outcome_from(mean(scores), format_level[fid])
+    for fid, scored_weights in by_format.items():
+        base = outcome_from(mean(score for score, _ in scored_weights), format_level[fid])
         format_records.append({
             "format_id": fid,
             "outcome": base,
             "level": format_level[fid],
-            "exposure_weight": format_exposure_weight(len(scores)),
+            "exposure_weight": mean(weight for _, weight in scored_weights),
         })
 
     if events:
@@ -889,7 +920,10 @@ async def record_outcomes_endpoint(req: RecordOutcomesRequest, auth: AuthContext
     # ── Ingredient-level evidence from misconception distractors (Stream A) ──
     # For each wrong answer that carries a misconception_id, fire a negative
     # ingredient event on every ingredient the map links to that misconception.
-    # Deduped per (misconception, ingredient) within one request; null ids skipped.
+    # Ingredient evidence deliberately has different repeat semantics: the fire
+    # is deduped per (misconception, ingredient) per request, but the severity
+    # counter increments for every wrong observation. Stable traps get louder
+    # without multiplying ingredient mastery updates.
     misconception_items = [
         obs for obs in observations
         if obs.get("misconception_id") and obs.get("correct", 1.0) <= 0.0
@@ -899,10 +933,14 @@ async def record_outcomes_endpoint(req: RecordOutcomesRequest, auth: AuthContext
             load_ingredient_state,
             save_ingredient_state,
         )
-        from mindcraft_graph.engine.ingredient_runtime import update_ingredient_state
+        from mindcraft_graph.engine.ingredient_runtime import (
+            aggregate_to_concept_mastery,
+            update_ingredient_state,
+        )
 
         ing_state = load_ingredient_state(req.student_id)
         fired: set[tuple[str, str]] = set()  # (misconception_id, ingredient_id)
+        touched_concepts: set[str] = set()
 
         for obs in misconception_items:
             mis_id = obs["misconception_id"]
@@ -916,6 +954,9 @@ async def record_outcomes_endpoint(req: RecordOutcomesRequest, auth: AuthContext
                 if (mis_id, ing_id) in fired:
                     continue
                 fired.add((mis_id, ing_id))
+                ingredient = ingredient_graph.get_ingredient(ing_id)
+                if ingredient is not None:
+                    touched_concepts.add(ingredient.concept_id)
                 card = CardRecommendation(
                     card_template_id=f"mis_{mis_id}",
                     target_type="ingredient",
@@ -935,6 +976,32 @@ async def record_outcomes_endpoint(req: RecordOutcomesRequest, auth: AuthContext
                 )
 
         save_ingredient_state(req.student_id, ing_state)
+
+        ingredient_events = [
+            SessionEvent(
+                student_id=req.student_id,
+                concept_id=concept_id,
+                event_type="problem_set",
+                outcome=outcome_from(aggregate_to_concept_mastery(
+                    ing_state, concept_id, ingredient_graph
+                )),
+                effort=0.6,
+                duration_minutes=0.0,
+                timestamp=now,
+                # This is second-hand distractor evidence in addition to the
+                # raw correctness event above, never another full-weight vote.
+                exposure_weight=INGREDIENT_AGGREGATE_EXPOSURE_WEIGHT,
+                misconceptions=dict(misconceptions_by_concept[concept_id]),
+            )
+            for concept_id in sorted(touched_concepts)
+            if concept_id in valid_concepts
+        ]
+        if ingredient_events:
+            append_interactions(
+                req.student_id,
+                ingredient_events,
+                source="ingredient_aggregate",
+            )
 
     all_events = load_student_events(req.student_id)
     graph = create_personal_graph(req.student_id, ontology)
@@ -1179,7 +1246,9 @@ async def record_work_evidence_endpoint(req: RecordWorkEvidenceRequest, auth: Au
     if concept_events:
         append_interactions(req.student_id, concept_events, source="verified_step")
 
-    touched_concepts = {req.concept_id}
+    # Ingredient-derived concept evidence follows the interaction log just like
+    # every other mastery update. Only concepts whose ingredients moved qualify.
+    touched_concepts: set[str] = set()
     if outcome_ingredient_id:
         ingredient = ingredient_graph.get_ingredient(outcome_ingredient_id)
         if ingredient is not None:
@@ -1191,36 +1260,42 @@ async def record_work_evidence_endpoint(req: RecordWorkEvidenceRequest, auth: Au
         if ingredient is not None:
             touched_concepts.add(ingredient.concept_id)
 
+    from mindcraft_graph.config import (
+        INGREDIENT_AGGREGATE_EXPOSURE_WEIGHT,
+        outcome_from,
+    )
+
+    aggregate_events = [
+        SessionEvent(
+            student_id=req.student_id,
+            concept_id=concept_id,
+            event_type="problem_set",
+            outcome=outcome_from(aggregate_to_concept_mastery(
+                student_state, concept_id, ingredient_graph
+            )),
+            effort=0.5,
+            duration_minutes=0.0,
+            timestamp=now,
+            exposure_weight=INGREDIENT_AGGREGATE_EXPOSURE_WEIGHT,
+        )
+        for concept_id in sorted(touched_concepts)
+        if concept_id in valid_concepts
+    ]
+    if aggregate_events:
+        append_interactions(
+            req.student_id, aggregate_events, source="ingredient_aggregate"
+        )
+
     all_events = load_student_events(req.student_id)
     graph = create_personal_graph(req.student_id, ontology)
     if all_events:
         graph = update_personal_graph(graph, all_events, ontology)
 
-    updated_concepts = {}
-    for concept_id in touched_concepts:
-        if concept_id not in valid_concepts:
-            continue
-        aggregated_mastery = aggregate_to_concept_mastery(
-            student_state,
-            concept_id,
-            ingredient_graph,
-        )
-        current = graph.state.mastery_by_concept.get(concept_id)
-        if current is None:
-            graph.state.mastery_by_concept[concept_id] = ConceptMastery(
-                concept_id=concept_id,
-                mastery=aggregated_mastery,
-                exposure_count=0,
-                last_interaction=now,
-                cumulative_outcome=0.0,
-                attempts=0,
-            )
-        else:
-            graph.state.mastery_by_concept[concept_id] = current.model_copy(update={
-                "mastery": aggregated_mastery,
-                "last_interaction": now,
-            })
-        updated_concepts[concept_id] = aggregated_mastery
+    updated_concepts = {
+        concept_id: graph.state.mastery_by_concept[concept_id].mastery
+        for concept_id in touched_concepts
+        if concept_id in graph.state.mastery_by_concept
+    }
 
     graph.updated_at = now
     save_personal_graph(req.student_id, graph)
