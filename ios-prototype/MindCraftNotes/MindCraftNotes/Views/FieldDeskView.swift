@@ -318,7 +318,25 @@ struct FieldDeskView: View {
         if placedWidgets.contains(.intel) { showIntelPanel = true }
     }
 
-    /// Full-screen sheets that hide logo + mode toggle too.
+    /// ⚠️ GUARDRAIL - read before adding a new full-screen overlay to
+    /// `body`'s top-level ZStack (an `if show___ { ... .zIndex(N) }` block
+    /// like ActFieldBook/GmailBox/ApplyToday/etc. below): add its flag HERE
+    /// too, or it silently inherits two real, already-hit bugs instead of
+    /// working correctly:
+    ///   1. Top chrome (logo/mode-toggle/sign-out) won't hide behind it.
+    ///   2. WORSE - `deskBackgroundPanZoomLayer`'s full-screen touch catcher
+    ///      (`fieldDeskPanZoomCatcher`, a raw UIKit `PassThroughOverlay`)
+    ///      stays active underneath your new overlay and silently eats
+    ///      every touch meant for it, even though it paints correctly on
+    ///      top. This exact bug independently hit the Add panel, the
+    ///      Binder card, and the ACT Field Book popup this session (three
+    ///      separate "button exists in the tree, isHittable: false"
+    ///      failures, three separate diagnoses) before this property was
+    ///      wired in as the ONE shared guard for both consumers - see the
+    ///      `panZoomCatcherBlocked` line in `body` and `floatDockBlocked`
+    ///      right below. Both read THIS property; a new overlay flag added
+    ///      only to its own `if` block and nowhere else WILL reproduce that
+    ///      failure again.
     private var deskOverlayChromeBlocked: Bool {
         showActFieldBook
             || showGmailBox
@@ -332,6 +350,9 @@ struct FieldDeskView: View {
     }
 
     /// Jesse kitchen Ask/dock only — Work/Create own their own prompt bars.
+    /// Also feeds `panZoomCatcherBlocked` in `body` - see the guardrail
+    /// comment on `deskOverlayChromeBlocked` above before adding a new
+    /// overlay case to either this or that property.
     private var floatDockBlocked: Bool {
         deskOverlayChromeBlocked || showStandaloneDesk || showCreateStudio
     }
@@ -640,6 +661,16 @@ struct FieldDeskView: View {
                     PolkaTransitionOverlay(progress: polkaProgress)
                         .zIndex(95)
                 }
+
+                // ⚠️ Adding another full-screen `if show___ { ... .zIndex(N) }`
+                // overlay below this point (or anywhere above)? Add its flag
+                // to `deskOverlayChromeBlocked` (and `floatDockBlocked` if it
+                // should also suppress the bottom dock) a few dozen lines up
+                // in this file - see the guardrail comment there. Skipping
+                // this is silent: the overlay still paints correctly on top,
+                // it just won't receive touches, because the pan/zoom
+                // catcher a few blocks above (`panZoomCatcherBlocked`) will
+                // keep claiming the full screen underneath it.
 
                 if showAddPanel {
                     // Needs an explicit zIndex above the Jesse Kitchen WebView
