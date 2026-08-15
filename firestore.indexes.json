@@ -67,6 +67,15 @@
       ]
     },
     {
+      "_comment": "BOTH orders are required and neither is redundant: load_recent_attempt_observations (firestore_adapter.py:199) queries DESC for /recommend's misconceptionGaps, load_attempt_observations (:165) queries ASC for the whole validation harness. Deleting either one silently returns [] via the bare except handlers and reads as 'student has no data'. See ENGINE_BOOK_ACCURACY_REVIEW.md section 1.",
+      "collectionGroup": "attempt_observations",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "studentId", "order": "ASCENDING" },
+        { "fieldPath": "timestamp", "order": "ASCENDING" }
+      ]
+    },
+    {
       "collectionGroup": "format_interactions",
       "queryScope": "COLLECTION",
       "fields": [
