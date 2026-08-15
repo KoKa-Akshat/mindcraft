@@ -296,9 +296,9 @@ final class MindCraftNotesUITests: XCTestCase {
     // save. The success path needs a real signed-in account and is verified
     // separately (see the written status doc), not by this automated test.
 
-    private func launchDashboardApp() -> XCUIApplication {
+    private func launchDashboardApp(extraArgs: [String] = []) -> XCUIApplication {
         let app = XCUIApplication()
-        app.launchArguments = ["--ui-testing-in-memory", "--ui-testing-skip-auth"]
+        app.launchArguments = ["--ui-testing-in-memory", "--ui-testing-skip-auth"] + extraArgs
         app.launch()
         XCUIDevice.shared.orientation = .landscapeLeft
         // "Classic desk boot slide -> Field Desk (primary after login)"
@@ -661,6 +661,56 @@ final class MindCraftNotesUITests: XCTestCase {
             XCUIDevice.shared.orientation = .portrait
             app.terminate()
         }
+    }
+
+    /// First real coverage for the Map tab (`KnowledgeMapView`) - previously
+    /// zero UI tests touched it. Uses `--ui-testing-force-map`
+    /// (`KnowledgeGraphClient.seedMockGraph`) to seed a small real
+    /// prerequisite chain instead of depending on a signed-in account's
+    /// backend data: `linear_equations` mastered unlocks `quadratic_equations`
+    /// (in progress), `systems_of_linear_equations` (struggling), and
+    /// `functions_basics` (untouched but ZPD-ready, since its only
+    /// prerequisite is mastered) - while `polynomial_functions` and
+    /// `derivatives` stay untouched-and-locked (their prerequisite chain
+    /// isn't mastered yet). Confirms both the new ready/locked legend entry
+    /// and that tapping "See path" actually reveals route steps on the
+    /// mocked ready node, not just that the button exists.
+    func testKnowledgeMapShowsZPDReadyVsLockedAndRevealsPath() {
+        let app = launchDashboardApp(extraArgs: ["--ui-testing-force-map"])
+
+        let mapTab = app.buttons.matching(NSPredicate(format: "label == %@", "Map")).firstMatch
+        XCTAssertTrue(mapTab.waitForExistence(timeout: 15), "expected the Map tab pill")
+        mapTab.tap()
+
+        let readyLegend = app.staticTexts["Ready to learn"]
+        XCTAssertTrue(readyLegend.waitForExistence(timeout: 10), "expected the new ZPD-ready legend entry")
+
+        let readyNode = app.buttons["mapNode_functions_basics"]
+        XCTAssertTrue(readyNode.waitForExistence(timeout: 10), "expected the mocked ZPD-ready node")
+        XCTAssertTrue(waitUntilHittable(readyNode), "ZPD-ready node should be hittable")
+        readyNode.tap()
+        attachScreenshot(app, name: "map_ready_node_selected")
+
+        let seePath = app.buttons["mapSeePath"]
+        XCTAssertTrue(seePath.waitForExistence(timeout: 5), "expected the See path button on the detail panel")
+        seePath.tap()
+
+        XCTAssertTrue(app.staticTexts["Your Next Route"].waitForExistence(timeout: 10), "expected the route panel to open")
+        // The mock reason text is unique to `RouteClient.plotRoute`'s
+        // `--ui-testing-force-map` seam, so finding it actually proves the
+        // route resolved and rendered - not just that some other element
+        // sharing a concept's name happens to be on screen elsewhere (the
+        // canvas node label for `linear_equations` would have satisfied a
+        // plain "Linear Equations" text search regardless of whether the
+        // route panel worked at all).
+        XCTAssertTrue(app.staticTexts["This is your target. Focus your practice here."].waitForExistence(timeout: 10), "expected the mocked route to resolve and show the target step's reason")
+        // The reveal task steps roughly every 0.26s per step; give the
+        // 2-step mock time to fully animate in before screenshotting.
+        Thread.sleep(forTimeInterval: 1.0)
+        attachScreenshot(app, name: "map_route_panel_revealed")
+
+        let lockedNode = app.buttons["mapNode_derivatives"]
+        XCTAssertTrue(lockedNode.waitForExistence(timeout: 5), "expected the mocked locked node")
     }
 
     /// Real practice-session interaction: pick a choice, check the answer,

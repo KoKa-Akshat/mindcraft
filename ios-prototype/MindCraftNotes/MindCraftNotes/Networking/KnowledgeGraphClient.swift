@@ -115,6 +115,16 @@ final class KnowledgeGraphClient: ObservableObject {
     /// different screens; this client only has one caller today, so that
     /// complexity isn't needed yet).
     func load() async {
+        // Test-only seam (same pattern as `GmailClient.seedForTesting`) - the
+        // Map screen has no UI test coverage yet and needs real node/edge
+        // shapes (mastered, in-progress, struggling, AND untouched-with-
+        // prerequisites-met vs. untouched-and-blocked) to actually exercise
+        // the ZPD ready/locked split, which real backend data can't be
+        // relied on to contain in any given run.
+        if ProcessInfo.processInfo.arguments.contains("--ui-testing-force-map") {
+            seedMockGraph()
+            return
+        }
         guard let user = Auth.auth().currentUser else {
             lastError = KnowledgeGraphError.notSignedIn
             return
@@ -159,5 +169,36 @@ final class KnowledgeGraphClient: ObservableObject {
         } catch {
             lastError = error
         }
+    }
+
+    /// `--ui-testing-force-map` only. A small, real prerequisite chain -
+    /// mastered `linear_equations` unlocks `quadratic_equations` (in
+    /// progress) and `systems_of_linear_equations` (struggling) plus
+    /// `functions_basics` (untouched, but ZPD-ready since its only
+    /// prerequisite is mastered); `polynomial_functions` needs the
+    /// not-yet-mastered `quadratic_equations` too, so it's untouched-and-
+    /// locked, and `derivatives` sits two hops past that, also locked.
+    private func seedMockGraph() {
+        nodes = [
+            KnowledgeGraphNode(id: "linear_equations", name: "Linear Equations", level: "foundational", x: 0.08, y: 0.5, mastery: 0.94, strengthScore: 0.8, eventCount: 14, status: "mastered"),
+            KnowledgeGraphNode(id: "quadratic_equations", name: "Quadratic Equations", level: "core", x: 0.38, y: 0.3, mastery: 0.5, strengthScore: 0.35, eventCount: 6, status: "in_progress"),
+            KnowledgeGraphNode(id: "systems_of_linear_equations", name: "Systems of Linear Equations", level: "core", x: 0.4, y: 0.72, mastery: 0.22, strengthScore: 0.1, eventCount: 5, status: "struggling"),
+            KnowledgeGraphNode(id: "functions_basics", name: "Functions Basics", level: "core", x: 0.36, y: 0.5, mastery: 0, strengthScore: nil, eventCount: 0, status: "untouched"),
+            KnowledgeGraphNode(id: "polynomial_functions", name: "Polynomial Functions", level: "advanced", x: 0.68, y: 0.35, mastery: 0, strengthScore: nil, eventCount: 0, status: "untouched"),
+            KnowledgeGraphNode(id: "derivatives", name: "Derivatives", level: "advanced", x: 0.92, y: 0.42, mastery: 0, strengthScore: nil, eventCount: 0, status: "untouched"),
+        ]
+        edges = [
+            KnowledgeGraphEdge(from: "linear_equations", to: "quadratic_equations", weight: 0.6, relation: "prerequisite"),
+            KnowledgeGraphEdge(from: "linear_equations", to: "systems_of_linear_equations", weight: 0.5, relation: "prerequisite"),
+            KnowledgeGraphEdge(from: "linear_equations", to: "functions_basics", weight: 0.4, relation: "prerequisite"),
+            KnowledgeGraphEdge(from: "quadratic_equations", to: "polynomial_functions", weight: 0.55, relation: "prerequisite"),
+            KnowledgeGraphEdge(from: "functions_basics", to: "polynomial_functions", weight: 0.3, relation: "prerequisite"),
+            KnowledgeGraphEdge(from: "polynomial_functions", to: "derivatives", weight: 0.5, relation: "prerequisite"),
+        ]
+        var map: [String: ConceptProgress] = [:]
+        for node in nodes { map[node.id] = ConceptProgress(mastery: node.mastery ?? 0, status: node.status ?? "untouched") }
+        progress = map
+        studentPoints = nil
+        axisLabels = KnowledgeGraphAxisLabels(x: "applied \u{2194} symbolic", y: "probabilistic \u{2194} spatial")
     }
 }

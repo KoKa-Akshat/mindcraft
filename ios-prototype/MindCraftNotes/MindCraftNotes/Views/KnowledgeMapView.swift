@@ -37,6 +37,18 @@ struct KnowledgeMapView: View {
     @State private var routeSteps: [RouteStep]?
     @State private var routeLoading = false
     @State private var showingRoute = false
+    // Real, on-canvas animated reveal of "See path" - the trail lights up
+    // one step at a time rather than just populating the side list, filling
+    // the gap this file's own header doc already named ("the route panel's
+    // mini interactive graph SVG - a plain step list stands in for that one
+    // piece"). `pathRevealCount` is how many leading steps are lit; the
+    // task drives it forward and is cancelled/restarted on every new route.
+    @State private var pathRevealCount: Int = 0
+    @State private var revealTask: Task<Void, Never>?
+    // One shared breathing pulse every ZPD-ready node's glow halo reads -
+    // a single repeating animation driving many views in unison reads as a
+    // cohesive "alive" canvas rather than needing a per-node timer.
+    @State private var pulsePhase = false
 
     // MARK: Ported status taxonomy (ConstellationGpsExplorer.tsx statusKind/KIND_COLOR/KIND_LABEL)
 
@@ -89,6 +101,40 @@ struct KnowledgeMapView: View {
     /// version explicitly filters out.
     private func isMajorEdge(_ edge: KnowledgeGraphEdge) -> Bool {
         edge.relation == "prerequisite" ? edge.weight > 0.25 : edge.weight > 0.45
+    }
+
+    // MARK: Zone of proximal development (real, not cosmetic)
+
+    /// Vygotsky's ZPD: not mastered yet, but reachable right now because the
+    /// scaffolding under it is already in place - versus a node that's
+    /// genuinely still out of reach. Every "untouched" node used to render
+    /// identically dim regardless of which of those two it was; this
+    /// recovers the distinction from data already on screen (no extra
+    /// network call), mirroring the real pathfinder's own backward-
+    /// propagation rule ("unknown presumed mastered only if chain successor
+    /// is mastered" - `engine/planning/pathfinder.py`, per CLAUDE.md): an
+    /// untouched node is ZPD-ready when every real `prerequisite` edge into
+    /// it comes from an already-stable node, or it has no prerequisite
+    /// edges at all (a foundational node).
+    private var zpdReadyIds: Set<String> {
+        let statusById = Dictionary(uniqueKeysWithValues: nodes.map { ($0.id, statusKind($0.status)) })
+        var ready: Set<String> = []
+        for node in nodes where statusKind(node.status) == .unknown {
+            let prereqEdges = edges.filter { $0.relation == "prerequisite" && $0.to == node.id }
+            let blocked = prereqEdges.contains { (statusById[$0.from] ?? .unknown) != .stable }
+            if !blocked { ready.insert(node.id) }
+        }
+        return ready
+    }
+
+    private enum ZPDZone { case mastered, active, ready, locked }
+
+    private func zpdZone(_ node: KnowledgeGraphNode, zpdReady: Set<String>) -> ZPDZone {
+        switch statusKind(node.status) {
+        case .stable: return .mastered
+        case .progress, .needs: return .active
+        case .unknown: return zpdReady.contains(node.id) ? .ready : .locked
+        }
     }
 
     private func label(for id: String) -> String {
@@ -199,6 +245,11 @@ struct KnowledgeMapView: View {
             }
         }
         .padding(.bottom, 24)
+        .onAppear {
+            withAnimation(.easeInOut(duration: 1.6).repeatForever(autoreverses: true)) {
+                pulsePhase = true
+            }
+        }
     }
 
     // MARK: Graph canvas
@@ -212,6 +263,7 @@ struct KnowledgeMapView: View {
             let scale = zoom
             let offset = CGSize(width: pan.width, height: pan.height)
             let bundle = layout
+            let zpdReady = zpdReadyIds
 
             let screenPoint: (CGPoint) -> CGPoint = { norm in
                 CGPoint(
@@ -254,6 +306,34 @@ struct KnowledgeMapView: View {
                         line.addLine(to: transformed(screenPoint(st)))
                         context.stroke(line, with: .color(.purple.opacity(0.5)), style: StrokeStyle(lineWidth: 1.5, dash: [4, 3]))
                     }
+
+                    // "See path" reveal trail - the real answer to "which
+                    // ones do I click to see the next path": a genuine
+                    // Beta-Binomial-weighted `RouteClient.plotRoute` result,
+                    // lit segment by segment as `pathRevealCount` advances
+                    // (driven by `loadRoute`'s reveal task), not a static
+                    // overlay. Glow is a wide blurred pass under a crisp core
+                    // stroke - Canvas has no native shadow-on-stroke.
+                    if showingRoute, let steps = routeSteps, steps.count > 1 {
+                        var trail = Path()
+                        var any = false
+                        for i in 0..<min(pathRevealCount, steps.count - 1) {
+                            guard
+                                let a = bundle.positions[steps[i].conceptId],
+                                let b = bundle.positions[steps[i + 1].conceptId]
+                            else { continue }
+                            trail.move(to: transformed(screenPoint(a)))
+                            trail.addLine(to: transformed(screenPoint(b)))
+                            any = true
+                        }
+                        if any {
+                            context.drawLayer { glow in
+                                glow.addFilter(.blur(radius: 5))
+                                glow.stroke(trail, with: .color(MapColor.zpdReady.opacity(0.85)), lineWidth: 5)
+                            }
+                            context.stroke(trail, with: .color(MapColor.zpdReady), lineWidth: 2)
+                        }
+                    }
                 }
 
                 if let m = layout.studentMastery {
@@ -268,7 +348,7 @@ struct KnowledgeMapView: View {
                 ForEach(nodes) { node in
                     if let norm = layout.positions[node.id] {
                         let p = transformed(screenPoint(norm))
-                        nodeView(node, at: p)
+                        nodeView(node, at: p, zpdReady: zpdReady)
                     }
                 }
 
@@ -304,32 +384,70 @@ struct KnowledgeMapView: View {
     }
 
     @ViewBuilder
-    private func nodeView(_ node: KnowledgeGraphNode, at p: CGPoint) -> some View {
+    private func nodeView(_ node: KnowledgeGraphNode, at p: CGPoint, zpdReady: Set<String>) -> some View {
         let isSelected = selectedId == node.id
         let hasData = (node.eventCount ?? 0) > 0
         let kind = statusKind(node.status)
-        let accent = kindColor(kind)
+        let zone = zpdZone(node, zpdReady: zpdReady)
+        // Ready/locked are both "unknown" under the mastery-status taxonomy,
+        // but they mean opposite things for what to do next - give them
+        // genuinely different colors instead of collapsing to one gray.
+        let accent: Color = kind == .unknown
+            ? (zone == .ready ? MapColor.zpdReady : MapColor.zpdLocked)
+            : kindColor(kind)
         let radius: CGFloat = isSelected ? (hasData ? 15 : 12.5) : (hasData ? 11 : 9.5)
         let mastery = min(1, max(0, node.mastery ?? 0))
         let dimmed = !visibleNodeIds.contains(node.id)
         let showLabel = isSelected || (node.eventCount ?? 0) > 3
+        let stepIndex = routeStepIndex(for: node.id)
+        let isRevealed = stepIndex.map { pathRevealCount > $0 } ?? false
+        let isPendingOnPath = stepIndex.map { pathRevealCount <= $0 } ?? false
+        let baseOpacity: Double = {
+            if dimmed { return 0.3 }
+            if hasData { return 1 }
+            return zone == .ready ? 0.85 : 0.35
+        }()
 
         ZStack {
+            // Breathing glow halo - the ZPD's actual invitation: "not done,
+            // but everything under this is." Only ready-unknown nodes with
+            // no data yet get it; a node the student has already touched
+            // reads through mastery/status instead.
+            if zone == .ready, !hasData, !dimmed {
+                Circle()
+                    .fill(
+                        RadialGradient(
+                            colors: [MapColor.zpdReady.opacity(pulsePhase ? 0.38 : 0.16), .clear],
+                            center: .center, startRadius: 0, endRadius: radius + 16
+                        )
+                    )
+                    .frame(width: (radius + 16) * 2, height: (radius + 16) * 2)
+                    .scaleEffect(pulsePhase ? 1.08 : 0.94)
+            }
+
+            if isRevealed {
+                Circle()
+                    .fill(MapColor.zpdReady.opacity(0.22))
+                    .frame(width: (radius + 9) * 2, height: (radius + 9) * 2)
+                    .overlay(Circle().stroke(MapColor.zpdReady.opacity(0.7), lineWidth: 1.5))
+                    .transition(.scale(scale: 0.6).combined(with: .opacity))
+            } else if isPendingOnPath {
+                Circle()
+                    .strokeBorder(MapColor.zpdReady.opacity(0.35), style: StrokeStyle(lineWidth: 1, dash: [2, 3]))
+                    .frame(width: (radius + 9) * 2, height: (radius + 9) * 2)
+            }
+
             if isSelected {
                 Circle().fill(accent.opacity(0.12)).frame(width: (radius + 11) * 2, height: (radius + 11) * 2)
                     .overlay(Circle().stroke(accent.opacity(0.45), lineWidth: 1.5))
             }
 
             Button(action: {
-                if selectedId == node.id {
-                    selectedId = nil
-                    showingRoute = false
-                    routeSteps = nil
-                } else {
-                    selectedId = node.id
-                    showingRoute = false
-                    routeSteps = nil
-                }
+                revealTask?.cancel()
+                pathRevealCount = 0
+                showingRoute = false
+                routeSteps = nil
+                selectedId = (selectedId == node.id) ? nil : node.id
             }) {
                 ZStack {
                     Group {
@@ -370,7 +488,8 @@ struct KnowledgeMapView: View {
                 .contentShape(Circle())
             }
             .buttonStyle(.plain)
-            .opacity(dimmed ? 0.3 : (hasData ? 1 : 0.62))
+            .opacity(baseOpacity)
+            .accessibilityIdentifier("mapNode_\(node.id)")
 
             if showLabel {
                 Text(label(for: node.id))
@@ -476,6 +595,16 @@ struct KnowledgeMapView: View {
                             .foregroundColor(MapColor.inkSoft.opacity(0.75))
                     }
                 }
+                // The one real distinction this pass adds: "untouched" used
+                // to be a single gray bucket. Now the ZPD-ready subset (every
+                // prerequisite already mastered) gets its own glowing color -
+                // the honest answer to "which one do I click next."
+                HStack(spacing: 4) {
+                    Circle().fill(MapColor.zpdReady).frame(width: 7, height: 7)
+                    Text("Ready to learn")
+                        .font(.system(size: 10, weight: .medium, design: .rounded))
+                        .foregroundColor(MapColor.inkSoft.opacity(0.75))
+                }
             }
             Spacer()
             VStack(alignment: .trailing, spacing: 2) {
@@ -562,6 +691,7 @@ struct KnowledgeMapView: View {
                         Text("See path").font(.system(size: 13, weight: .medium, design: .rounded)).frame(maxWidth: .infinity).padding(.vertical, 9)
                     }
                     .buttonStyle(.bordered)
+                    .accessibilityIdentifier("mapSeePath")
                 }
                 Button(action: { onQuickPractice(id) }) {
                     Text("Quick practice").font(.system(size: 13, weight: .medium, design: .rounded)).frame(maxWidth: .infinity).padding(.vertical, 9)
@@ -569,18 +699,18 @@ struct KnowledgeMapView: View {
                 .buttonStyle(.bordered)
             }
             .padding(14)
-            .background(
-                RoundedRectangle(cornerRadius: 14, style: .continuous)
-                    .fill(MapColor.cardPaper)
-                    .overlay(RoundedRectangle(cornerRadius: 14, style: .continuous).strokeBorder(kindColor(kind).opacity(0.25), lineWidth: 1))
-            )
+            .glassCard(accent: kindColor(kind))
         )
     }
 
     private func routePanel(for targetId: String) -> some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
-                Button(action: { showingRoute = false }) {
+                Button(action: {
+                    revealTask?.cancel()
+                    pathRevealCount = 0
+                    showingRoute = false
+                }) {
                     Label("Back", systemImage: "chevron.left").font(.system(size: 12, weight: .semibold, design: .rounded))
                 }
                 .buttonStyle(.plain)
@@ -632,18 +762,31 @@ struct KnowledgeMapView: View {
             }
         }
         .padding(14)
-        .background(
-            RoundedRectangle(cornerRadius: 14, style: .continuous)
-                .fill(MapColor.cardPaper)
-                .overlay(RoundedRectangle(cornerRadius: 14, style: .continuous).strokeBorder(MapColor.ink.opacity(0.12), lineWidth: 1))
-        )
+        .glassCard(accent: MapColor.zpdReady)
     }
 
     private func loadRoute(for id: String) async {
+        revealTask?.cancel()
+        pathRevealCount = 0
         showingRoute = true
         routeLoading = true
         routeSteps = await RouteClient.plotRoute(targetConceptId: id)
         routeLoading = false
+        guard let steps = routeSteps, !steps.isEmpty else { return }
+        revealTask = Task { @MainActor in
+            for i in 0...steps.count {
+                if Task.isCancelled { return }
+                withAnimation(.easeOut(duration: 0.45)) { pathRevealCount = i }
+                try? await Task.sleep(nanoseconds: 260_000_000)
+            }
+        }
+    }
+
+    /// Index of a concept within the currently-loading/loaded route, if any
+    /// - drives both the canvas trail and each node's individual reveal.
+    private func routeStepIndex(for id: String) -> Int? {
+        guard showingRoute, let steps = routeSteps else { return nil }
+        return steps.firstIndex { $0.conceptId == id }
     }
 
     private var emptyState: some View {
@@ -688,6 +831,39 @@ private enum MapColor {
     static let inkSoft = Color(mapHex: "e8eaed").opacity(0.72)
     static let cardPaper = Color(mapHex: "162d22")
     static let canvasBg = Color(mapHex: "050505")
+    // ZPD-ready invitation glow (warm gold - "come here next") and the
+    // muted charcoal a genuinely locked node recedes into, both new for
+    // the ready/locked split above.
+    static let zpdReady = Color(mapHex: "ffb84d")
+    static let zpdLocked = Color(mapHex: "3a4048")
+}
+
+private extension View {
+    /// Frosted glass card: a tinted dark fill under `.ultraThinMaterial`,
+    /// a soft gradient glow border in the given accent, and a matching
+    /// tinted shadow for real depth - replaces the map panels' old flat
+    /// `cardPaper` fill with the Luma-esque glass treatment.
+    func glassCard(accent: Color) -> some View {
+        self
+            .background(
+                ZStack {
+                    MapColor.cardPaper.opacity(0.62)
+                    Rectangle().fill(.ultraThinMaterial)
+                }
+            )
+            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                    .strokeBorder(
+                        LinearGradient(
+                            colors: [accent.opacity(0.6), accent.opacity(0.1)],
+                            startPoint: .topLeading, endPoint: .bottomTrailing
+                        ),
+                        lineWidth: 1
+                    )
+            )
+            .shadow(color: accent.opacity(0.28), radius: 20, x: 0, y: 10)
+    }
 }
 
 private extension Color {
