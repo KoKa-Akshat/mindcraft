@@ -4,6 +4,10 @@
 
 ---
 
+## Archive sims are playable (2026-08-15)
+
+The shelf pauses page scroll while it is open. The MicroSim sits in a live play surface so you can drag the lesson in the same box.
+
 ## Archive RAG in the shelf (2026-08-15)
 
 Caption boxes stay one size. No extra sub-line. Archive shelf is wider. Close is a link to the full page. Search asks the books and loads the chapter plus a MicroSim in the same box.
