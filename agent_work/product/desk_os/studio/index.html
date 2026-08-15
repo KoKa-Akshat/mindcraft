@@ -462,6 +462,8 @@ html.from-jesse .floatAsk{
   margin-top:8px; width:100%; border-radius:12px; padding:10px;
   background:#c4f547; color:#0c1207; font:800 12px/1 'DM Sans',sans-serif;
 }
+.tgo.on{ background:#ff6b6b; color:#fff; animation:callPulse 1.2s ease-in-out infinite; }
+@keyframes callPulse{0%,100%{opacity:1}50%{opacity:.6}}
 
 /* center stage — Jesse default, swaps to loot when timeline has scenes */
 .centerNode{
@@ -1118,6 +1120,7 @@ const state = {
   createMode: false, fsStage: false,
   selectedNode: null, layout: null,
   activeTool: null, canvasZoom: 1, canvasX: 0, canvasY: 0,
+  callListening: false, lastHeard: '',
 };
 
 const LEVELS = [
@@ -1350,6 +1353,7 @@ const CREATE_TOOLS = [
   { id: 'stickers', label: 'Stickers', hint: '', icon: '✦',  tone: 'g' },
   { id: 'music',    label: 'Music',    hint: '', icon: '♪',  tone: 'i' },
   { id: 'fx',       label: 'Looks',    hint: '', icon: '◎',  tone: 'i' },
+  { id: 'call',     label: 'Call Jesse', hint: 'Talk it through', icon: '📞', tone: 'g' },
 ];
 
 /* Bigger work-style tiles · tap to zoom open · captions carry the copy */
@@ -1358,12 +1362,13 @@ const DEFAULT_LAYOUT = {
   media:    { l: 5,  t: 8,  w: 22, h: 16 },
   text:     { l: 4,  t: 28, w: 22, h: 14 },
   captions: { l: 5,  t: 46, w: 22, h: 14 },
-  stickers: { l: 73, t: 8,  w: 22, h: 16 },
-  music:    { l: 74, t: 28, w: 22, h: 14 },
-  fx:       { l: 73, t: 46, w: 22, h: 14 },
+  stickers: { l: 73, t: 6,  w: 22, h: 14 },
+  music:    { l: 74, t: 22, w: 22, h: 13 },
+  fx:       { l: 73, t: 37, w: 22, h: 13 },
+  call:     { l: 73, t: 52, w: 22, h: 13 },
   timeline: { l: 2,  t: 66, w: 96, h: 30 },
 };
-const TOOL_EXPAND_H = { media: 36, text: 26, captions: 22, stickers: 28, music: 30, fx: 24 };
+const TOOL_EXPAND_H = { media: 36, text: 26, captions: 22, stickers: 28, music: 30, fx: 24, call: 30 };
 const LAYOUT_KEY = 'mc_studio_create_layout_v9_worktiles';
 const HANDLES = ['nw','n','ne','e','se','s','sw','w'];
 
@@ -1626,6 +1631,13 @@ function toolBodyHTML(id) {
       `<button type="button" class="tchip ${state.effect === fx ? 'on' : ''}" data-act="fx" data-fx="${fx}">${fx}</button>`
     ).join('');
   }
+  if (id === 'call') {
+    const talking = state.callListening;
+    return `
+      <button type="button" class="tgo ${talking ? 'on' : ''}" data-act="call-listen" id="callJesseBtn">${talking ? 'Listening…' : 'Tap to talk'}</button>
+      <p class="callTranscript" id="callTranscript" style="margin-top:8px;font:600 12px/1.4 'DM Sans',sans-serif;color:#143a2e;min-height:16px">${esc(state.lastHeard || '')}</p>
+      <p style="margin-top:6px;font:600 11px/1.3 'DM Sans',sans-serif;color:#8a8174">Say what you're trying to do. Same edit tips as typing into Ask Jesse, just hands-free.</p>`;
+  }
   return '';
 }
 
@@ -1672,8 +1684,50 @@ function bindToolCardActions(card, id) {
         renderToolCards();
         toast(state.effect === 'none' ? 'Look cleared' : `Look: ${state.effect}`);
       }
+      if (act === 'call-listen') { toggleCallListen(); }
     });
   });
+}
+
+/* ============ CALL JESSE - voice in, same intel tips Ask Jesse already gives ============
+   Honest scope: this studio has no live AI editing backend yet (askJesse()
+   above is a static tips sheet, not a real model call) - so this is real
+   voice CAPTURE feeding that same real, already-shipped tips flow, not a
+   claim that speaking here drives live AI edits. Same
+   SpeechRecognition/speechSynthesis pattern as the resume workflow
+   (agent_work/product/desk_os/workflows/resume/agent.js) for consistency. */
+let callRec = null;
+function toggleCallListen() {
+  if (callRec) { try { callRec.stop(); } catch (_) {} return; }
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) {
+    const said = prompt('Type what you would say to Jesse');
+    if (said) hearJesseCall(said);
+    return;
+  }
+  const r = new SR();
+  r.lang = 'en-US';
+  r.interimResults = false;
+  state.callListening = true;
+  renderToolCards();
+  r.onresult = (e) => hearJesseCall(e.results[0][0].transcript);
+  r.onend = () => {
+    state.callListening = false;
+    callRec = null;
+    renderToolCards();
+  };
+  r.start();
+  callRec = r;
+}
+function hearJesseCall(text) {
+  state.lastHeard = text;
+  openIntel(text);
+  const tip = INTEL_TIPS[0];
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(`Here's one: ${tip.t}. ${tip.s}`);
+  u.rate = 0.94;
+  u.pitch = 1.02;
+  speechSynthesis.speak(u);
 }
 
 function bindNodeInteract(el, id) {
