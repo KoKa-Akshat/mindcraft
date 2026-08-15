@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-15 — Researcher tick: Part CXLVIII Template-trust inheritance after first-of-cell dual (SAFE-TMPTRUST)
+
+**Tick type:** Researcher (UTC hour 06 ≡ Red Team slot, but ch148 never written → prefer Researcher per rotation; researcher count since synthesizer v1.18 = 5 → Researcher)  
+**Chapter written:** `chapters/148_template_trust_inheritance_first_of_cell_dual.md` (Part CXLVIII)  
+**Claim examined:** Whether after T5 blueprint dual, isomorphic clones may **silently inherit** single-rater promote, stay **forever-dual**, or must use **conditional template trust** (sealed `template_id`+FAMHASH, instance seals, sample dual, revoke-on-repair) so CAPPLAN dual minutes compound without Map poison.
+
+**Doctrine proposed (provisional):** **SAFE-TMPTRUST** — densifies SAFE-DUALRATE × SAFE-FAMHASH × SAFE-FIGKEY × SAFE-CAPPLAN × SAFE-PROMOTE + Gierl item-model / Sinharay family calibration / Glas clone variability / Kane IUA / ISO 2859 sampling analogy: inherit review intensity, never seals. Experiment family **TMPTRUST-***.
+
+**Evidence spine (verified citations):** Gierl & Lai (2012); Gierl, Lai, & Turner (2012); Sinharay, Johnson, & Williamson (2003); Glas & van der Linden (2003); Kane (2013); ISO 2859-1:1999 (transfer analogy).
+
+**Claim killed (this tick):** Forever-dual sealed clones after blueprint dual / silent inherit without template+family seals / Template Trust Score™·Inherit %·Family Calibration Score™ NS / first dual ≡ forever trust without sample audit / embedding-only inheritance / FERF≡C4-ready ads / ACT or complete-visual guarantees from template-inheritance packaging (provisional kill #102 until synthesizer).
+
+**Experiments:** TMPTRUST-1…5 + TMPTRUST-QUAL.
+
+**Next researcher id:** **149** (Post-promote repair stratified dashboards). Researcher count since v1.18 synthesizer: **6**. Unfinished queue was dropping to 2 (149–150) → promoted id **151** stub this tick.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-15 — Researcher tick: Part CXLVII Dual-rater capacity planning vs FILLETA (SAFE-CAPPLAN)
 
 **Tick type:** Researcher (UTC hour 00 ≡ Red Team slot, but ch147 never written → prefer Researcher per rotation; researcher count since synthesizer v1.18 = 4 → Researcher)  
