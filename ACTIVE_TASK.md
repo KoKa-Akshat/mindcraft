@@ -4,6 +4,10 @@
 
 ---
 
+## Marketing elevate (2026-08-15)
+
+joinmindcraft.com: less copy, Maya's night, then someone walks in. Reel uses real Desk stills plus short writing. No em dashes. Brand Book §1/§2/§5. Forms and mentor map kept.
+
 ## Field Desk Create / Work canvas (2026-08-15)
 
 Native iOS, not `app/public/desk-os`. Source of truth: `CLAUDE.md` iOS section + `agent_work/product/field_desk_create_redesign_2026-08-15/BRIEF.md`.
