@@ -1266,6 +1266,60 @@ final class MindCraftNotesUITests: XCTestCase {
         XCUIDevice.shared.orientation = .portrait
     }
 
+    /// Double-tap-to-fit: a quicker shortcut to the same reset the Recenter
+    /// button already does, added onto the empty-space pan/zoom catcher via
+    /// `.simultaneousGesture` (not a second `.gesture()`, which would have
+    /// silently replaced pan/zoom instead of adding alongside it).
+    func testFieldDeskDoubleTapResetsPanZoom() {
+        let app = XCUIApplication()
+        app.launchArguments = ["--ui-testing-in-memory", "--ui-testing-skip-auth"]
+        app.launch()
+        XCUIDevice.shared.orientation = .landscapeLeft
+
+        XCTAssertTrue(app.buttons["fieldDeskModeToggle"].waitForExistence(timeout: 40), "expected Field Desk chrome after cold load")
+        let bootText = app.staticTexts["Your workspace is starting up"]
+        if bootText.exists { _ = bootText.waitForNonExistence(timeout: 90) }
+
+        let bottomEdge = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.98))
+        let midScreen = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.55))
+        bottomEdge.press(forDuration: 0.05, thenDragTo: midScreen)
+
+        let addButton = app.buttons["fieldDeskAdd"]
+        XCTAssertTrue(addButton.waitForExistence(timeout: 8), "expected + Add dock icon")
+        addButton.tap()
+        let addGmail = app.buttons["fieldDeskAddGmail"]
+        XCTAssertTrue(addGmail.waitForExistence(timeout: 5), "expected Gmail row in the add panel")
+        addGmail.tap()
+        XCTAssertTrue(app.descendants(matching: .any)["fieldDeskCard_gmail"].waitForExistence(timeout: 5),
+                      "expected the Gmail card placed on the desk")
+
+        let panProbe = app.descendants(matching: .any)["fieldDeskPanOffset"]
+        XCTAssertTrue(panProbe.waitForExistence(timeout: 3), "expected pan/zoom probe")
+
+        let emptyStart = app.coordinate(withNormalizedOffset: CGVector(dx: 0.85, dy: 0.15))
+        let emptyEnd = app.coordinate(withNormalizedOffset: CGVector(dx: 0.55, dy: 0.45))
+        emptyStart.press(forDuration: 0.05, thenDragTo: emptyEnd)
+        let afterPan = panProbe.value as? String ?? ""
+        XCTAssertNotEqual(afterPan, "0,0,1.00", "expected pan to move away from identity after an empty-space drag")
+
+        // Double-tap empty space to fit/reset. Two sequential
+        // coordinate.tap() calls aren't tight enough in time to register as
+        // a real double-tap to SwiftUI's TapGesture(count: 2) - .doubleTap()
+        // on the catcher ELEMENT itself uses XCUITest's own synthesized
+        // double-tap timing instead (confirmed: the coordinate-pair version
+        // timed out waiting for a reset that never happened).
+        let catcher = app.descendants(matching: .any)["fieldDeskPanZoomCatcher"]
+        XCTAssertTrue(catcher.waitForExistence(timeout: 3), "expected the pan/zoom catcher")
+        catcher.doubleTap()
+
+        let recentered = NSPredicate(format: "value == %@", "0,0,1.00")
+        let expectation = XCTNSPredicateExpectation(predicate: recentered, object: panProbe)
+        let result = XCTWaiter().wait(for: [expectation], timeout: 3)
+        XCTAssertEqual(result, .completed, "expected double-tap on empty space to reset pan/zoom to identity")
+
+        XCUIDevice.shared.orientation = .portrait
+    }
+
     /// The Gdoc/whiteboard desk card had no Pencil-vs-finger separation at
     /// all before this round (a hand-rolled Canvas + DragGesture(minimumDistance: 0)
     /// that drew for any touch, unlike QuestionView's real PKCanvasView).

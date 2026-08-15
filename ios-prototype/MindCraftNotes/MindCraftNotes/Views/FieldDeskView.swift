@@ -1087,6 +1087,13 @@ struct FieldDeskView: View {
                 .contentShape(Rectangle())
                 .frame(width: viewport.width, height: viewport.height)
                 .gesture(deskPanZoomGesture)
+                // simultaneousGesture, not another .gesture() - a second
+                // .gesture() call replaces the first outright in SwiftUI,
+                // which would silently kill panning/zooming instead of
+                // adding double-tap-to-fit alongside it.
+                .simultaneousGesture(
+                    TapGesture(count: 2).onEnded { resetDeskPanZoom() }
+                )
                 .accessibilityIdentifier("fieldDeskPanZoomCatcher")
 
             deskCardsLayer(viewport: viewport)
