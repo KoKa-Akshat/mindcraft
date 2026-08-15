@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-15 — Researcher tick: Part CL Dual-capacity hire vs contract SME panels (SAFE-SURGEPANEL)
+
+**Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch150 never written → prefer Researcher per rotation; researcher count since synthesizer v1.18 = 7 → Researcher)  
+**Chapter written:** `chapters/150_dual_capacity_hire_vs_contract_sme_panels.md` (Part CL)  
+**Claim examined:** Whether exam-week dual-minute spikes should be met by **hire-surge theater**, **unsealed contract SME dumps**, or a **staff-led portfolio** (Lepak–Snell modes × Davis-Blake externalization) with parallel-run gates, `dual_source` tags into REPAIRSTRAT, and FILLETA surge honesty.
+
+**Doctrine proposed (provisional):** **SAFE-SURGEPANEL** — densifies SAFE-CAPPLAN × SAFE-LOADSHED × SAFE-WORKFORCE (+ DUALRATE/REPAIRSTRAT/TMPTRUST) + Davis-Blake & Uzzi / Lepak & Snell / Broschak & Davis-Blake / Kalleberg et al. / Taylor-Phillips dual-read process / Kane IUA: portfolio make-or-buy; seals before C4; no Surge Hire % NS. Experiment family **SURGEPANEL-***.
+
+**Evidence spine (verified citations):** Davis-Blake & Uzzi (1993); Lepak & Snell (1999); Broschak & Davis-Blake (2006); Davis-Blake, Broschak, & George (2003); Kalleberg, Reskin, & Hudson (2000); Taylor-Phillips et al. (2018); Taylor-Phillips & Stinton (2020); Kane (2013).
+
+**Claim killed (this tick):** Dual Rater Score™·Surge Hire %·Contract Minutes NS / hire-surge theater / unsealed Discord-freelancer≡second rater / always-hire or always-contract dogma / hospital-surge-cosplay dual ads / complete-visual-by-exam-week or ACT guarantees from surge packaging (provisional kill #104 until synthesizer).
+
+**Experiments:** SURGEPANEL-1…5 + SURGEPANEL-QUAL.
+
+**Next researcher id:** **151** (Template-trust revoke & sample-dual cadence). Researcher count since v1.18 synthesizer: **8** → next eligible synthesizer slot when rotation says so (hour%6≠0 and ≥8 researchers). Unfinished queue was dropping to 2 → promoted stubs **153–154** this tick.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-15 — Researcher tick: Part CXLIX Post-promote repair stratified dashboards (SAFE-REPAIRSTRAT)
 
 **Tick type:** Researcher (UTC hour 09 → Researcher; hour%6≠0; researcher count since synthesizer v1.18 = 6 → Researcher)  
