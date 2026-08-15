@@ -11,6 +11,12 @@ struct DashboardView: View {
     /// swap in-place; house lands on the dash Home tab (does not leave desk).
     var embeddedInDesk: Bool = false
     var onDeskHome: (() -> Void)? = nil
+    /// Real nav-intent entry point ("study quadratic equations" -> Ask The
+    /// Desk resolves it to a real concept id via `DeskAskClient`'s
+    /// `study_concept` action -> `FieldDeskView` opens the ACT stage with
+    /// this set). Consumed once in `.task` below, then cleared - a plain
+    /// concept-dot tap keeps working exactly as before it existed.
+    var pendingConceptId: String? = nil
 
     private enum Tab: String, CaseIterable {
         case home = "Home"
@@ -220,6 +226,9 @@ struct DashboardView: View {
             }
         }
         .task {
+            if let pendingConceptId {
+                chapterConceptId = pendingConceptId
+            }
             // Embedded ACT stage: stay in-place - no diagnostic full-page gate.
             if embeddedInDesk {
                 diagnosticGate = .done

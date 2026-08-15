@@ -87,6 +87,10 @@ struct FieldDeskView: View {
     @State private var gmailStartReconnect = false
     @State private var gmailOpenTopReply = false
     @State private var showActFieldBook = false
+    /// Real nav-intent target ("study quadratic equations" via Ask The Desk
+    /// -> `study_concept` action) - threaded into `DashboardView` so it
+    /// opens straight to that concept's chapter instead of just the roadmap.
+    @State private var pendingStudyConceptId: String?
     @State private var showDocCook = false
     @StateObject private var workflowMarket = WorkflowMarketStore()
     @State private var showImporter = false
@@ -1790,9 +1794,10 @@ struct FieldDeskView: View {
                 DashboardView(embeddedInDesk: true, onDeskHome: {
                     // Already on the dash stage — Home means dash Home tab
                     // (handled inside DashboardView when embedded).
-                })
+                }, pendingConceptId: pendingStudyConceptId)
                     .environmentObject(studentStore)
                     .environmentObject(authService)
+                    .onDisappear { pendingStudyConceptId = nil }
             }
             .frame(width: w, height: h)
             .background(
@@ -3370,6 +3375,17 @@ struct FieldDeskView: View {
             case "prepend_intel":
                 if let line = action.payload?.trimmingCharacters(in: .whitespacesAndNewlines), !line.isEmpty {
                     store.prependIntel(line)
+                }
+            case "study_concept":
+                if let conceptId = action.payload?.trimmingCharacters(in: .whitespacesAndNewlines), !conceptId.isEmpty {
+                    pendingStudyConceptId = conceptId
+                    showBlankPage = false
+                    showGmailBox = false
+                    showApplyToday = false
+                    showDocCook = false
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        showActFieldBook = true
+                    }
                 }
             default:
                 break
