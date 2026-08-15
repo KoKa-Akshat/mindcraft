@@ -343,7 +343,24 @@
     box-shadow:0 16px 40px rgba(196,245,71,.35);
   }
   .jesse-disc:focus{outline:3px solid #143a2e; outline-offset:4px;}
+  .jesse-disc.is-hot{
+    animation:jessePulse 1.5s ease-in-out infinite;
+    box-shadow:0 0 0 14px rgba(196,245,71,.16), 0 16px 40px rgba(196,245,71,.4);
+  }
+  @keyframes jessePulse{
+    0%,100%{ transform:scale(1); box-shadow:0 0 0 10px rgba(196,245,71,.12), 0 16px 40px rgba(196,245,71,.35); }
+    50%{ transform:scale(1.04); box-shadow:0 0 0 22px rgba(196,245,71,.08), 0 20px 48px rgba(196,245,71,.45); }
+  }
   .jesse-press .hint{font-size:12px; color:rgba(20,58,46,.5);}
+  .jesse-live-words{
+    display:none; margin-top:8px; min-height:1.2em;
+    font-family:var(--serif); font-style:italic; font-weight:500;
+    font-size:clamp(22px,3.2vw,36px); line-height:1.28; color:#143a2e;
+  }
+  .jesse-live-words.is-on{display:block;}
+  .jesse-live-words .interim{color:rgba(20,58,46,.42);}
+  .epic-card.paper.has-words h2,
+  .epic-card.paper.has-words .epic-line{display:none;}
   .book-studio{
     display:grid; grid-template-columns:148px 1fr; min-height:460px;
     background:#f7f5f0; color:#143a2e;
@@ -684,12 +701,13 @@
         </div>
       </article>
       <article class="epic-page" data-beat="5">
-        <div class="epic-card paper">
+        <div class="epic-card paper" id="jesseLiveCard">
           <p class="epic-k">Jesse</p>
-          <h2>Press to talk.</h2>
-          <p class="epic-line">The page is already here. Say the next sentence.</p>
+          <h2 id="jesseLiveTitle">Press to talk.</h2>
+          <p class="epic-line" id="jesseLiveLead">The page is already here. Say the next sentence.</p>
+          <p class="jesse-live-words" id="jesseLiveWords" aria-live="polite"></p>
           <div class="jesse-press" style="min-height:0;padding:18px 0 0;background:none;">
-            <button class="jesse-disc" type="button" id="jessePressDemo">Press</button>
+            <button class="jesse-disc" type="button" id="jessePressDemo" aria-pressed="false">Press</button>
             <div class="hint" id="jessePressHint">One button. Dead center.</div>
           </div>
         </div>
@@ -1341,17 +1359,113 @@
     input.addEventListener('input', () => render(input.value.trim()));
   })();
 
-  // ---------- Jesse press (demo) + book studio ----------
+  // ---------- Jesse press: live transcribe as you speak ----------
   (function(){
     const disc = document.getElementById('jessePressDemo');
     const hint = document.getElementById('jessePressHint');
-    if (disc && hint){
-      disc.addEventListener('click', () => {
-        hint.textContent = 'Listening. Say what you actually did.';
-        disc.textContent = '…';
-        setTimeout(() => { disc.textContent = 'Press'; hint.textContent = 'Got it. I will keep your words.'; }, 1600);
-      });
+    const card = document.getElementById('jesseLiveCard');
+    const words = document.getElementById('jesseLiveWords');
+    if (!disc || !hint || !card || !words) return;
+
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    let rec = null;
+    let listening = false;
+    let finalText = '';
+    let wantListen = false;
+
+    function escapeHtml(s){
+      return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     }
+    function paint(finalPart, interimPart){
+      const has = Boolean((finalPart || interimPart).trim());
+      const show = has || listening;
+      words.classList.toggle('is-on', show);
+      card.classList.toggle('has-words', show);
+      if (!has){
+        words.innerHTML = listening ? '<span class="interim">Listening.</span>' : '';
+        return;
+      }
+      words.innerHTML =
+        (finalPart ? '<span>' + escapeHtml(finalPart).trim() + '</span>' : '') +
+        (interimPart ? ' <span class="interim">' + escapeHtml(interimPart).trim() + '</span>' : '');
+    }
+    function setIdle(message){
+      listening = false;
+      wantListen = false;
+      disc.classList.remove('is-hot');
+      disc.textContent = 'Press';
+      disc.setAttribute('aria-pressed', 'false');
+      hint.textContent = message;
+      const kept = Boolean(finalText.trim());
+      words.classList.toggle('is-on', kept);
+      card.classList.toggle('has-words', kept);
+    }
+    function stop(){
+      wantListen = false;
+      if (rec){ try { rec.stop(); } catch (_) {} }
+      rec = null;
+      setIdle(finalText.trim() ? 'Got it. I will keep your words.' : 'Press again. Say the next sentence.');
+    }
+    function startEngine(){
+      if (!wantListen || !SR) return;
+      const r = new SR();
+      r.lang = 'en-US';
+      r.continuous = true;
+      r.interimResults = true;
+      r.onresult = (e) => {
+        let interim = '';
+        for (let i = e.resultIndex; i < e.results.length; i++){
+          const bit = (e.results[i][0].transcript || '').trim();
+          if (!bit) continue;
+          if (e.results[i].isFinal) finalText = (finalText + ' ' + bit).trim();
+          else interim += (interim ? ' ' : '') + bit;
+        }
+        paint(finalText, interim);
+      };
+      r.onerror = (e) => {
+        const err = e.error || '';
+        if (err === 'not-allowed' || err === 'service-not-allowed'){
+          wantListen = false;
+          setIdle('Mic is blocked. Allow it, then press again.');
+        }
+      };
+      r.onend = () => {
+        rec = null;
+        if (!wantListen) return;
+        try { startEngine(); } catch (_) { stop(); }
+      };
+      rec = r;
+      r.start();
+    }
+    function start(){
+      if (!SR){
+        hint.textContent = 'Chrome or Safari can hear you. Type the next sentence below.';
+        words.classList.add('is-on');
+        words.setAttribute('contenteditable', 'true');
+        words.setAttribute('role', 'textbox');
+        words.focus();
+        return;
+      }
+      wantListen = true;
+      listening = true;
+      finalText = '';
+      disc.classList.add('is-hot');
+      disc.textContent = 'Stop';
+      disc.setAttribute('aria-pressed', 'true');
+      hint.textContent = 'Speak. Your words land here.';
+      paint('', '');
+      try { startEngine(); }
+      catch (_) { setIdle('Could not start the mic. Press again.'); }
+    }
+
+    disc.addEventListener('click', () => {
+      if (listening || wantListen) stop();
+      else start();
+    });
+  })();
+
+  // ---------- book studio (no-op if the studio is not on this page) ----------
+  (function(){
     const BOOKS = {
       skate: {
         kicker: 'Your book · Skate physics',

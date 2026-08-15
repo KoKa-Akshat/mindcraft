@@ -4,6 +4,10 @@
 
 ---
 
+## Jesse live transcribe (2026-08-15)
+
+Press on the Jesse story card live-transcribes as you speak (Web Speech API). Words replace the headline. Chrome/Safari. Tap again to stop.
+
 ## Marketing sims + book studio (2026-08-15)
 
 joinmindcraft.com is one hero story: the colored 3D graph is the spine. Scroll down zooms in. Pages pop (night, verdict, walk in, map, Jesse, book). No researcher name on the chrome. Mentors, archive, pricing, apply forms stay below.
