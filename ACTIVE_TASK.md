@@ -4,6 +4,10 @@
 
 ---
 
+## Jesse talk + claim lattice (2026-08-15)
+
+Press to talk asks for the mic, writes words live, then Jesse speaks back. Claim desk sits on a cream card beside a spinning 3D lattice box.
+
 ## Share thumbnail (2026-08-15)
 
 Link previews use the first story panel (graph + Never work alone), not the old reel-map still.
