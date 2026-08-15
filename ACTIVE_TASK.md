@@ -4,6 +4,10 @@
 
 ---
 
+## Archive shelf scrolls (2026-08-15)
+
+The hardcover grid scrolls inside the box. The page stays put.
+
 ## Archive hardcovers (2026-08-15)
 
 Stats are the old number blocks again. No search on the left, only Browse. Opening the shelf does not stretch the page. Go back replaces Open the full page. Books show as hardcovers.
