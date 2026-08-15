@@ -1144,6 +1144,70 @@ final class MindCraftNotesUITests: XCTestCase {
         XCUIDevice.shared.orientation = .portrait
     }
 
+    /// Desk-level pan/zoom (Work mode, empty-space drag/pinch): place a real
+    /// card via the + panel, confirm dragging empty space moves the whole
+    /// desk (not the card), pinch changes zoom, and the recenter control
+    /// appears and resets both back to identity. fieldDeskPanOffset already
+    /// existed as an accessibility probe reading real pan/scale state - this
+    /// is the first test to actually exercise it, since pan/scale were dead
+    /// @State (declared, never wired to a gesture) before this change.
+    func testFieldDeskPanZoomsAndRecenters() {
+        let app = XCUIApplication()
+        app.launchArguments = ["--ui-testing-in-memory", "--ui-testing-skip-auth"]
+        app.launch()
+        XCUIDevice.shared.orientation = .landscapeLeft
+
+        XCTAssertTrue(app.buttons["fieldDeskModeToggle"].waitForExistence(timeout: 40), "expected Field Desk chrome after cold load")
+        let bootText = app.staticTexts["Your workspace is starting up"]
+        if bootText.exists { _ = bootText.waitForNonExistence(timeout: 90) }
+
+        let bottomEdge = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.98))
+        let midScreen = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.55))
+        bottomEdge.press(forDuration: 0.05, thenDragTo: midScreen)
+
+        let addButton = app.buttons["fieldDeskAdd"]
+        XCTAssertTrue(addButton.waitForExistence(timeout: 8), "expected + Add dock icon")
+        addButton.tap()
+
+        let addGmail = app.buttons["fieldDeskAddGmail"]
+        XCTAssertTrue(addGmail.waitForExistence(timeout: 5), "expected Gmail row in the add panel")
+        attachScreenshot(app, name: "add_panel_open")
+        addGmail.tap()
+
+        let card = app.buttons["fieldDeskCard_gmail"]
+        XCTAssertTrue(card.waitForExistence(timeout: 5), "expected Gmail card placed on the desk")
+
+        let panProbe = app.descendants(matching: .any)["fieldDeskPanOffset"]
+        XCTAssertTrue(panProbe.waitForExistence(timeout: 3), "expected pan/zoom probe")
+        let before = (panProbe.value as? String) ?? ""
+        XCTAssertEqual(before, "0,0,1.00", "expected identity pan/zoom before any gesture")
+
+        // Drag a patch of empty desk space (top-right corner, away from
+        // where the Gmail card lands) - this must pan the desk, not the card.
+        let emptyStart = app.coordinate(withNormalizedOffset: CGVector(dx: 0.85, dy: 0.15))
+        let emptyEnd = app.coordinate(withNormalizedOffset: CGVector(dx: 0.55, dy: 0.45))
+        emptyStart.press(forDuration: 0.05, thenDragTo: emptyEnd)
+
+        let afterPan = (panProbe.value as? String) ?? ""
+        XCTAssertNotEqual(afterPan, "0,0,1.00", "expected pan to move away from identity after an empty-space drag")
+        XCTAssertTrue(card.exists, "expected the Gmail card to survive a desk pan (still placed, not dismissed)")
+
+        let recenter = app.buttons["fieldDeskRecenter"]
+        XCTAssertTrue(recenter.waitForExistence(timeout: 3), "expected recenter control once panned away from identity")
+        attachScreenshot(app, name: "field_desk_panned")
+        recenter.tap()
+
+        // Recenter animates - poll briefly rather than asserting the instant
+        // after tapping.
+        let recentered = NSPredicate(format: "value == %@", "0,0,1.00")
+        let expectation = XCTNSPredicateExpectation(predicate: recentered, object: panProbe)
+        let result = XCTWaiter().wait(for: [expectation], timeout: 3)
+        XCTAssertEqual(result, .completed, "expected pan/zoom to return to identity after recenter")
+        XCTAssertFalse(app.buttons["fieldDeskRecenter"].waitForExistence(timeout: 2), "expected recenter control to hide once back at identity")
+
+        XCUIDevice.shared.orientation = .portrait
+    }
+
     /// Minimize/reconnect: collapsing Scheduling Workflows should NOT close
     /// it (that's a separate, existing control) - it should shrink to a
     /// reconnectable chip on the desk, same treatment as the ACT stage's
