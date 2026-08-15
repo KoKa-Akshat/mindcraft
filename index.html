@@ -357,6 +357,10 @@
   }
   .jesse-live-words.is-on{display:block;}
   .jesse-live-words .interim{color:rgba(20,58,46,.42);}
+  .jesse-reply{
+    display:none; margin-top:14px; font-size:15px; font-weight:600; color:#247a4d; line-height:1.4;
+  }
+  .jesse-reply.is-on{display:block;}
   .epic-card.paper.has-words h2,
   .epic-card.paper.has-words .epic-line{display:none;}
   .book-studio{
@@ -507,28 +511,60 @@
   details[open] summary::after{content:"–";}
   details p{padding:0 0 20px; color:var(--chalk-dim); font-weight:400; font-size:14px; line-height:1.6; max-width:660px;}
 
-  /* ---------- CTA ---------- */
-  .cta{padding-bottom:clamp(88px,10vw,148px); background:var(--field);}
-  .ctaband{ position:relative; border-radius:32px; overflow:hidden; text-align:center; padding:clamp(64px,8vw,104px) 32px; border:1px solid var(--edge); background:radial-gradient(ellipse 70% 90% at 50% 0%, rgba(196,245,71,.08), transparent 60%), var(--field-2); }
-  .ctaband h2{font-size:clamp(36px,5vw,58px); color:var(--chalk);}
-  .ctaband h2 em{font-style:normal; color:var(--lime);}
-  .ctaband > p{margin:16px auto 8px; max-width:480px; font-size:15.5px; font-weight:400; color:var(--chalk-dim); line-height:1.5;}
-  .cta-row{display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-top:26px;}
-  .apply-done{margin:16px auto 0; max-width:420px; font-size:14px; color:var(--lime); font-weight:600;}
-  .apply-stage{margin:32px auto 0; max-width:640px; text-align:left;}
+  /* ---------- CTA + lattice box ---------- */
+  .cta{padding-bottom:clamp(88px,10vw,148px); background:#05070a;}
+  .cta-split{
+    display:grid; grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);
+    gap:18px; align-items:stretch;
+  }
+  .cta-lattice-box{
+    position:relative; min-height:520px; border-radius:28px; overflow:hidden;
+    border:1px solid rgba(196,245,71,.22);
+    background:#05070a;
+    box-shadow:0 30px 80px rgba(0,0,0,.35);
+  }
+  .cta-lattice{position:absolute; inset:0;}
+  .cta-lattice canvas{outline:none;}
+  .cta-lattice-cap{
+    position:absolute; left:22px; bottom:20px; z-index:2;
+    font-family:var(--serif); font-style:italic; font-size:16px; color:rgba(245,245,244,.72);
+    text-shadow:0 8px 24px rgba(0,0,0,.6);
+  }
+  .ctaband{
+    position:relative; border-radius:28px; overflow:hidden; text-align:left;
+    padding:clamp(28px,4vw,40px);
+    border:1px solid rgba(20,58,46,.12);
+    background:#f7f5f0; color:#143a2e;
+    box-shadow:0 30px 80px rgba(0,0,0,.28);
+  }
+  .ctaband h2{font-size:clamp(32px,4.2vw,48px); color:#143a2e; letter-spacing:-.03em;}
+  .ctaband h2 em{font-style:normal; color:#247a4d;}
+  .ctaband > p{margin:12px 0 0; max-width:36ch; font-size:15.5px; font-weight:400; color:rgba(20,58,46,.68); line-height:1.5;}
+  .cta-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:22px;}
+  .ctaband .btn.soft{background:#fff; border-color:rgba(20,58,46,.16); color:#143a2e;}
+  .ctaband .btn.soft:hover{background:#fff; border-color:#143a2e;}
+  .apply-done{margin:16px 0 0; font-size:14px; color:#247a4d; font-weight:600;}
+  .apply-stage{margin:22px 0 0; text-align:left;}
   .apply-form{display:none;}
   .apply-stage[data-state="student"] #applyFormStudent{display:block;}
   .apply-stage[data-state="tutor"] #applyFormTutor{display:block;}
-  .form-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
-  .field{display:flex; flex-direction:column; gap:6px;}
+  .form-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  .field{display:flex; flex-direction:column; gap:7px;}
   .field.full{grid-column:1/-1;}
-  .field label{font-size:11.5px; font-weight:600; color:var(--chalk-faint); letter-spacing:.02em;}
-  .field input, .field select, .field textarea{ font:inherit; font-size:14px; padding:12px 14px; border-radius:12px; border:1px solid var(--edge); background:var(--field-1); color:var(--chalk); }
-  .field textarea{min-height:76px; resize:vertical;}
-  .field input:focus, .field select:focus, .field textarea:focus{outline:2px solid rgba(196,245,71,.35); border-color:var(--lime);}
+  .field label{font-size:11.5px; font-weight:600; color:rgba(20,58,46,.5); letter-spacing:.04em; text-transform:uppercase;}
+  .field input, .field select, .field textarea{
+    font:inherit; font-size:15px; padding:13px 14px; border-radius:14px;
+    border:1px solid rgba(20,58,46,.14); background:#fff; color:#143a2e;
+  }
+  .field textarea{min-height:88px; resize:vertical;}
+  .field input:focus, .field select:focus, .field textarea:focus{outline:2px solid rgba(196,245,71,.55); border-color:#143a2e;}
   .apply-submit{width:100%; margin-top:16px;}
-  .apply-note{margin-top:10px; font-size:11.5px; color:var(--chalk-faint); text-align:center;}
+  .apply-note{margin-top:10px; font-size:11.5px; color:rgba(20,58,46,.45); text-align:center;}
   .honey{position:absolute; left:-9999px;}
+  @media (max-width:900px){
+    .cta-split{grid-template-columns:1fr;}
+    .cta-lattice-box{min-height:280px;}
+  }
 
   footer{background:var(--field); border-top:1px solid var(--edge); padding:44px 0 56px; color:var(--chalk-faint); font-size:13px; font-weight:400;}
   .foot-row{display:flex; align-items:center; gap:22px; flex-wrap:wrap;}
@@ -704,9 +740,10 @@
           <h2 id="jesseLiveTitle">Press to talk.</h2>
           <p class="epic-line" id="jesseLiveLead">The page is already here. Say the next sentence.</p>
           <p class="jesse-live-words" id="jesseLiveWords" aria-live="polite"></p>
+          <p class="jesse-reply" id="jesseLiveReply"></p>
           <div class="jesse-press" style="min-height:0;padding:18px 0 0;background:none;">
             <button class="jesse-disc" type="button" id="jessePressDemo" aria-pressed="false">Press</button>
-            <div class="hint" id="jessePressHint">One button. Dead center.</div>
+            <div class="hint" id="jessePressHint">Press. Speak. Jesse writes it, then answers.</div>
           </div>
         </div>
       </article>
@@ -919,7 +956,12 @@
 <!-- ================= CTA ================= -->
 <section class="cta" id="start">
   <div class="wrap">
-    <div class="ctaband reveal">
+    <div class="cta-split reveal">
+      <aside class="cta-lattice-box" aria-hidden="true">
+        <div class="cta-lattice" id="ctaLattice"></div>
+        <p class="cta-lattice-cap">Your map starts here.</p>
+      </aside>
+      <div class="ctaband">
       <h2>Never work <em>alone</em> again.</h2>
       <p>A few seats this round. We build the first map. A person is close when you need one.</p>
       <p class="apply-done" id="applyDone" hidden>Got it. A real human replies within 48 hours.</p>
@@ -961,6 +1003,7 @@
           <button class="btn primary apply-submit" type="submit">Apply to mentor</button>
           <p class="apply-note">Sends to joinmindcraft@gmail.com. We reply within 48 hours.</p>
         </form>
+      </div>
       </div>
     </div>
   </div>
@@ -1151,6 +1194,55 @@
       addEventListener('scroll', onScroll, { passive:true });
       onScroll();
     }
+  })();
+
+  // ---------- Claim-desk lattice box (cubic connected graph) ----------
+  (function(){
+    const el = document.getElementById('ctaLattice');
+    if (!el || !window.ForceGraph3D) return;
+    const n = 5, gap = 22;
+    const colors = ['#c4f547','#4fd1c5','#6c8cff','#a78bfa','#f2b84b','#e05a5a'];
+    const nodes = [];
+    const links = [];
+    const idAt = (x,y,z) => x + y * n + z * n * n;
+    for (let z = 0; z < n; z++){
+      for (let y = 0; y < n; y++){
+        for (let x = 0; x < n; x++){
+          nodes.push({
+            id: idAt(x,y,z),
+            fx: (x - (n - 1) / 2) * gap,
+            fy: (y - (n - 1) / 2) * gap,
+            fz: (z - (n - 1) / 2) * gap,
+            color: colors[(x + y + z) % colors.length]
+          });
+          if (x < n - 1) links.push({ source: idAt(x,y,z), target: idAt(x + 1,y,z) });
+          if (y < n - 1) links.push({ source: idAt(x,y,z), target: idAt(x,y + 1,z) });
+          if (z < n - 1) links.push({ source: idAt(x,y,z), target: idAt(x,y,z + 1) });
+        }
+      }
+    }
+    const graph = ForceGraph3D({ controlType:'orbit' })(el)
+      .graphData({ nodes, links })
+      .backgroundColor('#05070a')
+      .nodeColor(n => n.color)
+      .nodeRelSize(2.4)
+      .nodeLabel(() => '')
+      .linkColor(() => 'rgba(196,245,71,.28)')
+      .linkOpacity(0.4)
+      .showNavInfo(false)
+      .enableNodeDrag(false)
+      .enableNavigationControls(true)
+      .d3AlphaDecay(1)
+      .warmupTicks(0)
+      .cooldownTicks(0);
+    const ctrl = graph.controls && graph.controls();
+    if (ctrl){
+      if ('enableZoom' in ctrl) ctrl.enableZoom = false;
+      if ('enablePan' in ctrl) ctrl.enablePan = false;
+      ctrl.autoRotate = !prefersReduced;
+      ctrl.autoRotateSpeed = 0.55;
+    }
+    graph.cameraPosition({ x: 70, y: 36, z: 110 }, { x:0, y:0, z:0 });
   })();
 
   // ---------- Live mentor map (Leaflet) ----------
@@ -1350,12 +1442,13 @@
     input.addEventListener('input', () => render(input.value.trim()));
   })();
 
-  // ---------- Jesse press: live transcribe as you speak ----------
+  // ---------- Jesse press: live transcribe, then Jesse speaks ----------
   (function(){
     const disc = document.getElementById('jessePressDemo');
     const hint = document.getElementById('jessePressHint');
     const card = document.getElementById('jesseLiveCard');
     const words = document.getElementById('jesseLiveWords');
+    const replyEl = document.getElementById('jesseLiveReply');
     if (!disc || !hint || !card || !words) return;
 
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -1373,12 +1466,39 @@
       words.classList.toggle('is-on', show);
       card.classList.toggle('has-words', show);
       if (!has){
-        words.innerHTML = listening ? '<span class="interim">Listening.</span>' : '';
+        words.innerHTML = listening ? '<span class="interim">Listening. I can hear you.</span>' : '';
         return;
       }
       words.innerHTML =
         (finalPart ? '<span>' + escapeHtml(finalPart).trim() + '</span>' : '') +
         (interimPart ? ' <span class="interim">' + escapeHtml(interimPart).trim() + '</span>' : '');
+    }
+    function setReply(text){
+      if (!replyEl) return;
+      replyEl.textContent = text || '';
+      replyEl.classList.toggle('is-on', Boolean(text));
+    }
+    function pickVoice(){
+      const voices = window.speechSynthesis ? speechSynthesis.getVoices() : [];
+      return voices.find(v => /Samantha|Ava|Jenny|Google US English/i.test(v.name))
+        || voices.find(v => /^en(-|_|$)/i.test(v.lang) && /female|samantha|ava/i.test(v.name))
+        || voices.find(v => /^en/i.test(v.lang))
+        || null;
+    }
+    function speakBack(line){
+      setReply(line);
+      if (!window.speechSynthesis) return;
+      try { speechSynthesis.cancel(); } catch (_) {}
+      const u = new SpeechSynthesisUtterance(line);
+      u.rate = 0.96;
+      u.pitch = 1.04;
+      const voice = pickVoice();
+      if (voice) u.voice = voice;
+      speechSynthesis.speak(u);
+    }
+    if (window.speechSynthesis){
+      try { speechSynthesis.getVoices(); } catch (_) {}
+      speechSynthesis.addEventListener('voiceschanged', () => { pickVoice(); });
     }
     function setIdle(message){
       listening = false;
@@ -1391,18 +1511,27 @@
       words.classList.toggle('is-on', kept);
       card.classList.toggle('has-words', kept);
     }
-    function stop(){
+    function finishTurn(){
       wantListen = false;
       if (rec){ try { rec.stop(); } catch (_) {} }
       rec = null;
-      setIdle(finalText.trim() ? 'Got it. I will keep your words.' : 'Press again. Say the next sentence.');
+      const said = finalText.trim();
+      if (said){
+        paint(said, '');
+        speakBack('Got it. I will keep your words.');
+        setIdle('Press again if there is more.');
+      } else {
+        setReply('');
+        setIdle('I did not catch that. Press and say it again.');
+      }
     }
     function startEngine(){
       if (!wantListen || !SR) return;
       const r = new SR();
       r.lang = 'en-US';
-      r.continuous = true;
+      r.continuous = false;
       r.interimResults = true;
+      r.maxAlternatives = 1;
       r.onresult = (e) => {
         let interim = '';
         for (let i = e.resultIndex; i < e.results.length; i++){
@@ -1417,41 +1546,77 @@
         const err = e.error || '';
         if (err === 'not-allowed' || err === 'service-not-allowed'){
           wantListen = false;
-          setIdle('Mic is blocked. Allow it, then press again.');
+          setIdle('Mic is blocked. Allow it in the browser, then press again.');
+          return;
+        }
+        if (err === 'audio-capture'){
+          wantListen = false;
+          setIdle('No mic found. Check the input, then press again.');
         }
       };
       r.onend = () => {
         rec = null;
         if (!wantListen) return;
-        try { startEngine(); } catch (_) { stop(); }
+        if (finalText.trim()){ finishTurn(); return; }
+        setTimeout(() => {
+          if (!wantListen) return;
+          try { startEngine(); } catch (_) { finishTurn(); }
+        }, 220);
       };
       rec = r;
       r.start();
     }
-    function start(){
+    async function start(){
+      setReply('');
+      finalText = '';
       if (!SR){
-        hint.textContent = 'Chrome or Safari can hear you. Type the next sentence below.';
+        hint.textContent = 'This browser cannot hear you. Type here, then press again.';
         words.classList.add('is-on');
+        card.classList.add('has-words');
         words.setAttribute('contenteditable', 'true');
         words.setAttribute('role', 'textbox');
         words.focus();
         return;
       }
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia){
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          stream.getTracks().forEach(t => t.stop());
+        } catch (_) {
+          setIdle('Allow the mic, then press again.');
+          return;
+        }
+      }
       wantListen = true;
       listening = true;
-      finalText = '';
       disc.classList.add('is-hot');
       disc.textContent = 'Stop';
       disc.setAttribute('aria-pressed', 'true');
-      hint.textContent = 'Speak. Your words land here.';
+      hint.textContent = 'Listening. Say the next sentence.';
       paint('', '');
       try { startEngine(); }
       catch (_) { setIdle('Could not start the mic. Press again.'); }
     }
+    function stopManual(){
+      if (finalText.trim()) finishTurn();
+      else {
+        wantListen = false;
+        if (rec){ try { rec.stop(); } catch (_) {} }
+        rec = null;
+        setIdle('Press and talk. I write as you speak.');
+      }
+    }
 
     disc.addEventListener('click', () => {
-      if (listening || wantListen) stop();
-      else start();
+      if (listening || wantListen){ stopManual(); return; }
+      if (!SR && words.getAttribute('contenteditable') && (words.textContent || '').trim()){
+        finalText = (words.textContent || '').trim();
+        paint(finalText, '');
+        speakBack('Got it. I will keep your words.');
+        hint.textContent = 'Press again if there is more.';
+        return;
+      }
+      start();
     });
   })();
 
