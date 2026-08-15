@@ -4,6 +4,10 @@
 
 ---
 
+## Lime Create opens the PDF board (2026-08-15)
+
+The old web Field Binder has Jesse's + Create, no Work. Lime Create (kitchen and that desk) now opens the cream tile board. Dashboard sits above deskweb so the old page cannot cover it.
+
 ## Work opens the PDF dashboard (2026-08-15)
 
 Work / Projects / kitchen desk no longer open the old deskweb Field Binder (split FLOWS/BINDER/CALENDAR + Ask AI). They open the cream Create Dashboard with the merged dock.

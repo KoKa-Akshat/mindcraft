@@ -583,7 +583,7 @@ struct FieldDeskView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .ignoresSafeArea()
                     .transition(.opacity)
-                    .zIndex(70)
+                    .zIndex(88)
                     // Not .accessibilityIdentifier() here - DeskGridDashboardView's
                     // own root already self-identifies as "deskGridDashboard" via
                     // an internal marker overlay. Applying an identifier here too
@@ -1459,7 +1459,7 @@ struct FieldDeskView: View {
             switch modeToggleKind {
             case .createWork:
                 modePill("Create", lime: true, id: "fieldDeskCreateButton") {
-                    openCreateStudio()
+                    openWorkCanvas()
                 }
                 modePill("Work", lime: false, id: "fieldDeskWorkButton") {
                     openWorkFromJesse()
@@ -1469,7 +1469,7 @@ struct FieldDeskView: View {
                     closeStandaloneDesk()
                 }
                 modePill("Create", lime: true, id: "fieldDeskCreateButton") {
-                    switchDeskToCreate()
+                    openWorkCanvas()
                 }
             case .jessesWork:
                 modePill("Jesse's", lime: false, id: "fieldDeskJessesButton") {
