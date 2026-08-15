@@ -19,6 +19,7 @@
 		1F9E043A15C0940CA4A9CDB5 /* PolynomialExpression.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16F5501162A4F865EFC69C0 /* PolynomialExpression.swift */; };
 		20FE9273DBB5C8611FB6D861 /* RouteClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FECBAC947388E48E0524B2D /* RouteClient.swift */; };
 		D7JESSECALL01A2B3 /* JesseCallSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7JESSECALL01A2B3 /* JesseCallSession.swift */; };
+		D0KOKOROTTS01A2 /* KokoroTTSClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0KOKOROTTS01A2 /* KokoroTTSClient.swift */; };
 		D8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift */; };
 		D9JESSEOVERLAY01A2 /* JesseCallOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9JESSEOVERLAY01A2 /* JesseCallOverlay.swift */; };
 		2ED5A15418DF8B11D28A484D /* KnowledgeMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037C287CDFB7C16477B6DBF0 /* KnowledgeMapView.swift */; };
@@ -175,6 +176,7 @@
 		6C6EE743854CB1274F574739 /* storyArt */ = {isa = PBXFileReference; lastKnownFileType = folder; path = storyArt; sourceTree = "<group>"; };
 		6FECBAC947388E48E0524B2D /* RouteClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteClient.swift; sourceTree = "<group>"; };
 		C7JESSECALL01A2B3 /* JesseCallSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JesseCallSession.swift; sourceTree = "<group>"; };
+		C0KOKOROTTS01A2 /* KokoroTTSClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KokoroTTSClient.swift; sourceTree = "<group>"; };
 		C8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveRagClient.swift; sourceTree = "<group>"; };
 		C9JESSEOVERLAY01A2 /* JesseCallOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JesseCallOverlay.swift; sourceTree = "<group>"; };
 		7028A09FF6E145FFCC90FF6A /* MyScriptRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyScriptRecognizer.swift; sourceTree = "<group>"; };
@@ -362,6 +364,7 @@
 				C9QCALINVITE01A2B3C4 /* QCalInvite.swift */,
 				C7JESSECALL01A2B3 /* JesseCallSession.swift */,
 				C8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift */,
+				C0KOKOROTTS01A2 /* KokoroTTSClient.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -664,6 +667,7 @@
 				45DD6448870A218F1EA9A065 /* ConceptGraphLoader.swift in Sources */,
 				20FE9273DBB5C8611FB6D861 /* RouteClient.swift in Sources */,
 				D7JESSECALL01A2B3 /* JesseCallSession.swift in Sources */,
+				D0KOKOROTTS01A2 /* KokoroTTSClient.swift in Sources */,
 				D8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift in Sources */,
 				D9JESSEOVERLAY01A2 /* JesseCallOverlay.swift in Sources */,
 				0488FF0AF1C04DCCB33C8ED2 /* OutcomeClient.swift in Sources */,

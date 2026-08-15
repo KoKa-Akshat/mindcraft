@@ -22,12 +22,19 @@ struct JesseCallTurn: Identifiable, Codable, Equatable {
 /// does not end an in-progress conversation, because this object was never
 /// scoped to that screen in the first place.
 ///
-/// Stage 1 of the "fluid, persists-across-tabs Jesse call" build: real
+/// Stage 1+2 of the "fluid, persists-across-tabs Jesse call" build: real
 /// native audio I/O, real transcript, real pause, calling `archive-rag`
-/// directly (`ArchiveRagClient`) instead of routing through the web JS.
-/// NOT yet built (deliberately out of scope for this pass): swapping in a
-/// third-party natural-voice model, and nav-intent routing ("study
-/// fractals" -> navigate there). Those are separate, later stages.
+/// directly (`ArchiveRagClient`) instead of routing through the web JS, and
+/// real Kokoro-generated speech (`KokoroTTSClient`, see its own doc comment
+/// for the voice comparison and why Kokoro) in place of the default iOS
+/// system voice - `AVSpeechSynthesizer` stays wired as a fallback for when
+/// the network call fails (offline, cold-start timeout), so the call is
+/// never silent, just briefly less natural.
+/// NOT yet built (deliberately out of scope for this pass): nav-intent
+/// routing during a live call itself (the Ask The Desk text field already
+/// has this - see FieldDeskView's `study_concept` action - wiring it into
+/// THIS call specifically is a separate stage), and live knowledge-graph
+/// updates while a call is in progress.
 @MainActor
 final class JesseCallSession: NSObject, ObservableObject {
     @Published private(set) var isActive = false
@@ -47,9 +54,11 @@ final class JesseCallSession: NSObject, ObservableObject {
     private let recognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US"))
     private let audioEngine = AVAudioEngine()
     private let synthesizer = AVSpeechSynthesizer()
+    private var audioPlayer: AVAudioPlayer?
     private var request: SFSpeechAudioBufferRecognitionRequest?
     private var task: SFSpeechRecognitionTask?
     private var studentWeakness: (conceptId: String, label: String)?
+    private var speakGeneration = 0
 
     override init() {
         super.init()
@@ -87,8 +96,12 @@ final class JesseCallSession: NSObject, ObservableObject {
     /// was really said.
     @discardableResult
     func end() -> [JesseCallTurn] {
+        speakGeneration += 1 // invalidate any in-flight Kokoro request's result
         stopListening()
         synthesizer.stopSpeaking(at: .immediate)
+        audioPlayer?.stop()
+        audioPlayer = nil
+        isSpeaking = false
         let finalTurns = turns
         isActive = false
         isPaused = false
@@ -99,23 +112,50 @@ final class JesseCallSession: NSObject, ObservableObject {
 
     func pause() {
         guard isActive else { return }
+        speakGeneration += 1
         isPaused = true
         stopListening()
         if synthesizer.isSpeaking { synthesizer.pauseSpeaking(at: .word) }
+        if let audioPlayer, audioPlayer.isPlaying {
+            audioPlayer.pause()
+        }
     }
 
     func resume() {
         guard isActive else { return }
         isPaused = false
         if synthesizer.isPaused { synthesizer.continueSpeaking() }
+        audioPlayer?.play()
     }
 
     // MARK: - Speaking
 
-    private func speak(_ text: String) {
+    /// Real Kokoro speech first; native `AVSpeechSynthesizer` only if the
+    /// network call fails (offline, cold container timeout) - so the call
+    /// keeps talking either way, just less naturally on the fallback path.
+    /// `speakGeneration` guards against a slow Kokoro response landing
+    /// after the student has since paused or ended the call.
+    private func speak(_ text: String, voice: KokoroVoice = .heart) async {
         guard !isPaused else { return }
         turns.append(JesseCallTurn(id: UUID().uuidString, speaker: "jesse", text: text, at: Date()))
         configureAudioSession()
+
+        let generation = speakGeneration
+        if let wav = await KokoroTTSClient.synthesize(text: text, voice: voice) {
+            guard generation == speakGeneration, isActive, !isPaused else { return }
+            do {
+                let player = try AVAudioPlayer(data: wav)
+                player.delegate = self
+                audioPlayer = player
+                isSpeaking = true
+                player.play()
+                return
+            } catch {
+                // Fall through to the native voice below.
+            }
+        }
+
+        guard generation == speakGeneration, isActive, !isPaused else { return }
         let utterance = AVSpeechUtterance(string: text)
         utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
         utterance.rate = 0.48
@@ -216,9 +256,12 @@ final class JesseCallSession: NSObject, ObservableObject {
     private func askJesse(_ message: String) async {
         isThinking = true
         let reply = await ArchiveRagClient.ask(message: message, studentWeakness: studentWeakness)
+        // isThinking stays true through speech generation too (Kokoro's own
+        // network round-trip) rather than adding a separate UI state - the
+        // call pill already reads "Jesse is thinking..." either way.
+        guard isActive else { isThinking = false; return } // call may have ended while awaiting
+        await speak(reply ?? "I didn't quite catch that. Try again?")
         isThinking = false
-        guard isActive else { return } // call may have ended while awaiting
-        speak(reply ?? "I didn't quite catch that. Try again?")
     }
 }
 
@@ -230,6 +273,20 @@ extension JesseCallSession: AVSpeechSynthesizerDelegate {
     }
 
     nonisolated func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
+        Task { @MainActor in
+            self.isSpeaking = false
+        }
+    }
+}
+
+extension JesseCallSession: AVAudioPlayerDelegate {
+    nonisolated func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        Task { @MainActor in
+            self.isSpeaking = false
+        }
+    }
+
+    nonisolated func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
         Task { @MainActor in
             self.isSpeaking = false
         }
