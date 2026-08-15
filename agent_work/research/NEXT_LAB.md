@@ -142,10 +142,11 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 145 | Isomorphic stem-family hashing for cool-down without over-block | SAFE-COOLDOWN × SAFE-GENQ/FIGKEY; clone seals without starving FormatId practice | **DONE** (2026-08-14) — Part CXLV / SAFE-FAMHASH |
 | 146 | Gap-scan exit emotion without Anxiety Score™ (destake copy after holes) | SAFE-STUDHOLE × SAFE-PRIVACY/EXPOSE; calm language without mood telemetry | **DONE** (2026-08-14) — Part CXLVI / SAFE-EXITEMO |
 | 147 | Dual-rater capacity planning vs FILLETA band honesty | SAFE-DUALRATE × SAFE-FILLETA/WORKFORCE; reviewer minutes in fill estimator without Dual Rater Score™ | **DONE** (2026-08-15) — Part CXLVII / SAFE-CAPPLAN |
-| — | *(147 complete; 148 is next)* | | |
-| 148 | Template-trust inheritance after first-of-cell dual admit | SAFE-DUALRATE × SAFE-COOLDOWN/FIGKEY; when isomorphic clones may single-rater promote | **NEXT** |
-| 149 | Post-promote repair stratified dashboards (single vs dual) | SAFE-DUALRATE × SAFE-PROMOTE/INSTRUMENT; ops IRR without Kappa % NS | queued |
+| 148 | Template-trust inheritance after first-of-cell dual admit | SAFE-DUALRATE × SAFE-FAMHASH/FIGKEY; when isomorphic clones may single-rater promote | **DONE** (2026-08-15) — Part CXLVIII / SAFE-TMPTRUST |
+| — | *(148 complete; 149 is next)* | | |
+| 149 | Post-promote repair stratified dashboards (single vs dual) | SAFE-DUALRATE × SAFE-PROMOTE/INSTRUMENT; ops IRR without Kappa % NS | **NEXT** |
 | 150 | Dual-capacity hire vs contract SME panels under exam-week spikes | SAFE-CAPPLAN × SAFE-LOADSHED/WORKFORCE; surge dual without Dual Rater Score™ | queued |
+| 151 | Template-trust revoke & sample-dual cadence under repair spikes | SAFE-TMPTRUST × SAFE-REPAIR/CAPPLAN; tighten/revoke without Template Trust Score™ | queued |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 
@@ -254,3 +255,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any item_id-only cool-down under GENQ clones / concept×FormatId cool-down as default family / embedding-only family without SME seal / Family Hash Score™·Clone Minutes·Similarity % NS / pad when family bar empties a cell / ACT or complete-visual guarantees from hashing packaging (Part CXLV / SAFE-FAMHASH)
 - Any Anxiety Score™ / Calm Score™ / Exit Emotion Score™ / Mood Minutes NS / consoling “not everyone can…” ability talk / ego Completeness % beside hole honesty / mandatory mood gate / emotion-AI exit empathy / fake greens as affect management / calm-to-zero or ACT guarantees from gap-scan exit packaging (Part CXLVI / SAFE-EXITEMO)
 - Any dual-omitted FILLETA / ETA-skipped dual / always-dual without dual FTE / 100% dual-util plans / Dual Rater Score™·Capacity Score™·Reviewer Minutes NS / hospital-cosplay dual-capacity ads / complete-visual-by-date or ACT guarantees from dual capacity packaging (Part CXLVII / SAFE-CAPPLAN)
+- Any forever-dual on sealed isomorphic clones after blueprint dual / silent inherit without template+family seals / Template Trust Score™·Inherit %·Family Calibration Score™ NS / first dual ≡ forever trust without sample audit / embedding-only inheritance / FERF≡C4-ready ads / ACT or complete-visual guarantees from template-inheritance packaging (Part CXLVIII / SAFE-TMPTRUST)
