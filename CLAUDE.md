@@ -386,6 +386,31 @@ Frontend `.env.production` + Vercel `ML_API_URL` point here.
 ### `mindcraft-homework` (LLM solver) — Cloud Run, project `mindcraft-93858`
 - Code in `homework/`. Secret `ANTHROPIC_API_KEY`. Stateless. Down on credits.
 
+### `mindcraft-webhook` — Vercel serverless functions, project `webhook/`
+
+**CI auto-deploys on every push to `main`** (fixed 2026-08-14 — previously did
+NOT auto-deploy at all; the Vercel project had no Git repo connected, so every
+prior deploy was a manual `vercel --prod`). Vercel's own Git integration is
+connected to `KoKa-Akshat/mindcraft` (the monorepo — NOT the separate
+`KoKa-Akshat/mindcraft-ios-prototype` repo, easy to pick by mistake) with
+**Root Directory set to `webhook`** in Project Settings → Build and
+Development — required since this is a monorepo; without it Vercel looks for
+`vercel.json`/`api/` at the repo root instead of inside `webhook/`.
+Handlers live in `webhook/lib/handlers/`, routed through
+`webhook/api/app-actions.ts` + a `webhook/vercel.json` rewrite per action
+(Hobby plan's 12-serverless-function cap is why one router fans out instead of
+one file per endpoint).
+
+Fallback manual deploy (should not be needed now, kept for reference):
+`cd webhook && vercel --prod --yes`. If `firestore.rules`/`storage.rules`
+changed, also run `bash scripts/sync-rules.sh` first (copies the repo-root
+canonical rules into `webhook/firebase/`, which is what `deploy-rules.ts`
+actually reads — Vercel's Root Directory means the repo-root `firebase/`
+folder is otherwise invisible to the deployed function), then
+`POST /api/deploy-rules` with `{"secret": "<last 8 chars of ANTHROPIC_API_KEY>"}`
+to actually push them live (the only sanctioned way — never local
+`firebase deploy`, see Security section above).
+
 ### Frontend + world + marketing — Firebase Hosting, project `mindcraft-93858`
 
 **CI auto-deploys on every push to `main`.** Workflow: `.github/workflows/deploy.yml`.
