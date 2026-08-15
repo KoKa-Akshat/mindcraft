@@ -53,6 +53,9 @@ struct FieldDeskView: View {
     @State private var workMode = false
     /// Native Projects menu (Binder / Intel / … + Go Back) — not the vending cat screen.
     @State private var showProjectsPanel = false
+    /// Fixed-tile dashboard grid (`DeskGridDashboardView`) - PDF-referenced
+    /// layout, distinct from the free-drag desk cards below.
+    @State private var showDeskGridDashboard = false
     /// Projects screen — Malevolent Shrine project card; tap → work area.
     @State private var showProjectsScreen = false
     /// Shrine → Gen-Z captions → workspace starting → work desk.
@@ -358,6 +361,7 @@ struct FieldDeskView: View {
             || showProjectsPanel
             || showProjectsScreen
             || showWorkflowLibrary
+            || showDeskGridDashboard
     }
 
     /// Jesse kitchen Ask/dock only — Work/Create own their own prompt bars.
@@ -531,6 +535,23 @@ struct FieldDeskView: View {
                     .transition(.opacity)
                     .zIndex(65)
                     .accessibilityIdentifier("fieldDeskActNotesPopup")
+                }
+
+                if showDeskGridDashboard {
+                    DeskGridDashboardView(
+                        onOpenBinder: {
+                            showDeskGridDashboard = false
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+                                withAnimation(.easeInOut(duration: 0.2)) {
+                                    showActFieldBook = true
+                                }
+                            }
+                        },
+                        onClose: { showDeskGridDashboard = false }
+                    )
+                    .transition(.opacity)
+                    .zIndex(70)
+                    .accessibilityIdentifier("fieldDeskGridDashboardOverlay")
                 }
 
                 if showApplyToday {
@@ -1539,6 +1560,8 @@ struct FieldDeskView: View {
             flash("Doc · blank page")
         case .gmail:
             placeWidget(.gmail)
+        case .dashboard:
+            showDeskGridDashboard = true
         }
     }
 
@@ -3106,6 +3129,17 @@ struct FieldDeskView: View {
                     placeWidget(.intel)
                 }
                 .accessibilityIdentifier("fieldDeskAddWakeJesse")
+
+                addMenuRow(
+                    title: "Dashboard",
+                    subtitle: "Intel · Binder · Moodle · Email · Gcal, one view",
+                    system: "square.grid.2x2.fill",
+                    enabled: true
+                ) {
+                    showAddPanel = false
+                    showDeskGridDashboard = true
+                }
+                .accessibilityIdentifier("fieldDeskAddDashboard")
 
                 if placedWidgets.contains(.memo) {
                     VStack(alignment: .leading, spacing: 8) {
