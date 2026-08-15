@@ -501,6 +501,7 @@
   .archive-shelf{
     flex:1; min-height:0; overflow:auto; padding:0 12px 14px;
     display:grid; gap:8px; align-content:start;
+    overscroll-behavior:contain;
   }
   .abook{
     display:flex; align-items:center; gap:12px; width:100%;
@@ -523,9 +524,18 @@
   .alesson-book{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--lime);}
   .alesson h3{font-size:clamp(20px,2.2vw,28px); letter-spacing:-.03em; color:var(--chalk); line-height:1.15;}
   .alesson-quote{font-size:14px; line-height:1.55; color:var(--chalk-dim);}
+  .alesson-play{
+    position:relative; z-index:2; pointer-events:auto;
+    border:1px solid var(--edge); border-radius:14px; overflow:hidden;
+    background:#05070a; touch-action:none; overscroll-behavior:contain;
+  }
+  .alesson-play b{
+    display:block; padding:8px 12px 0; font-size:11px; font-weight:600;
+    letter-spacing:.12em; text-transform:uppercase; color:var(--lime);
+  }
   .alesson-sim{
-    width:100%; height:min(42vh, 360px); border:1px solid var(--edge);
-    border-radius:14px; background:#05070a;
+    display:block; width:100%; height:min(48vh, 420px); border:0;
+    background:#05070a; pointer-events:auto; touch-action:auto;
   }
   .alesson .btn{justify-self:start;}
   @media (max-width:900px){
@@ -1181,10 +1191,22 @@
     // toward Lenis's already-smoothed position), which read as laggy/floaty
     // rather than responsive. A shorter duration plus a touch more wheel
     // travel keeps the glide but tightens the lag between input and motion.
-    lenis = new Lenis({ duration: 0.8, smoothWheel: true, wheelMultiplier: 1.15 });
+    lenis = new Lenis({
+      duration: 0.8,
+      smoothWheel: true,
+      wheelMultiplier: 1.15,
+      prevent: function(node){
+        return !!(node && node.closest && node.closest('.archive-box, .alesson-play'));
+      }
+    });
     function raf(time){ lenis.raf(time); requestAnimationFrame(raf); }
     requestAnimationFrame(raf);
     if (window.ScrollTrigger) lenis.on('scroll', ScrollTrigger.update);
+  }
+  function pageScroll(on){
+    if (!lenis) return;
+    if (on) lenis.start();
+    else lenis.stop();
   }
 
   // ---------- Scroll reveal ----------
@@ -1814,11 +1836,19 @@
           (reply ? '<p class="alesson-reply">' + escapeHtml(reply) + '</p>' : '') +
           '<p class="alesson-book">' + escapeHtml(hit.bookTitle) + '</p>' +
           '<h3>' + escapeHtml(hit.pageTitle) + '</h3>' +
+          (sim
+            ? '<div class="alesson-play"><b>Drag a variable. The idea moves.</b>' +
+              '<iframe class="alesson-sim" src="' + escapeHtml(sim) + '" title="Interactive lesson" allow="autoplay; fullscreen" allowfullscreen sandbox="allow-scripts allow-same-origin allow-pointer-lock" referrerpolicy="no-referrer"></iframe></div>'
+            : '') +
           '<p class="alesson-quote">' + escapeHtml(hit.quote) + '</p>' +
-          (sim ? '<iframe class="alesson-sim" src="' + escapeHtml(sim) + '" title="Lesson" loading="lazy" referrerpolicy="no-referrer"></iframe>' : '') +
           '<a class="btn primary" href="' + escapeHtml(hit.pageUrl) + '" target="_blank" rel="noopener">Open this page</a>' +
         '</div>';
       if (count) count.textContent = hit.bookTitle;
+      const play = shelf.querySelector('.alesson-play');
+      if (play){
+        play.addEventListener('pointerenter', function(){ pageScroll(false); });
+        play.addEventListener('pointerleave', function(){ pageScroll(false); });
+      }
     }
     function renderShelf(q){
       if (!books) return;
@@ -1896,6 +1926,7 @@
       openBtn.textContent = 'Close the shelf';
       loadBooks();
       loadChunks();
+      pageScroll(false);
       input.focus();
     }
     function closeBox(){
@@ -1905,6 +1936,7 @@
       if (copy) copy.appendChild(search);
       openBtn.setAttribute('aria-expanded', 'false');
       openBtn.textContent = 'Browse the archive';
+      pageScroll(true);
     }
     openBtn.addEventListener('click', function(){
       if (stage.classList.contains('is-open')) closeBox();
