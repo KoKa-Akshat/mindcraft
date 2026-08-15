@@ -79,7 +79,15 @@ struct DeskGridDashboardView: View {
                 .accessibilityIdentifier("deskGridDashboardDone")
         }
         .animation(.spring(response: 0.45, dampingFraction: 0.84), value: rail)
-        .accessibilityIdentifier("deskGridDashboard")
+        // Not a direct .accessibilityIdentifier() here either - same
+        // clobbering bug as workDock, this time it would stomp every
+        // nested tile/dock/rail identifier with "deskGridDashboard".
+        .accessibilityElement(children: .contain)
+        .overlay(alignment: .topLeading) {
+            Text(verbatim: "dashboard").font(.system(size: 1)).foregroundColor(.clear)
+                .accessibilityIdentifier("deskGridDashboard")
+                .allowsHitTesting(false)
+        }
     }
 
     @ViewBuilder
@@ -234,7 +242,20 @@ struct DeskGridDashboardView: View {
         .padding(.horizontal, 16)
         .padding(.vertical, 10)
         .background(Capsule().fill(Color(gridHex: "1c1c1e")))
-        .accessibilityIdentifier("deskGridDashboardToolbar")
+        // NOT .accessibilityIdentifier() directly on this container - that
+        // clobbers every child dockChip's own identifier with this one
+        // (confirmed live: each chip reported identifier
+        // "deskGridDashboardToolbar" instead of its own deskGridDock_*,
+        // even though .accessibilityElement(children: .contain) correctly
+        // kept them individually queryable/tappable). Same proven fix as
+        // FieldDeskView's combinedAskAndDock: an invisible marker Text
+        // carries the container's own identifier instead.
+        .accessibilityElement(children: .contain)
+        .overlay(alignment: .topLeading) {
+            Text(verbatim: "toolbar").font(.system(size: 1)).foregroundColor(.clear)
+                .accessibilityIdentifier("deskGridDashboardToolbar")
+                .allowsHitTesting(false)
+        }
     }
 
     private func dockChip(_ title: String, system: String, identifier: String? = nil, action: @escaping () -> Void) -> some View {
@@ -272,6 +293,7 @@ struct DeskGridDashboardView: View {
                 .shadow(color: .black.opacity(0.12), radius: 10, y: 4)
         )
         .accessibilityIdentifier("deskGridTile_Memo")
+        .accessibilityElement(children: .contain)
     }
 
     private var flowsRail: some View {
@@ -293,7 +315,16 @@ struct DeskGridDashboardView: View {
                 .fill(Color.white)
                 .shadow(color: .black.opacity(0.12), radius: 10, y: 4)
         )
-        .accessibilityIdentifier("deskGridFlowsRail")
+        // Not a direct .accessibilityIdentifier() - same clobbering bug as
+        // workDock, would stomp all 6 flowRow identifiers
+        // (Presentation/GDoc/Resume/Archive/Book/Apply) with this
+        // container's own.
+        .accessibilityElement(children: .contain)
+        .overlay(alignment: .topLeading) {
+            Text(verbatim: "flows").font(.system(size: 1)).foregroundColor(.clear)
+                .accessibilityIdentifier("deskGridFlowsRail")
+                .allowsHitTesting(false)
+        }
     }
 
     private func flowRow(_ title: String, system: String, action: @escaping () -> Void) -> some View {

@@ -427,6 +427,27 @@ wrapper view clobbers every nested control's own identifier (confirmed twice
 own distinct identifiers, use an invisible marker `Text` sized to the
 wrapper's frame instead if a "this card exists" check is needed.
 
+**A third variant of the same identifier-clobbering family, one layer
+further out** (found 2026-08-15 in `DeskGridDashboardView`/`CreateCanvasView`
++ their `FieldDeskView` call sites): a child view can correctly self-identify
+internally (`.accessibilityElement(children: .contain)` + an invisible marker
+`Text` overlay carrying its own id — the proven fix above) and still get
+clobbered if the PARENT applies `.accessibilityIdentifier(...)` to that whole
+child view from the outside, at the call site (e.g.
+`DeskGridDashboardView(...).accessibilityIdentifier("fieldDeskGridDashboardOverlay")`
+in `FieldDeskView`). Confirmed via a live accessibility-tree dump
+(`XCTAttachment(screenshot:)` + `xcrun xcresulttool export attachments` is
+the reliable way to pull one out of an `.xcresult` bundle post-run — far more
+robust than racing external `simctl io screenshot` against sleeps): both the
+child's top-level contain-group node AND its own marker `Text` sibling
+reported the outer `fieldDeskGridDashboardOverlay` identifier instead of the
+child's real one, while deeper-nested identifiers (`deskGridTile_*`,
+`deskGridDock_*`) stayed correct — the stomp only hits the top-level
+sibling(s) exposed at the child view's own boundary, not everything nested
+inside. **Fix**: don't re-identify a subview from its call site if that
+subview already self-identifies internally — delete the outer
+`.accessibilityIdentifier()` and trust the child's own marker.
+
 A genuinely open structural question (raised, deliberately deferred): the
 ~15 separate `show___` booleans could collapse into one
 `activeOverlay: OverlayKind?` enum, which would eliminate this bug class

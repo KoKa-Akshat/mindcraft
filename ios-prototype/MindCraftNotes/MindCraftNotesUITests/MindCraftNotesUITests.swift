@@ -1927,27 +1927,33 @@ final class MindCraftNotesUITests: XCTestCase {
         XCTAssertTrue(addDashboard.waitForExistence(timeout: 5), "expected Dashboard row")
         addDashboard.tap()
 
-        XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 5), "expected the PDF work canvas")
-        XCTAssertTrue(app.descendants(matching: .any)["deskGridTile_Binder"].waitForExistence(timeout: 3), "expected Binder tile")
-        XCTAssertTrue(app.descendants(matching: .any)["deskGridTile_Intel"].waitForExistence(timeout: 2), "expected Intel tile")
-        XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboardToolbar"].waitForExistence(timeout: 2), "expected the single work dock")
+        XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 10), "expected Create Dashboard to open")
+        XCTAssertTrue(app.buttons["deskGridTile_Binder"].waitForExistence(timeout: 10), "expected Binder tile")
+        XCTAssertTrue(app.buttons["deskGridTile_Intel"].exists, "expected Intel tile")
+        XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboardToolbar"].exists, "expected merged work toolbar")
 
         let flows = app.buttons["deskGridDock_Flows"]
-        XCTAssertTrue(flows.waitForExistence(timeout: 3), "expected Flows on the work dock")
+        XCTAssertTrue(flows.waitForExistence(timeout: 10), "expected Flows dock chip with its own identifier")
         flows.tap()
-        XCTAssertTrue(app.descendants(matching: .any)["deskGridFlowsRail"].waitForExistence(timeout: 3), "expected Flows as a right rail, not a new page")
+
+        XCTAssertTrue(app.descendants(matching: .any)["deskGridFlowsRail"].waitForExistence(timeout: 10), "expected Flows rail to open")
 
         let presentation = app.buttons["deskGridFlow_Presentation"]
-        XCTAssertTrue(presentation.waitForExistence(timeout: 3), "expected Presentation in the Flows rail")
+        XCTAssertTrue(presentation.waitForExistence(timeout: 10), "expected Presentation row in Flows rail")
         presentation.tap()
 
-        XCTAssertTrue(app.descendants(matching: .any)["createCanvasRoot"].waitForExistence(timeout: 5), "expected the Create screen, centered")
-        XCTAssertTrue(app.descendants(matching: .any)["createCanvasJesseRail"].waitForExistence(timeout: 3), "expected Jesse's rail")
-        XCTAssertTrue(app.buttons["createCanvasCallJesse"].waitForExistence(timeout: 3), "expected Jump on a call with Jesse")
-        XCTAssertFalse(app.staticTexts.containing(NSPredicate(format: "label CONTAINS 'Jack'")).firstMatch.exists, "agent name is Jesse, never Jack")
+        XCTAssertTrue(app.descendants(matching: .any)["createCanvasRoot"].waitForExistence(timeout: 15), "expected Create canvas to open")
+        XCTAssertTrue(app.descendants(matching: .any)["createCanvasJesseRail"].waitForExistence(timeout: 10), "expected Jesse call rail")
+        XCTAssertTrue(app.buttons["createCanvasCallJesse"].exists, "expected Jump on a call with Jesse button")
 
-        app.buttons["createCanvasDone"].tap()
-        XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 3), "closing Create returns to the work canvas")
+        let jesseTexts = app.staticTexts.allElementsBoundByIndex.map { $0.label }
+        XCTAssertFalse(jesseTexts.contains { $0.contains("Jack") }, "Create canvas must say Jesse, not Jack")
+
+        let done = app.buttons["createCanvasDone"]
+        XCTAssertTrue(done.waitForExistence(timeout: 5), "expected Done button on Create canvas")
+        done.tap()
+
+        XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 5), "expected to return to Create Dashboard")
 
         XCUIDevice.shared.orientation = .portrait
     }

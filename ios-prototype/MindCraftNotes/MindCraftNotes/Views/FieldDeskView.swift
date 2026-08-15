@@ -582,7 +582,14 @@ struct FieldDeskView: View {
                     .id(dashboardStartRail)
                     .transition(.opacity)
                     .zIndex(70)
-                    .accessibilityIdentifier("fieldDeskGridDashboardOverlay")
+                    // Not .accessibilityIdentifier() here - DeskGridDashboardView's
+                    // own root already self-identifies as "deskGridDashboard" via
+                    // an internal marker overlay. Applying an identifier here too
+                    // stomps that marker AND the view's own top-level contain-group
+                    // node down to THIS identifier instead (same clobbering family
+                    // as workDock, one layer further out - confirmed via a live
+                    // accessibility-tree dump showing both nodes wrongly reporting
+                    // 'fieldDeskGridDashboardOverlay' instead of 'deskGridDashboard').
                 }
 
                 if showApplyToday {
