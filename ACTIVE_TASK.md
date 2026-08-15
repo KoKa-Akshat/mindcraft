@@ -4,6 +4,10 @@
 
 ---
 
+## Archive opens in place (2026-08-15)
+
+Browse the archive no longer leaves the page. It opens a rectangular box on the right, moves search to the top, and lets you scroll the books there.
+
 ## Jesse + archive auto captions (2026-08-15)
 
 Jesse story card plays workflow captions (fractals, inbox drafts, resume, map, notes). Press sits on the right and is optional. Archive credit cycles the same captions. Archive bullets are one line. Browse sits to the right of the bullets.
