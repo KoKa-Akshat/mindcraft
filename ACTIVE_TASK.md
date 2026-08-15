@@ -4,6 +4,10 @@
 
 ---
 
+## Fractals open the right lesson (2026-08-15)
+
+Ask "fractals" and the shelf opens Koch / Sierpinski from Geometry, not a random DSP sim. While the shelf is open, the lime button is Visit the page, to the full archive. Go back stays.
+
 ## Archive shelf scrolls (2026-08-15)
 
 The hardcover grid scrolls inside the box. The page stays put.
