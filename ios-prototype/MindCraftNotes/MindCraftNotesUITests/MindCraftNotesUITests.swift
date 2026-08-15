@@ -1311,6 +1311,105 @@ final class MindCraftNotesUITests: XCTestCase {
         XCUIDevice.shared.orientation = .portrait
     }
 
+    /// Job OS "Apply today" LinkedIn match algorithm, end to end, exercising
+    /// the actual worked example from `agent_work/job-os/MATCH_RULES.md`:
+    /// Alhareth Ali's LinkedIn export only shows his *current* company
+    /// (Chamfr) — the CSV format has no past-employer column at all — so he
+    /// only shows up on an Augeo role once `past:Kigo,Augeo` is added via a
+    /// paste line, and the resulting card must show an honest "alias family"
+    /// match rule rather than a silent/black-box match. A second imported
+    /// person (Wells Fargo) is a negative control: unrelated companies must
+    /// never show up as a false match.
+    ///
+    /// `UIDocumentPickerViewController` (the real CSV file picker) can't be
+    /// driven from XCUITest, so `--ui-testing-job-os-seed` (JobOSShellView's
+    /// `seedForUITestingIfNeeded`) bypasses only that one step by calling the
+    /// real `store.importLinkedInConnections(text:source:)` — the same
+    /// `JobOSLinkedInImport.parseCSV` code path a real file import uses —
+    /// against a realistic Connections.csv fixture (Notes: preamble, real
+    /// header order). Every other step below (past-company paste, LinkedIn
+    /// URL connect, add role, opening the role, reading the reach-out card)
+    /// is real UI interaction, not seeded.
+    func testJobOSLinkedInImportMatchesAugeoAliasFamily() {
+        let app = launchFieldDeskApp(extraArgs: ["--ui-testing-job-os-seed"])
+
+        let bottomEdge = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.98))
+        let midScreen = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.55))
+        bottomEdge.press(forDuration: 0.05, thenDragTo: midScreen)
+
+        let workflowsButton = app.buttons["fieldDeskWorkflows"]
+        XCTAssertTrue(workflowsButton.waitForExistence(timeout: 8), "expected Workflows dock icon")
+        workflowsButton.press(forDuration: 0.7)
+
+        let applyTodayRow = app.buttons["workflowOpen_applyToday"]
+        XCTAssertTrue(applyTodayRow.waitForExistence(timeout: 5), "expected Apply today row in workflow library")
+        applyTodayRow.tap()
+
+        // `jobOSRoot`'s identifier sits on a plain GeometryReader/ZStack
+        // chain, which (per FieldDeskView's own documented caveat on
+        // archiveWorkflowRoot/schedulingWorkflows) doesn't reliably
+        // materialize as its own queryable element — wait on a real leaf
+        // control instead, same as those other tests do.
+        let linkedInAsset = app.buttons["jobOSAsset_link_linkedin"]
+        XCTAssertTrue(linkedInAsset.waitForExistence(timeout: 10), "expected the Apply today board to open with a Connect LinkedIn box")
+        linkedInAsset.tap()
+
+        let desk2People = app.staticTexts.matching(NSPredicate(format: "label CONTAINS[c] %@", "2 people")).firstMatch
+        XCTAssertTrue(desk2People.waitForExistence(timeout: 5), "expected the real CSV parser to have imported both seeded rows (Alhareth Ali + Jordan Rivera)")
+
+        // Connect the LinkedIn profile URL live (real UI, no file picker involved).
+        let urlField = app.textFields["jobOSLinkedInURLField"]
+        XCTAssertTrue(urlField.waitForExistence(timeout: 5))
+        urlField.tap()
+        urlField.typeText("https://www.linkedin.com/in/testuser")
+        app.buttons["jobOSLinkedInURLSave"].tap()
+
+        // Add Alhareth's past-company history the honest way the spec
+        // describes: the CSV can't carry it, so it comes from a paste line.
+        let pasteField = app.textViews["jobOSLinkedInPasteField"]
+        XCTAssertTrue(pasteField.waitForExistence(timeout: 5))
+        pasteField.tap()
+        pasteField.typeText("Alhareth Ali | Chamfr | AI/ML Intern | https://www.linkedin.com/in/alharethali | past:Kigo,Augeo")
+        app.buttons["jobOSLinkedInPasteSubmit"].tap()
+
+        app.buttons["jobOSLinkedInDone"].tap()
+
+        // Add the Augeo role through the real Add role form.
+        let addRoleButton = app.buttons["jobOSAddRoleButton"]
+        XCTAssertTrue(addRoleButton.waitForExistence(timeout: 5), "expected board to be ready (resume + LinkedIn connected)")
+        addRoleButton.tap()
+
+        let companyField = app.textFields["jobOSAddRoleCompany"]
+        XCTAssertTrue(companyField.waitForExistence(timeout: 5))
+        companyField.tap()
+        companyField.typeText("Augeo")
+        let roleField = app.textFields["jobOSAddRoleRole"]
+        roleField.tap()
+        roleField.typeText("Software Engineering Intern")
+        app.buttons["jobOSAddRoleSubmit"].tap()
+
+        // Open the role card that was just added.
+        let roleRow = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "jobOSRole_")).firstMatch
+        XCTAssertTrue(roleRow.waitForExistence(timeout: 5), "expected the new Augeo role row on the board")
+        roleRow.tap()
+
+        // The role detail sheet lists reach-outs with an explicit match rule.
+        let matchRuleValue = app.staticTexts.matching(
+            NSPredicate(format: "label CONTAINS[c] %@ AND label CONTAINS[c] %@", "alias family", "augeo")
+        ).firstMatch
+        XCTAssertTrue(matchRuleValue.waitForExistence(timeout: 8), "expected an 'alias family (...augeo...)' match rule on the Augeo role card")
+        attachScreenshot(app, name: "job_os_augeo_match")
+
+        XCTAssertTrue(app.staticTexts["Alhareth Ali"].waitForExistence(timeout: 3), "expected Alhareth Ali to be matched via his past Kigo/Augeo employer")
+        XCTAssertTrue(matchRuleValue.label.lowercased().contains("kigo"), "expected the match rule to name Kigo, the alias that actually bridged Chamfr -> Augeo: \(matchRuleValue.label)")
+
+        // Negative control: Jordan Rivera (Wells Fargo, unrelated company)
+        // must never show up as a false match on the Augeo role.
+        XCTAssertFalse(app.staticTexts["Jordan Rivera"].exists, "unrelated LinkedIn connection (Wells Fargo) must not match the Augeo role")
+
+        XCUIDevice.shared.orientation = .portrait
+    }
+
     /// Desk-level pan/zoom (Work mode, empty-space drag/pinch): place a real
     /// card via the + panel, confirm dragging empty space moves the whole
     /// desk (not the card), pinch changes zoom, and the recenter control

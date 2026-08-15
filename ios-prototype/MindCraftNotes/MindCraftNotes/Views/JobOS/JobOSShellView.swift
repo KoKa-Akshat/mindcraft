@@ -27,6 +27,7 @@ struct JobOSShellView: View {
     @State private var boardFocused = true
     @State private var resizeStart: CGSize?
     @State private var didPlace = false
+    @State private var didSeedForUITesting = false
 
     var body: some View {
         GeometryReader { proxy in
@@ -157,7 +158,40 @@ struct JobOSShellView: View {
             Text("Only confirm if you actually submitted.")
         }
         .accessibilityIdentifier("jobOSRoot")
+        .onAppear { seedForUITestingIfNeeded() }
     }
+
+    /// Seeds a realistic LinkedIn Connections.csv import through the real
+    /// `JobOSLinkedInImport.parseCSV` / `store.importLinkedInConnections`
+    /// path (not fabricated `JobOSLinkedInPerson` structs) so UI tests can
+    /// exercise the actual CSV parser + alias matcher end to end. Only the
+    /// file-picker step is bypassed — a `UIDocumentPickerViewController`
+    /// can't be driven from XCUITest — everything downstream (paste-based
+    /// past-company augmentation, LinkedIn URL connect, add role, reach-out
+    /// matching) still happens through real UI interaction in the test.
+    private func seedForUITestingIfNeeded() {
+        guard !didSeedForUITesting else { return }
+        guard ProcessInfo.processInfo.arguments.contains("--ui-testing-job-os-seed") else { return }
+        didSeedForUITesting = true
+        store.markResumeUploaded(fileName: "test-resume.pdf")
+        store.importLinkedInConnections(text: Self.seedConnectionsCSV, source: "csv")
+    }
+
+    /// Real-shaped LinkedIn Connections.csv export: "Notes:" preamble
+    /// paragraph (quoted, may contain commas), a blank line, then the
+    /// official header. Per the spec (`MATCH_RULES.md`), the export only
+    /// ever carries *current* Company — Alhareth's Kigo/Augeo history is
+    /// deliberately absent here and added later via the paste `past:`
+    /// mechanism, exactly as a real student would have to.
+    private static let seedConnectionsCSV = """
+        Notes:
+        "When exporting your connection data, you will only see the data for connections that were made after 2015. LinkedIn does not currently support export of connections made prior to 2015 due to changes in our privacy practices."
+
+
+        First Name,Last Name,URL,Email Address,Company,Position,Connected On
+        Alhareth,Ali,https://www.linkedin.com/in/alharethali,,Chamfr,AI/ML Intern,15 Jan 2025
+        Jordan,Rivera,https://www.linkedin.com/in/jordanrivera,,Wells Fargo,Analyst,02 Mar 2024
+        """
 
     // MARK: - Placement / move / resize
 
@@ -451,6 +485,7 @@ struct JobOSShellView: View {
                             .background(Capsule().fill(Color(jobHex: "c4f547")))
                     }
                     .buttonStyle(.plain)
+                    .accessibilityIdentifier("jobOSAddRoleButton")
                 }
             }
 
@@ -649,6 +684,7 @@ private struct LinkedInConnectSheet: View {
                         .padding(12)
                         .background(RoundedRectangle(cornerRadius: 12).fill(Color.white))
                         .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color(jobHex: "d9d2c5")))
+                        .accessibilityIdentifier("jobOSLinkedInURLField")
                     Button {
                         store.connectLinkedIn(profileUrl: url)
                     } label: {
@@ -660,6 +696,7 @@ private struct LinkedInConnectSheet: View {
                             .background(RoundedRectangle(cornerRadius: 14).fill(Color(jobHex: "c4f547")))
                     }
                     .buttonStyle(.plain)
+                    .accessibilityIdentifier("jobOSLinkedInURLSave")
 
                     Text("2. People you can reach")
                         .font(.system(size: 12, weight: .heavy, design: .rounded))
@@ -691,6 +728,7 @@ private struct LinkedInConnectSheet: View {
                         .scrollContentBackground(.hidden)
                         .padding(10)
                         .background(RoundedRectangle(cornerRadius: 12).fill(Color.white))
+                        .accessibilityIdentifier("jobOSLinkedInPasteField")
                     Button {
                         store.importLinkedInConnections(text: paste, source: "paste")
                         paste = ""
@@ -703,10 +741,12 @@ private struct LinkedInConnectSheet: View {
                             .background(RoundedRectangle(cornerRadius: 14).fill(Color(jobHex: "c4f547")))
                     }
                     .buttonStyle(.plain)
+                    .accessibilityIdentifier("jobOSLinkedInPasteSubmit")
 
                     Button("Done") { dismiss() }
                         .font(.system(size: 14, weight: .bold, design: .rounded))
                         .frame(maxWidth: .infinity)
+                        .accessibilityIdentifier("jobOSLinkedInDone")
                 }
                 .padding(20)
             }
@@ -877,7 +917,9 @@ private struct AddRoleSheet: View {
         NavigationStack {
             Form {
                 TextField("Company", text: $company)
+                    .accessibilityIdentifier("jobOSAddRoleCompany")
                 TextField("Role", text: $role)
+                    .accessibilityIdentifier("jobOSAddRoleRole")
                 TextField("Location", text: $location)
                 TextField("Role URL", text: $url)
                     .textInputAutocapitalization(.never)
@@ -899,6 +941,7 @@ private struct AddRoleSheet: View {
                         )
                         dismiss()
                     }
+                    .accessibilityIdentifier("jobOSAddRoleSubmit")
                 }
             }
         }

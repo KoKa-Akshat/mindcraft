@@ -71,17 +71,33 @@ enum JobOSCompanyMatch {
         ]
     ]
 
+    /// Legal-suffix / filler words the spec says to strip (`MATCH_RULES.md`
+    /// "Normalize"). Stripped as **whole tokens only** — the previous
+    /// implementation ran `String.replacingOccurrences` per token, which
+    /// deletes raw substrings anywhere they appear, not whole words. That
+    /// mangled ordinary company names that merely *contain* one of these
+    /// letter sequences: "Coinbase" -> "inbase" ("co"), "Cognizant" ->
+    /// "gnizant" ("co"), "Scotiabank Corp" -> "s tiabank" ("co" inside
+    /// "Scotiabank"). Worse, because "corp" is itself a substring of
+    /// "corporation" and sits earlier in the old token list, stripping
+    /// "corp" first ate the front of "corporation" and left garbage
+    /// ("XYZ Corporation" -> "xyz oration") — so the exact pair the spec
+    /// calls out ("corp" / "corporation") never actually normalized to the
+    /// same key. Tokenizing on non-alphanumeric boundaries first and then
+    /// dropping only whole tokens that exactly equal a suffix word fixes
+    /// both: "XYZ Corp" and "XYZ Corporation" both canon to "xyz", and
+    /// "Coinbase" is left intact.
+    private static let suffixWords: Set<String> = [
+        "inc", "llc", "ltd", "corp", "corporation", "company", "co", "the"
+    ]
+
     static func canon(_ raw: String) -> String {
         var s = raw.lowercased()
         s = s.replacingOccurrences(of: "&", with: " and ")
-        let junk = [
-            ",", ".", "inc", "llc", "ltd", "corp", "corporation",
-            "company", "co", "the ", "  "
-        ]
-        for token in junk {
-            s = s.replacingOccurrences(of: token, with: " ")
-        }
-        return s.split(whereSeparator: { $0.isWhitespace }).joined(separator: " ")
+        let boundary = CharacterSet.alphanumerics.inverted
+        let words = s.components(separatedBy: boundary)
+            .filter { !$0.isEmpty && !suffixWords.contains($0) }
+        return words.joined(separator: " ")
     }
 
     static func family(of raw: String) -> Set<String> {
@@ -204,13 +220,29 @@ enum JobOSReachOutBuilder {
         return "exact/normalized name"
     }
 
+    /// Rank tiers from `MATCH_RULES.md` "Rank" (1/2 are the LinkedIn-graph
+    /// hits assigned in `match(person:roleCompany:)` below; CRM rows only
+    /// ever land in 3-6):
+    ///   3 CRM intern-pipeline / People · 4 Other CRM · 5 Cold executive ·
+    ///   6 Verify-first (incomplete identity)
+    ///
+    /// The previous version checked "intern" / "people" / "pipeline" BEFORE
+    /// "ceo" / "cold" / "executive", so any cold-executive contact whose own
+    /// warmth note happened to *mention* "People" (e.g. "intro via People,
+    /// not a first ping" — the department, not the pipeline) got bucketed
+    /// into the warm intern-pipeline tier instead of the cautioned
+    /// cold-executive tier. That's not a hypothetical: it happened to the
+    /// app's own worked example (`loadAugeoDesignExample`) — David Kristal,
+    /// the Augeo CEO, whose `bestAsk` literally says "Do not cold-ask the
+    /// CEO for an intern seat," was ranking ahead of "Other CRM" contacts
+    /// and tied with genuinely warm intern-pipeline people. Checking the
+    /// cold/verify signals first (most specific, safety-relevant) fixes it.
     private static func warmthForCRM(_ contact: JobOSContact) -> Int {
-        let blob = (contact.warmth + contact.role + contact.notes).lowercased()
-        if blob.contains("1st") || blob.contains("connection") { return 2 }
-        if blob.contains("intern") || blob.contains("people") || blob.contains("pipeline") { return 3 }
-        if blob.contains("ceo") || blob.contains("cold") || blob.contains("executive") { return 6 }
-        if blob.contains("verify") { return 7 }
-        return 5
+        let blob = (contact.warmth + " " + contact.role + " " + contact.notes).lowercased()
+        if blob.contains("verify") { return 6 }
+        if blob.contains("cold") || blob.contains("ceo") || blob.contains("executive") || blob.contains("founder") { return 5 }
+        if blob.contains("intern") || blob.contains("pipeline") || blob.contains("people") { return 3 }
+        return 4
     }
 }
 
@@ -318,12 +350,28 @@ enum JobOSLinkedInImport {
         return people
     }
 
+    /// RFC 4180 (what LinkedIn's export actually uses): a literal `"` inside
+    /// a quoted field is written as a doubled `""`, not a bare `"`. The
+    /// previous version toggled `quoted` on every `"` unconditionally, so
+    /// `""` inside a quoted field (e.g. a Position/Company value like
+    /// `Senior "Growth" Lead`) flipped quoted off-then-on instead of
+    /// emitting one literal `"` — silently dropping the character and, if
+    /// the field also contained a comma, splitting it in the wrong place.
+    /// A one-token lookahead for the doubled-quote case fixes it.
     private static func splitCSV(_ line: String) -> [String] {
         var out: [String] = []
         var cur = ""
         var quoted = false
-        for ch in line {
+        let chars = Array(line)
+        var i = 0
+        while i < chars.count {
+            let ch = chars[i]
             if ch == "\"" {
+                if quoted, i + 1 < chars.count, chars[i + 1] == "\"" {
+                    cur.append("\"")
+                    i += 2
+                    continue
+                }
                 quoted.toggle()
             } else if ch == ",", !quoted {
                 out.append(cur)
@@ -331,6 +379,7 @@ enum JobOSLinkedInImport {
             } else {
                 cur.append(ch)
             }
+            i += 1
         }
         out.append(cur)
         return out
