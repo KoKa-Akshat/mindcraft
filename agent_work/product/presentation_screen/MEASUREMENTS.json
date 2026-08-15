@@ -1,0 +1,62 @@
+{
+  "artboard": { "w": 1440, "h": 810, "note": "Canva landscape. PNGs are 2x (2880x1620)." },
+  "source_pdf": "Presentation_Screen.pdf",
+  "pages": {
+    "1": {
+      "name": "Create · Presentation · Jesse rail idle",
+      "boxes": {
+        "slide": { "x0": 96, "y0": 53, "x1": 936, "y1": 546, "w": 840, "h": 493 },
+        "jesse_rail": { "x0": 988, "y0": 53, "x1": 1364, "y1": 597, "w": 376, "h": 544 },
+        "phone_fab": { "x0": 0, "y0": 8, "x1": 63, "y1": 70, "w": 63, "h": 62 },
+        "dock": { "x0": 96, "y0": 632, "x1": 1417, "y1": 728, "w": 1321, "h": 96 }
+      }
+    },
+    "2": {
+      "name": "Create · Presentation · call live",
+      "boxes": {
+        "slide": { "x0": 30, "y0": 74, "x1": 870, "y1": 567, "w": 840, "h": 493 },
+        "transcription": { "x0": 898, "y0": 103, "x1": 1198, "y1": 555, "w": 300, "h": 452 },
+        "storyboards": { "x0": 1225, "y0": 74, "x1": 1421, "y1": 555, "w": 196, "h": 481 },
+        "dock": { "x0": 96, "y0": 632, "x1": 1417, "y1": 728, "w": 1321, "h": 96 }
+      }
+    },
+    "3": {
+      "name": "Create · GDoc · Jesse rail idle",
+      "boxes": {
+        "doc": { "x0": 96, "y0": 53, "x1": 936, "y1": 546, "w": 840, "h": 493 },
+        "jesse_rail": { "x0": 988, "y0": 53, "x1": 1364, "y1": 597, "w": 376, "h": 544 },
+        "phone_fab": { "x0": 0, "y0": 8, "x1": 63, "y1": 70, "w": 63, "h": 62 },
+        "dock": { "x0": 96, "y0": 632, "x1": 1417, "y1": 728, "w": 1321, "h": 96 }
+      }
+    },
+    "4": {
+      "name": "Work canvas default",
+      "boxes": {
+        "binder": { "x0": 492, "y0": 61, "x1": 997, "y1": 629, "w": 505, "h": 568 },
+        "intel": { "x0": 81, "y0": 118, "x1": 457, "y1": 345, "w": 376, "h": 227 },
+        "moodle": { "x0": 115, "y0": 378, "x1": 430, "y1": 600, "w": 315, "h": 222 },
+        "email_summaries": { "x0": 1033, "y0": 107, "x1": 1414, "y1": 319, "w": 381, "h": 212 },
+        "gcal": { "x0": 1032, "y0": 343, "x1": 1425, "y1": 629, "w": 392, "h": 286 },
+        "dock": { "x0": 96, "y0": 632, "x1": 1417, "y1": 728, "w": 1321, "h": 96 }
+      }
+    },
+    "5": {
+      "name": "Work canvas + right rail",
+      "boxes": {
+        "binder": { "x0": 425, "y0": 54, "x1": 853, "y1": 578, "w": 428, "h": 524 },
+        "intel": { "x0": 76, "y0": 103, "x1": 395, "y1": 295, "w": 319, "h": 192 },
+        "moodle": { "x0": 106, "y0": 323, "x1": 373, "y1": 511, "w": 267, "h": 188 },
+        "email_summaries": { "x0": 884, "y0": 93, "x1": 1206, "y1": 273, "w": 322, "h": 180 },
+        "gcal": { "x0": 884, "y0": 295, "x1": 1216, "y1": 620, "w": 332, "h": 325 },
+        "memo_rail": { "x0": 1231, "y0": 193, "x1": 1429, "y1": 387, "w": 199, "h": 194 },
+        "dock": { "x0": 96, "y0": 632, "x1": 1417, "y1": 728, "w": 1321, "h": 96 }
+      }
+    }
+  },
+  "dock_fill": {
+    "work_canvas": ["Binder", "Calendar", "Memo", "Gmail", "Flows", "search"],
+    "create": ["paperclip", "Ask AI", "mic", "waveform"],
+    "note": "PDF pages 4–5 reuse the Create Ask-AI pill. Product rule: Work canvas fills that same pill with service shortcuts, not Ask AI."
+  },
+  "rename": { "Jack": "Jesse" }
+}
