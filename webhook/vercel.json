@@ -1,6 +1,5 @@
 {
   "functions": {
-    "api/calendly.ts": { "maxDuration": 10 },
     "api/fireflies.ts": { "maxDuration": 30 },
     "api/generate-summary.ts": { "maxDuration": 30 },
     "api/cron-fireflies.ts": { "maxDuration": 60 },
@@ -23,6 +22,7 @@
     { "source": "/api/delete-session", "destination": "/api/app-actions?action=delete-session" },
     { "source": "/api/publish-summary", "destination": "/api/app-actions?action=publish-summary" },
     { "source": "/api/register-calendly", "destination": "/api/app-actions?action=register-calendly" },
+    { "source": "/api/calendly", "destination": "/api/app-actions?action=calendly-webhook" },
     { "source": "/api/concept-graph", "destination": "/api/app-actions?action=concept-graph" },
     { "source": "/api/parse-homework", "destination": "/api/app-actions?action=parse-homework" },
     { "source": "/api/spark-experience", "destination": "/api/app-actions?action=spark-experience" },

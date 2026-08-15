@@ -1,18 +1,20 @@
 /**
- * api/calendly.ts
+ * lib/handlers/calendly-webhook.ts
  *
  * Receives Calendly webhook events and keeps MindCraft in sync.
  *
  * invitee.created  → creates a session doc, invites Fireflies bot, auto-completes stale sessions
  * invitee.canceled → marks the matching session as cancelled, clears student's nextSession
  *
- * Calendly webhook is registered per-tutor via /api/register-calendly.
+ * Calendly webhook is registered per-tutor via /api/register-calendly, pointed at
+ * /api/calendly (kept stable via the vercel.json rewrite — Calendly already has this
+ * URL saved per-tutor, so the path can't move even though the handler lives here now).
  * The tutor is matched by the organizer email on the scheduled event.
  */
 
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { FieldValue } from 'firebase-admin/firestore'
-import { db } from '../lib/firebase'
+import { db } from '../firebase'
 
 const FIREFLIES_API  = 'https://api.fireflies.ai/graphql'
 const FIREFLIES_KEY  = process.env.FIREFLIES_API_KEY!

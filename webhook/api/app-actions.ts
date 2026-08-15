@@ -15,6 +15,7 @@ import grantAdmin from '../lib/handlers/grant-admin'
 import deleteSession from '../lib/handlers/delete-session'
 import publishSummary from '../lib/handlers/publish-summary'
 import registerCalendly from '../lib/handlers/register-calendly'
+import calendlyWebhook from '../lib/handlers/calendly-webhook'
 import conceptGraph from '../lib/handlers/concept-graph'
 import parseHomework from '../lib/handlers/parse-homework'
 import sparkExperience from '../lib/handlers/spark-experience'
@@ -37,6 +38,7 @@ const HANDLERS: Record<string, (req: VercelRequest, res: VercelResponse) => Prom
   'delete-session': deleteSession,
   'publish-summary': publishSummary,
   'register-calendly': registerCalendly,
+  'calendly-webhook': calendlyWebhook,
   'concept-graph': conceptGraph,
   'parse-homework': parseHomework,
   'spark-experience': sparkExperience,
