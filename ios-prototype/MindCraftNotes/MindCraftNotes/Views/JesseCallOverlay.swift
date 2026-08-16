@@ -39,6 +39,11 @@ struct JesseCallPill: View {
     }
 
     private var pillLabel: String {
+        if call.isAmbient {
+            if call.isListening { return "Recording…" }
+            if call.isPaused { return "Transcribe · paused" }
+            return "Transcribe · on"
+        }
         if call.isThinking { return "Jesse is thinking…" }
         if call.isListening { return "Listening…" }
         if call.isSpeaking { return "Jesse" }
@@ -60,7 +65,7 @@ struct JesseCallSheetView: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack {
-                Text("Jesse")
+                Text(call.isAmbient ? "Transcribe" : "Jesse")
                     .font(.system(size: 20, weight: .bold, design: .rounded))
                     .foregroundColor(.white)
                 Spacer()
@@ -143,7 +148,7 @@ struct JesseCallSheetView: View {
             .accessibilityIdentifier("jesseCallMic")
 
             Button(action: onEnd) {
-                Image(systemName: "phone.down.fill")
+                Image(systemName: call.isAmbient ? "stop.fill" : "phone.down.fill")
                     .font(.system(size: 16, weight: .bold))
                     .foregroundColor(.white)
                     .frame(width: 48, height: 48)

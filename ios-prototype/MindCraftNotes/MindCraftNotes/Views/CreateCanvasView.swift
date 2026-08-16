@@ -7,7 +7,8 @@ enum CreateCanvasKind: String {
 
 /// PDF pages 1–3: Create · Presentation / GDoc.
 /// Centered slide or doc, Jesse rail on the right, one Ask-AI dock.
-/// Call live → slide stays, transcription + storyboards open (page 2).
+/// Slides rail (the thumbnail picker, formerly labeled "Storyboards")
+/// shows whenever there is more than one slide — not only during a call.
 /// Agent is Jesse. Mic is tap-to-toggle, same as `JesseCallSheetView`.
 struct CreateCanvasView: View {
     var kind: CreateCanvasKind
@@ -40,6 +41,12 @@ struct CreateCanvasView: View {
 
     private var callLive: Bool {
         jesseCall.isActive && jesseCall.context == "create"
+    }
+
+    /// Slide-thumbnail picker. Not "people on the call" — it jumps
+    /// `slideIndex`. Visible whenever a deck has more than one slide.
+    private var showSlidesRail: Bool {
+        kind == .presentation && slides.count > 1
     }
 
     private var spaceGesture: some Gesture {
@@ -91,7 +98,7 @@ struct CreateCanvasView: View {
         // Not a direct .accessibilityIdentifier() - confirmed live (via
         // DeskGridDashboardView's identical bug) that doing so clobbers
         // every nested button's own identifier (the Jesse rail's call
-        // button, the dock, storyboards, add-slide, …) with this
+        // button, the dock, slides rail, add-slide, …) with this
         // container's own instead of just hiding them.
         .accessibilityElement(children: .contain)
         .overlay(alignment: .topLeading) {
@@ -109,10 +116,12 @@ struct CreateCanvasView: View {
         // live - it used to jump to a different box (CreateArtboard
         // .transcription) once callLive flipped, which read as teleporting
         // to a new tab instead of the conversation just continuing.
-        if callLive {
+        if callLive || showSlidesRail {
             placed(CreateArtboard.liveSlide, scale: scale) { slideOrDoc }
             placed(CreateArtboard.jesseRail, scale: scale) { jesseRail }
-            placed(CreateArtboard.storyboards, scale: scale) { storyboardsRail }
+            if showSlidesRail {
+                placed(CreateArtboard.slidesRail, scale: scale) { slidesRail }
+            }
         } else {
             placed(CreateArtboard.idleStage, scale: scale) { slideOrDoc }
             placed(CreateArtboard.jesseRail, scale: scale) { jesseRail }
@@ -380,9 +389,9 @@ struct CreateCanvasView: View {
         }
     }
 
-    private var storyboardsRail: some View {
+    private var slidesRail: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Storyboards")
+            Text("Slides")
                 .font(.system(size: 12, weight: .bold, design: .rounded))
                 .foregroundColor(Color(createHex: "143a2e").opacity(0.45))
             ScrollView {
@@ -413,7 +422,7 @@ struct CreateCanvasView: View {
                 .fill(Color.white)
                 .shadow(color: .black.opacity(0.08), radius: 10, y: 4)
         )
-        .accessibilityIdentifier("createCanvasStoryboards")
+        .accessibilityIdentifier("createCanvasSlides")
     }
 
     // MARK: - Dock + call
@@ -517,7 +526,7 @@ private enum CreateArtboard {
     static let idleStage = CGRect(x: 96, y: 53, width: 840, height: 493)
     static let jesseRail = CGRect(x: 988, y: 53, width: 376, height: 544)
     static let liveSlide = CGRect(x: 30, y: 74, width: 840, height: 493)
-    static let storyboards = CGRect(x: 1225, y: 74, width: 196, height: 481)
+    static let slidesRail = CGRect(x: 1225, y: 74, width: 196, height: 481)
     static let dock = CGRect(x: 96, y: 632, width: 1321, height: 96)
 }
 

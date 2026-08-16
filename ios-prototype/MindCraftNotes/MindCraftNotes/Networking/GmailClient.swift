@@ -6,7 +6,21 @@ import UIKit
 
 /// Student's **real Gmail** (+ Calendar read) via Google OAuth.
 /// Not AgentMail. Login scopes stay openid/email/profile; these are added
-/// only when the student taps Connect in the Gmail workflow box.
+/// only when the student taps Connect (or the sleeping box mascot).
+///
+/// Level 2 scope (`JESSE_CENTRAL_AI_PLAN.md`): this is a **data connector**,
+/// not an agent. It does not reason, does not converse, and does not make
+/// LLM calls. Central Jesse (`JesseCallSession`) is the only student-facing
+/// agent; this client just reads/sends mail and reads the week.
+///
+/// | Surface | Can | Cannot |
+/// |---|---|---|
+/// | **Gmail (Email Summaries)** | Read inbox (`gmail.readonly`), send drafts (`gmail.send`) once `hasGmailScope` | Touch Calendar, Moodle, Drive, or Binder; invent mail |
+/// | **Gcal** | Read this week's events (`calendar.readonly`) once `hasCalendarScope` | Create/edit events, send mail, or fetch Moodle |
+///
+/// Intel is not this connector — it only displays what Gmail/Gcal (and
+/// others) already fetched. Binder is the write-target, not a permission
+/// this client holds. Moodle is a separate client (`MoodleClient`).
 @MainActor
 final class GmailClient: ObservableObject {
     static let shared = GmailClient()
@@ -35,6 +49,7 @@ final class GmailClient: ObservableObject {
     }
 
     @Published private(set) var messages: [Message] = []
+    @Published private(set) var week: [CalendarItem] = []
     @Published private(set) var isBusy = false
     @Published private(set) var hasGmailScope = false
     @Published private(set) var hasCalendarScope = false
@@ -55,9 +70,35 @@ final class GmailClient: ObservableObject {
 
     private init() {
         refreshScopeStatus()
+        let args = ProcessInfo.processInfo.arguments
+        if args.contains("--ui-testing-gmail-digest") || args.contains("--ui-testing-gmail-dashboard") {
+            seedForTesting(messages: Self.testingInbox)
+        }
     }
 
+    /// Shared by the Gmail overlay digest test and the Work-tile summaries test.
+    static let testingInbox: [Message] = [
+        Message(
+            id: "1", threadId: "t1", from: "Ms. Park", fromEmail: "park@school.edu",
+            subject: "Quadratic problem set due Friday",
+            snippet: "Please submit problems 1-20 by Friday 3pm. Late work not accepted.",
+            dateLabel: "Mon", rfcMessageId: ""
+        ),
+        Message(
+            id: "2", threadId: "t2", from: "Dr. Nguyen", fromEmail: "nguyen@school.edu",
+            subject: "Lab groups posted",
+            snippet: "Check the portal for your assigned lab group for the titration experiment.",
+            dateLabel: "Tue", rfcMessageId: ""
+        ),
+    ]
+
     var isConnected: Bool { hasGmailScope }
+
+    /// Real Google session (not the UI-test seed). Dashboard uses this so
+    /// it can show seeded subjects without waiting on `/api/gmail-digest`.
+    var hasLiveGoogleUser: Bool {
+        !isSeededForTesting && GIDSignIn.sharedInstance.currentUser != nil
+    }
 
     /// Set once by `seedForTesting`, so `refreshScopeStatus()` (called from
     /// `GmailWorkflowBoxView.onAppear` right after a seed, among other
@@ -75,6 +116,21 @@ final class GmailClient: ObservableObject {
         isSeededForTesting = true
         hasGmailScope = true
         self.messages = messages
+    }
+
+    /// Work dashboard calls this on appear so an already-connected Google
+    /// session actually refills the Email / Gcal tiles (scopes live on
+    /// GIDSignIn; inbox/week do not persist).
+    func restoreSessionIfNeeded() async {
+        guard !isSeededForTesting else { return }
+        if GIDSignIn.sharedInstance.currentUser == nil {
+            await withCheckedContinuation { (cont: CheckedContinuation<Void, Never>) in
+                GIDSignIn.sharedInstance.restorePreviousSignIn { _, _ in
+                    cont.resume()
+                }
+            }
+        }
+        refreshScopeStatus()
     }
 
     func refreshScopeStatus() {
@@ -152,6 +208,7 @@ final class GmailClient: ObservableObject {
     }
 
     func fetchInbox() async {
+        guard !isSeededForTesting else { return }
         lastError = nil
         enableApiURL = nil
         refreshScopeStatus()
@@ -258,7 +315,7 @@ final class GmailClient: ObservableObject {
             parseDay.locale = Locale(identifier: "en_US_POSIX")
             parseDay.dateFormat = "yyyy-MM-dd"
 
-            return items.compactMap { ev -> CalendarItem? in
+            let rows = items.compactMap { ev -> CalendarItem? in
                 let id = (ev["id"] as? String) ?? UUID().uuidString
                 let summary = (ev["summary"] as? String)?.trimmingCharacters(in: .whitespacesAndNewlines)
                 let title = (summary?.isEmpty == false) ? summary! : "Event"
@@ -274,6 +331,8 @@ final class GmailClient: ObservableObject {
                 guard let when = date else { return nil }
                 return CalendarItem(id: id, day: dayFmt.string(from: when), title: title)
             }
+            week = rows
+            return rows
         } catch {
             let text = error.localizedDescription
             if text.contains("Calendar API") || text.contains("403") {

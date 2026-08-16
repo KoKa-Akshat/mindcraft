@@ -141,9 +141,9 @@ CSS, neither of which was actually asked for.
 # Level 2 — box mascots, scoped connectors, ambient transcribe
 
 Added 2026-08-16, later the same session, once the direction above got
-more specific. **Planning only — nothing below has been implemented.**
-This is written for a Cursor agent to execute against; the "explicit
-instructions" section near the bottom is the actual work list.
+more specific. **Implemented 2026-08-16** (items 1–6 of the instruction
+list). Item 7 (Presentation specialized agent) is still a later, separate
+pass — do not start it from this list.
 
 ## The core architectural correction
 
@@ -253,38 +253,23 @@ accident.
 
 ## Explicit instructions for Cursor (in order)
 
-1. **Scope-table pass first, no UI changes.** Confirm/document exactly
-   what each connector can and can't do (table above) as code comments
-   at each connector's definition (`GmailClient.swift`, and a new
-   `MoodleClient.swift` stub if Moodle work starts). This is cheap and
-   prevents scope creep on everything after it.
-2. **`JesseCallSession.beginAmbientTranscription()`** — add the mode
-   flag and skip-reply-loop behavior described above. Wire the Flows
-   dock's "Transcribe" chip (`FieldDeskView.swift`'s `onTranscribe`) to
-   call this instead of `begin(context:)`. Build+install+verify on
-   device per the pattern in `SESSION_LOG_2026-08-16.md` before
-   committing — this touches the shared call session every other
-   surface depends on.
-3. **Storyboards rename + visibility fix** (small, low-risk, do it
-   alongside #2 since it's in the same file).
-4. **Mascot state machine wiring** — once art exists, replace the
-   plain "Connect" buttons on Moodle/Gmail/Gcal boxes with the
-   mascot-tap interaction; Intel/Binder mascots are decorative-only
-   (no wake-up step). Don't block this on Moodle actually existing —
-   Gmail/Gcal can get their mascots first since those connectors are
-   real today.
-5. **Moodle connector** — new work, real scope: read-only assignments/
-   grades. Needs Moodle API research (auth model, what a student-role
-   token can access) before any code — don't guess at an API shape.
-6. **Binder auto-organization** — when central Jesse (or, later, a
-   flow-agent) writes an artifact to Binder, tag it by source
-   automatically (call summary / resume draft / book chapter / archive
-   plan) instead of leaving that to manual filing.
-7. **Presentation specialized agent** — explicitly last, explicitly a
-   separate design pass, not a Cursor "just build it" task. Needs its
-   own scoping conversation (what does hand-off from Jesse actually
-   look like in the UI/transcript, what's the Presentation Agent's own
-   prompt/tooling) before any code.
+1. **DONE — Scope-table pass.** Comments on `GmailClient.swift`, new
+   `MoodleClient.swift`, and Intel/Binder roles on `FieldDeskStore`.
+2. **DONE — `JesseCallSession.beginAmbientTranscription()`.** `isAmbient`
+   skips `askJesse()`/`speak()` and keeps listening. Flows Transcribe
+   chip calls this instead of `begin(context:)`.
+3. **DONE — Storyboards → Slides.** Label renamed; visible when
+   `kind == .presentation && slides.count > 1`, not gated on `callLive`.
+4. **DONE — Mascot state machine.** SwiftUI `DeskBoxMascot` on the five
+   Work tiles. Sleeping mascot is the connect tap for Moodle/Gmail/Gcal;
+   Intel/Binder mascots are decorative.
+5. **DONE — Moodle connector.** Real `moodle_mobile_app` token + REST
+   (assignments/grades). No fake homework. SSO-only schools fail honestly.
+6. **DONE — Binder auto-organization.** `BinderSource` on write
+   (call / resume / book / archive). Ambient/call end, book publish, and
+   resume apply file into the matching bucket.
+7. **NOT THIS PASS — Presentation specialized agent.** Separate design
+   conversation first.
 
 ## Self-check on this plan (done before handing it over)
 

@@ -22,8 +22,22 @@ struct DeskGridDashboardView: View {
     var onOpenFlow: (String) -> Void = { _ in }
     var onSaveMemo: (String) -> Void = { _ in }
     var onTranscribe: () -> Void = {}
+    var intelHasData: Bool = false
+    var binderHasData: Bool = false
+    var onGmailLinked: (_ calendarToo: Bool) -> Void = { _ in }
+    var onMoodleLinked: () -> Void = {}
+    var onMoodleDisconnected: () -> Void = {}
+    var intelLines: [String] = []
     /// Titles from `BinderStore`, not `FieldDeskStore.FiledItem`.
     var binderTitles: [String] = []
+    var onSyncCalendar: () -> Void = {}
+
+    @ObservedObject private var gmail = GmailClient.shared
+    @ObservedObject private var moodle = MoodleClient.shared
+    @ObservedObject private var digest = GmailDigestClient.shared
+    @ObservedObject private var digestStore = GmailDigestStore.shared
+    @ObservedObject private var boxBus = DeskBoxBus.shared
+    @State private var showMoodleSheet = false
 
     @State private var rail: Rail
     @State private var memoDraft: String
@@ -50,7 +64,14 @@ struct DeskGridDashboardView: View {
         onOpenFlow: @escaping (String) -> Void = { _ in },
         onSaveMemo: @escaping (String) -> Void = { _ in },
         onTranscribe: @escaping () -> Void = {},
-        binderTitles: [String] = []
+        intelHasData: Bool = false,
+        binderHasData: Bool = false,
+        onGmailLinked: @escaping (_ calendarToo: Bool) -> Void = { _ in },
+        onMoodleLinked: @escaping () -> Void = {},
+        onMoodleDisconnected: @escaping () -> Void = {},
+        intelLines: [String] = [],
+        binderTitles: [String] = [],
+        onSyncCalendar: @escaping () -> Void = {}
     ) {
         self.initialRail = initialRail
         self.initialMemoText = initialMemoText
@@ -63,7 +84,14 @@ struct DeskGridDashboardView: View {
         self.onOpenFlow = onOpenFlow
         self.onSaveMemo = onSaveMemo
         self.onTranscribe = onTranscribe
+        self.intelHasData = intelHasData
+        self.binderHasData = binderHasData
+        self.onGmailLinked = onGmailLinked
+        self.onMoodleLinked = onMoodleLinked
+        self.onMoodleDisconnected = onMoodleDisconnected
+        self.intelLines = intelLines
         self.binderTitles = binderTitles
+        self.onSyncCalendar = onSyncCalendar
         _rail = State(initialValue: initialRail)
         _memoDraft = State(initialValue: initialMemoText)
     }
@@ -108,9 +136,19 @@ struct DeskGridDashboardView: View {
             .frame(width: geo.size.width, height: geo.size.height)
             .contentShape(Rectangle())
             .gesture(spaceGesture)
+            .task { await syncConnectedBoxes() }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .ignoresSafeArea()
+        .onChange(of: intelLines) { _, lines in boxBus.intelLines = lines }
+        .onChange(of: binderTitles) { _, titles in boxBus.binderTitles = titles }
+        .sheet(isPresented: $showMoodleSheet) {
+            MoodleBoxSheet(
+                client: moodle,
+                onLinked: onMoodleLinked,
+                onDisconnected: onMoodleDisconnected
+            )
+        }
         // No Exit control here anymore - moved into the Manage page
         // (logo tap) so the dashboard itself stays clean. onClose is still
         // wired from FieldDeskView but nothing on this screen calls it now.
@@ -131,19 +169,19 @@ struct DeskGridDashboardView: View {
                 .frame(width: board.width, height: board.height)
             DottedDeskGrid()
                 .frame(width: board.width, height: board.height)
-            pin(expanded ? WorkArtboard.p5Intel : WorkArtboard.p4Intel, scale: scale) {
+            pin(boxRect(.intel), scale: scale) {
                 photoTile(.intel)
             }
-            pin(expanded ? WorkArtboard.p5Moodle : WorkArtboard.p4Moodle, scale: scale) {
+            pin(boxRect(.moodle), scale: scale) {
                 photoTile(.moodle)
             }
-            pin(expanded ? WorkArtboard.p5Binder : WorkArtboard.p4Binder, scale: scale) {
+            pin(boxRect(.binder), scale: scale) {
                 photoTile(.binder)
             }
-            pin(expanded ? WorkArtboard.p5Email : WorkArtboard.p4Email, scale: scale) {
+            pin(boxRect(.emailSummaries), scale: scale) {
                 photoTile(.emailSummaries)
             }
-            pin(expanded ? WorkArtboard.p5Gcal : WorkArtboard.p4Gcal, scale: scale) {
+            pin(boxRect(.gcal), scale: scale) {
                 photoTile(.gcal)
             }
             pin(WorkArtboard.dock, scale: scale) { activeDock }
@@ -154,6 +192,7 @@ struct DeskGridDashboardView: View {
             }
         }
         .frame(width: board.width, height: board.height, alignment: .topLeading)
+        .animation(.spring(response: 0.42, dampingFraction: 0.86), value: boxBus.hungry)
     }
 
     /// Place a measured PDF box on the hard-framed board. `.position()` is
@@ -184,7 +223,21 @@ struct DeskGridDashboardView: View {
             }
         }
 
-        var connected: Bool { self != .moodle }
+        var mascotSlug: String? {
+            switch self {
+            case .intel: return "intel"
+            case .moodle: return "moodle"
+            case .binder: return "binder"
+            case .emailSummaries: return "email"
+            case .gcal: return "gcal"
+            case .memo: return nil
+            }
+        }
+
+        func mascotAssetName(state: MascotPhase) -> String? {
+            guard let mascotSlug else { return nil }
+            return "desk_mascot_\(mascotSlug)_\(state.rawValue)"
+        }
 
         var wash: [Color] {
             switch self {
@@ -208,20 +261,52 @@ struct DeskGridDashboardView: View {
             }
         }
 
-        var blurb: String {
+        func blurb(phase: MascotPhase, assignmentCount: Int) -> String {
             switch self {
-            case .intel: return "Jesse pulled three things from this week."
-            case .moodle: return "Connect Moodle to drop homework here."
-            case .binder: return "Memo, docs, and your own books."
-            case .emailSummaries: return "Listen through what actually needs you."
-            case .gcal: return "This week, already on the page."
-            case .memo: return "Pin a note on the right rail."
+            case .moodle:
+                if phase == .working { return "Talking to Moodle…" }
+                if phase == .awake {
+                    return assignmentCount == 0
+                        ? "Connected. No assignments in view yet."
+                        : "\(assignmentCount) assignment\(assignmentCount == 1 ? "" : "s") from Moodle."
+                }
+                return "Tap the sleeping mascot to connect."
+            case .emailSummaries:
+                if phase == .sleeping { return "Tap the sleeping mascot to connect Gmail." }
+                if phase == .working { return "Connecting Gmail…" }
+                return "Listen through what actually needs you."
+            case .gcal:
+                if phase == .sleeping { return "Tap the sleeping mascot to connect Calendar." }
+                if phase == .working { return "Connecting Calendar…" }
+                return "This week, already on the page."
+            case .intel:
+                return phase == .sleeping
+                    ? "Empty until Gmail, Calendar, or Moodle fetch something."
+                    : "Jesse pulled three things from this week."
+            case .binder:
+                return phase == .sleeping
+                    ? "Empty until Jesse files something here."
+                    : "Memo, docs, and your own books."
+            case .memo:
+                return "Pin a note on the right rail."
             }
         }
     }
 
+    /// Real paper-cut illustrated stills (`desk_mascot_<slug>_<state>` in
+    /// Assets.xcassets) replace the earlier procedurally-drawn creature -
+    /// same three-state model, same five box identities, just image-backed
+    /// with an SF Symbol fallback if an asset is ever missing.
+    private enum MascotPhase: String {
+        case sleeping
+        case working
+        case awake
+    }
+
     private func photoTile(_ kind: TileKind) -> some View {
-        VStack(alignment: .leading, spacing: 6) {
+        let phase = mascotPhase(kind)
+        let awake = phase != .sleeping
+        return VStack(alignment: .leading, spacing: 6) {
             Text(kind.title)
                 .font(.system(size: 15, weight: .bold, design: .rounded))
                 .foregroundColor(Color(gridHex: "143a2e"))
@@ -231,47 +316,30 @@ struct DeskGridDashboardView: View {
                 ZStack {
                     RoundedRectangle(cornerRadius: 18, style: .continuous)
                         .fill(LinearGradient(colors: kind.wash, startPoint: .topLeading, endPoint: .bottomTrailing))
-                    if kind == .binder {
-                        Circle()
-                            .fill(Color(gridHex: "143a2e").opacity(0.18))
-                            .frame(width: 120, height: 120)
-                            .offset(y: binderPulled ? 18 : 0)
-                        Image(systemName: kind.symbol)
-                            .font(.system(size: 54, weight: .medium))
-                            .foregroundColor(Color(gridHex: "143a2e").opacity(0.55))
-                            .offset(y: binderPulled ? 18 : 0)
+                    if kind.mascotSlug != nil {
+                        mascotArt(kind, phase: phase)
+                        .scaleEffect(tileShowsContent(kind) ? 0.55 : 1)
+                        .offset(
+                            x: tileShowsContent(kind) ? 48 : 0,
+                            y: kind == .binder && binderPulled ? 18 : (tileShowsContent(kind) ? -28 : -8)
+                        )
                     } else {
                         Image(systemName: kind.symbol)
                             .font(.system(size: 36, weight: .medium))
-                            .foregroundColor(.white.opacity(kind.connected ? 0.88 : 0.35))
+                            .foregroundColor(.white.opacity(awake ? 0.88 : 0.35))
                     }
-                    VStack {
-                        Spacer()
-                        HStack {
-                            Text(tileBlurb(kind))
-                                .font(.system(size: 12, weight: .semibold, design: .rounded))
-                                .foregroundColor(kind == .binder || kind == .moodle ? Color(gridHex: "143a2e") : .white)
-                                .lineLimit(2)
-                                .multilineTextAlignment(.leading)
-                            Spacer(minLength: 0)
-                        }
-                        .padding(10)
+                    VStack(alignment: .leading, spacing: 6) {
+                        Spacer(minLength: 0)
+                        tileBody(kind, phase: phase)
                     }
-                    if !kind.connected {
-                        Text("Connect")
-                            .font(.system(size: 12, weight: .bold, design: .rounded))
-                            .foregroundColor(Color(gridHex: "143a2e").opacity(0.55))
-                            .padding(.horizontal, 10)
-                            .padding(.vertical, 5)
-                            .background(Capsule().fill(Color.white.opacity(0.7)))
-                    }
+                    .padding(10)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
                 .shadow(color: .black.opacity(0.14), radius: 12, y: 6)
                 .overlay(
                     RoundedRectangle(cornerRadius: 18, style: .continuous)
-                        .strokeBorder(kind.connected ? Color.clear : Color(gridHex: "143a2e").opacity(0.2), style: StrokeStyle(lineWidth: 1, dash: [5, 4]))
+                        .strokeBorder(awake ? Color.clear : Color(gridHex: "143a2e").opacity(0.2), style: StrokeStyle(lineWidth: 1, dash: [5, 4]))
                 )
             }
             .buttonStyle(.plain)
@@ -279,11 +347,80 @@ struct DeskGridDashboardView: View {
         }
     }
 
-    private func tileBlurb(_ kind: TileKind) -> String {
-        if kind == .binder, !binderTitles.isEmpty {
-            return binderTitles.prefix(2).joined(separator: " · ")
+    private func mascotPhase(_ kind: TileKind) -> MascotPhase {
+        switch kind {
+        case .emailSummaries:
+            if gmail.isBusy { return .working }
+            return gmail.hasGmailScope ? .awake : .sleeping
+        case .gcal:
+            if gmail.isBusy { return .working }
+            return gmail.hasCalendarScope ? .awake : .sleeping
+        case .moodle:
+            if moodle.isBusy { return .working }
+            return moodle.isConnected ? .awake : .sleeping
+        case .intel:
+            return intelHasData ? .awake : .sleeping
+        case .binder:
+            return binderHasData ? .awake : .sleeping
+        case .memo:
+            return .awake
         }
-        return kind.blurb
+    }
+
+    /// Identifier lives on a nested marker, not the root image - same
+    /// clobber family as `DeskGridDashboardView`'s dock (see CLAUDE.md):
+    /// a parent's `.accessibilityIdentifier` stomps a plain child's own id.
+    @ViewBuilder
+    private func mascotArt(_ kind: TileKind, phase: MascotPhase) -> some View {
+        if let assetName = kind.mascotAssetName(state: phase), let image = UIImage(named: assetName) {
+            let content = Image(uiImage: image)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .overlay(alignment: .topLeading) {
+                    Text(verbatim: "mascot-\(kind.mascotSlug ?? "")")
+                        .font(.system(size: 1))
+                        .foregroundColor(.clear)
+                        .accessibilityIdentifier("deskGridMascot_\(kind.mascotSlug ?? "")")
+                        .allowsHitTesting(false)
+                }
+                .accessibilityLabel("\(kind.title) mascot, \(phase.rawValue)")
+            if mascotTappable(kind) {
+                Button(action: { connectMascot(kind) }) { content }
+                    .buttonStyle(.plain)
+                    .accessibilityHint("Connect this box")
+            } else {
+                content.accessibilityAddTraits(.isImage)
+            }
+        } else {
+            Image(systemName: kind.symbol)
+                .font(.system(size: kind == .binder ? 54 : 36, weight: .medium))
+                .foregroundColor(.white.opacity(phase != .sleeping ? 0.88 : 0.35))
+        }
+    }
+
+    private func mascotTappable(_ kind: TileKind) -> Bool {
+        switch kind {
+        case .moodle: return !moodle.isConnected
+        case .emailSummaries: return !gmail.hasGmailScope
+        case .gcal: return !gmail.hasCalendarScope
+        default: return false
+        }
+    }
+
+    private func connectMascot(_ kind: TileKind) {
+        switch kind {
+        case .moodle:
+            showMoodleSheet = true
+        case .emailSummaries, .gcal:
+            Task {
+                await gmail.connectGoogleMailAndCalendar()
+                if gmail.hasGmailScope {
+                    onGmailLinked(gmail.hasCalendarScope)
+                }
+            }
+        default:
+            break
+        }
     }
 
     /// The search field had no wired behavior at all - typing did nothing,
@@ -330,6 +467,11 @@ struct DeskGridDashboardView: View {
     }
 
     private func handleTile(_ kind: TileKind) {
+        let box = boxID(kind)
+        if tileShowsContent(kind), boxBus.hungry != box {
+            boxBus.requestSpace(for: box)
+            return
+        }
         switch kind {
         case .binder:
             withAnimation(.spring(response: 0.42, dampingFraction: 0.78)) { binderPulled = true }
@@ -342,8 +484,231 @@ struct DeskGridDashboardView: View {
             setRail(rail == .memo ? .none : .memo)
         case .intel:
             onOpenIntel()
+        case .moodle:
+            showMoodleSheet = true
         default:
             break
+        }
+    }
+
+    private func boxID(_ kind: TileKind) -> DeskBoxBus.Box {
+        switch kind {
+        case .intel: return .intel
+        case .moodle: return .moodle
+        case .binder: return .binder
+        case .emailSummaries: return .email
+        case .gcal: return .gcal
+        case .memo: return .jesse
+        }
+    }
+
+    private func tileShowsContent(_ kind: TileKind) -> Bool {
+        switch kind {
+        case .emailSummaries:
+            return gmail.hasGmailScope && (shownDigest != nil || !gmail.messages.isEmpty)
+        case .gcal:
+            return gmail.hasCalendarScope && !gmail.week.isEmpty
+        case .moodle:
+            return moodle.isConnected && (!moodle.assignments.isEmpty || !moodle.grades.isEmpty)
+        case .intel:
+            return !intelLines.isEmpty
+        case .binder:
+            return !binderTitles.isEmpty
+        case .memo:
+            return false
+        }
+    }
+
+    private var shownDigest: GmailDigestClient.Digest? {
+        if let d = digest.digest { return d }
+        guard let rec = digestStore.history.first else { return nil }
+        return GmailDigestClient.Digest(
+            headline: rec.headline,
+            actionItems: rec.actionItems,
+            fyi: rec.fyi,
+            fallback: false
+        )
+    }
+
+    private var tileInk: Color { Color(gridHex: "143a2e") }
+
+    @ViewBuilder
+    private func tileBody(_ kind: TileKind, phase: MascotPhase) -> some View {
+        let ink: Color = (kind == .binder || kind == .moodle || kind == .emailSummaries) ? tileInk : .white
+        if tileShowsContent(kind) {
+            VStack(alignment: .leading, spacing: 4) {
+                ForEach(Array(tileLines(kind).prefix(boxBus.hungry == boxID(kind) ? 7 : 3).enumerated()), id: \.offset) { _, line in
+                    Text(line)
+                        .font(.system(size: 12, weight: .semibold, design: .rounded))
+                        .foregroundColor(ink)
+                        .lineLimit(2)
+                        .multilineTextAlignment(.leading)
+                }
+            }
+            .accessibilityIdentifier(kind == .emailSummaries ? "deskGridEmailSummaries" : "deskGridTileBody_\(kind.title)")
+        } else {
+            Text(kind.blurb(phase: phase, assignmentCount: moodle.assignments.count))
+                .font(.system(size: 12, weight: .semibold, design: .rounded))
+                .foregroundColor(ink)
+                .lineLimit(2)
+                .multilineTextAlignment(.leading)
+        }
+    }
+
+    private func tileLines(_ kind: TileKind) -> [String] {
+        switch kind {
+        case .emailSummaries:
+            if let digest = shownDigest {
+                var lines = [digest.headline]
+                lines.append(contentsOf: digest.actionItems.prefix(4).map(\.subject))
+                if lines.count < 3 {
+                    lines.append(contentsOf: digest.fyi.prefix(2).map(\.subject))
+                }
+                return lines.filter { !$0.isEmpty }
+            }
+            return gmail.messages.prefix(5).map(\.subject).filter { !$0.isEmpty }
+        case .gcal:
+            return gmail.week.prefix(6).map { "\($0.day) · \($0.title)" }
+        case .moodle:
+            let work = moodle.assignments.prefix(5).map { "\($0.name) · \($0.dueLabel)" }
+            if !work.isEmpty { return Array(work) }
+            return moodle.grades.prefix(5).map { "\($0.itemName) · \($0.gradeLabel)" }
+        case .intel:
+            return intelLines
+        case .binder:
+            return binderTitles
+        case .memo:
+            return []
+        }
+    }
+
+    private func boxRect(_ kind: TileKind) -> CGRect {
+        let base: CGRect
+        switch kind {
+        case .intel: base = expanded ? WorkArtboard.p5Intel : WorkArtboard.p4Intel
+        case .moodle: base = expanded ? WorkArtboard.p5Moodle : WorkArtboard.p4Moodle
+        case .binder: base = expanded ? WorkArtboard.p5Binder : WorkArtboard.p4Binder
+        case .emailSummaries: base = expanded ? WorkArtboard.p5Email : WorkArtboard.p4Email
+        case .gcal: base = expanded ? WorkArtboard.p5Gcal : WorkArtboard.p4Gcal
+        case .memo: return WorkArtboard.memoRail
+        }
+        guard let hungry = boxBus.hungry else { return base }
+        return negotiated(kind, hungry: hungry, page5: expanded, base: base)
+    }
+
+    /// A cramped box asks its neighbors to shrink so it can show content.
+    /// Restores when another box asks, or when hungry is cleared.
+    private func negotiated(_ kind: TileKind, hungry: DeskBoxBus.Box, page5: Bool, base: CGRect) -> CGRect {
+        if page5 {
+            switch hungry {
+            case .email:
+                switch kind {
+                case .emailSummaries: return CGRect(x: 820, y: 54, width: 400, height: 340)
+                case .gcal: return CGRect(x: 820, y: 404, width: 400, height: 216)
+                case .binder: return CGRect(x: 425, y: 54, width: 380, height: 524)
+                default: return base
+                }
+            case .gcal:
+                switch kind {
+                case .gcal: return CGRect(x: 820, y: 180, width: 400, height: 440)
+                case .emailSummaries: return CGRect(x: 820, y: 54, width: 400, height: 116)
+                case .binder: return CGRect(x: 425, y: 54, width: 380, height: 524)
+                default: return base
+                }
+            case .intel:
+                switch kind {
+                case .intel: return CGRect(x: 76, y: 54, width: 340, height: 280)
+                case .moodle: return CGRect(x: 106, y: 344, width: 267, height: 167)
+                default: return base
+                }
+            case .moodle:
+                switch kind {
+                case .moodle: return CGRect(x: 76, y: 250, width: 340, height: 280)
+                case .intel: return CGRect(x: 76, y: 54, width: 319, height: 180)
+                default: return base
+                }
+            case .binder:
+                switch kind {
+                case .binder: return CGRect(x: 380, y: 54, width: 500, height: 560)
+                case .intel: return CGRect(x: 76, y: 103, width: 280, height: 192)
+                case .moodle: return CGRect(x: 76, y: 323, width: 280, height: 188)
+                case .emailSummaries: return CGRect(x: 900, y: 93, width: 300, height: 180)
+                case .gcal: return CGRect(x: 900, y: 295, width: 300, height: 325)
+                default: return base
+                }
+            case .jesse:
+                return base
+            }
+        }
+        switch hungry {
+        case .email:
+            switch kind {
+            case .emailSummaries: return CGRect(x: 900, y: 90, width: 510, height: 400)
+            case .gcal: return CGRect(x: 900, y: 500, width: 510, height: 170)
+            case .binder: return CGRect(x: 492, y: 61, width: 390, height: 568)
+            default: return base
+            }
+        case .gcal:
+            switch kind {
+            case .gcal: return CGRect(x: 900, y: 200, width: 510, height: 470)
+            case .emailSummaries: return CGRect(x: 900, y: 90, width: 510, height: 100)
+            case .binder: return CGRect(x: 492, y: 61, width: 390, height: 568)
+            default: return base
+            }
+        case .intel:
+            switch kind {
+            case .intel: return CGRect(x: 81, y: 70, width: 400, height: 320)
+            case .moodle: return CGRect(x: 115, y: 400, width: 315, height: 200)
+            default: return base
+            }
+        case .moodle:
+            switch kind {
+            case .moodle: return CGRect(x: 81, y: 280, width: 400, height: 340)
+            case .intel: return CGRect(x: 81, y: 70, width: 376, height: 190)
+            default: return base
+            }
+        case .binder:
+            switch kind {
+            case .binder: return CGRect(x: 430, y: 50, width: 580, height: 600)
+            case .intel: return CGRect(x: 81, y: 118, width: 330, height: 227)
+            case .moodle: return CGRect(x: 81, y: 378, width: 330, height: 222)
+            case .emailSummaries: return CGRect(x: 1033, y: 107, width: 370, height: 212)
+            case .gcal: return CGRect(x: 1033, y: 343, width: 370, height: 286)
+            default: return base
+            }
+        case .jesse:
+            return base
+        }
+    }
+
+    private func syncConnectedBoxes() async {
+        boxBus.intelLines = intelLines
+        boxBus.binderTitles = binderTitles
+        await gmail.restoreSessionIfNeeded()
+        // Cached digest / seeded inbox can paint before the network round-trip.
+        if tileShowsContent(.emailSummaries) {
+            boxBus.requestSpace(for: .email)
+        }
+        if gmail.hasGmailScope {
+            await gmail.fetchInbox()
+            // Seeded UI tests have messages but no Google user — skip the
+            // webhook so the tile can show subjects without a network wait.
+            if gmail.hasLiveGoogleUser, !gmail.messages.isEmpty {
+                await digest.summarize(gmail.messages)
+                if let d = digest.digest {
+                    digestStore.save(d, messageCount: gmail.messages.count)
+                }
+            }
+            if tileShowsContent(.emailSummaries) {
+                boxBus.requestSpace(for: .email)
+            }
+        }
+        if gmail.hasCalendarScope {
+            _ = await gmail.fetchCalendarWeek()
+        }
+        onSyncCalendar()
+        if moodle.isConnected {
+            await moodle.refresh()
         }
     }
 
@@ -393,9 +758,9 @@ struct DeskGridDashboardView: View {
             dockChip("Dashboard", system: "square.grid.2x2.fill", identifier: "deskGridDock_BackToDash") { setRail(.none) }
             // Binder/Calendar/Gmail don't apply inside Flows - they're
             // already on the dashboard's own dock. Just Memo + Transcribe
-            // (Jesse call) + the flow search itself.
+            // (ambient room recording, not a Jesse call) + the flow search.
             dockChip("Memo", system: "note.text", identifier: "deskGridFlowsMemo") { setRail(.memo) }
-            dockChip("Transcribe", system: "phone.fill", identifier: "deskGridFlowsTranscribe", action: onTranscribe)
+            dockChip("Transcribe", system: "waveform", identifier: "deskGridFlowsTranscribe", action: onTranscribe)
             searchField(
                 placeholder: "Search Presentation, Resume, Archive, Book…",
                 identifier: "deskGridFlowsSearch",
@@ -587,5 +952,135 @@ private extension Color {
         let g = Double((value >> 8) & 0xFF) / 255
         let b = Double(value & 0xFF) / 255
         self.init(red: r, green: g, blue: b)
+    }
+}
+
+/// Moodle box sheet: connect form when sleeping, real assignments/grades
+/// when connected. Never invents homework.
+private struct MoodleBoxSheet: View {
+    @ObservedObject var client: MoodleClient
+    var onLinked: () -> Void
+    var onDisconnected: () -> Void
+    @Environment(\.dismiss) private var dismiss
+
+    @State private var site = ""
+    @State private var username = ""
+    @State private var password = ""
+
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 14) {
+                    if client.isConnected {
+                        connectedBody
+                    } else {
+                        connectForm
+                    }
+                    if let err = client.lastError, !err.isEmpty {
+                        Text(err)
+                            .font(.system(size: 13, weight: .medium, design: .rounded))
+                            .foregroundColor(Color(gridHex: "b0473f"))
+                    }
+                }
+                .padding(20)
+            }
+            .background(Color(gridHex: "fff8e9").ignoresSafeArea())
+            .navigationTitle("Moodle")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Close") { dismiss() }
+                        .accessibilityIdentifier("moodleSheetClose")
+                }
+            }
+        }
+    }
+
+    private var connectForm: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Read-only. Assignments and grades for this student, nothing else. Schools that only allow SSO can’t mint a mobile token this way — that’s Moodle, not a fake empty inbox.")
+                .font(.system(size: 13, weight: .medium, design: .rounded))
+                .foregroundColor(Color(gridHex: "143a2e").opacity(0.7))
+            field("Moodle URL", text: $site, hint: "https://moodle.school.edu")
+            field("Username", text: $username, hint: "school username")
+            SecureField("Password", text: $password)
+                .textFieldStyle(.plain)
+                .padding(12)
+                .background(RoundedRectangle(cornerRadius: 12).fill(Color.white))
+            Button {
+                Task {
+                    await client.connect(siteURL: site, username: username, password: password)
+                    if client.isConnected {
+                        onLinked()
+                    }
+                }
+            } label: {
+                Text(client.isBusy ? "Connecting…" : "Wake Moodle")
+                    .font(.system(size: 15, weight: .bold, design: .rounded))
+                    .foregroundColor(Color(gridHex: "0c1207"))
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 12)
+                    .background(Capsule().fill(Color(gridHex: "c4f547")))
+            }
+            .buttonStyle(.plain)
+            .disabled(client.isBusy)
+            .accessibilityIdentifier("moodleSheetConnect")
+        }
+    }
+
+    private var connectedBody: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text(client.siteHost ?? "Connected")
+                .font(.system(size: 12, weight: .semibold, design: .rounded))
+                .foregroundColor(Color(gridHex: "8a8478"))
+            if client.assignments.isEmpty && client.grades.isEmpty && !client.isBusy {
+                Text("Connected, and Moodle returned nothing to show yet.")
+                    .font(.system(size: 14, weight: .medium, design: .rounded))
+                    .foregroundColor(Color(gridHex: "143a2e"))
+            }
+            ForEach(client.assignments) { item in
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(item.name)
+                        .font(.system(size: 14, weight: .bold, design: .rounded))
+                    Text("\(item.courseName) · \(item.dueLabel)")
+                        .font(.system(size: 12, weight: .medium, design: .rounded))
+                        .foregroundColor(Color(gridHex: "8a8478"))
+                }
+                .padding(10)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(RoundedRectangle(cornerRadius: 12).fill(Color.white))
+            }
+            ForEach(Array(client.grades.prefix(12))) { item in
+                HStack {
+                    Text(item.itemName)
+                        .font(.system(size: 13, weight: .semibold, design: .rounded))
+                    Spacer()
+                    Text(item.gradeLabel)
+                        .font(.system(size: 13, weight: .bold, design: .rounded))
+                }
+                .foregroundColor(Color(gridHex: "143a2e"))
+            }
+            Button("Disconnect") {
+                client.disconnect()
+                onDisconnected()
+            }
+            .font(.system(size: 13, weight: .semibold, design: .rounded))
+            .foregroundColor(Color(gridHex: "b0473f"))
+            .accessibilityIdentifier("moodleSheetDisconnect")
+        }
+    }
+
+    private func field(_ title: String, text: Binding<String>, hint: String) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(title)
+                .font(.system(size: 11, weight: .heavy, design: .rounded))
+                .foregroundColor(Color(gridHex: "8a8478"))
+            TextField(hint, text: text)
+                .textFieldStyle(.plain)
+                .textInputAutocapitalization(.never)
+                .autocorrectionDisabled()
+                .padding(12)
+                .background(RoundedRectangle(cornerRadius: 12).fill(Color.white))
+        }
     }
 }

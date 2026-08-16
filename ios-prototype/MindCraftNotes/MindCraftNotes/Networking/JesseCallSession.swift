@@ -22,6 +22,16 @@ struct JesseCallTurn: Identifiable, Codable, Equatable {
 /// does not end an in-progress conversation, because this object was never
 /// scoped to that screen in the first place.
 ///
+/// This is the **one central Jesse**. Dashboard boxes (Intel / Moodle /
+/// Binder / Gmail / Gcal) are scoped connectors and stores — they do not
+/// talk. See `JESSE_CENTRAL_AI_PLAN.md` Level 2.
+///
+/// Two entry points:
+/// - `begin(context:)` — listen-respond-speak call (Archive, Resume, Hub,
+///   Presentation).
+/// - `beginAmbientTranscription(context:)` — record the room and append
+///   turns, no `askJesse()` / `speak()`. Flows dock "Transcribe" uses this.
+///
 /// Stage 1+2 of the "fluid, persists-across-tabs Jesse call" build: real
 /// native audio I/O, real transcript, real pause, calling `archive-rag`
 /// directly (`ArchiveRagClient`) instead of routing through the web JS, and
@@ -38,6 +48,10 @@ struct JesseCallTurn: Identifiable, Codable, Equatable {
 @MainActor
 final class JesseCallSession: NSObject, ObservableObject {
     @Published private(set) var isActive = false
+    /// True while Flows "Transcribe" (or any ambient capture) is running.
+    /// `isActive` is still true so the pill and turn persistence keep
+    /// working; this flag only suppresses the reply loop.
+    @Published private(set) var isAmbient = false
     @Published private(set) var isListening = false
     @Published private(set) var isSpeaking = false
     @Published private(set) var isPaused = false
@@ -64,6 +78,9 @@ final class JesseCallSession: NSObject, ObservableObject {
     private var task: SFSpeechRecognitionTask?
     private var studentWeakness: (conceptId: String, label: String)?
     private var speakGeneration = 0
+    /// Index into `turns` at the start of this session so `end()` can
+    /// hand back only what was said *this* capture, not the 60-turn cache.
+    private var sessionTurnOrigin = 0
 
     override init() {
         super.init()
@@ -76,10 +93,18 @@ final class JesseCallSession: NSObject, ObservableObject {
         // already-active call with a fixed transcript.
         if ProcessInfo.processInfo.arguments.contains("--ui-testing-jesse-call") {
             isActive = true
+            isAmbient = false
             context = "archive"
             turns = [
                 JesseCallTurn(id: "t1", speaker: "student", text: "Can you help me with quadratic equations?", at: Date()),
                 JesseCallTurn(id: "t2", speaker: "jesse", text: "I opened Algebra I at Method 3: Solving by Elimination.", at: Date()),
+            ]
+        } else if ProcessInfo.processInfo.arguments.contains("--ui-testing-jesse-ambient") {
+            isActive = true
+            isAmbient = true
+            context = "flows"
+            turns = [
+                JesseCallTurn(id: "a1", speaker: "student", text: "We should review the lab write-up before Friday.", at: Date()),
             ]
         }
     }
@@ -90,11 +115,26 @@ final class JesseCallSession: NSObject, ObservableObject {
         guard !isActive else { return }
         self.context = context
         self.studentWeakness = studentWeakness
+        isAmbient = false
         isActive = true
+        sessionTurnOrigin = turns.count
         // turns is NOT reset here - the conversation carries across calls
         // (and relaunches, via loadTurns()/saveTurns()) so past turns stay
         // visible instead of vanishing every time a new call starts.
         status = nil
+    }
+
+    /// Room recording: same STT + transcript box as a call, but Jesse
+    /// never replies. Used by the Flows dock Transcribe chip.
+    func beginAmbientTranscription(context: String) {
+        guard !isActive else { return }
+        self.context = context
+        self.studentWeakness = nil
+        isAmbient = true
+        isActive = true
+        sessionTurnOrigin = turns.count
+        status = nil
+        startListening()
     }
 
     /// Ends the call and returns the final transcript for the caller to
@@ -109,12 +149,13 @@ final class JesseCallSession: NSObject, ObservableObject {
         audioPlayer?.stop()
         audioPlayer = nil
         isSpeaking = false
-        let finalTurns = turns
+        let sessionTurns = Array(turns.suffix(max(0, turns.count - sessionTurnOrigin)))
         isActive = false
+        isAmbient = false
         isPaused = false
         isThinking = false
         context = nil
-        return finalTurns
+        return sessionTurns
     }
 
     func pause() {
@@ -143,7 +184,7 @@ final class JesseCallSession: NSObject, ObservableObject {
     /// `speakGeneration` guards against a slow Kokoro response landing
     /// after the student has since paused or ended the call.
     private func speak(_ text: String, voice: KokoroVoice = .heart) async {
-        guard !isPaused else { return }
+        guard !isPaused, !isAmbient else { return }
         turns.append(JesseCallTurn(id: UUID().uuidString, speaker: "jesse", text: text, at: Date()))
         configureAudioSession()
 
@@ -222,7 +263,11 @@ final class JesseCallSession: NSObject, ObservableObject {
                     self.liveTranscript = result.bestTranscription.formattedString
                     if result.isFinal { self.finishListeningTurn() }
                 }
-                if error != nil { self.stopListening() }
+                if error != nil {
+                    let shouldResume = self.isAmbient && self.isActive && !self.isPaused
+                    self.stopListening()
+                    if shouldResume { self.startListening() }
+                }
             }
         }
     }
@@ -232,6 +277,12 @@ final class JesseCallSession: NSObject, ObservableObject {
         stopListening()
         guard !text.isEmpty else { return }
         turns.append(JesseCallTurn(id: UUID().uuidString, speaker: "student", text: text, at: Date()))
+        if isAmbient {
+            // Keep capturing the room. A conversational call waits for Jesse
+            // to reply before listening again; ambient never takes that turn.
+            if isActive, !isPaused { startListening() }
+            return
+        }
         Task { await askJesse(text) }
     }
 
@@ -261,8 +312,20 @@ final class JesseCallSession: NSObject, ObservableObject {
     // MARK: - Jesse's reply
 
     private func askJesse(_ message: String) async {
+        guard !isAmbient else { return }
         isThinking = true
-        let reply = await ArchiveRagClient.ask(message: message, studentWeakness: studentWeakness)
+        let bus = DeskBoxBus.shared
+        if let local = bus.directAnswer(for: message) {
+            guard isActive else { isThinking = false; return }
+            await speak(local)
+            isThinking = false
+            return
+        }
+        let briefing = bus.briefing()
+        let composed = briefing.isEmpty
+            ? message
+            : briefing + "\n\nStudent said: " + message
+        let reply = await ArchiveRagClient.ask(message: composed, studentWeakness: studentWeakness)
         // isThinking stays true through speech generation too (Kokoro's own
         // network round-trip) rather than adding a separate UI state - the
         // call pill already reads "Jesse is thinking..." either way.
