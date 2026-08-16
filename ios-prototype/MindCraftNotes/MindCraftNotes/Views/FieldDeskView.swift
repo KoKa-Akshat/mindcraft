@@ -631,7 +631,13 @@ struct FieldDeskView: View {
                             }
                         },
                         onOpenFlow: { id in
-                            showDeskGridDashboard = false
+                            // Dashboard stays mounted (not torn down) - Resume/
+                            // Archive/Book present as .fullScreenCover (always
+                            // covers everything regardless), Apply Today layers
+                            // above via zIndex(90). Closing the dashboard first
+                            // meant Done/close revealed whatever showDeskGrid-
+                            // Dashboard=false falls back to - Jesse's Kitchen -
+                            // instead of the dashboard you actually came from.
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                                 switch id {
                                 case "resume": showResumeAgent = true
