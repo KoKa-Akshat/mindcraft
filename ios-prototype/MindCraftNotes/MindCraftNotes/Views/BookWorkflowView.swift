@@ -43,7 +43,7 @@ private struct BookWorkflowWebView: UIViewRepresentable {
            let url = URL(string: override) {
             return url
         }
-        return URL(string: "https://mindcraft-93858.web.app/desk-os/workflows/book/?v=b1")!
+        return URL(string: "https://mindcraft-93858.web.app/desk-os/workflows/book/?v=b2")!
     }
 
     func makeCoordinator() -> Coord { Coord(onPublished: onPublished) }

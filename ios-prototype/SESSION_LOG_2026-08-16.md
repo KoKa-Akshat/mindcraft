@@ -39,24 +39,37 @@ session is executing against.
 
 ---
 
-## In progress as of this entry
+## Priority order and status
 
-Working through, in this order (chosen for risk — data/backend work
-first since it can't destabilize the app, native UI redesign next, the
-OAuth-at-login change last since auth-flow timing is the highest-risk
-item):
+Chosen for risk — data/backend work first since it can't destabilize the
+app, native/web UI redesign next, the OAuth-at-login change last since
+auth-flow timing is the highest-risk item this session has touched.
 
-1. **[in progress]** Richer archive chunks.json — cross-reference
-   tonight's `agent_work/product/archive_mirror/out/*/pages.jsonl` +
-   `sims.json` per book into a consolidated, reasonably-sized replacement
-   for the current 216-entry `agent_work/product/desk_os/workflows/archive/chunks.json`,
-   matching pages to their actual sims (not currently linked) and picking
-   a sane bundle size for a client-side fetch (the raw mirror output is
-   262MB across 113 books — needs real trimming, not a wholesale copy).
-2. **NOT STARTED** — Binder redesign (the Intel/Binder overlay boxes
-   should match the visual polish of Calendar/Presentation's boxes -
-   currently plainer).
-3. **NOT STARTED** — Book workflow (`agent_work/product/desk_os/workflows/book/`)
+1. **DONE** — Richer archive chunks.json. `build_chunks.py` (new,
+   rerunnable) selects up to 24 chunks/book from the full mirror output
+   (`pages.jsonl` + `sims.json` per book), filters out internal
+   project-management pages the sitemap picked up (TODOs, prompts,
+   learning-graph tooling), and links pages to MicroSims by slug/title
+   token overlap (McCreary's sites don't expose an explicit page<->sim
+   relationship - this is a heuristic, spot-checked accurate, requires
+   2+ shared meaningful words to avoid false positives). Result: 216 ->
+   2,612 entries (1,869 sim-linked), 2.7MB. Replaces
+   `agent_work/product/desk_os/workflows/archive/chunks.json` directly -
+   rerun `build_chunks.py` any time the mirror output changes. Committed,
+   pushed, deployed (Firebase CI auto-deploys `agent_work/product/desk_os`
+   changes on push - no iOS rebuild needed for this one, cache-bust
+   query param on the chunks.json fetch was added so devices pick it up).
+2. **DEPRIORITIZED, not abandoned** — Binder redesign. The user's ask
+   here was brief/secondary compared to the other three items and it's
+   genuinely ambiguous which surface they meant (the dashboard's Binder
+   tile opens `ActInstanceShellView` - a full embedded legacy dashboard,
+   a much bigger redesign than the Gmail/Calendar/Intel overlay boxes
+   built earlier tonight; OR they meant the free-drag desk's own
+   `binderBody` card in `FieldDeskView.swift`, which is already
+   reasonably close to the other boxes' visual style). Worth a direct
+   "which screen do you mean" check before spending real time here,
+   rather than guessing at the more expensive interpretation.
+3. **[in progress]** Book workflow (`agent_work/product/desk_os/workflows/book/`)
    and Archive's own "meet"/voice-call screen redesigned to match the
    native app's "cute box" language (avatar + waveform + greeting bubble
    + pinned action button, cream/lime/ink palette) instead of their

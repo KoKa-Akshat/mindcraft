@@ -52,6 +52,17 @@
   h1{font-family:"Fredoka",sans-serif;font-size:34px;line-height:1.05;margin:8px 4px 0;font-weight:700}
   .lede{margin:0 4px;font-size:16px;font-weight:700;color:rgba(20,58,46,.62);line-height:1.35}
   .platter{padding:18px;border-radius:28px}
+  /* One unified card for the whole "meet Jesse" moment - avatar, status,
+     greeting, action button, and hint all live inside it, matching the
+     native app's jesseRail pattern (one solid cream card with a real
+     shadow) instead of several loose elements stacked in the page flow. */
+  .jesse-card{
+    background:var(--cream); border-radius:26px; padding:20px 20px 22px;
+    box-shadow:0 18px 38px rgba(20,58,46,.14);
+    display:flex; flex-direction:column; gap:14px; align-items:stretch;
+  }
+  .jesse-card .btn.fill{margin-top:2px}
+  .jesse-card .hint{margin:0}
   .avatar{
     width:56px;height:56px;border-radius:18px;
     background:linear-gradient(160deg,#d8f08a,#9ad4a0);
@@ -210,8 +221,7 @@
 
     <section class="screen" id="meet">
       <h1>Hi. I’m Jesse.</h1>
-      <p class="lede">Tell me how much time you have and what you’re into. I’ll open a real page, load a simulation, and lay a plan on the desk.</p>
-      <div class="platter" data-glass="card">
+      <div class="jesse-card">
         <div class="row">
           <div class="avatar" aria-hidden="true">J</div>
           <div>
@@ -219,10 +229,11 @@
             <div class="wave off" id="meetWave"></div>
           </div>
         </div>
+        <p class="lede" style="margin:0;font-size:15px">Tell me how much time you have and what you’re into. I’ll open a real page, load a simulation, and lay a plan on the desk.</p>
+        <button class="rec" id="recBtn" type="button" data-glass="orb" data-thickness="40" data-density="1">Hold</button>
+        <p class="hint">Hold to talk. Release when you’re done.</p>
+        <button class="btn fill" id="planBtn" type="button">Make a study plan</button>
       </div>
-      <button class="rec" id="recBtn" type="button" data-glass="orb" data-thickness="40" data-density="1">Hold</button>
-      <p class="hint">Hold to talk. Release when you’re done.</p>
-      <button class="btn fill" id="planBtn" type="button">Make a study plan</button>
       <button class="quiet" id="toShelf">or browse the shelf</button>
       <div class="rights" data-glass="card">
         <b>Your data stays yours.</b> Time and interest stay on this device. Dan’s books stay on his sites. We only open the page.
