@@ -96,7 +96,7 @@ final class MoodleClient: ObservableObject {
         do {
             let token = try await Self.requestToken(site: site, username: user, password: password)
             let info = try await Self.rest(site: site, token: token, function: "core_webservice_get_site_info")
-            guard let uid = info["userid"] as? Int else {
+            guard let infoDict = info as? [String: Any], let uid = infoDict["userid"] as? Int else {
                 lastError = "Moodle signed in but didn’t return a user id."
                 return
             }
