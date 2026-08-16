@@ -135,3 +135,173 @@ CSS, neither of which was actually asked for.
   route for call summarization crosses that boundary; flag it before
   building, the same way this session flagged the archive-mirror
   Google Drive question before building past a local pilot.
+
+---
+
+# Level 2 — box mascots, scoped connectors, ambient transcribe
+
+Added 2026-08-16, later the same session, once the direction above got
+more specific. **Planning only — nothing below has been implemented.**
+This is written for a Cursor agent to execute against; the "explicit
+instructions" section near the bottom is the actual work list.
+
+## The core architectural correction
+
+**Not** "each box is its own sub-agent." **One central Jesse**
+(`JesseCallSession`, already real, already shared app-wide) is the only
+agent a student talks to for the foreseeable future. The five dashboard
+boxes — Intel, Moodle, Binder, Email Summaries (Gmail), Gcal — are
+**scoped data connectors and stores**, not agents. They don't reason,
+don't converse, don't have their own LLM calls. Jesse reads from the
+connectors and writes to Binder. That's the whole relationship.
+
+The one deliberate exception, and it's explicitly a **later phase, not
+now**: Flows (starting with Presentation) may eventually get their own
+specialized sub-agent (e.g. a "Presentation Agent" whose only job is
+slide/deck generation), with central Jesse talking *to* that agent
+rather than doing the slide work itself — "flows are spaces where two
+agents talk." Don't build this yet. Get the one-agent-plus-scoped-
+connectors foundation solid first; a second agent only makes sense once
+there's a real central Jesse to hand work off *from*.
+
+## Per-connector scope (the "extremely defined scopes" ask)
+
+| Box | Kind | Scope | Status |
+|---|---|---|---|
+| **Gmail (Email Summaries)** | Connector | `GmailClient` — read inbox, send drafts. Already real, OAuth-gated (`hasGmailScope`). | Built. |
+| **Gcal** | Connector | `GmailClient`'s calendar scope — read the week. Already real (`hasCalendarScope`). | Built. |
+| **Moodle** | Connector | Read-only: assignments/grades for this student. **No client exists yet** — this is genuinely new work, not a redesign of something real. Don't fake data for it. | Not built. |
+| **Intel** | Derived view, not a connector | Read-only over whatever Moodle/Gmail/Gcal/Binder already fetched — no permissions of its own, no independent network calls. Its job is display: summarize what the *other* connectors already pulled. | Partially built (currently reads `FieldDeskStore.intelLines`, a flat string log — see "what changes" below). |
+| **Binder** | Store, not a connector | The write-target. Central Jesse (and later, specialized flow-agents) write produced artifacts here — call summaries, resume drafts, book chapters, study plans. "The agent organizes it properly" = auto-categorize/tag on write (by source: call/resume/book/archive), not a manual filing UI. | Data model exists (`FieldDeskStore.items`), auto-organization does not — new work. |
+
+Each connector keeps its scope narrow on purpose: Gmail can send mail,
+it can't touch Calendar; Moodle (once built) is read-only, full stop.
+Intel and Binder are not connectors at all — conflating "Intel needs
+its own permission" with "Intel needs to read what's already been
+fetched" was the wrong framing tonight; fix that framing before writing
+any code for it.
+
+## Box UI: mascot states
+
+Cursor designs the actual mascot art (explicitly the user's plan, not
+this document's job). What this doc defines is the **state machine**
+the art needs to support, so mascot design and interaction wiring don't
+drift apart:
+
+- **Sleeping** — connector not yet granted permission (Moodle/Gmail/
+  Gcal before OAuth) or, for Intel/Binder, genuinely empty (no data
+  fetched yet anywhere).
+- **Working** — actively syncing (mid-OAuth handshake, mid-fetch).
+- **Awake / idle** — connected and has data, nothing in flight.
+- *(Open question for the mascot designer, not resolved here: does
+  "awake" need a distinct visual per box, e.g. Gmail's mascot looks
+  different awake than Gcal's, or is state the only visual axis and
+  identity comes from a fixed icon/label alongside the mascot? Pick one
+  before drawing all the states, not after.)*
+
+**Interaction model**: tapping the mascot is the connect affordance for
+OAuth-gated boxes (Moodle, Gmail, Gcal) — replaces the current plain
+"Connect" text button with "tap the sleeping mascot to wake it up."
+For Intel/Binder (no OAuth, always available), tapping opens the
+existing overlay content (already built tonight — `intelOverlayLayer`,
+the redesigned `binderBody`) unchanged; there's no "wake up" step for
+those two since there's no permission to grant.
+
+## Fix: dashboard "Transcribe" is ambient recording, not a call
+
+Built tonight as a call trigger (`jesseCall.begin(context: "flows")` +
+full `JesseCallSheetView`) — wrong shape. It should record the room and
+show a live transcript, full stop — no Jesse spoken reply, no
+listen-respond-speak loop. Same STT engine and same transcript *box*
+UI, different mode.
+
+Concretely: `JesseCallSession` needs a second entry point alongside
+`begin(context:)` — something like `beginAmbientTranscription(context:)`
+— that starts `SFSpeechRecognizer` capture and appends turns exactly
+like today, but never calls `askJesse()`/`speak()`. `isActive` still
+flips true (so the persistent "on the line" pill and turn-persistence
+both keep working unmodified), but a new `isAmbient` flag suppresses
+the reply loop. `JesseCallSheetView`'s mic/pause/end controls stay
+useful as-is for ending an ambient session; only the reply plumbing
+changes.
+
+## Fix: storyboards on the call screen
+
+Checked the actual code — `storyboardsRail` in `CreateCanvasView.swift`
+is a **slide-thumbnail picker** (tap a title, jump `slideIndex` to it).
+It is not "space for people on call" — that read never matched what it
+does. Recommend: rename the label from "Storyboards" to "Slides" (the
+honest name for what it is), and stop gating it behind `callLive` —
+it's useful for navigating a deck whether or not a call is active, so
+tie its visibility to `slides.count > 1` instead.
+
+## Meeting transcripts (Gcal-scheduled calls) also feed central Jesse
+
+New ask, reconciles with — doesn't contradict — the "don't reuse
+`/process-summary` for Jesse calls" caution above. That caution was
+about *writing* Jesse's own call transcripts into the tutor-session
+pipeline (wrong data shape, wrong trust boundary). This is about
+*reading*: when a real meeting happens (student + tutor/friend, booked
+via the existing QCal-invite flow in Manage → Friends) and gets
+Fireflies-transcribed through the existing `webhook/` pipeline, that
+summary should become *additional context Jesse can read*, alongside
+Jesse's own call history — not merged into the same file, just another
+source the Phase 2 "Jesse reads it back" context-assembly step pulls
+from. This only makes sense after Phase 0-2 above exist; note it here
+so whoever builds Phase 2 doesn't scope it to Jesse-only transcripts by
+accident.
+
+## Explicit instructions for Cursor (in order)
+
+1. **Scope-table pass first, no UI changes.** Confirm/document exactly
+   what each connector can and can't do (table above) as code comments
+   at each connector's definition (`GmailClient.swift`, and a new
+   `MoodleClient.swift` stub if Moodle work starts). This is cheap and
+   prevents scope creep on everything after it.
+2. **`JesseCallSession.beginAmbientTranscription()`** — add the mode
+   flag and skip-reply-loop behavior described above. Wire the Flows
+   dock's "Transcribe" chip (`FieldDeskView.swift`'s `onTranscribe`) to
+   call this instead of `begin(context:)`. Build+install+verify on
+   device per the pattern in `SESSION_LOG_2026-08-16.md` before
+   committing — this touches the shared call session every other
+   surface depends on.
+3. **Storyboards rename + visibility fix** (small, low-risk, do it
+   alongside #2 since it's in the same file).
+4. **Mascot state machine wiring** — once art exists, replace the
+   plain "Connect" buttons on Moodle/Gmail/Gcal boxes with the
+   mascot-tap interaction; Intel/Binder mascots are decorative-only
+   (no wake-up step). Don't block this on Moodle actually existing —
+   Gmail/Gcal can get their mascots first since those connectors are
+   real today.
+5. **Moodle connector** — new work, real scope: read-only assignments/
+   grades. Needs Moodle API research (auth model, what a student-role
+   token can access) before any code — don't guess at an API shape.
+6. **Binder auto-organization** — when central Jesse (or, later, a
+   flow-agent) writes an artifact to Binder, tag it by source
+   automatically (call summary / resume draft / book chapter / archive
+   plan) instead of leaving that to manual filing.
+7. **Presentation specialized agent** — explicitly last, explicitly a
+   separate design pass, not a Cursor "just build it" task. Needs its
+   own scoping conversation (what does hand-off from Jesse actually
+   look like in the UI/transcript, what's the Presentation Agent's own
+   prompt/tooling) before any code.
+
+## Self-check on this plan (done before handing it over)
+
+- Verified `storyboardsRail`'s actual behavior by reading
+  `CreateCanvasView.swift` directly rather than guessing from the name
+  — confirmed it's a slide picker, not a call-adjacent feature.
+- Verified `JesseCallSession.begin()`'s existing structure (`isActive`,
+  turn persistence, the pill) is compatible with adding a second entry
+  point without restructuring what's already shipped and stable — the
+  ambient mode only needs one new bool and one early-return in the
+  reply path, not a rewrite.
+- Confirmed the "don't reuse /process-summary" guidance from the
+  original plan and the new "meeting transcripts should feed Jesse"
+  ask aren't actually in conflict once separated into write-path
+  (unchanged: Fireflies pipeline keeps owning tutor-session ingestion)
+  vs. read-path (new: Jesse's context-assembly step also pulls from
+  it) — flagged explicitly above so this doesn't get rebuilt wrong.
+- Did **not** verify Moodle's actual API/auth model — flagged as
+  needing real research (item 5) rather than assumed, since no Moodle
+  client exists anywhere in this codebase to check against.
