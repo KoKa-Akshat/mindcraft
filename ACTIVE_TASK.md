@@ -4,6 +4,10 @@
 
 ---
 
+## Two mentors, no empty map hole (2026-08-16)
+
+Tutors shows two cards. The map stretches to the same height so the black gap under it is gone.
+
 ## Mentor list lets the page scroll (2026-08-16)
 
 Tutors shows three or four cards in the page, not a trapped inner book. Phone map is short and does not steal the swipe. Wheel past this block no longer fights the map fly.

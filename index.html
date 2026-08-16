@@ -423,30 +423,30 @@
   }
   .tutor-quote p{font-family:var(--serif); font-style:italic; font-size:clamp(17px,1.8vw,21px); line-height:1.4; color:var(--chalk);}
   .tutor-quote p em{font-style:italic; color:var(--lime);}
-  .tutor-duo{ margin:38px auto 0; display:grid; grid-template-columns:1.1fr 1fr; gap:16px; width:100%; padding:14px; border-radius:26px; border:1px solid var(--edge); background:var(--field-2); box-shadow:var(--shadow); align-items:start; }
-  .tutor-pane{ border-radius:18px; overflow:hidden; border:1px solid var(--edge); background:#0b1116; min-height:0; position:relative; display:flex; flex-direction:column; }
-  .tutor-pane.map{height:420px;}
+  .tutor-duo{ margin:38px auto 0; display:grid; grid-template-columns:1.1fr 1fr; gap:12px; width:100%; padding:10px; border-radius:22px; border:1px solid var(--edge); background:var(--field-2); box-shadow:var(--shadow); align-items:stretch; }
+  .tutor-pane{ border-radius:16px; overflow:hidden; border:1px solid var(--edge); background:#0b1116; min-height:0; position:relative; display:flex; flex-direction:column; }
+  .tutor-pane.map{height:auto; min-height:0;}
   .tutor-pane.book{height:auto;}
   .tm-search{display:flex; gap:8px; padding:12px; background:#0b1116; border-bottom:1px solid var(--edge); flex:none; z-index:5;}
   .tm-search input{ flex:1; min-width:0; border:1px solid var(--edge); border-radius:12px; padding:11px 14px; font:inherit; font-size:13.5px; font-weight:500; color:var(--chalk); background:#0e151b; }
   .tm-search input::placeholder{color:var(--chalk-faint);}
   .tm-search input:focus{outline:2px solid rgba(196,245,71,.4); border-color:var(--lime);}
   .tm-search button{ border:0; border-radius:12px; padding:0 16px; background:var(--lime); color:var(--lime-ink); font:inherit; font-size:11.5px; font-weight:700; cursor:pointer; }
-  .tm-map{flex:1; min-height:0; width:100%; z-index:1;}
+  .tm-map{flex:1; min-height:240px; width:100%; z-index:1;}
   .tm-pin{width:26px; height:26px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); border:2px solid #fff; box-shadow:0 6px 14px rgba(0,0,0,.5);}
   .tm-pin-label{ position:absolute; left:22px; top:-4px; transform:rotate(45deg); background:#0b1116; border:1px solid var(--edge); border-radius:8px; padding:2px 7px; font-size:11px; font-weight:600; color:var(--chalk); white-space:nowrap; }
-  .tm-list-head{padding:14px 16px 8px; font-family:var(--mono); font-size:10.5px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--lime); flex:none;}
+  .tm-list-head{padding:12px 14px 6px; font-family:var(--mono); font-size:10.5px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--lime); flex:none;}
   .tm-list-head em{font-style:normal; color:var(--chalk-faint); letter-spacing:.04em;}
-  .tm-list{flex:none; overflow:visible; padding:4px 12px 14px; display:flex; flex-direction:column; gap:10px;}
-  .tm-card{ background:#0e151b; border:1px solid var(--edge); border-radius:16px; padding:14px; transition:border-color .2s var(--ease); }
+  .tm-list{flex:none; overflow:visible; padding:4px 10px 10px; display:flex; flex-direction:column; gap:8px;}
+  .tm-card{ background:#0e151b; border:1px solid var(--edge); border-radius:14px; padding:12px; transition:border-color .2s var(--ease); }
   .tm-card:hover{border-color:rgba(196,245,71,.3);}
-  .tm-card-top{display:flex; gap:12px; align-items:flex-start;}
-  .tm-avatar{width:38px; height:38px; border-radius:50%; flex:none; display:grid; place-items:center; color:#fff; font-size:12px; font-weight:700;}
-  .tm-card h4{font-family:var(--serif); font-style:italic; font-weight:600; font-size:22px; letter-spacing:-.02em; color:var(--chalk); line-height:1.15; margin:0 0 6px;}
-  .tm-meta{font-family:var(--serif); font-style:italic; font-size:13.5px; font-weight:500; letter-spacing:0; text-transform:none; color:rgba(245,245,244,.58); margin-bottom:8px;}
-  .tm-card p{font-size:13px; font-weight:400; color:var(--chalk-dim); line-height:1.45; margin:0;}
-  .tm-dist{ display:inline-block; margin-top:10px; font-family:var(--serif); font-style:italic; font-size:12.5px; font-weight:500; letter-spacing:0; text-transform:none; color:var(--lime); background:none; border-radius:0; padding:0; }
-  .tm-book{ display:block; margin-top:14px; text-align:center; border-radius:999px; background:transparent; border:1px solid rgba(196,245,71,.45); color:var(--lime); padding:12px 16px; font-family:"Space Grotesk",sans-serif; font-size:14px; font-weight:600; letter-spacing:-.01em; text-transform:none; transition:background .2s var(--ease), color .2s var(--ease); }
+  .tm-card-top{display:flex; gap:10px; align-items:flex-start;}
+  .tm-avatar{width:34px; height:34px; border-radius:50%; flex:none; display:grid; place-items:center; color:#fff; font-size:11px; font-weight:700;}
+  .tm-card h4{font-family:var(--serif); font-style:italic; font-weight:600; font-size:19px; letter-spacing:-.02em; color:var(--chalk); line-height:1.15; margin:0 0 4px;}
+  .tm-meta{font-family:var(--serif); font-style:italic; font-size:13px; font-weight:500; letter-spacing:0; text-transform:none; color:rgba(245,245,244,.58); margin-bottom:6px;}
+  .tm-card p{font-size:13px; font-weight:400; color:var(--chalk-dim); line-height:1.4; margin:0; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;}
+  .tm-dist{ display:inline-block; margin-top:8px; font-family:var(--serif); font-style:italic; font-size:12.5px; font-weight:500; letter-spacing:0; text-transform:none; color:var(--lime); background:none; border-radius:0; padding:0; }
+  .tm-book{ display:block; margin-top:10px; text-align:center; border-radius:999px; background:transparent; border:1px solid rgba(196,245,71,.45); color:var(--lime); padding:9px 14px; font-family:"Space Grotesk",sans-serif; font-size:13px; font-weight:600; letter-spacing:-.01em; text-transform:none; transition:background .2s var(--ease), color .2s var(--ease); }
   .tm-book:hover{background:var(--lime); color:var(--lime-ink); border-color:var(--lime);}
   .leaflet-container{font:inherit; background:#0e151b;}
   .leaflet-control-attribution{font-size:9px !important; background:rgba(10,14,19,.8) !important; color:var(--chalk-faint) !important;}
@@ -911,7 +911,7 @@
         <div id="tmMap" class="tm-map" role="img" aria-label="Map of MindCraft mentors"></div>
       </div>
       <div class="tutor-pane book">
-        <div class="tm-list-head">Available mentors · <em id="tmNearLabel">three near you</em></div>
+        <div class="tm-list-head">Available mentors · <em id="tmNearLabel">two near you</em></div>
         <div class="tm-list" id="tmList"></div>
       </div>
     </div>
@@ -1634,7 +1634,7 @@
       if (mi < 900) return Math.round(mi) + ' mi away';
       return Math.round(mi) + ' mi · sessions online';
     }
-    function rank(origin){ return TUTORS.map(t => ({...t, mi: origin ? haversineMi(origin, t) : 0})).sort((a,b) => a.mi - b.mi).slice(0, 4); }
+    function rank(origin){ return TUTORS.map(t => ({...t, mi: origin ? haversineMi(origin, t) : 0})).sort((a,b) => a.mi - b.mi).slice(0, 2); }
     function pinIcon(t){
       const html = '<div class="tm-pin" style="background:'+t.color+'"></div><span class="tm-pin-label">'+t.name.split(' ')[0]+'</span>';
       return L.divIcon({ className:'', html:'<div style="position:relative;width:28px;height:28px">'+html+'</div>', iconSize:[28,28], iconAnchor:[14,28] });
@@ -1665,7 +1665,7 @@
           '<a class="tm-book" href="'+t.book+'" target="_blank" rel="noopener">Book a free session</a>' +
           '</article>';
       }).join('');
-      if (nearLabel) nearLabel.textContent = label ? ('near ' + label) : 'three near you';
+      if (nearLabel) nearLabel.textContent = label ? ('near ' + label) : 'two near you';
       if (origin){
         const nearest = ranked[0];
         const zoom = nearest.mi < 80 ? 10 : nearest.mi < 400 ? 6 : 4;
@@ -1683,6 +1683,7 @@
           if (t && markers[t.id]){ map.flyTo([t.lat, t.lng], 11, { duration:.7 }); markers[t.id].openPopup(); }
         });
       });
+      requestAnimationFrame(function(){ map.invalidateSize(); });
     }
     function resolveQuery(q){
       const key = q.trim().toLowerCase().replace(/,/g,' ').replace(/\s+/g,' ').trim();
