@@ -456,7 +456,7 @@
 
   Promise.all([
     fetch('./books.json?v=c1').then((r) => r.json()).catch(() => ({ books: [] })),
-    fetch('./chunks.json').then((r) => r.json()).catch(() => ({ chunks: [] })),
+    fetch('./chunks.json?v=b1').then((r) => r.json()).catch(() => ({ chunks: [] })),
   ]).then(([booksData, chunkData]) => {
     SHELF = booksData.books || [];
     chunks = chunkData.chunks || [];
