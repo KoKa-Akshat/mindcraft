@@ -4,6 +4,10 @@
 
 ---
 
+## Mentor list lets the page scroll (2026-08-16)
+
+Tutors shows three or four cards in the page, not a trapped inner book. Phone map is short and does not steal the swipe. Wheel past this block no longer fights the map fly.
+
 ## Dashboards move in space (2026-08-15)
 
 Create and Work boards were empty color blocks you could not pan. Tiles now carry a line of copy. Drag / pinch moves the board in space. Kitchen reuses cache so Jesse's is not a full minute download each open. Lime Create opens the slide canvas; Work opens the tile board.
