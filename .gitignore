@@ -80,3 +80,6 @@ showcase-qr.html
 marketing/run/
 marketing/review/
 marketing-drive-service-account.json
+
+# Archive mirror pilot output — regenerable via mirror_book.py, kept out of git
+agent_work/product/archive_mirror/out/
