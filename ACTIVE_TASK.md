@@ -4,6 +4,10 @@
 
 ---
 
+## Level 2 Jesse connectors (2026-08-16)
+
+One central Jesse. Intel/Moodle/Binder/Email/Gcal are scoped connectors and a store, not sub-agents. Work dashboard now restores the Google session, fetches inbox + digest + calendar week on appear, and paints those summaries on the tiles (that was why Email Summaries stayed empty even when Gmail was already connected). A cramped tile asks neighbors to shrink via `DeskBoxBus` (not an LLM). Jesse quotes any box on that page through the same bus. Flows Transcribe is ambient recording. Create canvas "Storyboards" is now **Slides**. Presentation specialized agent is still a later pass.
+
 ## Founders inbox is the public email (2026-08-16)
 
 Apply forms, footer, mailto, and lead alerts go to founders@joinmindcraft.com. We still only collect email when someone applies, not on a bare visit.

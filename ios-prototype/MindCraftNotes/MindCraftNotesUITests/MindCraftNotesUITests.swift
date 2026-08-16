@@ -951,14 +951,15 @@ final class MindCraftNotesUITests: XCTestCase {
     }
 
     /// Round 10: the previously-deferred `.hub-mastery-head`/`.hub-orb-row`
-    /// port (goal setter + mastery cube + `hubCall.js` check-in). Asserts
-    /// the three load-bearing behaviors end to end on the real device:
-    /// the goal echo paints the default focus/goal pair exactly as
-    /// `paintGoalControls()` would; the mastery percent starts as an
-    /// em-dash (`masteryForInstance()`'s honesty rule - no check-in
-    /// evidence, no invented number); and saving a check-in at the web's
-    /// default 40% round-trips through `DeskGoalStore` into a live orb-row
-    /// repaint plus the web-worded toast.
+    /// port (goal setter + mastery cube + `hubCall.js` check-in), now
+    /// reduced to what's actually reachable from this page. The Level 2
+    /// refactor removed Call (and with it the only trigger for
+    /// `showCheckIn`) from the desk hub entirely - the mastery check-in
+    /// sheet itself still exists and works, just not from here anymore
+    /// (see the `callButton removed` comment on `DeskShellView`) - so this
+    /// only asserts the hub chrome that's still live: Connect/Back next to
+    /// the greeting, the workflow market and mastery orb gone, and Tutors
+    /// nearby with a working map search.
     func testDeskHubMasteryGoalAndCheckIn() {
         let app = XCUIApplication()
         app.launchArguments = ["--ui-testing-in-memory", "--ui-testing-skip-auth"]
@@ -1008,16 +1009,6 @@ final class MindCraftNotesUITests: XCTestCase {
         XCTAssertTrue(app.buttons["deskHubMapSearchGo"].waitForExistence(timeout: 3),
                       "expected map Search button")
         attachScreenshot(app, name: "desk_hub_tutors")
-
-        callButton.tap()
-        let save = app.buttons["deskCallSave"]
-        XCTAssertTrue(save.waitForExistence(timeout: 5), "expected the check-in sheet's save button")
-        attachScreenshot(app, name: "desk_hub_checkin_sheet")
-        save.tap()
-
-        // Toast still confirms a saved check-in (mastery orb no longer on hub).
-        XCTAssertTrue(app.staticTexts["deskToast"].waitForExistence(timeout: 5), "expected the check-in toast after saving")
-        attachScreenshot(app, name: "desk_hub_mastery_after_checkin")
     }
 
     /// Round 13: Field Desk opens the full desk home (rail + widgets).
@@ -1741,6 +1732,44 @@ final class MindCraftNotesUITests: XCTestCase {
         XCUIDevice.shared.orientation = .portrait
     }
 
+    /// Work Email Summaries used to stay empty even when Gmail was already
+    /// connected: the tile never fetched the inbox (only the overlay box
+    /// did). Seeded mail must show on the tile itself, and the cramped
+    /// Email box should borrow height from Gcal so the subjects fit.
+    func testWorkDashboardShowsSeededEmailSummariesAndAsksNeighborsForSpace() {
+        let app = launchFieldDeskApp(extraArgs: ["--ui-testing-gmail-dashboard"])
+        XCUIDevice.shared.orientation = .landscapeLeft
+
+        XCTAssertTrue(
+            app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 15),
+            "expected Work dashboard on cold load"
+        )
+
+        let summaries = app.descendants(matching: .any)["deskGridEmailSummaries"]
+        XCTAssertTrue(
+            summaries.waitForExistence(timeout: 12),
+            "Email Summaries tile should show inbox text when Gmail is already connected"
+        )
+        XCTAssertTrue(
+            app.staticTexts.containing(NSPredicate(format: "label CONTAINS %@", "Quadratic")).firstMatch.waitForExistence(timeout: 5),
+            "expected a real seeded subject on the Email tile, not the empty blurb"
+        )
+
+        let email = app.buttons["deskGridTile_Email Summaries"]
+        let gcal = app.buttons["deskGridTile_Gcal"]
+        XCTAssertTrue(email.waitForExistence(timeout: 3), "expected Email tile")
+        XCTAssertTrue(gcal.waitForExistence(timeout: 3), "expected Gcal tile")
+        Thread.sleep(forTimeInterval: 0.7)
+        XCTAssertGreaterThan(
+            email.frame.height,
+            gcal.frame.height,
+            "Email should have asked Gcal to shrink so summaries fit"
+        )
+        attachScreenshot(app, name: "dashboard_email_summaries")
+
+        XCUIDevice.shared.orientation = .portrait
+    }
+
     /// Minimize/reconnect: collapsing Scheduling Workflows should NOT close
     /// it (that's a separate, existing control) - it should shrink to a
     /// reconnectable chip on the desk, same treatment as the ACT stage's
@@ -1968,6 +1997,7 @@ final class MindCraftNotesUITests: XCTestCase {
         XCTAssertTrue(app.descendants(matching: .any)["createCanvasRoot"].waitForExistence(timeout: 15), "expected Create canvas to open")
         XCTAssertTrue(app.descendants(matching: .any)["createCanvasJesseRail"].waitForExistence(timeout: 10), "expected Jesse call rail")
         XCTAssertTrue(app.buttons["createCanvasCallJesse"].exists, "expected Jump on a call with Jesse button")
+        XCTAssertTrue(app.descendants(matching: .any)["createCanvasSlides"].waitForExistence(timeout: 5), "expected Slides rail without a live call — it is a slide picker, not a call-only rail")
 
         let jesseTexts = app.staticTexts.allElementsBoundByIndex.map { $0.label }
         XCTAssertFalse(jesseTexts.contains { $0.contains("Jack") }, "Create canvas must say Jesse, not Jack")
@@ -1987,7 +2017,7 @@ final class MindCraftNotesUITests: XCTestCase {
         }
         app.buttons["createCanvasCallJesse"].tap()
         XCTAssertTrue(app.descendants(matching: .any)["createCanvasTranscription"].waitForExistence(timeout: 8), "expected Transcription rail once the call goes live")
-        XCTAssertTrue(app.descendants(matching: .any)["createCanvasStoryboards"].waitForExistence(timeout: 5), "expected Storyboards rail once the call goes live")
+        XCTAssertTrue(app.descendants(matching: .any)["createCanvasSlides"].waitForExistence(timeout: 5), "expected Slides rail to stay visible during a call")
         Thread.sleep(forTimeInterval: 2.0)
         attachScreenshot(app, name: "create-canvas-call-live")
 
@@ -2026,6 +2056,42 @@ final class MindCraftNotesUITests: XCTestCase {
         XCTAssertTrue(closeButton.waitForExistence(timeout: 10), "expected Calendar card with a close button - app is still alive")
         closeButton.tap()
 
+        XCUIDevice.shared.orientation = .portrait
+    }
+
+    /// Flows Transcribe is ambient capture, not a Jesse reply-loop call.
+    /// `--ui-testing-jesse-ambient` seeds an already-active ambient session
+    /// (same seam as `--ui-testing-jesse-call`) so this test is about the
+    /// sheet chrome, not the microphone.
+    func testAmbientTranscribeSheetIsNotAJesseCall() {
+        let app = launchFieldDeskApp(extraArgs: ["--ui-testing-jesse-ambient"])
+
+        let pill = app.buttons["jesseCallPill"]
+        XCTAssertTrue(pill.waitForExistence(timeout: 10), "expected the transcribe pill at Field Desk root")
+        XCTAssertTrue(
+            pill.label.contains("Transcribe") || pill.label.contains("Recording"),
+            "pill must not read as a Jesse call: \(pill.label)"
+        )
+        pill.tap()
+
+        XCTAssertTrue(app.staticTexts["Transcribe"].waitForExistence(timeout: 8), "expected Transcribe sheet title, not Jesse")
+        XCTAssertTrue(app.staticTexts["We should review the lab write-up before Friday."].waitForExistence(timeout: 5), "expected the seeded ambient transcript")
+        XCTAssertFalse(app.staticTexts["Jesse is thinking…"].exists, "ambient mode must not show the reply-loop thinking label")
+
+        app.buttons["jesseCallEnd"].tap()
+        XCTAssertTrue(pill.waitForNonExistence(timeout: 5), "expected the pill to disappear once transcribe ends")
+    }
+
+    /// Dashboard boxes expose a mascot (sleeping/working/awake). Intel and
+    /// Binder mascots are decorative; Moodle/Gmail/Gcal mascots are the
+    /// connect affordance. This only asserts they exist on the work canvas.
+    func testDashboardBoxMascotsExist() {
+        let app = launchFieldDeskApp()
+        XCUIDevice.shared.orientation = .landscapeLeft
+        XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 15))
+        for id in ["deskGridMascot_intel", "deskGridMascot_moodle", "deskGridMascot_binder", "deskGridMascot_email", "deskGridMascot_gcal"] {
+            XCTAssertTrue(app.descendants(matching: .any)[id].waitForExistence(timeout: 5), "expected \(id)")
+        }
         XCUIDevice.shared.orientation = .portrait
     }
 }

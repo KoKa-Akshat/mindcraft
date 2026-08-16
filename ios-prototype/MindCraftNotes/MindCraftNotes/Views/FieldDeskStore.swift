@@ -6,8 +6,49 @@ import UniformTypeIdentifiers
 /// IndexedDB/localStorage slice used by Drop → File → Binder / Intel /
 /// Connect (`js/upload.js`, `js/connectLinks.js`, `js/home.js`).
 /// Same `deskOs.*` key family as `DeskGoalStore`.
+///
+/// Level 2 scope (`JESSE_CENTRAL_AI_PLAN.md`):
+/// - **Intel** is a derived view, not a connector. `intelLines` is a display
+///   log of what Gmail / Gcal / Moodle / Binder already fetched or wrote.
+///   Intel has no OAuth of its own and makes no independent network calls.
+/// - **Binder** (`items`) is the write-target store, not a connector.
+///   Central Jesse (and later, specialized flow-agents) file artifacts here.
+///   Auto-organization is `BinderSource` on write — call / resume / book /
+///   archive — not a manual filing UI.
 @MainActor
 final class FieldDeskStore: ObservableObject {
+    /// Who produced a Binder artifact. Set automatically on write so the
+    /// Binder card can group without asking the student to file by hand.
+    enum BinderSource: String, Codable, CaseIterable {
+        case call
+        case resume
+        case book
+        case archive
+        case drop
+        case manual
+
+        var binderCourse: String {
+            switch self {
+            case .call: return "Calls"
+            case .resume: return "Resume"
+            case .book: return "Book"
+            case .archive: return "Archive"
+            case .drop, .manual: return "Inbox"
+            }
+        }
+
+        var tagLabel: String {
+            switch self {
+            case .call: return "Call summary"
+            case .resume: return "Resume draft"
+            case .book: return "Book chapter"
+            case .archive: return "Archive plan"
+            case .drop: return "Drop"
+            case .manual: return "Note"
+            }
+        }
+    }
+
     struct FiledItem: Identifiable, Codable, Equatable {
         let id: String
         var title: String
@@ -16,6 +57,44 @@ final class FieldDeskStore: ObservableObject {
         var createdAt: String
         /// Original filename when dropped from Files/Photos; empty for manual.
         var sourceName: String
+        var source: BinderSource
+
+        enum CodingKeys: String, CodingKey {
+            case id, title, course, note, createdAt, sourceName, source
+        }
+
+        init(
+            id: String,
+            title: String,
+            course: String,
+            note: String,
+            createdAt: String,
+            sourceName: String,
+            source: BinderSource
+        ) {
+            self.id = id
+            self.title = title
+            self.course = course
+            self.note = note
+            self.createdAt = createdAt
+            self.sourceName = sourceName
+            self.source = source
+        }
+
+        init(from decoder: Decoder) throws {
+            let c = try decoder.container(keyedBy: CodingKeys.self)
+            id = try c.decode(String.self, forKey: .id)
+            title = try c.decode(String.self, forKey: .title)
+            course = try c.decode(String.self, forKey: .course)
+            note = try c.decode(String.self, forKey: .note)
+            createdAt = try c.decode(String.self, forKey: .createdAt)
+            sourceName = try c.decodeIfPresent(String.self, forKey: .sourceName) ?? ""
+            if let decoded = try c.decodeIfPresent(BinderSource.self, forKey: .source) {
+                source = decoded
+            } else {
+                source = sourceName.isEmpty ? .manual : .drop
+            }
+        }
     }
 
     struct CalendarEvent: Identifiable, Codable, Equatable {
@@ -206,18 +285,63 @@ final class FieldDeskStore: ObservableObject {
             course: resolvedCourse,
             note: note,
             createdAt: Self.isoNow(),
-            sourceName: sourceName
+            sourceName: sourceName,
+            source: sourceName.isEmpty ? .manual : .drop
         )
         items.insert(item, at: 0)
         Self.encode(items, key: Self.itemsKey)
         prependIntel("Filed · \(item.title) → \(item.course)")
     }
 
-    func addManualNote(title: String, course: String, body: String) {
+    /// Auto-tagged Binder write. Course defaults to the source bucket
+    /// (Calls / Resume / Book / Archive) so filings sort without a
+    /// manual "put this in a folder" step.
+    @discardableResult
+    func fileArtifact(
+        title: String,
+        note: String,
+        source: BinderSource,
+        course: String? = nil
+    ) -> FiledItem? {
+        let t = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !t.isEmpty else { return nil }
+        let explicit = course?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let resolved = explicit.isEmpty ? source.binderCourse : explicit
+        let item = FiledItem(
+            id: UUID().uuidString,
+            title: t,
+            course: resolved,
+            note: note,
+            createdAt: Self.isoNow(),
+            sourceName: "",
+            source: source
+        )
+        items.insert(item, at: 0)
+        Self.encode(items, key: Self.itemsKey)
+        prependIntel("Filed · \(source.tagLabel) · \(item.title)")
+        return item
+    }
+
+    func fileJesseTranscript(_ turns: [JesseCallTurn], context: String?, ambient: Bool) {
+        let spoken = turns.map(\.text).joined(separator: " ").trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !spoken.isEmpty else { return }
+        let stamp = Self.shortStamp()
+        let title = ambient ? "Transcript · \(stamp)" : "Jesse call · \(stamp)"
+        let body = turns.map { "\($0.speaker): \($0.text)" }.joined(separator: "\n")
+        let ctx = context?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let source: BinderSource = ctx == "archive" ? .archive : (ctx == "resume" ? .resume : .call)
+        _ = fileArtifact(title: title, note: body, source: source)
+    }
+
+    func addManualNote(title: String, course: String, body: String, source: BinderSource = .manual) {
         let t = title.trimmingCharacters(in: .whitespacesAndNewlines)
         let c = course.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !t.isEmpty, !c.isEmpty else { return }
-        fileDrop(sourceName: "", explicitTitle: t, course: c, note: body)
+        if source == .manual {
+            fileDrop(sourceName: "", explicitTitle: t, course: c, note: body)
+        } else {
+            _ = fileArtifact(title: t, note: body, source: source, course: c)
+        }
     }
 
     func prependIntel(_ line: String) {
@@ -368,6 +492,12 @@ final class FieldDeskStore: ObservableObject {
         let formatter = ISO8601DateFormatter()
         formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
         return formatter.string(from: Date())
+    }
+
+    private static func shortStamp() -> String {
+        let f = DateFormatter()
+        f.dateFormat = "MMM d · h:mm a"
+        return f.string(from: Date())
     }
 
     private static func decode<T: Decodable>(_ type: T.Type, key: String) -> T? {

@@ -112,6 +112,10 @@ final class BinderStore: ObservableObject {
     /// `body` is the assembled chapter markdown. See `BookWorkflowView`.
     @discardableResult
     func addBook(title: String, body: String) -> String {
+        // Source tag is automatic — "jesse_book_agent" — so Binder can
+        // group book chapters without a manual filing step. The Field Desk
+        // card also files a local `BinderSource.book` artifact via the
+        // `onPublished` callback in FieldDeskView.
         create(type: "book", title: title, body: body, source: "jesse_book_agent", storageRefs: [])
     }
 

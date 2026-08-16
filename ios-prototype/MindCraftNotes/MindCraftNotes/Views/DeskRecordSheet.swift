@@ -174,7 +174,7 @@ struct DeskRecordSheet: View {
         let guessed = FieldDeskStore.guessCoursePublic(from: body)
         let resolved = (course == "Inbox" && guessed != "Inbox") ? guessed : course
         let title = "Transcript · \(Self.shortStamp())"
-        store.addManualNote(title: title, course: resolved, body: body)
+        store.addManualNote(title: title, course: resolved, body: body, source: .call)
         store.prependIntel("Transcript · \(resolved) · \(String(body.prefix(60)))")
         onClose()
     }
