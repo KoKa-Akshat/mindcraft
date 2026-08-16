@@ -40,6 +40,13 @@ enum BinderStoreError: Error {
 final class BinderStore: ObservableObject {
     @Published private(set) var items: [BinderItem] = []
 
+    /// Memo / Doc / BYOB split used by the Work Binder popup. `book` sits
+    /// with Doc — it's a filed chapter, not an uploaded packet.
+    func items(types: String...) -> [BinderItem] {
+        let wanted = Set(types)
+        return items.filter { wanted.contains($0.type) }
+    }
+
     private let db = Firestore.firestore()
     private lazy var storage = Storage.storage()
     private var itemsListener: ListenerRegistration?

@@ -22,6 +22,8 @@ struct DeskGridDashboardView: View {
     var onOpenFlow: (String) -> Void = { _ in }
     var onSaveMemo: (String) -> Void = { _ in }
     var onTranscribe: () -> Void = {}
+    /// Titles from `BinderStore`, not `FieldDeskStore.FiledItem`.
+    var binderTitles: [String] = []
 
     @State private var rail: Rail
     @State private var memoDraft: String
@@ -47,7 +49,8 @@ struct DeskGridDashboardView: View {
         onOpenCreate: @escaping (CreateCanvasKind) -> Void = { _ in },
         onOpenFlow: @escaping (String) -> Void = { _ in },
         onSaveMemo: @escaping (String) -> Void = { _ in },
-        onTranscribe: @escaping () -> Void = {}
+        onTranscribe: @escaping () -> Void = {},
+        binderTitles: [String] = []
     ) {
         self.initialRail = initialRail
         self.initialMemoText = initialMemoText
@@ -60,6 +63,7 @@ struct DeskGridDashboardView: View {
         self.onOpenFlow = onOpenFlow
         self.onSaveMemo = onSaveMemo
         self.onTranscribe = onTranscribe
+        self.binderTitles = binderTitles
         _rail = State(initialValue: initialRail)
         _memoDraft = State(initialValue: initialMemoText)
     }
@@ -208,7 +212,7 @@ struct DeskGridDashboardView: View {
             switch self {
             case .intel: return "Jesse pulled three things from this week."
             case .moodle: return "Connect Moodle to drop homework here."
-            case .binder: return "ACT Field Book. Pull it onto the desk."
+            case .binder: return "Memo, docs, and your own books."
             case .emailSummaries: return "Listen through what actually needs you."
             case .gcal: return "This week, already on the page."
             case .memo: return "Pin a note on the right rail."
@@ -244,7 +248,7 @@ struct DeskGridDashboardView: View {
                     VStack {
                         Spacer()
                         HStack {
-                            Text(kind.blurb)
+                            Text(tileBlurb(kind))
                                 .font(.system(size: 12, weight: .semibold, design: .rounded))
                                 .foregroundColor(kind == .binder || kind == .moodle ? Color(gridHex: "143a2e") : .white)
                                 .lineLimit(2)
@@ -273,6 +277,13 @@ struct DeskGridDashboardView: View {
             .buttonStyle(.plain)
             .accessibilityIdentifier("deskGridTile_\(kind.title)")
         }
+    }
+
+    private func tileBlurb(_ kind: TileKind) -> String {
+        if kind == .binder, !binderTitles.isEmpty {
+            return binderTitles.prefix(2).joined(separator: " · ")
+        }
+        return kind.blurb
     }
 
     /// The search field had no wired behavior at all - typing did nothing,

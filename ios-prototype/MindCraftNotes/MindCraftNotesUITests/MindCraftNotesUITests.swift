@@ -2000,6 +2000,40 @@ final class MindCraftNotesUITests: XCTestCase {
         XCUIDevice.shared.orientation = .portrait
     }
 
+    /// Assignment A: Binder tile opens a Memo/Doc/BYOB popup, not ACT Field Book.
+    func testWorkBinderPopupHasMemoDocBYOB() {
+        let app = launchFieldDeskApp()
+        XCUIDevice.shared.orientation = .landscapeLeft
+
+        XCTAssertTrue(
+            app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 15),
+            "expected Work dashboard on cold load"
+        )
+        let binder = app.buttons["deskGridTile_Binder"]
+        XCTAssertTrue(binder.waitForExistence(timeout: 10), "expected Binder tile")
+        binder.tap()
+
+        XCTAssertTrue(
+            app.descendants(matching: .any)["fieldDeskBinderOverlay"].waitForExistence(timeout: 10),
+            "Binder tile should open the Binder popup, not jump to ACT Field Book"
+        )
+        XCTAssertTrue(
+            app.descendants(matching: .any)["fieldDeskBinderSection_Memo"].waitForExistence(timeout: 5),
+            "expected Memo section"
+        )
+        XCTAssertTrue(app.descendants(matching: .any)["fieldDeskBinderSection_Doc"].exists, "expected Doc section")
+        XCTAssertTrue(app.descendants(matching: .any)["fieldDeskBinderSection_BYOB"].exists, "expected BYOB section")
+        XCTAssertTrue(app.buttons["fieldDeskBinderBYOB"].exists, "expected Bring your own book control")
+        XCTAssertTrue(app.buttons["fieldDeskBinderActFieldBook"].exists, "expected ACT Field Book as an entry inside the popup")
+        XCTAssertFalse(
+            app.descendants(matching: .any)["fieldDeskActNotesPopup"].exists,
+            "tapping Binder must not immediately present ACT Field Book"
+        )
+        attachScreenshot(app, name: "binder_popup_memo_doc_byob")
+
+        XCUIDevice.shared.orientation = .portrait
+    }
+
     /// Regression test for a real crash: tapping Calendar force-quit the
     /// whole app with no crash log, because DeskCalendarLoader's
     /// requestFullAccessToEvents() had no matching Info.plist usage
