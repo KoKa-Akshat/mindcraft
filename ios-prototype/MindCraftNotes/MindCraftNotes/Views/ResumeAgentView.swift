@@ -3,31 +3,69 @@ import WebKit
 
 /// Jesse resume agent — live `/desk-os/workflows/resume/`.
 /// Native bridge: Drive folder read (PDFKit) + Apply today ingest.
+/// The web page still has its own separate voice call (browser
+/// SpeechRecognition/speechSynthesis, dies with this view) - untouched,
+/// out of scope here. This adds the SAME native "Call Jesse" +
+/// JesseCallSheetView already used by Archive/Presentation/the Hub/Flows,
+/// as a real alternative that keeps running via JesseCallSession
+/// independent of the web view, same shape as Archive's native call.
 struct ResumeAgentView: View {
     var onClose: () -> Void
     var onApply: (() -> Void)? = nil
+
+    @EnvironmentObject private var jesseCall: JesseCallSession
+    @State private var showJesseCallSheet = false
 
     var body: some View {
         ZStack(alignment: .topTrailing) {
             Color(red: 244 / 255, green: 239 / 255, blue: 230 / 255).ignoresSafeArea()
             ResumeAgentWebView(onApply: onApply)
                 .ignoresSafeArea()
-            Button(action: onClose) {
-                Text("Done")
-                    .font(.system(size: 13, weight: .heavy, design: .rounded))
-                    .foregroundColor(Color(red: 20 / 255, green: 58 / 255, blue: 46 / 255))
-                    .padding(.horizontal, 14)
-                    .padding(.vertical, 10)
-                    .background(Capsule().fill(Color.white.opacity(0.94)))
+            HStack(spacing: 8) {
+                Button(action: startCall) {
+                    Label(jesseCall.isActive ? "On call" : "Call Jesse", systemImage: "phone.fill")
+                        .font(.system(size: 13, weight: .heavy, design: .rounded))
+                        .foregroundColor(Color(red: 20 / 255, green: 58 / 255, blue: 46 / 255))
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 10)
+                        .background(Capsule().fill(jesseCall.isActive ? Color(red: 196 / 255, green: 245 / 255, blue: 71 / 255) : Color.white.opacity(0.94)))
+                }
+                .buttonStyle(.plain)
+                .disabled(jesseCall.isActive)
+                .accessibilityIdentifier("resumeCallJesse")
+
+                Button(action: onClose) {
+                    Text("Done")
+                        .font(.system(size: 13, weight: .heavy, design: .rounded))
+                        .foregroundColor(Color(red: 20 / 255, green: 58 / 255, blue: 46 / 255))
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 10)
+                        .background(Capsule().fill(Color.white.opacity(0.94)))
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("resumeAgentBack")
+                .accessibilityLabel("Done")
             }
-            .buttonStyle(.plain)
             .padding(.top, 12)
             .padding(.trailing, 16)
-            .accessibilityIdentifier("resumeAgentBack")
-            .accessibilityLabel("Done")
         }
         .statusBarHidden(true)
         .accessibilityIdentifier("resumeAgentRoot")
+        .sheet(isPresented: $showJesseCallSheet) {
+            JesseCallSheetView(
+                call: jesseCall,
+                onClose: { showJesseCallSheet = false },
+                onEnd: {
+                    jesseCall.end()
+                    showJesseCallSheet = false
+                }
+            )
+        }
+    }
+
+    private func startCall() {
+        jesseCall.begin(context: "resume")
+        showJesseCallSheet = true
     }
 }
 
