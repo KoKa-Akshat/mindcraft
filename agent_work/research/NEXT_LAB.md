@@ -150,9 +150,10 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 152 | Path-conditioned dual blame tests (selection vs quality) | SAFE-REPAIRSTRAT × SAFE-DUALRATE/CAPPLAN; risk-adjusted path tables without Dual Shame Score™ | **DONE** (2026-08-15) — Part CLII / SAFE-PATHBLAME |
 | 153 | Contract SME panel seal onboarding & parallel-run gates | SAFE-SURGEPANEL × SAFE-FIGKEY/DUALRATE; ramp before C4 authority without Parallel Score™ | **DONE** (2026-08-16) — Part CLIII / SAFE-PANELRAMP |
 | 154 | Post-spike dual demobilization without fidelity cliff | SAFE-SURGEPANEL × SAFE-WORKFORCE/REPAIRSTRAT; end panel without invent-work or repair spike | **DONE** (2026-08-16) — Part CLIV / SAFE-DEMOB |
-| 155 | Gold-set planted probes for path×stratum monitors | SAFE-PATHBLAME × SAFE-REPAIRSTRAT/INSTRUMENT; sealed canaries without Gold Set Score™ | **NEXT** |
-| 156 | Generator vs rater poison separation on inherit repair | SAFE-REVOKE × SAFE-PATHBLAME/GENQ; blame labels without Generator Shame Score™ | queued |
+| 155 | Gold-set planted probes for path×stratum monitors | SAFE-PATHBLAME × SAFE-REPAIRSTRAT/INSTRUMENT; sealed canaries without Gold Set Score™ | **DONE** (2026-08-16) — Part CLV / SAFE-GOLDSET |
+| 156 | Generator vs rater poison separation on inherit repair | SAFE-REVOKE × SAFE-PATHBLAME/GENQ; blame labels without Generator Shame Score™ | **NEXT** |
 | 157 | LEA packet path-mix honesty without Dual Shame theater | SAFE-PATHBLAME × SAFE-PROCURE/HOLETRUST; mix charts in trust packets without case-mix cosplay | queued |
+| 158 | Gold-bank rotation & tip-resistance under rater familiarity | SAFE-GOLDSET × SAFE-REVOKE/PANELRAMP; rotate sealed probes without Gold Familiarity Score™ | queued |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 
@@ -268,3 +269,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any Dual Shame Score™ / Selection-Adjusted Repair % / Path Blame Minutes NS / unconditioned dual-vs-single rankings as quality proof / Propensity Theater™ brand / hospital case-mix cosplay ACT ads / κ-as-blame-verdict / complete-visual from blame packaging (Part CLII / SAFE-PATHBLAME)
 - Any Parallel Score™ / Onboard Minutes / Ramp % NS / day-one C4 for contract panelists / Loom≡seal literacy / SOW-signed≡gate-pass / forever-ramp without exit / silent graduate under ETA panic / AP·ETS cosplay ACT ads / complete-visual or ACT guarantees from panel onboarding packaging (Part CLIII / SAFE-PANELRAMP)
 - Any Demobilization Score™ / Idle Minutes / Panel Utilization % NS / invent-work after spike / cliff-cut without handover / forever-panel latch without CAPPLAN review / silent FILLETA after demob / hospital-demob cosplay ACT ads / complete-visual or ACT guarantees from demobilization packaging (Part CLIV / SAFE-DEMOB)
+- Any Gold Set Score™ / Canary Minutes / Probe Hit % NS / open or student-facing planted stems / pooled-only gold vanity / invent-work gold pad / radiology-canary cosplay ACT ads / complete-visual or ACT guarantees from canary packaging (Part CLV / SAFE-GOLDSET)
