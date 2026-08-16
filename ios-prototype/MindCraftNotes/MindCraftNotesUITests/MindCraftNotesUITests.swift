@@ -977,14 +977,17 @@ final class MindCraftNotesUITests: XCTestCase {
         manageWordmark.tap()
 
         // Hub redesign: no separate hub-nav row anymore (persistent
-        // top-level chrome - logo/call/sign-out - covers every screen
-        // including this one now), so "The Desk" wordmark, the "Jesse's"
-        // home button, and the whole Workflow market section are gone.
-        // Call now lives next to the greeting instead of next to a wordmark.
-        let callButton = app.buttons["deskHubCallButton"]
-        XCTAssertTrue(callButton.waitForExistence(timeout: 10), "expected Call next to the greeting on the desk hub")
+        // top-level chrome - logo/sign-out - covers every screen including
+        // this one now), so "The Desk" wordmark, the "Jesse's" home
+        // button, Call, and the whole Workflow market section are all
+        // gone. Connect (Friends, swaps the Tutors section in place) and
+        // Back now live next to the greeting instead.
+        let connectButton = app.buttons["deskHubConnectButton"]
+        XCTAssertTrue(connectButton.waitForExistence(timeout: 10), "expected Connect next to the greeting on the desk hub")
+        XCTAssertTrue(app.buttons["deskHubBackButton"].waitForExistence(timeout: 3),
+                      "expected Back next to the greeting on the desk hub")
         XCTAssertFalse(app.staticTexts["Start your mastery check-in"].exists,
-                       "no bubble copy next to the Call button")
+                       "no bubble copy next to the Connect button")
         XCTAssertTrue(app.buttons["deskHubCreateInstance"].waitForExistence(timeout: 3),
                       "expected tappable Create an instance tile")
         XCTAssertFalse(app.staticTexts["Your instances"].exists,

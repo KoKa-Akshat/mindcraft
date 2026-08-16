@@ -290,6 +290,26 @@ struct CreateCanvasView: View {
                         .fill(Color(createHex: "eef1ec"))
                 )
 
+            // Pinned right under the greeting - toggles to a real "End
+            // call" once active (previously just went disabled/"On the
+            // line" with no way to actually hang up from here). Transcript
+            // scrolls beneath it, not above.
+            Button(action: jesseCall.isActive ? endCall : jumpOnCall) {
+                HStack {
+                    Image(systemName: jesseCall.isActive ? "phone.down.fill" : "phone.fill")
+                    Text(jesseCall.isActive ? "End call" : "Jump on a call with Jesse")
+                    Spacer(minLength: 0)
+                    if !jesseCall.isActive { Image(systemName: "arrow.right") }
+                }
+                .font(.system(size: 14, weight: .bold, design: .rounded))
+                .foregroundColor(.white)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 14)
+                .background(Capsule().fill(jesseCall.isActive ? Color(createHex: "b0473f") : Color.black))
+            }
+            .buttonStyle(.plain)
+            .accessibilityIdentifier("createCanvasCallJesse")
+
             if !jesseCall.turns.isEmpty || !instructionLog.isEmpty || jesseCall.isListening || jesseCall.isThinking {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 10) {
@@ -318,23 +338,6 @@ struct CreateCanvasView: View {
                 )
                 .accessibilityIdentifier("createCanvasTranscription")
             }
-
-            Button(action: jumpOnCall) {
-                HStack {
-                    Image(systemName: "phone.fill")
-                    Text(jesseCall.isActive ? "On the line" : "Jump on a call with Jesse")
-                    Spacer(minLength: 0)
-                    Image(systemName: "arrow.right")
-                }
-                .font(.system(size: 14, weight: .bold, design: .rounded))
-                .foregroundColor(.white)
-                .padding(.horizontal, 16)
-                .padding(.vertical, 14)
-                .background(Capsule().fill(Color.black))
-            }
-            .buttonStyle(.plain)
-            .disabled(jesseCall.isActive)
-            .accessibilityIdentifier("createCanvasCallJesse")
 
             Text("or continue in chat")
                 .font(.system(size: 12, weight: .medium, design: .rounded))
@@ -475,6 +478,12 @@ struct CreateCanvasView: View {
         } else {
             jesseCall.startListening()
         }
+    }
+
+    /// Real hang-up - the button used to just go disabled/"On the line"
+    /// once active, with no way to actually end the call from here.
+    private func endCall() {
+        jesseCall.end()
     }
 
     private func toggleMic() {

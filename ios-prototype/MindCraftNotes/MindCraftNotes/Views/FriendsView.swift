@@ -1,14 +1,16 @@
 import SwiftUI
 import EventKit
 
-/// Friends tab — reached from the Call button anywhere in the dashboard.
-/// Two sections: friends the student added, and tutors from the platform's
-/// tutor directory (no separate "booked tutors" tracking exists yet, so this
-/// uses the full tutor roster — the honest, practical scope given what data
-/// actually exists today). Each row can send a QCal invite.
+/// Friends content — embedded inline in the Manage hub's "Tutors nearby"
+/// slot (swaps in when Connect is tapped, swaps back out on tap again).
+/// No longer a separate full-screen destination - that pushed to a whole
+/// new screen instead of updating in place, which is what was actually
+/// wanted. Two sections: friends the student added, and tutors from the
+/// platform's tutor directory (no separate "booked tutors" tracking
+/// exists yet, so this uses the full tutor roster — the honest, practical
+/// scope given what data actually exists today). Each row can send a
+/// QCal invite.
 struct FriendsView: View {
-    var onClose: () -> Void
-
     @StateObject private var friendsStore = FriendsStore()
     @StateObject private var tutorClient = TutorDirectoryClient()
     @State private var newName = ""
@@ -20,62 +22,50 @@ struct FriendsView: View {
     @Environment(\.openURL) private var openURL
 
     private static let ink = Color(red: 20 / 255, green: 58 / 255, blue: 46 / 255)
-    private static let cream = Color(red: 255 / 255, green: 248 / 255, blue: 233 / 255)
     private static let lime = Color(red: 196 / 255, green: 245 / 255, blue: 71 / 255)
 
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 26) {
-                    addFriendCard
+        ScrollView {
+            VStack(alignment: .leading, spacing: 20) {
+                addFriendCard
 
-                    sectionHeader("Friends")
-                    if friendsStore.friends.isEmpty {
-                        Text("No friends added yet. Add one above.")
-                            .font(.system(size: 13, weight: .medium, design: .rounded))
-                            .foregroundColor(Self.ink.opacity(0.5))
-                    } else {
-                        VStack(spacing: 10) {
-                            ForEach(friendsStore.friends) { friend in
-                                personRow(
-                                    name: friend.name,
-                                    subtitle: friend.email.isEmpty ? "No email on file" : friend.email,
-                                    email: friend.email
-                                ) {
-                                    friendsStore.removeFriend(friend.id)
-                                }
-                            }
-                        }
-                    }
-
-                    sectionHeader("Tutors")
-                    if tutorClient.tutors.isEmpty {
-                        ProgressView().padding(.vertical, 12)
-                    } else {
-                        VStack(spacing: 10) {
-                            ForEach(tutorClient.tutors) { tutor in
-                                personRow(
-                                    name: tutor.displayName,
-                                    subtitle: tutor.subjects.joined(separator: " · "),
-                                    email: ""
-                                )
+                sectionHeader("Friends")
+                if friendsStore.friends.isEmpty {
+                    Text("No friends added yet. Add one above.")
+                        .font(.system(size: 13, weight: .medium, design: .rounded))
+                        .foregroundColor(Self.ink.opacity(0.5))
+                } else {
+                    VStack(spacing: 10) {
+                        ForEach(friendsStore.friends) { friend in
+                            personRow(
+                                name: friend.name,
+                                subtitle: friend.email.isEmpty ? "No email on file" : friend.email,
+                                email: friend.email
+                            ) {
+                                friendsStore.removeFriend(friend.id)
                             }
                         }
                     }
                 }
-                .padding(20)
-            }
-            .background(Self.cream.ignoresSafeArea())
-            .navigationTitle("Friends")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button("Back to Desk", action: onClose)
-                        .font(.system(size: 13, weight: .bold, design: .rounded))
+
+                sectionHeader("Tutors")
+                if tutorClient.tutors.isEmpty {
+                    ProgressView().padding(.vertical, 12)
+                } else {
+                    VStack(spacing: 10) {
+                        ForEach(tutorClient.tutors) { tutor in
+                            personRow(
+                                name: tutor.displayName,
+                                subtitle: tutor.subjects.joined(separator: " · "),
+                                email: ""
+                            )
+                        }
+                    }
                 }
             }
+            .padding(4)
         }
-        .accessibilityIdentifier("friendsTabRoot")
+        .accessibilityIdentifier("friendsInlineSection")
         .sheet(item: Binding(
             get: { pendingEvent.map { IdentifiableEvent(event: $0) } },
             set: { if $0 == nil { pendingEvent = nil } }

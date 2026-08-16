@@ -60,7 +60,10 @@ struct DeskShellView: View {
     @State private var fieldDeskRoute: FieldDeskRoute?
     @State private var showTestInstance = false
     @State private var showCheckIn = false
-    @State private var showFriends = false
+    /// Swaps the "Tutors nearby" slot to Friends content in place - was a
+    /// separate fullScreenCover (FriendsView), which pushed to a whole new
+    /// screen instead of updating the hub itself.
+    @State private var showFriendsInline = false
     @State private var showFindTutor = false
     @State private var toastMessage: String?
     @State private var tutorFilter: String = "All"
@@ -171,36 +174,22 @@ struct DeskShellView: View {
             }
         }
         .fullScreenCover(isPresented: $showHubPage) {
-            ZStack(alignment: .bottom) {
-                hub
-                // "Done" - every screen except the dashboard itself uses
-                // this label (the dashboard alone gets "Exit"); this hub
-                // page is a secondary detail screen, same as Binder/
-                // Calendar/Presentation/etc.
-                Button {
-                    showHubPage = false
-                } label: {
-                    Text("Done")
-                        .font(.system(size: 13, weight: .heavy, design: .rounded))
-                        .foregroundColor(Color(shellHex: "f4f7f4"))
-                        .padding(.horizontal, 18)
-                        .padding(.vertical, 11)
-                        .background(Capsule().fill(Color(shellHex: "1f2a22")))
-                        .shadow(color: .black.opacity(0.25), radius: 12, y: 5)
-                }
-                .buttonStyle(.plain)
-                .padding(.bottom, 18)
-                .accessibilityIdentifier("hubPageDone")
-            }
-            // Attached HERE, not on the outer body - callButton (which sets
-            // showCheckIn) lives inside this fullScreenCover's content.
-            // SwiftUI silently no-ops a .sheet() declared on an ancestor
-            // OUTSIDE the currently-presented fullScreenCover's own hosted
-            // hierarchy: showCheckIn correctly flipped true (confirmed no
-            // crash), but no sheet ever appeared - the real bug behind
-            // MasteryCheckInSheet being unreachable, not the callButton
-            // action itself (that part was already fixed to call showCheckIn
-            // instead of showFriends, restoring web parity with hubCall.js).
+            // No floating "Done" pill anymore - the header's own Back
+            // button (deskHubBackButton) does the same thing, and having
+            // both was a duplicate control for the same action.
+            hub
+            // Attached HERE, not on the outer body - whatever sets
+            // showCheckIn needs to live inside this fullScreenCover's own
+            // content. SwiftUI silently no-ops a .sheet() declared on an
+            // ancestor OUTSIDE the currently-presented fullScreenCover's
+            // own hosted hierarchy: showCheckIn correctly flipped true
+            // (confirmed no crash), but no sheet ever appeared - the real
+            // bug behind MasteryCheckInSheet being unreachable. showCheckIn
+            // itself is currently unreachable from anywhere in the UI
+            // (its one trigger, callButton, was removed - see the note
+            // near hubSignOutFooter/orbRow), so this .sheet() is presently
+            // dead code too, kept only because the pipeline it feeds is
+            // real and this may get re-wired to something else.
             .sheet(isPresented: $showCheckIn) {
                 MasteryCheckInSheet(store: goalStore) { message in
                     flashHub(message)
@@ -254,9 +243,6 @@ struct DeskShellView: View {
                         }
                     }
             }
-        }
-        .fullScreenCover(isPresented: $showFriends) {
-            FriendsView(onClose: { showFriends = false })
         }
         .sheet(isPresented: $showManage) {
             AccountManageView()
@@ -320,35 +306,60 @@ struct DeskShellView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
                     // No separate nav row - the persistent top-level chrome
-                    // (logo, sign-out) covers that now. Call (Jesse) and
-                    // Connect (Friends/invite) both live here instead of on
-                    // the dashboard, which keeps the dashboard itself clean.
+                    // (logo, sign-out) covers that now. Call (Jesse) is
+                    // gone from here - the logo/chrome already reaches
+                    // Jesse from anywhere, having it duplicated on this
+                    // page too was redundant. Back replaces it instead.
                     HStack(alignment: .center, spacing: 10) {
                         greeting
                         Spacer(minLength: 0)
                         Button {
-                            showFriends = true
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                showFriendsInline.toggle()
+                            }
                         } label: {
                             Image(systemName: "person.2.fill")
                                 .font(.system(size: 14, weight: .medium))
+                                .foregroundColor(showFriendsInline ? Color.white : ShellColor.ink)
+                                .frame(width: 44, height: 44)
+                                .background(Circle().fill(showFriendsInline ? ShellColor.ink : Color.white.opacity(0.7)))
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityIdentifier("deskHubConnectButton")
+                        .accessibilityLabel("Connect")
+
+                        Button {
+                            showHubPage = false
+                        } label: {
+                            Image(systemName: "chevron.left")
+                                .font(.system(size: 14, weight: .bold))
                                 .foregroundColor(ShellColor.ink)
                                 .frame(width: 44, height: 44)
                                 .background(Circle().fill(Color.white.opacity(0.7)))
                         }
                         .buttonStyle(.plain)
-                        .accessibilityIdentifier("deskHubConnectButton")
-                        .accessibilityLabel("Connect")
-                        callButton
+                        .accessibilityIdentifier("deskHubBackButton")
+                        .accessibilityLabel("Back")
                     }
                     .padding(.top, 4)
                     .padding(.bottom, 16)
                     instanceGrid
 
-                    // Shown directly, no collapse/expand toolbar wrapper -
-                    // tutors are always visible on the hub.
-                    plainSectionHeader(title: "Tutors nearby", a11y: "deskHubTutorsNearby")
+                    // Connect swaps this slot to Friends in place (scrollable,
+                    // same shape as the marketing site's Archive box expanding
+                    // in place over its own teaser) instead of pushing a
+                    // separate full-screen destination.
+                    plainSectionHeader(
+                        title: showFriendsInline ? "Friends" : "Tutors nearby",
+                        a11y: "deskHubTutorsNearby"
+                    )
                         .padding(.top, 22)
-                    tutorsNearbySection
+                    if showFriendsInline {
+                        FriendsView()
+                            .frame(height: 420)
+                    } else {
+                        tutorsNearbySection
+                    }
 
                     hubSignOutFooter
                 }
@@ -381,8 +392,9 @@ struct DeskShellView: View {
 
     // hubNav removed - "The Desk" wordmark, name/email, and the "Jesse's"
     // button it held were all redundant with the persistent top-level
-    // chrome (logo/call/sign-out) that now covers every screen. callButton
-    // moved next to the greeting below.
+    // chrome (logo/sign-out) that now covers every screen. Call was moved
+    // here next to the greeting first, then removed entirely (redundant
+    // with the persistent chrome/JesseCallPill) in favor of Connect + Back.
 
     /// Sign out, moved off the primary nav row - it shouldn't share visual
     /// weight with "back to Jesse's." Sits under the Workflow Market section,
@@ -390,9 +402,10 @@ struct DeskShellView: View {
     private var hubSignOutFooter: some View {
         HStack(spacing: 10) {
             Spacer()
-            // Moved off the dashboard itself (which now has no close
-            // control of its own) - leaves Field Desk entirely, not just
-            // this hub page.
+            // No separate Sign out button here - the persistent top-level
+            // chrome already has one on every screen. Exit leaves Field
+            // Desk entirely (not just this hub page), since the dashboard
+            // itself has no close control of its own.
             Button("Exit") {
                 showHubPage = false
                 fieldDeskRoute = nil
@@ -403,14 +416,6 @@ struct DeskShellView: View {
             .padding(.vertical, 8)
             .background(Capsule().stroke(ShellColor.ink.opacity(0.2), lineWidth: 1))
             .accessibilityIdentifier("deskHubExit")
-
-            Button("Sign out") { authService.signOut() }
-                .font(.system(size: 12, weight: .bold, design: .rounded))
-                .foregroundColor(ShellColor.ink.opacity(0.55))
-                .padding(.horizontal, 14)
-                .padding(.vertical, 8)
-                .background(Capsule().stroke(ShellColor.ink.opacity(0.2), lineWidth: 1))
-                .accessibilityIdentifier("deskShellSignOut")
             Spacer()
         }
         .padding(.top, 26)
@@ -511,28 +516,13 @@ struct DeskShellView: View {
 
     /// `.hub-call` - a real call to Jesse (the same shared JesseCallSession
     /// every other call surface uses), with the same transcript sheet.
-    /// Was showCheckIn (the mastery check-in form) - that's now unreachable
-    /// from here. The affective-state pipeline it fed (webhook ->
-    /// affective_state Firestore doc -> /recommend's stress softening)
-    /// still exists and still works if driven another way; it just isn't
-    /// wired to this button anymore. Flagged, not silently dropped.
-    private var callButton: some View {
-        Button {
-            if !jesseCall.isActive {
-                jesseCall.begin(context: "hub")
-            }
-            showJesseCallSheet = true
-        } label: {
-            Image(systemName: "phone.fill")
-                .font(.system(size: 14, weight: .medium))
-                .foregroundColor(Color(shellHex: "c4f547"))
-                .frame(width: 44, height: 44)
-                .background(Circle().fill(Color(shellHex: "111111")))
-        }
-        .buttonStyle(.plain)
-        .accessibilityIdentifier("deskHubCallButton")
-        .accessibilityLabel("Call")
-    }
+    // callButton removed - Call is gone from this page entirely (the
+    // persistent chrome/JesseCallPill already reach Jesse from anywhere).
+    // It previously replaced showCheckIn (the mastery check-in form) here;
+    // that form and the affective-state pipeline it fed (webhook ->
+    // affective_state Firestore doc -> /recommend's stress softening)
+    // still exist untouched, just unreachable from this page now, same as
+    // before this button existed - flagged, not silently dropped.
 
     /// `.hub-orb-row` - the rotating wireframe cube (web: a 3D CSS cube,
     /// 6 faces + 3 cross planes, `rotateX(-18deg)` + a 16s full Y turn)
