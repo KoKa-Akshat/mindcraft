@@ -83,3 +83,5 @@ marketing-drive-service-account.json
 
 # Archive mirror pilot output — regenerable via mirror_book.py, kept out of git
 agent_work/product/archive_mirror/out/
+agent_work/product/archive_mirror/mirror_run*.log
+agent_work/product/archive_mirror/_book_list.tsv

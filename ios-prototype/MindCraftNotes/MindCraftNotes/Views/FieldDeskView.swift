@@ -100,6 +100,10 @@ struct FieldDeskView: View {
     /// old free-drag desk, which is what "closing the app" from Calendar
     /// actually was: the dashboard vanished with nothing re-shown on top.
     @State private var showCalendarOverlay = false
+    /// Intel tapped from the Work dashboard - same overlay-on-top treatment
+    /// as Calendar/Binder/Gmail above. Was previously a dead tap on the
+    /// dashboard (handleTile's Intel case fell into `default: break`).
+    @State private var showIntelOverlay = false
     /// Real nav-intent target ("study quadratic equations" via Ask The Desk
     /// -> `study_concept` action) - threaded into `DashboardView` so it
     /// opens straight to that concept's chapter instead of just the roadmap.
@@ -593,9 +597,19 @@ struct FieldDeskView: View {
                         .accessibilityIdentifier("fieldDeskCalendarOverlay")
                 }
 
+                // Intel box as an in-desk popup over the dashboard, same
+                // shape as Gcal/Binder above.
+                if showIntelOverlay {
+                    intelOverlayLayer
+                        .transition(.opacity)
+                        .zIndex(89)
+                        .accessibilityIdentifier("fieldDeskIntelOverlay")
+                }
+
                 if showDeskGridDashboard {
                     DeskGridDashboardView(
                         initialRail: dashboardStartRail,
+                        initialMemoText: store.memoText,
                         onOpenBinder: {
                             // Keep the dashboard mounted underneath - Field Book
                             // layers on top via its higher zIndex above. Closing
@@ -624,6 +638,11 @@ struct FieldDeskView: View {
                                 showGmailBox = true
                             }
                         },
+                        onOpenIntel: {
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                showIntelOverlay = true
+                            }
+                        },
                         onOpenCreate: { kind in
                             createCanvasKind = kind
                             withAnimation(.easeInOut(duration: 0.28)) {
@@ -647,7 +666,8 @@ struct FieldDeskView: View {
                                 default: break
                                 }
                             }
-                        }
+                        },
+                        onSaveMemo: { store.saveMemo($0) }
                     )
                     .id(dashboardStartRail)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -954,27 +974,30 @@ struct FieldDeskView: View {
                     .animation(.easeInOut(duration: 0.22), value: showTopChrome)
                 }
             }
-            // Top-left product mark → Manage (text only: The Desk), plus Call
-            // right beside it. `topChrome` below is a swipe-to-reveal bar
-            // that's also fully suppressed on Standalone Desk / Create
-            // Studio (`floatDockBlocked`) — Call used to live only there, so
-            // it vanished entirely on those two screens and needed a swipe
-            // to appear on Jesse's. Anchoring it to this always-visible
-            // header instead gives it one consistent home across all three
-            // screens, next to "The Desk" wordmark (Akshat).
+            // Top-left product mark → Manage (logo mark), plus Call right
+            // beside it. `topChrome` below is a swipe-to-reveal bar that's
+            // also fully suppressed on Standalone Desk / Create Studio
+            // (`floatDockBlocked`) — Call used to live only there, so it
+            // vanished entirely on those two screens and needed a swipe to
+            // appear on Jesse's. Anchoring it to this always-visible header
+            // instead gives it one consistent home across all three screens.
+            // `|| showDeskGridDashboard` extends this same persistent chrome
+            // onto the Work dashboard too - previously deskOverlayChromeBlocked
+            // hid it there entirely, so the dashboard had no logo/call/sign-out
+            // at all (Done was the dashboard's only way to interact with chrome).
             .overlay(alignment: .topLeading) {
-                if !deskOverlayChromeBlocked {
+                if !deskOverlayChromeBlocked || showDeskGridDashboard {
                     HStack(spacing: 10) {
                         Button {
                             openManageFromChrome()
                         } label: {
-                            Text("The Desk")
-                                .font(.system(size: 13, weight: .heavy, design: .rounded))
-                                .foregroundColor(Color(fdHex: "143a2e"))
-                                .padding(.horizontal, 14)
-                                .padding(.vertical, 10)
+                            Image("MindCraftLogo")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 40, height: 40)
+                                .clipShape(Circle())
                                 .background(
-                                    Capsule()
+                                    Circle()
                                         .fill(Color.white.opacity(0.96))
                                         .shadow(color: .black.opacity(0.16), radius: 8, y: 3)
                                 )
@@ -1002,10 +1025,11 @@ struct FieldDeskView: View {
                 }
             }
             // Top-right: mode toggle (Create/Work or Jesse's pair) · Sign out.
+            // Same dashboard extension as the top-left chrome above.
             .overlay(alignment: .topTrailing) {
-                if !deskOverlayChromeBlocked {
+                if !deskOverlayChromeBlocked || showDeskGridDashboard {
                     HStack(spacing: 10) {
-                        modeToggleBar
+                        if !showDeskGridDashboard { modeToggleBar }
 
                         Button {
                             authService.signOut()
@@ -2875,6 +2899,52 @@ struct FieldDeskView: View {
     private func closeCalendarOverlay() {
         withAnimation(.easeInOut(duration: 0.2)) {
             showCalendarOverlay = false
+        }
+    }
+
+    /// Intel box for `showIntelOverlay` - same "centered card over the
+    /// dashboard" shape as `calendarOverlayLayer`, reusing the existing
+    /// `intelBody` content (recent intel lines) instead of the old
+    /// free-drag desk card.
+    private var intelOverlayLayer: some View {
+        ZStack {
+            Color.black.opacity(0.35)
+                .ignoresSafeArea()
+                .onTapGesture { closeIntelOverlay() }
+
+            VStack(alignment: .leading, spacing: 12) {
+                HStack(spacing: 10) {
+                    Text("Intel")
+                        .font(.system(size: 16, weight: .bold, design: .rounded))
+                        .foregroundColor(Color(fdHex: "0c1207"))
+                    Spacer(minLength: 0)
+                    Button(action: closeIntelOverlay) {
+                        Label("Minimize", systemImage: "arrow.down.right.and.arrow.up.left")
+                            .font(.system(size: 12, weight: .bold, design: .rounded))
+                            .foregroundColor(Color(fdHex: "0c1207"))
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 8)
+                            .background(Capsule().fill(Color(fdHex: "c4f547")))
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityIdentifier("fieldDeskIntelMinimize")
+                    .accessibilityLabel("Minimize intel")
+                }
+                intelBody
+            }
+            .padding(18)
+            .frame(width: 360, height: 320)
+            .background(
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .fill(Color(fdHex: "fff8e9"))
+                    .shadow(color: .black.opacity(0.35), radius: 24, y: 12)
+            )
+        }
+    }
+
+    private func closeIntelOverlay() {
+        withAnimation(.easeInOut(duration: 0.2)) {
+            showIntelOverlay = false
         }
     }
 

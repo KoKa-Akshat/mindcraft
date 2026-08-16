@@ -100,6 +100,7 @@ final class FieldDeskStore: ObservableObject {
     private static let layoutOffsetsKey = "deskOs.layoutOffsets"
     private static let layoutSizesKey = "deskOs.layoutSizes"
     private static let layoutFocusKey = "deskOs.layoutFocus"
+    private static let memoTextKey = "deskOs.memoText"
     private static let uiTesting = ProcessInfo.processInfo.arguments.contains("--ui-testing-in-memory")
 
     @Published private(set) var items: [FiledItem] = []
@@ -118,6 +119,7 @@ final class FieldDeskStore: ObservableObject {
     @Published private(set) var layoutOffsets: [String: CGSize] = [:]
     @Published private(set) var layoutSizes: [String: CGSize] = [:]
     @Published private(set) var layoutFocus: String?
+    @Published private(set) var memoText: String = ""
 
     init() {
         items = Self.decode([FiledItem].self, key: Self.itemsKey) ?? []
@@ -133,6 +135,14 @@ final class FieldDeskStore: ObservableObject {
         layoutOffsets = Self.decode([String: CGSize].self, key: Self.layoutOffsetsKey) ?? [:]
         layoutSizes = Self.decode([String: CGSize].self, key: Self.layoutSizesKey) ?? [:]
         layoutFocus = Self.decode(String.self, key: Self.layoutFocusKey)
+        memoText = Self.decode(String.self, key: Self.memoTextKey) ?? ""
+    }
+
+    /// Explicit save action on the Memo card - previously pure @State that
+    /// reset on every relaunch with no way to persist it at all.
+    func saveMemo(_ text: String) {
+        memoText = text
+        Self.encode(text, key: Self.memoTextKey)
     }
 
     /// Called on every commit (drag end, resize end, card placed/closed) -

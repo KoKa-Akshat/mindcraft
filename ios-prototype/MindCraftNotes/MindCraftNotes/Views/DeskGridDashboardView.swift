@@ -12,16 +12,21 @@ struct DeskGridDashboardView: View {
     }
 
     var initialRail: Rail = .none
+    var initialMemoText: String = ""
     var onOpenBinder: () -> Void = {}
     var onClose: () -> Void = {}
     var onOpenCalendar: () -> Void = {}
     var onOpenGmail: () -> Void = {}
+    var onOpenIntel: () -> Void = {}
     var onOpenCreate: (CreateCanvasKind) -> Void = { _ in }
     var onOpenFlow: (String) -> Void = { _ in }
+    var onSaveMemo: (String) -> Void = { _ in }
 
     @State private var rail: Rail
-    @State private var memoDraft = ""
+    @State private var memoDraft: String
+    @State private var memoSaved = true
     @State private var searchQuery = ""
+    @State private var flowsSearchQuery = ""
     @State private var binderPulled = false
     @State private var spacePan: CGSize = .zero
     @State private var spaceZoom: CGFloat = 1
@@ -32,21 +37,28 @@ struct DeskGridDashboardView: View {
 
     init(
         initialRail: Rail = .none,
+        initialMemoText: String = "",
         onOpenBinder: @escaping () -> Void = {},
         onClose: @escaping () -> Void = {},
         onOpenCalendar: @escaping () -> Void = {},
         onOpenGmail: @escaping () -> Void = {},
+        onOpenIntel: @escaping () -> Void = {},
         onOpenCreate: @escaping (CreateCanvasKind) -> Void = { _ in },
-        onOpenFlow: @escaping (String) -> Void = { _ in }
+        onOpenFlow: @escaping (String) -> Void = { _ in },
+        onSaveMemo: @escaping (String) -> Void = { _ in }
     ) {
         self.initialRail = initialRail
+        self.initialMemoText = initialMemoText
         self.onOpenBinder = onOpenBinder
         self.onClose = onClose
         self.onOpenCalendar = onOpenCalendar
         self.onOpenGmail = onOpenGmail
+        self.onOpenIntel = onOpenIntel
         self.onOpenCreate = onOpenCreate
         self.onOpenFlow = onOpenFlow
+        self.onSaveMemo = onSaveMemo
         _rail = State(initialValue: initialRail)
+        _memoDraft = State(initialValue: initialMemoText)
     }
 
     private var expanded: Bool { rail != .none }
@@ -92,17 +104,9 @@ struct DeskGridDashboardView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .ignoresSafeArea()
-        .overlay(alignment: .topTrailing) {
-            Button("Done", action: onClose)
-                .font(.system(size: 13, weight: .bold, design: .rounded))
-                .foregroundColor(Color(gridHex: "0c1207"))
-                .padding(.horizontal, 14)
-                .padding(.vertical, 8)
-                .background(Capsule().fill(Color(gridHex: "c4f547")))
-                .padding(.top, 12)
-                .padding(.trailing, 16)
-                .accessibilityIdentifier("deskGridDashboardDone")
-        }
+        // No "Done" button - the persistent top-left logo + top-right
+        // call/sign-out chrome (FieldDeskView) covers this screen too now,
+        // so a redundant close control isn't needed here.
         // Not a direct .accessibilityIdentifier() here either - same
         // clobbering bug as workDock, this time it would stomp every
         // nested tile/dock/rail identifier with "deskGridDashboard".
@@ -135,7 +139,7 @@ struct DeskGridDashboardView: View {
             pin(expanded ? WorkArtboard.p5Gcal : WorkArtboard.p4Gcal, scale: scale) {
                 photoTile(.gcal)
             }
-            pin(WorkArtboard.dock, scale: scale) { workDock }
+            pin(WorkArtboard.dock, scale: scale) { activeDock }
             if expanded {
                 pin(rail == .memo ? WorkArtboard.memoRail : WorkArtboard.flowsRail, scale: scale) {
                     if rail == .memo { memoRail } else { flowsRail }
@@ -290,6 +294,27 @@ struct DeskGridDashboardView: View {
         }
     }
 
+    /// Flows-only search - already inside the rail, so a match opens the
+    /// flow directly instead of just toggling the rail (which is already open).
+    private func submitFlowsSearch() {
+        let query = flowsSearchQuery.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        defer { flowsSearchQuery = "" }
+        guard !query.isEmpty else { return }
+        if "presentation".contains(query) || "slide".contains(query) {
+            onOpenCreate(.presentation)
+        } else if "gdoc".contains(query) || "doc".contains(query) {
+            onOpenCreate(.gdoc)
+        } else if "resume".contains(query) {
+            onOpenFlow("resume")
+        } else if "archive".contains(query) {
+            onOpenFlow("archive")
+        } else if "book".contains(query) {
+            onOpenFlow("book")
+        } else if "apply".contains(query) || "job".contains(query) {
+            onOpenFlow("apply")
+        }
+    }
+
     private func handleTile(_ kind: TileKind) {
         switch kind {
         case .binder:
@@ -301,12 +326,25 @@ struct DeskGridDashboardView: View {
             onOpenGmail()
         case .memo:
             setRail(rail == .memo ? .none : .memo)
+        case .intel:
+            onOpenIntel()
         default:
             break
         }
     }
 
     // MARK: - Dock
+
+    /// Flows has its own dock: Binder/Calendar/Memo/Gmail don't apply inside
+    /// that rail, so it's just a way back + a search optimized for flows.
+    @ViewBuilder
+    private var activeDock: some View {
+        if rail == .flows {
+            flowsDock
+        } else {
+            workDock
+        }
+    }
 
     private var workDock: some View {
         HStack(spacing: 8) {
@@ -315,20 +353,7 @@ struct DeskGridDashboardView: View {
             dockChip("Memo", system: "note.text", identifier: "deskGridDashboardAddMemo") { setRail(rail == .memo ? .none : .memo) }
             dockChip("Gmail", system: "envelope.fill", action: onOpenGmail)
             dockChip("Flows", system: "bolt.fill", identifier: "deskGridDock_Flows") { setRail(rail == .flows ? .none : .flows) }
-            HStack(spacing: 6) {
-                Image(systemName: "magnifyingglass")
-                    .foregroundColor(.white.opacity(0.45))
-                TextField("Search", text: $searchQuery)
-                    .textFieldStyle(.plain)
-                    .font(.system(size: 13, weight: .medium, design: .rounded))
-                    .foregroundColor(.white)
-                    .submitLabel(.search)
-                    .onSubmit(submitSearch)
-            }
-            .padding(.horizontal, 12)
-            .padding(.vertical, 8)
-            .background(Capsule().fill(Color.white.opacity(0.12)))
-            .accessibilityIdentifier("deskGridDashboardSearch")
+            searchField(placeholder: "Search", identifier: "deskGridDashboardSearch", onSubmit: submitSearch)
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 10)
@@ -347,6 +372,44 @@ struct DeskGridDashboardView: View {
                 .accessibilityIdentifier("deskGridDashboardToolbar")
                 .allowsHitTesting(false)
         }
+    }
+
+    private var flowsDock: some View {
+        HStack(spacing: 8) {
+            dockChip("Dashboard", system: "square.grid.2x2.fill", identifier: "deskGridDock_BackToDash") { setRail(.none) }
+            searchField(
+                placeholder: "Search Presentation, Resume, Archive, Book…",
+                identifier: "deskGridFlowsSearch",
+                text: $flowsSearchQuery,
+                onSubmit: submitFlowsSearch
+            )
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 10)
+        .background(Capsule().fill(Color(gridHex: "1c1c1e")))
+        .accessibilityElement(children: .contain)
+        .overlay(alignment: .topLeading) {
+            Text(verbatim: "toolbar").font(.system(size: 1)).foregroundColor(.clear)
+                .accessibilityIdentifier("deskGridDashboardToolbar")
+                .allowsHitTesting(false)
+        }
+    }
+
+    private func searchField(placeholder: String, identifier: String, text: Binding<String>? = nil, onSubmit: @escaping () -> Void) -> some View {
+        HStack(spacing: 6) {
+            Image(systemName: "magnifyingglass")
+                .foregroundColor(.white.opacity(0.45))
+            TextField(placeholder, text: text ?? $searchQuery)
+                .textFieldStyle(.plain)
+                .font(.system(size: 13, weight: .medium, design: .rounded))
+                .foregroundColor(.white)
+                .submitLabel(.search)
+                .onSubmit(onSubmit)
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 8)
+        .background(Capsule().fill(Color.white.opacity(0.12)))
+        .accessibilityIdentifier(identifier)
     }
 
     private func dockChip(_ title: String, system: String, identifier: String? = nil, action: @escaping () -> Void) -> some View {
@@ -368,13 +431,31 @@ struct DeskGridDashboardView: View {
 
     private var memoRail: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Memo")
-                .font(.system(size: 14, weight: .bold, design: .rounded))
-                .foregroundColor(Color(gridHex: "143a2e"))
+            HStack {
+                Text("Memo")
+                    .font(.system(size: 14, weight: .bold, design: .rounded))
+                    .foregroundColor(Color(gridHex: "143a2e"))
+                Spacer(minLength: 0)
+                Button {
+                    onSaveMemo(memoDraft)
+                    memoSaved = true
+                } label: {
+                    Text(memoSaved ? "Saved" : "Save")
+                        .font(.system(size: 11, weight: .heavy, design: .rounded))
+                        .foregroundColor(memoSaved ? Color(gridHex: "8a8478") : Color(gridHex: "143a2e"))
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 5)
+                        .background(Capsule().fill(memoSaved ? Color(gridHex: "e4dcc8") : Color(gridHex: "c4f547")))
+                }
+                .buttonStyle(.plain)
+                .disabled(memoSaved)
+                .accessibilityIdentifier("deskGridDashboardMemoSave")
+            }
             TextField("Pin a note…", text: $memoDraft, axis: .vertical)
                 .font(.system(size: 13, weight: .medium, design: .rounded))
                 .textFieldStyle(.plain)
                 .lineLimit(3...6)
+                .onChange(of: memoDraft) { _, _ in memoSaved = false }
             Spacer(minLength: 0)
         }
         .padding(12)
@@ -458,7 +539,9 @@ private enum WorkArtboard {
     // y: 632, leaving an 82pt empty gap below it out of an 810pt-tall
     // board). Tile boxes above are untouched - bottom-aligning the whole
     // ZStack instead moved the tiles too, which is explicitly wrong.
-    static let dock = CGRect(x: 96, y: 698, width: 1321, height: 96)
+    // Nudged closer to the true bottom edge again (was y: 698, leaving a
+    // 16pt gap under a 96pt-tall dock on an 810pt board) - tiles untouched.
+    static let dock = CGRect(x: 96, y: 706, width: 1321, height: 96)
 }
 
 private struct DottedDeskGrid: View {
