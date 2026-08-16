@@ -32,7 +32,13 @@ final class GmailDigestClient: ObservableObject {
     @Published private(set) var isBusy = false
     @Published var lastError: String?
 
-    private init() {}
+    private static let cacheKey = "deskOs.lastGmailDigest.v1"
+
+    private init() {
+        if !ProcessInfo.processInfo.arguments.contains("--ui-testing-in-memory") {
+            digest = Self.loadCache()
+        }
+    }
 
     func summarize(_ messages: [GmailClient.Message]) async {
         guard !messages.isEmpty else { return }
@@ -66,8 +72,46 @@ final class GmailDigestClient: ObservableObject {
                 return
             }
             digest = Self.parse(json)
+            if let digest { Self.saveCache(digest) }
         } catch {
             lastError = "Couldn't reach the summary service. Check your connection."
+        }
+    }
+
+    private struct CachedDigest: Codable {
+        var headline: String
+        var actionItems: [CachedItem]
+        var fyi: [CachedItem]
+        var fallback: Bool
+    }
+
+    private struct CachedItem: Codable {
+        var from: String
+        var subject: String
+        var why: String
+    }
+
+    private static func loadCache() -> Digest? {
+        guard let data = UserDefaults.standard.data(forKey: cacheKey),
+              let cached = try? JSONDecoder().decode(CachedDigest.self, from: data)
+        else { return nil }
+        return Digest(
+            headline: cached.headline,
+            actionItems: cached.actionItems.map { Item(from: $0.from, subject: $0.subject, why: $0.why) },
+            fyi: cached.fyi.map { Item(from: $0.from, subject: $0.subject, why: $0.why) },
+            fallback: cached.fallback
+        )
+    }
+
+    private static func saveCache(_ digest: Digest) {
+        let cached = CachedDigest(
+            headline: digest.headline,
+            actionItems: digest.actionItems.map { CachedItem(from: $0.from, subject: $0.subject, why: $0.why) },
+            fyi: digest.fyi.map { CachedItem(from: $0.from, subject: $0.subject, why: $0.why) },
+            fallback: digest.fallback
+        )
+        if let data = try? JSONEncoder().encode(cached) {
+            UserDefaults.standard.set(data, forKey: cacheKey)
         }
     }
 

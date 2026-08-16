@@ -1741,6 +1741,44 @@ final class MindCraftNotesUITests: XCTestCase {
         XCUIDevice.shared.orientation = .portrait
     }
 
+    /// Work Email Summaries used to stay empty even when Gmail was already
+    /// connected: the tile never fetched the inbox (only the overlay box
+    /// did). Seeded mail must show on the tile itself, and the cramped
+    /// Email box should borrow height from Gcal so the subjects fit.
+    func testWorkDashboardShowsSeededEmailSummariesAndAsksNeighborsForSpace() {
+        let app = launchFieldDeskApp(extraArgs: ["--ui-testing-gmail-dashboard"])
+        XCUIDevice.shared.orientation = .landscapeLeft
+
+        XCTAssertTrue(
+            app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 15),
+            "expected Work dashboard on cold load"
+        )
+
+        let summaries = app.descendants(matching: .any)["deskGridEmailSummaries"]
+        XCTAssertTrue(
+            summaries.waitForExistence(timeout: 12),
+            "Email Summaries tile should show inbox text when Gmail is already connected"
+        )
+        XCTAssertTrue(
+            app.staticTexts.containing(NSPredicate(format: "label CONTAINS %@", "Quadratic")).firstMatch.waitForExistence(timeout: 5),
+            "expected a real seeded subject on the Email tile, not the empty blurb"
+        )
+
+        let email = app.buttons["deskGridTile_Email Summaries"]
+        let gcal = app.buttons["deskGridTile_Gcal"]
+        XCTAssertTrue(email.waitForExistence(timeout: 3), "expected Email tile")
+        XCTAssertTrue(gcal.waitForExistence(timeout: 3), "expected Gcal tile")
+        Thread.sleep(forTimeInterval: 0.7)
+        XCTAssertGreaterThan(
+            email.frame.height,
+            gcal.frame.height,
+            "Email should have asked Gcal to shrink so summaries fit"
+        )
+        attachScreenshot(app, name: "dashboard_email_summaries")
+
+        XCUIDevice.shared.orientation = .portrait
+    }
+
     /// Minimize/reconnect: collapsing Scheduling Workflows should NOT close
     /// it (that's a separate, existing control) - it should shrink to a
     /// reconnectable chip on the desk, same treatment as the ACT stage's

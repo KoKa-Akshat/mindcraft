@@ -314,7 +314,18 @@ final class JesseCallSession: NSObject, ObservableObject {
     private func askJesse(_ message: String) async {
         guard !isAmbient else { return }
         isThinking = true
-        let reply = await ArchiveRagClient.ask(message: message, studentWeakness: studentWeakness)
+        let bus = DeskBoxBus.shared
+        if let local = bus.directAnswer(for: message) {
+            guard isActive else { isThinking = false; return }
+            await speak(local)
+            isThinking = false
+            return
+        }
+        let briefing = bus.briefing()
+        let composed = briefing.isEmpty
+            ? message
+            : briefing + "\n\nStudent said: " + message
+        let reply = await ArchiveRagClient.ask(message: composed, studentWeakness: studentWeakness)
         // isThinking stays true through speech generation too (Kokoro's own
         // network round-trip) rather than adding a separate UI state - the
         // call pill already reads "Jesse is thinking..." either way.

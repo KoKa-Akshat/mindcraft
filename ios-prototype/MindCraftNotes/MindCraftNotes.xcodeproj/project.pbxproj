@@ -20,6 +20,7 @@
 		20FE9273DBB5C8611FB6D861 /* RouteClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FECBAC947388E48E0524B2D /* RouteClient.swift */; };
 		D7JESSECALL01A2B3 /* JesseCallSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7JESSECALL01A2B3 /* JesseCallSession.swift */; };
 		D7MOODLECLIENT01A2 /* MoodleClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7MOODLECLIENT01A2 /* MoodleClient.swift */; };
+		D7DESKBOXBUS01A2 /* DeskBoxBus.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DESKBOXBUS01A2 /* DeskBoxBus.swift */; };
 		A0DESKBOXMASCOT01 /* DeskBoxMascot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DESKBOXMASCOT01 /* DeskBoxMascot.swift */; };
 		D0KOKOROTTS01A2 /* KokoroTTSClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0KOKOROTTS01A2 /* KokoroTTSClient.swift */; };
 		D8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift */; };
@@ -181,6 +182,7 @@
 		6FECBAC947388E48E0524B2D /* RouteClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteClient.swift; sourceTree = "<group>"; };
 		C7JESSECALL01A2B3 /* JesseCallSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JesseCallSession.swift; sourceTree = "<group>"; };
 		C7MOODLECLIENT01A2 /* MoodleClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodleClient.swift; sourceTree = "<group>"; };
+		C7DESKBOXBUS01A2 /* DeskBoxBus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskBoxBus.swift; sourceTree = "<group>"; };
 		B0DESKBOXMASCOT01 /* DeskBoxMascot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskBoxMascot.swift; sourceTree = "<group>"; };
 		C0KOKOROTTS01A2 /* KokoroTTSClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KokoroTTSClient.swift; sourceTree = "<group>"; };
 		C8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveRagClient.swift; sourceTree = "<group>"; };
@@ -372,6 +374,7 @@
 				C9QCALINVITE01A2B3C4 /* QCalInvite.swift */,
 				C7JESSECALL01A2B3 /* JesseCallSession.swift */,
 				C7MOODLECLIENT01A2 /* MoodleClient.swift */,
+				C7DESKBOXBUS01A2 /* DeskBoxBus.swift */,
 				C8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift */,
 				C0KOKOROTTS01A2 /* KokoroTTSClient.swift */,
 			);
@@ -680,6 +683,7 @@
 				20FE9273DBB5C8611FB6D861 /* RouteClient.swift in Sources */,
 				D7JESSECALL01A2B3 /* JesseCallSession.swift in Sources */,
 				D7MOODLECLIENT01A2 /* MoodleClient.swift in Sources */,
+				D7DESKBOXBUS01A2 /* DeskBoxBus.swift in Sources */,
 				D0KOKOROTTS01A2 /* KokoroTTSClient.swift in Sources */,
 				D8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift in Sources */,
 				D9JESSEOVERLAY01A2 /* JesseCallOverlay.swift in Sources */,
