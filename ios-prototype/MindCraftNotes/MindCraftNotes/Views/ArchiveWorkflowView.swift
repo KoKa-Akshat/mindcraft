@@ -110,7 +110,7 @@ private struct ArchiveWorkflowWebView: UIViewRepresentable {
            let url = URL(string: override) {
             return url
         }
-        return URL(string: "https://mindcraft-93858.web.app/desk-os/workflows/archive/?v=a3")!
+        return URL(string: "https://mindcraft-93858.web.app/desk-os/workflows/archive/?v=a4")!
     }
 
     func makeCoordinator() -> Coord { Coord() }

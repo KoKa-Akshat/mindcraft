@@ -371,6 +371,68 @@
     });
   }
 
+  /// Live search: typing a real subject ("calculus") fills the screen with
+  /// typed result boxes pulled from the same local retrieve() scoring
+  /// layPlan() already uses (RAG-shaped: score chunks, take the best
+  /// match, render what it actually says) - not just filtering book
+  /// covers by title. Short queries or no-hit queries fall back to the
+  /// plain cover grid, filtered by title/subject as before.
+  function renderSearchBoxes(hits) {
+    const results = $('shelfResults');
+    const grid = $('shelfGrid');
+    results.innerHTML = '';
+    if (!hits.length) {
+      results.hidden = true;
+      grid.hidden = false;
+      return;
+    }
+    grid.hidden = true;
+    results.hidden = false;
+
+    const top = hits[0];
+    const book = SHELF.find((b) => b.slug === top.bookSlug);
+
+    results.appendChild(window.DeskBoxes.renderWorkspaceBox({
+      tone: 'teal',
+      kicker: 'Summary',
+      title: top.bookTitle,
+      body: (book && book.description) || top.pageTitle,
+    }));
+
+    results.appendChild(window.DeskBoxes.renderWorkspaceBox({
+      tone: 'forest',
+      kicker: 'Content',
+      title: top.pageTitle,
+      body: top.quote.slice(0, 140),
+      bullets: [top.bookTitle],
+      cta: 'Open this page',
+    }, () => openBook(top)));
+
+    if (top.simUrl) {
+      results.appendChild(window.DeskBoxes.renderWorkspaceBox({
+        tone: 'lime',
+        kicker: 'Simulation',
+        title: 'Touch the idea',
+        body: 'Drag a variable. Watch it move.',
+        cta: 'Load simulation',
+      }, () => { openBook(top); loadSim(top); }));
+    }
+  }
+
+  function onShelfSearchInput() {
+    const q = ($('shelfSearch').value || '').trim();
+    if (q.length >= 3) {
+      const hits = retrieve(q, 3);
+      if (hits.length) {
+        renderSearchBoxes(hits);
+        return;
+      }
+    }
+    $('shelfResults').hidden = true;
+    $('shelfGrid').hidden = false;
+    renderShelf();
+  }
+
   $('planBtn').addEventListener('click', startPlan);
   $('shelfPlan').addEventListener('click', startPlan);
   $('toShelf').addEventListener('click', () => show('shelf'));
@@ -390,7 +452,7 @@
   });
   bindHold($('recBtn'));
   bindHold($('callRec'));
-  if ($('shelfSearch')) $('shelfSearch').addEventListener('input', renderShelf);
+  if ($('shelfSearch')) $('shelfSearch').addEventListener('input', onShelfSearchInput);
 
   Promise.all([
     fetch('./books.json?v=c1').then((r) => r.json()).catch(() => ({ books: [] })),

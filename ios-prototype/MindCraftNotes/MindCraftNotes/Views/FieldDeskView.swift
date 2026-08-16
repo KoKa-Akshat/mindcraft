@@ -1026,29 +1026,14 @@ struct FieldDeskView: View {
                     .zIndex(80)
                 }
             }
-            // Top-right: mode toggle (Create/Work or Jesse's pair) · Sign out.
-            // Same dashboard extension as the top-left chrome above.
+            // Top-right: mode toggle (Create/Work or Jesse's pair) only now -
+            // Sign out moved into the Manage page (replacing Exit there),
+            // so it isn't duplicated between the persistent chrome and
+            // Manage anymore.
             .overlay(alignment: .topTrailing) {
-                if !deskOverlayChromeBlocked || showDeskGridDashboard {
+                if (!deskOverlayChromeBlocked || showDeskGridDashboard) && !showDeskGridDashboard {
                     HStack(spacing: 10) {
-                        if !showDeskGridDashboard { modeToggleBar }
-
-                        Button {
-                            authService.signOut()
-                        } label: {
-                            Image(systemName: "rectangle.portrait.and.arrow.right")
-                                .font(.system(size: 14, weight: .bold))
-                                .foregroundColor(Color(fdHex: "143a2e"))
-                                .frame(width: 40, height: 40)
-                                .background(
-                                    Circle()
-                                        .fill(Color.white.opacity(0.94))
-                                        .shadow(color: .black.opacity(0.18), radius: 8, y: 3)
-                                )
-                        }
-                        .buttonStyle(.plain)
-                        .accessibilityIdentifier("fieldDeskSignOutButton")
-                        .accessibilityLabel("Sign out")
+                        modeToggleBar
                     }
                     .padding(.top, 12)
                     .padding(.trailing, 16)

@@ -402,20 +402,20 @@ struct DeskShellView: View {
     private var hubSignOutFooter: some View {
         HStack(spacing: 10) {
             Spacer()
-            // No separate Sign out button here - the persistent top-level
-            // chrome already has one on every screen. Exit leaves Field
-            // Desk entirely (not just this hub page), since the dashboard
-            // itself has no close control of its own.
-            Button("Exit") {
+            // Sign out lives here now, not Exit - the persistent top-level
+            // chrome no longer has its own sign-out button either, so this
+            // is the one place it lives instead of being duplicated.
+            Button("Sign out") {
                 showHubPage = false
                 fieldDeskRoute = nil
+                authService.signOut()
             }
             .font(.system(size: 12, weight: .bold, design: .rounded))
             .foregroundColor(ShellColor.ink.opacity(0.55))
             .padding(.horizontal, 14)
             .padding(.vertical, 8)
             .background(Capsule().stroke(ShellColor.ink.opacity(0.2), lineWidth: 1))
-            .accessibilityIdentifier("deskHubExit")
+            .accessibilityIdentifier("deskHubSignOut")
             Spacer()
         }
         .padding(.top, 26)

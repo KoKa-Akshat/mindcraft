@@ -235,6 +235,11 @@
       <h1>The shelf.</h1>
       <p class="lede">113 textbooks. Each one has its own cover. Open a book — Jesse can still make a plan from here.</p>
       <input class="shelf-search" id="shelfSearch" type="search" placeholder="Search the 113 books…" autocomplete="off">
+      <!-- Live search results: Summary / Content / Simulation, one box
+           each, filled as you type - replaces the cover grid while a
+           query is active, same story-box component layPlan() already
+           uses so the visual language matches the rest of the app. -->
+      <div class="board" id="shelfResults" hidden></div>
       <div class="shelf" id="shelfGrid"></div>
       <button class="btn fill" id="shelfPlan" type="button">Make a study plan</button>
       <button class="quiet" id="toMeet">or talk to Jesse</button>
@@ -285,7 +290,7 @@
   <div class="think" id="think" hidden data-glass="bar"><b>Jesse is reading</b></div>
 
 <script src="../glass.js"></script>
-<script src="./boxes.js?v=a4"></script>
-<script src="./agent.js?v=a4"></script>
+<script src="./boxes.js?v=a5"></script>
+<script src="./agent.js?v=a5"></script>
 </body>
 </html>
