@@ -454,7 +454,11 @@ private enum WorkArtboard {
     static let p5Gcal = CGRect(x: 884, y: 295, width: 332, height: 325)
     static let memoRail = CGRect(x: 1231, y: 193, width: 199, height: 194)
     static let flowsRail = CGRect(x: 1231, y: 54, width: 199, height: 566)
-    static let dock = CGRect(x: 96, y: 632, width: 1321, height: 96)
+    // Only the dock's own box moves toward the board's bottom edge (was
+    // y: 632, leaving an 82pt empty gap below it out of an 810pt-tall
+    // board). Tile boxes above are untouched - bottom-aligning the whole
+    // ZStack instead moved the tiles too, which is explicitly wrong.
+    static let dock = CGRect(x: 96, y: 698, width: 1321, height: 96)
 }
 
 private struct DottedDeskGrid: View {

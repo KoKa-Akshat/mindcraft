@@ -533,14 +533,26 @@ struct FieldDeskView: View {
                     ActInstanceShellView(onMinimize: {
                         withAnimation(.easeInOut(duration: 0.2)) {
                             showActFieldBook = false
-                            showBinderPanel = true
-                            binderOpen = true
+                            // Dashboard was kept alive underneath (see onOpenBinder
+                            // below) - minimizing just reveals it directly, no
+                            // need to also surface the free-drag Binder card. Only
+                            // fall back to that when Field Book was opened from a
+                            // non-dashboard path (binderBody, AI study_concept
+                            // action), where the dashboard was never showing.
+                            if !showDeskGridDashboard {
+                                showBinderPanel = true
+                                binderOpen = true
+                            }
                         }
                     })
                     .environmentObject(studentStore)
                     .environmentObject(authService)
                     .transition(.opacity)
-                    .zIndex(65)
+                    // Above Dashboard's zIndex(88) so it layers on top rather
+                    // than requiring the dashboard to close first - closing
+                    // first briefly exposed Jesse's Kitchen underneath during
+                    // the transition gap.
+                    .zIndex(89)
                     .accessibilityIdentifier("fieldDeskActNotesPopup")
                 }
 
@@ -548,11 +560,13 @@ struct FieldDeskView: View {
                     DeskGridDashboardView(
                         initialRail: dashboardStartRail,
                         onOpenBinder: {
-                            showDeskGridDashboard = false
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
-                                withAnimation(.easeInOut(duration: 0.2)) {
-                                    showActFieldBook = true
-                                }
+                            // Keep the dashboard mounted underneath - Field Book
+                            // layers on top via its higher zIndex above. Closing
+                            // the dashboard first (previous behavior) left a gap
+                            // before Field Book appeared where Jesse's Kitchen
+                            // briefly showed through.
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                showActFieldBook = true
                             }
                         },
                         onClose: { showDeskGridDashboard = false },
