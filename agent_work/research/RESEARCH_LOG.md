@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-16 — Researcher tick: Part CLIV Post-spike dual demobilization without fidelity cliff (SAFE-DEMOB)
+
+**Tick type:** Researcher (UTC hour 3; hour%6≠0; researcher count since synthesizer v1.19 = 3 → Researcher)  
+**Chapter written:** `chapters/154_post_spike_dual_demobilization_fidelity_cliff.md` (Part CLIV)  
+**Claim examined:** Whether exam-week contract dual panels may end by cliff-cut / invent-work / forever-latch, or must run a **planned handover + knowledge capture + FILLETA demob honesty** so Map repair does not spike when contractors leave.
+
+**Doctrine proposed (provisional):** **SAFE-DEMOB** — densifies SAFE-SURGEPANEL × SAFE-WORKFORCE × SAFE-REPAIRSTRAT (+ PANELRAMP/PATHBLAME/CAPPLAN/FILLETA) + Houseman flexible-staffing fluctuation motives / Davis-Blake–Uzzi externalization / Lepak–Snell modes / Broschak blending costs / Matusik–Hill contingent knowledge / Argote–Ingram transfer reservoirs / Argote–Epple knowledge depreciation / Kane IUA: demob is designed exit — no Demobilization Score™. Experiment family **DEMOB-***.
+
+**Evidence spine (verified citations):** Houseman (2001); Davis-Blake & Uzzi (1993); Lepak & Snell (1999); Broschak & Davis-Blake (2006); Davis-Blake, Broschak, & George (2003); Matusik & Hill (1998); Argote & Ingram (2000); Argote, Beckman, & Epple (1990); Darr, Argote, & Epple (1995); Kane (2013).
+
+**Claim killed (this tick):** Demobilization Score™ / Idle Minutes / Panel Utilization % NS / invent-work after spike / cliff-cut without handover / forever-panel latch / silent FILLETA after demob / hospital-demob cosplay ACT ads / complete-visual from demob packaging (provisional kill #108 until synthesizer).
+
+**Experiments:** DEMOB-1…5 + DEMOB-QUAL.
+
+**Next researcher id:** **155** (Gold-set planted probes for path×stratum monitors). Researcher count since v1.19 synthesizer: **4**. Unfinished queue still ≥3 (155–157); no QUEUE_EXTENDED promote this tick.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-16 — Researcher tick: Part CLIII Contract SME panel seal onboarding & parallel-run (SAFE-PANELRAMP)
 
 **Tick type:** Researcher (UTC hour 0 ≡ Red Team slot, but ch153 never written → prefer Researcher per rotation; researcher count since synthesizer v1.19 = 2 → Researcher)  

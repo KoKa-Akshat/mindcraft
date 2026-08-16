@@ -149,8 +149,8 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 151 | Template-trust revoke & sample-dual cadence under repair spikes | SAFE-TMPTRUST × SAFE-REPAIR/CAPPLAN; tighten/revoke without Template Trust Score™ | **DONE** (2026-08-15) — Part CLI / SAFE-REVOKE |
 | 152 | Path-conditioned dual blame tests (selection vs quality) | SAFE-REPAIRSTRAT × SAFE-DUALRATE/CAPPLAN; risk-adjusted path tables without Dual Shame Score™ | **DONE** (2026-08-15) — Part CLII / SAFE-PATHBLAME |
 | 153 | Contract SME panel seal onboarding & parallel-run gates | SAFE-SURGEPANEL × SAFE-FIGKEY/DUALRATE; ramp before C4 authority without Parallel Score™ | **DONE** (2026-08-16) — Part CLIII / SAFE-PANELRAMP |
-| 154 | Post-spike dual demobilization without fidelity cliff | SAFE-SURGEPANEL × SAFE-WORKFORCE/REPAIRSTRAT; end panel without invent-work or repair spike | **NEXT** |
-| 155 | Gold-set planted probes for path×stratum monitors | SAFE-PATHBLAME × SAFE-REPAIRSTRAT/INSTRUMENT; sealed canaries without Gold Set Score™ | queued |
+| 154 | Post-spike dual demobilization without fidelity cliff | SAFE-SURGEPANEL × SAFE-WORKFORCE/REPAIRSTRAT; end panel without invent-work or repair spike | **DONE** (2026-08-16) — Part CLIV / SAFE-DEMOB |
+| 155 | Gold-set planted probes for path×stratum monitors | SAFE-PATHBLAME × SAFE-REPAIRSTRAT/INSTRUMENT; sealed canaries without Gold Set Score™ | **NEXT** |
 | 156 | Generator vs rater poison separation on inherit repair | SAFE-REVOKE × SAFE-PATHBLAME/GENQ; blame labels without Generator Shame Score™ | queued |
 | 157 | LEA packet path-mix honesty without Dual Shame theater | SAFE-PATHBLAME × SAFE-PROCURE/HOLETRUST; mix charts in trust packets without case-mix cosplay | queued |
 
@@ -267,3 +267,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any forever-trust latch after blueprint / frozen sample-% theater / Template Trust Score™·Sample Dual %·Revoke Minutes NS / ISO AQL tables as ACT cut-scores / hospital-CUSUM cosplay QA ads / ETA-forced trust during surge / silent re-qualify from play counts / complete-visual from trust-health packaging (Part CLI / SAFE-REVOKE)
 - Any Dual Shame Score™ / Selection-Adjusted Repair % / Path Blame Minutes NS / unconditioned dual-vs-single rankings as quality proof / Propensity Theater™ brand / hospital case-mix cosplay ACT ads / κ-as-blame-verdict / complete-visual from blame packaging (Part CLII / SAFE-PATHBLAME)
 - Any Parallel Score™ / Onboard Minutes / Ramp % NS / day-one C4 for contract panelists / Loom≡seal literacy / SOW-signed≡gate-pass / forever-ramp without exit / silent graduate under ETA panic / AP·ETS cosplay ACT ads / complete-visual or ACT guarantees from panel onboarding packaging (Part CLIII / SAFE-PANELRAMP)
+- Any Demobilization Score™ / Idle Minutes / Panel Utilization % NS / invent-work after spike / cliff-cut without handover / forever-panel latch without CAPPLAN review / silent FILLETA after demob / hospital-demob cosplay ACT ads / complete-visual or ACT guarantees from demobilization packaging (Part CLIV / SAFE-DEMOB)
