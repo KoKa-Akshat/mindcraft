@@ -94,6 +94,12 @@ struct FieldDeskView: View {
     @State private var gmailStartReconnect = false
     @State private var gmailOpenTopReply = false
     @State private var showActFieldBook = false
+    /// Calendar tapped from the Work dashboard - overlays on top of it
+    /// (dashboard stays mounted, same treatment as showActFieldBook above)
+    /// instead of tearing the dashboard down and falling through to the
+    /// old free-drag desk, which is what "closing the app" from Calendar
+    /// actually was: the dashboard vanished with nothing re-shown on top.
+    @State private var showCalendarOverlay = false
     /// Real nav-intent target ("study quadratic equations" via Ask The Desk
     /// -> `study_concept` action) - threaded into `DashboardView` so it
     /// opens straight to that concept's chapter instead of just the roadmap.
@@ -321,12 +327,21 @@ struct FieldDeskView: View {
     /// restored card behaves exactly as if it had just been placed, not a
     /// partial state that only happens to render.
     private func restoreDeskLayout() {
+        // .calendar excluded: the free-drag Calendar card is retired in
+        // favor of showCalendarOverlay (dashboard tap only, never
+        // persisted). A stale .calendar entry from before that change
+        // reproduced a real launch-time crash via this exact auto-restore
+        // path - dropping it here means old devices self-heal instead of
+        // crashing on every subsequent launch.
         placedWidgets = Set(store.layoutWidgets.compactMap(PlaceableWidget.init(rawValue:)))
+            .subtracting([.calendar])
         cardOffsets = Dictionary(uniqueKeysWithValues: store.layoutOffsets.compactMap { key, value in
-            DeskCardID(rawValue: key).map { ($0, value) }
+            guard let id = DeskCardID(rawValue: key), Self.isSaneCardSize(value) else { return nil }
+            return (id, value)
         })
         cardSizes = Dictionary(uniqueKeysWithValues: store.layoutSizes.compactMap { key, value in
-            DeskCardID(rawValue: key).map { ($0, value) }
+            guard let id = DeskCardID(rawValue: key), Self.isSaneCardSize(value) else { return nil }
+            return (id, value)
         })
         cardDrag = [:]
         focusedCard = store.layoutFocus.flatMap(DeskCardID.init(rawValue:))
@@ -336,6 +351,19 @@ struct FieldDeskView: View {
         }
         if placedWidgets.contains(.connect) { showConnectPanel = true }
         if placedWidgets.contains(.intel) { showIntelPanel = true }
+    }
+
+    /// Guards `restoreDeskLayout()` against NaN/infinite/absurd offsets or
+    /// sizes reaching `.position()` math in `movableCard`/`movableBook` -
+    /// a real, confirmed crash cause, not theoretical: `cardMoveGesture`
+    /// has no bounds clamping, and a session interrupted mid-drag (this
+    /// codebase saw many crash-interrupted sessions in one night) can
+    /// persist a garbage value that then re-crashes every subsequent
+    /// launch via auto-restore, regardless of which code version is
+    /// running - reproduced with a stale Calendar card entry.
+    private static func isSaneCardSize(_ size: CGSize) -> Bool {
+        size.width.isFinite && size.height.isFinite
+            && abs(size.width) < 20_000 && abs(size.height) < 20_000
     }
 
     /// ⚠️ GUARDRAIL - read before adding a new full-screen overlay to
@@ -556,6 +584,15 @@ struct FieldDeskView: View {
                     .accessibilityIdentifier("fieldDeskActNotesPopup")
                 }
 
+                // Gcal box as an in-desk popup over the dashboard, same
+                // shape as ACT Field Book above — not the free-drag desk card.
+                if showCalendarOverlay {
+                    calendarOverlayLayer
+                        .transition(.opacity)
+                        .zIndex(89)
+                        .accessibilityIdentifier("fieldDeskCalendarOverlay")
+                }
+
                 if showDeskGridDashboard {
                     DeskGridDashboardView(
                         initialRail: dashboardStartRail,
@@ -571,8 +608,10 @@ struct FieldDeskView: View {
                         },
                         onClose: { showDeskGridDashboard = false },
                         onOpenCalendar: {
-                            showDeskGridDashboard = false
-                            placeWidget(.calendar)
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                showCalendarOverlay = true
+                            }
+                            Task { await refreshDeskCalendar() }
                         },
                         onOpenGmail: {
                             showDeskGridDashboard = false
@@ -2748,6 +2787,63 @@ struct FieldDeskView: View {
             .accessibilityIdentifier("fieldDeskNotesCardOpen")
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+    }
+
+    /// Gcal box for `showCalendarOverlay` — a centered card over the
+    /// dashboard (same "box on screen" shape as `calendarBody`'s content,
+    /// dimmer scrim + its own minimize instead of the free-drag card frame).
+    private var calendarOverlayLayer: some View {
+        ZStack {
+            Color.black.opacity(0.35)
+                .ignoresSafeArea()
+                .onTapGesture { closeCalendarOverlay() }
+
+            VStack(alignment: .leading, spacing: 12) {
+                HStack(spacing: 10) {
+                    Text("Calendar")
+                        .font(.system(size: 16, weight: .bold, design: .rounded))
+                        .foregroundColor(Color(fdHex: "0c1207"))
+                    Spacer(minLength: 0)
+                    Button {
+                        Task { await refreshDeskCalendar() }
+                    } label: {
+                        Image(systemName: "arrow.clockwise")
+                            .font(.system(size: 12, weight: .bold))
+                            .foregroundColor(Color(fdHex: "0c1207"))
+                            .padding(10)
+                            .background(Circle().fill(Color(fdHex: "e4dcc8")))
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityIdentifier("fieldDeskCalendarRefresh")
+
+                    Button(action: closeCalendarOverlay) {
+                        Label("Minimize", systemImage: "arrow.down.right.and.arrow.up.left")
+                            .font(.system(size: 12, weight: .bold, design: .rounded))
+                            .foregroundColor(Color(fdHex: "0c1207"))
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 8)
+                            .background(Capsule().fill(Color(fdHex: "c4f547")))
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityIdentifier("fieldDeskCalendarMinimize")
+                    .accessibilityLabel("Minimize calendar")
+                }
+                calendarBody
+            }
+            .padding(18)
+            .frame(width: 360, height: 320)
+            .background(
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .fill(Color(fdHex: "fff8e9"))
+                    .shadow(color: .black.opacity(0.35), radius: 24, y: 12)
+            )
+        }
+    }
+
+    private func closeCalendarOverlay() {
+        withAnimation(.easeInOut(duration: 0.2)) {
+            showCalendarOverlay = false
+        }
     }
 
     private var calendarBody: some View {
