@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-16 — Researcher tick: Part CLVI Generator vs rater poison separation on inherit repair (SAFE-POISONSEP)
+
+**Tick type:** Researcher (UTC hour 15; hour%6≠0; researcher count since synthesizer v1.19 = 5 → Researcher)  
+**Chapter written:** `chapters/156_generator_vs_rater_poison_inherit_repair.md` (Part CLVI)  
+**Claim examined:** Whether inherit-path repair spikes may drive REVOKE/Dual Shame as an **unlabeled pool**, or must carry **`poison_source` ∈ {generator, rater, ambiguous}** so family quarantine vs rater retrain fire correctly — without Generator Shame Score™.
+
+**Doctrine proposed (provisional):** **SAFE-POISONSEP** — densifies SAFE-REVOKE × SAFE-PATHBLAME × SAFE-GENQ (+ FIGKEY/GOLDSET/TMPTRUST) + Deming measurement-as-process / Shewhart / Glas–van der Linden clone variability / Bejar–Bennett automated QC validity / Myford–Wolfe + Shin–Wolfe–Wilson rater monitoring / Gierl–Lai AIG item-quality separation / Kane IUA: label poison source before escalate — no Generator Shame Score™. Experiment family **POISONSEP-***.
+
+**Evidence spine (verified citations):** Deming (1975); Shewhart (1931); Glas & van der Linden (2003); Bejar (2011); Bennett & Bejar (1998); Myford & Wolfe (2009); Shin, Wolfe, & Wilson (2019); Gierl & Lai (2013); Kane (2013).
+
+**Claim killed (this tick):** Generator Shame Score™ / Rater Poison Minutes / Blame Separation % NS / always-rater·always-generator dogma / unlabeled Dual Shame / MSA·Six-Sigma cosplay ACT ads / complete-visual from root-cause packaging (provisional kill #110 until synthesizer).
+
+**Experiments:** POISONSEP-1…5 + POISONSEP-QUAL.
+
+**Next researcher id:** **157** (LEA packet path-mix honesty). Researcher count since v1.19 synthesizer: **6**. Unfinished queue was <3 after marking 156 DONE → promoted **159** (Ambiguous-ticket dual re-seal SLA) into NEXT_LAB; unfinished now 157–159.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-16 — Researcher tick: Part CLV Gold-set planted probes for path×stratum monitors (SAFE-GOLDSET)
 
 **Tick type:** Researcher (UTC hour 6 ≡ Red Team slot, but ch155 never written → prefer Researcher per rotation; researcher count since synthesizer v1.19 = 4 → Researcher)  
