@@ -222,15 +222,20 @@ struct DeskGridDashboardView: View {
             }
         }
 
-        func mascotKind() -> DeskBoxMascot.Kind? {
+        var mascotSlug: String? {
             switch self {
-            case .intel: return .intel
-            case .moodle: return .moodle
-            case .binder: return .binder
-            case .emailSummaries: return .email
-            case .gcal: return .gcal
+            case .intel: return "intel"
+            case .moodle: return "moodle"
+            case .binder: return "binder"
+            case .emailSummaries: return "email"
+            case .gcal: return "gcal"
             case .memo: return nil
             }
+        }
+
+        func mascotAssetName(state: MascotPhase) -> String? {
+            guard let mascotSlug else { return nil }
+            return "desk_mascot_\(mascotSlug)_\(state.rawValue)"
         }
 
         var wash: [Color] {
@@ -255,7 +260,7 @@ struct DeskGridDashboardView: View {
             }
         }
 
-        func blurb(phase: DeskBoxMascot.Phase, assignmentCount: Int) -> String {
+        func blurb(phase: MascotPhase, assignmentCount: Int) -> String {
             switch self {
             case .moodle:
                 if phase == .working { return "Talking to Moodle…" }
@@ -287,10 +292,19 @@ struct DeskGridDashboardView: View {
         }
     }
 
+    /// Real paper-cut illustrated stills (`desk_mascot_<slug>_<state>` in
+    /// Assets.xcassets) replace the earlier procedurally-drawn creature -
+    /// same three-state model, same five box identities, just image-backed
+    /// with an SF Symbol fallback if an asset is ever missing.
+    private enum MascotPhase: String {
+        case sleeping
+        case working
+        case awake
+    }
+
     private func photoTile(_ kind: TileKind) -> some View {
         let phase = mascotPhase(kind)
         let awake = phase != .sleeping
-        let mascot = kind.mascotKind()
         return VStack(alignment: .leading, spacing: 6) {
             Text(kind.title)
                 .font(.system(size: 15, weight: .bold, design: .rounded))
@@ -301,13 +315,8 @@ struct DeskGridDashboardView: View {
                 ZStack {
                     RoundedRectangle(cornerRadius: 18, style: .continuous)
                         .fill(LinearGradient(colors: kind.wash, startPoint: .topLeading, endPoint: .bottomTrailing))
-                    if let mascot {
-                        DeskBoxMascot(
-                            kind: mascot,
-                            phase: phase,
-                            tappable: mascotTappable(kind),
-                            action: { connectMascot(kind) }
-                        )
+                    if kind.mascotSlug != nil {
+                        mascotArt(kind, phase: phase)
                         .scaleEffect(tileShowsContent(kind) ? 0.55 : 1)
                         .offset(
                             x: tileShowsContent(kind) ? 48 : 0,
@@ -337,7 +346,7 @@ struct DeskGridDashboardView: View {
         }
     }
 
-    private func mascotPhase(_ kind: TileKind) -> DeskBoxMascot.Phase {
+    private func mascotPhase(_ kind: TileKind) -> MascotPhase {
         switch kind {
         case .emailSummaries:
             if gmail.isBusy { return .working }
@@ -354,6 +363,37 @@ struct DeskGridDashboardView: View {
             return binderHasData ? .awake : .sleeping
         case .memo:
             return .awake
+        }
+    }
+
+    /// Identifier lives on a nested marker, not the root image - same
+    /// clobber family as `DeskGridDashboardView`'s dock (see CLAUDE.md):
+    /// a parent's `.accessibilityIdentifier` stomps a plain child's own id.
+    @ViewBuilder
+    private func mascotArt(_ kind: TileKind, phase: MascotPhase) -> some View {
+        if let assetName = kind.mascotAssetName(state: phase), let image = UIImage(named: assetName) {
+            let content = Image(uiImage: image)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .overlay(alignment: .topLeading) {
+                    Text(verbatim: "mascot-\(kind.mascotSlug ?? "")")
+                        .font(.system(size: 1))
+                        .foregroundColor(.clear)
+                        .accessibilityIdentifier("deskGridMascot_\(kind.mascotSlug ?? "")")
+                        .allowsHitTesting(false)
+                }
+                .accessibilityLabel("\(kind.title) mascot, \(phase.rawValue)")
+            if mascotTappable(kind) {
+                Button(action: { connectMascot(kind) }) { content }
+                    .buttonStyle(.plain)
+                    .accessibilityHint("Connect this box")
+            } else {
+                content.accessibilityAddTraits(.isImage)
+            }
+        } else {
+            Image(systemName: kind.symbol)
+                .font(.system(size: kind == .binder ? 54 : 36, weight: .medium))
+                .foregroundColor(.white.opacity(phase != .sleeping ? 0.88 : 0.35))
         }
     }
 
@@ -492,7 +532,7 @@ struct DeskGridDashboardView: View {
     private var tileInk: Color { Color(gridHex: "143a2e") }
 
     @ViewBuilder
-    private func tileBody(_ kind: TileKind, phase: DeskBoxMascot.Phase) -> some View {
+    private func tileBody(_ kind: TileKind, phase: MascotPhase) -> some View {
         let ink: Color = (kind == .binder || kind == .moodle || kind == .emailSummaries) ? tileInk : .white
         if tileShowsContent(kind) {
             VStack(alignment: .leading, spacing: 4) {

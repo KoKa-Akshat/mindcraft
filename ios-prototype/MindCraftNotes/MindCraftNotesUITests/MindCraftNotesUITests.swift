@@ -951,14 +951,15 @@ final class MindCraftNotesUITests: XCTestCase {
     }
 
     /// Round 10: the previously-deferred `.hub-mastery-head`/`.hub-orb-row`
-    /// port (goal setter + mastery cube + `hubCall.js` check-in). Asserts
-    /// the three load-bearing behaviors end to end on the real device:
-    /// the goal echo paints the default focus/goal pair exactly as
-    /// `paintGoalControls()` would; the mastery percent starts as an
-    /// em-dash (`masteryForInstance()`'s honesty rule - no check-in
-    /// evidence, no invented number); and saving a check-in at the web's
-    /// default 40% round-trips through `DeskGoalStore` into a live orb-row
-    /// repaint plus the web-worded toast.
+    /// port (goal setter + mastery cube + `hubCall.js` check-in), now
+    /// reduced to what's actually reachable from this page. The Level 2
+    /// refactor removed Call (and with it the only trigger for
+    /// `showCheckIn`) from the desk hub entirely - the mastery check-in
+    /// sheet itself still exists and works, just not from here anymore
+    /// (see the `callButton removed` comment on `DeskShellView`) - so this
+    /// only asserts the hub chrome that's still live: Connect/Back next to
+    /// the greeting, the workflow market and mastery orb gone, and Tutors
+    /// nearby with a working map search.
     func testDeskHubMasteryGoalAndCheckIn() {
         let app = XCUIApplication()
         app.launchArguments = ["--ui-testing-in-memory", "--ui-testing-skip-auth"]
@@ -1008,16 +1009,6 @@ final class MindCraftNotesUITests: XCTestCase {
         XCTAssertTrue(app.buttons["deskHubMapSearchGo"].waitForExistence(timeout: 3),
                       "expected map Search button")
         attachScreenshot(app, name: "desk_hub_tutors")
-
-        callButton.tap()
-        let save = app.buttons["deskCallSave"]
-        XCTAssertTrue(save.waitForExistence(timeout: 5), "expected the check-in sheet's save button")
-        attachScreenshot(app, name: "desk_hub_checkin_sheet")
-        save.tap()
-
-        // Toast still confirms a saved check-in (mastery orb no longer on hub).
-        XCTAssertTrue(app.staticTexts["deskToast"].waitForExistence(timeout: 5), "expected the check-in toast after saving")
-        attachScreenshot(app, name: "desk_hub_mastery_after_checkin")
     }
 
     /// Round 13: Field Desk opens the full desk home (rail + widgets).
