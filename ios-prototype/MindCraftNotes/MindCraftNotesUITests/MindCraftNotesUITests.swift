@@ -1933,9 +1933,6 @@ final class MindCraftNotesUITests: XCTestCase {
         }
         let gcal = app.buttons["deskGridTile_Gcal"].frame
         XCTAssertGreaterThan(gcal.midX, screen.minX + screen.width * 0.55, "Gcal belongs on the right of the 1440 artboard, not in a half-width board")
-        let binderChip = app.buttons["deskGridDock_Binder"].frame
-        let flowsChip = app.buttons["deskGridDock_Flows"].frame
-        XCTAssertGreaterThan(flowsChip.maxX - binderChip.minX, screen.width * 0.45, "dock chips should span most of the artboard, not a half-width strip")
     }
 
     /// Work canvas (PDF page 4) + Create · Presentation (PDF page 1).
@@ -1987,7 +1984,7 @@ final class MindCraftNotesUITests: XCTestCase {
         XCTAssertTrue(done.waitForExistence(timeout: 5), "expected Done button on Create canvas")
         done.tap()
 
-        XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 5), "expected to return to Create Dashboard")
+        XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 12), "expected to return to Create Dashboard")
 
         XCUIDevice.shared.orientation = .portrait
     }

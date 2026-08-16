@@ -732,9 +732,17 @@ struct FieldDeskView: View {
                     CreateCanvasView(
                         kind: createCanvasKind,
                         studentName: deskChromeName ?? "there",
-                        onClose: { showCreateCanvas = false }
+                        // Explicit re-assert, not just relying on
+                        // showDeskGridDashboard having stayed true the whole
+                        // time Create Canvas was open - Done was landing back
+                        // on Create Canvas instead of the dashboard without
+                        // this (confirmed via UI test + screen recording).
+                        onClose: {
+                            showCreateCanvas = false
+                            showDeskGridDashboard = true
+                        }
                     )
-                    .zIndex(87)
+                    .zIndex(89)
                     .transition(.opacity)
                 }
 

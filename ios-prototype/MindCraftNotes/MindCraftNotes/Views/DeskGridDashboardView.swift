@@ -304,6 +304,7 @@ struct DeskGridDashboardView: View {
             .padding(.horizontal, 12)
             .padding(.vertical, 8)
             .background(Capsule().fill(Color.white.opacity(0.12)))
+            .accessibilityIdentifier("deskGridDashboardSearch")
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 10)
