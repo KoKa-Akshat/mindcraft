@@ -239,7 +239,6 @@
       </div>
       <button class="rec" id="recBtn" type="button" data-glass="orb" data-thickness="40" data-density="1">Hold</button>
       <p class="hint">Hold to talk. Release when you’re done.</p>
-      <button class="btn fill" id="callBtn" type="button">Jump on a call with Jesse</button>
       <button class="quiet" id="toLink">or continue to LinkedIn</button>
       <div class="rights" data-glass="card">
         <b>Your data stays yours.</b> Mail, Drive, and this resume live in accounts you already own. The Desk reads the folder you choose. Nothing is sold.
@@ -269,7 +268,6 @@
           <b style="font-family:Fredoka,sans-serif">Jesse on the desk</b>
           <div class="status" id="deskLive">Listening when you are</div>
         </div>
-        <button class="btn fill" style="width:auto;padding:10px 14px;border-radius:999px" id="deskCall" type="button">Call</button>
       </div>
       <div class="platter" data-glass="card">
         <div class="row">
@@ -287,22 +285,6 @@
         <button class="mini" id="deskUpload" type="button" data-glass="btn">Upload / Drive</button>
       </div>
       <button class="btn fill" id="applyBtn" type="button" hidden>Let’s apply</button>
-    </section>
-
-    <section class="screen" id="call">
-      <div class="callbar" data-glass="bar" data-radius="999">
-        <span class="dot"></span>
-        <div style="flex:1"><b style="font-family:Fredoka,sans-serif">On a call with Jesse</b><div class="status" id="callStatus">Friendly. Guided. Your words.</div></div>
-        <button class="quiet" id="endCall" type="button">End</button>
-      </div>
-      <div class="transcript" id="log"></div>
-      <div class="suggest">
-        <button type="button" data-glass="chip" data-say="Add Python">Add Python</button>
-        <button type="button" data-glass="chip" data-say="I interned at TD">I interned at TD</button>
-        <button type="button" data-glass="chip" data-say="Connect Drive">Connect Drive</button>
-      </div>
-      <button class="rec" id="callRec" type="button" data-glass="orb" data-thickness="40" data-density="1">Talk</button>
-      <p class="hint">Tap once. It's a real back-and-forth from there - tap again anytime to jump back in.</p>
     </section>
 
     <section class="screen" id="apply">
@@ -605,6 +587,6 @@
 </script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-<script src="./agent.js?v=r5"></script>
+<script src="./agent.js?v=r6"></script>
 </body>
 </html>

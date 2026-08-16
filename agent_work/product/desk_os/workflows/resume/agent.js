@@ -21,10 +21,6 @@
   };
   let suggestedRoles = [];
   let thinking = false;
-  // Call screen only - true from "Jump on a call" until End, gates the
-  // listen -> reply -> speak -> listen auto-loop below so it can't keep
-  // firing after the call has ended.
-  let callActive = false;
 
   const wave = $('meetWave');
   for (let i = 0; i < 18; i++) {
@@ -84,15 +80,6 @@
       n.classList.toggle('hot', on);
       n.disabled = on;
     });
-    glass();
-  }
-
-  function sayLog(who, text) {
-    const el = document.createElement('div');
-    el.className = 'bubble ' + who;
-    el.textContent = text;
-    $('log').appendChild(el);
-    $('log').scrollTop = $('log').scrollHeight;
     glass();
   }
 
@@ -221,13 +208,7 @@
     applyDraft(data.draft);
     suggestedRoles = data.suggestedRoles || [];
     const reply = data.reply;
-    // On the call screen, keep the conversation going hands-free once
-    // Jesse's done talking - the whole point of tap-to-talk over hold-to-
-    // talk is not needing to reach for the button for every single turn.
-    // Tapping callRec mid-reply still interrupts (speechSynthesis.cancel()
-    // at the top of speak() handles that).
-    speak(reply, () => { if (callActive) listenForCall(); });
-    if ($('call').classList.contains('on')) sayLog('j', reply);
+    speak(reply);
     if ((data.actions || []).some((a) => a.type === 'open_apply')) openApply();
     if (data.readyToApply) $('applyBtn').hidden = false;
     return data;
@@ -312,9 +293,6 @@
   };
 
   let rec = null;
-  // statusEl defaults to meetStatus for recBtn's own call site below;
-  // callRec passes callStatus instead - the two screens don't share one
-  // status label.
   async function listen(button, onText, statusEl) {
     const status = statusEl || $('meetStatus');
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -344,16 +322,9 @@
   }
   function stopListen() { if (rec) try { rec.stop(); } catch (_) {} }
 
-  // Tap to start a turn, same tap to cut it short - SpeechRecognition
-  // already silence-detects the end of an utterance on its own
-  // (interimResults is off, so onresult only fires once it has a final
-  // transcript), so nothing has to be held down for it to work. Previously
-  // this was pointerdown/pointerup (real push-to-talk) on both recBtn (the
-  // one-shot "tell me about yourself" recorder on the meet screen, kept as
-  // a quick hold since it's a single dictation, not a conversation) and
-  // callRec (the actual live call, where "hold this button the whole time
-  // you're talking" was the friction point - a real back-and-forth needs
-  // tap-once-and-talk).
+  // One-shot dictation on the meet screen: hold to talk, release to send -
+  // a single utterance, not a live back-and-forth (that's the native "Call
+  // Jesse" call now, JesseCallSession on the app side).
   $('recBtn').addEventListener('pointerdown', (e) => {
     e.preventDefault();
     listen($('recBtn'), (text) => {
@@ -365,23 +336,6 @@
   $('recBtn').addEventListener('pointercancel', stopListen);
   $('recBtn').addEventListener('pointerleave', stopListen);
 
-  function listenForCall() {
-    if (!callActive || thinking) return;
-    listen($('callRec'), (text) => {
-      sayLog('you', text);
-      if (/connect drive/i.test(text)) { connectDriveWeb(); return; }
-      if (/linkedin/i.test(text) && !state.linkedinUrl) { $('liSheet').hidden = false; glass(); return; }
-      askJesse(text);
-    }, $('callStatus'));
-  }
-  $('callRec').addEventListener('click', listenForCall);
-
-  $('callBtn').addEventListener('click', () => {
-    callActive = true;
-    show('call');
-    $('log').innerHTML = '';
-    askJesse('Hi Jesse. Start the call. Help me build my resume.');
-  });
   $('toLink').addEventListener('click', () => show('link'));
   $('liBtn').addEventListener('click', () => {
     $('liSheet').hidden = false;
@@ -483,22 +437,6 @@
     await askJesse('I uploaded a resume file. Extract useful facts and place them on the draft.', {
       resumeText: text,
       resumeFileName: f.name,
-    });
-  });
-  $('deskCall').addEventListener('click', () => $('callBtn').click());
-  $('endCall').addEventListener('click', () => {
-    callActive = false;
-    stopListen();
-    speechSynthesis.cancel();
-    show('desk');
-    renderResume();
-  });
-  document.querySelectorAll('[data-say]').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const text = btn.getAttribute('data-say');
-      sayLog('you', text);
-      if (/connect drive/i.test(text)) { connectDriveWeb(); return; }
-      askJesse(text);
     });
   });
   $('addSkill').addEventListener('click', () => {
