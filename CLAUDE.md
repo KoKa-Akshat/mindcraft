@@ -365,15 +365,50 @@ Firestore project (`mindcraft-93858`) and webhook (`mindcraft-webhook.vercel.app
 as the web app — see their own Deployment entries below for how those two are
 shipped; this section is iOS-specific.
 
+### Physical device deploys need a manual re-trust after EVERY reinstall
+
+Discovered 2026-08-15 after an hour of misdiagnosing this as crashes/device
+instability: with free/personal-team ad-hoc signing (no paid Apple Developer
+Program enrollment yet), the physical iPad requires the user to manually
+re-trust the developer profile **every single time** a build gets
+uninstalled+reinstalled — not just after a device restart. `xcrun devicectl
+device process launch` fails with a clear, specific error when this is the
+cause:
+```
+Unable to launch com.mindcraft.notes.prototype.akshat because it has an
+invalid code signature, inadequate entitlements or its profile has not
+been explicitly trusted by the user.
+```
+**Always launch with `--console`** (not the default detached launch) when
+diagnosing a "just deployed and it won't come up" report — it surfaces this
+exact error message immediately, whereas a detached launch plus a screenshot
+just looks like "app boots then silently vanishes to the home screen with no
+crash log," which is very easy to misattribute to a real crash (SIGSEGV,
+watchdog kill, permission-dialog timing) and chase for a long time before
+realizing the launch never actually succeeded at all. Fix: on the device,
+**Settings → General → VPN & Device Management → Developer App → tap the
+certificate → Trust**. There is no way to do this programmatically from the
+Mac side (no devicectl/simctl equivalent) — it always needs the user.
+
 ### Navigation shape
 
-`AuthGate` → `DeskShellView`, which boots straight into `FieldDeskView`
-("Jesse's Kitchen") as the primary landing surface — **not** a hub-grid of
-instance cards, despite older comments/tests in this codebase describing that
-shape (a real architecture change mid-development; stale references to it are
-a common source of confused test failures, not real regressions). The
-instance-card hub (tutors map, workflow market, "Create an instance") is a
-**secondary** page now, reached only via Field Desk's "The Desk · Manage"
+`AuthGate` → `DeskShellView`, which boots **directly into the Work dashboard**
+(`DeskGridDashboardView`, PDF-referenced tile grid) as of 2026-08-15 — the
+"Your workspace is starting up" boot slide (`DeskBootView`) is gone entirely
+(explicit product direction: no intermediate loading screen), and Jesse's
+Kitchen (`FieldDeskView`'s own default landing) is no longer what a fresh
+login shows first. `FieldDeskView` still mounts underneath (via
+`initialShowDashboard: true` on its init) and Jesse's Kitchen is still there
+if the dashboard's own "Done" closes back to it — it's just not the first
+thing shown anymore. **This supersedes the older description below** (kept
+for now since it's still accurate for what's reachable after Done, and for
+older comments/tests in this codebase that predate both this change and the
+Jesse's-Kitchen-primary change before it — three real, sequential
+architecture changes on this same screen; stale references to any of the
+earlier two are a common source of confused test failures, not real
+regressions). The instance-card hub (tutors map, workflow market, "Create an
+instance") is a **secondary** page now, reached only via Field Desk's "The
+Desk · Manage"
 wordmark. "ACT Field Book" (the Contents roadmap / chapters / practice
 session content, i.e. most of what used to be `DashboardView`) is a card
 *inside Field Desk's Binder panel* (`fieldDeskBinderInstance_act_main`), not

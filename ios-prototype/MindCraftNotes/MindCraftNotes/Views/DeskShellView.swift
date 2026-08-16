@@ -46,9 +46,13 @@ struct DeskShellView: View {
     // navigating away from that screen never ends an in-progress call.
     @StateObject private var jesseCall = JesseCallSession()
     @State private var showJesseCallSheet = false
-    /// Classic desk boot slide → Field Desk (primary after login).
-    @State private var showBoot = true
-    @State private var showWorkDesk = false
+    /// "Your workspace is starting up" boot slide - explicitly removed per
+    /// product direction (login should land directly on the workspace, no
+    /// intermediate loading screen). FieldDeskView already boots straight
+    /// to the Work dashboard on its own, so there's nothing left for the
+    /// slide to bridge to.
+    @State private var showBoot = false
+    @State private var showWorkDesk = true
     @State private var kitchenReady = false
     @State private var showActFieldBook = false
     /// Item-based Field Desk presentation so `opensAct` is not stale-captured
