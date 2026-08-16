@@ -6,7 +6,21 @@ import UIKit
 
 /// Student's **real Gmail** (+ Calendar read) via Google OAuth.
 /// Not AgentMail. Login scopes stay openid/email/profile; these are added
-/// only when the student taps Connect in the Gmail workflow box.
+/// only when the student taps Connect (or the sleeping box mascot).
+///
+/// Level 2 scope (`JESSE_CENTRAL_AI_PLAN.md`): this is a **data connector**,
+/// not an agent. It does not reason, does not converse, and does not make
+/// LLM calls. Central Jesse (`JesseCallSession`) is the only student-facing
+/// agent; this client just reads/sends mail and reads the week.
+///
+/// | Surface | Can | Cannot |
+/// |---|---|---|
+/// | **Gmail (Email Summaries)** | Read inbox (`gmail.readonly`), send drafts (`gmail.send`) once `hasGmailScope` | Touch Calendar, Moodle, Drive, or Binder; invent mail |
+/// | **Gcal** | Read this week's events (`calendar.readonly`) once `hasCalendarScope` | Create/edit events, send mail, or fetch Moodle |
+///
+/// Intel is not this connector — it only displays what Gmail/Gcal (and
+/// others) already fetched. Binder is the write-target, not a permission
+/// this client holds. Moodle is a separate client (`MoodleClient`).
 @MainActor
 final class GmailClient: ObservableObject {
     static let shared = GmailClient()

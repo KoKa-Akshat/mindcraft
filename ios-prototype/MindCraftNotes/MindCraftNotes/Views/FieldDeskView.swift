@@ -94,10 +94,9 @@ struct FieldDeskView: View {
     @State private var gmailStartReconnect = false
     @State private var gmailOpenTopReply = false
     @State private var showActFieldBook = false
-    /// "Transcribe" from the Flows dock - reuses the SAME JesseCallSession
-    /// and JesseCallSheetView already used at the Hub and in Presentation,
-    /// just presented locally here instead of threading a callback all the
-    /// way up to DeskShellView's own showJesseCallSheet.
+    /// "Transcribe" from the Flows dock — ambient room recording via
+    /// `JesseCallSession.beginAmbientTranscription()`, not a two-way call.
+    /// Same sheet + pill as a Jesse call; `isAmbient` suppresses replies.
     @State private var showJesseCallSheet = false
     /// Calendar tapped from the Work dashboard - overlays on top of it
     /// (dashboard stays mounted, same treatment as showActFieldBook above)
@@ -675,10 +674,18 @@ struct FieldDeskView: View {
                         onSaveMemo: { store.saveMemo($0) },
                         onTranscribe: {
                             if !jesseCall.isActive {
-                                jesseCall.begin(context: "flows")
+                                jesseCall.beginAmbientTranscription(context: "flows")
                             }
                             showJesseCallSheet = true
-                        }
+                        },
+                        intelHasData: !store.intelLines.isEmpty,
+                        binderHasData: !store.items.isEmpty,
+                        onGmailLinked: { calendarToo in
+                            _ = store.markConnected("gmail")
+                            if calendarToo { _ = store.markConnected("gcal") }
+                        },
+                        onMoodleLinked: { _ = store.markConnected("moodle") },
+                        onMoodleDisconnected: { _ = store.disconnect("moodle") }
                     )
                     .id(dashboardStartRail)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -1155,6 +1162,7 @@ struct FieldDeskView: View {
             ResumeAgentView(
                 onClose: { showResumeAgent = false },
                 onApply: {
+                    _ = store.fileArtifact(title: "Resume draft", note: "Filed from Jesse resume.", source: .resume)
                     showResumeAgent = false
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
                         showApplyToday = true
@@ -1168,7 +1176,10 @@ struct FieldDeskView: View {
         .fullScreenCover(isPresented: $showBookWorkflow) {
             BookWorkflowView(
                 onClose: { showBookWorkflow = false },
-                onPublished: { flash("Filed to your Binder") }
+                onPublished: { title, body in
+                    _ = store.fileArtifact(title: title, note: body, source: .book)
+                    flash("Filed to your Binder")
+                }
             )
         }
         .sheet(isPresented: $showManage) {
@@ -1181,7 +1192,10 @@ struct FieldDeskView: View {
                 call: jesseCall,
                 onClose: { showJesseCallSheet = false },
                 onEnd: {
-                    jesseCall.end()
+                    let ambient = jesseCall.isAmbient
+                    let ctx = jesseCall.context
+                    let turns = jesseCall.end()
+                    store.fileJesseTranscript(turns, context: ctx, ambient: ambient)
                     showJesseCallSheet = false
                 }
             )
@@ -2787,7 +2801,7 @@ struct FieldDeskView: View {
                                             .font(.system(size: 13, weight: .semibold, design: .rounded))
                                             .foregroundColor(Color(fdHex: "1c1a17"))
                                             .lineLimit(1)
-                                        Text(item.course)
+                                        Text("\(item.course) · \(item.source.tagLabel)")
                                             .font(.system(size: 10, weight: .medium, design: .rounded))
                                             .foregroundColor(Color(fdHex: "8a8478"))
                                     }

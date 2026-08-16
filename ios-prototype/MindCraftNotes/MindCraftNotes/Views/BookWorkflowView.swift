@@ -8,7 +8,7 @@ import WebKit
 /// web page never needs its own Firebase Auth session.
 struct BookWorkflowView: View {
     var onClose: () -> Void
-    var onPublished: (() -> Void)? = nil
+    var onPublished: ((String, String) -> Void)? = nil
 
     var body: some View {
         ZStack(alignment: .topTrailing) {
@@ -36,7 +36,7 @@ struct BookWorkflowView: View {
 }
 
 private struct BookWorkflowWebView: UIViewRepresentable {
-    var onPublished: (() -> Void)?
+    var onPublished: ((String, String) -> Void)?
 
     static var bookURL: URL {
         if let override = UserDefaults.standard.string(forKey: "deskOs.bookWorkflowURL"),
@@ -74,11 +74,11 @@ private struct BookWorkflowWebView: UIViewRepresentable {
     }
 
     final class Coord: NSObject, WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandler {
-        var onPublished: (() -> Void)?
+        var onPublished: ((String, String) -> Void)?
         weak var webView: WKWebView?
         private let binder = BinderStore()
 
-        init(onPublished: (() -> Void)?) { self.onPublished = onPublished }
+        init(onPublished: ((String, String) -> Void)?) { self.onPublished = onPublished }
 
         func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
             decisionHandler(.allow)
@@ -112,7 +112,7 @@ private struct BookWorkflowWebView: UIViewRepresentable {
                 respond(ok: false, error: "Sign in to publish to your Binder")
             } else {
                 respond(ok: true, error: nil)
-                onPublished?()
+                onPublished?(title, bodyText)
             }
         }
 

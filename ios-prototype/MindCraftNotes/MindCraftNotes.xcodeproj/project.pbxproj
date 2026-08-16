@@ -19,6 +19,8 @@
 		1F9E043A15C0940CA4A9CDB5 /* PolynomialExpression.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16F5501162A4F865EFC69C0 /* PolynomialExpression.swift */; };
 		20FE9273DBB5C8611FB6D861 /* RouteClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FECBAC947388E48E0524B2D /* RouteClient.swift */; };
 		D7JESSECALL01A2B3 /* JesseCallSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7JESSECALL01A2B3 /* JesseCallSession.swift */; };
+		D7MOODLECLIENT01A2 /* MoodleClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7MOODLECLIENT01A2 /* MoodleClient.swift */; };
+		A0DESKBOXMASCOT01 /* DeskBoxMascot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DESKBOXMASCOT01 /* DeskBoxMascot.swift */; };
 		D0KOKOROTTS01A2 /* KokoroTTSClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0KOKOROTTS01A2 /* KokoroTTSClient.swift */; };
 		D8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift */; };
 		D9JESSEOVERLAY01A2 /* JesseCallOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9JESSEOVERLAY01A2 /* JesseCallOverlay.swift */; };
@@ -178,6 +180,8 @@
 		6C6EE743854CB1274F574739 /* storyArt */ = {isa = PBXFileReference; lastKnownFileType = folder; path = storyArt; sourceTree = "<group>"; };
 		6FECBAC947388E48E0524B2D /* RouteClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteClient.swift; sourceTree = "<group>"; };
 		C7JESSECALL01A2B3 /* JesseCallSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JesseCallSession.swift; sourceTree = "<group>"; };
+		C7MOODLECLIENT01A2 /* MoodleClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodleClient.swift; sourceTree = "<group>"; };
+		B0DESKBOXMASCOT01 /* DeskBoxMascot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskBoxMascot.swift; sourceTree = "<group>"; };
 		C0KOKOROTTS01A2 /* KokoroTTSClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KokoroTTSClient.swift; sourceTree = "<group>"; };
 		C8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveRagClient.swift; sourceTree = "<group>"; };
 		C9JESSEOVERLAY01A2 /* JesseCallOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JesseCallOverlay.swift; sourceTree = "<group>"; };
@@ -367,6 +371,7 @@
 				C9FRIENDSTORE01A2B3 /* FriendsStore.swift */,
 				C9QCALINVITE01A2B3C4 /* QCalInvite.swift */,
 				C7JESSECALL01A2B3 /* JesseCallSession.swift */,
+				C7MOODLECLIENT01A2 /* MoodleClient.swift */,
 				C8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift */,
 				C0KOKOROTTS01A2 /* KokoroTTSClient.swift */,
 			);
@@ -429,6 +434,7 @@
 				B79B07C7A6E7F8091B2C3D4E /* DeskInstanceChrome.swift */,
 				B8AC7157E11A0001B2C3D4E5 /* ActInstanceShellView.swift */,
 				B0DESKGRID001A2E /* DeskGridDashboardView.swift */,
+				B0DESKBOXMASCOT01 /* DeskBoxMascot.swift */,
 				B0CREATECANVAS01A2 /* CreateCanvasView.swift */,
 				B89B08C8A6E7F8091B2C3D4E /* SpeechCaptureController.swift */,
 				B99B09C9A6E7F8091B2C3D4E /* DeskPanCanvas.swift */,
@@ -673,6 +679,7 @@
 				45DD6448870A218F1EA9A065 /* ConceptGraphLoader.swift in Sources */,
 				20FE9273DBB5C8611FB6D861 /* RouteClient.swift in Sources */,
 				D7JESSECALL01A2B3 /* JesseCallSession.swift in Sources */,
+				D7MOODLECLIENT01A2 /* MoodleClient.swift in Sources */,
 				D0KOKOROTTS01A2 /* KokoroTTSClient.swift in Sources */,
 				D8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift in Sources */,
 				D9JESSEOVERLAY01A2 /* JesseCallOverlay.swift in Sources */,
@@ -731,6 +738,7 @@
 				A79B07C7A6E7F8091B2C3D4E /* DeskInstanceChrome.swift in Sources */,
 				A8AC7157E11A0001B2C3D4E5 /* ActInstanceShellView.swift in Sources */,
 				A0DESKGRID001A2E /* DeskGridDashboardView.swift in Sources */,
+				A0DESKBOXMASCOT01 /* DeskBoxMascot.swift in Sources */,
 				A0CREATECANVAS01A2 /* CreateCanvasView.swift in Sources */,
 				A89B08C8A6E7F8091B2C3D4E /* SpeechCaptureController.swift in Sources */,
 				A99B09C9A6E7F8091B2C3D4E /* DeskPanCanvas.swift in Sources */,

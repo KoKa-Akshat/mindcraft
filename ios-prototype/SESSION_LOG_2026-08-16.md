@@ -95,15 +95,9 @@ auth-flow timing is the highest-risk item this session has touched.
    stacked-paper list with colored accent bars, proper empty state.
    All data already existed (`FieldDeskStore.items`) - this was a
    visual pass only.
-6. **DONE (planning only, see "Level 2" section in
-   `JESSE_CENTRAL_AI_PLAN.md`)** — the box-mascot architecture (central
-   Jesse, not per-box sub-agents; scoped connectors; Intel/Binder are
-   derived views not connectors), the fix for "Transcribe" (should be
-   ambient recording via a new `JesseCallSession.beginAmbientTranscription()`
-   entry point, not a two-way call), a definitive read on `storyboardsRail`
-   (it's a slide picker - verified in code, not "space for people on
-   call"), and how Gcal-scheduled meeting transcripts (via the existing
-   Fireflies pipeline) should feed central Jesse's context without
-   disturbing that pipeline's existing tutor-session role. Nothing in
-   this section has been implemented - see its own "Explicit
-   instructions for Cursor" list for the actual work order.
+6. **DONE (Level 2, items 1–6)** — one central Jesse + scoped connectors.
+   Ambient Transcribe (`beginAmbientTranscription`), Slides rail (renamed,
+   visible without a call), box mascots (sleeping/working/awake), real
+   Moodle client (mobile token + REST, no fake data), Binder auto-tag on
+   write (`BinderSource`). Presentation sub-agent is still item 7, not
+   started. See `JESSE_CENTRAL_AI_PLAN.md`.

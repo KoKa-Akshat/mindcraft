@@ -1968,6 +1968,7 @@ final class MindCraftNotesUITests: XCTestCase {
         XCTAssertTrue(app.descendants(matching: .any)["createCanvasRoot"].waitForExistence(timeout: 15), "expected Create canvas to open")
         XCTAssertTrue(app.descendants(matching: .any)["createCanvasJesseRail"].waitForExistence(timeout: 10), "expected Jesse call rail")
         XCTAssertTrue(app.buttons["createCanvasCallJesse"].exists, "expected Jump on a call with Jesse button")
+        XCTAssertTrue(app.descendants(matching: .any)["createCanvasSlides"].waitForExistence(timeout: 5), "expected Slides rail without a live call — it is a slide picker, not a call-only rail")
 
         let jesseTexts = app.staticTexts.allElementsBoundByIndex.map { $0.label }
         XCTAssertFalse(jesseTexts.contains { $0.contains("Jack") }, "Create canvas must say Jesse, not Jack")
@@ -1987,7 +1988,7 @@ final class MindCraftNotesUITests: XCTestCase {
         }
         app.buttons["createCanvasCallJesse"].tap()
         XCTAssertTrue(app.descendants(matching: .any)["createCanvasTranscription"].waitForExistence(timeout: 8), "expected Transcription rail once the call goes live")
-        XCTAssertTrue(app.descendants(matching: .any)["createCanvasStoryboards"].waitForExistence(timeout: 5), "expected Storyboards rail once the call goes live")
+        XCTAssertTrue(app.descendants(matching: .any)["createCanvasSlides"].waitForExistence(timeout: 5), "expected Slides rail to stay visible during a call")
         Thread.sleep(forTimeInterval: 2.0)
         attachScreenshot(app, name: "create-canvas-call-live")
 
@@ -2026,6 +2027,42 @@ final class MindCraftNotesUITests: XCTestCase {
         XCTAssertTrue(closeButton.waitForExistence(timeout: 10), "expected Calendar card with a close button - app is still alive")
         closeButton.tap()
 
+        XCUIDevice.shared.orientation = .portrait
+    }
+
+    /// Flows Transcribe is ambient capture, not a Jesse reply-loop call.
+    /// `--ui-testing-jesse-ambient` seeds an already-active ambient session
+    /// (same seam as `--ui-testing-jesse-call`) so this test is about the
+    /// sheet chrome, not the microphone.
+    func testAmbientTranscribeSheetIsNotAJesseCall() {
+        let app = launchFieldDeskApp(extraArgs: ["--ui-testing-jesse-ambient"])
+
+        let pill = app.buttons["jesseCallPill"]
+        XCTAssertTrue(pill.waitForExistence(timeout: 10), "expected the transcribe pill at Field Desk root")
+        XCTAssertTrue(
+            pill.label.contains("Transcribe") || pill.label.contains("Recording"),
+            "pill must not read as a Jesse call: \(pill.label)"
+        )
+        pill.tap()
+
+        XCTAssertTrue(app.staticTexts["Transcribe"].waitForExistence(timeout: 8), "expected Transcribe sheet title, not Jesse")
+        XCTAssertTrue(app.staticTexts["We should review the lab write-up before Friday."].waitForExistence(timeout: 5), "expected the seeded ambient transcript")
+        XCTAssertFalse(app.staticTexts["Jesse is thinking…"].exists, "ambient mode must not show the reply-loop thinking label")
+
+        app.buttons["jesseCallEnd"].tap()
+        XCTAssertTrue(pill.waitForNonExistence(timeout: 5), "expected the pill to disappear once transcribe ends")
+    }
+
+    /// Dashboard boxes expose a mascot (sleeping/working/awake). Intel and
+    /// Binder mascots are decorative; Moodle/Gmail/Gcal mascots are the
+    /// connect affordance. This only asserts they exist on the work canvas.
+    func testDashboardBoxMascotsExist() {
+        let app = launchFieldDeskApp()
+        XCUIDevice.shared.orientation = .landscapeLeft
+        XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 15))
+        for id in ["deskGridMascot_intel", "deskGridMascot_moodle", "deskGridMascot_binder", "deskGridMascot_email", "deskGridMascot_gcal"] {
+            XCTAssertTrue(app.descendants(matching: .any)[id].waitForExistence(timeout: 5), "expected \(id)")
+        }
         XCUIDevice.shared.orientation = .portrait
     }
 }

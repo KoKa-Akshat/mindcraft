@@ -4,6 +4,10 @@
 
 ---
 
+## Level 2 Jesse connectors (2026-08-16)
+
+One central Jesse. Intel/Moodle/Binder/Email/Gcal are scoped connectors and a store, not sub-agents. Flows Transcribe is ambient recording (`beginAmbientTranscription`). Create canvas "Storyboards" is now **Slides** and shows without a call. Dashboard boxes have sleeping/working/awake mascots (tap-to-connect on Moodle/Gmail/Gcal). Moodle is a real read-only client (mobile token + REST), no fake homework. Binder filings auto-tag by source. Presentation sub-agent is not this pass.
+
 ## Founders inbox is the public email (2026-08-16)
 
 Apply forms, footer, mailto, and lead alerts go to founders@joinmindcraft.com. We still only collect email when someone applies, not on a bare visit.
