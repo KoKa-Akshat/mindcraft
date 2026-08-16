@@ -614,8 +614,15 @@ struct FieldDeskView: View {
                             Task { await refreshDeskCalendar() }
                         },
                         onOpenGmail: {
-                            showDeskGridDashboard = false
-                            showGmailBox = true
+                            // Keep dashboard mounted (same shape as Binder/
+                            // Calendar above) - GmailWorkflowBoxView is a
+                            // floating, non-opaque box (~440x360), so
+                            // whatever's behind it at open time shows through
+                            // its margins. Closing the dashboard first left
+                            // Jesse's Kitchen visible around the box instead.
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                showGmailBox = true
+                            }
                         },
                         onOpenCreate: { kind in
                             createCanvasKind = kind
@@ -729,7 +736,11 @@ struct FieldDeskView: View {
                         startWithTopReply: gmailOpenTopReply
                     )
                     .transition(.opacity)
-                    .zIndex(56)
+                    // Above Dashboard's zIndex(88), same tier as Binder/
+                    // Calendar - was 56 (below the dashboard), which is how
+                    // Jesse's Kitchen showed through the box's margins once
+                    // the dashboard was torn down to open it.
+                    .zIndex(89)
                     .accessibilityIdentifier("fieldDeskGmailOverlay")
                 }
 
