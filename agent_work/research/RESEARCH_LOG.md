@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-16 — Researcher tick: Part CLIII Contract SME panel seal onboarding & parallel-run (SAFE-PANELRAMP)
+
+**Tick type:** Researcher (UTC hour 0 ≡ Red Team slot, but ch153 never written → prefer Researcher per rotation; researcher count since synthesizer v1.19 = 2 → Researcher)  
+**Chapter written:** `chapters/153_contract_sme_panel_seal_onboarding_parallel_run.md` (Part CLIII)  
+**Claim examined:** Whether contract SME panels may hold C4 / `hcelig_pass` authority after SOW or Loom-only training, or must pass a **seal-literacy → shadow dual → graduate** stage machine with FILLETA `contract_ramp` honesty.
+
+**Doctrine proposed (provisional):** **SAFE-PANELRAMP** — densifies SAFE-SURGEPANEL × SAFE-FIGKEY × SAFE-DUALRATE (+ CAPPLAN/REPAIRSTRAT/PATHBLAME) + Weigle rater training / Engelhard–Myford severity monitoring / Wolfe–Moulder–Myford DRIFT / Bidwell–Briscoe contractor training undersupply / Kane IUA: ramp before authority; hard deny without `contract_parallel_run_pass` — no Parallel Score™. Experiment family **PANELRAMP-***.
+
+**Evidence spine (verified citations):** Weigle (1994; 1998); Engelhard & Myford (2003); Wolfe, Moulder, & Myford (2001); Myford & Wolfe (2009); Bidwell & Briscoe (2009); Davis-Blake & Uzzi (1993); Lepak & Snell (1999); Kane (2013).
+
+**Claim killed (this tick):** Parallel Score™ / Onboard Minutes / Ramp % NS / day-one C4 / Loom≡ready / SOW≡scaled dual / forever-ramp without exit / silent graduate / AP·ETS cosplay ACT ads / complete-visual from panel onboarding packaging (provisional kill #107 until synthesizer).
+
+**Experiments:** PANELRAMP-1…5 + PANELRAMP-QUAL.
+
+**Next researcher id:** **154** (Post-spike dual demobilization without fidelity cliff). Researcher count since v1.19 synthesizer: **3**. Unfinished queue still ≥3 (154–157); no QUEUE_EXTENDED promote this tick.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-15 — Researcher tick: Part CLII Path-conditioned dual blame tests (SAFE-PATHBLAME)
 
 **Tick type:** Researcher (UTC hour 21; hour%6≠0; researcher count since synthesizer v1.19 = 1 → Researcher)  
