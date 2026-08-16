@@ -997,7 +997,21 @@ struct FieldDeskView: View {
                 }
                 UserDefaults.standard.set(true, forKey: sampleWipeKey)
             }
-            Task { await refreshDeskCalendar() }
+            // Delayed, not fired inline in this .onAppear: this calls through
+            // to EventKit's requestFullAccessToEvents(), which on a fresh
+            // install pops a real system permission alert. Doing that
+            // synchronously during the very first launch's .onAppear risks
+            // racing UIKit's own launch-completion signal - iOS's launch
+            // watchdog can SIGKILL the app for taking too long to finish
+            // launching, and that termination doesn't always produce a
+            // normal crash report (seen live: app vanishes with no crash
+            // log, inconsistently, including right after a device restart
+            // ruled out other causes). Giving the launch sequence a moment
+            // to fully settle first is the standard mitigation.
+            Task {
+                try? await Task.sleep(for: .seconds(1.5))
+                await refreshDeskCalendar()
+            }
             // One-shot rewire: put Gmail back on Connect for a clean reconnect test.
             let rewireKey = "deskOs.gmailRewire.v2"
             if !UserDefaults.standard.bool(forKey: rewireKey) {
