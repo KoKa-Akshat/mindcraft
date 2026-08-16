@@ -78,14 +78,32 @@ auth-flow timing is the highest-risk item this session has touched.
    pass only touched the landing card. Also not done: Resume's page
    (its live call UI was removed entirely earlier tonight in favor of
    the native call, so it has no "meet" card to unify).
-4. **NOT STARTED, highest risk, needs care not a rush** — Gmail/Gcal
-   OAuth consent prompted at login instead of deferred to a "Connect"
-   tap inside a box, so the dashboard is already populated on first
-   view after login. This touches the actual sign-in flow (`AuthGate`/
-   wherever Google Sign-In is currently triggered) — auth-flow timing
-   bugs are a real, different risk class from the UI overlay bugs this
-   session has mostly been fixing (see CLAUDE.md's own note about launch-
-   watchdog kills from synchronous permission prompts at launch — the
-   same category of risk applies to an OAuth consent screen fired at the
-   wrong moment in the login sequence). Investigate the current login
-   flow's exact structure before changing it; don't guess at timing.
+4. **INVESTIGATED, awaiting go-ahead** — Gmail/Gcal OAuth at login.
+   Confirmed `AuthService.signInWithGoogle()` currently does a bare
+   identity sign-in (no Gmail/Calendar scopes at all); those scopes are
+   requested separately by `GmailClient.connectGoogleMailAndCalendar()`,
+   which is real and already works. Recommended approach: don't touch
+   `signInWithGoogle()` itself (core auth path, don't add risk to it) -
+   instead, right after a Google sign-in succeeds, trigger
+   `connectGoogleMailAndCalendar()` automatically after a short deferred
+   delay (same `Task.sleep` pattern already proven tonight for the
+   EventKit calendar-launch crash, applied to OAuth-consent timing
+   instead). Not yet implemented - waiting on explicit confirmation
+   this approach is right before touching the sign-in path.
+5. **DONE (redesign)** — Binder card redesigned: gradient hero for ACT
+   Field Book, refined instance tiles, filed items as a real
+   stacked-paper list with colored accent bars, proper empty state.
+   All data already existed (`FieldDeskStore.items`) - this was a
+   visual pass only.
+6. **DONE (planning only, see "Level 2" section in
+   `JESSE_CENTRAL_AI_PLAN.md`)** — the box-mascot architecture (central
+   Jesse, not per-box sub-agents; scoped connectors; Intel/Binder are
+   derived views not connectors), the fix for "Transcribe" (should be
+   ambient recording via a new `JesseCallSession.beginAmbientTranscription()`
+   entry point, not a two-way call), a definitive read on `storyboardsRail`
+   (it's a slide picker - verified in code, not "space for people on
+   call"), and how Gcal-scheduled meeting transcripts (via the existing
+   Fireflies pipeline) should feed central Jesse's context without
+   disturbing that pipeline's existing tutor-session role. Nothing in
+   this section has been implemented - see its own "Explicit
+   instructions for Cursor" list for the actual work order.
