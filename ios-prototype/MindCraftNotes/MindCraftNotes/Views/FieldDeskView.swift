@@ -626,7 +626,9 @@ struct FieldDeskView: View {
                         },
                         onOpenCreate: { kind in
                             createCanvasKind = kind
-                            showCreateCanvas = true
+                            withAnimation(.easeInOut(duration: 0.28)) {
+                                showCreateCanvas = true
+                            }
                         },
                         onOpenFlow: { id in
                             showDeskGridDashboard = false
@@ -804,12 +806,19 @@ struct FieldDeskView: View {
                         // on Create Canvas instead of the dashboard without
                         // this (confirmed via UI test + screen recording).
                         onClose: {
-                            showCreateCanvas = false
-                            showDeskGridDashboard = true
+                            withAnimation(.easeInOut(duration: 0.28)) {
+                                showCreateCanvas = false
+                                showDeskGridDashboard = true
+                            }
                         }
                     )
                     .zIndex(89)
-                    .transition(.opacity)
+                    // Slides in from the right / back out to the right
+                    // instead of a plain crossfade - reads as an adjacent
+                    // panel on the same screen (Work stays put underneath,
+                    // never actually leaves) rather than teleporting to a
+                    // disconnected space.
+                    .transition(.move(edge: .trailing))
                 }
 
                 // Polka doorway sheet rides above both worlds while crossing.
@@ -1625,8 +1634,14 @@ struct FieldDeskView: View {
         createCanvasKind = .presentation
         showStandaloneDesk = false
         showCreateStudio = false
-        showDeskGridDashboard = false
-        showCreateCanvas = true
+        // Dashboard stays mounted (not torn down) - same shape as Binder/
+        // Calendar/Gmail. In practice this pill is hidden whenever the
+        // dashboard shows (deskOverlayChromeBlocked), but leaving this true
+        // matched the old tear-down-first pattern that read as "opening in
+        // a disconnected new space" everywhere else it was fixed tonight.
+        withAnimation(.easeInOut(duration: 0.28)) {
+            showCreateCanvas = true
+        }
     }
 
     private func switchDeskToCreate() {
@@ -3334,7 +3349,9 @@ struct FieldDeskView: View {
                 ) {
                     showAddPanel = false
                     createCanvasKind = .presentation
-                    showCreateCanvas = true
+                    withAnimation(.easeInOut(duration: 0.28)) {
+                        showCreateCanvas = true
+                    }
                 }
                 .accessibilityIdentifier("fieldDeskAddPresentation")
 
