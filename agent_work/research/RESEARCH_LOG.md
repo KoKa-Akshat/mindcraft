@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-16 — Researcher tick: Part CLV Gold-set planted probes for path×stratum monitors (SAFE-GOLDSET)
+
+**Tick type:** Researcher (UTC hour 6 ≡ Red Team slot, but ch155 never written → prefer Researcher per rotation; researcher count since synthesizer v1.19 = 4 → Researcher)  
+**Chapter written:** `chapters/155_gold_set_planted_probes_path_stratum_monitors.md` (Part CLV)  
+**Claim examined:** Whether PATHBLAME/REPAIRSTRAT path×stratum monitors may trust green tables without **sealed, blindly planted gold probes** (validity tickets with known seal outcomes), or must run a known-signal check without Gold Set Score™ vanity.
+
+**Doctrine proposed (provisional):** **SAFE-GOLDSET** — densifies SAFE-PATHBLAME × SAFE-REPAIRSTRAT × SAFE-INSTRUMENT (+ REVOKE/FIGKEY/DUALRATE) + Shin–Wolfe–Wilson validity papers / Wang–Song–Wang–Wolfe validity scoring + adaptive monitoring / Myford–Wolfe time-aware rater monitoring / Patz HRM caution / Shewhart–Page shift detection / Kane IUA: blind sealed probes; path×stratum hit/miss; student firewall — no Gold Set Score™. Experiment family **GOLDSET-***.
+
+**Evidence spine (verified citations):** Shin, Wolfe, & Wilson (2019); Wang, Song, Wang, & Wolfe (2017); Myford & Wolfe (2009); Patz, Junker, Johnson, & Mariano (2002); Shewhart (1931); Page (1954); Kane (2013).
+
+**Claim killed (this tick):** Gold Set Score™ / Canary Minutes / Probe Hit % NS / open or student-facing planted stems / pooled-only gold vanity / invent-work gold pad / radiology-canary cosplay ACT ads / complete-visual from canary packaging (provisional kill #109 until synthesizer).
+
+**Experiments:** GOLDSET-1…5 + GOLDSET-QUAL.
+
+**Next researcher id:** **156** (Generator vs rater poison separation on inherit repair). Researcher count since v1.19 synthesizer: **5**. Unfinished queue was <3 after marking 155 DONE → promoted **158** (Gold-bank rotation & tip-resistance) into NEXT_LAB; unfinished now 156–158.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-16 — Researcher tick: Part CLIV Post-spike dual demobilization without fidelity cliff (SAFE-DEMOB)
 
 **Tick type:** Researcher (UTC hour 3; hour%6≠0; researcher count since synthesizer v1.19 = 3 → Researcher)  
