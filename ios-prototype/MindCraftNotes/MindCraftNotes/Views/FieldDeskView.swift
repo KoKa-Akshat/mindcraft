@@ -2619,147 +2619,195 @@ struct FieldDeskView: View {
     }
 
     @ViewBuilder
+    /// Redesigned 2026-08-16: was a plain label + white-card list. Now a
+    /// hero ACT card (gradient, matches the app's forest/lime identity),
+    /// refined instance tiles, and filed items as a real stacked-paper
+    /// list (colored left accent per type, relative dates) instead of
+    /// plain text rows - same visual ambition as the Calendar/Intel/Gmail
+    /// boxes built earlier tonight, just a level up given this is the
+    /// most-used surface in Binder.
     private var binderBody: some View {
         // Binder shows ACT only (never Doc→Cook). Customs stay secondary.
         let customs = customInstances.instances.map {
             DeskBoundInstance.custom(id: $0.id, name: $0.name, subject: $0.subject)
         }
-        VStack(alignment: .leading, spacing: 10) {
-            Text("BINDER")
-                .font(.system(size: 10, weight: .heavy, design: .rounded))
-                .tracking(0.8)
-                .foregroundColor(Color(fdHex: "8a8478"))
-
-            // ACT → in-desk Field Book popup with notes (not Doc→Cook, not a new tab).
-            Button {
-                showBlankPage = false
-                showGmailBox = false
-                showApplyToday = false
-                showDocCook = false
-                withAnimation(.easeInOut(duration: 0.2)) {
-                    showActFieldBook = true
-                }
-            } label: {
-                VStack(alignment: .leading, spacing: 8) {
-                    HStack(spacing: 8) {
-                        Image(systemName: "book.closed.fill")
-                            .font(.system(size: 13, weight: .bold))
-                            .foregroundColor(Color(fdHex: "0c1207"))
-                            .frame(width: 28, height: 28)
-                            .background(Circle().fill(Color(fdHex: "c4f547")))
-                        Text("ACT")
-                            .font(.system(size: 11, weight: .heavy, design: .rounded))
-                            .foregroundColor(Color(fdHex: "0c1207"))
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 3)
-                            .background(Capsule().fill(Color(fdHex: "c4f547").opacity(0.85)))
-                        Spacer(minLength: 0)
-                        Image(systemName: "arrow.up.left.and.arrow.down.right")
-                            .font(.system(size: 11, weight: .bold))
-                            .foregroundColor(Color(fdHex: "8a8478"))
-                    }
-                    Text("ACT Field Book")
-                        .font(.system(size: 17, weight: .bold, design: .rounded))
+        return ScrollView(showsIndicators: false) {
+            VStack(alignment: .leading, spacing: 16) {
+                HStack(spacing: 8) {
+                    Image(systemName: "books.vertical.fill")
+                        .font(.system(size: 13, weight: .bold))
+                        .foregroundColor(Color(fdHex: "247a4d"))
+                    Text("Binder")
+                        .font(.system(size: 15, weight: .heavy, design: .rounded))
                         .foregroundColor(Color(fdHex: "1c1a17"))
-                    Text("Open dash + notes on this desk")
-                        .font(.system(size: 12, weight: .semibold, design: .rounded))
-                        .foregroundColor(Color(fdHex: "6f6a61"))
+                    Spacer(minLength: 0)
+                    Text(store.items.isEmpty ? "Empty" : "\(store.items.count) filed")
+                        .font(.system(size: 10, weight: .heavy, design: .rounded))
+                        .tracking(0.4)
+                        .foregroundColor(Color(fdHex: "8a8478"))
+                        .padding(.horizontal, 9)
+                        .padding(.vertical, 4)
+                        .background(Capsule().fill(Color(fdHex: "efe8d8")))
                 }
-                .padding(14)
-                .frame(maxWidth: .infinity, minHeight: 110, alignment: .topLeading)
-                .background(
-                    RoundedRectangle(cornerRadius: 14, style: .continuous)
-                        .fill(Color.white.opacity(0.92))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 14, style: .continuous)
-                                .stroke(Color(fdHex: "c4f547"), lineWidth: 2)
-                        )
-                )
-            }
-            .buttonStyle(.plain)
-            .accessibilityIdentifier("fieldDeskBinderInstance_act_main")
 
-            if !customs.isEmpty {
-                LazyVGrid(
-                    columns: [GridItem(.flexible(), spacing: 8), GridItem(.flexible(), spacing: 8)],
-                    spacing: 8
-                ) {
-                    ForEach(customs) { inst in
-                        Button {
-                            // Never route ACT/Doc→Cook through hub from Binder.
-                            if case .custom = inst {
-                                onLaunchInstance?(inst)
-                            }
-                        } label: {
-                            VStack(alignment: .leading, spacing: 6) {
-                                HStack(spacing: 6) {
-                                    Image(systemName: inst.systemImage)
-                                        .font(.system(size: 11, weight: .bold))
-                                        .foregroundColor(Color(fdHex: "0c1207"))
-                                        .frame(width: 22, height: 22)
-                                        .background(Circle().fill(Color(fdHex: "c4f547")))
-                                    Text(inst.badge)
-                                        .font(.system(size: 9, weight: .heavy, design: .rounded))
-                                        .foregroundColor(Color(fdHex: "8a8478"))
-                                    Spacer(minLength: 0)
-                                }
-                                Text(inst.title)
-                                    .font(.system(size: 13, weight: .bold, design: .rounded))
-                                    .foregroundColor(Color(fdHex: "1c1a17"))
-                                    .lineLimit(2)
-                            }
-                            .padding(10)
-                            .frame(maxWidth: .infinity, minHeight: 72, alignment: .topLeading)
-                            .background(
-                                RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                    .fill(Color.white.opacity(0.72))
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                            .stroke(Color(fdHex: "d9d2c5"), lineWidth: 1)
-                                    )
-                            )
-                        }
-                        .buttonStyle(.plain)
-                        .accessibilityIdentifier("fieldDeskBinderInstance_\(inst.id)")
+                // ACT → in-desk Field Book popup with notes (not Doc→Cook, not a new tab).
+                Button {
+                    showBlankPage = false
+                    showGmailBox = false
+                    showApplyToday = false
+                    showDocCook = false
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        showActFieldBook = true
                     }
-                }
-            }
-
-            HStack {
-                Text("FILED")
-                    .font(.system(size: 10, weight: .heavy, design: .rounded))
-                    .tracking(0.8)
-                    .foregroundColor(Color(fdHex: "8a8478"))
-                Spacer(minLength: 0)
-                Text(store.items.isEmpty ? "tap + to file" : "\(store.items.count)")
-                    .font(.system(size: 10, weight: .semibold, design: .rounded))
-                    .foregroundColor(Color(fdHex: "8a8478"))
-            }
-            .padding(.top, 2)
-
-            if store.items.isEmpty {
-                Text("Notes, pages, and drops land here.")
-                    .font(.system(size: 12, weight: .medium, design: .rounded))
-                    .foregroundColor(Color(fdHex: "8a8478"))
-            } else {
-                ForEach(store.items.prefix(4)) { item in
-                    Button {
-                        openEntry = item
-                    } label: {
-                        HStack(spacing: 6) {
-                            Image(systemName: item.course == "Pages" ? "doc.plaintext" : "paperclip")
-                                .font(.system(size: 11, weight: .semibold))
-                                .foregroundColor(Color(fdHex: "6b4f3a"))
-                            Text(item.title)
-                                .font(.system(size: 13, weight: .semibold, design: .rounded))
-                                .foregroundColor(Color(fdHex: "1c1a17"))
-                                .lineLimit(1)
+                } label: {
+                    VStack(alignment: .leading, spacing: 10) {
+                        HStack {
+                            Image(systemName: "book.closed.fill")
+                                .font(.system(size: 15, weight: .bold))
+                                .foregroundColor(Color(fdHex: "0c1207"))
+                                .frame(width: 34, height: 34)
+                                .background(Circle().fill(Color(fdHex: "c4f547")))
                             Spacer(minLength: 0)
+                            Image(systemName: "arrow.up.right")
+                                .font(.system(size: 12, weight: .bold))
+                                .foregroundColor(.white.opacity(0.7))
+                                .frame(width: 26, height: 26)
+                                .background(Circle().fill(Color.white.opacity(0.12)))
+                        }
+                        Spacer(minLength: 2)
+                        Text("ACT Field Book")
+                            .font(.system(size: 19, weight: .bold, design: .rounded))
+                            .foregroundColor(.white)
+                        Text("Dash + notes, on this desk")
+                            .font(.system(size: 12, weight: .semibold, design: .rounded))
+                            .foregroundColor(.white.opacity(0.68))
+                    }
+                    .padding(16)
+                    .frame(maxWidth: .infinity, minHeight: 128, alignment: .topLeading)
+                    .background(
+                        RoundedRectangle(cornerRadius: 18, style: .continuous)
+                            .fill(
+                                LinearGradient(
+                                    colors: [Color(fdHex: "1f3d2e"), Color(fdHex: "0c1512")],
+                                    startPoint: .topLeading, endPoint: .bottomTrailing
+                                )
+                            )
+                            .shadow(color: Color(fdHex: "0c1512").opacity(0.35), radius: 14, y: 8)
+                    )
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("fieldDeskBinderInstance_act_main")
+
+                if !customs.isEmpty {
+                    LazyVGrid(
+                        columns: [GridItem(.flexible(), spacing: 8), GridItem(.flexible(), spacing: 8)],
+                        spacing: 8
+                    ) {
+                        ForEach(customs) { inst in
+                            Button {
+                                // Never route ACT/Doc→Cook through hub from Binder.
+                                if case .custom = inst {
+                                    onLaunchInstance?(inst)
+                                }
+                            } label: {
+                                VStack(alignment: .leading, spacing: 6) {
+                                    HStack(spacing: 6) {
+                                        Image(systemName: inst.systemImage)
+                                            .font(.system(size: 11, weight: .bold))
+                                            .foregroundColor(Color(fdHex: "0c1207"))
+                                            .frame(width: 22, height: 22)
+                                            .background(Circle().fill(Color(fdHex: "c4f547")))
+                                        Text(inst.badge)
+                                            .font(.system(size: 9, weight: .heavy, design: .rounded))
+                                            .foregroundColor(Color(fdHex: "8a8478"))
+                                        Spacer(minLength: 0)
+                                    }
+                                    Text(inst.title)
+                                        .font(.system(size: 13, weight: .bold, design: .rounded))
+                                        .foregroundColor(Color(fdHex: "1c1a17"))
+                                        .lineLimit(2)
+                                }
+                                .padding(10)
+                                .frame(maxWidth: .infinity, minHeight: 72, alignment: .topLeading)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                        .fill(Color.white.opacity(0.85))
+                                        .shadow(color: .black.opacity(0.06), radius: 6, y: 3)
+                                )
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityIdentifier("fieldDeskBinderInstance_\(inst.id)")
                         }
                     }
-                    .buttonStyle(.plain)
-                    .accessibilityLabel(item.title)
-                    .accessibilityIdentifier("fieldDeskBinderItem_\(item.id)")
+                }
+
+                Text("Filed")
+                    .font(.system(size: 11, weight: .heavy, design: .rounded))
+                    .tracking(0.4)
+                    .foregroundColor(Color(fdHex: "8a8478"))
+                    .padding(.top, 2)
+
+                if store.items.isEmpty {
+                    HStack(spacing: 10) {
+                        Image(systemName: "tray")
+                            .font(.system(size: 16, weight: .medium))
+                            .foregroundColor(Color(fdHex: "b6ac98"))
+                        Text("Notes, pages, and drops land here as you work.")
+                            .font(.system(size: 12, weight: .medium, design: .rounded))
+                            .foregroundColor(Color(fdHex: "8a8478"))
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    .padding(12)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .fill(Color(fdHex: "efe8d8").opacity(0.6))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                    .strokeBorder(style: StrokeStyle(lineWidth: 1, dash: [4, 4]))
+                                    .foregroundColor(Color(fdHex: "d9d2c5"))
+                            )
+                    )
+                } else {
+                    VStack(spacing: 6) {
+                        ForEach(store.items.prefix(6)) { item in
+                            Button {
+                                openEntry = item
+                            } label: {
+                                HStack(spacing: 10) {
+                                    RoundedRectangle(cornerRadius: 2)
+                                        .fill(item.course == "Pages" ? Color(fdHex: "247a4d") : Color(fdHex: "c4a484"))
+                                        .frame(width: 3, height: 30)
+                                    Image(systemName: item.course == "Pages" ? "doc.plaintext.fill" : "paperclip")
+                                        .font(.system(size: 12, weight: .semibold))
+                                        .foregroundColor(Color(fdHex: "6b4f3a"))
+                                        .frame(width: 20)
+                                    VStack(alignment: .leading, spacing: 1) {
+                                        Text(item.title)
+                                            .font(.system(size: 13, weight: .semibold, design: .rounded))
+                                            .foregroundColor(Color(fdHex: "1c1a17"))
+                                            .lineLimit(1)
+                                        Text(item.course)
+                                            .font(.system(size: 10, weight: .medium, design: .rounded))
+                                            .foregroundColor(Color(fdHex: "8a8478"))
+                                    }
+                                    Spacer(minLength: 0)
+                                    Image(systemName: "chevron.right")
+                                        .font(.system(size: 10, weight: .semibold))
+                                        .foregroundColor(Color(fdHex: "b6ac98"))
+                                }
+                                .padding(.horizontal, 10)
+                                .padding(.vertical, 8)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                        .fill(Color.white.opacity(0.85))
+                                )
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityLabel(item.title)
+                            .accessibilityIdentifier("fieldDeskBinderItem_\(item.id)")
+                        }
+                    }
                 }
             }
         }
