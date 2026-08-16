@@ -4,6 +4,10 @@
 
 ---
 
+## Founders inbox is the public email (2026-08-16)
+
+Apply forms, footer, mailto, and lead alerts go to founders@joinmindcraft.com. We still only collect email when someone applies, not on a bare visit.
+
 ## Pricing hides Individual Plus (2026-08-16)
 
 Public pricing is Free, Family, and Institutional. Individual Plus is off the row until paid plans open.

@@ -3,18 +3,51 @@
  * POST https://mindcraft-webhook.vercel.app/api/marketing-lead
  * Body: { email, name?, role?, source?, note?, page? }
  *
- * Stores Firestore marketing_leads/{emailLower} and schedules a 1-hour
- * follow-up email (sent by cron-marketing-followup).
+ * Stores Firestore marketing_leads/{emailLower}, emails founders@joinmindcraft.com,
+ * and schedules a 1-hour follow-up (sent by cron-marketing-followup).
  */
 
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { FieldValue, Timestamp } from 'firebase-admin/firestore'
 import { db } from '../firebase'
 import { setCors } from '../cors'
-import { DEFAULT_FOLLOWUP } from '../sendMarketingEmail'
+import { DEFAULT_FOLLOWUP, FOUNDERS_EMAIL, sendMarketingEmail } from '../sendMarketingEmail'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const FOLLOWUP_DELAY_MS = 60 * 60 * 1000 // 1 hour
+
+async function notifyFounders(input: {
+  email: string
+  name: string
+  role: string
+  source: string
+  note: string
+  page: string
+  returning: boolean
+}) {
+  const subject = input.returning
+    ? `Lead again · ${input.email}`
+    : `New lead · ${input.email}`
+  const lines = [
+    input.returning ? 'A returning visitor submitted again.' : 'A new visitor submitted their email.',
+    `Email: ${input.email}`,
+    input.name && `Name: ${input.name}`,
+    `Role: ${input.role}`,
+    `Source: ${input.source}`,
+    input.page && `Page: ${input.page}`,
+    input.note && `Note: ${input.note}`,
+  ].filter(Boolean)
+  try {
+    const result = await sendMarketingEmail({
+      to: FOUNDERS_EMAIL,
+      subject,
+      text: lines.join('\n'),
+    })
+    if (!result.ok) console.error('[marketing-lead] founders notify', result.error)
+  } catch (err) {
+    console.error('[marketing-lead] founders notify', err)
+  }
+}
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   setCors(res)
@@ -63,6 +96,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         },
         { merge: true },
       )
+      await notifyFounders({ email, name: name || String(prev.name || ''), role, source, note, page, returning: true })
       return res.status(200).json({ ok: true, id, returning: true })
     }
 
@@ -95,6 +129,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       })
     }
 
+    await notifyFounders({ email, name, role, source, note, page, returning: false })
     return res.status(200).json({ ok: true, id, returning: false })
   } catch (err: any) {
     console.error('[marketing-lead]', err)
