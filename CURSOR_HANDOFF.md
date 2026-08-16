@@ -7,6 +7,249 @@ Manjushree landing-panel brief: `agent_work/manjushree-zone/LANDING_PANEL_HANDOF
 
 ---
 
+## Operating model (2026-08-16): Claude plans, Cursor codes
+
+As of this handoff, Claude Code (terminal, run by Akshat) is the **command
+center** — it reads device/CI state, makes architecture calls, writes the
+task spec below, and audits Cursor's finished work against it. **Cursor
+executes from the spec it finds here** — don't invent scope beyond it, and
+don't start a new direction without one.
+
+### The loop
+1. Akshat describes a problem/goal to Claude (in terminal, sometimes with a
+   hand-drawn layout/size sketch — see below).
+2. Claude investigates the real repo/device/CI state (never assumes), makes
+   the calls that need a person only when genuinely ambiguous, and writes a
+   scoped spec into **"Next assignment for Cursor"** below, overwriting the
+   previous one once it's been picked up.
+3. Cursor reads this file, implements **exactly that scope**, verifies per
+   the spec's own checklist, and appends a dated result note under
+   **"Cursor's last report"** (what shipped, what verification actually ran,
+   any deviation and why).
+4. Claude reads that report at the start of its next session, audits it
+   against real repo/CI/device state (not just the report's own claims), and
+   writes the next spec. Repeat.
+
+### Spec format (what Claude writes for Cursor)
+Every assignment states, explicitly:
+- **Goal** — the actual problem, one or two sentences, not just a feature name.
+- **Files in scope** — exact paths. Cursor should not touch files outside this
+  list without flagging it back in the report.
+- **Constraints** — lane ownership (see below), anything explicitly NOT to
+  change, existing patterns to match (e.g. "match `TileKind`'s enum-switch
+  shape, don't introduce a class hierarchy — see CLAUDE.md's
+  accessibility-identifier-clobbering gotcha").
+- **Definition of done** — a concrete, runnable check: `xcodebuild build`
+  passes, a specific `xcodebuild test -only-testing:` target passes, a
+  screenshot of a specific screen state. Not "looks right."
+
+### Hand-drawn layout references
+When Akshat hand-draws box sizes/positions as a template, photograph it and
+drop it in `agent_work/product/design_refs/` (create if missing), named by
+date + surface (e.g. `2026-08-16_desk_grid_sizes.jpg`). The task spec below
+should point Cursor at the exact filename and which measurements to treat as
+load-bearing vs. illustrative — a photo alone, with no spec pointing at it,
+won't reliably translate into exact point values.
+
+### Next assignment for Cursor
+
+Five sequenced assignments below (2026-08-16 planning session with Akshat).
+**Do them in order, A→E, one PR branch per letter, one report entry per
+letter.** Later ones assume earlier ones landed — don't jump ahead. Each
+needs `xcodebuild build-for-testing` green (device or simulator) before its
+report is written; CI (`iOS simulator build+test`) is the real gate before
+merge, same as PR 43 — see "How this handoff gets written" above.
+
+---
+
+#### Assignment A — Consolidate Binder onto `BinderStore`, revive BYOB
+
+**Goal.** The Work Dashboard's Binder tile currently reads
+`FieldDeskStore.FiledItem` (`FieldDeskView.swift:690`,
+`binderTitles: Array(store.items...)`) and tapping it jumps straight to ACT
+Field Book (`DeskGridDashboardView.swift`'s `handleTile(.binder)` →
+`onOpenBinder` → `showActFieldBook = true`). Meanwhile a *second*,
+already-built, Storage-backed, security-reviewed Binder system
+(`BinderStore.swift`, `binder_items` Firestore collection, real file uploads
+via `CreateInstanceStudioView.swift`'s BYOB — "Bring Your Own Book" — flow)
+exists but is only reachable through `StandaloneDeskView`, which CLAUDE.md
+explicitly marks as the deprecated old web desk ("Do not send Work to
+StandaloneDeskView"). That's why upload-a-PDF-and-file-it-into-Binder
+"disappeared" — it's not broken, it's stranded behind a surface nobody
+routes to anymore. Fix: make `BinderStore` the one real Binder data source,
+and give the Work Dashboard's Binder tile a real popup (same shape as
+`intelOverlayLayer` in `FieldDeskView.swift:2965` — a fixed card, Done
+button, `.accessibilityIdentifier`) with **Memo / Doc / BYOB** sections (the
+proven taxonomy already used in the old web Binder) plus ACT Field Book as
+one entry inside it, not the tile's sole destination.
+
+**Files in scope:**
+- `ios-prototype/MindCraftNotes/MindCraftNotes/Views/FieldDeskView.swift` —
+  new `binderOverlayLayer` (mirror `intelOverlayLayer`'s shape exactly),
+  own a `BinderStore` instance the same way `StandaloneDeskView` does
+  (`@StateObject private var binderStore = BinderStore()`), wire
+  `onOpenBinder` to show it instead of jumping straight to
+  `showActFieldBook`.
+- `ios-prototype/MindCraftNotes/MindCraftNotes/Views/DeskGridDashboardView.swift`
+  — `binderTitles` should read from the new `BinderStore` (passed in), not
+  `FieldDeskStore.FiledItem`.
+- `ios-prototype/MindCraftNotes/MindCraftNotes/Views/CreateInstanceStudioView.swift`
+  — reuse as-is (`CreateInstanceStudioView(binderStore:onCreated:)` already
+  supports this), just give it a new entry point from the binder popup's
+  BYOB section instead of `StandaloneDeskView`.
+- `ios-prototype/MindCraftNotes/MindCraftNotes/Networking/BinderStore.swift`
+  — read, don't restructure, unless the Memo/Doc/BYOB section split needs a
+  small query helper.
+
+**Constraints:**
+- Don't delete `FieldDeskStore.FiledItem` or its call sites — Jesse's
+  Kitchen's own filing (Intel etc.) may still depend on it; if you find it's
+  now fully redundant with `BinderStore`, flag that in the report rather
+  than deleting unilaterally.
+- Don't touch `StandaloneDeskView.swift` / `worlds/deskweb/desk.html` — old
+  web desk, out of scope, leave it working for whatever still reaches it.
+- `FieldDeskView.swift` is flagged in CLAUDE.md as the highest-risk file in
+  the app (overlay hit-testing / accessibility-identifier-clobbering bug
+  class, documented at length there) — read that section before adding the
+  new overlay, and add `showBinderOverlay` to `deskOverlayChromeBlocked` per
+  its own doc comment.
+- Match `intelOverlayLayer`'s existing visual language (cream card,
+  `fdHex` palette, Done capsule) — don't invent a new visual style for this.
+
+**Definition of done:** tapping Binder on the Work Dashboard opens a real
+popup with Memo/Doc/BYOB sections (not an immediate jump to ACT Field
+Book); uploading a file via BYOB produces a real `binder_items` Firestore
+doc with `type: "byob"` and a Storage blob under `binder/{uid}/{itemId}/`;
+the item then shows up in the popup's Doc/BYOB list. `xcodebuild build` +
+`build-for-testing` green. New XCUITest: open Binder popup, verify
+Memo/Doc/BYOB sections exist by accessibility id.
+
+---
+
+#### Assignment B — Real content rows in Intel/Email tiles, not mascot+list
+
+**Goal.** When a dashboard box is "hungry" (grown via `DeskBoxBus.requestSpace`
+— tap-to-grow, neighbors shrink, this behavior is correct and must not
+change), it currently layers a scaled-down mascot image behind a plain
+stacked-text list (`tileBody`/`tileLines` in `DeskGridDashboardView.swift`).
+Akshat wants the same real row styling used in the full popups
+(`intelBody`'s dot+line+divider rows, `GmailWorkflowBoxView`'s subject-row
+styling) to be what's shown in the grown tile too — one visual language for
+"this box's real content," not two. Don't embed the popups' fixed-size views
+directly into a resizable tile (that's the accessibility-identifier/layout
+clobbering trap documented repeatedly in CLAUDE.md) — extract the row itself
+as a small shared view, sized by whichever parent gives it space.
+
+**Files in scope:**
+- `ios-prototype/MindCraftNotes/MindCraftNotes/Views/DeskGridDashboardView.swift`
+  — `tileBody`/`tileLines`/`mascotArt` (kill the mascot layer when
+  `tileShowsContent` is true; the real rows replace it, not sit behind it).
+- `ios-prototype/MindCraftNotes/MindCraftNotes/Views/FieldDeskView.swift` —
+  `intelBody` (extract its row as a shared small view).
+- `ios-prototype/MindCraftNotes/MindCraftNotes/Views/GmailWorkflowBoxView.swift`
+  — same extraction for its subject rows.
+- New shared file if the extracted row view doesn't have an obvious home:
+  `ios-prototype/MindCraftNotes/MindCraftNotes/Views/DeskContentRow.swift`.
+
+**Constraints:** keep the mascot for the non-hungry (sleeping/working) state
+— this only changes what shows once a box has real data and is grown. Don't
+touch `DeskBoxBus`/`negotiated(...)` sizing logic — that's the resize
+behavior Akshat explicitly said to preserve.
+
+**Definition of done:** grow Email (has a digest) — see real digest rows
+using the same row style as the Gmail popup, no mascot underneath.
+Same for Intel. `xcodebuild build` green, existing
+`testDashboardBoxMascotsExist` still passes (sleeping-state mascots still
+render).
+
+---
+
+#### Assignment C — Bring-your-own AI key (Keychain), targeting homework help
+
+**Goal.** `mindcraft-homework` (Anthropic-powered problem solver, stateless,
+`homework/` dir, Cloud Run) is currently down — shared Anthropic credits
+exhausted, documented in `CLAUDE.md`. Let a student optionally connect their
+own free-tier AI key (Groq recommended — fastest free tier; Anthropic as an
+alt) so homework help keeps working for them specifically, without any
+backend/Engine-lane change. The iOS app calls the student's own key directly
+against the provider's plain REST endpoint for this feature only.
+
+**Files in scope:** new
+`ios-prototype/MindCraftNotes/MindCraftNotes/Networking/StudentAIKeyStore.swift`
+(Keychain-backed — **never** Firestore/UserDefaults/logs for the raw key),
+a new settings row (find the existing account/settings surface —
+`AccountManageView.swift` is the likely home, confirm before assuming) to
+add/remove/test the key, and whichever view currently calls the (down)
+homework endpoint (`grep -rn "mindcraft-homework\|recommend-ingredients" 
+ios-prototype/` to find it) — add a "use your own AI key" path there when a
+key is present, falling back to the existing `/recommend-ingredients`
+behavior when it's not.
+
+**Constraints:** Keychain only for the raw key, full stop — this is not
+negotiable, flag back rather than improvising storage if Keychain access
+turns out awkward from wherever the settings view lives. Never send the key
+anywhere except the provider's own API host. This is Product/iOS-lane-only
+by design (see Goal) — if implementing this turns out to need a webhook or
+`ml/` change, stop and flag it rather than crossing into Engine's lane
+unannounced.
+
+**Definition of done:** with no key set, homework help behaves exactly as
+today (falls back, no crash). With a valid student-provided Groq key set,
+a homework question gets a real answer sourced from that key. `xcodebuild
+build` green. Confirm via a real device test with a real (your own test)
+free Groq key — not just that the code compiles.
+
+---
+
+#### Assignment D — Extend Drive storage to more Binder-sourced content
+
+**Goal.** `DriveClient.swift` already archives Gmail into the student's own
+Drive folder ("The Desk") via the narrow `drive.file` scope (only ever sees
+files this app itself creates) — durable storage outside MindCraft's
+backend, at zero cost to MindCraft. Extend that same pattern to Binder-filed
+notes/transcripts/BYOB uploads once Assignment A lands (needs `BinderStore`
+consolidated first).
+
+**Files in scope:**
+`ios-prototype/MindCraftNotes/MindCraftNotes/Networking/DriveClient.swift`,
+`BinderStore.swift`.
+
+**Constraints:** reuse the existing `drive.file` write scope and folder
+convention — don't request a broader Drive scope. Depends on Assignment A;
+don't start until it's landed and reported.
+
+**Definition of done:** filing a Binder item also produces a corresponding
+file in the student's "The Desk" Drive folder. `xcodebuild build` green.
+
+---
+
+#### Assignment E — Subagent settings panel (connect/reorder existing boxes)
+
+**Goal.** Let students see, connect/disconnect, and reorder the five
+existing box kinds (Intel/Moodle/Binder/Email/Gcal) from a settings surface.
+This is deliberately **not** "let students define new custom subagent
+types" — that's a bigger, separate vision-level idea, explicitly out of
+scope here. Most of the plumbing already exists (`DeskBoxBus`, per-box OAuth
+via `GmailClient`/`MoodleClient`) — this is mostly a settings UI on top of
+what's already there.
+
+**Files in scope:** `AccountManageView.swift` (or wherever Assignment C's
+settings row landed — keep them together), `DeskGridDashboardView.swift`
+(read a persisted box order/visibility instead of the current fixed order).
+
+**Constraints:** don't change `DeskBoxBus`'s core mediator logic, this is
+additive UI only.
+
+**Definition of done:** disconnecting Moodle from settings makes its tile
+show sleeping/disconnected state without restarting the app; reordering
+persists across relaunch. `xcodebuild build` green.
+
+### Cursor's last report
+_(Cursor: append your dated result note here after finishing an assignment.
+Claude reads this at the start of its next session.)_
+
+---
+
 ## Brand pivot notice (2026-08-11)
 
 MindCraft's positioning moved from "ACT-math tutoring" to "collaborative workspace / operating system for student work." `BRAND_BOOK.md` bumped to **v2.0** — read it before writing any new marketing or product copy. Math/Katha/"the click" is now the voice of the **Solver** vertical specifically, not the whole brand. New: `BUSINESS_MODEL.md`.
@@ -32,7 +275,14 @@ Native Desk OS + Desk Operator agent work landed today and is **pushed to main**
 ## Repo, branch, remote
 
 - **One repo, one remote:** https://github.com/KoKa-Akshat/mindcraft.git
-- **Everyone works on `main` directly.** No feature branches in this workflow — commits land on `main` and CI deploys immediately.
+- **`app/`, `webhook/`, marketing, `ml/`: work on `main` directly.** No feature
+  branches — commits land on `main` and CI deploys immediately.
+- **`ios-prototype/` (Cursor agent work specifically): PR branches.** Cursor's
+  autonomous iOS sessions push to a named branch (`cursor/<slug>`) and open a
+  PR rather than committing straight to `main` — check `gh pr list` for open
+  ones before assuming `main` has the latest iOS state. Merge only after CI
+  (`iOS simulator build+test`) is green; `xcodebuild build-for-testing`
+  locally catches the same compile errors CI does, faster.
 
 ### Two local checkouts (do not confuse them)
 
