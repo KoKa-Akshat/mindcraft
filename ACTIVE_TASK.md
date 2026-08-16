@@ -4,6 +4,10 @@
 
 ---
 
+## Pricing hides Individual Plus (2026-08-16)
+
+Public pricing is Free, Family, and Institutional. Individual Plus is off the row until paid plans open.
+
 ## Two mentors, no empty map hole (2026-08-16)
 
 Tutors shows two cards. The map stretches to the same height so the black gap under it is gone.
