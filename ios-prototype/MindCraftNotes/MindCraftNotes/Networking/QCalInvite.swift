@@ -49,7 +49,10 @@ enum QCalInvite {
         formatter.dateStyle = .medium
         formatter.timeStyle = .short
         let subject = "Study session — \(eventTitle)"
-        let body = "Hi \(name),\n\nProposing \(formatter.string(from: start)) for a study session on The Desk. Let me know if that works.\n"
+        // Default invite copy promotes MindCraft to whoever receives it -
+        // most recipients aren't on the platform yet, and this is the one
+        // moment an invite reaches them directly.
+        let body = "Hi \(name),\n\nProposing \(formatter.string(from: start)) for a study session on The Desk. Let me know if that works.\n\nJoin MindCraft: https://joinmindcraft.com\n"
         var comps = URLComponents()
         comps.scheme = "mailto"
         comps.path = email
