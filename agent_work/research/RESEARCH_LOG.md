@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-16 — Researcher tick: Part CLVIII Gold-bank rotation & tip-resistance under rater familiarity (SAFE-GOLDROT)
+
+**Tick type:** Researcher (UTC hour 21; hour%6≠0; researcher count since synthesizer v1.19 = 7 → Researcher)  
+**Chapter written:** `chapters/158_gold_bank_rotation_tip_resistance.md` (Part CLVIII)  
+**Claim examined:** Whether sealed gold probes may remain a forever-fixed bank (or sell Gold Familiarity Score™ / CAT-security cosplay as integrity), or must **rotate + exposure-cap** so hit rates measure seal skill rather than tip-channel recall.
+
+**Doctrine proposed (provisional):** **SAFE-GOLDROT** — densifies SAFE-GOLDSET × SAFE-REVOKE × SAFE-PANELRAMP (+ FAMHASH/INSTRUMENT) + Wang et al. fixed-set/exposure limits / Shin–Wolfe–Wilson validity papers / McCaffrey et al. ETS CR validity-insert practice / Myford–Wolfe + Congdon–McQueen time drift / Stocking–Lewis exposure security (transfer-limited) / Kane IUA: rotate and cap gold families — no Gold Familiarity Score™. Experiment family **GOLDROT-***.
+
+**Evidence spine (verified citations):** Wang, Song, Wang, & Wolfe (2017); Shin, Wolfe, & Wilson (2019); McCaffrey, Casabianca, Ricker-Pedley, Lawless, & Wendler (2022); Myford & Wolfe (2009); Congdon & McQueen (2000); Stocking & Lewis (1998); Kane (2013).
+
+**Claim killed (this tick):** Gold Familiarity Score™ / Tip Minutes / Rotation Health % NS / forever-fixed open gold / tip-sheet theater / thrash-empty cells / CAT-security cosplay ACT ads / complete-visual from rotation packaging (provisional kill #112 until synthesizer).
+
+**Experiments:** GOLDROT-1…5 + GOLDROT-QUAL.
+
+**Next researcher id:** **159** (Ambiguous-ticket dual re-seal SLA). Researcher count since v1.19 synthesizer: **8** → next UTC hour%6==0 still Red Team first; else Synthesizer eligible. Unfinished queue was <3 after marking 158 DONE → promoted **161** (Panel-cohort gold hygiene audits) into NEXT_LAB; unfinished now 159–161.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-16 — Researcher tick: Part CLVII LEA packet path-mix honesty without Dual Shame theater (SAFE-PATHMIX)
 
 **Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch157 never written → prefer Researcher per rotation; researcher count since synthesizer v1.19 = 6 → Researcher)  
