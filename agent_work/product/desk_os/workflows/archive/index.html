@@ -208,7 +208,7 @@
       <span class="pill">Your data</span>
     </header>
 
-    <section class="screen on" id="meet">
+    <section class="screen" id="meet">
       <h1>Hi. I’m Jesse.</h1>
       <p class="lede">Tell me how much time you have and what you’re into. I’ll open a real page, load a simulation, and lay a plan on the desk.</p>
       <div class="platter" data-glass="card">
@@ -229,12 +229,15 @@
       </div>
     </section>
 
-    <section class="screen" id="shelf">
+    <!-- Default screen: search + covers first, not the voice call - the
+         browse experience is what students actually want to land on. -->
+    <section class="screen on" id="shelf">
       <h1>The shelf.</h1>
       <p class="lede">113 textbooks. Each one has its own cover. Open a book — Jesse can still make a plan from here.</p>
       <input class="shelf-search" id="shelfSearch" type="search" placeholder="Search the 113 books…" autocomplete="off">
       <div class="shelf" id="shelfGrid"></div>
       <button class="btn fill" id="shelfPlan" type="button">Make a study plan</button>
+      <button class="quiet" id="toMeet">or talk to Jesse</button>
     </section>
 
     <section class="screen" id="desk">
@@ -282,7 +285,7 @@
   <div class="think" id="think" hidden data-glass="bar"><b>Jesse is reading</b></div>
 
 <script src="../glass.js"></script>
-<script src="./boxes.js?v=a3"></script>
-<script src="./agent.js?v=a3"></script>
+<script src="./boxes.js?v=a4"></script>
+<script src="./agent.js?v=a4"></script>
 </body>
 </html>

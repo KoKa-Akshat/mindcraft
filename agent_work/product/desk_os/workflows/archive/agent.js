@@ -374,6 +374,7 @@
   $('planBtn').addEventListener('click', startPlan);
   $('shelfPlan').addEventListener('click', startPlan);
   $('toShelf').addEventListener('click', () => show('shelf'));
+  if ($('toMeet')) $('toMeet').addEventListener('click', () => show('meet'));
   $('backShelf').addEventListener('click', () => show('shelf'));
   $('endCall').addEventListener('click', () => { speechSynthesis.cancel(); show('meet'); });
   $('loadSim').addEventListener('click', () => loadSim());
