@@ -38,6 +38,7 @@ struct FieldDeskView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var studentStore: FirestoreStudentStore
     @EnvironmentObject private var authService: AuthService
+    @EnvironmentObject private var jesseCall: JesseCallSession
     @StateObject private var store = FieldDeskStore()
     @ObservedObject private var customInstances = CustomInstanceStore.shared
 
@@ -82,7 +83,6 @@ struct FieldDeskView: View {
     @State private var showBottomChrome = false
     @State private var chromeHideToken = UUID()
     @State private var showFindTutor = false
-    @State private var showFriends = false
     @State private var showWorkflowLibrary = false
     @State private var showResumeAgent = false
     @State private var showArchiveWorkflow = false
@@ -94,6 +94,11 @@ struct FieldDeskView: View {
     @State private var gmailStartReconnect = false
     @State private var gmailOpenTopReply = false
     @State private var showActFieldBook = false
+    /// "Transcribe" from the Flows dock - reuses the SAME JesseCallSession
+    /// and JesseCallSheetView already used at the Hub and in Presentation,
+    /// just presented locally here instead of threading a callback all the
+    /// way up to DeskShellView's own showJesseCallSheet.
+    @State private var showJesseCallSheet = false
     /// Calendar tapped from the Work dashboard - overlays on top of it
     /// (dashboard stays mounted, same treatment as showActFieldBook above)
     /// instead of tearing the dashboard down and falling through to the
@@ -667,7 +672,13 @@ struct FieldDeskView: View {
                                 }
                             }
                         },
-                        onSaveMemo: { store.saveMemo($0) }
+                        onSaveMemo: { store.saveMemo($0) },
+                        onTranscribe: {
+                            if !jesseCall.isActive {
+                                jesseCall.begin(context: "flows")
+                            }
+                            showJesseCallSheet = true
+                        }
                     )
                     .id(dashboardStartRail)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -1005,19 +1016,10 @@ struct FieldDeskView: View {
                         .buttonStyle(.plain)
                         .accessibilityIdentifier("fieldDeskLogoManage")
                         .accessibilityLabel("The Desk · Manage")
-
-                        Button {
-                            showFriends = true
-                        } label: {
-                            Image(systemName: "phone.fill")
-                                .font(.system(size: 14, weight: .medium))
-                                .foregroundColor(Color(fdHex: "c4f547"))
-                                .frame(width: 40, height: 40)
-                                .background(Circle().fill(Color(fdHex: "111111")))
-                        }
-                        .buttonStyle(.plain)
-                        .accessibilityIdentifier("fieldDeskCallButton")
-                        .accessibilityLabel("Call")
+                        // Connect (Friends/invite) and Exit both moved into
+                        // the Manage page itself - logo tap is the one
+                        // persistent top-left control now, keeping every
+                        // screen (dashboard included) clean.
                     }
                     .padding(.top, 12)
                     .padding(.leading, 16)
@@ -1135,9 +1137,6 @@ struct FieldDeskView: View {
                     }
             }
         }
-        .fullScreenCover(isPresented: $showFriends) {
-            FriendsView(onClose: { showFriends = false })
-        }
         .fullScreenCover(isPresented: $showWorkflowLibrary) {
             WorkflowLibraryView(
                 market: workflowMarket,
@@ -1191,6 +1190,16 @@ struct FieldDeskView: View {
             AccountManageView()
                 .environmentObject(studentStore)
                 .environmentObject(authService)
+        }
+        .sheet(isPresented: $showJesseCallSheet) {
+            JesseCallSheetView(
+                call: jesseCall,
+                onClose: { showJesseCallSheet = false },
+                onEnd: {
+                    jesseCall.end()
+                    showJesseCallSheet = false
+                }
+            )
         }
         .fullScreenCover(isPresented: $showDocCook) {
             TestInstanceView()

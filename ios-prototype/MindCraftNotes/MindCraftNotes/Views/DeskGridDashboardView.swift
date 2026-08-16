@@ -21,6 +21,7 @@ struct DeskGridDashboardView: View {
     var onOpenCreate: (CreateCanvasKind) -> Void = { _ in }
     var onOpenFlow: (String) -> Void = { _ in }
     var onSaveMemo: (String) -> Void = { _ in }
+    var onTranscribe: () -> Void = {}
 
     @State private var rail: Rail
     @State private var memoDraft: String
@@ -45,7 +46,8 @@ struct DeskGridDashboardView: View {
         onOpenIntel: @escaping () -> Void = {},
         onOpenCreate: @escaping (CreateCanvasKind) -> Void = { _ in },
         onOpenFlow: @escaping (String) -> Void = { _ in },
-        onSaveMemo: @escaping (String) -> Void = { _ in }
+        onSaveMemo: @escaping (String) -> Void = { _ in },
+        onTranscribe: @escaping () -> Void = {}
     ) {
         self.initialRail = initialRail
         self.initialMemoText = initialMemoText
@@ -57,6 +59,7 @@ struct DeskGridDashboardView: View {
         self.onOpenCreate = onOpenCreate
         self.onOpenFlow = onOpenFlow
         self.onSaveMemo = onSaveMemo
+        self.onTranscribe = onTranscribe
         _rail = State(initialValue: initialRail)
         _memoDraft = State(initialValue: initialMemoText)
     }
@@ -104,22 +107,9 @@ struct DeskGridDashboardView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .ignoresSafeArea()
-        // "Exit" - the dashboard is the one screen that gets this label;
-        // every other screen (Binder, Calendar, Intel, Presentation, the
-        // hub, etc.) says "Done" instead. Small/plain since the persistent
-        // top chrome (logo/call/sign-out) already covers most of what the
-        // old "Done" pill did here.
-        .overlay(alignment: .bottomTrailing) {
-            Button("Exit", action: onClose)
-                .font(.system(size: 12, weight: .bold, design: .rounded))
-                .foregroundColor(.white.opacity(0.85))
-                .padding(.horizontal, 12)
-                .padding(.vertical, 7)
-                .background(Capsule().fill(Color.black.opacity(0.35)))
-                .padding(.bottom, 16)
-                .padding(.trailing, 16)
-                .accessibilityIdentifier("deskGridDashboardExit")
-        }
+        // No Exit control here anymore - moved into the Manage page
+        // (logo tap) so the dashboard itself stays clean. onClose is still
+        // wired from FieldDeskView but nothing on this screen calls it now.
         // Not a direct .accessibilityIdentifier() here either - same
         // clobbering bug as workDock, this time it would stomp every
         // nested tile/dock/rail identifier with "deskGridDashboard".
@@ -390,6 +380,11 @@ struct DeskGridDashboardView: View {
     private var flowsDock: some View {
         HStack(spacing: 8) {
             dockChip("Dashboard", system: "square.grid.2x2.fill", identifier: "deskGridDock_BackToDash") { setRail(.none) }
+            // Binder/Calendar/Gmail don't apply inside Flows - they're
+            // already on the dashboard's own dock. Just Memo + Transcribe
+            // (Jesse call) + the flow search itself.
+            dockChip("Memo", system: "note.text", identifier: "deskGridFlowsMemo") { setRail(.memo) }
+            dockChip("Transcribe", system: "phone.fill", identifier: "deskGridFlowsTranscribe", action: onTranscribe)
             searchField(
                 placeholder: "Search Presentation, Resume, Archive, Book…",
                 identifier: "deskGridFlowsSearch",

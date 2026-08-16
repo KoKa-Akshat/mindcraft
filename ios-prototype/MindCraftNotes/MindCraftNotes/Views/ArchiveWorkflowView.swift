@@ -18,6 +18,11 @@ struct ArchiveWorkflowView: View {
     // LLM in archive-rag.ts) decides in language whether it's worth
     // mentioning at all, never forced into an unrelated answer.
     @State private var weakness: (id: String, label: String)?
+    /// startCall() began the shared JesseCallSession but nothing ever showed
+    /// it - a real gap (calling Jesse here produced no visible transcript
+    /// at all). Same JesseCallSheetView already used at the Hub and from
+    /// the Flows dock.
+    @State private var showJesseCallSheet = false
 
     var body: some View {
         // No wrapper .accessibilityIdentifier on the outer ZStack: applying
@@ -64,10 +69,21 @@ struct ArchiveWorkflowView: View {
         }
         .statusBarHidden(true)
         .task { await loadWeakness() }
+        .sheet(isPresented: $showJesseCallSheet) {
+            JesseCallSheetView(
+                call: jesseCall,
+                onClose: { showJesseCallSheet = false },
+                onEnd: {
+                    jesseCall.end()
+                    showJesseCallSheet = false
+                }
+            )
+        }
     }
 
     private func startCall() {
         jesseCall.begin(context: "archive", studentWeakness: weakness.map { (conceptId: $0.id, label: $0.label) })
+        showJesseCallSheet = true
     }
 
     /// Doesn't block or delay the web view's own load - resolves in the

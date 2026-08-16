@@ -319,12 +319,25 @@ struct DeskShellView: View {
 
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
-                    // No separate nav row - the persistent chrome (logo,
-                    // call, sign-out) that now lives on every screen covers
-                    // that, so greeting + call is the whole header here.
-                    HStack(alignment: .center, spacing: 14) {
+                    // No separate nav row - the persistent top-level chrome
+                    // (logo, sign-out) covers that now. Call (Jesse) and
+                    // Connect (Friends/invite) both live here instead of on
+                    // the dashboard, which keeps the dashboard itself clean.
+                    HStack(alignment: .center, spacing: 10) {
                         greeting
                         Spacer(minLength: 0)
+                        Button {
+                            showFriends = true
+                        } label: {
+                            Image(systemName: "person.2.fill")
+                                .font(.system(size: 14, weight: .medium))
+                                .foregroundColor(ShellColor.ink)
+                                .frame(width: 44, height: 44)
+                                .background(Circle().fill(Color.white.opacity(0.7)))
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityIdentifier("deskHubConnectButton")
+                        .accessibilityLabel("Connect")
                         callButton
                     }
                     .padding(.top, 4)
@@ -375,8 +388,22 @@ struct DeskShellView: View {
     /// weight with "back to Jesse's." Sits under the Workflow Market section,
     /// the last thing on the hub page.
     private var hubSignOutFooter: some View {
-        HStack {
+        HStack(spacing: 10) {
             Spacer()
+            // Moved off the dashboard itself (which now has no close
+            // control of its own) - leaves Field Desk entirely, not just
+            // this hub page.
+            Button("Exit") {
+                showHubPage = false
+                fieldDeskRoute = nil
+            }
+            .font(.system(size: 12, weight: .bold, design: .rounded))
+            .foregroundColor(ShellColor.ink.opacity(0.55))
+            .padding(.horizontal, 14)
+            .padding(.vertical, 8)
+            .background(Capsule().stroke(ShellColor.ink.opacity(0.2), lineWidth: 1))
+            .accessibilityIdentifier("deskHubExit")
+
             Button("Sign out") { authService.signOut() }
                 .font(.system(size: 12, weight: .bold, design: .rounded))
                 .foregroundColor(ShellColor.ink.opacity(0.55))
@@ -482,10 +509,19 @@ struct DeskShellView: View {
         .accessibilityIdentifier(a11yId)
     }
 
-    /// `.hub-call` - compact phone next to Manage (mastery strip removed).
+    /// `.hub-call` - a real call to Jesse (the same shared JesseCallSession
+    /// every other call surface uses), with the same transcript sheet.
+    /// Was showCheckIn (the mastery check-in form) - that's now unreachable
+    /// from here. The affective-state pipeline it fed (webhook ->
+    /// affective_state Firestore doc -> /recommend's stress softening)
+    /// still exists and still works if driven another way; it just isn't
+    /// wired to this button anymore. Flagged, not silently dropped.
     private var callButton: some View {
         Button {
-            showCheckIn = true
+            if !jesseCall.isActive {
+                jesseCall.begin(context: "hub")
+            }
+            showJesseCallSheet = true
         } label: {
             Image(systemName: "phone.fill")
                 .font(.system(size: 14, weight: .medium))
