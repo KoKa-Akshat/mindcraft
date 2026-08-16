@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-16 — Researcher tick: Part CLVII LEA packet path-mix honesty without Dual Shame theater (SAFE-PATHMIX)
+
+**Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch157 never written → prefer Researcher per rotation; researcher count since synthesizer v1.19 = 6 → Researcher)  
+**Chapter written:** `chapters/157_lea_packet_path_mix_honesty.md` (Part CLVII)  
+**Claim examined:** Whether LEA/district trust packets may hide path×stratum mix (or sell Dual Shame / hospital case-mix cosplay as QA proof), or must disclose dated path-mix + routing rationale at Kane ambition L1/L2 without Dual Shame Score™.
+
+**Doctrine proposed (provisional):** **SAFE-PATHMIX** — densifies SAFE-PATHBLAME × SAFE-PROCURE × SAFE-HOLETRUST (+ REPAIRSTRAT/COVER) + Schnackenberg–Tomlinson transparency / Mayer ABI / Rawlins accountability / Bickel stratification / Iezzoni risk-adjustment method sensitivity / Kane IUA / PTAC–NDPA packet floor: mix charts in trust packets; routing honesty; no Dual Shame / Case-Mix Score™. Experiment family **PATHMIX-***.
+
+**Evidence spine (verified citations):** Schnackenberg & Tomlinson (2016); Schnackenberg, Tomlinson, & Coen (2021); Mayer, Davis, & Schoorman (1995); Rawlins (2008); Bickel, Hammel, & O’Connell (1975); Iezzoni (1997); Iezzoni et al. (1995); Kane (2013); ED PTAC (2014; 2016).
+
+**Claim killed (this tick):** Dual Shame Score™ / Case-Mix Score™ / Path Mix Minutes NS / hide-mix-for-conversion / unconditioned dual RFP rankings / hospital·CMS report-card cosplay / Propensity Theater™ / complete-visual from mix packaging / mix≡DPA (provisional kill #111 until synthesizer).
+
+**Experiments:** PATHMIX-1…5 + PATHMIX-QUAL.
+
+**Next researcher id:** **158** (Gold-bank rotation & tip-resistance). Researcher count since v1.19 synthesizer: **7**. Unfinished queue was <3 after marking 157 DONE → promoted **160** (Path-mix packet refresh cadence after surge demobilization) into NEXT_LAB; unfinished now 158–160.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-16 — Researcher tick: Part CLVI Generator vs rater poison separation on inherit repair (SAFE-POISONSEP)
 
 **Tick type:** Researcher (UTC hour 15; hour%6≠0; researcher count since synthesizer v1.19 = 5 → Researcher)  

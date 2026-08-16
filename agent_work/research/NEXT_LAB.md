@@ -152,9 +152,10 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 154 | Post-spike dual demobilization without fidelity cliff | SAFE-SURGEPANEL × SAFE-WORKFORCE/REPAIRSTRAT; end panel without invent-work or repair spike | **DONE** (2026-08-16) — Part CLIV / SAFE-DEMOB |
 | 155 | Gold-set planted probes for path×stratum monitors | SAFE-PATHBLAME × SAFE-REPAIRSTRAT/INSTRUMENT; sealed canaries without Gold Set Score™ | **DONE** (2026-08-16) — Part CLV / SAFE-GOLDSET |
 | 156 | Generator vs rater poison separation on inherit repair | SAFE-REVOKE × SAFE-PATHBLAME/GENQ; blame labels without Generator Shame Score™ | **DONE** (2026-08-16) — Part CLVI / SAFE-POISONSEP |
-| 157 | LEA packet path-mix honesty without Dual Shame theater | SAFE-PATHBLAME × SAFE-PROCURE/HOLETRUST; mix charts in trust packets without case-mix cosplay | **NEXT** |
-| 158 | Gold-bank rotation & tip-resistance under rater familiarity | SAFE-GOLDSET × SAFE-REVOKE/PANELRAMP; rotate sealed probes without Gold Familiarity Score™ | queued |
+| 157 | LEA packet path-mix honesty without Dual Shame theater | SAFE-PATHBLAME × SAFE-PROCURE/HOLETRUST; mix charts in trust packets without case-mix cosplay | **DONE** (2026-08-16) — Part CLVII / SAFE-PATHMIX |
+| 158 | Gold-bank rotation & tip-resistance under rater familiarity | SAFE-GOLDSET × SAFE-REVOKE/PANELRAMP; rotate sealed probes without Gold Familiarity Score™ | **NEXT** |
 | 159 | Ambiguous-ticket dual re-seal SLA before poison labels | SAFE-POISONSEP × SAFE-GOLDSET/DUALRATE; hold ambiguous without Forced Blame Score™ | queued |
+| 160 | Path-mix packet refresh cadence after surge demobilization | SAFE-PATHMIX × SAFE-DEMOB/CAPPLAN; stale mix labels without Case-Mix Score™ | queued |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 
@@ -272,3 +273,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any Demobilization Score™ / Idle Minutes / Panel Utilization % NS / invent-work after spike / cliff-cut without handover / forever-panel latch without CAPPLAN review / silent FILLETA after demob / hospital-demob cosplay ACT ads / complete-visual or ACT guarantees from demobilization packaging (Part CLIV / SAFE-DEMOB)
 - Any Gold Set Score™ / Canary Minutes / Probe Hit % NS / open or student-facing planted stems / pooled-only gold vanity / invent-work gold pad / radiology-canary cosplay ACT ads / complete-visual or ACT guarantees from canary packaging (Part CLV / SAFE-GOLDSET)
 - Any Generator Shame Score™ / Rater Poison Minutes / Blame Separation % NS / always-rater or always-generator dogma / unlabeled Dual Shame on inherit / MSA·Six-Sigma cosplay ACT ads / complete-visual or ACT guarantees from root-cause packaging (Part CLVI / SAFE-POISONSEP)
+- Any Dual Shame Score™ / Case-Mix Score™ / Path Mix Minutes / Selection-Adjusted Repair % NS / hide-mix-for-conversion / unconditioned dual-vs-single RFP rankings / hospital·CMS report-card cosplay ACT ads / Propensity Theater™ brand / complete-visual or Map-trust guarantees from mix packaging / mix≡DPA (Part CLVII / SAFE-PATHMIX)
