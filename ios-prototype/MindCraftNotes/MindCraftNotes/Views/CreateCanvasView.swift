@@ -103,11 +103,15 @@ struct CreateCanvasView: View {
 
     @ViewBuilder
     private func artboardContent(scale: CGFloat) -> some View {
-        phoneFAB(scale: scale)
-
+        // No separate phone FAB - it duplicated "Jump on a call with
+        // Jesse" inside jesseRail below, which does the same thing.
+        // jesseRail stays at the SAME position whether or not a call is
+        // live - it used to jump to a different box (CreateArtboard
+        // .transcription) once callLive flipped, which read as teleporting
+        // to a new tab instead of the conversation just continuing.
         if callLive {
             placed(CreateArtboard.liveSlide, scale: scale) { slideOrDoc }
-            placed(CreateArtboard.transcription, scale: scale) { transcriptionRail }
+            placed(CreateArtboard.jesseRail, scale: scale) { jesseRail }
             placed(CreateArtboard.storyboards, scale: scale) { storyboardsRail }
         } else {
             placed(CreateArtboard.idleStage, scale: scale) { slideOrDoc }
@@ -250,6 +254,13 @@ struct CreateCanvasView: View {
 
     // MARK: - Jesse rail (page 1 / 3)
 
+    /// Greeting + transcript in ONE box, at one fixed position - previously
+    /// the transcript was a separate positioned rail that only appeared
+    /// once a call went live, which read as jumping to "its own new tab"
+    /// instead of the conversation just continuing under the greeting.
+    /// jesseCall.turns now persists across calls (JesseCallSession no
+    /// longer wipes it in begin()), so past turns stay visible here too -
+    /// not just for the current call.
     private var jesseRail: some View {
         VStack(alignment: .leading, spacing: 14) {
             HStack(spacing: 10) {
@@ -279,10 +290,39 @@ struct CreateCanvasView: View {
                         .fill(Color(createHex: "eef1ec"))
                 )
 
+            if !jesseCall.turns.isEmpty || !instructionLog.isEmpty || jesseCall.isListening || jesseCall.isThinking {
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 10) {
+                        ForEach(jesseCall.turns) { turn in
+                            transcriptLine(turn.speaker == "jesse" ? "Jesse" : firstName, turn.text)
+                        }
+                        if jesseCall.isListening, !jesseCall.liveTranscript.isEmpty {
+                            transcriptLine(firstName, jesseCall.liveTranscript)
+                                .opacity(0.55)
+                        }
+                        ForEach(Array(instructionLog.enumerated()), id: \.offset) { _, line in
+                            transcriptLine("Dock", line)
+                        }
+                        if jesseCall.isThinking {
+                            Text("Jesse is working")
+                                .font(.system(size: 12, weight: .semibold, design: .rounded))
+                                .foregroundColor(Color(createHex: "247a4d"))
+                        }
+                    }
+                }
+                .frame(maxHeight: 240)
+                .padding(10)
+                .background(
+                    RoundedRectangle(cornerRadius: 14, style: .continuous)
+                        .fill(Color(createHex: "f3f1ec"))
+                )
+                .accessibilityIdentifier("createCanvasTranscription")
+            }
+
             Button(action: jumpOnCall) {
                 HStack {
                     Image(systemName: "phone.fill")
-                    Text("Jump on a call with Jesse")
+                    Text(jesseCall.isActive ? "On the line" : "Jump on a call with Jesse")
                     Spacer(minLength: 0)
                     Image(systemName: "arrow.right")
                 }
@@ -293,6 +333,7 @@ struct CreateCanvasView: View {
                 .background(Capsule().fill(Color.black))
             }
             .buttonStyle(.plain)
+            .disabled(jesseCall.isActive)
             .accessibilityIdentifier("createCanvasCallJesse")
 
             Text("or continue in chat")
@@ -322,41 +363,6 @@ struct CreateCanvasView: View {
                 .accessibilityIdentifier("createCanvasJesseRail")
                 .allowsHitTesting(false)
         }
-    }
-
-    private var transcriptionRail: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("Transcription")
-                .font(.system(size: 16, weight: .bold, design: .rounded))
-                .foregroundColor(Color(createHex: "143a2e"))
-                .frame(maxWidth: .infinity)
-            ScrollView {
-                VStack(alignment: .leading, spacing: 10) {
-                    ForEach(jesseCall.turns) { turn in
-                        transcriptLine(turn.speaker == "jesse" ? "Jesse" : firstName, turn.text)
-                    }
-                    if jesseCall.isListening, !jesseCall.liveTranscript.isEmpty {
-                        transcriptLine(firstName, jesseCall.liveTranscript)
-                            .opacity(0.55)
-                    }
-                    ForEach(Array(instructionLog.enumerated()), id: \.offset) { _, line in
-                        transcriptLine("Dock", line)
-                    }
-                    if jesseCall.isThinking {
-                        Text("Jesse is working")
-                            .font(.system(size: 12, weight: .semibold, design: .rounded))
-                            .foregroundColor(Color(createHex: "247a4d"))
-                    }
-                }
-            }
-        }
-        .padding(14)
-        .background(
-            RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .fill(Color(createHex: "f3f1ec"))
-                .shadow(color: .black.opacity(0.08), radius: 10, y: 4)
-        )
-        .accessibilityIdentifier("createCanvasTranscription")
     }
 
     private func transcriptLine(_ who: String, _ text: String) -> some View {
@@ -460,19 +466,6 @@ struct CreateCanvasView: View {
         }
     }
 
-    private func phoneFAB(scale: CGFloat) -> some View {
-        Button(action: jumpOnCall) {
-            Image(systemName: "phone.fill")
-                .font(.system(size: 16, weight: .bold))
-                .foregroundColor(.white)
-                .frame(width: 52, height: 52)
-                .background(Circle().fill(Color.black))
-        }
-        .buttonStyle(.plain)
-        .position(x: 32 * scale, y: 40 * scale)
-        .accessibilityIdentifier("createCanvasPhoneFAB")
-    }
-
     private func jumpOnCall() {
         if !jesseCall.isActive {
             jesseCall.begin(context: "create")
@@ -515,7 +508,6 @@ private enum CreateArtboard {
     static let idleStage = CGRect(x: 96, y: 53, width: 840, height: 493)
     static let jesseRail = CGRect(x: 988, y: 53, width: 376, height: 544)
     static let liveSlide = CGRect(x: 30, y: 74, width: 840, height: 493)
-    static let transcription = CGRect(x: 898, y: 103, width: 300, height: 452)
     static let storyboards = CGRect(x: 1225, y: 74, width: 196, height: 481)
     static let dock = CGRect(x: 96, y: 632, width: 1321, height: 96)
 }

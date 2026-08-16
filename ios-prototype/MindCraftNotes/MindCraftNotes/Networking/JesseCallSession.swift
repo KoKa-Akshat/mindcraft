@@ -42,7 +42,12 @@ final class JesseCallSession: NSObject, ObservableObject {
     @Published private(set) var isSpeaking = false
     @Published private(set) var isPaused = false
     @Published private(set) var isThinking = false
-    @Published private(set) var turns: [JesseCallTurn] = []
+    // Persists across calls (not reset in begin()) and across relaunches -
+    // "so you can refer to things you've said" - capped so it can't grow
+    // unbounded, same shape as FieldDeskStore's intelLines cap.
+    @Published private(set) var turns: [JesseCallTurn] = JesseCallSession.loadTurns() {
+        didSet { JesseCallSession.saveTurns(turns) }
+    }
     @Published private(set) var liveTranscript = ""
     @Published var status: String?
     /// Which surface most recently opened this call ("archive" today) -
@@ -86,7 +91,9 @@ final class JesseCallSession: NSObject, ObservableObject {
         self.context = context
         self.studentWeakness = studentWeakness
         isActive = true
-        turns = []
+        // turns is NOT reset here - the conversation carries across calls
+        // (and relaunches, via loadTurns()/saveTurns()) so past turns stay
+        // visible instead of vanishing every time a new call starts.
         status = nil
     }
 
@@ -262,6 +269,24 @@ final class JesseCallSession: NSObject, ObservableObject {
         guard isActive else { isThinking = false; return } // call may have ended while awaiting
         await speak(reply ?? "I didn't quite catch that. Try again?")
         isThinking = false
+    }
+
+    // MARK: - Persistence
+
+    private static let turnsKey = "jesseCall.turns"
+    private static let maxStoredTurns = 60
+
+    private static func loadTurns() -> [JesseCallTurn] {
+        guard let data = UserDefaults.standard.data(forKey: turnsKey),
+              let decoded = try? JSONDecoder().decode([JesseCallTurn].self, from: data)
+        else { return [] }
+        return decoded
+    }
+
+    private static func saveTurns(_ turns: [JesseCallTurn]) {
+        let capped = turns.count > maxStoredTurns ? Array(turns.suffix(maxStoredTurns)) : turns
+        guard let data = try? JSONEncoder().encode(capped) else { return }
+        UserDefaults.standard.set(data, forKey: turnsKey)
     }
 }
 
