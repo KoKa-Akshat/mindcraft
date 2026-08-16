@@ -976,48 +976,35 @@ final class MindCraftNotesUITests: XCTestCase {
         XCTAssertTrue(manageWordmark.waitForExistence(timeout: 8), "expected The Desk · Manage wordmark on Field Desk")
         manageWordmark.tap()
 
-        // Round 27 hub: greeting → instances (no mastery/SET GOAL strip).
-        // Call lives next to Manage; Tutors / Workflow are collapsible tabs.
+        // Hub redesign: no separate hub-nav row anymore (persistent
+        // top-level chrome - logo/call/sign-out - covers every screen
+        // including this one now), so "The Desk" wordmark, the "Jesse's"
+        // home button, and the whole Workflow market section are gone.
+        // Call now lives next to the greeting instead of next to a wordmark.
         let callButton = app.buttons["deskHubCallButton"]
-        XCTAssertTrue(callButton.waitForExistence(timeout: 10), "expected Call next to Manage on the desk hub")
+        XCTAssertTrue(callButton.waitForExistence(timeout: 10), "expected Call next to the greeting on the desk hub")
         XCTAssertFalse(app.staticTexts["Start your mastery check-in"].exists,
                        "no bubble copy next to the Call button")
-        XCTAssertTrue(app.buttons["deskHubHome"].waitForExistence(timeout: 3),
-                      "expected the house (Open The Desk) control next to The Desk wordmark")
-        let deskWordmark = app.staticTexts["deskHubWordmark"]
-        XCTAssertTrue(deskWordmark.waitForExistence(timeout: 3) || app.staticTexts["The Desk"].exists,
-                      "expected The Desk hub wordmark")
         XCTAssertTrue(app.buttons["deskHubCreateInstance"].waitForExistence(timeout: 3),
                       "expected tappable Create an instance tile")
         XCTAssertFalse(app.staticTexts["Your instances"].exists,
                        "Your instances heading should be gone")
         XCTAssertFalse(app.staticTexts["deskMasteryPct"].exists,
                        "mastery orb/percent removed from hub")
+        XCTAssertFalse(app.descendants(matching: .any)["deskHubWorkflowMarket"].exists,
+                       "Workflow market section removed from the hub")
         attachScreenshot(app, name: "desk_hub_mastery_head")
 
         let tutors = app.descendants(matching: .any)["deskHubTutorsNearby"]
-        XCTAssertTrue(tutors.waitForExistence(timeout: 5), "expected Tutors nearby tab on the desk hub")
-        tutors.tap()
+        XCTAssertTrue(tutors.waitForExistence(timeout: 5), "expected Tutors nearby section on the desk hub")
         if !app.textFields["deskHubMapSearch"].waitForExistence(timeout: 2) {
             tutors.swipeUp()
         }
         XCTAssertTrue(app.textFields["deskHubMapSearch"].waitForExistence(timeout: 5),
-                      "expected writable map search after expanding Tutors")
+                      "expected writable map search under Tutors")
         XCTAssertTrue(app.buttons["deskHubMapSearchGo"].waitForExistence(timeout: 3),
                       "expected map Search button")
-        let workflows = app.descendants(matching: .any)["deskHubWorkflowMarket"]
-        XCTAssertTrue(workflows.waitForExistence(timeout: 5),
-                      "expected Workflow market tab on the desk hub")
-        workflows.tap()
-        XCTAssertTrue(app.staticTexts["deskHubWorkflowSoon_application_tracker"].waitForExistence(timeout: 3)
-                      || app.otherElements["deskHubWorkflow_application_tracker"].waitForExistence(timeout: 1),
-                      "expected grayed Application Tracker card")
-        XCTAssertTrue(app.staticTexts["deskHubWorkflowSoon_health_insights"].waitForExistence(timeout: 3)
-                      || app.otherElements["deskHubWorkflow_health_insights"].waitForExistence(timeout: 1),
-                      "expected grayed Connect health data card")
-        XCTAssertFalse(app.buttons["deskHubWorkflowBuy_gap_scan_pack"].exists,
-                       "old buyable gap-scan workflow must be gone")
-        attachScreenshot(app, name: "desk_hub_tutors_and_workflows")
+        attachScreenshot(app, name: "desk_hub_tutors")
 
         callButton.tap()
         let save = app.buttons["deskCallSave"]
@@ -1162,11 +1149,11 @@ final class MindCraftNotesUITests: XCTestCase {
         XCTAssertTrue(
             app.descendants(matching: .any)["actInstanceShell"].waitForExistence(timeout: 5)
                 || app.descendants(matching: .any)["fieldDeskActNotesPopup"].waitForExistence(timeout: 2)
-                || app.buttons["actInstanceMinimize"].waitForExistence(timeout: 2),
+                || app.buttons["actInstanceDone"].waitForExistence(timeout: 2),
             "expected ACT Field Book notes popup on desk"
         )
-        if app.buttons["actInstanceMinimize"].waitForExistence(timeout: 3) {
-            app.buttons["actInstanceMinimize"].tap()
+        if app.buttons["actInstanceDone"].waitForExistence(timeout: 3) {
+            app.buttons["actInstanceDone"].tap()
         }
         XCUIDevice.shared.orientation = .portrait
     }

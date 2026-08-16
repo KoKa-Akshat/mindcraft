@@ -40,7 +40,6 @@ struct DeskShellView: View {
     @StateObject private var studentStore = FirestoreStudentStore()
     @StateObject private var goalStore = DeskGoalStore()
     @StateObject private var tutorClient = TutorDirectoryClient()
-    @StateObject private var workflowStore = WorkflowMarketStore()
     // App-lifetime Jesse voice session (see JesseCallSession.swift's doc
     // comment) - owned here, not inside whichever screen starts a call, so
     // navigating away from that screen never ends an in-progress call.
@@ -65,7 +64,6 @@ struct DeskShellView: View {
     @State private var showFindTutor = false
     @State private var toastMessage: String?
     @State private var tutorFilter: String = "All"
-    @State private var workflowQuery: String = ""
     /// Writable map search (web FindTutor Places parity via CLGeocoder).
     @State private var mapSearchText: String = ""
     @State private var mapSearchOrigin: CLLocationCoordinate2D?
@@ -82,7 +80,6 @@ struct DeskShellView: View {
     @StateObject private var customInstances = CustomInstanceStore.shared
     @State private var showManage = false
     @State private var showCreateInstance = false
-    @State private var showOpenArchive = false
     @State private var openCustomId: String?
     /// Full hub page (tutors map + workflow market) opened from the work
     /// area's Manage button.
@@ -176,24 +173,24 @@ struct DeskShellView: View {
         .fullScreenCover(isPresented: $showHubPage) {
             ZStack(alignment: .bottom) {
                 hub
+                // "Done" - every screen except the dashboard itself uses
+                // this label (the dashboard alone gets "Exit"); this hub
+                // page is a secondary detail screen, same as Binder/
+                // Calendar/Presentation/etc.
                 Button {
                     showHubPage = false
                 } label: {
-                    HStack(spacing: 8) {
-                        Image(systemName: "chevron.left")
-                            .font(.system(size: 12, weight: .heavy))
-                        Text("Back to desk")
-                            .font(.system(size: 13, weight: .heavy, design: .rounded))
-                    }
-                    .foregroundColor(Color(shellHex: "f4f7f4"))
-                    .padding(.horizontal, 18)
-                    .padding(.vertical, 11)
-                    .background(Capsule().fill(Color(shellHex: "1f2a22")))
-                    .shadow(color: .black.opacity(0.25), radius: 12, y: 5)
+                    Text("Done")
+                        .font(.system(size: 13, weight: .heavy, design: .rounded))
+                        .foregroundColor(Color(shellHex: "f4f7f4"))
+                        .padding(.horizontal, 18)
+                        .padding(.vertical, 11)
+                        .background(Capsule().fill(Color(shellHex: "1f2a22")))
+                        .shadow(color: .black.opacity(0.25), radius: 12, y: 5)
                 }
                 .buttonStyle(.plain)
                 .padding(.bottom, 18)
-                .accessibilityIdentifier("hubPageBackToDesk")
+                .accessibilityIdentifier("hubPageDone")
             }
             // Attached HERE, not on the outer body - callButton (which sets
             // showCheckIn) lives inside this fullScreenCover's content.
@@ -247,9 +244,6 @@ struct DeskShellView: View {
         .fullScreenCover(isPresented: $showTestInstance) {
             // Round 25: document→cook learning instance (McCreary stack showcase).
             TestInstanceView()
-        }
-        .fullScreenCover(isPresented: $showOpenArchive) {
-            OpenLearningArchiveView(onClose: { showOpenArchive = false })
         }
         .fullScreenCover(isPresented: $showFindTutor) {
             NavigationStack {
@@ -325,24 +319,23 @@ struct DeskShellView: View {
 
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
-                    hubNav
-                    // Greeting → straight into instance cards (no mastery /
-                    // SET GOAL / “Your instances” label in between).
-                    greeting
-                        .padding(.top, 4)
-                        .padding(.bottom, 16)
+                    // No separate nav row - the persistent chrome (logo,
+                    // call, sign-out) that now lives on every screen covers
+                    // that, so greeting + call is the whole header here.
+                    HStack(alignment: .center, spacing: 14) {
+                        greeting
+                        Spacer(minLength: 0)
+                        callButton
+                    }
+                    .padding(.top, 4)
+                    .padding(.bottom, 16)
                     instanceGrid
 
                     // Shown directly, no collapse/expand toolbar wrapper -
-                    // tutors and workflows are always visible on the hub.
+                    // tutors are always visible on the hub.
                     plainSectionHeader(title: "Tutors nearby", a11y: "deskHubTutorsNearby")
                         .padding(.top, 22)
                     tutorsNearbySection
-
-                    plainSectionHeader(title: "Workflow market", a11y: "deskHubWorkflowMarket")
-                        .padding(.top, 22)
-                    workflowMarketSection
-                        .padding(.bottom, 12)
 
                     hubSignOutFooter
                 }
@@ -373,55 +366,10 @@ struct DeskShellView: View {
         .animation(.easeInOut(duration: 0.2), value: toastMessage)
     }
 
-    /// Real port of `.hub-nav`: **The Desk** wordmark + Settings on the left,
-    /// user name/email + sign out on the right. No company logo in app chrome.
-    private var hubNav: some View {
-        HStack(alignment: .center) {
-            HStack(spacing: 12) {
-                Text("The Desk")
-                    .font(.system(size: 22, weight: .bold, design: .rounded))
-                    .foregroundColor(ShellColor.ink)
-                    .accessibilityIdentifier("deskHubWordmark")
-                callButton
-            }
-            Spacer(minLength: 8)
-            HStack(spacing: 10) {
-                VStack(alignment: .trailing, spacing: 1) {
-                    Text(studentStore.displayName == "there" ? "" : studentStore.displayName)
-                        .font(.system(size: 13, weight: .semibold, design: .rounded))
-                        .foregroundColor(ShellColor.ink)
-                    if let email = authService.currentUser?.email {
-                        Text(email)
-                            .font(.system(size: 11, weight: .medium, design: .rounded))
-                            .foregroundColor(ShellColor.ink.opacity(0.55))
-                    }
-                }
-                // Next to name → back to Jesse's (Field Desk). Was a bare
-                // house glyph - read as "does nothing" in testing even
-                // though it's wired correctly, because nothing about it said
-                // "Jesse" specifically. A text label fixes the affordance
-                // without touching the (already-correct) navigation.
-                Button {
-                    fieldDeskRoute = .plain
-                } label: {
-                    HStack(spacing: 6) {
-                        Image(systemName: "house.fill")
-                            .font(.system(size: 13, weight: .semibold))
-                        Text("Jesse's")
-                            .font(.system(size: 13, weight: .bold, design: .rounded))
-                    }
-                    .foregroundColor(ShellColor.ink)
-                    .padding(.horizontal, 14)
-                    .frame(height: 40)
-                    .background(Capsule().fill(ShellColor.brandGreen.opacity(0.22)))
-                }
-                .buttonStyle(.plain)
-                .accessibilityIdentifier("deskHubHome")
-                .accessibilityLabel("Back to Jesse's")
-            }
-        }
-        .padding(.bottom, 14)
-    }
+    // hubNav removed - "The Desk" wordmark, name/email, and the "Jesse's"
+    // button it held were all redundant with the persistent top-level
+    // chrome (logo/call/sign-out) that now covers every screen. callButton
+    // moved next to the greeting below.
 
     /// Sign out, moved off the primary nav row - it shouldn't share visual
     /// weight with "back to Jesse's." Sits under the Workflow Market section,
@@ -605,15 +553,10 @@ struct DeskShellView: View {
     /// tile at the end.
     private var instanceGrid: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 240), spacing: 16)], spacing: 16) {
-            instanceCard(
-                id: "open_archive", name: "Open Learning Archive", badge: "Free · No login",
-                systemImage: "books.vertical.fill", accent: Color(shellHex: "c4f547"),
-                execUsed: 113, execCap: 113, running: true, isFunctional: true,
-                statLabel: "Free intelligent textbooks"
-            ) {
-                showOpenArchive = true
-            }
-            .accessibilityIdentifier("deskInstance_openArchive")
+            // "+ Create an instance" leads the grid now (was last) - the
+            // Open Learning Archive default card that used to lead it is
+            // gone, so this is the first thing under the greeting.
+            createInstanceTile
             ForEach(customInstances.instances) { inst in
                 instanceCard(
                     id: inst.id, name: inst.name, badge: inst.subject,
@@ -625,7 +568,6 @@ struct DeskShellView: View {
                 }
                 .accessibilityIdentifier("deskInstance_custom_\(inst.id)")
             }
-            createInstanceTile
         }
     }
 
@@ -1049,105 +991,10 @@ struct DeskShellView: View {
         return 2 * r * asin(min(1, sqrt(h)))
     }
 
-    // MARK: - Workflow market (coming-soon gray cards)
-
-    private var workflowMarketSection: some View {
-        let q = workflowQuery.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-        let rows = WorkflowMarketStore.catalog.filter { item in
-            guard !q.isEmpty else { return true }
-            return item.title.lowercased().contains(q)
-                || item.tags.joined(separator: " ").lowercased().contains(q)
-                || item.blurb.lowercased().contains(q)
-        }
-
-        return VStack(alignment: .leading, spacing: 14) {
-            HStack {
-                Text("Browse loops & role apps - tap a card when they ship.")
-                    .font(.system(size: 13, weight: .medium, design: .rounded))
-                    .foregroundColor(ShellColor.ink.opacity(0.55))
-                Spacer()
-                Text("Coming soon")
-                    .font(.system(size: 11, weight: .bold, design: .rounded))
-                    .foregroundColor(ShellColor.ink.opacity(0.45))
-            }
-
-            HStack(spacing: 10) {
-                Image(systemName: "magnifyingglass")
-                    .foregroundColor(ShellColor.ink.opacity(0.45))
-                TextField("Apps, roles, study loops…", text: $workflowQuery)
-                    .textFieldStyle(.plain)
-                    .foregroundColor(ShellColor.ink)
-                    .accessibilityIdentifier("deskHubWorkflowSearch")
-            }
-            .padding(.horizontal, 14)
-            .padding(.vertical, 12)
-            .background(
-                RoundedRectangle(cornerRadius: 14, style: .continuous)
-                    .fill(Color(shellHex: "111814"))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 14, style: .continuous)
-                            .strokeBorder(ShellColor.ink.opacity(0.12), lineWidth: 1)
-                    )
-            )
-
-            VStack(spacing: 10) {
-                ForEach(rows) { item in
-                    workflowCard(item)
-                }
-            }
-        }
-        .padding(16)
-        .background(
-            RoundedRectangle(cornerRadius: 18, style: .continuous)
-                .fill(Color(shellHex: "0b1210"))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 18, style: .continuous)
-                        .strokeBorder(ShellColor.ink.opacity(0.10), lineWidth: 1)
-                )
-        )
-    }
-
-    private func workflowCard(_ item: WorkflowMarketStore.Item) -> some View {
-        VStack(alignment: .leading, spacing: 10) {
-            HStack(alignment: .top) {
-                VStack(alignment: .leading, spacing: 6) {
-                    Text(item.title)
-                        .font(.system(size: 16, weight: .bold, design: .rounded))
-                        .foregroundColor(ShellColor.ink.opacity(0.55))
-                    HStack(spacing: 6) {
-                        ForEach(item.tags, id: \.self) { tag in
-                            Text(tag)
-                                .font(.system(size: 10, weight: .bold, design: .rounded))
-                                .foregroundColor(ShellColor.ink.opacity(0.40))
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 4)
-                                .background(Capsule().fill(ShellColor.ink.opacity(0.08)))
-                        }
-                    }
-                }
-                Spacer()
-                Text("Soon")
-                    .font(.system(size: 12, weight: .heavy, design: .rounded))
-                    .foregroundColor(ShellColor.ink.opacity(0.40))
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 8)
-                    .background(Capsule().fill(ShellColor.ink.opacity(0.10)))
-                    .accessibilityIdentifier("deskHubWorkflowSoon_\(item.id)")
-            }
-            Text(item.blurb)
-                .font(.system(size: 12, weight: .medium, design: .rounded))
-                .foregroundColor(ShellColor.ink.opacity(0.38))
-                .fixedSize(horizontal: false, vertical: true)
-        }
-        .padding(14)
-        .background(
-            RoundedRectangle(cornerRadius: 14, style: .continuous)
-                .fill(Color(shellHex: "14201a").opacity(0.55))
-        )
-        .opacity(0.72)
-        .accessibilityElement(children: .contain)
-        .accessibilityIdentifier("deskHubWorkflow_\(item.id)")
-    }
+    // Workflow market section removed from the hub - "coming soon" gray
+    // cards with no real function, cut per explicit direction to keep this
+    // page neat and simple. WorkflowMarketStore itself stays (still used by
+    // WorkflowLibraryView, a different screen).
 }
 
 // MARK: - Location helper (hub map “use my location”)

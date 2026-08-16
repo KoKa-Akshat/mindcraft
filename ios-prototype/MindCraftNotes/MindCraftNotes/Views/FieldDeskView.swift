@@ -2873,7 +2873,7 @@ struct FieldDeskView: View {
                     .accessibilityIdentifier("fieldDeskCalendarRefresh")
 
                     Button(action: closeCalendarOverlay) {
-                        Label("Minimize", systemImage: "arrow.down.right.and.arrow.up.left")
+                        Text("Done")
                             .font(.system(size: 12, weight: .bold, design: .rounded))
                             .foregroundColor(Color(fdHex: "0c1207"))
                             .padding(.horizontal, 12)
@@ -2881,7 +2881,7 @@ struct FieldDeskView: View {
                             .background(Capsule().fill(Color(fdHex: "c4f547")))
                     }
                     .buttonStyle(.plain)
-                    .accessibilityIdentifier("fieldDeskCalendarMinimize")
+                    .accessibilityIdentifier("fieldDeskCalendarDone")
                     .accessibilityLabel("Minimize calendar")
                 }
                 calendarBody
@@ -2919,7 +2919,7 @@ struct FieldDeskView: View {
                         .foregroundColor(Color(fdHex: "0c1207"))
                     Spacer(minLength: 0)
                     Button(action: closeIntelOverlay) {
-                        Label("Minimize", systemImage: "arrow.down.right.and.arrow.up.left")
+                        Text("Done")
                             .font(.system(size: 12, weight: .bold, design: .rounded))
                             .foregroundColor(Color(fdHex: "0c1207"))
                             .padding(.horizontal, 12)
@@ -2927,8 +2927,7 @@ struct FieldDeskView: View {
                             .background(Capsule().fill(Color(fdHex: "c4f547")))
                     }
                     .buttonStyle(.plain)
-                    .accessibilityIdentifier("fieldDeskIntelMinimize")
-                    .accessibilityLabel("Minimize intel")
+                    .accessibilityIdentifier("fieldDeskIntelDone")
                 }
                 intelBody
             }

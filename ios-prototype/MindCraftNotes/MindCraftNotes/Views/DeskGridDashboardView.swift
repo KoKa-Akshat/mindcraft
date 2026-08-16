@@ -104,9 +104,22 @@ struct DeskGridDashboardView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .ignoresSafeArea()
-        // No "Done" button - the persistent top-left logo + top-right
-        // call/sign-out chrome (FieldDeskView) covers this screen too now,
-        // so a redundant close control isn't needed here.
+        // "Exit" - the dashboard is the one screen that gets this label;
+        // every other screen (Binder, Calendar, Intel, Presentation, the
+        // hub, etc.) says "Done" instead. Small/plain since the persistent
+        // top chrome (logo/call/sign-out) already covers most of what the
+        // old "Done" pill did here.
+        .overlay(alignment: .bottomTrailing) {
+            Button("Exit", action: onClose)
+                .font(.system(size: 12, weight: .bold, design: .rounded))
+                .foregroundColor(.white.opacity(0.85))
+                .padding(.horizontal, 12)
+                .padding(.vertical, 7)
+                .background(Capsule().fill(Color.black.opacity(0.35)))
+                .padding(.bottom, 16)
+                .padding(.trailing, 16)
+                .accessibilityIdentifier("deskGridDashboardExit")
+        }
         // Not a direct .accessibilityIdentifier() here either - same
         // clobbering bug as workDock, this time it would stomp every
         // nested tile/dock/rail identifier with "deskGridDashboard".

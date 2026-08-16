@@ -81,9 +81,10 @@ struct ActInstanceShellView: View {
             .buttonStyle(.plain)
             .accessibilityIdentifier("actInstanceNotesToggle")
 
-            // Explicit minimize - students were stuck with no way back from Binder launch.
+            // "Done" - standard label across every screen except the
+            // dashboard itself (which gets "Exit").
             Button(action: minimizeToBinder) {
-                Label("Minimize", systemImage: "arrow.down.right.and.arrow.up.left")
+                Text("Done")
                     .font(.system(size: 12, weight: .bold, design: .rounded))
                     .foregroundColor(Color(actShellHex: "0c1207"))
                     .padding(.horizontal, 12)
@@ -91,7 +92,7 @@ struct ActInstanceShellView: View {
                     .background(Capsule().fill(Color(actShellHex: "c4f547")))
             }
             .buttonStyle(.plain)
-            .accessibilityIdentifier("actInstanceMinimize")
+            .accessibilityIdentifier("actInstanceDone")
             .accessibilityLabel("Minimize to Binder")
         }
         .padding(.horizontal, 16)
