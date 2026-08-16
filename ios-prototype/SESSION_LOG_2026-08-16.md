@@ -69,12 +69,15 @@ auth-flow timing is the highest-risk item this session has touched.
    reasonably close to the other boxes' visual style). Worth a direct
    "which screen do you mean" check before spending real time here,
    rather than guessing at the more expensive interpretation.
-3. **[in progress]** Book workflow (`agent_work/product/desk_os/workflows/book/`)
-   and Archive's own "meet"/voice-call screen redesigned to match the
-   native app's "cute box" language (avatar + waveform + greeting bubble
-   + pinned action button, cream/lime/ink palette) instead of their
-   current plainer web styling. Presentation's `jesseRail` in
-   `CreateCanvasView.swift` is the reference design to match.
+3. **DONE (first pass)** — Book + Archive's "meet Jesse" screens now wrap
+   avatar/status/greeting/record-button/hint in one `.jesse-card`
+   (solid cream, real shadow), matching `jesseRail`'s one-cohesive-card
+   pattern instead of several loose stacked elements. NOT done: the
+   `#desk`/`#call` screens (the actual in-progress writing/reading
+   experience after "meet") still use the older loose layout - this
+   pass only touched the landing card. Also not done: Resume's page
+   (its live call UI was removed entirely earlier tonight in favor of
+   the native call, so it has no "meet" card to unify).
 4. **NOT STARTED, highest risk, needs care not a rush** — Gmail/Gcal
    OAuth consent prompted at login instead of deferred to a "Connect"
    tap inside a box, so the dashboard is already populated on first
