@@ -268,6 +268,28 @@ struct DeskGridDashboardView: View {
         }
     }
 
+    /// The search field had no wired behavior at all - typing did nothing,
+    /// submitting did nothing (reported explicitly). Matches against the
+    /// same real destinations the dock chips and tiles already open, so
+    /// "search" genuinely jumps somewhere instead of being a decorative box.
+    private func submitSearch() {
+        let query = searchQuery.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        defer { searchQuery = "" }
+        guard !query.isEmpty else { return }
+        if "binder".contains(query) || "act field book".contains(query) {
+            handleTile(.binder)
+        } else if "calendar".contains(query) || "gcal".contains(query) {
+            onOpenCalendar()
+        } else if "gmail".contains(query) || "email".contains(query) || "email summaries".contains(query) {
+            onOpenGmail()
+        } else if "memo".contains(query) {
+            setRail(rail == .memo ? .none : .memo)
+        } else if "flows".contains(query) || "presentation".contains(query) || "gdoc".contains(query)
+            || "resume".contains(query) || "archive".contains(query) || "book".contains(query) || "apply".contains(query) {
+            setRail(rail == .flows ? .none : .flows)
+        }
+    }
+
     private func handleTile(_ kind: TileKind) {
         switch kind {
         case .binder:
@@ -300,6 +322,8 @@ struct DeskGridDashboardView: View {
                     .textFieldStyle(.plain)
                     .font(.system(size: 13, weight: .medium, design: .rounded))
                     .foregroundColor(.white)
+                    .submitLabel(.search)
+                    .onSubmit(submitSearch)
             }
             .padding(.horizontal, 12)
             .padding(.vertical, 8)

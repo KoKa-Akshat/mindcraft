@@ -90,6 +90,10 @@ struct DeskShellView: View {
             if showWorkDesk || showBoot {
                 FieldDeskView(
                     initialActStage: false,
+                    // Land straight on the Work dashboard after login,
+                    // not Jesse's Kitchen - per explicit product direction,
+                    // Jesse's Kitchen is no longer the primary landing.
+                    initialShowDashboard: true,
                     onLaunchInstance: { inst in
                         switch inst {
                         case .custom:

@@ -304,7 +304,18 @@ final class MindCraftNotesUITests: XCTestCase {
         app.launchArguments = ["--ui-testing-in-memory", "--ui-testing-skip-auth"] + extraArgs
         app.launch()
         XCUIDevice.shared.orientation = .landscapeLeft
-        XCTAssertTrue(app.buttons["fieldDeskModeToggle"].waitForExistence(timeout: 40), "expected Field Desk chrome after cold load")
+        // Cold load now lands on the Work dashboard directly, not Jesse's
+        // Kitchen (explicit product direction) - fieldDeskModeToggle is
+        // Jesse's Kitchen's own chrome, only visible once the dashboard is
+        // dismissed. Accept either as "cold load finished" so this helper
+        // still works for tests that need Jesse's Kitchen specifically
+        // (they dismiss the dashboard themselves right after).
+        let modeToggle = app.buttons["fieldDeskModeToggle"]
+        let dashboard = app.descendants(matching: .any)["deskGridDashboard"]
+        XCTAssertTrue(
+            modeToggle.waitForExistence(timeout: 40) || dashboard.waitForExistence(timeout: 1),
+            "expected Field Desk chrome after cold load"
+        )
         let bootText = app.staticTexts["Your workspace is starting up"]
         if bootText.exists { _ = bootText.waitForNonExistence(timeout: 90) }
         return app
@@ -1942,19 +1953,10 @@ final class MindCraftNotesUITests: XCTestCase {
         let app = launchFieldDeskApp()
         XCUIDevice.shared.orientation = .landscapeLeft
 
-        let bottomEdge = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.98))
-        let midScreen = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.55))
-        bottomEdge.press(forDuration: 0.05, thenDragTo: midScreen)
-
-        let addButton = app.buttons["fieldDeskAdd"]
-        XCTAssertTrue(addButton.waitForExistence(timeout: 8), "expected + Add dock icon")
-        addButton.tap()
-
-        let addDashboard = app.buttons["fieldDeskAddDashboard"]
-        XCTAssertTrue(addDashboard.waitForExistence(timeout: 5), "expected Dashboard row")
-        addDashboard.tap()
-
-        XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 10), "expected Create Dashboard to open")
+        // Cold load now lands directly on the Work dashboard (explicit
+        // product direction - login skips Jesse's Kitchen entirely), so
+        // there's no dock to swipe up or + menu to open first anymore.
+        XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 15), "expected Create Dashboard to open directly on cold load")
         XCTAssertTrue(app.buttons["deskGridTile_Binder"].waitForExistence(timeout: 10), "expected Binder tile")
         XCTAssertTrue(app.buttons["deskGridTile_Intel"].exists, "expected Intel tile")
         XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboardToolbar"].exists, "expected merged work toolbar")
@@ -1980,11 +1982,54 @@ final class MindCraftNotesUITests: XCTestCase {
         let jesseTexts = app.staticTexts.allElementsBoundByIndex.map { $0.label }
         XCTAssertFalse(jesseTexts.contains { $0.contains("Jack") }, "Create canvas must say Jesse, not Jack")
 
+        // PDF page 2: tapping the call button should flip the right rail
+        // from the Jesse call card to Transcription + Storyboards. First
+        // tap on a fresh install triggers a real mic/speech permission
+        // prompt - handle it so the interruption doesn't invalidate
+        // subsequent element references.
+        let micPermission = addUIInterruptionMonitor(withDescription: "Mic permission") { alert in
+            let allow = alert.buttons["Allow"].exists ? alert.buttons["Allow"] : alert.buttons["OK"]
+            if allow.exists {
+                allow.tap()
+                return true
+            }
+            return false
+        }
+        app.buttons["createCanvasCallJesse"].tap()
+        XCTAssertTrue(app.descendants(matching: .any)["createCanvasTranscription"].waitForExistence(timeout: 8), "expected Transcription rail once the call goes live")
+        XCTAssertTrue(app.descendants(matching: .any)["createCanvasStoryboards"].waitForExistence(timeout: 5), "expected Storyboards rail once the call goes live")
+        Thread.sleep(forTimeInterval: 2.0)
+        attachScreenshot(app, name: "create-canvas-call-live")
+
         let done = app.buttons["createCanvasDone"]
         XCTAssertTrue(done.waitForExistence(timeout: 5), "expected Done button on Create canvas")
         done.tap()
 
         XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 12), "expected to return to Create Dashboard")
+
+        XCUIDevice.shared.orientation = .portrait
+    }
+
+    /// Reported explicitly: opening a dashboard tile (Calendar here) covers
+    /// the whole screen, and closing it left you stranded on Jesse's Kitchen
+    /// instead of back on the dashboard you came from - "tiles don't
+    /// minimize back". Dashboard is now the direct cold-load screen too.
+    func testDashboardCalendarMinimizesBackToDashboard() {
+        let app = launchFieldDeskApp()
+        XCUIDevice.shared.orientation = .landscapeLeft
+
+        XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 15), "expected Create Dashboard on cold load")
+
+        let calendarChip = app.buttons["deskGridDock_Calendar"]
+        XCTAssertTrue(calendarChip.waitForExistence(timeout: 10), "expected Calendar dock chip")
+        calendarChip.tap()
+
+        let closeButton = app.buttons["fieldDeskCardClose_Calendar"]
+        XCTAssertTrue(closeButton.waitForExistence(timeout: 10), "expected Calendar card with a close button")
+        XCTAssertFalse(app.descendants(matching: .any)["deskGridDashboard"].exists, "dashboard should be covered while Calendar is open")
+        closeButton.tap()
+
+        XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 10), "expected Calendar close to minimize back to the dashboard, not Jesse's Kitchen")
 
         XCUIDevice.shared.orientation = .portrait
     }
