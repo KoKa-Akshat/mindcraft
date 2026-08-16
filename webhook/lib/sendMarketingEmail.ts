@@ -16,6 +16,8 @@ export type SendEmailResult =
   | { ok: true; provider: 'resend'; id?: string }
   | { ok: false; provider: 'none' | 'resend'; error: string }
 
+export const FOUNDERS_EMAIL = 'founders@joinmindcraft.com'
+
 const FROM =
   process.env.MARKETING_FROM_EMAIL?.trim() ||
   'MindCraft <onboarding@resend.dev>'
@@ -43,7 +45,7 @@ export async function sendMarketingEmail(input: SendEmailInput): Promise<SendEma
         subject: input.subject,
         text: input.text,
         html: input.html || undefined,
-        reply_to: process.env.MARKETING_REPLY_TO?.trim() || 'joinmindcraft@gmail.com',
+        reply_to: process.env.MARKETING_REPLY_TO?.trim() || FOUNDERS_EMAIL,
       }),
     })
     const data = (await res.json().catch(() => ({}))) as { id?: string; message?: string }
@@ -77,7 +79,7 @@ Or just reply with your grade (or your student's grade) and what should feel eas
 
 Talk soon,
 Akshat + the MindCraft desk
-joinmindcraft@gmail.com`,
+founders@joinmindcraft.com`,
 }
 
 export function renderTemplate(template: string, vars: Record<string, string>): string {

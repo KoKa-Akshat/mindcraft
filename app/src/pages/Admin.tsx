@@ -133,7 +133,7 @@ Or just reply with your grade (or your student's grade) and what should feel eas
 
 Talk soon,
 Akshat + the MindCraft desk
-joinmindcraft@gmail.com`
+founders@joinmindcraft.com`
 
 function tsMs(raw: unknown): number | null {
   if (raw == null) return null
