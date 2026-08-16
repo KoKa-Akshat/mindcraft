@@ -15,6 +15,10 @@
 	<string>Jesse listens only while you hold the recorder so we can place skills on your resume.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>Speech stays on device to turn what you say into resume lines.</string>
+	<key>NSCalendarsFullAccessUsageDescription</key>
+	<string>The Desk reads your Calendar to show this week's events on the Calendar card.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>The Desk reads your Calendar to show this week's events on the Calendar card.</string>
 	<key>UIAppFonts</key>
 	<array/>
 </dict>
