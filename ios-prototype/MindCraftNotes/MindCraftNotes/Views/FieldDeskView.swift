@@ -57,15 +57,6 @@ struct FieldDeskView: View {
     /// layout, distinct from the free-drag desk cards below.
     @State private var showDeskGridDashboard = false
     @State private var dashboardStartRail: DeskGridDashboardView.Rail = .none
-    /// Set right before a dashboard tile/dock-chip opens something that
-    /// covers the dashboard (Binder, Calendar, Gmail) - the close/minimize
-    /// path for that destination checks-and-consumes this to reopen the
-    /// dashboard instead of falling through to Jesse's Kitchen underneath,
-    /// which read as "tiles don't minimize back" (reported explicitly).
-    /// Left false for every other entry point into these same panels (the
-    /// `+` Add menu, Projects sign, etc.) so those keep closing to the
-    /// kitchen as before.
-    @State private var returnToDashboardOnClose = false
     /// Native Create · Presentation / GDoc canvas (PDF pages 1–3).
     @State private var showCreateCanvas = false
     @State private var createCanvasKind: CreateCanvasKind = .presentation
@@ -542,12 +533,8 @@ struct FieldDeskView: View {
                     ActInstanceShellView(onMinimize: {
                         withAnimation(.easeInOut(duration: 0.2)) {
                             showActFieldBook = false
-                            if returnToDashboardOnClose {
-                                consumeReturnToDashboard()
-                            } else {
-                                showBinderPanel = true
-                                binderOpen = true
-                            }
+                            showBinderPanel = true
+                            binderOpen = true
                         }
                     })
                     .environmentObject(studentStore)
@@ -561,7 +548,6 @@ struct FieldDeskView: View {
                     DeskGridDashboardView(
                         initialRail: dashboardStartRail,
                         onOpenBinder: {
-                            returnToDashboardOnClose = true
                             showDeskGridDashboard = false
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
                                 withAnimation(.easeInOut(duration: 0.2)) {
@@ -571,12 +557,10 @@ struct FieldDeskView: View {
                         },
                         onClose: { showDeskGridDashboard = false },
                         onOpenCalendar: {
-                            returnToDashboardOnClose = true
                             showDeskGridDashboard = false
                             placeWidget(.calendar)
                         },
                         onOpenGmail: {
-                            returnToDashboardOnClose = true
                             showDeskGridDashboard = false
                             showGmailBox = true
                         },
@@ -585,7 +569,6 @@ struct FieldDeskView: View {
                             showCreateCanvas = true
                         },
                         onOpenFlow: { id in
-                            returnToDashboardOnClose = true
                             showDeskGridDashboard = false
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                                 switch id {
@@ -614,10 +597,7 @@ struct FieldDeskView: View {
                 }
 
                 if showApplyToday {
-                    JobOSShellView(onClose: {
-                        showApplyToday = false
-                        consumeReturnToDashboard()
-                    })
+                    JobOSShellView(onClose: { showApplyToday = false })
                         .transition(.opacity)
                         // Above Work/Create web surfaces so workflows use the big area.
                         .zIndex(90)
@@ -667,7 +647,6 @@ struct FieldDeskView: View {
                             showGmailBox = false
                             gmailStartReconnect = false
                             gmailOpenTopReply = false
-                            consumeReturnToDashboard()
                         },
                         onConnected: { calendarToo in
                             _ = store.markConnected("gmail")
@@ -1073,10 +1052,7 @@ struct FieldDeskView: View {
         }
         .fullScreenCover(isPresented: $showResumeAgent) {
             ResumeAgentView(
-                onClose: {
-                    showResumeAgent = false
-                    consumeReturnToDashboard()
-                },
+                onClose: { showResumeAgent = false },
                 onApply: {
                     showResumeAgent = false
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
@@ -1086,17 +1062,11 @@ struct FieldDeskView: View {
             )
         }
         .fullScreenCover(isPresented: $showArchiveWorkflow) {
-            ArchiveWorkflowView(onClose: {
-                showArchiveWorkflow = false
-                consumeReturnToDashboard()
-            })
+            ArchiveWorkflowView(onClose: { showArchiveWorkflow = false })
         }
         .fullScreenCover(isPresented: $showBookWorkflow) {
             BookWorkflowView(
-                onClose: {
-                    showBookWorkflow = false
-                    consumeReturnToDashboard()
-                },
+                onClose: { showBookWorkflow = false },
                 onPublished: { flash("Filed to your Binder") }
             )
         }
@@ -1572,16 +1542,6 @@ struct FieldDeskView: View {
         showDeskGridDashboard = true
     }
 
-    /// Call from every close/minimize path a dashboard tile can reach
-    /// (Binder, Calendar, Gmail, Flows sub-items) - reopens the dashboard
-    /// if that's genuinely where this session came from, and is a no-op
-    /// otherwise (e.g. the same panel opened via the `+` Add menu).
-    private func consumeReturnToDashboard() {
-        guard returnToDashboardOnClose else { return }
-        returnToDashboardOnClose = false
-        showDeskGridDashboard = true
-    }
-
     /// PDF Create canvas (pages 1–3): slide or GDoc, Jesse rail, Ask dock.
     private func openCreateCanvas() {
         createCanvasKind = .presentation
@@ -1816,7 +1776,6 @@ struct FieldDeskView: View {
                 placedWidgets.remove(.binder)
             case .calendar:
                 placedWidgets.remove(.calendar)
-                consumeReturnToDashboard()
             case .memo:
                 placedWidgets.remove(.memo)
             case .gmail:
