@@ -101,10 +101,24 @@ temptation to invent a rule for every ingredient is exactly how fabricated
 structure enters. Target 4 rule families for the pilot, not 5.
 
 Also note two of the five already carry a `canonical_misconception_family`
-pointing at `mis_linear_equations__*` ids. Those ids are **ontology-owned, not
-Eedi-derived**, so authored rules can cross-walk to them without inheriting any
-licence entanglement. Populate `misconception_id` from the family id where one
-exists; mint `mis_rule_*` only where none does.
+pointing at `mis_linear_equations__*` ids.
+
+> **CORRECTION 2026-08-17 — this paragraph originally claimed those family ids
+> are "ontology-owned, not Eedi-derived, so authored rules can cross-walk to
+> them without inheriting any licence entanglement." That is factually wrong.**
+> All four `mis_linear_equations__*` ids used by the pilot resolve into
+> `ml/data/eedi_misconceptions.json` and carry an `eedi_misconception_id`
+> (481, 245, 1190, 1417). The id slugs are derived from Eedi's own label text
+> ("When solving an equation, subtracts instead of dividing" →
+> `mis_linear_equations__solving_equation_subtracts_instead_dividing`). The
+> ontology's `canonical_misconception_family` field is itself Eedi-derived.
+>
+> **Consequence:** generated items currently carry Eedi-derived
+> `misconception_id`s, which quietly reintroduces the very dependency the
+> reframe exists to remove. The derivative is thin — a slugified short factual
+> descriptor — but it is a dependency, and it is in the artifact that was
+> supposed to be clean. **This is an open DECISION (D3, §10), not a settled
+> convention.**
 
 ---
 
@@ -330,6 +344,26 @@ multi-ingredient Q-vector.
 `ingredient_ids: string[]` for the full vector. **This is the same decision
 `INGREDIENT_TAG_EMISSION_BUILD.md` owns — the two specs must not diverge.**
 Settle it once, in that spec, and have this one consume it.
+
+**D3 — do generated items carry Eedi-derived `misconception_id`s? (NEW, open.)**
+See the correction in §2. The shipped pilot uses four Eedi-derived ids, and in
+two cases deviates from the ontology's own `canonical_misconception_family`:
+
+| rule | pilot uses | ontology family | note |
+|---|---|---|---|
+| `inverse_operations__subtracts_coefficient` | `…solving_equation_subtracts_instead_dividing` (eedi 1190) | `…thinks_inverse_subtraction_multiplication` (eedi 481) | **deviation — and arguably a correction**; 1190 describes this rule's actual behaviour, 481 describes a different error |
+| `isolate_variable__stops_before_dividing` | `…solving_equation_forgets_eliminate_coefficient` (eedi 1417) | *none* | spec said mint `mis_rule_*` where no family exists |
+| `both_sides__changes_one_side_only` | `…does_not_realise_maintain_balance` (eedi 245) | same | matches |
+| `equals_balance__chains_running_total` | `mis_rule_equals_balance__chains_running_total` | *none* | correctly minted |
+
+*Options:* (a) mint `mis_rule_*` for all four and keep an Eedi crosswalk in a
+separate, non-shipped sidecar — preserves the clean-artifact property and the
+diagnostic link; (b) keep Eedi ids and accept the thin dependency; (c) keep them
+only until the Learning Commons alignment supplies neutral ids.
+*Recommendation:* **(a)**. It is cheap now (four rules) and expensive later, and
+it is the whole point of generating rather than inheriting. The semantic
+improvement in row 1 should be preserved as a note on the ontology, since it
+suggests `basic_equations__inverse_operations` is currently mis-tagged.
 
 **D2 — `error_type` vs `failure_signature`.** `error_type` is consumed by
 substring matching, not an enum switch (`questionBank.ts:2316`,

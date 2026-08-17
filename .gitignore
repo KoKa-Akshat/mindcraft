@@ -56,6 +56,11 @@ ml/data/story_cells/batch_generated_*.json
 ml/data/story_cells/generate_report_*.json
 ml/data/story_cells/discarded_*.json
 
+# ingredient_first generation output — regenerable byte-identically from
+# (template_id, seed); rules/templates in git are the source of truth.
+# Re-create with: cd ml && python -m generation.ingredient_first --per-template 16
+ml/data/generated/
+
 # Repo-root large/binary files — store in Drive, not git
 data/*.zip
 data/SchemasV2/
