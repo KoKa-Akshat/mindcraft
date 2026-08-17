@@ -195,6 +195,11 @@ struct DeskShellView: View {
                     flashHub(message)
                 }
             }
+            .sheet(isPresented: $showManage) {
+                AccountManageView()
+                    .environmentObject(authService)
+                    .environmentObject(studentStore)
+            }
         }
         .onAppear {
             // Start loading Jesse immediately under the boot slide.
@@ -243,11 +248,6 @@ struct DeskShellView: View {
                         }
                     }
             }
-        }
-        .sheet(isPresented: $showManage) {
-            AccountManageView()
-                .environmentObject(authService)
-                .environmentObject(studentStore)
         }
         .sheet(isPresented: $showCreateInstance) {
             CreateInstanceStudioView { inst in
@@ -327,6 +327,19 @@ struct DeskShellView: View {
                         .buttonStyle(.plain)
                         .accessibilityIdentifier("deskHubConnectButton")
                         .accessibilityLabel("Connect")
+
+                        Button {
+                            showManage = true
+                        } label: {
+                            Image(systemName: "gearshape.fill")
+                                .font(.system(size: 14, weight: .medium))
+                                .foregroundColor(ShellColor.ink)
+                                .frame(width: 44, height: 44)
+                                .background(Circle().fill(Color.white.opacity(0.7)))
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityIdentifier("deskHubSettingsButton")
+                        .accessibilityLabel("Settings")
 
                         Button {
                             showHubPage = false

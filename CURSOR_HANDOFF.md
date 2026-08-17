@@ -313,6 +313,7 @@ Files:
 
 Flagged:
 - Photo-upload parse (`HomeworkClient.parseAndCreateSession` → webhook `/api/parse-homework`) is a different Anthropic path and is unchanged. Assignment C targeted the paste-a-problem solver that already fell back to `/recommend-ingredients`.
+- `AccountManageView` was an orphaned sheet (`showManage` never set true). Follow-up: hub gear (`deskHubSettingsButton`) next to Connect/Back opens it. Path: top-left logo ("The Desk · Manage") → hub → gear → **Homework help**. Touched `DeskShellView.swift` (not in the original C file list) because that is the live Manage page; the Settings sheet had no entry point.
 - Linux cloud agent cannot run `xcodebuild` or a real-device Groq-key check. CI is the compile gate; the DoD's "paste a problem with a real Groq key" needs Claude's device audit.
 
 Did not start Assignments D–E.
