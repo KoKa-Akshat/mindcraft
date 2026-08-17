@@ -2,10 +2,11 @@
 
 import logging
 import os
+from collections import Counter
 from datetime import datetime
 
 from google.cloud import firestore
-from mindcraft_graph.engine.edge_weights import EdgeState
+
 from mindcraft_graph.engine.student_graph import PersonalGraph
 from mindcraft_graph.models.affective_state import AffectiveState
 from mindcraft_graph.models.events import SessionEvent
@@ -22,7 +23,6 @@ from mindcraft_graph.models.learning_world import (
     MemoryRecord,
     ReflexionRecord,
 )
-from mindcraft_graph.models.student_state import ConceptMastery, StudentState
 
 # The student data lives in the Firebase project mindcraft-93858 (the frontend +
 # webhook write there). On Cloud Run, a bare firestore.Client() would resolve to
@@ -33,6 +33,15 @@ FIRESTORE_PROJECT = os.getenv("FIRESTORE_PROJECT") or "mindcraft-93858"
 
 db = firestore.Client(project=FIRESTORE_PROJECT)
 logger = logging.getLogger(__name__)
+
+# Public, process-local telemetry for callers that need to distinguish a real
+# empty result from loader failures without changing any loader return type.
+FIRESTORE_LOAD_FAILURE_COUNTS: Counter[str] = Counter()
+
+
+def get_firestore_load_failure_counts() -> dict[str, int]:
+    """Return a snapshot of caught Firestore loader failures by loader name."""
+    return dict(FIRESTORE_LOAD_FAILURE_COUNTS)
 
 
 def _to_naive(ts):
@@ -85,6 +94,8 @@ def load_student_events(student_id: str, limit: int = 500) -> list[SessionEvent]
 
         return events
     except Exception:
+        logger.exception("Failed to load student events for student %s", student_id)
+        FIRESTORE_LOAD_FAILURE_COUNTS["load_student_events"] += 1
         # Index may not exist yet or query failed — return empty for new students
         return []
 
@@ -223,6 +234,7 @@ def load_attempt_observations(
         return deduped
     except Exception:
         logger.exception("Failed to load attempt observations for student %s", student_id)
+        FIRESTORE_LOAD_FAILURE_COUNTS["load_attempt_observations"] += 1
         return []
 
 
@@ -253,6 +265,10 @@ def load_recent_attempt_observations(student_id: str, limit: int = 200) -> list[
             })
         return out
     except Exception:
+        logger.exception(
+            "Failed to load recent attempt observations for student %s", student_id
+        )
+        FIRESTORE_LOAD_FAILURE_COUNTS["load_recent_attempt_observations"] += 1
         return []
 
 
@@ -308,6 +324,8 @@ def load_format_events(student_id: str, limit: int = 500) -> list[SessionEvent]:
             ))
         return events
     except Exception:
+        logger.exception("Failed to load format events for student %s", student_id)
+        FIRESTORE_LOAD_FAILURE_COUNTS["load_format_events"] += 1
         return []
 
 
@@ -490,6 +508,8 @@ def load_affective_state(student_id: str) -> AffectiveState | None:
             return None
         return state
     except Exception:
+        logger.exception("Failed to load affective state for student %s", student_id)
+        FIRESTORE_LOAD_FAILURE_COUNTS["load_affective_state"] += 1
         return None
 
 
@@ -552,6 +572,12 @@ def load_learning_events(student_id: str, subject_id: str, limit: int = 500) -> 
         )
         return [doc.to_dict() for doc in docs]
     except Exception:
+        logger.exception(
+            "Failed to load learning events for student %s and subject %s",
+            student_id,
+            subject_id,
+        )
+        FIRESTORE_LOAD_FAILURE_COUNTS["load_learning_events"] += 1
         return []
 
 
@@ -580,6 +606,12 @@ def load_agent_skills(subject_id: str, concept_id: str | None = None, limit: int
             ]
         return skills
     except Exception:
+        logger.exception(
+            "Failed to load agent skills for subject %s and concept %s",
+            subject_id,
+            concept_id,
+        )
+        FIRESTORE_LOAD_FAILURE_COUNTS["load_agent_skills"] += 1
         return []
 
 
@@ -618,6 +650,13 @@ def load_memory_records(
             ]
         return records
     except Exception:
+        logger.exception(
+            "Failed to load memory records for subject %s, student %s, and concept %s",
+            subject_id,
+            student_id,
+            concept_id,
+        )
+        FIRESTORE_LOAD_FAILURE_COUNTS["load_memory_records"] += 1
         return []
 
 
