@@ -778,11 +778,11 @@
 				CODE_SIGNING_ALLOWED = YES;
 				CODE_SIGNING_REQUIRED = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 65;
+				CURRENT_PROJECT_VERSION = 66;
 				DEVELOPMENT_TEAM = N86VJTK78C;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				MARKETING_VERSION = 1.65;
+				MARKETING_VERSION = 1.66;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mindcraft.notes.prototype.akshat.uitests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -853,11 +853,11 @@
 				CODE_SIGNING_ALLOWED = YES;
 				CODE_SIGNING_REQUIRED = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 65;
+				CURRENT_PROJECT_VERSION = 66;
 				DEVELOPMENT_TEAM = N86VJTK78C;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				MARKETING_VERSION = 1.65;
+				MARKETING_VERSION = 1.66;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mindcraft.notes.prototype.akshat.uitests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -877,7 +877,7 @@
 				CODE_SIGNING_REQUIRED = YES;
 				CODE_SIGN_ENTITLEMENTS = MindCraftNotes/MindCraftNotes.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 65;
+				CURRENT_PROJECT_VERSION = 66;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = N86VJTK78C;
 				ENABLE_PREVIEWS = YES;
@@ -896,7 +896,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.65;
+				MARKETING_VERSION = 1.66;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mindcraft.notes.prototype.akshat";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -977,7 +977,7 @@
 				CODE_SIGNING_REQUIRED = YES;
 				CODE_SIGN_ENTITLEMENTS = MindCraftNotes/MindCraftNotes.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 65;
+				CURRENT_PROJECT_VERSION = 66;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = N86VJTK78C;
 				ENABLE_PREVIEWS = YES;
@@ -996,7 +996,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.65;
+				MARKETING_VERSION = 1.66;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mindcraft.notes.prototype.akshat";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
