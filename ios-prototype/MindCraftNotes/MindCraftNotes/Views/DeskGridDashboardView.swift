@@ -586,64 +586,93 @@ struct DeskGridDashboardView: View {
     /// `DeskContentRow` primitive the popups use. A section only renders
     /// when it actually has something (or a connect prompt) to show.
     @ViewBuilder
+    /// Each section is type-erased (`AnyView`) at its own boundary before
+    /// joining the others in one VStack. Three multi-branch conditional
+    /// chains (Research's optional, Email's 4-way if/else-if/else-if/else
+    /// with a nested if+ForEach inside one branch, Calendar's 3-way), left
+    /// as plain sibling `@ViewBuilder` content, compose into a generic type
+    /// complex enough to overflow the Swift runtime's metadata-resolution
+    /// stack on any re-render - a real SIGSEGV on-device (confirmed via the
+    /// device's actual crash log, "Could not determine thread index for
+    /// stack guard region" - the signature of this exact failure class),
+    /// not a hang or a simulator quirk. `AnyView` per section breaks the
+    /// cross-section compounding; do not remove these erasures casually.
     private func intelSections(ink: Color) -> some View {
         let muted = Color.white.opacity(0.72)
         let divider = Color.white.opacity(0.28)
-        VStack(alignment: .leading, spacing: 12) {
-            if !intelLines.isEmpty {
-                intelSectionHeader("Research")
-                ForEach(Array(intelLines.prefix(4).enumerated()), id: \.offset) { _, line in
-                    DeskContentRow(
-                        title: line, dot: Color.white.opacity(0.75), ink: ink, muted: muted,
-                        divider: divider, showDivider: true, compact: true
-                    )
-                }
-            }
+        return VStack(alignment: .leading, spacing: 12) {
+            AnyView(intelResearchSection(ink: ink, muted: muted, divider: divider))
+            AnyView(intelEmailSection(ink: ink, muted: muted))
+            AnyView(intelCalendarSection(ink: ink, muted: muted))
+        }
+    }
 
-            intelSectionHeader("Email")
-            if !gmail.hasGmailScope {
-                intelConnectRow(label: "Connect Gmail")
-            } else if let digest = shownDigest {
-                if !digest.headline.isEmpty {
-                    Text(digest.headline)
-                        .font(.system(size: 12, weight: .semibold, design: .rounded))
-                        .foregroundColor(ink)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-                ForEach(Array(digest.actionItems.prefix(3))) { item in
-                    DeskContentRow(
-                        title: item.subject, subtitle: item.why.isEmpty ? nil : item.why,
-                        dot: Color(gridHex: "c1121f"), ink: ink, muted: muted, showDivider: false, compact: true
-                    )
-                }
-            } else if !gmail.messages.isEmpty {
-                ForEach(Array(gmail.messages.prefix(3).enumerated()), id: \.offset) { _, msg in
-                    DeskContentRow(
-                        title: msg.subject, dot: Color(gridHex: "c1121f"), ink: ink, muted: muted,
-                        showDivider: false, compact: true
-                    )
-                }
-            } else {
-                Text("Nothing to summarize yet.")
-                    .font(.system(size: 12, weight: .medium, design: .rounded))
-                    .foregroundColor(muted)
+    @ViewBuilder
+    private func intelResearchSection(ink: Color, muted: Color, divider: Color) -> some View {
+        if !intelLines.isEmpty {
+            intelSectionHeader("Research")
+            ForEach(Array(intelLines.prefix(4).enumerated()), id: \.offset) { _, line in
+                DeskContentRow(
+                    title: line, dot: Color.white.opacity(0.75), ink: ink, muted: muted,
+                    divider: divider, showDivider: true, compact: true
+                )
             }
+        }
+    }
 
-            intelSectionHeader("Calendar")
-            if !gmail.hasCalendarScope {
-                intelConnectRow(label: "Connect Calendar")
-            } else if !gmail.week.isEmpty {
-                ForEach(Array(gmail.week.prefix(4))) { ev in
-                    DeskContentRow(
-                        title: "\(ev.day) · \(ev.title)", dot: Color.white.opacity(0.75), ink: ink, muted: muted,
-                        showDivider: false, compact: true
-                    )
-                }
-            } else {
-                Text("Clear this week.")
-                    .font(.system(size: 12, weight: .medium, design: .rounded))
-                    .foregroundColor(muted)
+    @ViewBuilder
+    private func intelEmailSection(ink: Color, muted: Color) -> some View {
+        intelSectionHeader("Email")
+        if !gmail.hasGmailScope {
+            intelConnectRow(label: "Connect Gmail")
+        } else if let digest = shownDigest {
+            AnyView(intelEmailDigestBody(digest: digest, ink: ink, muted: muted))
+        } else if !gmail.messages.isEmpty {
+            ForEach(Array(gmail.messages.prefix(3).enumerated()), id: \.offset) { _, msg in
+                DeskContentRow(
+                    title: msg.subject, dot: Color(gridHex: "c1121f"), ink: ink, muted: muted,
+                    showDivider: false, compact: true
+                )
             }
+        } else {
+            Text("Nothing to summarize yet.")
+                .font(.system(size: 12, weight: .medium, design: .rounded))
+                .foregroundColor(muted)
+        }
+    }
+
+    @ViewBuilder
+    private func intelEmailDigestBody(digest: GmailDigestClient.Digest, ink: Color, muted: Color) -> some View {
+        if !digest.headline.isEmpty {
+            Text(digest.headline)
+                .font(.system(size: 12, weight: .semibold, design: .rounded))
+                .foregroundColor(ink)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        ForEach(Array(digest.actionItems.prefix(3))) { item in
+            DeskContentRow(
+                title: item.subject, subtitle: item.why.isEmpty ? nil : item.why,
+                dot: Color(gridHex: "c1121f"), ink: ink, muted: muted, showDivider: false, compact: true
+            )
+        }
+    }
+
+    @ViewBuilder
+    private func intelCalendarSection(ink: Color, muted: Color) -> some View {
+        intelSectionHeader("Calendar")
+        if !gmail.hasCalendarScope {
+            intelConnectRow(label: "Connect Calendar")
+        } else if !gmail.week.isEmpty {
+            ForEach(Array(gmail.week.prefix(4))) { ev in
+                DeskContentRow(
+                    title: "\(ev.day) · \(ev.title)", dot: Color.white.opacity(0.75), ink: ink, muted: muted,
+                    showDivider: false, compact: true
+                )
+            }
+        } else {
+            Text("Clear this week.")
+                .font(.system(size: 12, weight: .medium, design: .rounded))
+                .foregroundColor(muted)
         }
     }
 
