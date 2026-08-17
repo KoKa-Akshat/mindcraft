@@ -4,6 +4,35 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-17 — Synthesizer tick v1.20: merge Parts CLI–CLIX
+
+**Tick type:** Synthesizer (UTC hour 03; hour%6≠0; ≥8 researcher entries since synthesizer v1.19 → Synthesizer)  
+**Chapter written:** none (merge pass only)  
+**Files revised:** `MINDCRAFT_RESEARCH_CONSTITUTION_v1.md` (edition/header / I.2 / I.4 / III / IX / XIV / XX / XXI / XXII glossary / Appendix F / closing); `NEXT_LAB.md`; this log; PDF regen.
+
+**Doctrine promoted to I.4 company law (provisional tags removed):**
+- SAFE-REVOKE (CLI) — revocable template-trust + switching sample cadence; no Template Trust Score™ / forever-trust latch
+- SAFE-PATHBLAME (CLII) — path×stratum blame before dual/single verdicts; no Dual Shame Score™ / unconditioned rankings
+- SAFE-PANELRAMP (CLIII) — seal literacy → shadow dual → graduate before contract C4; no Parallel Score™ / day-one C4
+- SAFE-DEMOB (CLIV) — planned post-spike dual wind-down; no Demobilization Score™ / invent-work / cliff-cut
+- SAFE-GOLDSET (CLV) — blind sealed gold probes for path×stratum monitors; no Gold Set Score™ / open canaries
+- SAFE-POISONSEP (CLVI) — generator vs rater vs ambiguous poison labels; no Generator Shame Score™ / unlabeled Dual Shame
+- SAFE-PATHMIX (CLVII) — dated path-mix + routing rationale in LEA packets; no Case-Mix Score™ / hide-mix
+- SAFE-GOLDROT (CLVIII) — rotate + exposure-cap sealed gold bank; no Gold Familiarity Score™ / forever-fixed gold
+- SAFE-AMBSEAL (CLIX) — finite dual re-seal/gold SLA for ambiguous tickets; no Forced Blame Score™ / clock≡poison
+
+**Red Team kills promoted:** #105–#113 (from provisional chapter kills → v1.20 company dossier).
+
+**Experiment families confirmed in Part IX:** REVOKE / PATHBLAME / PANELRAMP / DEMOB / GOLDSET / POISONSEP / PATHMIX / GOLDROT / AMBSEAL.
+
+**Claim killed (synthesis):** Treating CLI–CLIX as orphan provisional deep-dives or independent North Stars (Template Trust Score™ / Dual Shame Score™ / Parallel Score™ / Demobilization Score™ / Gold Set Score™ / Generator Shame Score™ / Case-Mix Score™ / Gold Familiarity Score™ / Forced Blame Score™ and costume variants) — demoted under FEI + SAFE-* method-not-costume rule.
+
+**Next researcher id:** **160** (Path-mix packet refresh cadence). Researcher count since v1.20 synthesizer: **0**. Unfinished queue still ≥3 (160–162); no QUEUE_EXTENDED promote this tick.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-17 — Researcher tick: Part CLIX Ambiguous-ticket dual re-seal SLA before poison labels (SAFE-AMBSEAL)
 
 **Tick type:** Researcher (UTC hour 00 ≡ Red Team slot, but ch159 never written → prefer Researcher per rotation; researcher count since synthesizer v1.19 = 8 → Researcher)  
