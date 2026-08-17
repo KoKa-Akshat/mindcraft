@@ -316,21 +316,24 @@ struct DeskGridDashboardView: View {
                 ZStack {
                     RoundedRectangle(cornerRadius: 18, style: .continuous)
                         .fill(LinearGradient(colors: kind.wash, startPoint: .topLeading, endPoint: .bottomTrailing))
-                    if kind.mascotSlug != nil {
+                    // Grown + real data: rows replace the mascot. Sleeping /
+                    // working / not-yet-grown keep the mascot (Assignment B).
+                    if kind.mascotSlug != nil, !tileIsGrown(kind) {
                         mascotArt(kind, phase: phase)
                         .scaleEffect(tileShowsContent(kind) ? 0.55 : 1)
                         .offset(
                             x: tileShowsContent(kind) ? 48 : 0,
                             y: kind == .binder && binderPulled ? 18 : (tileShowsContent(kind) ? -28 : -8)
                         )
-                    } else {
+                    } else if kind.mascotSlug == nil {
                         Image(systemName: kind.symbol)
                             .font(.system(size: 36, weight: .medium))
                             .foregroundColor(.white.opacity(awake ? 0.88 : 0.35))
                     }
                     VStack(alignment: .leading, spacing: 6) {
-                        Spacer(minLength: 0)
+                        if !tileIsGrown(kind) { Spacer(minLength: 0) }
                         tileBody(kind, phase: phase)
+                        if tileIsGrown(kind) { Spacer(minLength: 0) }
                     }
                     .padding(10)
                 }
@@ -502,6 +505,10 @@ struct DeskGridDashboardView: View {
         }
     }
 
+    private func tileIsGrown(_ kind: TileKind) -> Bool {
+        tileShowsContent(kind) && boxBus.hungry == boxID(kind)
+    }
+
     private func tileShowsContent(_ kind: TileKind) -> Bool {
         switch kind {
         case .emailSummaries:
@@ -536,14 +543,8 @@ struct DeskGridDashboardView: View {
     private func tileBody(_ kind: TileKind, phase: MascotPhase) -> some View {
         let ink: Color = (kind == .binder || kind == .moodle || kind == .emailSummaries) ? tileInk : .white
         if tileShowsContent(kind) {
-            VStack(alignment: .leading, spacing: 4) {
-                ForEach(Array(tileLines(kind).prefix(boxBus.hungry == boxID(kind) ? 7 : 3).enumerated()), id: \.offset) { _, line in
-                    Text(line)
-                        .font(.system(size: 12, weight: .semibold, design: .rounded))
-                        .foregroundColor(ink)
-                        .lineLimit(2)
-                        .multilineTextAlignment(.leading)
-                }
+            VStack(alignment: .leading, spacing: 0) {
+                tileContentRows(kind, ink: ink)
             }
             .accessibilityIdentifier(kind == .emailSummaries ? "deskGridEmailSummaries" : "deskGridTileBody_\(kind.title)")
         } else {
@@ -552,6 +553,79 @@ struct DeskGridDashboardView: View {
                 .foregroundColor(ink)
                 .lineLimit(2)
                 .multilineTextAlignment(.leading)
+        }
+    }
+
+    /// Popup-matching rows (dot + title + optional subtitle/divider), not
+    /// a scaled mascot sitting behind stacked `Text`. Grown tiles show more.
+    @ViewBuilder
+    private func tileContentRows(_ kind: TileKind, ink: Color) -> some View {
+        let grown = tileIsGrown(kind)
+        let limit = grown ? 7 : 3
+        let muted = kind == .emailSummaries || kind == .binder || kind == .moodle
+            ? Color(gridHex: "8a8478")
+            : Color.white.opacity(0.72)
+        let dot = kind == .emailSummaries
+            ? Color(gridHex: "c1121f")
+            : (kind == .binder || kind == .moodle ? Color(gridHex: "c4a484").opacity(0.85) : Color.white.opacity(0.75))
+        let divider = kind == .emailSummaries || kind == .binder || kind == .moodle
+            ? Color(gridHex: "d9d2c5").opacity(0.85)
+            : Color.white.opacity(0.28)
+        if kind == .emailSummaries {
+            emailTileRows(grown: grown, limit: limit, ink: ink, muted: muted)
+        } else {
+            ForEach(Array(tileLines(kind).prefix(limit).enumerated()), id: \.offset) { _, line in
+                DeskContentRow(
+                    title: line,
+                    dot: dot,
+                    ink: ink,
+                    muted: muted,
+                    divider: divider,
+                    showDivider: true,
+                    compact: true
+                )
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func emailTileRows(grown: Bool, limit: Int, ink: Color, muted: Color) -> some View {
+        if let digest = shownDigest {
+            if grown, !digest.headline.isEmpty {
+                Text(digest.headline)
+                    .font(.system(size: 13, weight: .semibold, design: .rounded))
+                    .foregroundColor(ink)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.bottom, 4)
+            }
+            ForEach(Array(digest.actionItems.prefix(limit))) { item in
+                DeskContentRow(
+                    title: item.subject,
+                    subtitle: item.why.isEmpty ? nil : item.why,
+                    dot: Color(gridHex: "c1121f"),
+                    ink: ink,
+                    muted: muted,
+                    showDivider: false,
+                    compact: true
+                )
+            }
+            if grown, !digest.fyi.isEmpty {
+                Text("\(digest.fyi.count) more, routine")
+                    .font(.system(size: 11, weight: .medium, design: .rounded))
+                    .foregroundColor(muted)
+                    .padding(.top, 4)
+            }
+        } else {
+            ForEach(Array(gmail.messages.prefix(limit).enumerated()), id: \.offset) { _, msg in
+                DeskContentRow(
+                    title: msg.subject,
+                    dot: Color(gridHex: "c1121f"),
+                    ink: ink,
+                    muted: muted,
+                    showDivider: false,
+                    compact: true
+                )
+            }
         }
     }
 

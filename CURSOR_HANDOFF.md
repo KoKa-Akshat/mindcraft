@@ -280,7 +280,20 @@ Verified for real, not just compiled: `xcodebuild build-for-testing` green, `tes
 
 Cursor's two flagged loose ends (`BookWorkflowView`'s separate `BinderStore()` instance, Kitchen's `fileImporter` still filing into `FieldDeskStore` not `BinderStore`) are real and worth remembering, not urgent — noted for whoever picks up Binder work next.
 
-**Assignment B is next.** Read it below before starting.
+**2026-08-17 — Assignment B (real content rows in Intel/Email tiles)** — branch `cursor/desk-content-rows-2c98`
+
+Shipped: grown (hungry) Intel/Email tiles no longer layer a scaled mascot behind stacked `Text`. Rows are `DeskContentRow` — same dot + title + optional subtitle/divider primitive as `intelBody` and Gmail digest subject rows. Sleeping/working/not-yet-grown tiles still show the mascot (`testDashboardBoxMascotsExist` still valid). `DeskBoxBus` / `negotiated(...)` untouched.
+
+Files:
+- `ios-prototype/MindCraftNotes/MindCraftNotes/Views/DeskContentRow.swift` — new shared row; no wrapper `.accessibilityIdentifier`.
+- `ios-prototype/MindCraftNotes/MindCraftNotes/Views/DeskGridDashboardView.swift` — hide mascot when `tileShowsContent && hungry`; Email grown tile uses digest subject+why rows (headline + FYI count when grown), fallback to seeded subjects; `deskGridEmailSummaries` id kept on the tile body VStack.
+- `ios-prototype/MindCraftNotes/MindCraftNotes/Views/FieldDeskView.swift` — `intelBody` now composes `DeskContentRow`.
+- `ios-prototype/MindCraftNotes/MindCraftNotes/Views/GmailWorkflowBoxView.swift` — digest action-item rows now compose `DeskContentRow`. Inbox message cards (from/date/subject/snippet white cards) left as-is — different primitive than the digest subject row.
+- `ios-prototype/MindCraftNotes/MindCraftNotes.xcodeproj/project.pbxproj` — added `DeskContentRow.swift` to the app target.
+
+Verification: this environment is Linux; `xcodebuild build` / `build-for-testing` cannot run here. CI (`iOS simulator build+test`) is the gate. Did not add a new XCUITest (not in Assignment B files-in-scope); existing `testDashboardBoxMascotsExist` + `testWorkDashboardShowsSeededEmailSummariesAndAsksNeighborsForSpace` should cover sleeping mascots and grown Email subjects.
+
+Did not start Assignments C–E.
 
 ---
 

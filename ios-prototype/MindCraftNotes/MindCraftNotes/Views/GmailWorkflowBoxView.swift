@@ -323,19 +323,15 @@ struct GmailWorkflowBoxView: View {
                         .accessibilityIdentifier("gmailDigestHeadline")
 
                     ForEach(digest.actionItems) { item in
-                        HStack(alignment: .top, spacing: 8) {
-                            Circle().fill(Color(gmHex: "c1121f")).frame(width: 6, height: 6).padding(.top, 5)
-                            VStack(alignment: .leading, spacing: 1) {
-                                Text(item.subject)
-                                    .font(.system(size: 12, weight: .bold, design: .rounded))
-                                    .lineLimit(1)
-                                if !item.why.isEmpty {
-                                    Text(item.why)
-                                        .font(.system(size: 11, weight: .medium, design: .rounded))
-                                        .foregroundColor(Color(gmHex: "8a8478"))
-                                }
-                            }
-                        }
+                        DeskContentRow(
+                            title: item.subject,
+                            subtitle: item.why.isEmpty ? nil : item.why,
+                            dot: Color(gmHex: "c1121f"),
+                            ink: Color(gmHex: "1c1a17"),
+                            muted: Color(gmHex: "8a8478"),
+                            showDivider: false,
+                            compact: true
+                        )
                     }
                     if !digest.fyi.isEmpty {
                         Text("\(digest.fyi.count) more, routine")
