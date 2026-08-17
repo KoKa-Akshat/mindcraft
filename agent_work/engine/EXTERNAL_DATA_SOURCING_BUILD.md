@@ -131,9 +131,34 @@ CC BY (usable)                          NC-SA (excluded)
   TOTAL                     2,112
 ```
 
-**2,112 commercially-clean exercises spanning prealgebra → precalculus** — more
-than the 1,508 Eedi rows at risk, and we already have a working adapter for this
-exact API. This is the single highest-leverage remediation available.
+> **CORRECTION 2026-08-17, after running the harvest — the 2,112 figure above is
+> wrong.** It sums per-book totals, and OpenStax *shares exercise records across
+> books and editions*. Deduplicated, the nine CC BY books yield **1,871 unique
+> exercises**, and **1,264 of those carry an NC book-slug as well** (the same
+> record is tagged to both a CC BY 1e and an NC-SA 2e). Breaking that down:
+>
+> | tier | count | status |
+> |---|---|---|
+> | **A** — no NC tag at all | **607** | unambiguously CC BY; **harvested** |
+> | **B** — same title, 1e + its own 2e | 1,093 | see below; not harvested |
+> | **C** — cross-title with a different NC book | 171 | see below; not harvested |
+>
+> **Tier B/C are probably recoverable, and the difference matters** (607 does not
+> replace Eedi's 1,508; ~1,700 would). Creative Commons grants are **irrevocable**
+> — "the licensor cannot revoke these freedoms" — so content published in a CC BY
+> 1st edition stays CC BY for that version, regardless of the 2e relicensing.
+> The unresolved risk is narrower: **the Exercises API serves the *latest* version
+> of a record**, so if an exercise was revised for the 2e, the text now returned
+> may be the NC-SA revision rather than the CC BY original. The record exposes
+> `version` / `versions` / `published_at`, so pinning to the version current at
+> 1e publication is likely tractable.
+>
+> **Not decided here.** Per §9, unclear licence blocks and escalates. This is the
+> single highest-value licensing question outstanding after the Eedi email.
+
+Actual harvested pool: **607 unambiguously-clean exercises** across Prealgebra,
+Elementary Algebra, Intermediate Algebra and Statistics — the ACT-prep range,
+which is the part that matters. We already have a working adapter for this API.
 
 ---
 
@@ -264,20 +289,57 @@ only lands the data.
 
 ---
 
-## 6. S5 — OpenStax CC BY harvest (the replacement corpus)
+## 6. S5 — OpenStax CC BY harvest — ✅ **RUN 2026-08-17**
 
-After S1. Re-run the fixed adapter against the nine CC BY books (~2,112
-exercises). Note these are largely **free-response**, not multiple-choice — which
-suits the current direction: they become `ProblemTemplate` seed material and
-stems for the ingredient-first generator, not drop-in bank rows.
+Staged at `ml/data/external/openstax/free_response_ccby.json` (601 items with
+per-item `sourceUid`, `sourceBookSlug`, `licence`, `attribution`).
 
-Sequence deliberately: this is the corpus that could make the Eedi decision
-cheap. If ~2,112 clean exercises cover the concepts Eedi covers, dropping Eedi
-costs coverage we can rebuild rather than coverage we lose.
+**Result, and it is not the replacement corpus we hoped for:**
 
-**Acceptance:** report per-concept coverage of the CC BY harvest against the
-42-concept ontology, side by side with current Eedi coverage, so the Eedi
-decision can be made on numbers.
+```
+1,871  unique exercises across the 9 CC BY books
+  607  tier A, no NC co-tag           <- harvested
+  601  of those carry usable stem text
+  594  concept-mapped, across 20 of 42 ontology concepts
+    4  usable MCQs with a published key   <- the direct-bank path is dead
+  602  free-response                       <- the actual material
+```
+
+**Two findings that shape what happens next.**
+
+1. **These are free-response; the MCQ path yields essentially nothing** (4 items
+   from 607). That is by design, not a bug — the docstring already recorded that
+   OpenStax withholds `correctness` on most MCQs. So this corpus becomes
+   **`ProblemTemplate` seed material for the ingredient-first generator**, not
+   drop-in bank rows. Which is the direction we already chose: distractors come
+   from executed misconception rules, never from an LLM inventing options.
+   **Do not** reach for `--convert-free-response` — it has an LLM invent
+   distractors, producing exactly the untagged, unverifiable options the
+   generation reframe exists to eliminate.
+
+2. **Coverage is real but skewed, and it closes three zero-coverage concepts.**
+
+```
+262  number_properties          33  measurement_units        3  factoring_polynomials
+109  fractions_decimals         25  probability_distributions  *  2  basic_equations  *
+ 52  algebraic_manipulation     25  inferential_statistics   *  2  radical_expressions
+ 42  descriptive_statistics     12  linear_equations            2  quadratic_equations
+                                 5  polynomials                 2  functions_basics
+     * previously ZERO-coverage  5  basic_probability           1  circles_geometry
+       per CLAUDE.md             4  systems_of_linear_equations 1  sequences_series
+                                 4  rational_expressions        3  coordinate_geometry
+```
+371 of 594 (62%) are elementary number work. But it closes
+`probability_distributions`, `inferential_statistics`, and — usefully —
+`basic_equations`, the ingredient-first pilot concept.
+
+**Honest bottom line: 601 free-response items do NOT replace 1,508 Eedi bank
+rows.** They are raw material for generation, which is slower than a swap. If
+tier B/C (§0.5) can be cleared, the pool roughly triples and the arithmetic
+changes; that licensing question is now the highest-value one outstanding.
+
+**Next:** author `ProblemTemplate`s for the concepts with real mass here, gated
+as always on Guard A (Learning Commons alignment) before scaling past a pilot.
 
 ---
 
