@@ -32,6 +32,12 @@ struct DeskGridDashboardView: View {
     /// Titles from `BinderStore`, not `FieldDeskStore.FiledItem`.
     var binderTitles: [String] = []
     var onSyncCalendar: () -> Void = {}
+    /// Falls through here when the typed search doesn't match a static
+    /// destination keyword - hands off to the same real Desk Ask agent
+    /// (`DeskAskClient`/`submitDeskAsk` in `FieldDeskView`) Jesse's Kitchen's
+    /// own Ask bar uses, so a natural-language request like "open my recent
+    /// email and draft a response" actually runs instead of silently no-op'ing.
+    var onAskAI: (String) -> Void = { _ in }
 
     @ObservedObject private var gmail = GmailClient.shared
     @ObservedObject private var moodle = MoodleClient.shared
@@ -74,7 +80,8 @@ struct DeskGridDashboardView: View {
         onMoodleDisconnected: @escaping () -> Void = {},
         intelLines: [String] = [],
         binderTitles: [String] = [],
-        onSyncCalendar: @escaping () -> Void = {}
+        onSyncCalendar: @escaping () -> Void = {},
+        onAskAI: @escaping (String) -> Void = { _ in }
     ) {
         self.initialRail = initialRail
         self.initialMemoText = initialMemoText
@@ -96,6 +103,7 @@ struct DeskGridDashboardView: View {
         self.intelLines = intelLines
         self.binderTitles = binderTitles
         self.onSyncCalendar = onSyncCalendar
+        self.onAskAI = onAskAI
         _rail = State(initialValue: initialRail)
         _memoDraft = State(initialValue: initialMemoText)
     }
@@ -227,7 +235,16 @@ struct DeskGridDashboardView: View {
         /// Binder and the merged Intel box always show real content (each
         /// section has its own empty/connect state built in) - neither
         /// gets a mascot moment anymore. Homework Help has no commissioned
-        /// art yet; SF Symbol fallback in `mascotArt` covers it.
+        /// art; SF Symbol fallback in `mascotArt` covers it. Moodle keeps
+        /// its slug (identity for the accessibility marker + tap-to-connect
+        /// hint) but its `desk_mascot_moodle_*` art assets were deleted -
+        /// they were MindCraft's own generic raccoon mascot recolored, not
+        /// real Moodle branding, and read as a mismatch (flagged, not
+        /// fixed, in an earlier session; Akshat asked to remove it rather
+        /// than keep shipping the wrong brand). `UIImage(named:)` now
+        /// misses for moodle too, so it falls back to the same SF Symbol
+        /// path as Homework Help (`graduationcap.fill` - already
+        /// brand-neutral) until real art exists.
         var mascotSlug: String? {
             switch self {
             case .moodle: return "moodle"
@@ -369,10 +386,45 @@ struct DeskGridDashboardView: View {
     /// a parent's `.accessibilityIdentifier` stomps a plain child's own id.
     @ViewBuilder
     private func mascotArt(_ kind: TileKind, phase: MascotPhase) -> some View {
+        let content = mascotContent(kind, phase: phase)
+        if mascotTappable(kind) {
+            Button(action: { connectMascot(kind) }) { content }
+                .buttonStyle(.plain)
+                .accessibilityHint("Connect this box")
+        } else {
+            content
+        }
+    }
+
+    /// Plain (non-`@ViewBuilder`) function - it just returns whichever
+    /// content applies, so an ordinary `if/else` with `return` works
+    /// without `@ViewBuilder` trying to treat the branches themselves as
+    /// view-producing statements.
+    private func mascotContent(_ kind: TileKind, phase: MascotPhase) -> AnyView {
         if let assetName = kind.mascotAssetName(state: phase), let image = UIImage(named: assetName) {
-            let content = Image(uiImage: image)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
+            return AnyView(
+                Image(uiImage: image)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .overlay(alignment: .topLeading) {
+                        Text(verbatim: "mascot-\(kind.mascotSlug ?? "")")
+                            .font(.system(size: 1))
+                            .foregroundColor(.clear)
+                            .accessibilityIdentifier("deskGridMascot_\(kind.mascotSlug ?? "")")
+                            .allowsHitTesting(false)
+                    }
+                    .accessibilityLabel("\(kind.title) mascot, \(phase.rawValue)")
+                    .accessibilityAddTraits(.isImage)
+            )
+        }
+        // No commissioned art for this tile (Homework Help never had any;
+        // Moodle's raccoon illustration was pulled - it was MindCraft's own
+        // generic mascot recolored, not actual Moodle branding, and read as
+        // a mismatch). SF Symbol fallback, same treatment either way.
+        return AnyView(
+            Image(systemName: kind.symbol)
+                .font(.system(size: kind == .binder ? 54 : 36, weight: .medium))
+                .foregroundColor(.white.opacity(phase != .sleeping ? 0.88 : 0.35))
                 .overlay(alignment: .topLeading) {
                     Text(verbatim: "mascot-\(kind.mascotSlug ?? "")")
                         .font(.system(size: 1))
@@ -381,18 +433,7 @@ struct DeskGridDashboardView: View {
                         .allowsHitTesting(false)
                 }
                 .accessibilityLabel("\(kind.title) mascot, \(phase.rawValue)")
-            if mascotTappable(kind) {
-                Button(action: { connectMascot(kind) }) { content }
-                    .buttonStyle(.plain)
-                    .accessibilityHint("Connect this box")
-            } else {
-                content.accessibilityAddTraits(.isImage)
-            }
-        } else {
-            Image(systemName: kind.symbol)
-                .font(.system(size: kind == .binder ? 54 : 36, weight: .medium))
-                .foregroundColor(.white.opacity(phase != .sleeping ? 0.88 : 0.35))
-        }
+        )
     }
 
     private func mascotTappable(_ kind: TileKind) -> Bool {
@@ -422,47 +463,75 @@ struct DeskGridDashboardView: View {
     }
 
     /// The search field had no wired behavior at all - typing did nothing,
-    /// submitting did nothing (reported explicitly). Matches against the
-    /// same real destinations the dock chips and tiles already open, so
-    /// "search" genuinely jumps somewhere instead of being a decorative box.
+    /// submitting did nothing (reported explicitly). Short static keywords
+    /// still jump straight to the matching destination (fast, no network),
+    /// same as the dock chips and tiles. Anything else - a real
+    /// natural-language ask like "open my recent email and draft a
+    /// response" - falls through to `onAskAI`, the same live agent
+    /// (`DeskAskClient`/`submitDeskAsk`) Jesse's Kitchen's own Ask bar uses,
+    /// instead of silently doing nothing just because it isn't one of the
+    /// ~6 recognized keywords.
     private func submitSearch() {
-        let query = searchQuery.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        let raw = searchQuery.trimmingCharacters(in: .whitespacesAndNewlines)
+        let query = raw.lowercased()
         defer { searchQuery = "" }
         guard !query.isEmpty else { return }
-        if "binder".contains(query) || "act field book".contains(query) {
+        // A short 1-3 word query ("gmail", "open calendar") is almost
+        // always someone naming a destination - keep that instant, no
+        // network round trip. Anything longer is a real instruction
+        // ("open my recent email and draft a response") - a single-keyword
+        // match on a long sentence would silently drop everything after
+        // the matched word (e.g. routing straight to onOpenGmail() and
+        // never acting on "and draft a response"), so hand those to the
+        // real agent instead, which already distinguishes "just open mail"
+        // from "open it with a ready reply" (see DeskAskClient.localFallback).
+        guard raw.split(separator: " ").count <= 3 else {
+            onAskAI(raw)
+            return
+        }
+        if query.contains("binder") || query.contains("act field book") {
             handleTile(.binder)
-        } else if "calendar".contains(query) || "gcal".contains(query) {
+        } else if query.contains("calendar") || query.contains("gcal") {
             onOpenCalendar()
-        } else if "gmail".contains(query) || "email".contains(query) || "email summaries".contains(query) {
+        } else if query.contains("gmail") || query.contains("email") {
             onOpenGmail()
-        } else if "homework".contains(query) || "homework help".contains(query) {
+        } else if query.contains("homework") {
             handleTile(.homeworkHelp)
-        } else if "memo".contains(query) {
+        } else if query.contains("memo") {
             setRail(rail == .memo ? .none : .memo)
-        } else if "flows".contains(query) || "presentation".contains(query) || "gdoc".contains(query)
-            || "resume".contains(query) || "archive".contains(query) || "book".contains(query) || "apply".contains(query) {
+        } else if query.contains("flows") || query.contains("presentation") || query.contains("gdoc")
+            || query.contains("resume") || query.contains("archive") || query.contains("book") || query.contains("apply") {
             setRail(rail == .flows ? .none : .flows)
+        } else {
+            onAskAI(raw)
         }
     }
 
     /// Flows-only search - already inside the rail, so a match opens the
     /// flow directly instead of just toggling the rail (which is already open).
     private func submitFlowsSearch() {
-        let query = flowsSearchQuery.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        let raw = flowsSearchQuery.trimmingCharacters(in: .whitespacesAndNewlines)
+        let query = raw.lowercased()
         defer { flowsSearchQuery = "" }
         guard !query.isEmpty else { return }
-        if "presentation".contains(query) || "slide".contains(query) {
+        guard raw.split(separator: " ").count <= 3 else {
+            onAskAI(raw)
+            return
+        }
+        if query.contains("presentation") || query.contains("slide") {
             onOpenCreate(.presentation)
-        } else if "gdoc".contains(query) || "doc".contains(query) {
+        } else if query.contains("gdoc") || query.contains("doc") {
             onOpenCreate(.gdoc)
-        } else if "resume".contains(query) {
+        } else if query.contains("resume") {
             onOpenFlow("resume")
-        } else if "archive".contains(query) {
+        } else if query.contains("archive") {
             onOpenFlow("archive")
-        } else if "book".contains(query) {
+        } else if query.contains("book") {
             onOpenFlow("book")
-        } else if "apply".contains(query) || "job".contains(query) {
+        } else if query.contains("apply") || query.contains("job") {
             onOpenFlow("apply")
+        } else {
+            onAskAI(raw)
         }
     }
 
