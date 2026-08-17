@@ -245,8 +245,26 @@ show sleeping/disconnected state without restarting the app; reordering
 persists across relaunch. `xcodebuild build` green.
 
 ### Cursor's last report
-_(Cursor: append your dated result note here after finishing an assignment.
-Claude reads this at the start of its next session.)_
+
+**2026-08-16 — Assignment A (BinderStore + BYOB popup)** — branch `cursor/binder-store-byob-2c98`
+
+Shipped: Work Dashboard Binder tile no longer jumps to ACT Field Book. It opens a cream-card popup (`binderOverlayLayer`, same Done-capsule / `fdHex` language as `intelOverlayLayer`) with Memo / Doc / BYOB sections plus ACT Field Book as one row inside. BYOB's "Bring your own book" presents existing `CreateInstanceStudioView(binderStore:)` as-is; that path already writes `binder_items` with `type: "byob"` and Storage at `binder/{uid}/{itemId}/`. The popup lists those items from the same `BinderStore` instance Field Desk now owns.
+
+Files:
+- `ios-prototype/MindCraftNotes/MindCraftNotes/Views/FieldDeskView.swift` — `@StateObject binderStore`, `showBinderOverlay` on `deskOverlayChromeBlocked`, overlay at zIndex 89, no wrapper `.accessibilityIdentifier` (marker Text `fieldDeskBinderOverlay` instead), BYOB fullScreenCover.
+- `ios-prototype/MindCraftNotes/MindCraftNotes/Views/DeskGridDashboardView.swift` — `binderTitles` from BinderStore; empty-state blurb "Memo, docs, and your own books."
+- `ios-prototype/MindCraftNotes/MindCraftNotes/Networking/BinderStore.swift` — small `items(types:)` helper only. Memo=`memo`, Doc=`doc`+`book`, BYOB=`byob`.
+- `ios-prototype/MindCraftNotes/MindCraftNotesUITests/MindCraftNotesUITests.swift` — `testWorkBinderPopupHasMemoDocBYOB`.
+- `CreateInstanceStudioView.swift` / `StandaloneDeskView.swift` / `worlds/deskweb/desk.html` — untouched.
+
+Verification: this environment is Linux; `xcodebuild build` / `build-for-testing` cannot run here. CI (`iOS simulator build+test`) is the gate. New XCUITest asserts overlay + Memo/Doc/BYOB ids + BYOB button + ACT Field Book row, and that `fieldDeskActNotesPopup` is not present after the Binder tap.
+
+Flagged, not deleted:
+- `FieldDeskStore.FiledItem` is still live for Jesse's Kitchen filing (`store.items` / `openEntry` / `entryStudio` / file-drop `store.fileDrop`). Not redundant with BinderStore.
+- `BookWorkflowView` still owns a separate `BinderStore()` instance. Out of Assignment A scope.
+- Kitchen fileImporter still files into `FieldDeskStore`, not BinderStore.
+
+Did not start Assignments B–E or transcript-to-Drive (Assignment D).
 
 ---
 

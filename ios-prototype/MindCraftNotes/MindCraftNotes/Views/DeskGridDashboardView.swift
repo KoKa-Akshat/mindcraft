@@ -28,6 +28,7 @@ struct DeskGridDashboardView: View {
     var onMoodleLinked: () -> Void = {}
     var onMoodleDisconnected: () -> Void = {}
     var intelLines: [String] = []
+    /// Titles from `BinderStore`, not `FieldDeskStore.FiledItem`.
     var binderTitles: [String] = []
     var onSyncCalendar: () -> Void = {}
 
@@ -285,7 +286,7 @@ struct DeskGridDashboardView: View {
             case .binder:
                 return phase == .sleeping
                     ? "Empty until Jesse files something here."
-                    : "ACT Field Book. Pull it onto the desk."
+                    : "Memo, docs, and your own books."
             case .memo:
                 return "Pin a note on the right rail."
             }

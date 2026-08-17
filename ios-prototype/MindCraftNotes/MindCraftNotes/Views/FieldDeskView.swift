@@ -40,6 +40,9 @@ struct FieldDeskView: View {
     @EnvironmentObject private var authService: AuthService
     @EnvironmentObject private var jesseCall: JesseCallSession
     @StateObject private var store = FieldDeskStore()
+    /// Durable Memo / Doc / BYOB Binder — same store StandaloneDeskView owns.
+    /// Work Dashboard's Binder tile reads this, not `FieldDeskStore.FiledItem`.
+    @StateObject private var binderStore = BinderStore()
     @ObservedObject private var customInstances = CustomInstanceStore.shared
 
     @State private var showAddPanel = false
@@ -108,6 +111,11 @@ struct FieldDeskView: View {
     /// as Calendar/Binder/Gmail above. Was previously a dead tap on the
     /// dashboard (handleTile's Intel case fell into `default: break`).
     @State private var showIntelOverlay = false
+    /// Binder tapped from the Work dashboard — Memo / Doc / BYOB popup
+    /// (not an immediate jump to ACT Field Book).
+    @State private var showBinderOverlay = false
+    /// BYOB "Cook a Field Book" from the Binder popup.
+    @State private var showByobStudio = false
     /// Real nav-intent target ("study quadratic equations" via Ask The Desk
     /// -> `study_concept` action) - threaded into `DashboardView` so it
     /// opens straight to that concept's chapter instead of just the roadmap.
@@ -405,6 +413,7 @@ struct FieldDeskView: View {
             || showWorkflowLibrary
             || showDeskGridDashboard
             || showCreateCanvas
+            || showBinderOverlay
     }
 
     /// Jesse kitchen Ask/dock only — Work/Create own their own prompt bars.
@@ -610,18 +619,22 @@ struct FieldDeskView: View {
                         .accessibilityIdentifier("fieldDeskIntelOverlay")
                 }
 
+                if showBinderOverlay {
+                    binderOverlayLayer
+                        .transition(.opacity)
+                        .zIndex(89)
+                    // No wrapper .accessibilityIdentifier here — that clobbers
+                    // Memo/Doc/BYOB section ids (same family as workDock).
+                    // binderOverlayLayer carries fieldDeskBinderOverlay on a marker.
+                }
+
                 if showDeskGridDashboard {
                     DeskGridDashboardView(
                         initialRail: dashboardStartRail,
                         initialMemoText: store.memoText,
                         onOpenBinder: {
-                            // Keep the dashboard mounted underneath - Field Book
-                            // layers on top via its higher zIndex above. Closing
-                            // the dashboard first (previous behavior) left a gap
-                            // before Field Book appeared where Jesse's Kitchen
-                            // briefly showed through.
                             withAnimation(.easeInOut(duration: 0.2)) {
-                                showActFieldBook = true
+                                showBinderOverlay = true
                             }
                         },
                         onClose: { showDeskGridDashboard = false },
@@ -679,7 +692,11 @@ struct FieldDeskView: View {
                             showJesseCallSheet = true
                         },
                         intelHasData: !store.intelLines.isEmpty,
-                        binderHasData: !store.items.isEmpty,
+                        // BinderStore, not FieldDeskStore.FiledItem - same
+                        // source the Binder popup's content reads from, so
+                        // the mascot's sleeping/awake state can't disagree
+                        // with what's actually shown when it wakes up.
+                        binderHasData: !binderStore.items.isEmpty,
                         onGmailLinked: { calendarToo in
                             _ = store.markConnected("gmail")
                             if calendarToo { _ = store.markConnected("gcal") }
@@ -687,7 +704,7 @@ struct FieldDeskView: View {
                         onMoodleLinked: { _ = store.markConnected("moodle") },
                         onMoodleDisconnected: { _ = store.disconnect("moodle") },
                         intelLines: Array(store.intelLines.prefix(8)),
-                        binderTitles: Array(store.items.prefix(6).map(\.title)),
+                        binderTitles: Array(binderStore.items.prefix(6).map(\.title)),
                         onSyncCalendar: { Task { await refreshDeskCalendar() } }
                     )
                     .id(dashboardStartRail)
@@ -1202,6 +1219,9 @@ struct FieldDeskView: View {
         }
         .fullScreenCover(isPresented: $showDocCook) {
             TestInstanceView()
+        }
+        .fullScreenCover(isPresented: $showByobStudio) {
+            CreateInstanceStudioView(binderStore: binderStore) { _ in }
         }
         .fileImporter(
             isPresented: $showImporter,
@@ -3000,6 +3020,139 @@ struct FieldDeskView: View {
     private func closeIntelOverlay() {
         withAnimation(.easeInOut(duration: 0.2)) {
             showIntelOverlay = false
+        }
+    }
+
+    /// Work Dashboard Binder popup — Memo / Doc / BYOB plus ACT Field Book
+    /// as one entry, not the tile's sole destination. Same cream-card /
+    /// Done-capsule language as `intelOverlayLayer`.
+    private var binderOverlayLayer: some View {
+        ZStack {
+            Color.black.opacity(0.35)
+                .ignoresSafeArea()
+                .onTapGesture { closeBinderOverlay() }
+
+            VStack(alignment: .leading, spacing: 12) {
+                HStack(spacing: 10) {
+                    Text("Binder")
+                        .font(.system(size: 16, weight: .bold, design: .rounded))
+                        .foregroundColor(Color(fdHex: "0c1207"))
+                    Spacer(minLength: 0)
+                    Button(action: closeBinderOverlay) {
+                        Text("Done")
+                            .font(.system(size: 12, weight: .bold, design: .rounded))
+                            .foregroundColor(Color(fdHex: "0c1207"))
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 8)
+                            .background(Capsule().fill(Color(fdHex: "c4f547")))
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityIdentifier("fieldDeskBinderDone")
+                }
+
+                Button(action: openActFieldBookFromBinder) {
+                    HStack(spacing: 8) {
+                        Image(systemName: "book.closed.fill")
+                            .font(.system(size: 13, weight: .semibold))
+                        Text("ACT Field Book")
+                            .font(.system(size: 14, weight: .bold, design: .rounded))
+                        Spacer(minLength: 0)
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: 11, weight: .bold))
+                    }
+                    .foregroundColor(Color(fdHex: "0c1207"))
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 10)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .fill(Color(fdHex: "e4dcc8"))
+                    )
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("fieldDeskBinderActFieldBook")
+
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 14) {
+                        binderSection("Memo", id: "Memo", items: binderStore.items(types: "memo"))
+                        binderSection("Doc", id: "Doc", items: binderStore.items(types: "doc", "book"))
+                        binderSection("BYOB", id: "BYOB", items: binderStore.items(types: "byob"), showCook: true)
+                    }
+                }
+            }
+            .padding(18)
+            .frame(width: 420, height: 520)
+            .background(
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .fill(Color(fdHex: "fff8e9"))
+                    .shadow(color: .black.opacity(0.35), radius: 24, y: 12)
+            )
+            .accessibilityElement(children: .contain)
+            .overlay(alignment: .topLeading) {
+                Text(verbatim: "binder").font(.system(size: 1)).foregroundColor(.clear)
+                    .accessibilityIdentifier("fieldDeskBinderOverlay")
+                    .allowsHitTesting(false)
+            }
+        }
+    }
+
+    private func binderSection(_ title: String, id: String, items: [BinderItem], showCook: Bool = false) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text(title)
+                .font(.system(size: 11, weight: .heavy, design: .rounded))
+                .foregroundColor(Color(fdHex: "8a8478"))
+                .accessibilityIdentifier("fieldDeskBinderSection_\(id)")
+            if items.isEmpty {
+                Text(showCook ? "File a PDF or notes as your own book." : "Nothing filed yet.")
+                    .font(.system(size: 13, weight: .medium, design: .rounded))
+                    .foregroundColor(Color(fdHex: "8a8478"))
+            } else {
+                ForEach(items.prefix(8)) { item in
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(item.title.isEmpty ? "Untitled" : item.title)
+                            .font(.system(size: 13, weight: .semibold, design: .rounded))
+                            .foregroundColor(Color(fdHex: "1c1a17"))
+                            .lineLimit(1)
+                        if !item.body.isEmpty {
+                            Text(item.body)
+                                .font(.system(size: 11, weight: .medium, design: .rounded))
+                                .foregroundColor(Color(fdHex: "8a8478"))
+                                .lineLimit(2)
+                        }
+                    }
+                    .padding(.vertical, 4)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .overlay(alignment: .bottom) {
+                        Rectangle().fill(Color(fdHex: "e4dcc8")).frame(height: 1)
+                    }
+                }
+            }
+            if showCook {
+                Button {
+                    showByobStudio = true
+                } label: {
+                    Text("Bring your own book")
+                        .font(.system(size: 13, weight: .bold, design: .rounded))
+                        .foregroundColor(Color(fdHex: "0c1207"))
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 10)
+                        .background(Capsule().fill(Color(fdHex: "c4f547")))
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("fieldDeskBinderBYOB")
+            }
+        }
+    }
+
+    private func closeBinderOverlay() {
+        withAnimation(.easeInOut(duration: 0.2)) {
+            showBinderOverlay = false
+        }
+    }
+
+    private func openActFieldBookFromBinder() {
+        withAnimation(.easeInOut(duration: 0.2)) {
+            showBinderOverlay = false
+            showActFieldBook = true
         }
     }
 
