@@ -300,23 +300,50 @@ Cleanest handoff yet — branched off current `main` (learned from A's conflict)
 
 Verified: `xcodebuild build-for-testing` green, `testDashboardBoxMascotsExist` + `testWorkBinderPopupHasMemoDocBYOB` (Assignment A's test — confirms B didn't regress A) both pass on-simulator. CI passed at 40m4s. Did not get a physical-device visual pass in before merging — iPad was disconnected at merge time; simulator + code review gave enough confidence given this is pure UI-composition (no OAuth/Storage/device-only APIs involved, unlike Assignment A). Will confirm on-device next time it's connected.
 
-**2026-08-17 — Assignment C (bring-your-own AI key)** — branch `cursor/student-ai-key-2c98`
+**2026-08-17 — Claude's audit of Assignment C, in progress** — PR #46 (`cursor/student-ai-key-2c98`) open, **not yet merged**.
 
-Shipped: optional student Groq (default) / Anthropic key in the Keychain, Settings row to add/remove/test it, and Work "Get hints" uses that key against the provider's own REST host when present. No key → existing `/recommend-ingredients` path unchanged. No webhook/`ml/` changes.
+Code-reviewed `StudentAIKeyStore.swift` line by line, not just the PR description: Keychain-only (`kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly` — correctly excluded from iCloud Keychain sync), the raw key is never logged anywhere in the file, and both provider calls guard `url.host == Provider.x.host` before sending — real defense in depth even though the URLs are hardcoded. `AccountManageView`'s Save/Test/Remove UI clears the draft field after save so the raw key never lingers displayed. `HomeworkClient`'s `Outcome` enum cleanly distinguishes key-rejected (Settings-facing message) from engine-unavailable (generic message) — read the diff, this is a real behavioral improvement, not just plumbing. Confirmed `xcodebuild build-for-testing` green, `testDashboardBoxMascotsExist` + `testWorkBinderPopupHasMemoDocBYOB` pass on-simulator, then installed on physical iPad and confirmed the Settings UI renders and doesn't crash.
 
-Files:
-- `ios-prototype/MindCraftNotes/MindCraftNotes/Networking/StudentAIKeyStore.swift` — Keychain only (`kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly`). Presence is published; raw key is read only for provider calls. Hosts allowed: `api.groq.com`, `api.anthropic.com`.
-- `ios-prototype/MindCraftNotes/MindCraftNotes/Views/AccountManageView.swift` — Homework help section (save / test / remove). Draft field is cleared after save; status never shows the raw key.
-- `ios-prototype/MindCraftNotes/MindCraftNotes/Networking/HomeworkClient.swift` — `IngredientHintsClient.hints` takes the student-key path first.
-- `ios-prototype/MindCraftNotes/MindCraftNotes/Views/WorkPracticeView.swift` — maps key-rejected vs engine-unavailable errors.
-- `project.pbxproj` — added `StudentAIKeyStore.swift`.
+**What's NOT verified — needs a real key**: I don't have a Groq/Anthropic key of my own and won't sign up for one unprompted. The actual "paste a problem, get a real answer back" round-trip is unconfirmed. **First task for whoever picks this up: paste a real free Groq key into Settings → Homework help → Test, confirm it says "Key works," then check `gh pr checks 46` — CI was still running the XCUITest suite as of this note (started 2026-08-17T06:28:22Z, full suite runs ~35-40min) — mark the PR ready (`gh pr ready 46`, it's a draft) and merge (`gh pr merge 46 --merge`) once green, sync `main`, then append a dated report entry here same as A/B/C before starting Assignment D.**
 
-Flagged:
-- Photo-upload parse (`HomeworkClient.parseAndCreateSession` → webhook `/api/parse-homework`) is a different Anthropic path and is unchanged. Assignment C targeted the paste-a-problem solver that already fell back to `/recommend-ingredients`.
-- `AccountManageView` was an orphaned sheet (`showManage` never set true). Follow-up: hub gear (`deskHubSettingsButton`) next to Connect/Back opens it. Path: top-left logo ("The Desk · Manage") → hub → gear → **Homework help**. Touched `DeskShellView.swift` (not in the original C file list) because that is the live Manage page; the Settings sheet had no entry point.
-- Linux cloud agent cannot run `xcodebuild` or a real-device Groq-key check. CI is the compile gate; the DoD's "paste a problem with a real Groq key" needs Claude's device audit.
+Also landed directly on `main` tonight (small, isolated, didn't need a PR): a Greptile-flagged overflow bug from PR #45 — compact (non-grown) Email tiles could clip when a digest row's `why` subtitle wrapped to 2 lines across all 3 shown items. Fixed by only showing the subtitle once a tile is actually grown. Commit `26aaba5a`, verified build+tests+device before pushing.
 
-Did not start Assignments D–E.
+---
+
+## Handoff note (2026-08-16 night → 2026-08-17 morning): Codex filling in for Claude
+
+Akshat's Claude Code session is ending for the night. A ChatGPT/Codex session
+is filling the **planner** role from here until Claude is back — Cursor
+keeps implementing exactly as before, just reporting to Codex instead of
+Claude in the meantime. **Nothing about the operating model above changes** —
+same loop (investigate real state → write/read the assignment spec → verify
+for real, not by trusting a report → append a dated entry here), same file,
+same "Cursor executes exactly the scope in front of it" rule.
+
+**For Codex, specifically, starting now:**
+1. Read the "Operating model" section at the top of this file in full before
+   doing anything else — it's the actual contract, this note is just a
+   pointer to it.
+2. First real task: finish auditing PR #46 per the note directly above this
+   section (CI check + real-key test + merge), **not** starting Assignment D
+   from scratch — Assignment C isn't closed out yet.
+3. Same discipline that's bitten this process twice already tonight, both
+   worth internalizing before touching anything: **(a)** any edit to this
+   file must be committed AND pushed immediately — Assignment A's spec once
+   sat local-only for ~40 minutes and Cursor built the wrong thing because of
+   it; **(b)** branch new assignment work off current `main`, not off
+   whatever commit you happened to read it at — Assignment A's PR forked
+   right before a big merge landed and needed a real conflict reconciliation
+   afterward; Assignment B branching off-tip avoided this entirely, do that.
+4. Verify claims against real repo/CI/device state before trusting any
+   report — including your own, and including this one. Don't rubber-stamp
+   Cursor's "done," and don't let Claude rubber-stamp yours tomorrow either —
+   append full, honest detail (what you read, what you ran, what you
+   couldn't verify and why) so tomorrow's audit has something real to check
+   against, the same way the entries above this one do.
+5. When Claude's session resumes, it will read everything appended here
+   between now and then and audit it the same way it audited A/B/C — real
+   diffs, real builds, real device checks, not just the report text.
 
 ---
 
