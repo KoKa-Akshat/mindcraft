@@ -970,7 +970,11 @@ final class MindCraftNotesUITests: XCTestCase {
         // workflow market + instance grid) now only opens as a fullScreenCover
         // from Field Desk's "The Desk · Manage" wordmark
         // (`fieldDeskLogoManage` -> posts .mcOpenHubFromDesk -> showHubPage).
-        XCTAssertTrue(app.buttons["fieldDeskModeToggle"].waitForExistence(timeout: 40), "expected Field Desk chrome after cold load")
+        XCTAssertTrue(
+            app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 40)
+                || app.buttons["fieldDeskModeToggle"].waitForExistence(timeout: 2),
+            "expected the Work dashboard or Field Desk chrome after cold load"
+        )
         let bootText = app.staticTexts["Your workspace is starting up"]
         if bootText.exists { _ = bootText.waitForNonExistence(timeout: 90) }
         let manageWordmark = app.buttons["fieldDeskLogoManage"]
@@ -987,6 +991,25 @@ final class MindCraftNotesUITests: XCTestCase {
         XCTAssertTrue(connectButton.waitForExistence(timeout: 10), "expected Connect next to the greeting on the desk hub")
         XCTAssertTrue(app.buttons["deskHubBackButton"].waitForExistence(timeout: 3),
                       "expected Back next to the greeting on the desk hub")
+        let settingsButton = app.buttons["deskHubSettingsButton"]
+        XCTAssertTrue(settingsButton.waitForExistence(timeout: 3),
+                      "expected Settings next to Connect and Back")
+        settingsButton.tap()
+        XCTAssertTrue(app.descendants(matching: .any)["manageAIKeyStatus"].waitForExistence(timeout: 5),
+                      "expected the Homework help AI-key status in Settings")
+        XCTAssertTrue(app.descendants(matching: .any)["manageAIKeyProvider"].exists,
+                      "expected the Groq/Anthropic provider picker")
+        XCTAssertTrue(app.descendants(matching: .any)["manageAIKeyField"].exists,
+                      "expected the secure API-key field")
+        XCTAssertTrue(app.buttons["manageAIKeyTest"].exists,
+                      "expected the saved-key connection test")
+        if app.navigationBars.buttons["Done"].waitForExistence(timeout: 2) {
+            app.navigationBars.buttons["Done"].tap()
+        } else {
+            app.buttons["Done"].tap()
+        }
+        XCTAssertTrue(settingsButton.waitForExistence(timeout: 3),
+                      "expected Settings to dismiss back to the hub")
         XCTAssertFalse(app.staticTexts["Start your mastery check-in"].exists,
                        "no bubble copy next to the Connect button")
         XCTAssertTrue(app.buttons["deskHubCreateInstance"].waitForExistence(timeout: 3),

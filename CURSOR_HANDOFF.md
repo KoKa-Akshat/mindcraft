@@ -360,6 +360,8 @@ Fix: wrapped every one of those ~20 branches' view expressions in `AnyView(...)`
 
 PR #47's branch (`cursor/box-grid-redesign-2c98`) now has both fixes. Gate is unchanged: **the real-key test on #46 is still the next thing that has to happen before either #46 or #47 merges.**
 
+**2026-08-17 — Claude, real-key gate cleared: Akshat confirmed his Groq key works on-device across both Homework Help and the new agent takeover (real drafted email reply, real answered questions) — merging #46.**
+
 ---
 
 ## Handoff note (2026-08-16 night → 2026-08-17 morning): Codex filling in for Claude

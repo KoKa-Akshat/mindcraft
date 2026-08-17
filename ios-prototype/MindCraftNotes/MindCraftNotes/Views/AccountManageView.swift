@@ -11,6 +11,11 @@ struct AccountManageView: View {
     @State private var username: String = ""
     @State private var saveNote: String?
     @State private var showWhitepaper = false
+    @ObservedObject private var aiKeys = StudentAIKeyStore.shared
+    @State private var aiProvider: StudentAIKeyStore.Provider = .groq
+    @State private var aiKeyDraft = ""
+    @State private var aiKeyNote: String?
+    @State private var aiKeyBusy = false
 
     var body: some View {
         NavigationStack {
@@ -39,6 +44,9 @@ struct AccountManageView: View {
                     }
                     .padding(16)
                     .background(cardBg)
+
+                    sectionHeader("Homework help")
+                    aiKeyCard
 
                     sectionHeader("Billing")
                     VStack(alignment: .leading, spacing: 12) {
@@ -121,6 +129,89 @@ struct AccountManageView: View {
             .fill(Color(uiColor: .secondarySystemBackground))
     }
 
+    private var aiKeyCard: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Use your own AI key")
+                .font(.system(size: 15, weight: .semibold, design: .rounded))
+            Text("Homework help uses MindCraft's engine when this is empty. Paste a free Groq key (Anthropic works too) to keep solving on your own quota. The key stays on this device's Keychain - it is never uploaded to MindCraft.")
+                .font(.system(size: 13, weight: .medium, design: .rounded))
+                .foregroundColor(.secondary)
+
+            if aiKeys.hasKey {
+                Text("\(aiKeys.provider?.title ?? "AI") key saved on this device")
+                    .font(.system(size: 13, weight: .semibold, design: .rounded))
+                    .foregroundColor(Color(shellHex: "54b948"))
+                    .accessibilityIdentifier("manageAIKeyStatus")
+            } else {
+                Text("No key saved")
+                    .font(.system(size: 13, weight: .medium, design: .rounded))
+                    .foregroundColor(.secondary)
+                    .accessibilityIdentifier("manageAIKeyStatus")
+            }
+
+            Picker("Provider", selection: $aiProvider) {
+                ForEach(StudentAIKeyStore.Provider.allCases) { provider in
+                    Text(provider.title).tag(provider)
+                }
+            }
+            .pickerStyle(.segmented)
+            .accessibilityIdentifier("manageAIKeyProvider")
+
+            SecureField("API key", text: $aiKeyDraft)
+                .textFieldStyle(.roundedBorder)
+                .textInputAutocapitalization(.never)
+                .autocorrectionDisabled()
+                .accessibilityIdentifier("manageAIKeyField")
+
+            HStack(spacing: 10) {
+                Button("Save key") {
+                    let ok = aiKeys.save(provider: aiProvider, key: aiKeyDraft)
+                    aiKeyDraft = ""
+                    aiKeyNote = ok ? "Key saved on this device" : "Could not save that key"
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(Color(shellHex: "c4f547"))
+                .foregroundColor(Color(shellHex: "0c1207"))
+                .disabled(aiKeyDraft.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                .accessibilityIdentifier("manageAIKeySave")
+
+                Button("Test") {
+                    Task { await testAIKey() }
+                }
+                .buttonStyle(.bordered)
+                .disabled(!aiKeys.hasKey || aiKeyBusy)
+                .accessibilityIdentifier("manageAIKeyTest")
+
+                if aiKeys.hasKey {
+                    Button("Remove") {
+                        aiKeys.remove()
+                        aiKeyNote = "Key removed"
+                    }
+                    .foregroundColor(.red.opacity(0.85))
+                    .accessibilityIdentifier("manageAIKeyRemove")
+                }
+            }
+
+            if aiKeyBusy {
+                ProgressView()
+                    .scaleEffect(0.8)
+            }
+            if let aiKeyNote {
+                Text(aiKeyNote)
+                    .font(.system(size: 13, weight: .semibold, design: .rounded))
+                    .foregroundColor(Color(shellHex: "54b948"))
+                    .accessibilityIdentifier("manageAIKeyNote")
+            }
+        }
+        .padding(16)
+        .background(cardBg)
+        .onAppear {
+            if let provider = aiKeys.provider {
+                aiProvider = provider
+            }
+        }
+    }
+
     private func sectionHeader(_ title: String) -> some View {
         Text(title.uppercased())
             .font(.system(size: 11, weight: .bold, design: .rounded))
@@ -136,6 +227,19 @@ struct AccountManageView: View {
         }
         await studentStore.updateDisplayName(name)
         saveNote = "Username updated"
+    }
+
+    private func testAIKey() async {
+        aiKeyBusy = true
+        defer { aiKeyBusy = false }
+        switch await aiKeys.testConnection() {
+        case .success:
+            aiKeyNote = "Key works - homework help will use it"
+        case .failure(.rejected), .failure(.noKey):
+            aiKeyNote = "That key was rejected"
+        case .failure(.unavailable):
+            aiKeyNote = "Could not reach the provider - try again"
+        }
     }
 }
 
