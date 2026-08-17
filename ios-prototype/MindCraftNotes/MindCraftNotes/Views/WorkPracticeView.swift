@@ -284,11 +284,14 @@ struct WorkPracticeView: View {
         hintsError = ""
         hintsLoading = true
         defer { hintsLoading = false }
-        guard let cards = await IngredientHintsClient.hints(for: solverText) else {
+        switch await IngredientHintsClient.hints(for: solverText) {
+        case .cards(let cards):
+            hintCards = cards
+        case .keyRejected:
+            hintsError = "That AI key was rejected. Open Settings to update it."
+        case .unavailable:
             hintsError = "Homework help is temporarily unavailable - try again in a bit."
-            return
         }
-        hintCards = cards
     }
 }
 

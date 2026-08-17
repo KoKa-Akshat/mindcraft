@@ -142,17 +142,41 @@ enum HomeworkClient {
 /// Real "paste a problem" solver - ported from `getIngredientCards()` in
 /// `mlApi.ts`, same `/recommend-ingredients` endpoint on the live ML engine
 /// (HF Spaces bridge, same base URL `KnowledgeGraphClient` already calls).
+/// When the student has saved their own Groq/Anthropic key, that key is used
+/// against the provider's REST host instead — MindCraft's homework service
+/// stays unused. No key → existing `/recommend-ingredients` fallback.
 enum IngredientHintsClient {
     struct HintCard {
         let title: String
         let body: String
     }
 
+    enum Outcome {
+        case cards([HintCard])
+        case unavailable
+        case keyRejected
+    }
+
     private static let baseURL = "https://joinmindcraft-mindcraft-ml.hf.space"
 
-    static func hints(for problemText: String) async -> [HintCard]? {
-        guard let user = Auth.auth().currentUser, let token = try? await user.getIDToken() else { return nil }
-        guard let url = URL(string: "\(baseURL)/recommend-ingredients") else { return nil }
+    @MainActor
+    static func hints(for problemText: String) async -> Outcome {
+        if StudentAIKeyStore.shared.hasKey {
+            switch await StudentAIKeyStore.shared.solveHomework(problemText: problemText) {
+            case .success(let text):
+                return .cards([HintCard(title: "Solution", body: text)])
+            case .failure(.rejected), .failure(.noKey):
+                return .keyRejected
+            case .failure(.unavailable):
+                return .unavailable
+            }
+        }
+        return await recommendIngredients(problemText)
+    }
+
+    private static func recommendIngredients(_ problemText: String) async -> Outcome {
+        guard let user = Auth.auth().currentUser, let token = try? await user.getIDToken() else { return .unavailable }
+        guard let url = URL(string: "\(baseURL)/recommend-ingredients") else { return .unavailable }
 
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -169,8 +193,8 @@ enum IngredientHintsClient {
               let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
               let rawCards = json["cards"] as? [[String: Any]]
         else {
-            return nil
+            return .unavailable
         }
-        return rawCards.map { HintCard(title: $0["title"] as? String ?? "Hint", body: $0["body"] as? String ?? "") }
+        return .cards(rawCards.map { HintCard(title: $0["title"] as? String ?? "Hint", body: $0["body"] as? String ?? "") })
     }
 }

@@ -300,9 +300,22 @@ Cleanest handoff yet — branched off current `main` (learned from A's conflict)
 
 Verified: `xcodebuild build-for-testing` green, `testDashboardBoxMascotsExist` + `testWorkBinderPopupHasMemoDocBYOB` (Assignment A's test — confirms B didn't regress A) both pass on-simulator. CI passed at 40m4s. Did not get a physical-device visual pass in before merging — iPad was disconnected at merge time; simulator + code review gave enough confidence given this is pure UI-composition (no OAuth/Storage/device-only APIs involved, unlike Assignment A). Will confirm on-device next time it's connected.
 
-**Assignment C is next.** Read it below before starting — note its "iOS-lane-only, stop and flag if it needs a webhook/`ml/` change" constraint particularly closely.
+**2026-08-17 — Assignment C (bring-your-own AI key)** — branch `cursor/student-ai-key-2c98`
 
-Did not start Assignments C–E.
+Shipped: optional student Groq (default) / Anthropic key in the Keychain, Settings row to add/remove/test it, and Work "Get hints" uses that key against the provider's own REST host when present. No key → existing `/recommend-ingredients` path unchanged. No webhook/`ml/` changes.
+
+Files:
+- `ios-prototype/MindCraftNotes/MindCraftNotes/Networking/StudentAIKeyStore.swift` — Keychain only (`kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly`). Presence is published; raw key is read only for provider calls. Hosts allowed: `api.groq.com`, `api.anthropic.com`.
+- `ios-prototype/MindCraftNotes/MindCraftNotes/Views/AccountManageView.swift` — Homework help section (save / test / remove). Draft field is cleared after save; status never shows the raw key.
+- `ios-prototype/MindCraftNotes/MindCraftNotes/Networking/HomeworkClient.swift` — `IngredientHintsClient.hints` takes the student-key path first.
+- `ios-prototype/MindCraftNotes/MindCraftNotes/Views/WorkPracticeView.swift` — maps key-rejected vs engine-unavailable errors.
+- `project.pbxproj` — added `StudentAIKeyStore.swift`.
+
+Flagged:
+- Photo-upload parse (`HomeworkClient.parseAndCreateSession` → webhook `/api/parse-homework`) is a different Anthropic path and is unchanged. Assignment C targeted the paste-a-problem solver that already fell back to `/recommend-ingredients`.
+- Linux cloud agent cannot run `xcodebuild` or a real-device Groq-key check. CI is the compile gate; the DoD's "paste a problem with a real Groq key" needs Claude's device audit.
+
+Did not start Assignments D–E.
 
 ---
 

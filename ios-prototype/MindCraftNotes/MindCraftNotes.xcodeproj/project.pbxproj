@@ -37,6 +37,7 @@
 		60C8889C6B8DFFDFD1C63FB5 /* FirebaseBootstrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E044A4E94D7F34216D068C /* FirebaseBootstrap.swift */; };
 		644D81C7CC9F5FDE773C3A27 /* AltDiagramSplitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71B0E74E82D928A06BE3928 /* AltDiagramSplitter.swift */; };
 		662A4D2F92F6C3FAE0B08896 /* HomeworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0317BB30BAEC751F016F6F0F /* HomeworkClient.swift */; };
+		D7STUDENTAIKEY01 /* StudentAIKeyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7STUDENTAIKEY01 /* StudentAIKeyStore.swift */; };
 		6A51541E9F79B94FEA0F207C /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5428A47D8655E6D13382E35 /* GraphView.swift */; };
 		6CB3A318117BA59DFBAFB2B7 /* StoryArtLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A80100A96CF6F45F4C8C55A /* StoryArtLoader.swift */; };
 		6F7FC9EB90394695AA3FFF61 /* StickersShelfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DECD1EEEF419421EBDCABAD4 /* StickersShelfView.swift */; };
@@ -150,6 +151,7 @@
 
 /* Begin PBXFileReference section */
 		0317BB30BAEC751F016F6F0F /* HomeworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeworkClient.swift; sourceTree = "<group>"; };
+		C7STUDENTAIKEY01 /* StudentAIKeyStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentAIKeyStore.swift; sourceTree = "<group>"; };
 		037C287CDFB7C16477B6DBF0 /* KnowledgeMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnowledgeMapView.swift; sourceTree = "<group>"; };
 		0A74CA882801493092A9127F /* MindCraftNotesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MindCraftNotesApp.swift; sourceTree = "<group>"; };
 		12E044A4E94D7F34216D068C /* FirebaseBootstrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseBootstrap.swift; sourceTree = "<group>"; };
@@ -361,6 +363,7 @@
 				DFEC353EF8F1EADA0F99E274 /* DiagnosticClient.swift */,
 				6FECBAC947388E48E0524B2D /* RouteClient.swift */,
 				0317BB30BAEC751F016F6F0F /* HomeworkClient.swift */,
+				C7STUDENTAIKEY01 /* StudentAIKeyStore.swift */,
 				80CEEF844EFE4193B796ED23 /* OutcomeClient.swift */,
 				DA7262B1A341CC17EEC08DFE /* LiveSessionClient.swift */,
 				B19B01C1A6E7F8091B2C3D4E /* AgentMailClient.swift */,
@@ -695,6 +698,7 @@
 				6F7FC9EB90394695AA3FFF61 /* StickersShelfView.swift in Sources */,
 				C395E316CD6E4A6BAB5701D4 /* WelcomeView.swift in Sources */,
 				662A4D2F92F6C3FAE0B08896 /* HomeworkClient.swift in Sources */,
+				D7STUDENTAIKEY01 /* StudentAIKeyStore.swift in Sources */,
 				58AD051935ED6A6A902DACDA /* PracticeSessionView.swift in Sources */,
 				51634C64A486CFCB3A5F4829 /* FormulaCardView.swift in Sources */,
 				FBE308BC7B92F7029BDDC696 /* WeeklyReviewWalkthroughView.swift in Sources */,
