@@ -1,0 +1,40 @@
+{
+  "concept_id": "basic_equations",
+  "generator_version": "ingredient-first-basic-equations-v1",
+  "rules": [
+    {
+      "rule_id": "mis_rule_inverse_operations__subtracts_coefficient",
+      "ingredient_ids": ["basic_equations__inverse_operations"],
+      "failure_signature": "substitution",
+      "misconception_id": "mis_linear_equations__solving_equation_subtracts_instead_dividing",
+      "implementation": "generation.rules.basic_equations.subtract_coefficient_instead_of_dividing"
+    },
+    {
+      "rule_id": "mis_rule_isolate_variable__stops_before_dividing",
+      "ingredient_ids": ["basic_equations__isolate_variable"],
+      "failure_signature": "omission",
+      "misconception_id": "mis_linear_equations__solving_equation_forgets_eliminate_coefficient",
+      "implementation": "generation.rules.basic_equations.stop_before_dividing"
+    },
+    {
+      "rule_id": "mis_rule_both_sides__changes_one_side_only",
+      "ingredient_ids": ["basic_equations__do_same_to_both_sides"],
+      "failure_signature": "omission",
+      "misconception_id": "mis_linear_equations__does_not_realise_maintain_balance",
+      "implementation": "generation.rules.basic_equations.change_only_one_side"
+    },
+    {
+      "rule_id": "mis_rule_equals_balance__chains_running_total",
+      "ingredient_ids": ["basic_equations__equals_sign_balance"],
+      "failure_signature": "sequencing",
+      "misconception_id": "mis_rule_equals_balance__chains_running_total",
+      "implementation": "generation.rules.basic_equations.chain_equals_as_running_total"
+    }
+  ],
+  "ingredients_without_rules": [
+    {
+      "ingredient_id": "basic_equations__solution_verification",
+      "reason": "Skipping verification does not produce a characteristic wrong value."
+    }
+  ]
+}
