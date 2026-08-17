@@ -568,86 +568,101 @@ struct FieldDeskView: View {
                 // right identifier, just never received touches).
                 if deskChromeLive {
                     let panZoomCatcherBlocked = floatDockBlocked || showAddPanel || activeGuideId != nil || polkaProgress > 0.001
-                    PassThroughOverlay(
-                        solidRects: panZoomCatcherBlocked ? [] : [CGRect(origin: .zero, size: viewport)]
-                    ) {
-                        deskBackgroundPanZoomLayer(viewport: viewport)
-                    }
-                    .frame(width: viewport.width, height: viewport.height)
-                    .zIndex(20)
+                    AnyView(
+                        PassThroughOverlay(
+                            solidRects: panZoomCatcherBlocked ? [] : [CGRect(origin: .zero, size: viewport)]
+                        ) {
+                            deskBackgroundPanZoomLayer(viewport: viewport)
+                        }
+                        .frame(width: viewport.width, height: viewport.height)
+                        .zIndex(20)
+                    )
                 }
 
                 if showActStage && actStageMaximized {
-                    actStageMaximizedLayer(viewport: viewport)
-                        .zIndex(30)
+                    AnyView(
+                        actStageMaximizedLayer(viewport: viewport)
+                            .zIndex(30)
+                    )
                 }
 
                 // ACT Field Book (dash + notes) as an in-desk popup — not a new tab.
                 if showActFieldBook {
-                    ActInstanceShellView(onMinimize: {
-                        withAnimation(.easeInOut(duration: 0.2)) {
-                            showActFieldBook = false
-                            // Dashboard was kept alive underneath (see onOpenBinder
-                            // below) - minimizing just reveals it directly, no
-                            // need to also surface the free-drag Binder card. Only
-                            // fall back to that when Field Book was opened from a
-                            // non-dashboard path (binderBody, AI study_concept
-                            // action), where the dashboard was never showing.
-                            if !showDeskGridDashboard {
-                                showBinderPanel = true
-                                binderOpen = true
+                    AnyView(
+                        ActInstanceShellView(onMinimize: {
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                showActFieldBook = false
+                                // Dashboard was kept alive underneath (see onOpenBinder
+                                // below) - minimizing just reveals it directly, no
+                                // need to also surface the free-drag Binder card. Only
+                                // fall back to that when Field Book was opened from a
+                                // non-dashboard path (binderBody, AI study_concept
+                                // action), where the dashboard was never showing.
+                                if !showDeskGridDashboard {
+                                    showBinderPanel = true
+                                    binderOpen = true
+                                }
                             }
-                        }
-                    })
-                    .environmentObject(studentStore)
-                    .environmentObject(authService)
-                    .transition(.opacity)
-                    // Above Dashboard's zIndex(88) so it layers on top rather
-                    // than requiring the dashboard to close first - closing
-                    // first briefly exposed Jesse's Kitchen underneath during
-                    // the transition gap.
-                    .zIndex(89)
-                    .accessibilityIdentifier("fieldDeskActNotesPopup")
+                        })
+                        .environmentObject(studentStore)
+                        .environmentObject(authService)
+                        .transition(.opacity)
+                        // Above Dashboard's zIndex(88) so it layers on top rather
+                        // than requiring the dashboard to close first - closing
+                        // first briefly exposed Jesse's Kitchen underneath during
+                        // the transition gap.
+                        .zIndex(89)
+                        .accessibilityIdentifier("fieldDeskActNotesPopup")
+                    )
                 }
 
                 // Gcal box as an in-desk popup over the dashboard, same
                 // shape as ACT Field Book above — not the free-drag desk card.
                 if showCalendarOverlay {
-                    calendarOverlayLayer
-                        .transition(.opacity)
-                        .zIndex(89)
-                        .accessibilityIdentifier("fieldDeskCalendarOverlay")
+                    AnyView(
+                        calendarOverlayLayer
+                            .transition(.opacity)
+                            .zIndex(89)
+                            .accessibilityIdentifier("fieldDeskCalendarOverlay")
+                    )
                 }
 
                 // Intel box as an in-desk popup over the dashboard, same
                 // shape as Gcal/Binder above.
                 if showIntelOverlay {
-                    intelOverlayLayer
-                        .transition(.opacity)
-                        .zIndex(89)
-                        .accessibilityIdentifier("fieldDeskIntelOverlay")
+                    AnyView(
+                        intelOverlayLayer
+                            .transition(.opacity)
+                            .zIndex(89)
+                            .accessibilityIdentifier("fieldDeskIntelOverlay")
+                    )
                 }
 
                 if showBinderOverlay {
-                    binderOverlayLayer
-                        .transition(.opacity)
-                        .zIndex(89)
                     // No wrapper .accessibilityIdentifier here — that clobbers
                     // Memo/Doc/BYOB section ids (same family as workDock).
                     // binderOverlayLayer carries fieldDeskBinderOverlay on a marker.
+                    AnyView(
+                        binderOverlayLayer
+                            .transition(.opacity)
+                            .zIndex(89)
+                    )
                 }
 
                 if showHomeworkHelpOverlay {
-                    homeworkHelpOverlayLayer
-                        .transition(.opacity)
-                        .zIndex(89)
                     // No wrapper .accessibilityIdentifier — this popup has
                     // its own distinct field/button ids inside (same
                     // clobbering trap as Binder's popup above); carries
                     // fieldDeskHomeworkHelpOverlay on its own marker instead.
+                    AnyView(
+                        homeworkHelpOverlayLayer
+                            .transition(.opacity)
+                            .zIndex(89)
+                    )
                 }
 
                 if showDeskGridDashboard {
+                    AnyView(
                     DeskGridDashboardView(
                         initialRail: dashboardStartRail,
                         initialMemoText: store.memoText,
@@ -744,14 +759,17 @@ struct FieldDeskView: View {
                     // as workDock, one layer further out - confirmed via a live
                     // accessibility-tree dump showing both nodes wrongly reporting
                     // 'fieldDeskGridDashboardOverlay' instead of 'deskGridDashboard').
+                    )
                 }
 
                 if showApplyToday {
-                    JobOSShellView(onClose: { showApplyToday = false })
-                        .transition(.opacity)
-                        // Above Work/Create web surfaces so workflows use the big area.
-                        .zIndex(90)
-                        .accessibilityIdentifier("fieldDeskApplyTodayOverlay")
+                    AnyView(
+                        JobOSShellView(onClose: { showApplyToday = false })
+                            .transition(.opacity)
+                            // Above Work/Create web surfaces so workflows use the big area.
+                            .zIndex(90)
+                            .accessibilityIdentifier("fieldDeskApplyTodayOverlay")
+                    )
                 }
 
                 if showSchedulingWorkflows && !schedulingWorkflowsMinimized {
@@ -761,158 +779,174 @@ struct FieldDeskView: View {
                     // real accessibility-tree dump - e.g. schedulingWorkflowsBack
                     // reporting as this wrapper's id instead of its own).
                     // SchedulingWorkflowsView already tags its own root.
-                    ZStack(alignment: .topTrailing) {
-                        SchedulingWorkflowsView(
-                            onClose: {
-                                showSchedulingWorkflows = false
-                                schedulingWorkflowsMinimized = false
-                            },
-                            onOpenApplyToday: { showApplyToday = true }
-                        )
-                        // Corner-only minimize, same treatment as ACT stage's
-                        // - collapses to a reconnectable chip on the desk
-                        // instead of fully closing, so other cards stay
-                        // reachable without losing the workflow's progress.
-                        Button {
-                            withAnimation(.easeInOut(duration: 0.2)) { schedulingWorkflowsMinimized = true }
-                        } label: {
-                            Image(systemName: "arrow.down.right.and.arrow.up.left")
-                                .font(.system(size: 12, weight: .bold))
-                                .foregroundColor(.white)
-                                .padding(10)
-                                .background(Circle().fill(Color.black.opacity(0.55)))
+                    AnyView(
+                        ZStack(alignment: .topTrailing) {
+                            SchedulingWorkflowsView(
+                                onClose: {
+                                    showSchedulingWorkflows = false
+                                    schedulingWorkflowsMinimized = false
+                                },
+                                onOpenApplyToday: { showApplyToday = true }
+                            )
+                            // Corner-only minimize, same treatment as ACT stage's
+                            // - collapses to a reconnectable chip on the desk
+                            // instead of fully closing, so other cards stay
+                            // reachable without losing the workflow's progress.
+                            Button {
+                                withAnimation(.easeInOut(duration: 0.2)) { schedulingWorkflowsMinimized = true }
+                            } label: {
+                                Image(systemName: "arrow.down.right.and.arrow.up.left")
+                                    .font(.system(size: 12, weight: .bold))
+                                    .foregroundColor(.white)
+                                    .padding(10)
+                                    .background(Circle().fill(Color.black.opacity(0.55)))
+                            }
+                            .buttonStyle(.plain)
+                            .padding(28)
+                            .accessibilityIdentifier("fieldDeskWorkflowsMinimize")
+                            .accessibilityLabel("Minimize workflow")
                         }
-                        .buttonStyle(.plain)
-                        .padding(28)
-                        .accessibilityIdentifier("fieldDeskWorkflowsMinimize")
-                        .accessibilityLabel("Minimize workflow")
-                    }
-                    .transition(.opacity)
-                    .zIndex(90)
+                        .transition(.opacity)
+                        .zIndex(90)
+                    )
                 }
 
                 if showGmailBox {
-                    GmailWorkflowBoxView(
-                        onClose: {
-                            showGmailBox = false
-                            gmailStartReconnect = false
-                            gmailOpenTopReply = false
-                        },
-                        onConnected: { calendarToo in
-                            _ = store.markConnected("gmail")
-                            if calendarToo {
-                                _ = store.markConnected("gcal")
-                                Task { await refreshDeskCalendar() }
-                            }
-                            gmailStartReconnect = false
-                            if store.allConnectorsLinked {
-                                flash("All linked · add Calendar · Connect · Memo from +")
-                            } else {
-                                flash(calendarToo ? "Connected · Gmail + Calendar" : "Connected · Gmail")
-                            }
-                        },
-                        onDisconnected: {
-                            _ = store.disconnect("gmail")
-                        },
-                        onInboxLoaded: { msgs in
-                            for msg in msgs.prefix(5).reversed() {
-                                let line = "Mail · \(msg.from): \(msg.subject)"
-                                if !store.intelLines.contains(line) {
-                                    store.prependIntel(line)
+                    AnyView(
+                        GmailWorkflowBoxView(
+                            onClose: {
+                                showGmailBox = false
+                                gmailStartReconnect = false
+                                gmailOpenTopReply = false
+                            },
+                            onConnected: { calendarToo in
+                                _ = store.markConnected("gmail")
+                                if calendarToo {
+                                    _ = store.markConnected("gcal")
+                                    Task { await refreshDeskCalendar() }
                                 }
-                            }
-                        },
-                        startInReconnect: gmailStartReconnect,
-                        startWithTopReply: gmailOpenTopReply
+                                gmailStartReconnect = false
+                                if store.allConnectorsLinked {
+                                    flash("All linked · add Calendar · Connect · Memo from +")
+                                } else {
+                                    flash(calendarToo ? "Connected · Gmail + Calendar" : "Connected · Gmail")
+                                }
+                            },
+                            onDisconnected: {
+                                _ = store.disconnect("gmail")
+                            },
+                            onInboxLoaded: { msgs in
+                                for msg in msgs.prefix(5).reversed() {
+                                    let line = "Mail · \(msg.from): \(msg.subject)"
+                                    if !store.intelLines.contains(line) {
+                                        store.prependIntel(line)
+                                    }
+                                }
+                            },
+                            startInReconnect: gmailStartReconnect,
+                            startWithTopReply: gmailOpenTopReply
+                        )
+                        .transition(.opacity)
+                        // Above Dashboard's zIndex(88), same tier as Binder/
+                        // Calendar - was 56 (below the dashboard), which is how
+                        // Jesse's Kitchen showed through the box's margins once
+                        // the dashboard was torn down to open it.
+                        .zIndex(89)
+                        .accessibilityIdentifier("fieldDeskGmailOverlay")
                     )
-                    .transition(.opacity)
-                    // Above Dashboard's zIndex(88), same tier as Binder/
-                    // Calendar - was 56 (below the dashboard), which is how
-                    // Jesse's Kitchen showed through the box's margins once
-                    // the dashboard was torn down to open it.
-                    .zIndex(89)
-                    .accessibilityIdentifier("fieldDeskGmailOverlay")
                 }
 
                 if showProjectsPanel {
-                    ZStack {
-                        Color.black.opacity(0.55)
-                            .ignoresSafeArea()
-                            .onTapGesture { closeProjectsPanel() }
-                        projectsToolsPanel
-                            .frame(maxWidth: min(520, viewport.width - 48))
-                            .padding(20)
-                    }
-                    .zIndex(70)
-                    .transition(.opacity)
-                    .accessibilityIdentifier("fieldDeskProjectsPanel")
+                    AnyView(
+                        ZStack {
+                            Color.black.opacity(0.55)
+                                .ignoresSafeArea()
+                                .onTapGesture { closeProjectsPanel() }
+                            projectsToolsPanel
+                                .frame(maxWidth: min(520, viewport.width - 48))
+                                .padding(20)
+                        }
+                        .zIndex(70)
+                        .transition(.opacity)
+                        .accessibilityIdentifier("fieldDeskProjectsPanel")
+                    )
                 }
 
                 // Projects screen — the Malevolent Shrine project, neatly on
                 // a white void. Tapping the shrine enters the work area.
                 if showProjectsScreen {
-                    projectsScreen
-                        .zIndex(83)
-                        .transition(.opacity)
+                    AnyView(
+                        projectsScreen
+                            .zIndex(83)
+                            .transition(.opacity)
+                    )
                 }
 
                 // Standalone Desk — full separation from the kitchen.
                 if showStandaloneDesk {
-                    StandaloneDeskView(
-                        onBackToKitchen: { closeStandaloneDesk() },
-                        onManage: { openManageHubFromDesk() },
-                        onOpenAct: {
-                            closeStandaloneDesk()
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
-                                openActDashOnDesk()
+                    AnyView(
+                        StandaloneDeskView(
+                            onBackToKitchen: { closeStandaloneDesk() },
+                            onManage: { openManageHubFromDesk() },
+                            onOpenAct: {
+                                closeStandaloneDesk()
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+                                    openActDashOnDesk()
+                                }
+                            },
+                            onWorkflows: {
+                                showWorkflowLibrary = true
+                            },
+                            onSound: { on in
+                                kitchenSoundOn = on
                             }
-                        },
-                        onWorkflows: {
-                            showWorkflowLibrary = true
-                        },
-                        onSound: { on in
-                            kitchenSoundOn = on
-                        }
+                        )
+                        .zIndex(85)
                     )
-                    .zIndex(85)
                 }
 
                 // Spatial Create — same polka doorway, cream orbital board.
                 if showCreateStudio {
-                    CreateStudioView(onClose: { closeCreateStudio() })
-                        .zIndex(86)
-                        .transition(.opacity)
+                    AnyView(
+                        CreateStudioView(onClose: { closeCreateStudio() })
+                            .zIndex(86)
+                            .transition(.opacity)
+                    )
                 }
 
                 if showCreateCanvas {
-                    CreateCanvasView(
-                        kind: createCanvasKind,
-                        studentName: deskChromeName ?? "there",
-                        // Explicit re-assert, not just relying on
-                        // showDeskGridDashboard having stayed true the whole
-                        // time Create Canvas was open - Done was landing back
-                        // on Create Canvas instead of the dashboard without
-                        // this (confirmed via UI test + screen recording).
-                        onClose: {
-                            withAnimation(.easeInOut(duration: 0.28)) {
-                                showCreateCanvas = false
-                                showDeskGridDashboard = true
+                    AnyView(
+                        CreateCanvasView(
+                            kind: createCanvasKind,
+                            studentName: deskChromeName ?? "there",
+                            // Explicit re-assert, not just relying on
+                            // showDeskGridDashboard having stayed true the whole
+                            // time Create Canvas was open - Done was landing back
+                            // on Create Canvas instead of the dashboard without
+                            // this (confirmed via UI test + screen recording).
+                            onClose: {
+                                withAnimation(.easeInOut(duration: 0.28)) {
+                                    showCreateCanvas = false
+                                    showDeskGridDashboard = true
+                                }
                             }
-                        }
+                        )
+                        .zIndex(89)
+                        // Slides in from the right / back out to the right
+                        // instead of a plain crossfade - reads as an adjacent
+                        // panel on the same screen (Work stays put underneath,
+                        // never actually leaves) rather than teleporting to a
+                        // disconnected space.
+                        .transition(.move(edge: .trailing))
                     )
-                    .zIndex(89)
-                    // Slides in from the right / back out to the right
-                    // instead of a plain crossfade - reads as an adjacent
-                    // panel on the same screen (Work stays put underneath,
-                    // never actually leaves) rather than teleporting to a
-                    // disconnected space.
-                    .transition(.move(edge: .trailing))
                 }
 
                 // Polka doorway sheet rides above both worlds while crossing.
                 if polkaProgress > 0.001 {
-                    PolkaTransitionOverlay(progress: polkaProgress)
-                        .zIndex(95)
+                    AnyView(
+                        PolkaTransitionOverlay(progress: polkaProgress)
+                            .zIndex(95)
+                    )
                 }
 
                 // ⚠️ Adding another full-screen `if show___ { ... .zIndex(N) }`
@@ -935,36 +969,42 @@ struct FieldDeskView: View {
                     // (confirmed via a full accessibility-tree dump showing
                     // every row - Close included - reporting isHittable:
                     // false). Same pattern as connectGuide below.
-                    ZStack {
-                        Color.black.opacity(0.45).onTapGesture { showAddPanel = false }
-                        addPanel.frame(maxWidth: min(440, viewport.width - 80))
-                    }
-                    .zIndex(70)
+                    AnyView(
+                        ZStack {
+                            Color.black.opacity(0.45).onTapGesture { showAddPanel = false }
+                            addPanel.frame(maxWidth: min(440, viewport.width - 80))
+                        }
+                        .zIndex(70)
+                    )
                 }
 
                 if let guideId = activeGuideId, let connector = store.connector(id: guideId) {
-                    ZStack {
-                        Color.black.opacity(0.45).onTapGesture { activeGuideId = nil }
-                        connectGuide(connector)
-                            .frame(maxWidth: min(480, viewport.width - 64))
-                            .padding(20)
-                    }
-                    .zIndex(60)
+                    AnyView(
+                        ZStack {
+                            Color.black.opacity(0.45).onTapGesture { activeGuideId = nil }
+                            connectGuide(connector)
+                                .frame(maxWidth: min(480, viewport.width - 64))
+                                .padding(20)
+                        }
+                        .zIndex(60)
+                    )
                 }
 
                 if let toast {
-                    VStack {
-                        Spacer()
-                        Text(toast)
-                            .font(.system(size: 14, weight: .semibold, design: .rounded))
-                            .foregroundColor(Color(fdHex: "f4f7f4"))
-                            .padding(.horizontal, 16).padding(.vertical, 10)
-                            .background(Capsule().fill(Color(fdHex: "1f2a22")))
-                            .padding(.bottom, 100)
-                            .accessibilityIdentifier("fieldDeskToast")
-                    }
-                    .zIndex(40)
-                    .allowsHitTesting(false)
+                    AnyView(
+                        VStack {
+                            Spacer()
+                            Text(toast)
+                                .font(.system(size: 14, weight: .semibold, design: .rounded))
+                                .foregroundColor(Color(fdHex: "f4f7f4"))
+                                .padding(.horizontal, 16).padding(.vertical, 10)
+                                .background(Capsule().fill(Color(fdHex: "1f2a22")))
+                                .padding(.bottom, 100)
+                                .accessibilityIdentifier("fieldDeskToast")
+                        }
+                        .zIndex(40)
+                        .allowsHitTesting(false)
+                    )
                 }
 
                 Text(verbatim: "desk-window")
