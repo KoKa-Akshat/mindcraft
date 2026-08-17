@@ -60,9 +60,10 @@ needs `xcodebuild build-for-testing` green (device or simulator) before its
 report is written; CI (`iOS simulator build+test`) is the real gate before
 merge, same as PR 43 — see "How this handoff gets written" above.
 
-**Assignment A is done and merged (2026-08-16, `fe54a37e`) — start on
-Assignment B next.** Open a fresh branch off current `main` (not off an
-older commit — that's what caused Assignment A's merge conflict).
+**Assignments A and B are done and merged (2026-08-16, `fe54a37e`,
+`b76afc88`) — start on Assignment C next.** Open a fresh branch off current
+`main`, same as B did (branching off-tip is what kept B conflict-free,
+unlike A).
 
 ---
 
@@ -130,7 +131,7 @@ Memo/Doc/BYOB sections exist by accessibility id.
 
 ---
 
-#### Assignment B — Real content rows in Intel/Email tiles, not mascot+list
+#### Assignment B — Real content rows in Intel/Email tiles, not mascot+list ✅ DONE
 
 **Goal.** When a dashboard box is "hungry" (grown via `DeskBoxBus.requestSpace`
 — tap-to-grow, neighbors shrink, this behavior is correct and must not
@@ -292,6 +293,14 @@ Files:
 - `ios-prototype/MindCraftNotes/MindCraftNotes.xcodeproj/project.pbxproj` — added `DeskContentRow.swift` to the app target.
 
 Verification: this environment is Linux; `xcodebuild build` / `build-for-testing` cannot run here. CI (`iOS simulator build+test`) is the gate. Did not add a new XCUITest (not in Assignment B files-in-scope); existing `testDashboardBoxMascotsExist` + `testWorkDashboardShowsSeededEmailSummariesAndAsksNeighborsForSpace` should cover sleeping mascots and grown Email subjects.
+
+**2026-08-17 — Claude's audit of Assignment B** — PR 45 merged (`b76afc88`).
+
+Cleanest handoff yet — branched off current `main` (learned from A's conflict), so no reconciliation needed this time. Read `DeskContentRow.swift`: genuinely well-designed, not just adequate — the `compact` flag handles tile-vs-popup sizing without a fixed frame, exactly the "parent sizes it" shape the spec asked for. Diffed `intelBody` and the Gmail digest rows against their pre-change versions: the extracted markup is byte-for-byte identical (same fonts, colors, spacing) to what was inlined before, just deduplicated — zero visual drift, confirmed by reading, not assumed.
+
+Verified: `xcodebuild build-for-testing` green, `testDashboardBoxMascotsExist` + `testWorkBinderPopupHasMemoDocBYOB` (Assignment A's test — confirms B didn't regress A) both pass on-simulator. CI passed at 40m4s. Did not get a physical-device visual pass in before merging — iPad was disconnected at merge time; simulator + code review gave enough confidence given this is pure UI-composition (no OAuth/Storage/device-only APIs involved, unlike Assignment A). Will confirm on-device next time it's connected.
+
+**Assignment C is next.** Read it below before starting — note its "iOS-lane-only, stop and flag if it needs a webhook/`ml/` change" constraint particularly closely.
 
 Did not start Assignments C–E.
 
