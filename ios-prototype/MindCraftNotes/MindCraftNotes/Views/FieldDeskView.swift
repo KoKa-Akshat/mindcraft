@@ -2625,28 +2625,21 @@ struct FieldDeskView: View {
     }
 
     private var intelBody: some View {
-        let lines: [String] = store.intelLines.isEmpty
+        let empty = store.intelLines.isEmpty
+        let lines: [String] = empty
             ? ["Connect a tool", "File into Binder", "Ask a note"]
             : Array(store.intelLines.prefix(6))
+        let ink = empty ? Color(fdHex: "8a8478") : Color(fdHex: "1c1a17")
         return VStack(alignment: .leading, spacing: 0) {
             ForEach(Array(lines.enumerated()), id: \.offset) { _, line in
-                HStack(alignment: .center, spacing: 10) {
-                    Circle()
-                        .fill(Color(fdHex: "c4a484").opacity(0.75))
-                        .frame(width: 6, height: 6)
-                    Text(line)
-                        .font(.system(size: 14, weight: .semibold, design: .rounded))
-                        .foregroundColor(store.intelLines.isEmpty ? Color(fdHex: "8a8478") : Color(fdHex: "1c1a17"))
-                        .lineLimit(2)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                }
-                .padding(.vertical, 7)
-                .overlay(alignment: .bottom) {
-                    Rectangle()
-                        .fill(Color(fdHex: "d9d2c5").opacity(0.85))
-                        .frame(height: 1)
-                        .padding(.leading, 16)
-                }
+                DeskContentRow(
+                    title: line,
+                    dot: Color(fdHex: "c4a484").opacity(0.75),
+                    ink: ink,
+                    muted: Color(fdHex: "8a8478"),
+                    divider: Color(fdHex: "d9d2c5").opacity(0.85),
+                    showDivider: true
+                )
             }
         }
         .padding(.leading, 2)
