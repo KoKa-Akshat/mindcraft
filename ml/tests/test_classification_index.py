@@ -2,17 +2,17 @@ from __future__ import annotations
 
 import numpy as np
 
+from mindcraft_graph.engine.ingredient_graph import IngredientGraph
 from mindcraft_graph.engine.ingredient_runtime import classify_problem, select_target_ingredients
 from mindcraft_graph.models.concept import Concept, Ontology
 from mindcraft_graph.models.ingredient import Ingredient, IngredientOntology
-from mindcraft_graph.engine.ingredient_graph import IngredientGraph
 from mindcraft_graph.representation.classification_index import (
     ClassificationEntry,
     ClassificationIndex,
+    build_classification_index,
     cache_matches,
     load_classification_index,
     save_classification_index,
-    build_classification_index,
 )
 
 
@@ -91,8 +91,8 @@ def test_required_ingredients_override_concept_wide_selection():
     graph = IngredientGraph(IngredientOntology(
         version="test",
         ingredients=[
-            Ingredient(id="keep", concept_id="c", name="Keep", description="", tags=[]),
-            Ingredient(id="other", concept_id="c", name="Other", description="", tags=[]),
+            Ingredient(id="keep", concept_ids=["c"], name="Keep", description="", tags=[]),
+            Ingredient(id="other", concept_ids=["c"], name="Other", description="", tags=[]),
         ],
     ))
     assert select_target_ingredients("c", [], graph, ["keep", "missing"]) == ["keep"]

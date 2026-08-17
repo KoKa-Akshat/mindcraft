@@ -30,8 +30,18 @@ def _graph(bridge: Bridge) -> IngredientGraph:
     return IngredientGraph(IngredientOntology(
         version="test",
         ingredients=[
-            Ingredient(id="source", concept_id="source_concept", name="Source", description=""),
-            Ingredient(id="target", concept_id="target_concept", name="Target", description=""),
+            Ingredient(
+                id="source",
+                concept_ids=["source_concept"],
+                name="Source",
+                description="",
+            ),
+            Ingredient(
+                id="target",
+                concept_ids=["target_concept"],
+                name="Target",
+                description="",
+            ),
         ],
         bridges=[bridge],
     ))
