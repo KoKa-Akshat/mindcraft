@@ -38,6 +38,7 @@ struct DeskGridDashboardView: View {
     @ObservedObject private var digest = GmailDigestClient.shared
     @ObservedObject private var digestStore = GmailDigestStore.shared
     @ObservedObject private var boxBus = DeskBoxBus.shared
+    @ObservedObject private var aiKeys = StudentAIKeyStore.shared
     @State private var showMoodleSheet = false
 
     @State private var rail: Rail
@@ -135,6 +136,14 @@ struct DeskGridDashboardView: View {
                 tileBoard(scale: scale, board: board)
                     .scaleEffect(spaceZoom * liveZoom)
                     .offset(x: spacePan.width + livePan.width, y: spacePan.height + livePan.height)
+                // Same dimmed-background + centered-card popup family as
+                // Intel/Binder/Homework Help - was a .sheet() with its own
+                // NavigationStack/toolbar, visually inconsistent with the
+                // rest of the boxes.
+                if showMoodleSheet {
+                    moodleOverlayLayer
+                        .transition(.opacity)
+                }
             }
             .frame(width: geo.size.width, height: geo.size.height)
             .contentShape(Rectangle())
@@ -145,13 +154,6 @@ struct DeskGridDashboardView: View {
         .ignoresSafeArea()
         .onChange(of: intelLines) { _, lines in boxBus.intelLines = lines }
         .onChange(of: binderTitles) { _, titles in boxBus.binderTitles = titles }
-        .sheet(isPresented: $showMoodleSheet) {
-            MoodleBoxSheet(
-                client: moodle,
-                onLinked: onMoodleLinked,
-                onDisconnected: onMoodleDisconnected
-            )
-        }
         // No Exit control here anymore - moved into the Manage page
         // (logo tap) so the dashboard itself stays clean. onClose is still
         // wired from FieldDeskView but nothing on this screen calls it now.
@@ -408,6 +410,15 @@ struct DeskGridDashboardView: View {
         if kind == .moodle {
             showMoodleSheet = true
         }
+    }
+
+    private var moodleOverlayLayer: some View {
+        MoodleBoxSheet(
+            client: moodle,
+            onLinked: onMoodleLinked,
+            onDisconnected: onMoodleDisconnected,
+            onClose: { showMoodleSheet = false }
+        )
     }
 
     /// The search field had no wired behavior at all - typing did nothing,
@@ -803,20 +814,42 @@ struct DeskGridDashboardView: View {
         }
     }
 
+    /// Same connect prompt Homework Help shows when no AI key is saved -
+    /// tapping any search field (dock or Flows rail) before a key exists
+    /// opens that exact popup instead of focusing the field, since search
+    /// itself doesn't need a key but this is the one place every session
+    /// passes through, and it's where the boxes' own AI-powered bits key
+    /// off of (Homework Help today; Intel's research summary later).
     private func searchField(placeholder: String, identifier: String, text: Binding<String>? = nil, onSubmit: @escaping () -> Void) -> some View {
-        HStack(spacing: 6) {
-            Image(systemName: "magnifyingglass")
-                .foregroundColor(.white.opacity(0.45))
-            TextField(placeholder, text: text ?? $searchQuery)
-                .textFieldStyle(.plain)
-                .font(.system(size: 13, weight: .medium, design: .rounded))
-                .foregroundColor(.white)
-                .submitLabel(.search)
-                .onSubmit(onSubmit)
+        ZStack {
+            HStack(spacing: 6) {
+                Image(systemName: "magnifyingglass")
+                    .foregroundColor(.white.opacity(0.45))
+                TextField(placeholder, text: text ?? $searchQuery)
+                    .textFieldStyle(.plain)
+                    .font(.system(size: 13, weight: .medium, design: .rounded))
+                    .foregroundColor(.white)
+                    .submitLabel(.search)
+                    .onSubmit(onSubmit)
+                    .disabled(!aiKeys.hasKey)
+            }
+            .padding(.horizontal, 12)
+            .padding(.vertical, 8)
+            .background(Capsule().fill(Color.white.opacity(0.12)))
+
+            if !aiKeys.hasKey {
+                // No nested .accessibilityIdentifier here - the outer one
+                // below already identifies this whole control, and a second
+                // one on this overlay would clobber it (same family as the
+                // dock/workDock clobbering CLAUDE.md documents). The popup
+                // this opens (`fieldDeskHomeworkHelpOverlay`) is what a test
+                // should assert on, not this transparent tap-catcher.
+                Color.clear
+                    .contentShape(Rectangle())
+                    .onTapGesture { onOpenHomeworkHelp() }
+                    .accessibilityLabel("Connect your AI to power search")
+            }
         }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 8)
-        .background(Capsule().fill(Color.white.opacity(0.12)))
         .accessibilityIdentifier(identifier)
     }
 
@@ -985,41 +1018,70 @@ private extension Color {
 
 /// Moodle box sheet: connect form when sleeping, real assignments/grades
 /// when connected. Never invents homework.
+/// Same cream-card / dimmed-background popup family as Intel/Binder/Homework
+/// Help (was a `.sheet()` with its own NavigationStack + toolbar Close
+/// button, visually inconsistent with the rest of the boxes).
 private struct MoodleBoxSheet: View {
     @ObservedObject var client: MoodleClient
     var onLinked: () -> Void
     var onDisconnected: () -> Void
-    @Environment(\.dismiss) private var dismiss
+    var onClose: () -> Void
 
     @State private var site = ""
     @State private var username = ""
     @State private var password = ""
 
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 14) {
-                    if client.isConnected {
-                        connectedBody
-                    } else {
-                        connectForm
+        ZStack {
+            Color.black.opacity(0.35)
+                .ignoresSafeArea()
+                .onTapGesture { onClose() }
+
+            VStack(alignment: .leading, spacing: 12) {
+                HStack(spacing: 10) {
+                    Text("Moodle")
+                        .font(.system(size: 16, weight: .bold, design: .rounded))
+                        .foregroundColor(Color(gridHex: "143a2e"))
+                    Spacer(minLength: 0)
+                    Button(action: onClose) {
+                        Text("Done")
+                            .font(.system(size: 12, weight: .bold, design: .rounded))
+                            .foregroundColor(Color(gridHex: "0c1207"))
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 8)
+                            .background(Capsule().fill(Color(gridHex: "c4f547")))
                     }
-                    if let err = client.lastError, !err.isEmpty {
-                        Text(err)
-                            .font(.system(size: 13, weight: .medium, design: .rounded))
-                            .foregroundColor(Color(gridHex: "b0473f"))
+                    .buttonStyle(.plain)
+                    .accessibilityIdentifier("moodleSheetClose")
+                }
+
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 14) {
+                        if client.isConnected {
+                            connectedBody
+                        } else {
+                            connectForm
+                        }
+                        if let err = client.lastError, !err.isEmpty {
+                            Text(err)
+                                .font(.system(size: 13, weight: .medium, design: .rounded))
+                                .foregroundColor(Color(gridHex: "b0473f"))
+                        }
                     }
                 }
-                .padding(20)
             }
-            .background(Color(gridHex: "fff8e9").ignoresSafeArea())
-            .navigationTitle("Moodle")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Close") { dismiss() }
-                        .accessibilityIdentifier("moodleSheetClose")
-                }
+            .padding(18)
+            .frame(width: 420, height: 480)
+            .background(
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .fill(Color(gridHex: "fff8e9"))
+                    .shadow(color: .black.opacity(0.35), radius: 24, y: 12)
+            )
+            .accessibilityElement(children: .contain)
+            .overlay(alignment: .topLeading) {
+                Text(verbatim: "moodle").font(.system(size: 1)).foregroundColor(.clear)
+                    .accessibilityIdentifier("moodleSheetOverlay")
+                    .allowsHitTesting(false)
             }
         }
     }
