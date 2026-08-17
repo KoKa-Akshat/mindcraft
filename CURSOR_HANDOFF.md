@@ -451,12 +451,12 @@ If `pwd` shows `Desktop/Business Ideas`, **stop and switch** to `/Users/akoirala
 
 Two people’s work lives in this same tree, on **disjoint** trees:
 
-| Lane | Owner | Tree |
-|------|-------|------|
-| **Engine** | Blake | `ml/**`, `webhook/**`, `data/**`, `worlds/**` |
-| **Product** | Akshat | `app/**`, `index.html`, `blog.html`, root marketing files |
+| Lane | Tree |
+|------|------|
+| **Engine** | `ml/**`, `webhook/**`, `data/**`, `worlds/**` |
+| **Product** | `app/**`, `ios-prototype/**`, `index.html`, `blog.html`, root marketing files |
 
-Coordinate before crossing a lane boundary. Shared seam files (also in `CLAUDE.md`): `app/src/lib/questionBank.ts`, `app/src/lib/mlApi.ts`, `CLAUDE.md`.
+Cross a lane boundary in its own labelled commit. Shared seam files (also in `CLAUDE.md`) are high blast radius: `app/src/lib/questionBank.ts`, `app/src/lib/mlApi.ts`, `CLAUDE.md`.
 
 ### Manjushree (third in-progress lane — co-founder WIP)
 

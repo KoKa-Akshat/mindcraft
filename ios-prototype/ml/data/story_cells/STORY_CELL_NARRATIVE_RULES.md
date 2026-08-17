@@ -146,8 +146,8 @@ the chrome is costing.
 - `examTag`: `ACT_*` when ACT-aligned; `GCSE` only when the cell is
   Eedi-linked; `null` when neither claim is honest.
 - Characters: reuse the pilot protagonists (William / market_world, Simon /
-  creature_sanctuary). New named characters require an Akshat sign-off — every
-  new name is working memory spent off-math.
+  creature_sanctuary). Introduce a new named character only with a stated
+  reason — every new name is working memory spent off-math.
 - Feedback tone: `world_feedback` celebrates the *move* ("split the price into
   rate and fee"), never the student's identity ("you're so smart") and never
   by shaming a character who erred. §1.2.3 tone-flag substrings apply to every

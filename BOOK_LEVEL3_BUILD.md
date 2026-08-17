@@ -4,8 +4,8 @@
 It never *reads* the learner model. This build connects the two. **No new UI, no new
 engine endpoints, no new data.** Every input below already exists and ships today.
 
-**Lane: Product (`app/**` — Akshat's tree). CROSS-LANE — coordinate before starting.**
-The engine side (`ml/**`) is Blake's and is **not touched by this build**. Shared seam
+**Lane: Product (`app/**`). CROSS-LANE — read the seam notes before starting.**
+The engine side (`ml/**`) is **not touched by this build**. Shared seam
 files `app/src/lib/questionBank.ts` and `app/src/lib/mlApi.ts` are read-only here:
 call them, don't change their signatures.
 
@@ -112,8 +112,8 @@ type StudyPlanItem = { id: string; label: string; state: 'done'|'active'|'upcomi
    `Dashboard.tsx` has a `'route'` view that currently collapses into `'home'`
    (~line 276) — that is the intended slot. Blake verifies the placement locally
    (`cd app && npm run dev`) before merge; no sign-off needed.
-   *Collision note:* `Dashboard.tsx` is a Product-lane file, so if Akshat has
-   in-flight work there, expect to merge rather than assuming a clean tree.
+   *Collision note:* `Dashboard.tsx` is a Product-lane file with other in-flight
+   work, so expect to merge rather than assuming a clean tree.
 4. `onSelect` → `navigate('/concept/:conceptId')` so the route is how you *enter* a
    chapter. That's the pathfinder becoming the table of contents.
 5. **Delete or clearly deprecate whichever of the two is left over.** Do not leave a

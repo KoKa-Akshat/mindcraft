@@ -10,13 +10,13 @@ AI tutoring platform. Students enter a story world, solve math problems as the p
 
 ---
 
-## Lane ownership — stay in your lane, save everyone tokens
+## Lanes — stay in your lane, save everyone tokens
 
-| Lane | Who | Tree | Deep doc |
-|------|-----|------|----------|
-| **Product** | Akshat / Claude / Cursor / Codex | `app/**`, root marketing files | `FABLE5_VISION.md` |
-| **Engine** | Blake | `ml/**`, `webhook/**`, `data/**`, `worlds/**` | `CLAUDE.md §Architecture` |
-| **Shared seams** | Coordinate before changing | `app/src/lib/questionBank.ts`, `app/src/lib/mlApi.ts`, `CLAUDE.md` | — |
+| Lane | Tree | Deep doc |
+|------|------|----------|
+| **Product** | `app/**`, `ios-prototype/**`, root marketing files | `FABLE5_VISION.md` |
+| **Engine** | `ml/**`, `webhook/**`, `data/**`, `worlds/**` | `CLAUDE.md §Architecture` |
+| **Shared seams** (high blast radius) | `app/src/lib/questionBank.ts`, `app/src/lib/mlApi.ts`, `CLAUDE.md` | — |
 
 **Before touching a shared seam file, check `ACTIVE_TASK.md` to see if another agent is already on it.**
 
