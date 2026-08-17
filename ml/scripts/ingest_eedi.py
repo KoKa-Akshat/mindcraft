@@ -760,16 +760,31 @@ def ingest(
         # Get the most common misconception for a wrong answer (not the correct one)
         misc_name = None
         misc_id_minted = None
+        # Keep this from-scratch join aligned with the shared incremental join
+        # in promote_questions.enrich_distractor_taxonomy.
+        distractor_taxonomy: list[dict] = []
         for i, col in enumerate(['MisconceptionAId', 'MisconceptionBId',
                                   'MisconceptionCId', 'MisconceptionDId']):
             if i == correct_idx:
                 continue
             mid_val = row.get(col)
+            choice_misc_name = None
+            choice_misc_id = None
             if pd.notna(mid_val):
-                misc_name = misc_lookup.get(int(mid_val), None)
-                if misc_name:
-                    misc_id_minted = mint_misconception_id(concept_id, misc_name)
-                    break
+                choice_misc_name = misc_lookup.get(int(mid_val), None)
+                if choice_misc_name:
+                    choice_misc_id = mint_misconception_id(concept_id, choice_misc_name)
+                    # Preserve the legacy question-level field as the first
+                    # resolved wrong-answer misconception.
+                    if misc_id_minted is None:
+                        misc_name = choice_misc_name
+                        misc_id_minted = choice_misc_id
+            distractor_taxonomy.append({
+                'choice_index': i,
+                'error_type': 'misconception' if choice_misc_id else 'unknown',
+                'student_thinking': choice_misc_name or 'Alternative error',
+                'misconception_id': choice_misc_id,
+            })
 
         cache_key = hashlib.sha256(f"{qid}:{q_plain}".encode()).hexdigest()[:16]
         explanation = ''
@@ -798,6 +813,7 @@ def ingest(
             'hints': hints,
             'examTag': 'GCSE',
             'format': fmt,
+            'distractor_taxonomy': distractor_taxonomy,
         }
         if misc_id_minted and misc_name:
             q_entry['misconception_id'] = misc_id_minted

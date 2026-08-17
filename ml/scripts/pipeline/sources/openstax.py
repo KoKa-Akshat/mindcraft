@@ -5,7 +5,31 @@ OpenStax Exercises adapter.
 Source: the OpenStax Exercises API —
     GET https://exercises.openstax.org/api/exercises?q=subject:math&per_page=100&page=N
 
-Exercises are CC-BY licensed items from OpenStax textbooks. Each exercise has:
+LICENSING — READ BEFORE CHANGING THE BOOK ALLOWLIST.
+
+OpenStax exercises are NOT uniformly CC BY. (This docstring previously claimed
+they were; that was false and it put 209 CC BY-NC-SA rows into the shipped
+commercial bundle. See agent_work/engine/EXTERNAL_DATA_SOURCING_BUILD.md.)
+
+**Licensing is EDITION-based, and the direction is counter-intuitive: OpenStax
+relicensed NEWER editions to NC-SA. The 1st editions remain CC BY.**
+
+    1st editions                    CC BY 4.0        usable commercially
+    `-2e` second editions           CC BY-NC-SA 4.0  NOT usable
+    Contemporary Mathematics        CC BY-NC-SA 4.0  NOT usable (no 1e exists)
+    Calculus Vol. 1-3               CC BY-NC-SA 4.0  NOT usable
+
+Verify any book before adding it — never assume from the series name:
+
+    https://openstax.org/apps/cms/api/v2/pages/
+        ?type=books.Book&slug=<book-slug>&fields=license_name
+
+The API exposes no licence field on the exercise itself, so the ONLY licence
+signal is the `book-slug:` tag. That is why parse_item() gates on
+CC_BY_BOOK_TOKENS and rejects anything else, including items dual-tagged with
+both a clean and an NC book.
+
+Each exercise has:
 
     {uid, tags: [...], stimulus_html,
      questions: [{stem_html, answers: [{content_html, correctness}]}]}
@@ -49,29 +73,51 @@ from base import (  # noqa: E402
 API_URL = "https://exercises.openstax.org/api/exercises"
 CACHE_PATH = ML_DATA / "openstax" / "exercises.json"
 
-# Book tokens (the part after `book:` / `book-slug:`) that mark a MATH item.
-# Spanish editions (c-lculo-volumen-N, introducci-n-estad-stica) are
-# dual-tagged onto the same exercise records as their English books, so the
-# English tokens already cover them.
-MATH_BOOK_TOKENS: frozenset[str] = frozenset({
-    # book-slug:* values
-    "algebra-1",
-    "algebra-and-trigonometry", "algebra-and-trigonometry-2e",
-    "calculus-volume-1", "calculus-volume-2", "calculus-volume-3",
-    "college-algebra", "college-algebra-2e",
-    "college-algebra-coreq", "college-algebra-corequisite-support-2e",
-    "contemporary-mathematics",
-    "elementary-algebra", "intermediate-algebra",
-    "introductory-business-statistics", "introductory-business-statistics-2e",
-    "introductory-statistics", "introductory-statistics-2e",
-    "prealgebra", "prealgebra-2e",
-    "precalculus", "precalculus-2e",
-    "statistics",
-    # book:stax-* values
-    "stax-algtrig", "stax-busstats", "stax-calc", "stax-calgebra",
-    "stax-cmath", "stax-coreqalgebra", "stax-elemalgebra", "stax-hsstats",
-    "stax-interalgebra", "stax-prealgebra", "stax-stats",
+# ---------------------------------------------------------------------------
+# Book allowlist. Every licence below was verified per-slug against the
+# OpenStax CMS API on 2026-08-17 (see module docstring for the query).
+# Counts are available exercises at that date.
+#
+# ONLY `book-slug:` values are listed. The parallel `book:stax-*` namespace is
+# deliberately NOT used for gating: both tags appear on the same record, so
+# book-slug alone is sufficient, and maintaining two namespaces is how an
+# NC book slips back in.
+# ---------------------------------------------------------------------------
+
+# CC BY 4.0 — commercially usable with attribution. These are all 1st editions.
+CC_BY_BOOK_TOKENS: frozenset[str] = frozenset({
+    "precalculus",                       # 579 exercises
+    "algebra-and-trigonometry",          # 353
+    "elementary-algebra",                # 278
+    "introductory-statistics",           # 220
+    "introductory-business-statistics",  # 182
+    "college-algebra",                   # 171
+    "intermediate-algebra",              # 118
+    "statistics",                        # 114
+    "prealgebra",                        #  97
+})                                       # total 2,112
+
+# CC BY-NC-SA 4.0 — NOT commercially usable. Listed explicitly rather than
+# omitted so the exclusion is self-documenting and a future edit cannot
+# "helpfully" restore one. Do not move a slug up without re-verifying.
+EXCLUDED_NC_BOOK_TOKENS: frozenset[str] = frozenset({
+    "contemporary-mathematics",              # NC-SA, 2,936 exercises. Was the
+                                             # source of 209 shipped rows.
+    "algebra-1",                             # NC-SA
+    "calculus-volume-1", "calculus-volume-2", "calculus-volume-3",   # NC-SA
+    "prealgebra-2e",                         # NC-SA (1e is clean, above)
+    "elementary-algebra-2e",                 # NC-SA
+    "intermediate-algebra-2e",               # NC-SA
+    "college-algebra-2e",                    # NC-SA
+    "precalculus-2e",                        # NC-SA
+    "algebra-and-trigonometry-2e",           # NC-SA
+    "introductory-statistics-2e",            # NC-SA
+    "introductory-business-statistics-2e",   # NC-SA
+    "college-algebra-corequisite-support-2e",  # NC-SA
 })
+
+# Retained for callers that only need "is this a math book at all".
+MATH_BOOK_TOKENS: frozenset[str] = CC_BY_BOOK_TOKENS | EXCLUDED_NC_BOOK_TOKENS
 
 # OpenStax module-slug substring -> (mindcraft_concept_id, default_level).
 # ORDER MATTERS: matched most-specific-first against every tag (dict order).
@@ -495,6 +541,12 @@ class OpenStaxAdapter(SourceAdapter):
             "_source_concept": ", ".join(
                 t for t in tags if t.startswith(("module-slug:", "book-slug:")))[:300],
             "_act_if_tested": True,           # examTag='ACT' if concept is ACT-tested
+            # Licence provenance, per row. Their absence on the 2026-07-07
+            # ingest is why 37 shipped rows have unrecoverable provenance and
+            # had to be quarantined wholesale. Do not drop these fields.
+            "sourceBookSlug": sorted(self.book_slugs(tags)),
+            "licence": "CC-BY-4.0",
+            "sourceUid": raw.get("uid"),
         }
 
     # ------------------------------------------------------------------
@@ -603,12 +655,27 @@ class OpenStaxAdapter(SourceAdapter):
     # ------------------------------------------------------------------
 
     @staticmethod
-    def _is_math_book(tags: list[str]) -> bool:
-        for tag in tags:
-            if tag.startswith(("book:", "book-slug:")):
-                if tag.split(":", 1)[1] in MATH_BOOK_TOKENS:
-                    return True
-        return False
+    def book_slugs(tags: list[str]) -> set[str]:
+        """Every `book-slug:` value on this item (items are often dual-tagged)."""
+        return {
+            tag.split(":", 1)[1]
+            for tag in tags
+            if tag.startswith("book-slug:")
+        }
+
+    @classmethod
+    def _is_math_book(cls, tags: list[str]) -> bool:
+        """Commercially-usable math item?
+
+        Gates on licence, not just subject. An item is accepted only if it
+        carries at least one CC BY book-slug and NO NonCommercial one — a
+        dual-tagged item inherits the NC terms, so co-tagging with a clean
+        book does not launder it.
+        """
+        slugs = cls.book_slugs(tags)
+        if slugs & EXCLUDED_NC_BOOK_TOKENS:
+            return False
+        return bool(slugs & CC_BY_BOOK_TOKENS)
 
     @staticmethod
     def _match_tags(tags: list[str]) -> tuple[str | None, int]:

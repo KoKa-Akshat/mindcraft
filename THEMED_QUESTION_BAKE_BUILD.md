@@ -7,11 +7,10 @@
 guidance overlay. Artifact key is `{conceptId}__{storyId}__{questionId}`
 (bakeVersion 2) so a reskin can be checked against its story world.
 
-**Lanes:** CROSS-SEAM — coordinate.
+**Lanes:** CROSS-SEAM — agree the artifact shape before either side starts.
 - **Bake pipeline** = Engine (`webhook/**`, reuses the `/story-module` composer).
-  Owner: Blake.
 - **Consumption wiring** = Product (`app/src/pages/Practice.tsx` + the artifact in
-  `app/src/data/`). Owner: Akshat.
+  `app/src/data/`).
 The **artifact** (`app/src/data/themedStems.generated.json`) is the seam — agree
 its shape first, then the two lanes proceed independently.
 **Architect:** Opus (this file — no code). **Implementer:** Cursor/Codex.

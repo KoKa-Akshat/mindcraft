@@ -12,7 +12,7 @@ import json
 import pathlib
 from typing import Any
 
-from mindcraft_graph.models.concept import Concept, OntologyEdge, Ontology
+from mindcraft_graph.models.concept import Concept, Ontology, OntologyEdge
 from mindcraft_graph.models.ingredient import (
     Bridge,
     CardRepresentation,
@@ -138,7 +138,7 @@ def _build_ingredient_ontology(data: dict[str, Any]) -> IngredientOntology:
             # Ingredient
             ing = Ingredient(
                 id=raw_ing["id"],
-                concept_id=concept_id,
+                concept_ids=[concept_id],
                 name=raw_ing.get("label", raw_ing["id"]),
                 description=raw_ing.get("description", ""),
                 tags=[concept_id, concept["level"]] + raw_ing.get("tags", []),

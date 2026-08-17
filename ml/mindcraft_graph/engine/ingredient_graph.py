@@ -30,7 +30,8 @@ class IngredientGraph:
 
         self.by_concept: dict[str, list[Ingredient]] = {}
         for ingredient in ontology.ingredients:
-            self.by_concept.setdefault(ingredient.concept_id, []).append(ingredient)
+            for concept_id in ingredient.concept_ids:
+                self.by_concept.setdefault(concept_id, []).append(ingredient)
 
         self.bridges_by_target: dict[str, list[Bridge]] = {}
         self.bridges_by_source: dict[str, list[Bridge]] = {}

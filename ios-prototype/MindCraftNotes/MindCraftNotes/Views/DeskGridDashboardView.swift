@@ -601,7 +601,11 @@ struct DeskGridDashboardView: View {
             ForEach(Array(digest.actionItems.prefix(limit))) { item in
                 DeskContentRow(
                     title: item.subject,
-                    subtitle: item.why.isEmpty ? nil : item.why,
+                    // Subtitle only when grown - a 2-line title + 2-line
+                    // subtitle row (~64pt) doesn't fit 3-up in the compact,
+                    // non-grown tile (~381x212 pre-scale); grown has 7-row
+                    // room, same shape as the popup. Greptile P1 on #45.
+                    subtitle: (grown && !item.why.isEmpty) ? item.why : nil,
                     dot: Color(gridHex: "c1121f"),
                     ink: ink,
                     muted: muted,

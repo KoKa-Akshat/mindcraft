@@ -273,3 +273,50 @@ there are ~10³ observations across ~50+ students, and even then as a
   change — and the first product consumer would be item selection (choose items
   near P≈0.7), not a mastery replacement.
 - Bridge confidence as an input — the field exists but is never populated.
+
+---
+
+## PRE-REGISTRATION — ingredient ability arms (written 2026-08-16, before running)
+
+This experiment is expected to be null. Its purpose at the current volume is to
+verify and measure the question → misconception → ingredient-state wiring, not
+to select or promote a predictor.
+
+### Predicted outcomes
+
+- **Constant:** expected to remain the hardest baseline to beat on held-out
+  students because the corpus is tiny and founder-dominated.
+- **Concept-mastery 2-parameter incumbent:** expected to improve in-sample over
+  the constant and tie or lose to it held out, consistent with Stage 1.
+- **Ingredient `min` (primary):** expected to show more item-level variation but
+  tie or lose to the constant and incumbent held out. If the signal is visible
+  at all, it should be strongest on resolved, human-only map rows.
+- **Ingredient `mean` (secondary comparison):** expected to be no better than
+  `min`; averaging should dilute a single broken required ingredient.
+
+Coverage below roughly 50% makes every model comparison uninformative, whatever
+the Brier score. All-row results must therefore be accompanied by resolved-only
+and provenance-split results.
+
+### What would count as evidence
+
+Nothing available at n≈148 can establish that the ingredient idea works. A
+directionally favorable held-out score here is a warning to check wiring and
+overfitting, not promotion evidence. Credible evidence would require a new,
+substantially larger and more diverse learner cohort, a pre-registered repeat,
+adequate question resolution, and a stable held-out improvement on resolved
+rows that is not confined to one student or one provenance group.
+
+### Actions by outcome
+
+- **Null or loss:** keep the validation-only wiring, report coverage and
+  provenance splits, add no parameters, and wait for learner volume and/or a
+  better misconception map.
+- **Win only in-sample or only on all rows:** treat it as overfit or fallback
+  mixing; do not tune or promote.
+- **Win only on human-only resolved rows:** record map quality as the leading
+  explanation and prioritize improving/reviewing LLM-provenance links; do not
+  promote the model.
+- **Broad held-out win:** audit leakage, determinism, folds, fallback, and joins;
+  retain the result as a hypothesis for the larger pre-registered repeat, with
+  no product promotion at this sample size.
