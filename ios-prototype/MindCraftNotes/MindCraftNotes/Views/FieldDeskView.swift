@@ -744,16 +744,7 @@ struct FieldDeskView: View {
                         onMoodleDisconnected: { _ = store.disconnect("moodle") },
                         intelLines: Array(store.intelLines.prefix(8)),
                         binderTitles: Array(binderStore.items.prefix(6).map(\.title)),
-                        onSyncCalendar: { Task { await refreshDeskCalendar() } },
-                        // Same live agent as Jesse's Kitchen's own "Ask The
-                        // Desk" bar (combinedAskAndDock/submitDeskAsk) - the
-                        // dashboard's search field falls through to this for
-                        // any real natural-language request instead of only
-                        // recognizing a handful of static keywords.
-                        onAskAI: { text in
-                            askText = text
-                            submitDeskAsk()
-                        }
+                        onSyncCalendar: { Task { await refreshDeskCalendar() } }
                     )
                     .id(dashboardStartRail)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)

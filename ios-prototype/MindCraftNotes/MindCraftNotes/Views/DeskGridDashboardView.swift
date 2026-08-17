@@ -32,12 +32,6 @@ struct DeskGridDashboardView: View {
     /// Titles from `BinderStore`, not `FieldDeskStore.FiledItem`.
     var binderTitles: [String] = []
     var onSyncCalendar: () -> Void = {}
-    /// Falls through here when the typed search doesn't match a static
-    /// destination keyword - hands off to the same real Desk Ask agent
-    /// (`DeskAskClient`/`submitDeskAsk` in `FieldDeskView`) Jesse's Kitchen's
-    /// own Ask bar uses, so a natural-language request like "open my recent
-    /// email and draft a response" actually runs instead of silently no-op'ing.
-    var onAskAI: (String) -> Void = { _ in }
 
     @ObservedObject private var gmail = GmailClient.shared
     @ObservedObject private var moodle = MoodleClient.shared
@@ -47,18 +41,39 @@ struct DeskGridDashboardView: View {
     @ObservedObject private var aiKeys = StudentAIKeyStore.shared
     @State private var showMoodleSheet = false
 
-    // MARK: - Agent takeover ("open my recent email and draft a response")
-    // Borrows Binder (shows the email) + Intel (shows the drafted reply)
-    // instead of spawning a new floating box - Akshat's explicit spec after
-    // the search-triggered Gmail box felt disconnected from the dashboard's
-    // own tile grid. Done (top-right) reverts both tiles to their normal
-    // content; nothing here persists past that.
+    // MARK: - Agent takeover (any real ask, not just the email/draft case)
+    // Any request longer than a quick nav keyword borrows Binder and/or
+    // Intel in place instead of spawning a new floating box - Akshat's
+    // explicit spec after the search-triggered Gmail box felt disconnected
+    // from the dashboard's own tile grid ("this mechanism of using screen +
+    // 1 box is great... make this happen across any and all request").
+    // Two content shapes share the same on/off switch:
+    //  - the email/draft case (agentEmail/agentDraftText/...) - richer,
+    //    uses the student's own AI key for a real drafted reply, not just
+    //    whatever the shared backend says.
+    //  - everything else (agentBinderLines/agentReplyText) - a plain
+    //    Desk Ask round trip (same agent Jesse's Kitchen's own Ask bar
+    //    calls), shown as short lines in Binder and the reply text in
+    //    Intel. A handful of asks (Apply Today, a full connect flow, a
+    //    specific concept's Field Book) still open their own existing
+    //    screen instead of a tile - the "screen + 1 box" model's one-box
+    //    allowance, routed through the same callbacks already passed in
+    //    from FieldDeskView rather than a new floating overlay.
+    // Done (top-right) reverts every tile to its normal content; nothing
+    // here persists past that.
     @State private var agentTakeoverActive = false
     @State private var agentEmail: GmailClient.Message?
     @State private var agentDraftText = ""
     @State private var agentDraftBusy = false
     @State private var agentDraftError: String?
     @State private var agentSending = false
+    @State private var agentBinderLines: [String]?
+    @State private var agentReplyText: String?
+    /// Separate from `agentDraftBusy` - that one also gates Binder's
+    /// spinner (it fetches the email first), but a general ask only ever
+    /// affects Intel, so reusing it would flash Binder's spinner then
+    /// silently drop it for every non-email request.
+    @State private var agentAskBusy = false
 
     @State private var rail: Rail
     @State private var memoDraft: String
@@ -93,8 +108,7 @@ struct DeskGridDashboardView: View {
         onMoodleDisconnected: @escaping () -> Void = {},
         intelLines: [String] = [],
         binderTitles: [String] = [],
-        onSyncCalendar: @escaping () -> Void = {},
-        onAskAI: @escaping (String) -> Void = { _ in }
+        onSyncCalendar: @escaping () -> Void = {}
     ) {
         self.initialRail = initialRail
         self.initialMemoText = initialMemoText
@@ -116,7 +130,6 @@ struct DeskGridDashboardView: View {
         self.intelLines = intelLines
         self.binderTitles = binderTitles
         self.onSyncCalendar = onSyncCalendar
-        self.onAskAI = onAskAI
         _rail = State(initialValue: initialRail)
         _memoDraft = State(initialValue: initialMemoText)
     }
@@ -500,11 +513,11 @@ struct DeskGridDashboardView: View {
     /// submitting did nothing (reported explicitly). Short static keywords
     /// still jump straight to the matching destination (fast, no network),
     /// same as the dock chips and tiles. Anything else - a real
-    /// natural-language ask like "open my recent email and draft a
-    /// response" - falls through to `onAskAI`, the same live agent
-    /// (`DeskAskClient`/`submitDeskAsk`) Jesse's Kitchen's own Ask bar uses,
-    /// instead of silently doing nothing just because it isn't one of the
-    /// ~6 recognized keywords.
+    /// natural-language ask - goes to `startAgentTakeover`, which borrows
+    /// Binder/Intel (or one of the existing full-screen flows for the
+    /// handful of asks that genuinely need their own screen) instead of
+    /// silently doing nothing just because it isn't one of the ~6
+    /// recognized keywords.
     private func submitSearch() {
         let raw = searchQuery.trimmingCharacters(in: .whitespacesAndNewlines)
         let query = raw.lowercased()
@@ -516,18 +529,9 @@ struct DeskGridDashboardView: View {
         // ("open my recent email and draft a response") - a single-keyword
         // match on a long sentence would silently drop everything after
         // the matched word (e.g. routing straight to onOpenGmail() and
-        // never acting on "and draft a response"). An email-plus-reply ask
-        // specifically borrows Binder/Intel in place (see startEmailDraft-
-        // Takeover) instead of opening a new floating box that feels
-        // disconnected from the dashboard; anything else goes to the
-        // general agent (DeskAskClient/submitDeskAsk, same one Jesse's
-        // Kitchen's own Ask bar uses).
+        // never acting on "and draft a response").
         guard raw.split(separator: " ").count <= 3 else {
-            if isEmailDraftRequest(query) {
-                startEmailDraftTakeover()
-            } else {
-                onAskAI(raw)
-            }
+            startAgentTakeover(raw)
             return
         }
         if query.contains("binder") || query.contains("act field book") {
@@ -544,7 +548,7 @@ struct DeskGridDashboardView: View {
             || query.contains("resume") || query.contains("archive") || query.contains("book") || query.contains("apply") {
             setRail(rail == .flows ? .none : .flows)
         } else {
-            onAskAI(raw)
+            startAgentTakeover(raw)
         }
     }
 
@@ -556,11 +560,7 @@ struct DeskGridDashboardView: View {
         defer { flowsSearchQuery = "" }
         guard !query.isEmpty else { return }
         guard raw.split(separator: " ").count <= 3 else {
-            if isEmailDraftRequest(query) {
-                startEmailDraftTakeover()
-            } else {
-                onAskAI(raw)
-            }
+            startAgentTakeover(raw)
             return
         }
         if query.contains("presentation") || query.contains("slide") {
@@ -576,7 +576,7 @@ struct DeskGridDashboardView: View {
         } else if query.contains("apply") || query.contains("job") {
             onOpenFlow("apply")
         } else {
-            onAskAI(raw)
+            startAgentTakeover(raw)
         }
     }
 
@@ -640,7 +640,10 @@ struct DeskGridDashboardView: View {
         agentDraftText = ""
         agentDraftError = nil
         agentDraftBusy = false
+        agentAskBusy = false
         agentSending = false
+        agentBinderLines = nil
+        agentReplyText = nil
     }
 
     private func sendAgentDraft() async {
@@ -653,6 +656,83 @@ struct DeskGridDashboardView: View {
         if ok {
             closeAgentTakeover()
         }
+    }
+
+    /// General entry point for any ask that isn't a quick nav keyword.
+    /// The email/draft case gets the richer, dedicated flow above (a real
+    /// key-drafted reply beats the shared backend's generic answer);
+    /// everything else goes through the same Desk Ask agent Jesse's
+    /// Kitchen's own Ask bar uses, rendered into Binder/Intel instead of a
+    /// floating box wherever the response maps onto one of them.
+    private func startAgentTakeover(_ text: String) {
+        if isEmailDraftRequest(text.lowercased()) {
+            startEmailDraftTakeover()
+            return
+        }
+        withAnimation(.easeInOut(duration: 0.2)) {
+            agentTakeoverActive = true
+        }
+        agentAskBusy = true
+        agentDraftError = nil
+        agentEmail = nil
+        agentBinderLines = nil
+        agentReplyText = nil
+        Task {
+            let context = buildDeskAskContext()
+            let result = await DeskAskClient.ask(message: text, context: context)
+                ?? DeskAskClient.localFallback(message: text, context: context)
+            applyGeneralAgentResult(result)
+            agentAskBusy = false
+        }
+    }
+
+    private func buildDeskAskContext() -> DeskAskClient.DeskContext {
+        var connected: [String] = []
+        if gmail.hasGmailScope { connected.append("gmail") }
+        if gmail.hasCalendarScope { connected.append("gcal") }
+        if moodle.isConnected { connected.append("moodle") }
+        return DeskAskClient.DeskContext(
+            intelLines: Array(intelLines.prefix(12)),
+            binderItems: binderTitles.prefix(20).map { DeskAskClient.BinderItem(title: $0, course: "") },
+            calendarEvents: gmail.week.prefix(10).map { DeskAskClient.CalendarEvent(day: $0.day, title: $0.title) },
+            connected: connected,
+            openSurface: "dashboard"
+        )
+    }
+
+    /// Maps a Desk Ask result onto Binder/Intel where the content is
+    /// short enough to belong in a tile. A few action types are inherently
+    /// full-screen (Apply Today's board, a connect flow, a specific
+    /// concept's Field Book) - those close the takeover and use the same
+    /// existing callback FieldDeskView already wired in for that surface,
+    /// rather than squeezing something that doesn't fit into a tile.
+    private func applyGeneralAgentResult(_ result: DeskAskClient.Result) {
+        for action in result.actions {
+            switch action.type {
+            case "open_gmail_top_reply":
+                startEmailDraftTakeover()
+                return
+            case "open_gmail":
+                agentBinderLines = gmail.messages.prefix(5).map { "\($0.from) \u{00B7} \($0.subject)" }
+            case "refresh_calendar":
+                onSyncCalendar()
+            case "open_apply":
+                closeAgentTakeover()
+                onOpenFlow("apply")
+                return
+            case "open_connect":
+                closeAgentTakeover()
+                onOpenIntel()
+                return
+            case "study_concept":
+                closeAgentTakeover()
+                onOpenBinder()
+                return
+            default:
+                break
+            }
+        }
+        agentReplyText = result.reply.isEmpty ? "Done." : result.reply
     }
 
     /// Binder is the only tile that still grows-in-place on first tap
@@ -728,7 +808,11 @@ struct DeskGridDashboardView: View {
     @ViewBuilder
     private func tileBody(_ kind: TileKind, phase: MascotPhase) -> some View {
         let ink: Color = (kind == .binder || kind == .moodle) ? tileInk : .white
-        if agentTakeoverActive && kind == .binder {
+        // Binder only takes over when there's actually binder-shaped
+        // content (an email or a list of lines) to show - a reply-only ask
+        // ("what's my next assignment") shouldn't blank out Binder's real
+        // titles just because Intel is showing an answer.
+        if agentTakeoverActive && kind == .binder && (agentEmail != nil || agentDraftBusy || agentBinderLines != nil) {
             AnyView(agentBinderTakeoverView(ink: ink))
         } else if agentTakeoverActive && kind == .intel {
             AnyView(agentIntelTakeoverView())
@@ -760,38 +844,75 @@ struct DeskGridDashboardView: View {
             .foregroundColor(ink.opacity(0.55))
     }
 
-    /// Binder's half of the takeover - the fetched email, in place of
-    /// Binder's normal Memo/Doc/BYOB titles.
+    /// Binder's half of the takeover - the fetched email (draft-reply ask)
+    /// or a short list of relevant lines (any other ask that touched
+    /// Binder-shaped content), in place of Binder's normal Memo/Doc/BYOB
+    /// titles.
+    @ViewBuilder
     private func agentBinderTakeoverView(ink: Color) -> some View {
-        VStack(alignment: .leading, spacing: 6) {
-            agentTakeoverLabel("Agent \u{00B7} Email", ink: ink)
-            if let email = agentEmail {
-                Text(email.subject.isEmpty ? "(no subject)" : email.subject)
-                    .font(.system(size: 13, weight: .bold, design: .rounded))
-                    .foregroundColor(ink)
-                    .lineLimit(2)
-                Text(email.from)
-                    .font(.system(size: 11, weight: .semibold, design: .rounded))
-                    .foregroundColor(ink.opacity(0.6))
-                Text(email.snippet)
-                    .font(.system(size: 12, weight: .medium, design: .rounded))
-                    .foregroundColor(ink.opacity(0.85))
-                    .lineLimit(6)
-                    .fixedSize(horizontal: false, vertical: true)
-            } else if agentDraftBusy {
+        if let email = agentEmail {
+            AnyView(
+                VStack(alignment: .leading, spacing: 6) {
+                    agentTakeoverLabel("Agent \u{00B7} Email", ink: ink)
+                    Text(email.subject.isEmpty ? "(no subject)" : email.subject)
+                        .font(.system(size: 13, weight: .bold, design: .rounded))
+                        .foregroundColor(ink)
+                        .lineLimit(2)
+                    Text(email.from)
+                        .font(.system(size: 11, weight: .semibold, design: .rounded))
+                        .foregroundColor(ink.opacity(0.6))
+                    Text(email.snippet)
+                        .font(.system(size: 12, weight: .medium, design: .rounded))
+                        .foregroundColor(ink.opacity(0.85))
+                        .lineLimit(6)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .accessibilityIdentifier("deskGridAgentEmail")
+            )
+        } else if let lines = agentBinderLines {
+            AnyView(
+                VStack(alignment: .leading, spacing: 6) {
+                    agentTakeoverLabel("Agent \u{00B7} Mail", ink: ink)
+                    ForEach(Array(lines.prefix(5).enumerated()), id: \.offset) { _, line in
+                        Text(line)
+                            .font(.system(size: 12, weight: .medium, design: .rounded))
+                            .foregroundColor(ink.opacity(0.85))
+                            .lineLimit(2)
+                    }
+                }
+                .accessibilityIdentifier("deskGridAgentEmail")
+            )
+        } else if agentDraftBusy {
+            AnyView(
                 ProgressView().tint(ink)
-            } else {
+                    .accessibilityIdentifier("deskGridAgentEmail")
+            )
+        } else {
+            AnyView(
                 Text(agentDraftError ?? "No recent email found.")
                     .font(.system(size: 12, weight: .medium, design: .rounded))
                     .foregroundColor(ink.opacity(0.7))
-            }
+                    .accessibilityIdentifier("deskGridAgentEmail")
+            )
         }
-        .accessibilityIdentifier("deskGridAgentEmail")
     }
 
-    /// Intel's half of the takeover - the AI-drafted reply, in place of
-    /// Intel's normal Research/Email/Calendar sections.
+    /// Intel's half of the takeover. Two modes share one tile: the
+    /// draft-reply flow (busy/error/draft+Send, keyed off `agentEmail`/
+    /// `agentDraftBusy`/`agentDraftError`/`agentDraftText`) and a plain
+    /// answer from the general agent (`agentAskBusy`/`agentReplyText`) for
+    /// every other ask - "what's due this week," "check my grades," etc.
+    @ViewBuilder
     private func agentIntelTakeoverView() -> some View {
+        let isDraftFlow = agentEmail != nil || agentDraftBusy || agentDraftError != nil || !agentDraftText.isEmpty
+        if isDraftFlow {
+            AnyView(agentIntelDraftBody())
+        } else {
+            AnyView(agentIntelReplyBody())
+        }
+    }
+
+    private func agentIntelDraftBody() -> some View {
         VStack(alignment: .leading, spacing: 8) {
             agentTakeoverLabel("Agent \u{00B7} Draft reply", ink: .white)
             if agentDraftBusy {
@@ -847,6 +968,29 @@ struct DeskGridDashboardView: View {
                 .background(Capsule().fill(Color(gridHex: "c4f547")))
                 .disabled(agentSending || agentDraftText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                 .accessibilityIdentifier("deskGridAgentDraftSend")
+            }
+        }
+        .accessibilityIdentifier("deskGridAgentDraft")
+    }
+
+    private func agentIntelReplyBody() -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            agentTakeoverLabel("Agent", ink: .white)
+            if agentAskBusy {
+                HStack(spacing: 8) {
+                    ProgressView().tint(.white)
+                    Text("Thinking\u{2026}")
+                        .font(.system(size: 12, weight: .medium, design: .rounded))
+                        .foregroundColor(.white.opacity(0.85))
+                }
+            } else {
+                ScrollView(showsIndicators: false) {
+                    Text(agentReplyText ?? "")
+                        .font(.system(size: 13, weight: .medium, design: .rounded))
+                        .foregroundColor(.white)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
             }
         }
         .accessibilityIdentifier("deskGridAgentDraft")
