@@ -47,6 +47,19 @@ struct DeskGridDashboardView: View {
     @ObservedObject private var aiKeys = StudentAIKeyStore.shared
     @State private var showMoodleSheet = false
 
+    // MARK: - Agent takeover ("open my recent email and draft a response")
+    // Borrows Binder (shows the email) + Intel (shows the drafted reply)
+    // instead of spawning a new floating box - Akshat's explicit spec after
+    // the search-triggered Gmail box felt disconnected from the dashboard's
+    // own tile grid. Done (top-right) reverts both tiles to their normal
+    // content; nothing here persists past that.
+    @State private var agentTakeoverActive = false
+    @State private var agentEmail: GmailClient.Message?
+    @State private var agentDraftText = ""
+    @State private var agentDraftBusy = false
+    @State private var agentDraftError: String?
+    @State private var agentSending = false
+
     @State private var rail: Rail
     @State private var memoDraft: String
     @State private var memoSaved = true
@@ -173,6 +186,27 @@ struct DeskGridDashboardView: View {
             Text(verbatim: "dashboard").font(.system(size: 1)).foregroundColor(.clear)
                 .accessibilityIdentifier("deskGridDashboard")
                 .allowsHitTesting(false)
+        }
+        // Pinned to the actual screen corner, not the pannable/zoomable
+        // board coordinate space - Binder/Intel can be panned off-center,
+        // but Done needs to stay reachable regardless.
+        .overlay(alignment: .topTrailing) {
+            if agentTakeoverActive {
+                Button(action: closeAgentTakeover) {
+                    Text("Done")
+                        .font(.system(size: 13, weight: .bold, design: .rounded))
+                        .foregroundColor(Color(gridHex: "143a2e"))
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 10)
+                        .background(Capsule().fill(Color(gridHex: "c4f547")))
+                        .shadow(color: .black.opacity(0.18), radius: 10, y: 4)
+                }
+                .buttonStyle(.plain)
+                .padding(.top, 16)
+                .padding(.trailing, 16)
+                .accessibilityIdentifier("deskGridAgentDone")
+                .transition(.opacity)
+            }
         }
     }
 
@@ -482,11 +516,18 @@ struct DeskGridDashboardView: View {
         // ("open my recent email and draft a response") - a single-keyword
         // match on a long sentence would silently drop everything after
         // the matched word (e.g. routing straight to onOpenGmail() and
-        // never acting on "and draft a response"), so hand those to the
-        // real agent instead, which already distinguishes "just open mail"
-        // from "open it with a ready reply" (see DeskAskClient.localFallback).
+        // never acting on "and draft a response"). An email-plus-reply ask
+        // specifically borrows Binder/Intel in place (see startEmailDraft-
+        // Takeover) instead of opening a new floating box that feels
+        // disconnected from the dashboard; anything else goes to the
+        // general agent (DeskAskClient/submitDeskAsk, same one Jesse's
+        // Kitchen's own Ask bar uses).
         guard raw.split(separator: " ").count <= 3 else {
-            onAskAI(raw)
+            if isEmailDraftRequest(query) {
+                startEmailDraftTakeover()
+            } else {
+                onAskAI(raw)
+            }
             return
         }
         if query.contains("binder") || query.contains("act field book") {
@@ -515,7 +556,11 @@ struct DeskGridDashboardView: View {
         defer { flowsSearchQuery = "" }
         guard !query.isEmpty else { return }
         guard raw.split(separator: " ").count <= 3 else {
-            onAskAI(raw)
+            if isEmailDraftRequest(query) {
+                startEmailDraftTakeover()
+            } else {
+                onAskAI(raw)
+            }
             return
         }
         if query.contains("presentation") || query.contains("slide") {
@@ -532,6 +577,81 @@ struct DeskGridDashboardView: View {
             onOpenFlow("apply")
         } else {
             onAskAI(raw)
+        }
+    }
+
+    private func isEmailDraftRequest(_ query: String) -> Bool {
+        let mailWords = ["email", "mail", "inbox"]
+        let draftWords = ["draft", "reply", "response", "respond", "write"]
+        return mailWords.contains(where: query.contains) && draftWords.contains(where: query.contains)
+    }
+
+    /// Fetches the most recent email and a real AI-drafted reply (the
+    /// student's own connected key - `GmailClient.suggestedReply` was only
+    /// ever a hardcoded template, never a real answer), then shows the
+    /// email in Binder and the draft in Intel in place of their normal
+    /// content until `closeAgentTakeover()`.
+    private func startEmailDraftTakeover() {
+        withAnimation(.easeInOut(duration: 0.2)) {
+            agentTakeoverActive = true
+        }
+        agentDraftBusy = true
+        agentDraftError = nil
+        agentDraftText = ""
+        agentEmail = nil
+        Task {
+            gmail.refreshScopeStatus()
+            guard gmail.hasGmailScope else {
+                agentDraftError = "Connect Gmail first - Search \u{201C}gmail\u{201D} or open it from Intel."
+                agentDraftBusy = false
+                return
+            }
+            if gmail.messages.isEmpty {
+                await gmail.fetchInbox()
+            }
+            guard let top = gmail.messages.first else {
+                agentDraftError = "No recent email found."
+                agentDraftBusy = false
+                return
+            }
+            agentEmail = top
+            guard aiKeys.hasKey else {
+                agentDraftError = "Connect your AI key to draft a real reply, not a template."
+                agentDraftBusy = false
+                return
+            }
+            switch await aiKeys.draftEmailReply(from: top.from, subject: top.subject, snippet: top.snippet) {
+            case .success(let text):
+                agentDraftText = text
+            case .failure(.rejected), .failure(.noKey):
+                agentDraftError = "That AI key was rejected. Open Settings to update it."
+            case .failure(.unavailable):
+                agentDraftError = "Couldn\u{2019}t draft a reply - try again in a bit."
+            }
+            agentDraftBusy = false
+        }
+    }
+
+    private func closeAgentTakeover() {
+        withAnimation(.easeInOut(duration: 0.2)) {
+            agentTakeoverActive = false
+        }
+        agentEmail = nil
+        agentDraftText = ""
+        agentDraftError = nil
+        agentDraftBusy = false
+        agentSending = false
+    }
+
+    private func sendAgentDraft() async {
+        guard let email = agentEmail else { return }
+        let body = agentDraftText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !body.isEmpty else { return }
+        agentSending = true
+        let ok = await gmail.sendReply(to: email, body: body)
+        agentSending = false
+        if ok {
+            closeAgentTakeover()
         }
     }
 
@@ -608,7 +728,11 @@ struct DeskGridDashboardView: View {
     @ViewBuilder
     private func tileBody(_ kind: TileKind, phase: MascotPhase) -> some View {
         let ink: Color = (kind == .binder || kind == .moodle) ? tileInk : .white
-        if kind == .intel {
+        if agentTakeoverActive && kind == .binder {
+            AnyView(agentBinderTakeoverView(ink: ink))
+        } else if agentTakeoverActive && kind == .intel {
+            AnyView(agentIntelTakeoverView())
+        } else if kind == .intel {
             // Merged box: three labeled sub-sections, not one flat list -
             // each of Email/Calendar/Research keeps its own visible space.
             ScrollView(showsIndicators: false) {
@@ -627,6 +751,105 @@ struct DeskGridDashboardView: View {
                 .lineLimit(2)
                 .multilineTextAlignment(.leading)
         }
+    }
+
+    private func agentTakeoverLabel(_ text: String, ink: Color) -> some View {
+        Text(text.uppercased())
+            .font(.system(size: 10, weight: .heavy, design: .rounded))
+            .tracking(0.4)
+            .foregroundColor(ink.opacity(0.55))
+    }
+
+    /// Binder's half of the takeover - the fetched email, in place of
+    /// Binder's normal Memo/Doc/BYOB titles.
+    private func agentBinderTakeoverView(ink: Color) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            agentTakeoverLabel("Agent \u{00B7} Email", ink: ink)
+            if let email = agentEmail {
+                Text(email.subject.isEmpty ? "(no subject)" : email.subject)
+                    .font(.system(size: 13, weight: .bold, design: .rounded))
+                    .foregroundColor(ink)
+                    .lineLimit(2)
+                Text(email.from)
+                    .font(.system(size: 11, weight: .semibold, design: .rounded))
+                    .foregroundColor(ink.opacity(0.6))
+                Text(email.snippet)
+                    .font(.system(size: 12, weight: .medium, design: .rounded))
+                    .foregroundColor(ink.opacity(0.85))
+                    .lineLimit(6)
+                    .fixedSize(horizontal: false, vertical: true)
+            } else if agentDraftBusy {
+                ProgressView().tint(ink)
+            } else {
+                Text(agentDraftError ?? "No recent email found.")
+                    .font(.system(size: 12, weight: .medium, design: .rounded))
+                    .foregroundColor(ink.opacity(0.7))
+            }
+        }
+        .accessibilityIdentifier("deskGridAgentEmail")
+    }
+
+    /// Intel's half of the takeover - the AI-drafted reply, in place of
+    /// Intel's normal Research/Email/Calendar sections.
+    private func agentIntelTakeoverView() -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            agentTakeoverLabel("Agent \u{00B7} Draft reply", ink: .white)
+            if agentDraftBusy {
+                HStack(spacing: 8) {
+                    ProgressView().tint(.white)
+                    Text("Writing a reply\u{2026}")
+                        .font(.system(size: 12, weight: .medium, design: .rounded))
+                        .foregroundColor(.white.opacity(0.85))
+                }
+            } else if let error = agentDraftError {
+                Text(error)
+                    .font(.system(size: 12, weight: .medium, design: .rounded))
+                    .foregroundColor(.white.opacity(0.85))
+                    .fixedSize(horizontal: false, vertical: true)
+                if !aiKeys.hasKey {
+                    Button {
+                        closeAgentTakeover()
+                        onOpenHomeworkHelp()
+                    } label: {
+                        Text("Connect your AI")
+                            .font(.system(size: 12, weight: .bold, design: .rounded))
+                            .foregroundColor(Color(gridHex: "143a2e"))
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 6)
+                            .background(Capsule().fill(Color.white.opacity(0.9)))
+                    }
+                    .buttonStyle(.plain)
+                }
+            } else {
+                ScrollView(showsIndicators: false) {
+                    Text(agentDraftText)
+                        .font(.system(size: 13, weight: .medium, design: .rounded))
+                        .foregroundColor(.white)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                Button {
+                    Task { await sendAgentDraft() }
+                } label: {
+                    if agentSending {
+                        ProgressView().tint(Color(gridHex: "143a2e"))
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 8)
+                    } else {
+                        Text("Send")
+                            .font(.system(size: 12, weight: .bold, design: .rounded))
+                            .foregroundColor(Color(gridHex: "143a2e"))
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 8)
+                    }
+                }
+                .buttonStyle(.plain)
+                .background(Capsule().fill(Color(gridHex: "c4f547")))
+                .disabled(agentSending || agentDraftText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                .accessibilityIdentifier("deskGridAgentDraftSend")
+            }
+        }
+        .accessibilityIdentifier("deskGridAgentDraft")
     }
 
     /// Popup-matching rows (dot + title + optional subtitle/divider), not

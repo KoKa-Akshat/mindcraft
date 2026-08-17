@@ -84,27 +84,44 @@ final class StudentAIKeyStore: ObservableObject {
 
     /// Tiny request against the provider's own host. Never logs the key.
     func testConnection() async -> Result<Void, SolveError> {
-        await solve(problemText: "Reply with the single word: ok")
+        await complete(system: Self.tutorSystemPrompt, user: "Reply with the single word: ok")
             .map { _ in () }
     }
 
     /// Homework answer from the student's key, or an error. Does not fall
     /// back to MindCraft's engine — caller does that only when `hasKey` is false.
     func solveHomework(problemText: String) async -> Result<String, SolveError> {
-        await solve(problemText: problemText)
+        await complete(system: Self.tutorSystemPrompt, user: problemText)
     }
 
-    private func solve(problemText: String) async -> Result<String, SolveError> {
+    /// Real AI-drafted email reply from the student's own key - the Work
+    /// Dashboard's "open my recent email and draft a response" ask used to
+    /// fall back to a hardcoded template (`GmailClient.suggestedReply`)
+    /// that never read the actual email; this is what makes "draft a
+    /// response" mean something real once a key is connected.
+    func draftEmailReply(from sender: String, subject: String, snippet: String) async -> Result<String, SolveError> {
+        let user = """
+        From: \(sender)
+        Subject: \(subject)
+
+        \(snippet)
+
+        Write a reply.
+        """
+        return await complete(system: Self.emailDraftSystemPrompt, user: user)
+    }
+
+    private func complete(system: String, user: String) async -> Result<String, SolveError> {
         guard let creds = readCredentials() else { return .failure(.noKey) }
         switch creds.provider {
         case .groq:
-            return await groqChat(key: creds.key, problemText: problemText)
+            return await groqChat(key: creds.key, system: system, user: user)
         case .anthropic:
-            return await anthropicMessage(key: creds.key, problemText: problemText)
+            return await anthropicMessage(key: creds.key, system: system, user: user)
         }
     }
 
-    private func groqChat(key: String, problemText: String) async -> Result<String, SolveError> {
+    private func groqChat(key: String, system: String, user: String) async -> Result<String, SolveError> {
         guard let url = URL(string: "https://api.groq.com/openai/v1/chat/completions"),
               url.host == Provider.groq.host
         else { return .failure(.unavailable) }
@@ -118,8 +135,8 @@ final class StudentAIKeyStore: ObservableObject {
             "max_completion_tokens": 1024,
             "reasoning_effort": "low",
             "messages": [
-                ["role": "system", "content": Self.tutorSystemPrompt],
-                ["role": "user", "content": problemText],
+                ["role": "system", "content": system],
+                ["role": "user", "content": user],
             ],
         ])
         return await decodeProviderText(request: request) { json in
@@ -129,7 +146,7 @@ final class StudentAIKeyStore: ObservableObject {
         }
     }
 
-    private func anthropicMessage(key: String, problemText: String) async -> Result<String, SolveError> {
+    private func anthropicMessage(key: String, system: String, user: String) async -> Result<String, SolveError> {
         guard let url = URL(string: "https://api.anthropic.com/v1/messages"),
               url.host == Provider.anthropic.host
         else { return .failure(.unavailable) }
@@ -141,9 +158,9 @@ final class StudentAIKeyStore: ObservableObject {
         request.httpBody = try? JSONSerialization.data(withJSONObject: [
             "model": "claude-haiku-4-5-20251001",
             "max_tokens": 1024,
-            "system": Self.tutorSystemPrompt,
+            "system": system,
             "messages": [
-                ["role": "user", "content": problemText],
+                ["role": "user", "content": user],
             ],
         ])
         return await decodeProviderText(request: request) { json in
@@ -230,5 +247,14 @@ final class StudentAIKeyStore: ObservableObject {
     private static let tutorSystemPrompt = """
     You are a homework tutor for a high-school student. Solve the problem \
     they paste. Show the steps briefly, then the answer. Do not mention API keys.
+    """
+
+    private static let emailDraftSystemPrompt = """
+    You are drafting a short, polite reply to an email on behalf of a \
+    high-school student. Given the sender, subject, and preview of an email \
+    they received, write ONLY the reply body text - a natural greeting, a \
+    few sentences that actually respond to what the email says, then a \
+    sign-off. No subject line, no "Here is a draft" preamble, no mention of \
+    API keys or that you are an AI.
     """
 }
