@@ -52,6 +52,9 @@ AI tutoring platform. Students enter a story world, solve math problems as the p
 | `agent_work/README.md` | Picking up or writing a build spec — index of specs + status |
 | `FABLE5_VISION.md` | Touching Practice.tsx, Dashboard, PawHub, question cards |
 | `WORLD_VISION.md` | Touching stories, concept chapters, the Jarvis vision |
+| `agent_work/product/future_school_vision_2026-08-17/README.md` | Touching Book Mission, Proof Passport, Studios, the platform pivot |
+| `agent_work/product/flows_2026-08-17/FLOWS_VISION.md` | Touching `flowsRail`/"Build a Flow"/`FlowBuilderView` — gate cleared (PR #46 merged), wait for PR #47 to land first (§14.5) |
+| `ios-prototype/JESSE_CENTRAL_AI_PLAN.md` | Touching Jesse, `JesseCallSession`, any box/connector that calls a model |
 | `CLAUDE.md` | Need ML architecture, Firestore rules, deployment details |
 | `CURSOR_HANDOVER.md` | Pipeline/question bank work |
 | `PIPELINE_MCQ_SPEC.md` | MCQ generation + triple-verify + story wrapper |
