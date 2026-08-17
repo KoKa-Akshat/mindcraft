@@ -48,15 +48,30 @@ final class StudentAIKeyStore: ObservableObject {
     func save(provider: Provider, key: String) -> Bool {
         let trimmed = key.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty, let data = trimmed.data(using: .utf8) else { return false }
-        deleteItem()
-        let query: [String: Any] = [
+
+        let match: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: service,
+        ]
+        let updates: [String: Any] = [
             kSecAttrAccount as String: provider.rawValue,
-            kSecAttrAccessible as String: kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly,
+            kSecAttrAccessible as String: kSecAttrAccessibleWhenUnlockedThisDeviceOnly,
             kSecValueData as String: data,
         ]
-        let status = SecItemAdd(query as CFDictionary, nil)
+        let updateStatus = SecItemUpdate(match as CFDictionary, updates as CFDictionary)
+        let status: OSStatus
+        if updateStatus == errSecItemNotFound {
+            let add: [String: Any] = [
+                kSecClass as String: kSecClassGenericPassword,
+                kSecAttrService as String: service,
+                kSecAttrAccount as String: provider.rawValue,
+                kSecAttrAccessible as String: kSecAttrAccessibleWhenUnlockedThisDeviceOnly,
+                kSecValueData as String: data,
+            ]
+            status = SecItemAdd(add as CFDictionary, nil)
+        } else {
+            status = updateStatus
+        }
         refreshPresence()
         return status == errSecSuccess
     }
@@ -97,9 +112,10 @@ final class StudentAIKeyStore: ObservableObject {
         request.setValue("Bearer \(key)", forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = try? JSONSerialization.data(withJSONObject: [
-            "model": "llama-3.3-70b-versatile",
+            "model": "openai/gpt-oss-120b",
             "temperature": 0.2,
-            "max_tokens": 1024,
+            "max_completion_tokens": 1024,
+            "reasoning_effort": "low",
             "messages": [
                 ["role": "system", "content": Self.tutorSystemPrompt],
                 ["role": "user", "content": problemText],
@@ -122,7 +138,7 @@ final class StudentAIKeyStore: ObservableObject {
         request.setValue("2023-06-01", forHTTPHeaderField: "anthropic-version")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = try? JSONSerialization.data(withJSONObject: [
-            "model": "claude-3-haiku-20240307",
+            "model": "claude-haiku-4-5-20251001",
             "max_tokens": 1024,
             "system": Self.tutorSystemPrompt,
             "messages": [
