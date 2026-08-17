@@ -18,6 +18,7 @@ struct DeskGridDashboardView: View {
     var onOpenCalendar: () -> Void = {}
     var onOpenGmail: () -> Void = {}
     var onOpenIntel: () -> Void = {}
+    var onOpenHomeworkHelp: () -> Void = {}
     var onOpenCreate: (CreateCanvasKind) -> Void = { _ in }
     var onOpenFlow: (String) -> Void = { _ in }
     var onSaveMemo: (String) -> Void = { _ in }
@@ -60,6 +61,7 @@ struct DeskGridDashboardView: View {
         onOpenCalendar: @escaping () -> Void = {},
         onOpenGmail: @escaping () -> Void = {},
         onOpenIntel: @escaping () -> Void = {},
+        onOpenHomeworkHelp: @escaping () -> Void = {},
         onOpenCreate: @escaping (CreateCanvasKind) -> Void = { _ in },
         onOpenFlow: @escaping (String) -> Void = { _ in },
         onSaveMemo: @escaping (String) -> Void = { _ in },
@@ -80,6 +82,7 @@ struct DeskGridDashboardView: View {
         self.onOpenCalendar = onOpenCalendar
         self.onOpenGmail = onOpenGmail
         self.onOpenIntel = onOpenIntel
+        self.onOpenHomeworkHelp = onOpenHomeworkHelp
         self.onOpenCreate = onOpenCreate
         self.onOpenFlow = onOpenFlow
         self.onSaveMemo = onSaveMemo
@@ -178,11 +181,8 @@ struct DeskGridDashboardView: View {
             pin(boxRect(.binder), scale: scale) {
                 photoTile(.binder)
             }
-            pin(boxRect(.emailSummaries), scale: scale) {
-                photoTile(.emailSummaries)
-            }
-            pin(boxRect(.gcal), scale: scale) {
-                photoTile(.gcal)
+            pin(boxRect(.homeworkHelp), scale: scale) {
+                photoTile(.homeworkHelp)
             }
             pin(WorkArtboard.dock, scale: scale) { activeDock }
             if expanded {
@@ -210,27 +210,26 @@ struct DeskGridDashboardView: View {
     // MARK: - Tiles
 
     private enum TileKind {
-        case intel, moodle, binder, emailSummaries, gcal, memo
+        case intel, moodle, binder, homeworkHelp, memo
 
         var title: String {
             switch self {
             case .intel: return "Intel"
             case .moodle: return "Moodle"
             case .binder: return "Binder"
-            case .emailSummaries: return "Email Summaries"
-            case .gcal: return "Gcal"
+            case .homeworkHelp: return "Homework Help"
             case .memo: return "Memo"
             }
         }
 
+        /// Binder and the merged Intel box always show real content (each
+        /// section has its own empty/connect state built in) - neither
+        /// gets a mascot moment anymore. Homework Help has no commissioned
+        /// art yet; SF Symbol fallback in `mascotArt` covers it.
         var mascotSlug: String? {
             switch self {
-            case .intel: return "intel"
             case .moodle: return "moodle"
-            case .binder: return "binder"
-            case .emailSummaries: return "email"
-            case .gcal: return "gcal"
-            case .memo: return nil
+            case .intel, .binder, .homeworkHelp, .memo: return nil
             }
         }
 
@@ -244,8 +243,7 @@ struct DeskGridDashboardView: View {
             case .intel: return [Color(gridHex: "247a4d"), Color(gridHex: "143a2e")]
             case .moodle: return [Color(gridHex: "d7e4d4"), Color(gridHex: "b7c9b4")]
             case .binder: return [Color(gridHex: "f3efe4"), Color(gridHex: "e4dcc8")]
-            case .emailSummaries: return [Color(gridHex: "c8ddd0"), Color(gridHex: "8fb89a")]
-            case .gcal: return [Color(gridHex: "1f3d2e"), Color(gridHex: "0c1512")]
+            case .homeworkHelp: return [Color(gridHex: "c4f547"), Color(gridHex: "7a9e2e")]
             case .memo: return [Color(gridHex: "fff8e9"), Color(gridHex: "efe6cf")]
             }
         }
@@ -255,8 +253,7 @@ struct DeskGridDashboardView: View {
             case .intel: return "sparkles"
             case .moodle: return "graduationcap.fill"
             case .binder: return "person.crop.circle.fill"
-            case .emailSummaries: return "headphones"
-            case .gcal: return "calendar"
+            case .homeworkHelp: return "lightbulb.fill"
             case .memo: return "note.text"
             }
         }
@@ -271,22 +268,16 @@ struct DeskGridDashboardView: View {
                         : "\(assignmentCount) assignment\(assignmentCount == 1 ? "" : "s") from Moodle."
                 }
                 return "Tap the sleeping mascot to connect."
-            case .emailSummaries:
-                if phase == .sleeping { return "Tap the sleeping mascot to connect Gmail." }
-                if phase == .working { return "Connecting Gmail…" }
-                return "Listen through what actually needs you."
-            case .gcal:
-                if phase == .sleeping { return "Tap the sleeping mascot to connect Calendar." }
-                if phase == .working { return "Connecting Calendar…" }
-                return "This week, already on the page."
             case .intel:
                 return phase == .sleeping
-                    ? "Empty until Gmail, Calendar, or Moodle fetch something."
-                    : "Jesse pulled three things from this week."
+                    ? "Connect Gmail, Calendar, or Moodle to fill this in."
+                    : "Email, calendar, and what Jesse's pulled this week."
             case .binder:
                 return phase == .sleeping
                     ? "Empty until Jesse files something here."
                     : "Memo, docs, and your own books."
+            case .homeworkHelp:
+                return "Paste a problem, upload a page, or write it out."
             case .memo:
                 return "Pin a note on the right rail."
             }
@@ -318,17 +309,21 @@ struct DeskGridDashboardView: View {
                         .fill(LinearGradient(colors: kind.wash, startPoint: .topLeading, endPoint: .bottomTrailing))
                     // Grown + real data: rows replace the mascot. Sleeping /
                     // working / not-yet-grown keep the mascot (Assignment B).
+                    // Binder is a filing system, not a connector - it never
+                    // gets a mascot/icon moment once it has real items,
+                    // always just its own neat rows (`tileBody`) below.
                     if kind.mascotSlug != nil, !tileIsGrown(kind) {
                         mascotArt(kind, phase: phase)
                         .scaleEffect(tileShowsContent(kind) ? 0.55 : 1)
                         .offset(
                             x: tileShowsContent(kind) ? 48 : 0,
-                            y: kind == .binder && binderPulled ? 18 : (tileShowsContent(kind) ? -28 : -8)
+                            y: tileShowsContent(kind) ? -28 : -8
                         )
-                    } else if kind.mascotSlug == nil {
+                    } else if kind.mascotSlug == nil, kind != .intel, !(kind == .binder && tileShowsContent(kind)) {
                         Image(systemName: kind.symbol)
-                            .font(.system(size: 36, weight: .medium))
+                            .font(.system(size: kind == .binder ? 54 : 36, weight: .medium))
                             .foregroundColor(.white.opacity(awake ? 0.88 : 0.35))
+                            .offset(y: kind == .binder && binderPulled ? 18 : 0)
                     }
                     VStack(alignment: .leading, spacing: 6) {
                         if !tileIsGrown(kind) { Spacer(minLength: 0) }
@@ -352,20 +347,17 @@ struct DeskGridDashboardView: View {
 
     private func mascotPhase(_ kind: TileKind) -> MascotPhase {
         switch kind {
-        case .emailSummaries:
-            if gmail.isBusy { return .working }
-            return gmail.hasGmailScope ? .awake : .sleeping
-        case .gcal:
-            if gmail.isBusy { return .working }
-            return gmail.hasCalendarScope ? .awake : .sleeping
         case .moodle:
             if moodle.isBusy { return .working }
             return moodle.isConnected ? .awake : .sleeping
         case .intel:
-            return intelHasData ? .awake : .sleeping
+            // Merged box: awake once Intel's own research, Gmail, or
+            // Calendar has anything to show.
+            if gmail.isBusy { return .working }
+            return (intelHasData || gmail.hasGmailScope || gmail.hasCalendarScope) ? .awake : .sleeping
         case .binder:
             return binderHasData ? .awake : .sleeping
-        case .memo:
+        case .homeworkHelp, .memo:
             return .awake
         }
     }
@@ -404,25 +396,17 @@ struct DeskGridDashboardView: View {
     private func mascotTappable(_ kind: TileKind) -> Bool {
         switch kind {
         case .moodle: return !moodle.isConnected
-        case .emailSummaries: return !gmail.hasGmailScope
-        case .gcal: return !gmail.hasCalendarScope
         default: return false
         }
     }
 
     private func connectMascot(_ kind: TileKind) {
-        switch kind {
-        case .moodle:
+        // Only Moodle's mascot is tap-to-connect now (`mascotTappable`
+        // gates this) - Gmail/Calendar connect from inside Intel's popup,
+        // since one mascot tap can no longer mean "connect the one thing
+        // this box is for" once Intel covers three sources at once.
+        if kind == .moodle {
             showMoodleSheet = true
-        case .emailSummaries, .gcal:
-            Task {
-                await gmail.connectGoogleMailAndCalendar()
-                if gmail.hasGmailScope {
-                    onGmailLinked(gmail.hasCalendarScope)
-                }
-            }
-        default:
-            break
         }
     }
 
@@ -440,6 +424,8 @@ struct DeskGridDashboardView: View {
             onOpenCalendar()
         } else if "gmail".contains(query) || "email".contains(query) || "email summaries".contains(query) {
             onOpenGmail()
+        } else if "homework".contains(query) || "homework help".contains(query) {
+            handleTile(.homeworkHelp)
         } else if "memo".contains(query) {
             setRail(rail == .memo ? .none : .memo)
         } else if "flows".contains(query) || "presentation".contains(query) || "gdoc".contains(query)
@@ -469,39 +455,41 @@ struct DeskGridDashboardView: View {
         }
     }
 
+    /// Binder is the only tile that still grows-in-place on first tap
+    /// (`DeskBoxBus.requestSpace`, borrowing height from neighbors) - Intel/
+    /// Moodle/Homework Help each already have a fixed, generous slot (Intel
+    /// doubled in size absorbing Email/Gcal) and open their destination
+    /// directly on tap instead.
     private func handleTile(_ kind: TileKind) {
-        let box = boxID(kind)
-        if tileShowsContent(kind), boxBus.hungry != box {
-            boxBus.requestSpace(for: box)
-            return
+        if kind == .binder {
+            let box = boxID(kind)
+            if tileShowsContent(kind), boxBus.hungry != box {
+                boxBus.requestSpace(for: box)
+                return
+            }
         }
         switch kind {
         case .binder:
             withAnimation(.spring(response: 0.42, dampingFraction: 0.78)) { binderPulled = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.28) { onOpenBinder() }
-        case .gcal:
-            onOpenCalendar()
-        case .emailSummaries:
-            onOpenGmail()
-        case .memo:
-            setRail(rail == .memo ? .none : .memo)
         case .intel:
             onOpenIntel()
         case .moodle:
             showMoodleSheet = true
-        default:
-            break
+        case .homeworkHelp:
+            onOpenHomeworkHelp()
+        case .memo:
+            setRail(rail == .memo ? .none : .memo)
         }
     }
 
+    /// Only Binder participates in `DeskBoxBus`'s grow/shrink negotiation -
+    /// the rest map to `.jesse`, the bus's existing "doesn't grow" sentinel
+    /// (same treatment `.memo` already had).
     private func boxID(_ kind: TileKind) -> DeskBoxBus.Box {
         switch kind {
-        case .intel: return .intel
-        case .moodle: return .moodle
         case .binder: return .binder
-        case .emailSummaries: return .email
-        case .gcal: return .gcal
-        case .memo: return .jesse
+        case .intel, .moodle, .homeworkHelp, .memo: return .jesse
         }
     }
 
@@ -511,17 +499,15 @@ struct DeskGridDashboardView: View {
 
     private func tileShowsContent(_ kind: TileKind) -> Bool {
         switch kind {
-        case .emailSummaries:
-            return gmail.hasGmailScope && (shownDigest != nil || !gmail.messages.isEmpty)
-        case .gcal:
-            return gmail.hasCalendarScope && !gmail.week.isEmpty
         case .moodle:
             return moodle.isConnected && (!moodle.assignments.isEmpty || !moodle.grades.isEmpty)
         case .intel:
-            return !intelLines.isEmpty
+            let hasEmail = gmail.hasGmailScope && (shownDigest != nil || !gmail.messages.isEmpty)
+            let hasCalendar = gmail.hasCalendarScope && !gmail.week.isEmpty
+            return !intelLines.isEmpty || hasEmail || hasCalendar
         case .binder:
             return !binderTitles.isEmpty
-        case .memo:
+        case .homeworkHelp, .memo:
             return false
         }
     }
@@ -541,12 +527,19 @@ struct DeskGridDashboardView: View {
 
     @ViewBuilder
     private func tileBody(_ kind: TileKind, phase: MascotPhase) -> some View {
-        let ink: Color = (kind == .binder || kind == .moodle || kind == .emailSummaries) ? tileInk : .white
-        if tileShowsContent(kind) {
+        let ink: Color = (kind == .binder || kind == .moodle) ? tileInk : .white
+        if kind == .intel {
+            // Merged box: three labeled sub-sections, not one flat list -
+            // each of Email/Calendar/Research keeps its own visible space.
+            ScrollView(showsIndicators: false) {
+                intelSections(ink: .white)
+            }
+            .accessibilityIdentifier("deskGridEmailSummaries")
+        } else if tileShowsContent(kind) {
             VStack(alignment: .leading, spacing: 0) {
                 tileContentRows(kind, ink: ink)
             }
-            .accessibilityIdentifier(kind == .emailSummaries ? "deskGridEmailSummaries" : "deskGridTileBody_\(kind.title)")
+            .accessibilityIdentifier("deskGridTileBody_\(kind.title)")
         } else {
             Text(kind.blurb(phase: phase, assignmentCount: moodle.assignments.count))
                 .font(.system(size: 12, weight: .semibold, design: .rounded))
@@ -557,101 +550,127 @@ struct DeskGridDashboardView: View {
     }
 
     /// Popup-matching rows (dot + title + optional subtitle/divider), not
-    /// a scaled mascot sitting behind stacked `Text`. Grown tiles show more.
+    /// a scaled mascot sitting behind stacked `Text`.
     @ViewBuilder
     private func tileContentRows(_ kind: TileKind, ink: Color) -> some View {
-        let grown = tileIsGrown(kind)
-        let limit = grown ? 7 : 3
-        let muted = kind == .emailSummaries || kind == .binder || kind == .moodle
-            ? Color(gridHex: "8a8478")
-            : Color.white.opacity(0.72)
-        let dot = kind == .emailSummaries
-            ? Color(gridHex: "c1121f")
-            : (kind == .binder || kind == .moodle ? Color(gridHex: "c4a484").opacity(0.85) : Color.white.opacity(0.75))
-        let divider = kind == .emailSummaries || kind == .binder || kind == .moodle
-            ? Color(gridHex: "d9d2c5").opacity(0.85)
-            : Color.white.opacity(0.28)
-        if kind == .emailSummaries {
-            emailTileRows(grown: grown, limit: limit, ink: ink, muted: muted)
-        } else {
-            ForEach(Array(tileLines(kind).prefix(limit).enumerated()), id: \.offset) { _, line in
-                DeskContentRow(
-                    title: line,
-                    dot: dot,
-                    ink: ink,
-                    muted: muted,
-                    divider: divider,
-                    showDivider: true,
-                    compact: true
-                )
+        let limit = 3
+        let muted = kind == .binder || kind == .moodle ? Color(gridHex: "8a8478") : Color.white.opacity(0.72)
+        let dot = kind == .binder || kind == .moodle ? Color(gridHex: "c4a484").opacity(0.85) : Color.white.opacity(0.75)
+        let divider = kind == .binder || kind == .moodle ? Color(gridHex: "d9d2c5").opacity(0.85) : Color.white.opacity(0.28)
+        ForEach(Array(tileLines(kind).prefix(limit).enumerated()), id: \.offset) { _, line in
+            DeskContentRow(
+                title: line,
+                dot: dot,
+                ink: ink,
+                muted: muted,
+                divider: divider,
+                showDivider: true,
+                compact: true
+            )
+        }
+    }
+
+    /// Intel's three merged sections - own research, Email digest, Calendar
+    /// week - each with a small caption header and its own real rows, same
+    /// `DeskContentRow` primitive the popups use. A section only renders
+    /// when it actually has something (or a connect prompt) to show.
+    @ViewBuilder
+    private func intelSections(ink: Color) -> some View {
+        let muted = Color.white.opacity(0.72)
+        let divider = Color.white.opacity(0.28)
+        VStack(alignment: .leading, spacing: 12) {
+            if !intelLines.isEmpty {
+                intelSectionHeader("Research")
+                ForEach(Array(intelLines.prefix(4).enumerated()), id: \.offset) { _, line in
+                    DeskContentRow(
+                        title: line, dot: Color.white.opacity(0.75), ink: ink, muted: muted,
+                        divider: divider, showDivider: true, compact: true
+                    )
+                }
+            }
+
+            intelSectionHeader("Email")
+            if !gmail.hasGmailScope {
+                intelConnectRow(label: "Connect Gmail")
+            } else if let digest = shownDigest {
+                if !digest.headline.isEmpty {
+                    Text(digest.headline)
+                        .font(.system(size: 12, weight: .semibold, design: .rounded))
+                        .foregroundColor(ink)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                ForEach(Array(digest.actionItems.prefix(3))) { item in
+                    DeskContentRow(
+                        title: item.subject, subtitle: item.why.isEmpty ? nil : item.why,
+                        dot: Color(gridHex: "c1121f"), ink: ink, muted: muted, showDivider: false, compact: true
+                    )
+                }
+            } else if !gmail.messages.isEmpty {
+                ForEach(Array(gmail.messages.prefix(3).enumerated()), id: \.offset) { _, msg in
+                    DeskContentRow(
+                        title: msg.subject, dot: Color(gridHex: "c1121f"), ink: ink, muted: muted,
+                        showDivider: false, compact: true
+                    )
+                }
+            } else {
+                Text("Nothing to summarize yet.")
+                    .font(.system(size: 12, weight: .medium, design: .rounded))
+                    .foregroundColor(muted)
+            }
+
+            intelSectionHeader("Calendar")
+            if !gmail.hasCalendarScope {
+                intelConnectRow(label: "Connect Calendar")
+            } else if !gmail.week.isEmpty {
+                ForEach(Array(gmail.week.prefix(4))) { ev in
+                    DeskContentRow(
+                        title: "\(ev.day) · \(ev.title)", dot: Color.white.opacity(0.75), ink: ink, muted: muted,
+                        showDivider: false, compact: true
+                    )
+                }
+            } else {
+                Text("Clear this week.")
+                    .font(.system(size: 12, weight: .medium, design: .rounded))
+                    .foregroundColor(muted)
             }
         }
     }
 
-    @ViewBuilder
-    private func emailTileRows(grown: Bool, limit: Int, ink: Color, muted: Color) -> some View {
-        if let digest = shownDigest {
-            if grown, !digest.headline.isEmpty {
-                Text(digest.headline)
-                    .font(.system(size: 13, weight: .semibold, design: .rounded))
-                    .foregroundColor(ink)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .padding(.bottom, 4)
+    private func intelSectionHeader(_ title: String) -> some View {
+        Text(title.uppercased())
+            .font(.system(size: 10, weight: .heavy, design: .rounded))
+            .tracking(0.4)
+            .foregroundColor(.white.opacity(0.55))
+    }
+
+    private func intelConnectRow(label: String) -> some View {
+        Button {
+            Task {
+                await gmail.connectGoogleMailAndCalendar()
+                if gmail.hasGmailScope { onGmailLinked(gmail.hasCalendarScope) }
             }
-            ForEach(Array(digest.actionItems.prefix(limit))) { item in
-                DeskContentRow(
-                    title: item.subject,
-                    subtitle: item.why.isEmpty ? nil : item.why,
-                    dot: Color(gridHex: "c1121f"),
-                    ink: ink,
-                    muted: muted,
-                    showDivider: false,
-                    compact: true
-                )
-            }
-            if grown, !digest.fyi.isEmpty {
-                Text("\(digest.fyi.count) more, routine")
-                    .font(.system(size: 11, weight: .medium, design: .rounded))
-                    .foregroundColor(muted)
-                    .padding(.top, 4)
-            }
-        } else {
-            ForEach(Array(gmail.messages.prefix(limit).enumerated()), id: \.offset) { _, msg in
-                DeskContentRow(
-                    title: msg.subject,
-                    dot: Color(gridHex: "c1121f"),
-                    ink: ink,
-                    muted: muted,
-                    showDivider: false,
-                    compact: true
-                )
-            }
+        } label: {
+            Text(label)
+                .font(.system(size: 12, weight: .bold, design: .rounded))
+                .foregroundColor(Color(gridHex: "143a2e"))
+                .padding(.horizontal, 10)
+                .padding(.vertical, 6)
+                .background(Capsule().fill(Color.white.opacity(0.85)))
         }
+        .buttonStyle(.plain)
     }
 
     private func tileLines(_ kind: TileKind) -> [String] {
         switch kind {
-        case .emailSummaries:
-            if let digest = shownDigest {
-                var lines = [digest.headline]
-                lines.append(contentsOf: digest.actionItems.prefix(4).map(\.subject))
-                if lines.count < 3 {
-                    lines.append(contentsOf: digest.fyi.prefix(2).map(\.subject))
-                }
-                return lines.filter { !$0.isEmpty }
-            }
-            return gmail.messages.prefix(5).map(\.subject).filter { !$0.isEmpty }
-        case .gcal:
-            return gmail.week.prefix(6).map { "\($0.day) · \($0.title)" }
+        case .intel:
+            return intelLines
         case .moodle:
             let work = moodle.assignments.prefix(5).map { "\($0.name) · \($0.dueLabel)" }
             if !work.isEmpty { return Array(work) }
             return moodle.grades.prefix(5).map { "\($0.itemName) · \($0.gradeLabel)" }
-        case .intel:
-            return intelLines
         case .binder:
             return binderTitles
-        case .memo:
+        case .homeworkHelp, .memo:
             return []
         }
     }
@@ -662,96 +681,34 @@ struct DeskGridDashboardView: View {
         case .intel: base = expanded ? WorkArtboard.p5Intel : WorkArtboard.p4Intel
         case .moodle: base = expanded ? WorkArtboard.p5Moodle : WorkArtboard.p4Moodle
         case .binder: base = expanded ? WorkArtboard.p5Binder : WorkArtboard.p4Binder
-        case .emailSummaries: base = expanded ? WorkArtboard.p5Email : WorkArtboard.p4Email
-        case .gcal: base = expanded ? WorkArtboard.p5Gcal : WorkArtboard.p4Gcal
+        case .homeworkHelp: base = expanded ? WorkArtboard.p5HomeworkHelp : WorkArtboard.p4HomeworkHelp
         case .memo: return WorkArtboard.memoRail
         }
         guard let hungry = boxBus.hungry else { return base }
         return negotiated(kind, hungry: hungry, page5: expanded, base: base)
     }
 
-    /// A cramped box asks its neighbors to shrink so it can show content.
-    /// Restores when another box asks, or when hungry is cleared.
+    /// Binder is the only box that still borrows space from neighbors
+    /// (`DeskBoxBus.requestSpace`) - Intel/Moodle/Homework Help each have
+    /// their own fixed, generous slot now (Intel doubled in size absorbing
+    /// Email/Gcal) and don't compete for room with a neighbor anymore.
     private func negotiated(_ kind: TileKind, hungry: DeskBoxBus.Box, page5: Bool, base: CGRect) -> CGRect {
+        guard hungry == .binder else { return base }
         if page5 {
-            switch hungry {
-            case .email:
-                switch kind {
-                case .emailSummaries: return CGRect(x: 820, y: 54, width: 400, height: 340)
-                case .gcal: return CGRect(x: 820, y: 404, width: 400, height: 216)
-                case .binder: return CGRect(x: 425, y: 54, width: 380, height: 524)
-                default: return base
-                }
-            case .gcal:
-                switch kind {
-                case .gcal: return CGRect(x: 820, y: 180, width: 400, height: 440)
-                case .emailSummaries: return CGRect(x: 820, y: 54, width: 400, height: 116)
-                case .binder: return CGRect(x: 425, y: 54, width: 380, height: 524)
-                default: return base
-                }
-            case .intel:
-                switch kind {
-                case .intel: return CGRect(x: 76, y: 54, width: 340, height: 280)
-                case .moodle: return CGRect(x: 106, y: 344, width: 267, height: 167)
-                default: return base
-                }
-            case .moodle:
-                switch kind {
-                case .moodle: return CGRect(x: 76, y: 250, width: 340, height: 280)
-                case .intel: return CGRect(x: 76, y: 54, width: 319, height: 180)
-                default: return base
-                }
-            case .binder:
-                switch kind {
-                case .binder: return CGRect(x: 380, y: 54, width: 500, height: 560)
-                case .intel: return CGRect(x: 76, y: 103, width: 280, height: 192)
-                case .moodle: return CGRect(x: 76, y: 323, width: 280, height: 188)
-                case .emailSummaries: return CGRect(x: 900, y: 93, width: 300, height: 180)
-                case .gcal: return CGRect(x: 900, y: 295, width: 300, height: 325)
-                default: return base
-                }
-            case .jesse:
-                return base
+            switch kind {
+            case .binder: return CGRect(x: 380, y: 54, width: 500, height: 560)
+            case .intel: return CGRect(x: 76, y: 103, width: 280, height: 192)
+            case .moodle: return CGRect(x: 76, y: 323, width: 280, height: 188)
+            case .homeworkHelp: return CGRect(x: 76, y: 54, width: 280, height: 192)
+            default: return base
             }
         }
-        switch hungry {
-        case .email:
-            switch kind {
-            case .emailSummaries: return CGRect(x: 900, y: 90, width: 510, height: 400)
-            case .gcal: return CGRect(x: 900, y: 500, width: 510, height: 170)
-            case .binder: return CGRect(x: 492, y: 61, width: 390, height: 568)
-            default: return base
-            }
-        case .gcal:
-            switch kind {
-            case .gcal: return CGRect(x: 900, y: 200, width: 510, height: 470)
-            case .emailSummaries: return CGRect(x: 900, y: 90, width: 510, height: 100)
-            case .binder: return CGRect(x: 492, y: 61, width: 390, height: 568)
-            default: return base
-            }
-        case .intel:
-            switch kind {
-            case .intel: return CGRect(x: 81, y: 70, width: 400, height: 320)
-            case .moodle: return CGRect(x: 115, y: 400, width: 315, height: 200)
-            default: return base
-            }
-        case .moodle:
-            switch kind {
-            case .moodle: return CGRect(x: 81, y: 280, width: 400, height: 340)
-            case .intel: return CGRect(x: 81, y: 70, width: 376, height: 190)
-            default: return base
-            }
-        case .binder:
-            switch kind {
-            case .binder: return CGRect(x: 430, y: 50, width: 580, height: 600)
-            case .intel: return CGRect(x: 81, y: 118, width: 330, height: 227)
-            case .moodle: return CGRect(x: 81, y: 378, width: 330, height: 222)
-            case .emailSummaries: return CGRect(x: 1033, y: 107, width: 370, height: 212)
-            case .gcal: return CGRect(x: 1033, y: 343, width: 370, height: 286)
-            default: return base
-            }
-        case .jesse:
-            return base
+        switch kind {
+        case .binder: return CGRect(x: 430, y: 50, width: 580, height: 600)
+        case .intel: return CGRect(x: 1060, y: 107, width: 330, height: 522)
+        case .moodle: return CGRect(x: 81, y: 378, width: 330, height: 222)
+        case .homeworkHelp: return CGRect(x: 81, y: 118, width: 330, height: 227)
+        default: return base
         }
     }
 
@@ -759,10 +716,6 @@ struct DeskGridDashboardView: View {
         boxBus.intelLines = intelLines
         boxBus.binderTitles = binderTitles
         await gmail.restoreSessionIfNeeded()
-        // Cached digest / seeded inbox can paint before the network round-trip.
-        if tileShowsContent(.emailSummaries) {
-            boxBus.requestSpace(for: .email)
-        }
         if gmail.hasGmailScope {
             await gmail.fetchInbox()
             // Seeded UI tests have messages but no Google user — skip the
@@ -772,9 +725,6 @@ struct DeskGridDashboardView: View {
                 if let d = digest.digest {
                     digestStore.save(d, messageCount: gmail.messages.count)
                 }
-            }
-            if tileShowsContent(.emailSummaries) {
-                boxBus.requestSpace(for: .email)
             }
         }
         if gmail.hasCalendarScope {
@@ -978,19 +928,23 @@ struct DeskGridDashboardView: View {
     }
 }
 
-/// 1440×810 boxes measured from Presentation_Screen.pdf.
+/// 1440×810 boxes measured from Presentation_Screen.pdf, with two later
+/// departures from the original PDF layout (2026-08-17): Email/Gcal are no
+/// longer separate boxes - their content lives inside Intel's box, which
+/// took over their combined footprint on the right - and Homework Help is
+/// new, in Intel's original top-left slot.
 private enum WorkArtboard {
-    static let p4Intel = CGRect(x: 81, y: 118, width: 376, height: 227)
+    static let p4HomeworkHelp = CGRect(x: 81, y: 118, width: 376, height: 227)
     static let p4Moodle = CGRect(x: 115, y: 378, width: 315, height: 222)
     static let p4Binder = CGRect(x: 492, y: 61, width: 505, height: 568)
-    static let p4Email = CGRect(x: 1033, y: 107, width: 381, height: 212)
-    static let p4Gcal = CGRect(x: 1032, y: 343, width: 392, height: 286)
+    /// Was Email (1033,107,381,212) + Gcal (1032,343,392,286) stacked.
+    static let p4Intel = CGRect(x: 1032, y: 107, width: 392, height: 522)
 
-    static let p5Intel = CGRect(x: 76, y: 103, width: 319, height: 192)
+    static let p5HomeworkHelp = CGRect(x: 76, y: 103, width: 319, height: 192)
     static let p5Moodle = CGRect(x: 106, y: 323, width: 267, height: 188)
     static let p5Binder = CGRect(x: 425, y: 54, width: 428, height: 524)
-    static let p5Email = CGRect(x: 884, y: 93, width: 322, height: 180)
-    static let p5Gcal = CGRect(x: 884, y: 295, width: 332, height: 325)
+    /// Was Email (884,93,322,180) + Gcal (884,295,332,325) stacked.
+    static let p5Intel = CGRect(x: 884, y: 93, width: 332, height: 527)
     static let memoRail = CGRect(x: 1231, y: 193, width: 199, height: 194)
     static let flowsRail = CGRect(x: 1231, y: 54, width: 199, height: 566)
     // Only the dock's own box moves toward the board's bottom edge (was

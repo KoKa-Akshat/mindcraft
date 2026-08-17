@@ -116,6 +116,14 @@ struct FieldDeskView: View {
     @State private var showBinderOverlay = false
     /// BYOB "Cook a Field Book" from the Binder popup.
     @State private var showByobStudio = false
+    /// Homework Help tapped from the Work dashboard — paste a problem,
+    /// uses the student's own AI key (`StudentAIKeyStore`) when saved.
+    @State private var showHomeworkHelpOverlay = false
+    @ObservedObject private var homeworkKeys = StudentAIKeyStore.shared
+    @State private var homeworkProblemDraft = ""
+    @State private var homeworkSolving = false
+    @State private var homeworkResultCards: [IngredientHintsClient.HintCard] = []
+    @State private var homeworkError: String?
     /// Real nav-intent target ("study quadratic equations" via Ask The Desk
     /// -> `study_concept` action) - threaded into `DashboardView` so it
     /// opens straight to that concept's chapter instead of just the roadmap.
@@ -414,6 +422,7 @@ struct FieldDeskView: View {
             || showDeskGridDashboard
             || showCreateCanvas
             || showBinderOverlay
+            || showHomeworkHelpOverlay
     }
 
     /// Jesse kitchen Ask/dock only — Work/Create own their own prompt bars.
@@ -628,6 +637,16 @@ struct FieldDeskView: View {
                     // binderOverlayLayer carries fieldDeskBinderOverlay on a marker.
                 }
 
+                if showHomeworkHelpOverlay {
+                    homeworkHelpOverlayLayer
+                        .transition(.opacity)
+                        .zIndex(89)
+                    // No wrapper .accessibilityIdentifier — this popup has
+                    // its own distinct field/button ids inside (same
+                    // clobbering trap as Binder's popup above); carries
+                    // fieldDeskHomeworkHelpOverlay on its own marker instead.
+                }
+
                 if showDeskGridDashboard {
                     DeskGridDashboardView(
                         initialRail: dashboardStartRail,
@@ -658,6 +677,11 @@ struct FieldDeskView: View {
                         onOpenIntel: {
                             withAnimation(.easeInOut(duration: 0.2)) {
                                 showIntelOverlay = true
+                            }
+                        },
+                        onOpenHomeworkHelp: {
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                showHomeworkHelpOverlay = true
                             }
                         },
                         onOpenCreate: { kind in
@@ -3146,6 +3170,171 @@ struct FieldDeskView: View {
         withAnimation(.easeInOut(duration: 0.2)) {
             showBinderOverlay = false
             showActFieldBook = true
+        }
+    }
+
+    /// Homework Help box's popup - paste a problem, get help from the
+    /// student's own AI key (`StudentAIKeyStore`, Assignment C) when one's
+    /// saved. No key yet -> a connect prompt straight into Settings, same
+    /// place `AccountManageView`'s "Homework help" section already lives.
+    /// Upload/write/full web-version parity is later, separately scoped work
+    /// (see `CURSOR_HANDOFF.md`) - this ships the paste-a-problem path for
+    /// real today, not a stub.
+    private var homeworkHelpOverlayLayer: some View {
+        ZStack {
+            Color.black.opacity(0.35)
+                .ignoresSafeArea()
+                .onTapGesture { closeHomeworkHelpOverlay() }
+
+            VStack(alignment: .leading, spacing: 12) {
+                HStack(spacing: 10) {
+                    Text("Homework Help")
+                        .font(.system(size: 16, weight: .bold, design: .rounded))
+                        .foregroundColor(Color(fdHex: "0c1207"))
+                    Spacer(minLength: 0)
+                    Button(action: closeHomeworkHelpOverlay) {
+                        Text("Done")
+                            .font(.system(size: 12, weight: .bold, design: .rounded))
+                            .foregroundColor(Color(fdHex: "0c1207"))
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 8)
+                            .background(Capsule().fill(Color(fdHex: "c4f547")))
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityIdentifier("fieldDeskHomeworkHelpDone")
+                }
+
+                if homeworkKeys.hasKey {
+                    homeworkHelpSolverBody
+                } else {
+                    homeworkHelpConnectPrompt
+                }
+            }
+            .padding(18)
+            .frame(width: 420, height: 480)
+            .background(
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .fill(Color(fdHex: "fff8e9"))
+                    .shadow(color: .black.opacity(0.35), radius: 24, y: 12)
+            )
+            .accessibilityElement(children: .contain)
+            .overlay(alignment: .topLeading) {
+                Text(verbatim: "homework").font(.system(size: 1)).foregroundColor(.clear)
+                    .accessibilityIdentifier("fieldDeskHomeworkHelpOverlay")
+                    .allowsHitTesting(false)
+            }
+        }
+    }
+
+    private var homeworkHelpConnectPrompt: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Image(systemName: "sparkles")
+                .font(.system(size: 28, weight: .medium))
+                .foregroundColor(Color(fdHex: "7a9e2e"))
+            Text("Connect your AI first")
+                .font(.system(size: 15, weight: .bold, design: .rounded))
+                .foregroundColor(Color(fdHex: "0c1207"))
+            Text("Paste a free Groq key (or Anthropic) in Settings and Homework Help solves on your own quota - MindCraft's engine is down on shared credits right now. The key stays on this device, never uploaded.")
+                .font(.system(size: 13, weight: .medium, design: .rounded))
+                .foregroundColor(Color(fdHex: "8a8478"))
+                .fixedSize(horizontal: false, vertical: true)
+            Button {
+                showHomeworkHelpOverlay = false
+                showManage = true
+            } label: {
+                Text("Open Settings")
+                    .font(.system(size: 13, weight: .bold, design: .rounded))
+                    .foregroundColor(Color(fdHex: "0c1207"))
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 10)
+                    .background(Capsule().fill(Color(fdHex: "c4f547")))
+            }
+            .buttonStyle(.plain)
+            .accessibilityIdentifier("fieldDeskHomeworkHelpConnect")
+            Spacer(minLength: 0)
+        }
+    }
+
+    private var homeworkHelpSolverBody: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Paste a problem, upload isn't wired up yet.")
+                .font(.system(size: 12, weight: .medium, design: .rounded))
+                .foregroundColor(Color(fdHex: "8a8478"))
+            TextEditor(text: $homeworkProblemDraft)
+                .font(.system(size: 14, weight: .medium, design: .rounded))
+                .frame(height: 100)
+                .padding(8)
+                .background(
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .fill(Color.white)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                .stroke(Color(fdHex: "e4dcc8"), lineWidth: 1)
+                        )
+                )
+                .accessibilityIdentifier("fieldDeskHomeworkHelpProblemField")
+
+            Button {
+                Task { await solveHomeworkProblem() }
+            } label: {
+                if homeworkSolving {
+                    ProgressView().tint(Color(fdHex: "0c1207"))
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 10)
+                } else {
+                    Text("Get help")
+                        .font(.system(size: 13, weight: .bold, design: .rounded))
+                        .foregroundColor(Color(fdHex: "0c1207"))
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 10)
+                }
+            }
+            .buttonStyle(.plain)
+            .background(Capsule().fill(Color(fdHex: "c4f547")))
+            .disabled(homeworkProblemDraft.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || homeworkSolving)
+            .accessibilityIdentifier("fieldDeskHomeworkHelpSolve")
+
+            ScrollView {
+                VStack(alignment: .leading, spacing: 6) {
+                    ForEach(homeworkResultCards, id: \.title) { card in
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(card.title)
+                                .font(.system(size: 12, weight: .bold, design: .rounded))
+                                .foregroundColor(Color(fdHex: "0c1207"))
+                            Text(card.body)
+                                .font(.system(size: 13, weight: .medium, design: .rounded))
+                                .foregroundColor(Color(fdHex: "1c1a17"))
+                        }
+                        .padding(.vertical, 4)
+                    }
+                    if let homeworkError {
+                        Text(homeworkError)
+                            .font(.system(size: 12, weight: .semibold, design: .rounded))
+                            .foregroundColor(Color(fdHex: "b3261e"))
+                    }
+                }
+            }
+            .accessibilityIdentifier("fieldDeskHomeworkHelpResult")
+        }
+    }
+
+    private func solveHomeworkProblem() async {
+        homeworkError = nil
+        homeworkSolving = true
+        defer { homeworkSolving = false }
+        switch await IngredientHintsClient.hints(for: homeworkProblemDraft) {
+        case .cards(let cards):
+            homeworkResultCards = cards
+        case .keyRejected:
+            homeworkError = "That AI key was rejected. Open Settings to update it."
+        case .unavailable:
+            homeworkError = "Couldn't get an answer - try again in a bit."
+        }
+    }
+
+    private func closeHomeworkHelpOverlay() {
+        withAnimation(.easeInOut(duration: 0.2)) {
+            showHomeworkHelpOverlay = false
         }
     }
 

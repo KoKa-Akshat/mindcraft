@@ -1759,7 +1759,11 @@ final class MindCraftNotesUITests: XCTestCase {
     /// connected: the tile never fetched the inbox (only the overlay box
     /// did). Seeded mail must show on the tile itself, and the cramped
     /// Email box should borrow height from Gcal so the subjects fit.
-    func testWorkDashboardShowsSeededEmailSummariesAndAsksNeighborsForSpace() {
+    /// 2026-08-17 box-grid redesign: Email Summaries is no longer its own
+    /// tile - its content lives inside Intel's merged box (`deskGridEmailSummaries`
+    /// identifier moved there), which is fixed-size and no longer negotiates
+    /// space with a Gcal neighbor (Gcal isn't a separate tile either anymore).
+    func testWorkDashboardShowsSeededEmailSummariesInIntel() {
         let app = launchFieldDeskApp(extraArgs: ["--ui-testing-gmail-dashboard"])
         XCUIDevice.shared.orientation = .landscapeLeft
 
@@ -1771,23 +1775,13 @@ final class MindCraftNotesUITests: XCTestCase {
         let summaries = app.descendants(matching: .any)["deskGridEmailSummaries"]
         XCTAssertTrue(
             summaries.waitForExistence(timeout: 12),
-            "Email Summaries tile should show inbox text when Gmail is already connected"
+            "Intel's merged box should show inbox text when Gmail is already connected"
         )
         XCTAssertTrue(
             app.staticTexts.containing(NSPredicate(format: "label CONTAINS %@", "Quadratic")).firstMatch.waitForExistence(timeout: 5),
-            "expected a real seeded subject on the Email tile, not the empty blurb"
+            "expected a real seeded subject inside Intel's Email section, not the empty blurb"
         )
-
-        let email = app.buttons["deskGridTile_Email Summaries"]
-        let gcal = app.buttons["deskGridTile_Gcal"]
-        XCTAssertTrue(email.waitForExistence(timeout: 3), "expected Email tile")
-        XCTAssertTrue(gcal.waitForExistence(timeout: 3), "expected Gcal tile")
-        Thread.sleep(forTimeInterval: 0.7)
-        XCTAssertGreaterThan(
-            email.frame.height,
-            gcal.frame.height,
-            "Email should have asked Gcal to shrink so summaries fit"
-        )
+        XCTAssertTrue(app.buttons["deskGridTile_Intel"].waitForExistence(timeout: 3), "expected Intel tile")
         attachScreenshot(app, name: "dashboard_email_summaries")
 
         XCUIDevice.shared.orientation = .portrait
@@ -1961,9 +1955,12 @@ final class MindCraftNotesUITests: XCTestCase {
         XCTAssertTrue(card.waitForExistence(timeout: 5), "expected return to hub")
     }
 
-    /// PDF pages 4–5: all five photo tiles must sit on the iPad, not fall
+    /// PDF pages 4–5: all four photo tiles must sit on the iPad, not fall
     /// off the right into Field Desk's black void. The half-width artboard
-    /// bug hid Email Summaries and Gcal even though geo.size was full-screen.
+    /// bug hid the right-column tile even though geo.size was full-screen.
+    /// 2026-08-17: Email Summaries/Gcal are no longer separate tiles - Intel
+    /// absorbed their content and took over their right-column position;
+    /// Homework Help is new, in Intel's old top-left slot.
     private func assertWorkCanvasTilesOnScreen(in app: XCUIApplication) {
         let screen = app.frame
         XCTAssertGreaterThan(screen.width, 0, "app frame should be real")
@@ -1971,8 +1968,7 @@ final class MindCraftNotesUITests: XCTestCase {
             "deskGridTile_Intel",
             "deskGridTile_Moodle",
             "deskGridTile_Binder",
-            "deskGridTile_Email Summaries",
-            "deskGridTile_Gcal",
+            "deskGridTile_Homework Help",
         ]
         for id in ids {
             let tile = app.buttons[id]
@@ -1984,8 +1980,8 @@ final class MindCraftNotesUITests: XCTestCase {
             XCTAssertGreaterThan(frame.maxY, screen.minY + 8, "\(id) should not sit entirely off the top")
             XCTAssertLessThan(frame.minY, screen.maxY - 8, "\(id) should not sit entirely off the bottom")
         }
-        let gcal = app.buttons["deskGridTile_Gcal"].frame
-        XCTAssertGreaterThan(gcal.midX, screen.minX + screen.width * 0.55, "Gcal belongs on the right of the 1440 artboard, not in a half-width board")
+        let intel = app.buttons["deskGridTile_Intel"].frame
+        XCTAssertGreaterThan(intel.midX, screen.minX + screen.width * 0.55, "Intel belongs on the right of the 1440 artboard, not in a half-width board")
     }
 
     /// Work canvas (PDF page 4) + Create · Presentation (PDF page 1).
@@ -2139,16 +2135,63 @@ final class MindCraftNotesUITests: XCTestCase {
         XCTAssertTrue(pill.waitForNonExistence(timeout: 5), "expected the pill to disappear once transcribe ends")
     }
 
-    /// Dashboard boxes expose a mascot (sleeping/working/awake). Intel and
-    /// Binder mascots are decorative; Moodle/Gmail/Gcal mascots are the
-    /// connect affordance. This only asserts they exist on the work canvas.
+    /// 2026-08-17 box-grid redesign: Email/Gcal are no longer separate
+    /// tiles (merged into Intel's box), and Intel/Binder now always show
+    /// real content instead of a mascot moment (same treatment). Moodle is
+    /// the only tile with a mascot left - this asserts that, plus that all
+    /// four tiles (Intel/Moodle/Binder/Homework Help) exist on the canvas
+    /// and the old Email/Gcal tiles are genuinely gone, not just renamed.
     func testDashboardBoxMascotsExist() {
         let app = launchFieldDeskApp()
         XCUIDevice.shared.orientation = .landscapeLeft
         XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 15))
-        for id in ["deskGridMascot_intel", "deskGridMascot_moodle", "deskGridMascot_binder", "deskGridMascot_email", "deskGridMascot_gcal"] {
-            XCTAssertTrue(app.descendants(matching: .any)[id].waitForExistence(timeout: 5), "expected \(id)")
+        XCTAssertTrue(app.descendants(matching: .any)["deskGridMascot_moodle"].waitForExistence(timeout: 5), "expected deskGridMascot_moodle")
+        for title in ["Intel", "Moodle", "Binder", "Homework Help"] {
+            XCTAssertTrue(app.buttons["deskGridTile_\(title)"].waitForExistence(timeout: 5), "expected deskGridTile_\(title)")
         }
+        XCTAssertFalse(app.buttons["deskGridTile_Email Summaries"].exists, "Email Summaries should no longer be a separate tile")
+        XCTAssertFalse(app.buttons["deskGridTile_Gcal"].exists, "Gcal should no longer be a separate tile")
+        XCUIDevice.shared.orientation = .portrait
+    }
+
+    /// Intel's merged box shows Research/Email/Calendar as labeled
+    /// sections in one tile instead of three separate boxes.
+    func testIntelTileShowsMergedSections() {
+        let app = launchFieldDeskApp()
+        XCUIDevice.shared.orientation = .landscapeLeft
+        XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 15))
+        let intel = app.buttons["deskGridTile_Intel"]
+        XCTAssertTrue(intel.waitForExistence(timeout: 10), "expected Intel tile")
+        // Nested Text inside the tile's outer Button can fail an exact
+        // .staticTexts[] lookup even when present (same containment family
+        // documented in CLAUDE.md) - a CONTAINS predicate is the proven
+        // reliable match, same pattern the seeded-email test already uses.
+        XCTAssertTrue(
+            app.staticTexts.containing(NSPredicate(format: "label CONTAINS[c] %@", "EMAIL")).firstMatch.waitForExistence(timeout: 5),
+            "expected Email section header inside Intel"
+        )
+        XCTAssertTrue(
+            app.staticTexts.containing(NSPredicate(format: "label CONTAINS[c] %@", "CALENDAR")).firstMatch.waitForExistence(timeout: 3),
+            "expected Calendar section header inside Intel"
+        )
+        XCUIDevice.shared.orientation = .portrait
+    }
+
+    /// Homework Help opens a real popup (not a dead tap) with a connect
+    /// prompt when no AI key is saved yet.
+    func testHomeworkHelpOpensConnectPromptWithoutKey() {
+        let app = launchFieldDeskApp()
+        XCUIDevice.shared.orientation = .landscapeLeft
+        XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 15))
+        let tile = app.buttons["deskGridTile_Homework Help"]
+        XCTAssertTrue(tile.waitForExistence(timeout: 10), "expected Homework Help tile")
+        tile.tap()
+        XCTAssertTrue(
+            app.descendants(matching: .any)["fieldDeskHomeworkHelpOverlay"].waitForExistence(timeout: 10),
+            "expected Homework Help popup to open"
+        )
+        XCTAssertTrue(app.buttons["fieldDeskHomeworkHelpConnect"].waitForExistence(timeout: 5), "expected Connect your AI prompt with no key saved")
+        app.buttons["fieldDeskHomeworkHelpDone"].tap()
         XCUIDevice.shared.orientation = .portrait
     }
 }
