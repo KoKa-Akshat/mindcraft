@@ -49,6 +49,7 @@ import csv
 import json
 import math
 import os
+import re
 import sys
 from collections import defaultdict
 from datetime import datetime, timezone
@@ -112,11 +113,22 @@ def aggregate_dry_run() -> dict[str, int]:
 
 # ── Train.csv index (per-choice misconception IDs) ────────────────────────────
 
-def build_train_index(
-    numeric_to_slug: dict[str, str],
-) -> dict[str, dict[str, str | None]]:
+def _numeric_id(raw: str | None) -> int | None:
+    """Parse the float-shaped IDs emitted by pandas/CSV without guessing."""
+    value = (raw or "").strip()
+    if not value or value.lower() == "nan":
+        return None
+    try:
+        return int(float(value))
+    except ValueError:
+        return None
+
+
+def build_train_index() -> dict[str, dict]:
     """
-    Returns {question_id_str: {A: mis_slug|None, B: ..., C: ..., D: ..., correct: 'A'}}.
+    Keep source choice positions and numeric IDs intact. Slugs cannot be resolved
+    until the question's concept is known; resolving them here was the original
+    cross-concept, last-wins defect.
 
     question_id_str = str(QuestionId) from train.csv — matches eedi_{N} format.
     """
@@ -124,16 +136,7 @@ def build_train_index(
         print(f"WARNING: {TRAIN_CSV_PATH} not found — per-choice enrichment unavailable.")
         return {}
 
-    index: dict[str, dict[str, str | None]] = {}
-
-    def to_slug(raw: str) -> str | None:
-        raw = raw.strip()
-        if not raw or raw in ("", "nan"):
-            return None
-        try:
-            return numeric_to_slug.get(str(int(float(raw))))
-        except ValueError:
-            return None
+    index: dict[str, dict] = {}
 
     with open(TRAIN_CSV_PATH, newline="", encoding="utf-8") as f:
         reader = csv.DictReader(f)
@@ -143,10 +146,11 @@ def build_train_index(
                 continue
             index[qid] = {
                 "correct": row.get("CorrectAnswer", "").strip(),
-                "A": to_slug(row.get("MisconceptionAId", "")),
-                "B": to_slug(row.get("MisconceptionBId", "")),
-                "C": to_slug(row.get("MisconceptionCId", "")),
-                "D": to_slug(row.get("MisconceptionDId", "")),
+                "choices": [row.get(f"Answer{letter}Text", "") for letter in CHOICE_LETTERS],
+                "misconception_numeric_ids": [
+                    _numeric_id(row.get(f"Misconception{letter}Id"))
+                    for letter in CHOICE_LETTERS
+                ],
             }
 
     print(f"  Train index: {len(index)} questions")
@@ -154,11 +158,44 @@ def build_train_index(
 
 
 def build_numeric_to_slug(eedi_mis: dict[str, dict]) -> dict[str, str]:
+    """Legacy diagnostic index. Never use this to write question taxonomy."""
     result: dict[str, str] = {}
     for slug, info in eedi_mis.items():
         nid = info.get("eedi_misconception_id")
         if nid is not None:
             result[str(int(nid))] = slug
+    return result
+
+
+def build_concept_numeric_to_slug(
+    eedi_mis: dict[str, dict],
+) -> dict[tuple[str, int], str]:
+    """Build the only slug index safe for writing question taxonomy."""
+    result: dict[tuple[str, int], str] = {}
+    for slug, info in eedi_mis.items():
+        numeric_id = info.get("eedi_misconception_id")
+        if numeric_id is None:
+            continue
+        for concept_id in info.get("concept_ids", []):
+            result[(concept_id, int(numeric_id))] = slug
+    return result
+
+
+def build_numeric_to_name(eedi_mis: dict[str, dict]) -> dict[int, str]:
+    """Load Eedi names, including IDs not represented in the current JSON."""
+    result = {
+        int(info["eedi_misconception_id"]): str(info.get("eedi_name", "")).strip()
+        for info in eedi_mis.values()
+        if info.get("eedi_misconception_id") is not None and info.get("eedi_name")
+    }
+    mapping_path = EEDI_DATA / "misconception_mapping.csv"
+    if mapping_path.exists():
+        with mapping_path.open(newline="", encoding="utf-8") as handle:
+            for row in csv.DictReader(handle):
+                numeric_id = _numeric_id(row.get("MisconceptionId"))
+                name = (row.get("MisconceptionName") or "").strip()
+                if numeric_id is not None and name:
+                    result[numeric_id] = name
     return result
 
 
@@ -194,12 +231,55 @@ def letter_to_index(letter: str) -> int | None:
     return mapping.get(letter.upper())
 
 
+def _mint_slug(concept_id: str, name: str) -> str:
+    stopwords = {"the", "a", "an", "of", "to", "when", "that", "in", "is", "as", "at", "by", "it"}
+    words = re.sub(r"[^a-z0-9\s]", "", name.lower()).split()
+    tokens = [word for word in words if word not in stopwords][:5]
+    return f"mis_{concept_id}__{'_'.join(tokens) or 'unknown'}"
+
+
+def _choice_key(value: object) -> str:
+    """Conservative key used only to recover an explicit choice permutation."""
+    return re.sub(r"\s+", " ", str(value or "")).strip().casefold()
+
+
+def _bank_to_source_indices(q: dict, train_row: dict) -> list[int] | None:
+    bank_choices = q.get("choices") or []
+    source_choices = train_row.get("choices") or []
+    if len(bank_choices) == len(source_choices):
+        source_by_key: dict[str, list[int]] = defaultdict(list)
+        for index, choice in enumerate(source_choices):
+            source_by_key[_choice_key(choice)].append(index)
+        mapping: list[int] = []
+        for choice in bank_choices:
+            matches = source_by_key.get(_choice_key(choice), [])
+            if len(matches) != 1:
+                mapping = []
+                break
+            mapping.append(matches[0])
+        if len(mapping) == len(bank_choices) and len(set(mapping)) == len(mapping):
+            return mapping
+
+    source_correct = letter_to_index(str(train_row.get("correct", "")))
+    bank_correct = q.get("correctIndex")
+    # The live bank was generated in source order. Two manually cleaned choice
+    # arrays no longer text-match, but their unchanged correct position proves
+    # that the source-order mapping is still valid.
+    if source_correct == bank_correct and len(bank_choices) <= len(CHOICE_LETTERS):
+        return list(range(len(bank_choices)))
+    return None
+
+
 def enrich_distractor_taxonomy(
     q: dict,
     train_row: dict | None,
     eedi_mis: dict[str, dict],
     mis_ing_map: dict[str, list[dict]],
     ing_meta: dict[str, dict],
+    *,
+    numeric_to_name: dict[int, str] | None = None,
+    stats: dict[str, int] | None = None,
+    add_world_feedback: bool = True,
 ) -> list[dict]:
     """
     Rebuild distractor_taxonomy with real misconception IDs for all wrong choices.
@@ -208,63 +288,73 @@ def enrich_distractor_taxonomy(
     choices = q.get("choices", [])
     correct_idx = q.get("correctIndex", 0)
     existing_dt = {d["choice_index"]: d for d in (q.get("distractor_taxonomy") or [])}
+    concept_id = str(q.get("conceptId", ""))
+    concept_index = build_concept_numeric_to_slug(eedi_mis)
+    numeric_to_name = numeric_to_name or build_numeric_to_name(eedi_mis)
+    bank_to_source = _bank_to_source_indices(q, train_row) if train_row else None
+    numeric_ids = train_row.get("misconception_numeric_ids", []) if train_row else []
 
     result = []
     for idx, _ in enumerate(choices):
         if idx == correct_idx:
             continue
 
-        # Figure out which letter this choice index maps to
-        # correctIndex is 0-based; train.csv CorrectAnswer is A/B/C/D
-        # We need to map idx → letter relative to the correct answer position
-        # Strategy: use train_row if available; otherwise preserve existing data
         mis_slug: str | None = None
-
-        if train_row:
-            # The correct choice in train.csv tells us letter mapping:
-            # choices[0]='A'...'D' iff correctIndex matches that letter
-            correct_letter = train_row.get("correct", "")
-            correct_letter_idx = letter_to_index(correct_letter)
-            if correct_letter_idx is not None and correct_letter_idx == correct_idx:
-                # Direct mapping: choice index i → letter CHOICE_LETTERS[i]
-                letter = CHOICE_LETTERS[idx] if idx < len(CHOICE_LETTERS) else None
-            else:
-                # Mapping is ambiguous without knowing the original order
-                # Fall back to existing distractor_taxonomy data
-                letter = None
-
-            if letter:
-                mis_slug = train_row.get(letter)
-
-        # Fallback to existing entry's misconception_id
         existing = existing_dt.get(idx, {})
-        if not mis_slug:
-            mis_slug = existing.get("misconception_id") or None
+        numeric_id = None
+        used_mint_path = False
+        if train_row and bank_to_source is None:
+            if stats is not None:
+                stats["unresolvable_permutation"] += 1
+        elif bank_to_source is not None and idx < len(bank_to_source):
+            source_index = bank_to_source[idx]
+            if source_index < len(numeric_ids):
+                numeric_id = numeric_ids[source_index]
+
+        if numeric_id is not None:
+            mis_slug = concept_index.get((concept_id, numeric_id))
+            if mis_slug is None:
+                name = numeric_to_name.get(numeric_id, "")
+                if name:
+                    used_mint_path = True
+                    mis_slug = _mint_slug(concept_id, name)
+                    if mis_slug not in eedi_mis:
+                        eedi_mis[mis_slug] = {
+                            "eedi_misconception_id": numeric_id,
+                            "eedi_name": name,
+                            "concept_ids": [concept_id],
+                            "occurrence_count": 0,
+                            "example_question_ids": [q.get("id")],
+                        }
+                    elif concept_id not in eedi_mis[mis_slug].get("concept_ids", []):
+                        eedi_mis[mis_slug].setdefault("concept_ids", []).append(concept_id)
+                    concept_index[(concept_id, numeric_id)] = mis_slug
+
+        # Existing IDs are retained only when they obey the same concept scope.
+        existing_slug = existing.get("misconception_id") or None
+        if used_mint_path and mis_slug != existing_slug and stats is not None:
+            stats["minted"] += 1
+        if mis_slug is None and existing_slug:
+            if concept_id in eedi_mis.get(existing_slug, {}).get("concept_ids", []):
+                mis_slug = existing_slug
 
         # Build the enriched entry
         mis_info = eedi_mis.get(mis_slug, {}) if mis_slug else {}
-        mis_label = mis_info.get("eedi_name", "").strip()
+        # Preserve the canonical value byte-for-byte; some source names retain
+        # trailing whitespace and S3R is an exact derivation from this field.
+        mis_label = mis_info.get("eedi_name", "")
 
-        # Get student_thinking from ingredient failure_mode when available
-        student_thinking = ""
+        entry = dict(existing)
+        entry["choice_index"] = idx
+        entry["misconception_id"] = mis_slug
         if mis_slug:
-            links = mis_ing_map.get(mis_slug, [])
-            if links:
-                ing_id = links[0]["ingredient_id"]
-                student_thinking = ing_meta.get(ing_id, {}).get("failure_mode", "")[:200]
-        if not student_thinking:
-            student_thinking = (existing.get("student_thinking") or
-                                mis_label or
-                                "Alternative error")
-
-        entry = {
-            "choice_index": idx,
-            "misconception_id": mis_slug,
-            "distractor_label": mis_label[:120] if mis_label else None,
-            "error_type": "misconception" if mis_slug else existing.get("error_type", "unknown"),
-            "student_thinking": student_thinking,
-            "world_feedback": existing.get("world_feedback") or None,
-        }
+            entry["error_type"] = "misconception"
+            entry["student_thinking"] = mis_label
+        else:
+            entry.setdefault("error_type", "unknown")
+            entry.setdefault("student_thinking", "Alternative error")
+        if add_world_feedback:
+            entry.setdefault("world_feedback", None)
         result.append(entry)
 
     return result
@@ -431,7 +521,7 @@ def main() -> None:
     # ── Load shared data ──────────────────────────────────────────────────────
     print("Loading shared data…")
     eedi_mis: dict[str, dict] = json.loads(EEDI_MIS_PATH.read_text())
-    numeric_to_slug = build_numeric_to_slug(eedi_mis)
+    eedi_mis_before = json.dumps(eedi_mis, sort_keys=True, ensure_ascii=False)
     print(f"  {len(eedi_mis)} Eedi misconceptions")
 
     ont: dict = json.loads(ONT_PATH.read_text())
@@ -454,7 +544,7 @@ def main() -> None:
     }
 
     # ── Per-choice train index ────────────────────────────────────────────────
-    train_index = build_train_index(numeric_to_slug)
+    train_index = build_train_index()
 
     # ── Aggregate student engagement ─────────────────────────────────────────
     print("\nAggregating misconception hits…")
@@ -524,6 +614,12 @@ def main() -> None:
 
     QUEUE_PATH.write_text(json.dumps(out, indent=2, ensure_ascii=False))
     print(f"\n✓ Written to {QUEUE_PATH}")
+    if json.dumps(eedi_mis, sort_keys=True, ensure_ascii=False) != eedi_mis_before:
+        EEDI_MIS_PATH.write_text(
+            json.dumps(eedi_mis, indent=2, ensure_ascii=False) + "\n",
+            encoding="utf-8",
+        )
+        print(f"✓ Written minted misconceptions to {EEDI_MIS_PATH}")
     print(f"\nNext steps:")
     print(f"  1. Give promotion_queue.json to Fable 5")
     print(f"  2. Fable 5 fills world_feedback on each distractor entry")
