@@ -60,9 +60,13 @@ needs `xcodebuild build-for-testing` green (device or simulator) before its
 report is written; CI (`iOS simulator build+test`) is the real gate before
 merge, same as PR 43 — see "How this handoff gets written" above.
 
+**Assignment A is done and merged (2026-08-16, `fe54a37e`) — start on
+Assignment B next.** Open a fresh branch off current `main` (not off an
+older commit — that's what caused Assignment A's merge conflict).
+
 ---
 
-#### Assignment A — Consolidate Binder onto `BinderStore`, revive BYOB
+#### Assignment A — Consolidate Binder onto `BinderStore`, revive BYOB ✅ DONE
 
 **Goal.** The Work Dashboard's Binder tile currently reads
 `FieldDeskStore.FiledItem` (`FieldDeskView.swift:690`,
@@ -265,6 +269,18 @@ Flagged, not deleted:
 - Kitchen fileImporter still files into `FieldDeskStore`, not BinderStore.
 
 Did not start Assignments B–E or transcript-to-Drive (Assignment D).
+
+**2026-08-16 — Claude's audit of Assignment A** — PR 44 merged (`fe54a37e`).
+
+Real, correctly-followed work: matched `intelOverlayLayer`'s visual language, put `showBinderOverlay` on `deskOverlayChromeBlocked`, used the marker-Text pattern (not a wrapper identifier) to dodge the clobbering bug, reused `CreateInstanceStudioView` as-is, left `FieldDeskStore.FiledItem`/`StandaloneDeskView` alone as instructed, shipped a real test. Not rubber-stamped.
+
+One thing the report didn't catch (Linux env, no `xcodebuild`, so it couldn't have): PR 44 forked from `dc679110` — a commit that predates PR 43's Level 2 connectors/mascot merge by minutes. Real conflict on `DeskGridDashboardView.swift`/`FieldDeskView.swift`, not just line drift — PR 44's own `tileBlurb()` helper predated the `mascotPhase`-driven `tileBody()` system entirely. Resolved by keeping main's structure (it already covered `binderTitles` as real content lines) and folding in PR 44's actual new content (updated Binder blurb copy, `BinderStore` as source). Caught and fixed one real bug the raw merge would've shipped: `binderHasData` (drives the mascot's sleeping/awake state) was still pointed at `FieldDeskStore`, which would've made the mascot disagree with what the popup shows. Repointed it at `BinderStore` alongside `binderTitles`.
+
+Verified for real, not just compiled: `xcodebuild build-for-testing` green, `testWorkBinderPopupHasMemoDocBYOB` + `testDashboardBoxMascotsExist` both pass on-simulator, then installed directly onto the physical iPad and launched clean. CI (`iOS simulator build+test`) passed at 37m40s. Merged to main.
+
+Cursor's two flagged loose ends (`BookWorkflowView`'s separate `BinderStore()` instance, Kitchen's `fileImporter` still filing into `FieldDeskStore` not `BinderStore`) are real and worth remembering, not urgent — noted for whoever picks up Binder work next.
+
+**Assignment B is next.** Read it below before starting.
 
 ---
 
