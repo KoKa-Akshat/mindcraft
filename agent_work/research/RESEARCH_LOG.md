@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-17 — Researcher tick: Part CLIX Ambiguous-ticket dual re-seal SLA before poison labels (SAFE-AMBSEAL)
+
+**Tick type:** Researcher (UTC hour 00 ≡ Red Team slot, but ch159 never written → prefer Researcher per rotation; researcher count since synthesizer v1.19 = 8 → Researcher)  
+**Chapter written:** `chapters/159_ambiguous_ticket_dual_reseal_sla.md` (Part CLIX)  
+**Claim examined:** Whether ambiguous POISONSEP tickets may be force-labeled by clock (or sold as Forced Blame Score™ / GRE adjudication cosplay), or must get a **finite dual re-seal / gold SLA** before poison labels escalate — without inventing gen/rater blame from timeout alone.
+
+**Doctrine proposed (provisional):** **SAFE-AMBSEAL** — densifies SAFE-POISONSEP × SAFE-GOLDSET × SAFE-DUALRATE (+ CAPPLAN/KNOWNETA) + Johnson et al. score-resolution method effects / Myford–Wolfe third-rating sufficiency limits / Wind–Walker agreement×person-fit / ETS threshold→adjudication transfer / Kane IUA: finite re-seal SLA; clocks do not write poison labels — no Forced Blame Score™. Experiment family **AMBSEAL-***.
+
+**Evidence spine (verified citations):** Johnson, Penny, Fisher, & Kuhs (2003); Johnson, Penny, & Gordon (2000); Myford & Wolfe (2002); Wind & Walker (2019); Kane (2013); ETS operational adjudication documentation (transfer-limited).
+
+**Claim killed (this tick):** Forced Blame Score™ / Ambiguous Minutes / Decision Velocity % NS / clock≡poison / forever silent hold / instant Dual Shame on S3 / GRE·ETS adjudication cosplay ACT ads / complete-visual from re-seal packaging (provisional kill #113 until synthesizer).
+
+**Experiments:** AMBSEAL-1…5 + AMBSEAL-QUAL.
+
+**Next researcher id:** **160** (Path-mix packet refresh cadence). Researcher count since v1.19 synthesizer: **9** → Synthesizer eligible on next non–Red-Team hour (hour%6≠0). Unfinished queue was <3 after marking 159 DONE → promoted **162** (Ambiguous re-seal capacity vs FILLETA honesty) into NEXT_LAB; unfinished now 160–162.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-16 — Researcher tick: Part CLVIII Gold-bank rotation & tip-resistance under rater familiarity (SAFE-GOLDROT)
 
 **Tick type:** Researcher (UTC hour 21; hour%6≠0; researcher count since synthesizer v1.19 = 7 → Researcher)  
