@@ -156,9 +156,10 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 158 | Gold-bank rotation & tip-resistance under rater familiarity | SAFE-GOLDSET × SAFE-REVOKE/PANELRAMP; rotate sealed probes without Gold Familiarity Score™ | **DONE** (2026-08-16) — Part CLVIII / SAFE-GOLDROT |
 | 159 | Ambiguous-ticket dual re-seal SLA before poison labels | SAFE-POISONSEP × SAFE-GOLDSET/DUALRATE; hold ambiguous without Forced Blame Score™ | **DONE** (2026-08-17) — Part CLIX / SAFE-AMBSEAL |
 | — | **Synthesizer v1.20** | Merge CLI–CLIX SAFE-* into core OS I.4 / XIV / IX / XXI | **DONE** (2026-08-17 UTC 03) |
-| 160 | Path-mix packet refresh cadence after surge demobilization | SAFE-PATHMIX × SAFE-DEMOB/CAPPLAN; stale mix labels without Case-Mix Score™ | **NEXT** |
-| 161 | Panel-cohort gold hygiene audits during parallel-run | SAFE-GOLDROT × SAFE-PANELRAMP/REVOKE; tip-incident quarantine without Tip Score™ | queued |
+| 160 | Path-mix packet refresh cadence after surge demobilization | SAFE-PATHMIX × SAFE-DEMOB/CAPPLAN; stale mix labels without Case-Mix Score™ | **DONE** (2026-08-17) — Part CLX / SAFE-MIXREFRESH |
+| 161 | Panel-cohort gold hygiene audits during parallel-run | SAFE-GOLDROT × SAFE-PANELRAMP/REVOKE; tip-incident quarantine without Tip Score™ | **NEXT** |
 | 162 | Ambiguous re-seal capacity vs FILLETA band honesty under dual scarcity | SAFE-AMBSEAL × SAFE-CAPPLAN/FILLETA; reseal backlog minutes without Forced Blame Score™ | queued |
+| 163 | Staff vs contract dual-share footnotes in path-mix after demob | SAFE-MIXREFRESH × SAFE-DEMOB/PATHBLAME; dual_source split without Dual Shame Score™ | queued |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 
@@ -279,3 +280,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any Dual Shame Score™ / Case-Mix Score™ / Path Mix Minutes / Selection-Adjusted Repair % NS / hide-mix-for-conversion / unconditioned dual-vs-single RFP rankings / hospital·CMS report-card cosplay ACT ads / Propensity Theater™ brand / complete-visual or Map-trust guarantees from mix packaging / mix≡DPA (Part CLVII / SAFE-PATHMIX / v1.20 company law)
 - Any Gold Familiarity Score™ / Tip Minutes / Rotation Health % NS / forever-fixed open gold / tip-sheet Slack keys / thrash-rotate that empties hard cells / CAT-security cosplay ACT ads / complete-visual or ACT guarantees from gold-rotation packaging (Part CLVIII / SAFE-GOLDROT / v1.20 company law)
 - Any Forced Blame Score™ / Ambiguous Minutes / Decision Velocity % NS / clock≡poison auto-label / forever silent ambiguous hold / instant Dual Shame on S3 / GRE·ETS adjudication cosplay ACT ads / complete-visual or ACT guarantees from re-seal packaging (Part CLIX / SAFE-AMBSEAL / v1.20 company law)
+- Any Mix Freshness Score™ / Case-Mix Score™ / Path Mix Minutes / Refresh Velocity % NS / forever-green surge-era mix / silent demob without stale label / hospital·CMS report-card lag cosplay ACT ads / continuous-refresh≡quality / complete-visual or Map-trust guarantees from path-mix refresh packaging (Part CLX / SAFE-MIXREFRESH)

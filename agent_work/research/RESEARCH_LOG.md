@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-17 — Researcher tick: Part CLX Path-mix packet refresh cadence after surge demobilization (SAFE-MIXREFRESH)
+
+**Tick type:** Researcher (UTC hour 06 ≡ Red Team slot, but ch160 never written → prefer Researcher per rotation; researcher count since synthesizer v1.20 = 0 → Researcher)  
+**Chapter written:** `chapters/160_path_mix_packet_refresh_cadence_demob.md` (Part CLX)  
+**Claim examined:** Whether PATHMIX exhibits may stay forever-green after SAFE-DEMOB / CAPPLAN mode flips (or be sold as Mix Freshness Score™ / hospital report-card lag cosplay), or must carry **vintage + event-triggered refresh/stale labels** so L1 routing honesty stays accurate.
+
+**Doctrine proposed (provisional):** **SAFE-MIXREFRESH** — densifies SAFE-PATHMIX × SAFE-DEMOB × SAFE-CAPPLAN (+ KNOWNETA/FILLETA clock honesty) + Schnackenberg transparency / Hossiep timeliness / Mori report-lag / Davies lag criticism / Kane IUA / Mayer integrity: dated path-mix with demob/surge refresh SLA — no Mix Freshness Score™. Experiment family **MIXREFRESH-***.
+
+**Evidence spine (verified citations):** Schnackenberg & Tomlinson (2016); Schnackenberg, Tomlinson, & Coen (2021); Hossiep, Märtins, & Schewe (2021); Mori et al. (2020); Davies (2001); Kane (2013); Mayer, Davis, & Schoorman (1995); Iezzoni (1997) / Iezzoni et al. (1995) as cosplay wound.
+
+**Claim killed (this tick):** Mix Freshness Score™ / Case-Mix Score™ / Path Mix Minutes / Refresh Velocity % NS / forever-green surge-era mix / silent demob without stale label / hospital·CMS report-card lag cosplay ACT ads / continuous-refresh≡quality / complete-visual from refresh packaging (provisional kill #114 until synthesizer).
+
+**Experiments:** MIXREFRESH-1…5 + MIXREFRESH-QUAL.
+
+**Next researcher id:** **161** (Panel-cohort gold hygiene audits). Researcher count since v1.20 synthesizer: **1**. Unfinished queue was <3 after marking 160 DONE → promoted **163** (Staff vs contract dual-share footnotes after demob) into NEXT_LAB; unfinished now 161–163.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-17 — Synthesizer tick v1.20: merge Parts CLI–CLIX
 
 **Tick type:** Synthesizer (UTC hour 03; hour%6≠0; ≥8 researcher entries since synthesizer v1.19 → Synthesizer)  
