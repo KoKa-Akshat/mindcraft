@@ -111,6 +111,23 @@ final class StudentAIKeyStore: ObservableObject {
         return await complete(system: Self.emailDraftSystemPrompt, user: user)
     }
 
+    /// Any other real question about the student's own desk data (recent
+    /// mail, calendar, binder) - the Work Dashboard's search used to route
+    /// everything through the shared backend (`DeskAskClient`), which
+    /// silently falls back to a generic "Opening your Gmail box." template
+    /// whenever its own LLM call fails, indistinguishable from a real
+    /// answer. Answering directly with the student's own key means "tell
+    /// me more about this recurring email" actually reads their real
+    /// recent mail instead of returning a canned navigation string.
+    func answerDeskQuestion(question: String, context: String) async -> Result<String, SolveError> {
+        let user = """
+        \(context)
+
+        Question: \(question)
+        """
+        return await complete(system: Self.deskAssistantSystemPrompt, user: user)
+    }
+
     private func complete(system: String, user: String) async -> Result<String, SolveError> {
         guard let creds = readCredentials() else { return .failure(.noKey) }
         switch creds.provider {
@@ -256,5 +273,15 @@ final class StudentAIKeyStore: ObservableObject {
     few sentences that actually respond to what the email says, then a \
     sign-off. No subject line, no "Here is a draft" preamble, no mention of \
     API keys or that you are an AI.
+    """
+
+    private static let deskAssistantSystemPrompt = """
+    You are a helpful assistant inside a high-school student's desk/\
+    dashboard app called The Desk. Answer their question using ONLY the \
+    context given below - recent emails, calendar events, and binder \
+    items. Be concise and specific (name the actual sender/subject/date \
+    when relevant instead of speaking generally). If the context doesn't \
+    have enough to answer, say so honestly instead of guessing. Do not \
+    mention API keys or that you are an AI.
     """
 }

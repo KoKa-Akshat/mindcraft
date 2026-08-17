@@ -124,6 +124,9 @@ struct FieldDeskView: View {
     @State private var homeworkSolving = false
     @State private var homeworkResultCards: [IngredientHintsClient.HintCard] = []
     @State private var homeworkError: String?
+    @State private var homeworkPhotoItem: PhotosPickerItem?
+    @State private var homeworkUploading = false
+    @State private var homeworkUploadNote: String?
     /// Real nav-intent target ("study quadratic equations" via Ask The Desk
     /// -> `study_concept` action) - threaded into `DashboardView` so it
     /// opens straight to that concept's chapter instead of just the roadmap.
@@ -3297,9 +3300,39 @@ struct FieldDeskView: View {
 
     private var homeworkHelpSolverBody: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Paste a problem, upload isn't wired up yet.")
-                .font(.system(size: 12, weight: .medium, design: .rounded))
-                .foregroundColor(Color(fdHex: "8a8478"))
+            HStack(spacing: 8) {
+                Text("Paste a problem, or upload a photo of it.")
+                    .font(.system(size: 12, weight: .medium, design: .rounded))
+                    .foregroundColor(Color(fdHex: "8a8478"))
+                Spacer(minLength: 0)
+                PhotosPicker(selection: $homeworkPhotoItem, matching: .images) {
+                    if homeworkUploading {
+                        ProgressView().tint(Color(fdHex: "0c1207"))
+                            .frame(width: 28, height: 28)
+                    } else {
+                        Image(systemName: "camera.fill")
+                            .font(.system(size: 13, weight: .semibold))
+                            .foregroundColor(Color(fdHex: "0c1207"))
+                            .frame(width: 28, height: 28)
+                            .background(Circle().fill(Color(fdHex: "c4f547")))
+                    }
+                }
+                .disabled(homeworkUploading)
+                .accessibilityIdentifier("fieldDeskHomeworkHelpUpload")
+                .accessibilityLabel("Upload a photo of the problem")
+            }
+            .onChange(of: homeworkPhotoItem) { _, item in
+                guard let item else { return }
+                Task {
+                    await handleHomeworkPhotoPicked(item)
+                    homeworkPhotoItem = nil
+                }
+            }
+            if let homeworkUploadNote {
+                Text(homeworkUploadNote)
+                    .font(.system(size: 11, weight: .semibold, design: .rounded))
+                    .foregroundColor(Color(fdHex: "7a9e2e"))
+            }
             TextEditor(text: $homeworkProblemDraft)
                 .font(.system(size: 14, weight: .medium, design: .rounded))
                 .frame(height: 100)
@@ -3369,6 +3402,42 @@ struct FieldDeskView: View {
             homeworkError = "That AI key was rejected. Open Settings to update it."
         case .unavailable:
             homeworkError = "Couldn't get an answer - try again in a bit."
+        }
+    }
+
+    /// Real upload, not a stub - same `HomeworkClient.parseAndCreateSession`
+    /// (`/api/parse-homework`) already used by the older Work tab
+    /// (`WorkPracticeView`), just reused here instead of duplicated. A
+    /// worksheet photo can parse into several questions; this popup only
+    /// solves one problem at a time, so the first parsed question's text
+    /// fills the draft field and solving starts immediately - a note says
+    /// how many more were found so nothing looks silently dropped.
+    private func handleHomeworkPhotoPicked(_ item: PhotosPickerItem) async {
+        homeworkError = nil
+        homeworkUploadNote = nil
+        homeworkUploading = true
+        guard let data = try? await item.loadTransferable(type: Data.self) else {
+            homeworkError = "Couldn\u{2019}t read that photo. Try a clearer shot."
+            homeworkUploading = false
+            return
+        }
+        let (result, _) = await HomeworkClient.parseAndCreateSession(imageData: data, fileName: "homework.jpg")
+        homeworkUploading = false
+        switch result {
+        case .success(let questions):
+            guard let first = questions.first else {
+                homeworkError = "Couldn\u{2019}t find a question on that page. Try another photo."
+                return
+            }
+            homeworkProblemDraft = first.text
+            homeworkUploadNote = questions.count > 1
+                ? "Found \(questions.count) questions - solving the first."
+                : "Got it - solving now."
+            await solveHomeworkProblem()
+        case .unavailable:
+            homeworkError = "Couldn\u{2019}t find questions on that page. Try another photo, or this may be temporarily unavailable."
+        case .notSignedIn:
+            homeworkError = "Please sign in again."
         }
     }
 
