@@ -89,6 +89,12 @@ final class JesseCallSession: NSObject, ObservableObject {
     /// no indication anything went wrong, same honesty rule the original
     /// form path already followed.
     @Published private(set) var studyPlanError: String?
+    /// Resume's live draft (Assignment H, 2026-08-18) - same shape as
+    /// `bookDraft`: set only while `context == "resume"`, updated from the
+    /// real `/api/resume-agent` round trip on every turn (see
+    /// `askJesseResume`) so `ResumeAgentView` can render the profile live as
+    /// the student talks. Reset in `begin()`.
+    @Published private(set) var resumeDraft: ResumeAgentDraft?
 
     private let recognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US"))
     private let audioEngine = AVAudioEngine()
@@ -147,6 +153,9 @@ final class JesseCallSession: NSObject, ObservableObject {
         }
         if context == "book" {
             bookDraft = nil
+        }
+        if context == "resume" {
+            resumeDraft = nil
         }
         status = nil
     }
@@ -360,6 +369,11 @@ final class JesseCallSession: NSObject, ObservableObject {
             isThinking = false
             return
         }
+        if context == "resume" {
+            await askJesseResume(message)
+            isThinking = false
+            return
+        }
 
         let bus = DeskBoxBus.shared
         if let local = bus.directAnswer(for: message) {
@@ -400,6 +414,25 @@ final class JesseCallSession: NSObject, ObservableObject {
         }
         guard isActive else { return }
         bookDraft = result.draft
+        await speak(result.reply)
+    }
+
+    // MARK: - Resume (Assignment H, 2026-08-18)
+
+    /// Real `/api/resume-agent` round trip - mirrors `agent.js`'s
+    /// `askJesse()` request/response cycle the same way `askJesseBook`
+    /// mirrors the book workflow's `ask()`. `sources` stays empty here (see
+    /// `ResumeAgentClient` doc comment) - this is the voice-only path;
+    /// LinkedIn/Drive/PDF extraction are a separate, not-yet-native piece.
+    private func askJesseResume(_ message: String) async {
+        let draft = resumeDraft ?? .empty
+        guard let result = await ResumeAgentClient.ask(message: message, draft: draft) else {
+            guard isActive else { return }
+            await speak("I couldn't reach the resume desk just now. Keep talking and I'll catch up.")
+            return
+        }
+        guard isActive else { return }
+        resumeDraft = result.draft
         await speak(result.reply)
     }
 

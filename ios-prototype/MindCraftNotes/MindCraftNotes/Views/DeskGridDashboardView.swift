@@ -331,7 +331,9 @@ struct DeskGridDashboardView: View {
             case .intel: return "sparkles"
             case .moodle: return "graduationcap.fill"
             case .binder: return "person.crop.circle.fill"
-            case .homeworkHelp: return "lightbulb.fill"
+            // Camera, not a lightbulb - matches the tile's actual primary
+            // action now (Upload a photo leads, "Get help" no longer does).
+            case .homeworkHelp: return "camera.fill"
             case .memo: return "note.text"
             }
         }

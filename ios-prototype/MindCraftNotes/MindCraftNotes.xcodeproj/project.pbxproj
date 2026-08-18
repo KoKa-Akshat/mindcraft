@@ -14,7 +14,6 @@
 		0488FF0AF1C04DCCB33C8ED2 /* OutcomeClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CEEF844EFE4193B796ED23 /* OutcomeClient.swift */; };
 		07E1F3565FD9F6A870432C44 /* PlottablePointsExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85EC6FCFFB7752E3F55BC22 /* PlottablePointsExtractor.swift */; };
 		08767AA809AC30C242D9FBC2 /* BinderStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDBCE2A4A4F89B33A5443D0 /* BinderStore.swift */; };
-		A0BOOKAGENTCLIENT01 /* BookAgentClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0BOOKAGENTCLIENT01 /* BookAgentClient.swift */; };
 		0FB945513AC3BD9B9D898CF2 /* SVGImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A270692D86516903DC8773D /* SVGImageView.swift */; };
 		105C091D2824B49561936062 /* actToc.json in Resources */ = {isa = PBXBuildFile; fileRef = C804A39BF276CEEBF088A65C /* actToc.json */; };
 		11DF2394C1B5D24E677DC1E1 /* TutorDirectoryClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD38C7392605523E1A10E7F6 /* TutorDirectoryClient.swift */; };
@@ -29,6 +28,7 @@
 		512B20F3A3B243F387FD0AFC /* QuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7A7972B0C44CE194A6D634 /* QuestionView.swift */; };
 		51634C64A486CFCB3A5F4829 /* FormulaCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54EE348EA08742A29688BF10 /* FormulaCardView.swift */; };
 		52C78F8B73F5660C828E4BD5 /* conceptStories.json in Resources */ = {isa = PBXBuildFile; fileRef = 3F11364E2053080C0A10CBB1 /* conceptStories.json */; };
+		580B5CBB823B80FC161D7182 /* ResumeAgentClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABEC5240A99216D0BB8059C /* ResumeAgentClient.swift */; };
 		58AD051935ED6A6A902DACDA /* PracticeSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556F5046AF8C8C22E031B975 /* PracticeSessionView.swift */; };
 		60C8889C6B8DFFDFD1C63FB5 /* FirebaseBootstrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E044A4E94D7F34216D068C /* FirebaseBootstrap.swift */; };
 		644D81C7CC9F5FDE773C3A27 /* AltDiagramSplitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71B0E74E82D928A06BE3928 /* AltDiagramSplitter.swift */; };
@@ -45,6 +45,7 @@
 		8ACCA09803A0C1DF9B8F19BB /* FirestoreStudentStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EAAFE0F66A60907CDB1C332 /* FirestoreStudentStore.swift */; };
 		9A6F2325A1FDC007FA06B7CA /* KnowledgeGraphClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333EDEE01284D66F3CAF76DD /* KnowledgeGraphClient.swift */; };
 		9D00117C89A5E8CB2AA33B3D /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3890F71414E363C12CC19397 /* DashboardView.swift */; };
+		A0BOOKAGENTCLIENT01 /* BookAgentClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0BOOKAGENTCLIENT01 /* BookAgentClient.swift */; };
 		A0CREATECANVAS01A2 /* CreateCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CREATECANVAS01A2 /* CreateCanvasView.swift */; };
 		A0DESKCONTENTROW01 /* DeskContentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DESKCONTENTROW01 /* DeskContentRow.swift */; };
 		A0DESKGRID001A2E /* DeskGridDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DESKGRID001A2E /* DeskGridDashboardView.swift */; };
@@ -70,7 +71,6 @@
 		A8BFBB951F764F03AE79B888 /* DrawingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B50609A6CA341D392B5BC37 /* DrawingStore.swift */; };
 		A99B09C9A6E7F8091B2C3D4E /* DeskPanCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99B09C9A6E7F8091B2C3D4E /* DeskPanCanvas.swift */; };
 		B0C259017B6359197378F0FD /* LearnStudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1858B772F353A476A8023F /* LearnStudioView.swift */; };
-		DDE6FE79749CA9A22EBDA201 /* DesignStudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600BDD909110482BB76AF2B6 /* DesignStudioView.swift */; };
 		B2C50496636E2ED7186E0232 /* DiagnosticGateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9818B2D6693B4381129CB08 /* DiagnosticGateView.swift */; };
 		B2C588BED4E177EC84C2B5D1 /* QuestionBankLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DAA6B2A396F72A1E1B6C97 /* QuestionBankLoader.swift */; };
 		B3D89B38899B7A196FE908B0 /* ContentsRoadmapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CA309BCDE2728C6DFBAC50 /* ContentsRoadmapView.swift */; };
@@ -131,6 +131,7 @@
 		D9SCHEDWORKF01A2B3C4 /* SchedulingWorkflowsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9SCHEDWORKF01A2B3C4 /* SchedulingWorkflowsView.swift */; };
 		DAE6F420718293B4C5D6E7F8 /* FieldDeskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D5E31F607182A3B4C5D6E7 /* FieldDeskView.swift */; };
 		DB8E5A9D2D06DFC8246BA1F0 /* WorkPracticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788775E6F0E0DB324F25E292 /* WorkPracticeView.swift */; };
+		DDE6FE79749CA9A22EBDA201 /* DesignStudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600BDD909110482BB76AF2B6 /* DesignStudioView.swift */; };
 		E1F7A5318293A4C5D6E7F809 /* ActFieldChrome.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E6F420718293B4C5D6E7F8 /* ActFieldChrome.swift */; };
 		E58FA0E3DF3B8556BD025DCB /* conceptContent.json in Resources */ = {isa = PBXBuildFile; fileRef = CC3901FD3CB48D913D28033E /* conceptContent.json */; };
 		F551930B299395BF13DE599B /* ConceptStoryLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2846DA5EC14603B4929385 /* ConceptStoryLoader.swift */; };
@@ -182,6 +183,7 @@
 		5A10EB3BDDE04216B5B57403 /* JesseRailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JesseRailView.swift; sourceTree = "<group>"; };
 		5A9A2FA726DCF7636F59A480 /* SessionNotesClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionNotesClient.swift; sourceTree = "<group>"; };
 		5B50609A6CA341D392B5BC37 /* DrawingStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingStore.swift; sourceTree = "<group>"; };
+		600BDD909110482BB76AF2B6 /* DesignStudioView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DesignStudioView.swift; sourceTree = "<group>"; };
 		670F10E849C346E2127D94CF /* DeskShellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskShellView.swift; sourceTree = "<group>"; };
 		6A270692D86516903DC8773D /* SVGImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGImageView.swift; sourceTree = "<group>"; };
 		6C6EE743854CB1274F574739 /* storyArt */ = {isa = PBXFileReference; lastKnownFileType = folder; path = storyArt; sourceTree = "<group>"; };
@@ -190,7 +192,6 @@
 		788775E6F0E0DB324F25E292 /* WorkPracticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkPracticeView.swift; sourceTree = "<group>"; };
 		789E888BA344DB5E76A0F09C /* ConceptChapterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConceptChapterView.swift; sourceTree = "<group>"; };
 		7CDBCE2A4A4F89B33A5443D0 /* BinderStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinderStore.swift; sourceTree = "<group>"; };
-		B0BOOKAGENTCLIENT01 /* BookAgentClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookAgentClient.swift; sourceTree = "<group>"; };
 		7EF74AFB2926183A3809D49B /* CoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverView.swift; sourceTree = "<group>"; };
 		80CEEF844EFE4193B796ED23 /* OutcomeClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutcomeClient.swift; sourceTree = "<group>"; };
 		8BF232E3B60D4484AC821058 /* MindCraftNotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MindCraftNotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -200,11 +201,11 @@
 		9668CDF69E284D128DF3FCBB /* StickerCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerCatalog.swift; sourceTree = "<group>"; };
 		9C5A189A567C149C7E1D34F1 /* conceptGraph.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = conceptGraph.json; sourceTree = "<group>"; };
 		9F1858B772F353A476A8023F /* LearnStudioView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LearnStudioView.swift; sourceTree = "<group>"; };
-		600BDD909110482BB76AF2B6 /* DesignStudioView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DesignStudioView.swift; sourceTree = "<group>"; };
 		9F8533094AB64B10828A047B /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		9FAB6A727D2FD6844F72EAF7 /* ConceptGraphLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConceptGraphLoader.swift; sourceTree = "<group>"; };
 		A05918461089BFC725BB84F8 /* questionBank.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = questionBank.json; sourceTree = "<group>"; };
 		A7B3C19D4E5F6081A2B3C4D5 /* PianoFieldBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PianoFieldBookView.swift; sourceTree = "<group>"; };
+		B0BOOKAGENTCLIENT01 /* BookAgentClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookAgentClient.swift; sourceTree = "<group>"; };
 		B0CREATECANVAS01A2 /* CreateCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCanvasView.swift; sourceTree = "<group>"; };
 		B0DESKCONTENTROW01 /* DeskContentRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskContentRow.swift; sourceTree = "<group>"; };
 		B0DESKGRID001A2E /* DeskGridDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskGridDashboardView.swift; sourceTree = "<group>"; };
@@ -262,6 +263,7 @@
 		C9OPENARCHIVE01A2B3C4 /* OpenLearningArchiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenLearningArchiveView.swift; sourceTree = "<group>"; };
 		C9QCALINVITE01A2B3C4 /* QCalInvite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QCalInvite.swift; sourceTree = "<group>"; };
 		C9SCHEDWORKF01A2B3C4 /* SchedulingWorkflowsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchedulingWorkflowsView.swift; sourceTree = "<group>"; };
+		CABEC5240A99216D0BB8059C /* ResumeAgentClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ResumeAgentClient.swift; sourceTree = "<group>"; };
 		CC3901FD3CB48D913D28033E /* conceptContent.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = conceptContent.json; sourceTree = "<group>"; };
 		CCBA83ACF9DE4E17BFF71157 /* SampleQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleQuestion.swift; sourceTree = "<group>"; };
 		CD38C7392605523E1A10E7F6 /* TutorDirectoryClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorDirectoryClient.swift; sourceTree = "<group>"; };
@@ -392,6 +394,7 @@
 				C8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift */,
 				C0KOKOROTTS01A2 /* KokoroTTSClient.swift */,
 				B0BOOKAGENTCLIENT01 /* BookAgentClient.swift */,
+				CABEC5240A99216D0BB8059C /* ResumeAgentClient.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -770,6 +773,7 @@
 				D9FE32A2CBC826477D6BCDA2 /* ChatHistoryImportParser.swift in Sources */,
 				D82368581E38D584FD93B658 /* JesseRailView.swift in Sources */,
 				A0BOOKAGENTCLIENT01 /* BookAgentClient.swift in Sources */,
+				580B5CBB823B80FC161D7182 /* ResumeAgentClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
