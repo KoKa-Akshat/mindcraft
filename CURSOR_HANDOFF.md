@@ -576,6 +576,68 @@ instead if the spec seems to need them:**
    asking for this dashboard rewrite. Treat it as still later unless told
    otherwise; don't fold it into this assignment's definition of done.
 
+**Visual/simulation generation — a real design, not a decision yet (Akshat
+explicitly asked for this to be thought through, not built, this session).**
+The question: when a lesson needs a diagram/graph/simulation, not just text,
+how does that actually get made? Three real options exist, in increasing
+order of power and risk — this is a genuine tradeoff, not a "just do the
+best one":
+
+1. **Constrained declarative spec, deterministic renderer (recommended
+   starting point).** The LLM never writes code — it fills in a fixed,
+   narrow JSON schema (`{"type": "line_chart", "points": [...], "labels":
+   [...]}`, `{"type": "number_line", "marks": [...]}`, etc. — a small,
+   closed set of chart/diagram kinds, not an open one), and a deterministic
+   renderer turns that into a real visual. Two renderer choices: (a)
+   **native, on-device** — SwiftUI `Charts`/`Canvas` render the spec
+   directly in the app, zero network round trip, zero server compute, zero
+   arbitrary-code-execution risk, but limited to whatever chart types get
+   built; (b) **server-side** — a small, fixed matplotlib/plotly script
+   (not LLM-written, just parameterized by the LLM's JSON) renders an
+   image, same safety property (the LLM supplies data, never code) but
+   with a richer visual vocabulary than SwiftUI Charts has today. This is
+   the same shape of guardrail this whole session has used everywhere else
+   (Practice Probe's real-bank-only rule, the `ADVISOR_AUTHORIZED_CREATORS`
+   licensing gate in `mindcraft-content-engine`) — never let the LLM's
+   output be more powerful than it needs to be to do the real job.
+
+2. **Manim, LLM-written Python, server-rendered (the ask's literal
+   suggestion — real, but real risk too).** Manim (3Blue1Brown's animation
+   library) produces genuinely excellent math visualizations, and "write
+   Manim code to explain X" is a real, well-precedented LLM task. But this
+   means executing LLM-generated Python on a server on every request — a
+   real arbitrary-code-execution surface, not a hypothetical one. Doing
+   this safely needs, at minimum: a sandboxed, network-isolated execution
+   environment (a locked-down container, not the same process handling
+   student data), a hard time/memory/output-size budget (a render that
+   hangs or runs away must not become a denial-of-service or a stuck
+   request), and validation that the generated script only imports Manim
+   (no `os`, `subprocess`, `socket`, etc. — a real allowlist, not a
+   best-effort filter). Manim renders are also not instant — seconds to
+   low minutes depending on complexity — so this needs an async job
+   pattern (kick off a render, poll or push a result), not a synchronous
+   request the student's UI blocks on. This is a real, buildable thing,
+   but it's a security-and-infrastructure project on its own, not a small
+   add to Assignment J's scope.
+
+3. **Real-life example, text only (the honest fallback, always available).**
+   When neither of the above fits — or before either is built — the
+   existing `StudentAIKeyStore.generateStudyPlan`-style `context` field
+   already does this: a warm, concrete, second-person analogy instead of a
+   diagram. Not a consolation prize; genuinely the right choice for a lot
+   of content (an abstract legal/philosophical concept from the book
+   graphs, for instance, may serve a student better as a real-life example
+   than a forced chart).
+
+**Recommended sequencing, if/when this gets built:** ship (1)'s native
+on-device renderer first — it's the lowest-risk, fastest to verify, and
+covers a meaningful chunk of "show it visually" (graphs, number lines,
+simple geometric figures) with zero new backend surface. Only reach for (2)
+once (1)'s limits are actually felt in practice, and treat it as its own
+scoped security review, not a quick follow-on. (3) is not a fallback to
+build — it already exists, just make sure the "no visual available" path
+routes to it honestly instead of silently showing nothing.
+
 **What IS honestly buildable, reusing what's real:**
 - Voice greeting: `JesseCallSession` has no "speak a scripted line without a
   full listen/reply loop" entry point today — `speak(_:)` is private, called
