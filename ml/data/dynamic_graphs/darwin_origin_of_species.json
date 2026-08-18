@@ -1,0 +1,331 @@
+{
+  "subject_id": "darwin_origin_of_species",
+  "title": "On the Origin of Species: The Theory of Evolution by Natural Selection",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "Struggle & Population": {
+      "classifier_name": "Struggle & Population",
+      "color": "SteelBlue"
+    },
+    "Variation": {
+      "classifier_name": "Variation",
+      "color": "SteelBlue"
+    },
+    "Heredity & Growth": {
+      "classifier_name": "Heredity & Growth",
+      "color": "SteelBlue"
+    },
+    "Synthesis": {
+      "classifier_name": "Synthesis",
+      "color": "SteelBlue"
+    },
+    "Biogeography & Classification": {
+      "classifier_name": "Biogeography & Classification",
+      "color": "SteelBlue"
+    },
+    "Selection Mechanisms": {
+      "classifier_name": "Selection Mechanisms",
+      "color": "SteelBlue"
+    },
+    "Historical Context": {
+      "classifier_name": "Historical Context",
+      "color": "SteelBlue"
+    },
+    "Evidence & Difficulties": {
+      "classifier_name": "Evidence & Difficulties",
+      "color": "SteelBlue"
+    }
+  },
+  "concepts": [
+    {
+      "id": "darwin_origin_of_species::darwin-historical-context",
+      "label": "Historical Context of Pre-Darwinian Natural History",
+      "subject_id": "darwin_origin_of_species",
+      "dependencies": [],
+      "taxonomy_id": "Historical Context",
+      "level": "foundational"
+    },
+    {
+      "id": "darwin_origin_of_species::species-immutability-debate",
+      "label": "The Debate Over Fixity of Species",
+      "subject_id": "darwin_origin_of_species",
+      "dependencies": [
+        "darwin_origin_of_species::darwin-historical-context"
+      ],
+      "taxonomy_id": "Historical Context",
+      "level": "foundational"
+    },
+    {
+      "id": "darwin_origin_of_species::variation-under-domestication",
+      "label": "Variation Under Domestication",
+      "subject_id": "darwin_origin_of_species",
+      "dependencies": [],
+      "taxonomy_id": "Variation",
+      "level": "foundational"
+    },
+    {
+      "id": "darwin_origin_of_species::selective-breeding",
+      "label": "Selective Breeding Practices",
+      "subject_id": "darwin_origin_of_species",
+      "dependencies": [
+        "darwin_origin_of_species::variation-under-domestication"
+      ],
+      "taxonomy_id": "Variation",
+      "level": "core"
+    },
+    {
+      "id": "darwin_origin_of_species::pigeon-breeding-evidence",
+      "label": "Pigeon Breeding as Evidence",
+      "subject_id": "darwin_origin_of_species",
+      "dependencies": [
+        "darwin_origin_of_species::selective-breeding"
+      ],
+      "taxonomy_id": "Variation",
+      "level": "core"
+    },
+    {
+      "id": "darwin_origin_of_species::variation-under-nature",
+      "label": "Variation Under Nature",
+      "subject_id": "darwin_origin_of_species",
+      "dependencies": [
+        "darwin_origin_of_species::variation-under-domestication"
+      ],
+      "taxonomy_id": "Variation",
+      "level": "core"
+    },
+    {
+      "id": "darwin_origin_of_species::species-vs-varieties",
+      "label": "Species vs. Varieties Distinction",
+      "subject_id": "darwin_origin_of_species",
+      "dependencies": [
+        "darwin_origin_of_species::variation-under-nature",
+        "darwin_origin_of_species::species-immutability-debate"
+      ],
+      "taxonomy_id": "Variation",
+      "level": "core"
+    },
+    {
+      "id": "darwin_origin_of_species::malthusian-population-principle",
+      "label": "Malthusian Population Principle",
+      "subject_id": "darwin_origin_of_species",
+      "dependencies": [],
+      "taxonomy_id": "Struggle & Population",
+      "level": "foundational"
+    },
+    {
+      "id": "darwin_origin_of_species::struggle-for-existence",
+      "label": "Struggle for Existence",
+      "subject_id": "darwin_origin_of_species",
+      "dependencies": [
+        "darwin_origin_of_species::malthusian-population-principle",
+        "darwin_origin_of_species::variation-under-nature"
+      ],
+      "taxonomy_id": "Struggle & Population",
+      "level": "core"
+    },
+    {
+      "id": "darwin_origin_of_species::natural-selection",
+      "label": "Natural Selection",
+      "subject_id": "darwin_origin_of_species",
+      "dependencies": [
+        "darwin_origin_of_species::struggle-for-existence",
+        "darwin_origin_of_species::species-vs-varieties"
+      ],
+      "taxonomy_id": "Selection Mechanisms",
+      "level": "core"
+    },
+    {
+      "id": "darwin_origin_of_species::sexual-selection",
+      "label": "Sexual Selection",
+      "subject_id": "darwin_origin_of_species",
+      "dependencies": [
+        "darwin_origin_of_species::natural-selection"
+      ],
+      "taxonomy_id": "Selection Mechanisms",
+      "level": "core"
+    },
+    {
+      "id": "darwin_origin_of_species::divergence-of-character",
+      "label": "Divergence of Character",
+      "subject_id": "darwin_origin_of_species",
+      "dependencies": [
+        "darwin_origin_of_species::natural-selection"
+      ],
+      "taxonomy_id": "Selection Mechanisms",
+      "level": "advanced"
+    },
+    {
+      "id": "darwin_origin_of_species::laws-of-variation",
+      "label": "Laws of Variation",
+      "subject_id": "darwin_origin_of_species",
+      "dependencies": [
+        "darwin_origin_of_species::variation-under-domestication"
+      ],
+      "taxonomy_id": "Heredity & Growth",
+      "level": "core"
+    },
+    {
+      "id": "darwin_origin_of_species::correlation-of-growth",
+      "label": "Correlation of Growth",
+      "subject_id": "darwin_origin_of_species",
+      "dependencies": [
+        "darwin_origin_of_species::laws-of-variation"
+      ],
+      "taxonomy_id": "Heredity & Growth",
+      "level": "core"
+    },
+    {
+      "id": "darwin_origin_of_species::inheritance-principle",
+      "label": "Principle of Inheritance",
+      "subject_id": "darwin_origin_of_species",
+      "dependencies": [
+        "darwin_origin_of_species::laws-of-variation"
+      ],
+      "taxonomy_id": "Heredity & Growth",
+      "level": "core"
+    },
+    {
+      "id": "darwin_origin_of_species::reversion-atavism",
+      "label": "Reversion and Atavism",
+      "subject_id": "darwin_origin_of_species",
+      "dependencies": [
+        "darwin_origin_of_species::inheritance-principle",
+        "darwin_origin_of_species::selective-breeding"
+      ],
+      "taxonomy_id": "Heredity & Growth",
+      "level": "advanced"
+    },
+    {
+      "id": "darwin_origin_of_species::instinct-as-heritable-trait",
+      "label": "Instinct as an Inherited, Selectable Trait",
+      "subject_id": "darwin_origin_of_species",
+      "dependencies": [
+        "darwin_origin_of_species::natural-selection",
+        "darwin_origin_of_species::inheritance-principle"
+      ],
+      "taxonomy_id": "Selection Mechanisms",
+      "level": "advanced"
+    },
+    {
+      "id": "darwin_origin_of_species::hybridism-sterility",
+      "label": "Hybridism and Sterility",
+      "subject_id": "darwin_origin_of_species",
+      "dependencies": [
+        "darwin_origin_of_species::species-vs-varieties",
+        "darwin_origin_of_species::inheritance-principle"
+      ],
+      "taxonomy_id": "Evidence & Difficulties",
+      "level": "advanced"
+    },
+    {
+      "id": "darwin_origin_of_species::difficulties-transitional-forms",
+      "label": "Difficulties: Transitional Forms",
+      "subject_id": "darwin_origin_of_species",
+      "dependencies": [
+        "darwin_origin_of_species::natural-selection",
+        "darwin_origin_of_species::divergence-of-character"
+      ],
+      "taxonomy_id": "Evidence & Difficulties",
+      "level": "advanced"
+    },
+    {
+      "id": "darwin_origin_of_species::complex-organs-problem",
+      "label": "Difficulties: Complex Organs",
+      "subject_id": "darwin_origin_of_species",
+      "dependencies": [
+        "darwin_origin_of_species::natural-selection"
+      ],
+      "taxonomy_id": "Evidence & Difficulties",
+      "level": "advanced"
+    },
+    {
+      "id": "darwin_origin_of_species::imperfection-geological-record",
+      "label": "Imperfection of the Geological Record",
+      "subject_id": "darwin_origin_of_species",
+      "dependencies": [
+        "darwin_origin_of_species::natural-selection"
+      ],
+      "taxonomy_id": "Evidence & Difficulties",
+      "level": "core"
+    },
+    {
+      "id": "darwin_origin_of_species::geological-succession",
+      "label": "Geological Succession of Species",
+      "subject_id": "darwin_origin_of_species",
+      "dependencies": [
+        "darwin_origin_of_species::imperfection-geological-record"
+      ],
+      "taxonomy_id": "Biogeography & Classification",
+      "level": "core"
+    },
+    {
+      "id": "darwin_origin_of_species::geographical-distribution",
+      "label": "Geographical Distribution of Species",
+      "subject_id": "darwin_origin_of_species",
+      "dependencies": [
+        "darwin_origin_of_species::natural-selection",
+        "darwin_origin_of_species::struggle-for-existence"
+      ],
+      "taxonomy_id": "Biogeography & Classification",
+      "level": "core"
+    },
+    {
+      "id": "darwin_origin_of_species::classification-common-descent",
+      "label": "Classification and Common Descent",
+      "subject_id": "darwin_origin_of_species",
+      "dependencies": [
+        "darwin_origin_of_species::geographical-distribution",
+        "darwin_origin_of_species::geological-succession",
+        "darwin_origin_of_species::divergence-of-character"
+      ],
+      "taxonomy_id": "Biogeography & Classification",
+      "level": "advanced"
+    },
+    {
+      "id": "darwin_origin_of_species::darwins-argumentative-structure",
+      "label": "Darwin's Argumentative Structure",
+      "subject_id": "darwin_origin_of_species",
+      "dependencies": [
+        "darwin_origin_of_species::darwin-historical-context",
+        "darwin_origin_of_species::species-immutability-debate"
+      ],
+      "taxonomy_id": "Synthesis",
+      "level": "cross_cutting"
+    },
+    {
+      "id": "darwin_origin_of_species::rhetorical-strategy-evidence-accumulation",
+      "label": "Cautious, Evidence-Accumulating Rhetorical Strategy",
+      "subject_id": "darwin_origin_of_species",
+      "dependencies": [
+        "darwin_origin_of_species::darwins-argumentative-structure",
+        "darwin_origin_of_species::difficulties-transitional-forms"
+      ],
+      "taxonomy_id": "Synthesis",
+      "level": "cross_cutting"
+    },
+    {
+      "id": "darwin_origin_of_species::descent-with-modification",
+      "label": "Descent with Modification (Central Thesis)",
+      "subject_id": "darwin_origin_of_species",
+      "dependencies": [
+        "darwin_origin_of_species::natural-selection",
+        "darwin_origin_of_species::classification-common-descent",
+        "darwin_origin_of_species::hybridism-sterility"
+      ],
+      "taxonomy_id": "Synthesis",
+      "level": "advanced"
+    },
+    {
+      "id": "darwin_origin_of_species::alternative-theories-rejected",
+      "label": "Rejection of Alternative Theories (e.g. Vestiges)",
+      "subject_id": "darwin_origin_of_species",
+      "dependencies": [
+        "darwin_origin_of_species::instinct-as-heritable-trait",
+        "darwin_origin_of_species::darwins-argumentative-structure"
+      ],
+      "taxonomy_id": "Synthesis",
+      "level": "cross_cutting"
+    }
+  ]
+}

@@ -74,6 +74,7 @@ DISTRACTOR_PRIORS_DIR = DATA_DIR / "distractor_priors"
 COMBINATION_MIN_OVERLAP = 0.5
 
 from mindcraft_graph.loaders.complete_ontology_loader import load_complete_ontology
+from mindcraft_graph.loaders.dynamic_concept_loader import load_dynamic_concept_graphs, merge_ontology
 
 if STANDARDIZED_ONTOLOGY_PATH.exists():
     ontology, ingredient_ontology = load_complete_ontology(STANDARDIZED_ONTOLOGY_PATH)
@@ -85,6 +86,20 @@ else:
     ontology = Ontology.model_validate_json(LEGACY_ONTOLOGY_PATH.read_text())
     ingredient_ontology = IngredientOntology.model_validate_json(LEGACY_INGREDIENT_PATH.read_text())
     _ontology_source = LEGACY_ONTOLOGY_PATH.name
+
+# Dynamic, book-derived concept graphs (mindcraft-content-engine pipeline
+# output — book -> concept graph -> validated, namespaced Ontology) merge
+# into the SAME live ontology every downstream system already reads: the
+# embedding/classification rebuild below, ingredient_graph, edges/decay/
+# pathfinder. The graph "scales organically" by growing this one object,
+# not by running a second parallel system. strict=False here on purpose —
+# see load_dynamic_concept_graphs' docstring — a live service must not go
+# down because one book graph in a growing, semi-automated directory is bad.
+DYNAMIC_GRAPHS_DIR = DATA_DIR / "dynamic_graphs"
+_dynamic_graphs = load_dynamic_concept_graphs(DYNAMIC_GRAPHS_DIR)
+if _dynamic_graphs:
+    ontology = merge_ontology(ontology, _dynamic_graphs)
+    _ontology_source = f"{_ontology_source} + {len(_dynamic_graphs)} dynamic graph(s)"
 
 ingredient_graph = IngredientGraph(ingredient_ontology)
 _standardized_ontology_data = (
