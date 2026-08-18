@@ -3320,29 +3320,32 @@ struct FieldDeskView: View {
         }
     }
 
+    /// Upload leads (explicit ask: "should be Upload instead of Get Help") -
+    /// typing a problem out is the fallback, not the default. Either path
+    /// ends the same way: a solved result files into Binder and this popup
+    /// hands off to the Binder screen instead of holding its own copy of
+    /// the answer (see `fileHomeworkHelpToBinder`).
     private var homeworkHelpSolverBody: some View {
         VStack(alignment: .leading, spacing: 10) {
-            HStack(spacing: 8) {
-                Text("Paste a problem, or upload a photo of it.")
-                    .font(.system(size: 12, weight: .medium, design: .rounded))
-                    .foregroundColor(Color(fdHex: "8a8478"))
-                Spacer(minLength: 0)
-                PhotosPicker(selection: $homeworkPhotoItem, matching: .images) {
+            PhotosPicker(selection: $homeworkPhotoItem, matching: .images) {
+                HStack(spacing: 8) {
                     if homeworkUploading {
                         ProgressView().tint(Color(fdHex: "0c1207"))
-                            .frame(width: 28, height: 28)
                     } else {
                         Image(systemName: "camera.fill")
-                            .font(.system(size: 13, weight: .semibold))
-                            .foregroundColor(Color(fdHex: "0c1207"))
-                            .frame(width: 28, height: 28)
-                            .background(Circle().fill(Color(fdHex: "c4f547")))
+                        Text("Upload a photo")
                     }
                 }
-                .disabled(homeworkUploading)
-                .accessibilityIdentifier("fieldDeskHomeworkHelpUpload")
-                .accessibilityLabel("Upload a photo of the problem")
+                .font(.system(size: 13, weight: .bold, design: .rounded))
+                .foregroundColor(Color(fdHex: "0c1207"))
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 12)
             }
+            .buttonStyle(.plain)
+            .background(Capsule().fill(Color(fdHex: "c4f547")))
+            .disabled(homeworkUploading)
+            .accessibilityIdentifier("fieldDeskHomeworkHelpUpload")
+            .accessibilityLabel("Upload a photo of the problem")
             .onChange(of: homeworkPhotoItem) { _, item in
                 guard let item else { return }
                 Task {
@@ -3350,14 +3353,20 @@ struct FieldDeskView: View {
                     homeworkPhotoItem = nil
                 }
             }
+
             if let homeworkUploadNote {
                 Text(homeworkUploadNote)
                     .font(.system(size: 11, weight: .semibold, design: .rounded))
                     .foregroundColor(Color(fdHex: "7a9e2e"))
             }
+
+            Text("or type it out")
+                .font(.system(size: 11, weight: .semibold, design: .rounded))
+                .foregroundColor(Color(fdHex: "8a8478"))
+
             TextEditor(text: $homeworkProblemDraft)
                 .font(.system(size: 14, weight: .medium, design: .rounded))
-                .frame(height: 100)
+                .frame(height: 90)
                 .padding(8)
                 .background(
                     RoundedRectangle(cornerRadius: 10, style: .continuous)
@@ -3377,7 +3386,7 @@ struct FieldDeskView: View {
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 10)
                 } else {
-                    Text("Get help")
+                    Text("Solve")
                         .font(.system(size: 13, weight: .bold, design: .rounded))
                         .foregroundColor(Color(fdHex: "0c1207"))
                         .frame(maxWidth: .infinity)
@@ -3385,31 +3394,16 @@ struct FieldDeskView: View {
                 }
             }
             .buttonStyle(.plain)
-            .background(Capsule().fill(Color(fdHex: "c4f547")))
+            .background(Capsule().fill(Color(fdHex: "e4dcc8")))
             .disabled(homeworkProblemDraft.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || homeworkSolving)
             .accessibilityIdentifier("fieldDeskHomeworkHelpSolve")
 
-            ScrollView {
-                VStack(alignment: .leading, spacing: 6) {
-                    ForEach(homeworkResultCards, id: \.title) { card in
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(card.title)
-                                .font(.system(size: 12, weight: .bold, design: .rounded))
-                                .foregroundColor(Color(fdHex: "0c1207"))
-                            Text(card.body)
-                                .font(.system(size: 13, weight: .medium, design: .rounded))
-                                .foregroundColor(Color(fdHex: "1c1a17"))
-                        }
-                        .padding(.vertical, 4)
-                    }
-                    if let homeworkError {
-                        Text(homeworkError)
-                            .font(.system(size: 12, weight: .semibold, design: .rounded))
-                            .foregroundColor(Color(fdHex: "b3261e"))
-                    }
-                }
+            if let homeworkError {
+                Text(homeworkError)
+                    .font(.system(size: 12, weight: .semibold, design: .rounded))
+                    .foregroundColor(Color(fdHex: "b3261e"))
+                    .accessibilityIdentifier("fieldDeskHomeworkHelpResult")
             }
-            .accessibilityIdentifier("fieldDeskHomeworkHelpResult")
         }
     }
 
@@ -3420,10 +3414,33 @@ struct FieldDeskView: View {
         switch await IngredientHintsClient.hints(for: homeworkProblemDraft) {
         case .cards(let cards):
             homeworkResultCards = cards
+            fileHomeworkHelpToBinder(problem: homeworkProblemDraft, cards: cards)
         case .keyRejected:
             homeworkError = "That AI key was rejected. Open Settings to update it."
         case .unavailable:
             homeworkError = "Couldn't get an answer - try again in a bit."
+        }
+    }
+
+    /// A solved problem doesn't stay trapped in this popup's own result
+    /// list - it files as a real Binder Doc and this popup hands off to
+    /// the Binder screen, which already shows it live (Firestore-backed).
+    /// Also drops an Intel line the same way the Gmail digest does
+    /// (`store.prependIntel`) - Intel's own takeover view already renders
+    /// fresh lines inline on the dashboard, so this needs no popup of its
+    /// own (explicit ask: "it doesn't need its own pop up").
+    private func fileHomeworkHelpToBinder(problem: String, cards: [IngredientHintsClient.HintCard]) {
+        let trimmed = problem.trimmingCharacters(in: .whitespacesAndNewlines)
+        let title = trimmed.isEmpty ? "Homework help" : String(trimmed.prefix(60))
+        let body = cards.map { "\($0.title)\n\($0.body)" }.joined(separator: "\n\n")
+        binderStore.addDoc(title: title, body: body, source: "homework_help")
+        let line = "Homework · \(title)"
+        if !store.intelLines.contains(line) {
+            store.prependIntel(line)
+        }
+        withAnimation(.easeInOut(duration: 0.2)) {
+            showHomeworkHelpOverlay = false
+            showBinderOverlay = true
         }
     }
 

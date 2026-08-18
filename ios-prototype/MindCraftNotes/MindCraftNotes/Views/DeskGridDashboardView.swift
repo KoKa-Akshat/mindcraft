@@ -1311,11 +1311,16 @@ struct DeskGridDashboardView: View {
     /// reuses the existing `onOpenFlow("book")` callback FieldDeskView
     /// already wires for the Flows rail's own Book row, not a new path.
     private var workDock: some View {
+        // Explicit order (2026-08-18 ask): Memo, Transcribe, Learn, Flows,
+        // +Book. "+Book" (not just "Book") because tapping it starts a book
+        // with Jesse rather than opening a passive library - same "+"
+        // convention as CreateCanvasView's "+ Slide".
         HStack(spacing: 8) {
             dockChip("Memo", system: "note.text", identifier: "deskGridDashboardAddMemo") { setRail(rail == .memo ? .none : .memo) }
-            dockChip("Flows", system: "bolt.fill", identifier: "deskGridDock_Flows") { setRail(rail == .flows ? .none : .flows) }
+            dockChip("Transcribe", system: "waveform", identifier: "deskGridDock_Transcribe", action: onTranscribe)
             dockChip("Learn", system: "square.grid.2x2.fill", identifier: "deskGridDock_LearnStudio") { onOpenLearnStudio() }
-            dockChip("Book", system: "book.fill", identifier: "deskGridDock_Book") { onOpenFlow("book") }
+            dockChip("Flows", system: "bolt.fill", identifier: "deskGridDock_Flows") { setRail(rail == .flows ? .none : .flows) }
+            dockChip("+Book", system: "book.fill", identifier: "deskGridDock_Book") { onOpenFlow("book") }
             searchField(placeholder: "Search", identifier: "deskGridDashboardSearch", onSubmit: submitSearch)
         }
         .padding(.horizontal, 16)
