@@ -360,7 +360,7 @@ Fix: wrapped every one of those ~20 branches' view expressions in `AnyView(...)`
 
 PR #47's branch (`cursor/box-grid-redesign-2c98`) now has both fixes. Gate is unchanged: **the real-key test on #46 is still the next thing that has to happen before either #46 or #47 merges.**
 
-**2026-08-17 — Claude, real-key gate cleared: Akshat confirmed his Groq key works on-device across both Homework Help and the new agent takeover (real drafted email reply, real answered questions) — merging #46.**
+**2026-08-17 — Claude, real-key gate cleared: Akshat confirmed his Groq key works on-device across both Homework Help and the new agent takeover (real drafted email reply, real answered questions).** Resolved the CURSOR_HANDOFF.md conflict against main (Engine-lane commits had diverged the branch heavily; no iOS code conflicted), confirmed `xcodebuild build` still green post-merge, waited for CI (`build-and-test` passed, 40m30s - the only red check is the pre-existing, already-investigated, unrelated Vercel webhook package-size failure), then merged via `gh pr merge 46 --merge`. **PR #46 is MERGED.** PR #47 (`cursor/box-grid-redesign-2c98`) is next - it now also contains the crash fix, search fix, and generalized agent-takeover work from tonight, all pushed and CI-worthy but not yet itself re-verified against this new main tip.
 
 ---
 
