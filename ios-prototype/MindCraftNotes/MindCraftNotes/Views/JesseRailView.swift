@@ -33,8 +33,10 @@ struct JesseRailView: View {
     /// The MindCraft raccoon mark, real asset (`Resources/stickers/
     /// raccoon-mascot.png`, same loading pattern `StickerCatalog` already
     /// uses) - not the placeholder smiley. Cached once per process, same
-    /// reasoning as `StickerCatalog.imageCache`.
-    private static let raccoonImage: Image = {
+    /// reasoning as `StickerCatalog.imageCache`. Not `private` - reused
+    /// directly by `DeskGridDashboardView`'s search-field icon swap
+    /// (2026-08-18) rather than a second copy of the same loading logic.
+    static let raccoonImage: Image = {
         if let url = Bundle.main.url(forResource: "raccoon-mascot", withExtension: "png", subdirectory: "stickers"),
            let data = try? Data(contentsOf: url),
            let uiImage = UIImage(data: data) {

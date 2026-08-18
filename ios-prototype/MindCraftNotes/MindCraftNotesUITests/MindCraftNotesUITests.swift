@@ -2263,6 +2263,33 @@ final class MindCraftNotesUITests: XCTestCase {
     /// (`HomeworkDocumentPicker`), which does present. This only proves the
     /// picker itself appears, not file selection (no real Files data in a
     /// fresh Simulator).
+    /// Real regression coverage for the Binder+Intel content-merge
+    /// (2026-08-18, explicit ask): with a seeded upload already being
+    /// viewed, Binder shows its real content, Intel's own tile is gone,
+    /// the search bar's icon is the raccoon (not the magnifying glass),
+    /// and the close button actually returns to the normal layout.
+    func testContentViewerShowsUploadAndCloses() {
+        let app = launchFieldDeskApp(extraArgs: ["--ui-testing-content-viewer"])
+        XCUIDevice.shared.orientation = .landscapeLeft
+        XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 15))
+
+        XCTAssertTrue(app.staticTexts["chapter3_notes.pdf"].waitForExistence(timeout: 5), "expected the viewed upload's filename in the content viewer")
+        // The card list renders inside a ScrollView that doesn't publish its
+        // own Text children to the accessibility tree (confirmed via a real
+        // screenshot showing the content correctly on screen) - a marker
+        // carrying the real card text as its label sidesteps that, same
+        // pattern as `deskGridDashboard`'s own marker.
+        let cardTextMarker = app.staticTexts["deskGridContentViewerCardText"]
+        XCTAssertTrue(cardTextMarker.waitForExistence(timeout: 5), "expected the content viewer's card-text marker")
+        XCTAssertTrue(cardTextMarker.label.contains("A derivative measures the instantaneous rate of change of a function."), "expected the real card content, not a placeholder")
+        XCTAssertFalse(app.buttons["deskGridTile_Intel"].exists, "expected Intel's own tile to be gone while content-viewer mode is active")
+        XCTAssertTrue(app.buttons["deskGridSearchJesseIcon"].exists, "expected the search field's icon to be the raccoon, not the magnifying glass")
+
+        app.buttons["deskGridContentViewerClose"].tap()
+        XCTAssertFalse(app.staticTexts["chapter3_notes.pdf"].waitForExistence(timeout: 3), "expected the content viewer to close")
+        XCTAssertTrue(app.buttons["deskGridTile_Intel"].waitForExistence(timeout: 5), "expected Intel's own tile back after closing")
+    }
+
     func testHomeworkHelpTileTapOpensDocumentPicker() {
         let app = launchFieldDeskApp()
         XCUIDevice.shared.orientation = .landscapeLeft

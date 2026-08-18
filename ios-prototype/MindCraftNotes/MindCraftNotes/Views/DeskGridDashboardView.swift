@@ -128,6 +128,13 @@ struct DeskGridDashboardView: View {
     @State private var homeworkError: String?
     @State private var homeworkUploads: [HomeworkUploadSummary] = []
     @State private var presentedMicroSim: MicroSimRecord?
+    /// A tapped Homework Help upload being read in the merged Binder+Intel
+    /// space (2026-08-18, explicit ask: "once you upload things you
+    /// should get to click on that file and that should display on your
+    /// binder... it mixes with Intel to get all that space on the
+    /// right... Intel instead moves down to our search bar... you can
+    /// press on it to keep continuing to Jesse"). nil = normal layout.
+    @State private var viewingUpload: HomeworkUploadSummary?
 
     // MARK: - Agent takeover (any real ask, not just the email/draft case)
     // Any request longer than a quick nav keyword borrows Binder and/or
@@ -304,6 +311,26 @@ struct DeskGridDashboardView: View {
             .contentShape(Rectangle())
             .gesture(spaceGesture)
             .task { await syncConnectedBoxes() }
+            .onAppear {
+                // Real STT/vision-OCR can't be driven by an automated test
+                // (no simulator camera/mic), so this seeds an already-
+                // uploaded, already-viewed file with a fixed summary -
+                // same shape as `--ui-testing-jesse-call` elsewhere in
+                // this app. Proves the content-viewer layout (Binder
+                // expands into Intel's space, search icon becomes the
+                // raccoon) independent of the real upload pipeline.
+                if ProcessInfo.processInfo.arguments.contains("--ui-testing-content-viewer") {
+                    let seed = HomeworkUploadSummary(
+                        fileName: "chapter3_notes.pdf",
+                        cards: [
+                            IngredientHintsClient.HintCard(title: "Definition", body: "A derivative measures the instantaneous rate of change of a function."),
+                            IngredientHintsClient.HintCard(title: "Chapters", body: "Limits\nDerivative Rules\nApplications"),
+                        ]
+                    )
+                    homeworkUploads = [seed]
+                    viewingUpload = seed
+                }
+            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .ignoresSafeArea()
@@ -352,8 +379,12 @@ struct DeskGridDashboardView: View {
         ZStack(alignment: .topLeading) {
             Color.clear
                 .frame(width: board.width, height: board.height)
-            pin(boxRect(.intel), scale: scale) {
-                photoTile(.intel)
+            // Intel's own tile is skipped entirely in content-viewer mode
+            // (see boxRect/searchField) - Binder expands into its space.
+            if viewingUpload == nil {
+                pin(boxRect(.intel), scale: scale) {
+                    photoTile(.intel)
+                }
             }
             pin(boxRect(.moodle), scale: scale) {
                 photoTile(.moodle)
@@ -1175,11 +1206,12 @@ struct DeskGridDashboardView: View {
         // Binder/Homework Help, so it needs dark ink like they do, even
         // though its own tile wash (violet) is dark.
         let ink: Color = (kind == .binder || kind == .homeworkHelp || kind == .moodle) ? tileInk : .white
-        // Binder only takes over when there's actually binder-shaped
-        // content (an email or a list of lines) to show - a reply-only ask
-        // ("what's my next assignment") shouldn't blank out Binder's real
-        // titles just because Intel is showing an answer.
-        if agentTakeoverActive && kind == .binder && (agentEmail != nil || agentDraftBusy || agentBinderLines != nil) {
+        // Content-viewer mode takes priority over every other Binder
+        // state - a real, tapped upload's content, not Binder's normal
+        // titles/blurb (2026-08-18, explicit ask).
+        if kind == .binder, let viewingUpload {
+            tileInnerCard { uploadContentViewerBody(viewingUpload, ink: ink) }
+        } else if agentTakeoverActive && kind == .binder && (agentEmail != nil || agentDraftBusy || agentBinderLines != nil) {
             AnyView(agentBinderTakeoverView(ink: ink))
         } else if agentTakeoverActive && kind == .intel {
             AnyView(agentIntelTakeoverView())
@@ -1268,6 +1300,107 @@ struct DeskGridDashboardView: View {
     /// intermediate screen. This is just the display: an upload hint when
     /// empty, or a scrollable "transcript space" of every solved item this
     /// session (filename + real AI summary) once there's something to show.
+    /// The merged Binder+Intel content-viewer's real body (2026-08-18,
+    /// explicit ask) - the tapped upload's real AI cards and matched
+    /// MicroSims, big and readable in the expanded space, plus a strip
+    /// of every other upload so switching between multiple uploaded
+    /// files stays reachable without leaving this view ("if I upload
+    /// another PDF... click on the second PDF, binder plus intel screen
+    /// should show me that").
+    @ViewBuilder
+    private func uploadContentViewerBody(_ upload: HomeworkUploadSummary, ink: Color) -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Text(upload.fileName)
+                    .font(.system(size: 18, weight: .heavy, design: .rounded))
+                    .foregroundColor(ink)
+                Spacer(minLength: 0)
+                Button {
+                    withAnimation(.easeInOut(duration: 0.25)) { viewingUpload = nil }
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .font(.system(size: 20))
+                        .foregroundColor(ink.opacity(0.4))
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("deskGridContentViewerClose")
+            }
+            if homeworkUploads.count > 1 {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 8) {
+                        ForEach(homeworkUploads) { other in
+                            Button {
+                                withAnimation(.easeInOut(duration: 0.2)) { viewingUpload = other }
+                            } label: {
+                                Text(other.fileName)
+                                    .font(.system(size: 11, weight: .bold, design: .rounded))
+                                    .lineLimit(1)
+                                    .foregroundColor(other.id == upload.id ? .white : ink)
+                                    .padding(.horizontal, 10)
+                                    .padding(.vertical, 6)
+                                    .background(
+                                        Capsule().fill(other.id == upload.id ? Color(gridHex: "247a4d") : Color(gridHex: "f3f1ec"))
+                                    )
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                }
+            }
+            ScrollView(showsIndicators: true) {
+                VStack(alignment: .leading, spacing: 16) {
+                    ForEach(upload.cards, id: \.title) { card in
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(card.title)
+                                .font(.system(size: 13, weight: .heavy, design: .rounded))
+                                .foregroundColor(Color(gridHex: "247a4d"))
+                            Text(card.body)
+                                .font(.system(size: 14, weight: .medium, design: .rounded))
+                                .foregroundColor(ink.opacity(0.9))
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                    }
+                    if !upload.microsims.isEmpty {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("INTERACTIVE SIMULATIONS")
+                                .font(.system(size: 10, weight: .heavy, design: .rounded))
+                                .tracking(0.4)
+                                .foregroundColor(ink.opacity(0.5))
+                            ForEach(upload.microsims) { sim in
+                                Button { presentedMicroSim = sim } label: {
+                                    HStack(spacing: 6) {
+                                        Image(systemName: "play.circle.fill")
+                                        Text(sim.title)
+                                    }
+                                    .font(.system(size: 13, weight: .bold, design: .rounded))
+                                    .foregroundColor(Color(gridHex: "5b3e8f"))
+                                }
+                                .buttonStyle(.plain)
+                            }
+                        }
+                    }
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
+        }
+        // Same invisible-marker technique as `deskGridDashboard`/
+        // `fieldDeskWindow` elsewhere in this file: the card content lives
+        // inside a ScrollView that, for reasons specific to this nested-
+        // ScrollView-inside-a-scaled-artboard shape, never publishes its
+        // own Text children to the accessibility tree (confirmed via a
+        // real screenshot - the content renders correctly on screen, it
+        // just isn't queryable via XCUITest directly). A marker carrying
+        // the real card text as its label sidesteps that without faking
+        // the content.
+        .overlay(alignment: .topLeading) {
+            Text(verbatim: upload.cards.map(\.body).joined(separator: " | "))
+                .font(.system(size: 1))
+                .foregroundColor(.clear)
+                .accessibilityIdentifier("deskGridContentViewerCardText")
+                .allowsHitTesting(false)
+        }
+    }
+
     @ViewBuilder
     private func homeworkHelpTileBody(ink: Color) -> some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -1320,6 +1453,12 @@ struct DeskGridDashboardView: View {
                             .padding(8)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .background(RoundedRectangle(cornerRadius: 8, style: .continuous).fill(Color(gridHex: "f3f1ec")))
+                            // Tap the row itself (not the microsim button
+                            // inside it) to open this upload's real content
+                            // in the merged Binder+Intel space.
+                            .contentShape(Rectangle())
+                            .onTapGesture { withAnimation(.easeInOut(duration: 0.25)) { viewingUpload = upload } }
+                            .accessibilityIdentifier("deskGridHomeworkUploadRow_\(upload.id)")
                         }
                     }
                 }
@@ -1609,6 +1748,13 @@ struct DeskGridDashboardView: View {
     }
 
     private func boxRect(_ kind: TileKind) -> CGRect {
+        // Content-viewer mode takes priority over everything else -
+        // Binder expands to the Binder+Intel union; Intel's own tile is
+        // skipped entirely (see tileBoard), so its rect is never asked
+        // for while this is active.
+        if viewingUpload != nil, kind == .binder {
+            return WorkArtboard.contentViewerBinder
+        }
         let base: CGRect
         switch kind {
         case .intel: base = expanded ? WorkArtboard.p5Intel : WorkArtboard.p4Intel
@@ -1821,8 +1967,28 @@ struct DeskGridDashboardView: View {
     private func searchField(placeholder: String, identifier: String, text: Binding<String>? = nil, onSubmit: @escaping () -> Void) -> some View {
         ZStack {
             HStack(spacing: 6) {
-                Image(systemName: "magnifyingglass")
-                    .foregroundColor(.white.opacity(0.45))
+                // While viewing an upload's content (Binder+Intel merged),
+                // the search icon becomes the raccoon - the real way back
+                // to Jesse without needing Intel's own tile back
+                // (2026-08-18, explicit ask: "instead of the search you
+                // see the raccoon and you can press on it to keep
+                // continuing to Jesse").
+                if viewingUpload != nil {
+                    Button {
+                        withAnimation(.easeInOut(duration: 0.25)) { viewingUpload = nil }
+                    } label: {
+                        JesseRailView.raccoonImage
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 18, height: 18)
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityIdentifier("deskGridSearchJesseIcon")
+                    .accessibilityLabel("Continue with Jesse")
+                } else {
+                    Image(systemName: "magnifyingglass")
+                        .foregroundColor(.white.opacity(0.45))
+                }
                 TextField(placeholder, text: text ?? $searchQuery)
                     .textFieldStyle(.plain)
                     .font(.system(size: 13, weight: .medium, design: .rounded))
@@ -1830,6 +1996,7 @@ struct DeskGridDashboardView: View {
                     .submitLabel(.search)
                     .onSubmit(onSubmit)
                     .disabled(!aiKeys.hasKey)
+                    .accessibilityIdentifier(identifier)
             }
             .padding(.horizontal, 12)
             .padding(.vertical, 8)
@@ -1846,7 +2013,6 @@ struct DeskGridDashboardView: View {
                     .accessibilityLabel("Connect your AI key from Manage to power search")
             }
         }
-        .accessibilityIdentifier(identifier)
     }
 
     private func dockChip(_ title: String, system: String, identifier: String? = nil, action: @escaping () -> Void) -> some View {
@@ -2002,6 +2168,16 @@ private enum WorkArtboard {
     // Nudged closer to the true bottom edge again (was y: 698, leaving a
     // 16pt gap under a 96pt-tall dock on an 810pt board) - tiles untouched.
     static let dock = CGRect(x: 96, y: 706, width: 1321, height: 96)
+
+    /// Content-viewer mode (2026-08-18, explicit ask: tap an uploaded
+    /// file, Binder "mixes with Intel to get all that space on the
+    /// right"). The union of Binder's and Intel's own p4 footprints -
+    /// Homework Help and Knowledge Graph stay put in the left column.
+    /// Intel's own tile is skipped entirely while this is active - "Intel
+    /// instead moves down to our search bar and instead of the search
+    /// you see the raccoon" is the search field's own leading icon
+    /// swapping to the raccoon (see `searchField`), not a second tile.
+    static let contentViewerBinder = CGRect(x: 490, y: 40, width: 930, height: 640)
 }
 
 /// Gentle, always-on pulse for the Knowledge Graph tile's empty-state seed
