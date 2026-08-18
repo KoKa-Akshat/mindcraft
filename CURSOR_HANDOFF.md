@@ -596,6 +596,42 @@ told otherwise.
 
 ---
 
+**2026-08-18 — Claude, "+ Design" shipped and merged — PR #48, separate from F/G**
+
+Not Assignment F or G — a third, parallel piece: `DesignStudioView.swift`,
+a new "+ Design" row at the bottom of the Flows menu. A boxy canvas
+(draggable/connectable Find/Ask/Make/Output boxes) following the exact
+shell shape Learn Studio already established: `JesseRailView` docked
+right, content on the same 1440x810 artboard `DeskGridDashboardView`/
+`LearnStudioView` both use — not the older WKWebView+desk_os pattern.
+Ask boxes make a real call via a new `StudentAIKeyStore.ask(systemPrompt:
+userPrompt:)` (generalizes the `complete()` primitive already backing
+`solveHomework`/`generateStudyPlan` — same BYO-key path, no separate
+setup). Find/Make/Output boxes say plainly they're not wired to a real
+backend yet rather than faking a result.
+
+Branched separately from PR #47 on purpose (that PR was, and is, mid-flight
+on Book/Learn Studio in the same two wiring files). Opened as PR #48,
+picked up a real conflict once #47's Book/Learn-Studio work and an
+unrelated Gmail-tile fix (PR #45) landed on `main` first — resolved by
+taking `main`'s version wholesale for anything not mine (the Gmail tile
+code, `CURSOR_HANDOFF.md`) and re-applying only the one `flowRow` addition
+on top, then fixing one stale call site (`DeskGridDashboardView`'s init
+had dropped `onOpenHomeworkHelp`/`onOpenLearnStudio` since this branch
+forked — Homework Help stays reachable via its existing separate wiring).
+`xcodebuild build` succeeded before and after the merge. Merged via
+`gh pr merge 48 --merge`. **PR #48 is MERGED.**
+
+Coordinated live with a second Claude Code session Akshat had standing by
+as a fallback — it stood down once I confirmed I had it, no double-work.
+
+Still open, not done tonight: Find/Make/Output boxes aren't wired to real
+Binder/Gmail/Drive backends, no pan/zoom camera, no NL "describe it, Jesse
+builds the boxes" generation, no flow persistence. See
+`agent_work/product/flows_2026-08-17/FLOWS_VISION.md` for the fuller list.
+
+---
+
 ## Handoff note (2026-08-16 night → 2026-08-17 morning): Codex filling in for Claude
 
 Akshat's Claude Code session is ending for the night. A ChatGPT/Codex session
