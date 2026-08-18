@@ -249,6 +249,170 @@ additive UI only.
 show sleeping/disconnected state without restarting the app; reordering
 persists across relaunch. `xcodebuild build` green.
 
+---
+
+#### Assignment F — Book: one native Jesse call instead of two, then real tools/boxes + tutor forward
+
+**Goal.** `BookWorkflowView` currently shows TWO independent, simultaneously-
+live "talk to Jesse" experiences: the web page on the left
+(`agent_work/product/desk_os/workflows/book/agent.js` — browser
+`SpeechRecognition`, hold-to-talk, its own `speechSynthesis` voice, POSTs to
+`https://mindcraft-webhook.vercel.app/api/book-agent` and actually drives the
+book draft) and the native `JesseRailView`/`JesseCallSession` call added on
+the right 2026-08-17, which today is decorative — it doesn't feed the
+book-writing loop at all. Akshat's explicit ask: "why are there two calls in
+Book… bring that functionality to the right." Port the real mechanism onto
+the native call so there is exactly one Jesse, then redesign the left side
+into structured tools/boxes ending in a tutor-review/forward step (the left
+side's current visual *design* — draft/chapters card, publish button — was
+called out as good; it's the dual-call and the missing tutor step that need
+fixing, not a from-scratch redesign of what's already there).
+
+**The backend is already fully portable — read this before assuming a big
+webhook change is needed.** `POST https://mindcraft-webhook.vercel.app/api/book-agent`
+is a plain stateless HTTP endpoint, not tied to the browser at all:
+- Request: `{ "message": string, "draft": { "topic": string, "title": string, "chapters": [{ "title": string, "body": string }] } }`
+- Response: `{ "reply": string, "draft": { same shape }, "readyToPublish": bool }`
+`agent_work/product/desk_os/workflows/book/agent.js`'s `ask()` function (top
+of the file) is the exact reference implementation of the request/response
+cycle — read it, don't guess the contract. Publishing is *also* already
+fully native: `BinderStore.addBook(title:body:)` writes straight to
+Firestore, and `BookWorkflowWebView.Coord.userContentController` in
+`BookWorkflowView.swift` already bridges the web page's `publish` message
+into that exact call — a fully-native Book wouldn't need a WKWebView at all.
+
+**The real work, and a genuine gotcha in shared code:** `JesseCallSession.
+askJesse(_:)` (`Networking/JesseCallSession.swift:314`) is the ONE place
+every native call across the whole app routes a heard utterance to a
+backend — and today it does **not** branch on `context` at all. Every
+screen's call (Resume, Presentation, Learn Studio, Archive, and Book once
+wired) currently ends up at the same generic `ArchiveRagClient.ask(...)`,
+regardless of which screen opened it — `context` is stored on turns and used
+for UI labeling only. Making Book's native call actually write chapters
+means adding a real `if context == "book"` branch inside `askJesse()` that
+calls a new `BookAgentClient.ask(message:draft:)` (mirror `agent.js`'s `ask()`
+exactly — same URL, same request/response shape) instead of
+`ArchiveRagClient`, and speaks back `reply` the same way the existing path
+already does. Store the running `draft` as a new `@Published private(set)
+var bookDraft: BookAgentDraft?` on `JesseCallSession` (reset it in `begin()`
+when `context == "book"`, same place `turns` persistence already lives) so
+`BookWorkflowView` can observe it via `.onChange`/environment and render the
+chapters live. **This touches a shared, central class every screen depends
+on — after adding the branch, confirm Resume/Presentation/Learn Studio/
+Archive calls still hit `ArchiveRagClient` exactly as before.** Don't
+refactor `askJesse()` more broadly than this one added branch.
+
+**Tutor forward — real client already exists, one real gap in it.**
+`Networking/TutorDirectoryClient.swift`'s `Tutor` struct (`displayName`,
+`bio`, `subjects`, `calendlyUrl`, …) and `TutorDirectoryClient.load()` are
+real and already used by `FindTutorView.swift` — reuse this directly rather
+than building a second tutor list. **Gap to fix as part of this
+assignment:** `Tutor` has no `email` field, even though `load()` already
+parses an `email`/`calendlyEmail` value locally per Firestore doc
+(`TutorDirectoryClient.swift` around line 85) just to build `calendlyUrl` —
+it's discarded instead of kept. Add `let email: String` to `Tutor` and
+persist that parsed value, then "send to tutor" can compose a real email via
+the student's own `GmailClient` (already does real sends, see
+`GmailClient.swift`) with the book draft in the body — no fabricated backend
+needed. If a tutor has no usable email, fall back to their `calendlyUrl`
+(book a call instead of emailing a draft) rather than silently failing.
+
+**Files in scope:** `ios-prototype/MindCraftNotes/MindCraftNotes/Views/
+BookWorkflowView.swift` (replace the WKWebView-based left side with a native
+draft/tools view; publish flow — `BinderStore.addBook` — stays as-is),
+new `ios-prototype/MindCraftNotes/MindCraftNotes/Networking/
+BookAgentClient.swift`, `Networking/JesseCallSession.swift` (the one added
+branch described above — high blast radius, be surgical),
+`Networking/TutorDirectoryClient.swift` (add `email`), `Views/JesseRailView.
+swift` (read-only reference for how it renders `jesseCall.turns` — Book's
+new left side should show the SAME transcript-driven feel, not invent a
+different one).
+
+**Constraints:** do not touch `agent_work/product/desk_os/workflows/book/**`
+or the web deploy pipeline — this assignment retires the web page as Book's
+UI, it doesn't need to keep working. Do not change `JesseRailView.swift`
+itself (every other screen depends on it staying exactly as it is) — Book
+keeps using it unmodified on the right, same as today. Do not build a new
+tutor-messaging backend; the student's own already-authorized `GmailClient`
+send is the real, available channel.
+
+**Definition of done:** open Book, talk to Jesse via the one native call on
+the right, watch chapters actually appear on the left as you talk (real
+`/api/book-agent` round trips, not a stub). Publish still files to Binder.
+The left side shows real "what we need from you" tools/boxes state (not
+just a blank draft waiting for a call) and, once a draft has at least one
+chapter, a "Send to a tutor for review" step that lists real tutors from
+`TutorDirectoryClient` and sends via `GmailClient`. `xcodebuild build`
+green, confirmed on a real device (a real Groq/Anthropic key isn't needed
+here — `/api/book-agent` is the shared webhook endpoint, not BYOK).
+
+---
+
+#### Assignment G — Learn Studio: cards generate live as the student talks, not from a one-shot form
+
+**Goal.** Learn Studio today (`LearnStudioView.swift`) is a strict two-phase
+flow: a static intake form (topic text field + level picker) submits ONE
+`StudentAIKeyStore.generateStudyPlan(topic:level:knownConceptIds:)` call,
+and whatever comes back permanently fixes the cards for that session — the
+Jesse rail on the intake screen is present but decorative, same issue as
+Book had before Assignment F. Akshat's ask: "it should be cards as I talk to
+Jesse" — the cards should generate and refine live as a real conversation
+happens, not from one static form submit.
+
+**This is the same architectural gap Assignment F fixes, applied to a
+different context value.** Read Assignment F's note on `JesseCallSession.
+askJesse(_:)` first — `context == "learnStudio"` has the identical problem
+(falls through to generic `ArchiveRagClient`, ignores the real study-plan
+machinery entirely). Unlike Book, Learn Studio's actual generation call
+(`StudentAIKeyStore.generateStudyPlan`) already exists and is BYOK-native
+(no new webhook needed) — the missing piece is wiring it to fire per
+conversation turn instead of once from the intake form.
+
+**Recommended shape (not mandatory — flag back if you find a better one):**
+add an `if context == "learnStudio"` branch in `askJesse()` that, instead of
+calling `ArchiveRagClient`, re-runs `StudentAIKeyStore.generateStudyPlan`
+with the accumulated conversation so far (simplest: concatenate all
+`jesseCall.turns` text as the "topic" context each time, regenerating the
+whole plan fresh per turn — this is the cheap, already-proven-correct
+option; a true incremental diff/patch of just the changed card is a nice-to-
+have, not the bar for done) and publish the result the same way `bookDraft`
+does in Assignment F. `LearnStudioView`'s existing `studyBoard`/`pane`/
+`definitionPane`/etc. rendering barely needs to change — it already renders
+from `plan: StudyPlan?`; what changes is `plan` updating live from
+conversation turns instead of once from `createPlan()`'s form submit.
+**Keep the honesty rule intact**: if a turn doesn't produce a usable plan
+(model failure, thin topic), don't silently keep stale cards without
+indicating anything — surface the same kind of honest `planError` the form
+path already has. Practice Probe's rule also stays exactly as-is: never let
+this path invent practice questions — it still only ever matches a real
+`matchedConceptId` from `SampleQuestion.all` via `StudyPlan.matchedConceptId`,
+same as today.
+
+**Files in scope:** `ios-prototype/MindCraftNotes/MindCraftNotes/Views/
+LearnStudioView.swift`, `Networking/JesseCallSession.swift` (the added
+branch — coordinate with whoever does Assignment F if both are in flight at
+once, since both touch `askJesse()`), `Networking/StudentAIKeyStore.swift`
+(reference `generateStudyPlan`/`StudyPlan.parse` — reuse, don't fork a
+second copy of the parsing logic).
+
+**Constraints:** don't remove the intake screen entirely — a student who
+prefers to type a topic and level and tap "Create my plan" without talking
+should still be able to (that path stays working exactly as today); this
+assignment ADDS the conversational path on top, via the same Jesse rail
+that's already sitting there. Don't touch `JesseRailView.swift` itself, same
+rule as Assignment F.
+
+**Definition of done:** on Learn Studio's intake screen, tap "Jump on a call
+with Jesse" and describe a topic out loud instead of typing it — cards
+appear/update on the studying screen as the conversation progresses, backed
+by real `generateStudyPlan` calls (not fabricated). The existing type-it-in
+form path still works unmodified. `xcodebuild build` green, confirmed on a
+real device with a real saved AI key (this path is BYOK, same as the
+existing form path — no key means the same "connect your AI key" messaging
+as today, not a silent no-op).
+
+---
+
 ### Cursor's last report
 
 **2026-08-16 — Assignment A (BinderStore + BYOB popup)** — branch `cursor/binder-store-byob-2c98`
@@ -361,6 +525,74 @@ Fix: wrapped every one of those ~20 branches' view expressions in `AnyView(...)`
 PR #47's branch (`cursor/box-grid-redesign-2c98`) now has both fixes. Gate is unchanged: **the real-key test on #46 is still the next thing that has to happen before either #46 or #47 merges.**
 
 **2026-08-17 — Claude, real-key gate cleared: Akshat confirmed his Groq key works on-device across both Homework Help and the new agent takeover (real drafted email reply, real answered questions).** Resolved the CURSOR_HANDOFF.md conflict against main (Engine-lane commits had diverged the branch heavily; no iOS code conflicted), confirmed `xcodebuild build` still green post-merge, waited for CI (`build-and-test` passed, 40m30s - the only red check is the pre-existing, already-investigated, unrelated Vercel webhook package-size failure), then merged via `gh pr merge 46 --merge`. **PR #46 is MERGED.** PR #47 (`cursor/box-grid-redesign-2c98`) is next - it now also contains the crash fix, search fix, and generalized agent-takeover work from tonight, all pushed and CI-worthy but not yet itself re-verified against this new main tip.
+
+---
+
+**2026-08-17/18 — Claude, overnight marathon session — #46 merged, large iOS batch shipped on `cursor/box-grid-redesign-2c98` (not yet a PR)**
+
+#46 merged after resolving a real git conflict and confirming CI green and a
+real on-device key test (per Akshat, tested and working). Everything below
+landed as direct commits on `cursor/box-grid-redesign-2c98`, verified via
+`xcodebuild build` + real device install/launch each time, not just compiled
+— this branch has NOT been opened as a PR yet, so `gh pr list` won't show it.
+This entry is a pointer, not a full diff — `git log --oneline
+b76afc88..cursor/box-grid-redesign-2c98` has the real detail; read commit
+messages, they're written to stand alone.
+
+Real fixes: SIGSEGV crashes on Search/Binder/Homework Help (un-type-erased
+`@ViewBuilder` chains — wrapped in `AnyView`), Work Dashboard search (was a
+backwards `.contains()` — completely dead before this), then generalized
+search into a real agent-takeover mechanism that borrows the Binder/Intel
+tiles for any request instead of opening new floating boxes.
+
+New/rebuilt surfaces: real Homework Help photo upload (now files results
+into Binder instead of its own popup — see "Homework Help files into Binder"
+commit); a new five-pane Learn Studio (`LearnStudioView.swift`) with a real
+two-phase intake→AI-generated-plan→adaptive-box-layout flow
+(`StudentAIKeyStore.generateStudyPlan`); a shared `JesseRailView.swift`
+(extracted from `CreateCanvasView`'s original "Jesse card") now used
+uniformly by Resume/Book/Learn Studio/Presentation instead of each screen
+inventing its own; Apply Today folded into Resume, Archive folded into Learn
+Studio (explicit, confirmed product-scope decisions — the underlying
+`JobOSStore`/`ArchiveWorkflowView` are untouched, just reached differently);
+Resume's "Applications" now opens inline on the left instead of a
+`.fullScreenCover`; Presentation's real box-overlap bug fixed (`slidesRail`/
+`jesseRail` overlapped by 139pt on every normal load) plus tightened
+margins and a search-styled Ask AI dock; Work dock chip set is now Memo,
+Transcribe, Learn, Flows, +Book.
+
+Real, confirmed regression caught and fixed same night: Resume briefly
+showed two separate "Jesse" identities — the shared `JesseRailView` on the
+right, and the embedded web page's own unprompted `speechSynthesis` greeting
+plus "Hi. I'm Jesse." header on the left. Fixed at the web source
+(`agent_work/product/desk_os/workflows/resume/{index.html,agent.js}`,
+pushed straight to `main` per the "edit the source, never `app/public/`"
+rule — this is a separate deploy from the iOS branch, already live).
+
+**Not done, deliberately — new Assignments F and G above are the scoped
+follow-up**, written tonight with real technical grounding (exact backend
+contracts, the shared-`JesseCallSession`-routing gotcha, the existing tutor
+client) rather than left as a vague ask:
+- **Book still has two Jesses** — the web page's own full call
+  (`agent_work/product/desk_os/workflows/book/agent.js`) runs independently
+  of the native `JesseRailView` added on the right, which today is
+  decorative. Assignment F.
+- **Learn Studio is one-shot, not conversational** — cards come from a
+  single static form submit, not a live conversation. Assignment G.
+- Presentation (`CreateCanvasView.swift`) has further asks not yet
+  addressed: move/resize the slide stage further left, reposition its search
+  bar to match the dashboard's standard position, and render uploaded docs
+  scrollable in the same box as slides (top 2/3 slides, bottom 1/3 uploads).
+  Not yet scoped as a lettered assignment — do that before starting it.
+- "Standard search bar position across dash" — a repeated consistency ask;
+  partially addressed (Presentation's dock now visually matches the
+  dashboard's `searchField` style) but not audited screen-by-screen.
+
+Branch is NOT yet a PR — before starting F or G, either open one against
+current `main` or confirm with Akshat whether to keep stacking on this same
+branch. Whoever starts either assignment: branch off current `main` (not off
+this long-lived branch) per the lesson in Assignment A's report above, unless
+told otherwise.
 
 ---
 
