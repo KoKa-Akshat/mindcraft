@@ -2194,4 +2194,54 @@ final class MindCraftNotesUITests: XCTestCase {
         app.buttons["fieldDeskHomeworkHelpDone"].tap()
         XCUIDevice.shared.orientation = .portrait
     }
+
+    /// Assignment F: Book is fully native now (no WKWebView) - opening it
+    /// from the Work dock shows the real left panel (tools/boxes, chapters,
+    /// publish button) plus the shared Jesse rail on the right, and Done
+    /// closes it cleanly. Doesn't exercise a live call (no real network
+    /// device available in this environment) - covers that the new native
+    /// surface actually renders instead of the old dual-Jesse WKWebView.
+    func testBookWorkflowIsNativeWithToolsAndJesseRail() {
+        let app = launchFieldDeskApp()
+        XCUIDevice.shared.orientation = .landscapeLeft
+        XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 15))
+
+        let bookChip = app.buttons["deskGridDock_Book"]
+        XCTAssertTrue(bookChip.waitForExistence(timeout: 10), "expected +Book dock chip")
+        bookChip.tap()
+
+        XCTAssertTrue(app.buttons["bookWorkflowBack"].waitForExistence(timeout: 10), "expected book workflow Done control")
+        XCTAssertTrue(app.descendants(matching: .any)["bookWorkflowTools"].waitForExistence(timeout: 5), "expected native what-we-need-from-you tools panel")
+        XCTAssertTrue(app.descendants(matching: .any)["bookWorkflowChapters"].waitForExistence(timeout: 5), "expected native chapters panel")
+        XCTAssertTrue(app.buttons["bookWorkflowPublish"].waitForExistence(timeout: 5), "expected Publish to Binder button")
+        XCTAssertTrue(app.descendants(matching: .any)["jesseRail"].waitForExistence(timeout: 5), "expected the one shared Jesse rail on the right")
+        XCTAssertTrue(app.buttons["jesseRailCall"].waitForExistence(timeout: 5), "expected the one native call control")
+
+        app.buttons["bookWorkflowBack"].tap()
+        XCTAssertFalse(app.buttons["bookWorkflowBack"].waitForExistence(timeout: 3), "expected book workflow closed")
+        XCUIDevice.shared.orientation = .portrait
+    }
+
+    /// Assignment G: the typed-topic intake form still works standalone
+    /// (unchanged path) and the Jesse rail is present on the same screen
+    /// (the conversational path this assignment adds on top of it).
+    func testLearnStudioIntakeStillHasFormAndJesseRail() {
+        let app = launchFieldDeskApp()
+        XCUIDevice.shared.orientation = .landscapeLeft
+        XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 15))
+
+        let learnChip = app.buttons["deskGridDock_LearnStudio"]
+        XCTAssertTrue(learnChip.waitForExistence(timeout: 10), "expected Learn dock chip")
+        learnChip.tap()
+
+        XCTAssertTrue(app.buttons["learnStudioDone"].waitForExistence(timeout: 10), "expected Learn Studio Done control")
+        XCTAssertTrue(app.descendants(matching: .any)["learnStudioTopicField"].waitForExistence(timeout: 5), "expected the typed-topic field to still exist")
+        XCTAssertTrue(app.buttons["learnStudioCreatePlan"].waitForExistence(timeout: 5), "expected the type-it-in form's Create my plan button")
+        XCTAssertTrue(app.descendants(matching: .any)["jesseRail"].waitForExistence(timeout: 5), "expected the shared Jesse rail on the intake screen")
+        XCTAssertTrue(app.buttons["jesseRailCall"].waitForExistence(timeout: 5), "expected the one native call control, not a decorative one")
+
+        app.buttons["learnStudioDone"].tap()
+        XCTAssertFalse(app.buttons["learnStudioDone"].waitForExistence(timeout: 3), "expected Learn Studio closed")
+        XCUIDevice.shared.orientation = .portrait
+    }
 }

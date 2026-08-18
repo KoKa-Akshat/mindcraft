@@ -86,11 +86,94 @@ struct LearnStudioView: View {
         .fullScreenCover(isPresented: $showArchive) {
             ArchiveWorkflowView(onClose: { showArchive = false })
         }
+        .overlay(alignment: .topLeading) {
+            jesseLiveControl
+                .padding(.top, 12)
+                .padding(.leading, 16)
+        }
+        .onChange(of: jesseCall.studyPlan) { _, newPlan in
+            guard let newPlan else { return }
+            // Give the cards a real headline instead of leaving topicDraft
+            // blank when the student never typed anything - the most
+            // recent thing they said stands in for "what do you want to
+            // study" the same way the form's own text field would.
+            if topicDraft.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+               let lastStudentTurn = jesseCall.turns.last(where: { $0.speaker == "student" }) {
+                topicDraft = String(lastStudentTurn.text.prefix(80))
+            }
+            // Only clear practice-probe progress if the matched concept
+            // actually changed - regenerating the same concept's plan every
+            // turn shouldn't wipe answers the student already checked.
+            if newPlan.matchedConceptId != plan?.matchedConceptId {
+                probeAnswers = [:]
+                probeChecked = []
+            }
+            plan = newPlan
+            planError = nil
+            if phase != .studying {
+                withAnimation(.easeInOut(duration: 0.25)) { phase = .studying }
+            }
+        }
+        .onChange(of: jesseCall.studyPlanError) { _, newError in
+            guard let newError else { return }
+            planError = newError
+        }
         .accessibilityElement(children: .contain)
         .overlay(alignment: .topLeading) {
             Text(verbatim: "learn-studio").font(.system(size: 1)).foregroundColor(.clear)
                 .accessibilityIdentifier("learnStudio")
                 .allowsHitTesting(false)
+        }
+    }
+
+    /// Compact live-call presence for the studying screen (Assignment G) -
+    /// `studyBoard` doesn't have room for the full `JesseRailView` card the
+    /// intake screen shows (five pinned panes already fill the canvas), but
+    /// without SOME control here the conversation could only ever produce
+    /// one turn: `JesseRailView`'s mic button is the only thing that
+    /// restarts listening after Jesse replies (listening does not
+    /// auto-resume - confirmed reading `JesseCallSession` directly), and
+    /// that button only exists inside `JesseRailView` itself, which
+    /// `intakeBoard` stops rendering once `phase` flips to `.studying`.
+    /// This reuses `jesseCall`/`JesseMiniWaveform` directly rather than
+    /// re-implementing call state - not a second call, just a second,
+    /// smaller control surface for the one call already running.
+    @ViewBuilder
+    private var jesseLiveControl: some View {
+        if phase == .studying, jesseCall.isActive, jesseCall.context == "learnStudio" {
+            HStack(spacing: 10) {
+                JesseMiniWaveform(active: jesseCall.isSpeaking || jesseCall.isListening)
+                Text(jesseCall.isThinking ? "Jesse is thinking\u{2026}" : (jesseCall.isListening ? "Listening\u{2026}" : "Tap mic to keep talking"))
+                    .font(.system(size: 12, weight: .semibold, design: .rounded))
+                    .foregroundColor(Color(lsHex: "143a2e"))
+                    .lineLimit(1)
+                Button {
+                    jesseCall.isListening ? jesseCall.stopListening() : jesseCall.startListening()
+                } label: {
+                    Image(systemName: jesseCall.isListening ? "mic.fill" : "mic.slash.fill")
+                        .font(.system(size: 13, weight: .bold))
+                        .foregroundColor(.white)
+                        .frame(width: 32, height: 32)
+                        .background(Circle().fill(jesseCall.isListening ? Color(lsHex: "247a4d") : Color(lsHex: "8a8478")))
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("learnStudioLiveMic")
+                Button {
+                    _ = jesseCall.end()
+                } label: {
+                    Image(systemName: "phone.down.fill")
+                        .font(.system(size: 12, weight: .bold))
+                        .foregroundColor(.white)
+                        .frame(width: 32, height: 32)
+                        .background(Circle().fill(Color(lsHex: "b0473f")))
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("learnStudioLiveEndCall")
+            }
+            .padding(.horizontal, 12)
+            .padding(.vertical, 8)
+            .background(Capsule().fill(Color.white).shadow(color: .black.opacity(0.12), radius: 10, y: 4))
+            .accessibilityIdentifier("learnStudioLiveBadge")
         }
     }
 
@@ -530,6 +613,17 @@ struct LearnStudioView: View {
             }
             .buttonStyle(.plain)
             .accessibilityIdentifier("learnStudioNewTopic")
+
+            // Honesty rule (Assignment G): a live turn that fails to
+            // produce a usable plan must not silently leave stale cards
+            // with no indication anything went wrong.
+            if let planError {
+                Text(planError)
+                    .font(.system(size: 11, weight: .semibold, design: .rounded))
+                    .foregroundColor(Color(lsHex: "b3261e"))
+                    .lineLimit(2)
+                    .accessibilityIdentifier("learnStudioLiveError")
+            }
 
             Spacer(minLength: 0)
 

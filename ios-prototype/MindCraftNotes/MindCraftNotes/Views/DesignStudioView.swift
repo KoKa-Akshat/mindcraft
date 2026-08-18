@@ -332,31 +332,10 @@ struct DesignStudioView: View {
 
     // MARK: - Dock + add
 
+    // "Reset flow" removed (explicit ask - unnecessary chrome; "Remove box"
+    // in the inspector already covers undoing a mistake per-box).
     private var dock: some View {
         HStack(spacing: 14) {
-            Button {
-                withAnimation(.easeInOut(duration: 0.2)) {
-                    boxes = DesignBox.demoFlow
-                    edges = DesignEdge.demoFlow
-                    results = [:]
-                    errors = [:]
-                    selectedId = nil
-                }
-            } label: {
-                HStack(spacing: 6) {
-                    Image(systemName: "arrow.uturn.backward")
-                    Text("Reset flow")
-                }
-                .font(.system(size: 12, weight: .bold, design: .rounded))
-                .foregroundColor(Color(dsHex: "143a2e"))
-                .padding(.horizontal, 12)
-                .padding(.vertical, 8)
-                .background(Capsule().fill(Color.white))
-                .overlay(Capsule().strokeBorder(Color(dsHex: "e4dcc8"), lineWidth: 1))
-            }
-            .buttonStyle(.plain)
-            .accessibilityIdentifier("designStudioReset")
-
             Spacer(minLength: 0)
 
             Text("\(boxes.count) boxes \u{00b7} \(edges.count) connections")
@@ -465,11 +444,16 @@ struct DesignBox: Identifiable {
 
     static let size = CGSize(width: 190, height: 92)
 
+    // Centered, symmetric flow-chart layout - was clustered at the canvas's
+    // top edge with the bottom two-thirds empty (and the add button sitting
+    // right on top of "notes"). Find -> Ask on one line, then Ask branches
+    // evenly up/down into Make and Output so the connectors read as one
+    // clean shape, not scattered boxes.
     static let demoFlow: [DesignBox] = [
-        DesignBox(id: "notes", type: .find, title: "My ACT Notes", subtitle: "Binder \u{00b7} not wired yet", position: CGPoint(x: 20, y: 40)),
-        DesignBox(id: "understand", type: .ask, title: "Understand my notes", subtitle: "Read what I wrote and tell me the 3 ideas I keep missing.", position: CGPoint(x: 280, y: 40)),
-        DesignBox(id: "flashcards", type: .make, title: "Make flashcards", subtitle: "10 cards on my weak spots", position: CGPoint(x: 540, y: 0)),
-        DesignBox(id: "results", type: .output, title: "Show me what I missed", subtitle: "One page, after the quiz", position: CGPoint(x: 540, y: 140)),
+        DesignBox(id: "notes", type: .find, title: "My ACT Notes", subtitle: "Binder \u{00b7} not wired yet", position: CGPoint(x: 20, y: 282)),
+        DesignBox(id: "understand", type: .ask, title: "Understand my notes", subtitle: "Read what I wrote and tell me the 3 ideas I keep missing.", position: CGPoint(x: 280, y: 282)),
+        DesignBox(id: "flashcards", type: .make, title: "Make flashcards", subtitle: "10 cards on my weak spots", position: CGPoint(x: 540, y: 190)),
+        DesignBox(id: "results", type: .output, title: "Show me what I missed", subtitle: "One page, after the quiz", position: CGPoint(x: 540, y: 374)),
     ]
 }
 

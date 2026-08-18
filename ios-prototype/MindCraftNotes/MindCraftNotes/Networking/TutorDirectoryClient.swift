@@ -15,6 +15,12 @@ struct Tutor: Identifiable {
     let coordinate: CLLocationCoordinate2D
     let regionLabel: String
     let hasRealLocation: Bool
+    /// Real contact email, kept for Book's "send to a tutor for review"
+    /// (Assignment F) - empty for the hardcoded demo roster below (no
+    /// verified real address on file for them, so callers fall back to
+    /// `calendlyUrl` instead of guessing one), non-empty for a real
+    /// Firestore tutor doc that has `calendlyEmail`/`email` set.
+    let email: String
 }
 
 private let studioLocation = CLLocationCoordinate2D(latitude: 44.9379, longitude: -93.1706)
@@ -33,7 +39,8 @@ private let demoTutors: [Tutor] = [
         calendlyUrl: "https://calendly.com/joinmindcraft/30min",
         coordinate: studioLocation,
         regionLabel: "Macalester · St Paul, MN",
-        hasRealLocation: true
+        hasRealLocation: true,
+        email: ""
     ),
     Tutor(
         id: "blake-kell",
@@ -43,7 +50,8 @@ private let demoTutors: [Tutor] = [
         calendlyUrl: "https://calendly.com/joinmindcraft/30min",
         coordinate: myrtleBeach,
         regionLabel: "Myrtle Beach, SC",
-        hasRealLocation: true
+        hasRealLocation: true,
+        email: ""
     ),
     Tutor(
         id: "abhigya-koirala",
@@ -53,7 +61,8 @@ private let demoTutors: [Tutor] = [
         calendlyUrl: "https://calendly.com/joinmindcraft/30min",
         coordinate: uncChapelHill,
         regionLabel: "UNC Chapel Hill, NC",
-        hasRealLocation: true
+        hasRealLocation: true,
+        email: ""
     ),
 ]
 
@@ -109,7 +118,11 @@ final class TutorDirectoryClient: ObservableObject {
                 calendlyUrl: calendlyUrl,
                 coordinate: coordinate,
                 regionLabel: regionLabel,
-                hasRealLocation: hasRealLocation
+                hasRealLocation: hasRealLocation,
+                // Same value already parsed above to build calendlyUrl's
+                // slug - kept instead of discarded (Assignment F) so "send
+                // to a tutor" has a real address to send to.
+                email: email
             )
         }
 
