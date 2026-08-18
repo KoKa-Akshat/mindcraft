@@ -326,15 +326,16 @@ struct LearnStudioView: View {
 
     private var studioDock: some View {
         HStack(spacing: 14) {
+            // Same Done capsule as Binder/Intel/Homework Help's popups
+            // (lime fill, dark text, no icon) - was a white "< Desk" chip,
+            // inconsistent with every other overlay's exit affordance.
             Button(action: onClose) {
-                HStack(spacing: 6) {
-                    Image(systemName: "chevron.left").font(.system(size: 12, weight: .bold))
-                    Text("Desk").font(.system(size: 13, weight: .bold, design: .rounded))
-                }
-                .foregroundColor(Color(lsHex: "143a2e"))
-                .padding(.horizontal, 14)
-                .padding(.vertical, 10)
-                .background(Capsule().fill(Color.white))
+                Text("Done")
+                    .font(.system(size: 12, weight: .bold, design: .rounded))
+                    .foregroundColor(Color(lsHex: "0c1207"))
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 8)
+                    .background(Capsule().fill(Color(lsHex: "c4f547")))
             }
             .buttonStyle(.plain)
             .accessibilityIdentifier("learnStudioBackToDesk")
