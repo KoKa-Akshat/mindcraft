@@ -75,6 +75,7 @@
       "Bash(pkill -f \"cloud-firestore-emulator\")",
       "Bash(pkill -f \"firebase emulators:exec\")",
       "Bash(git merge *)",
+      "Bash(gh pr merge*)",
       "Bash(awk 'NR==120,NR==240' components/WeeklyReviewPicker.tsx)",
       "Bash(VITE_SCREENSHOT_MODE=1 npx vite --port 5199 --strictPort)",
       "Bash(curl -sS -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:5199/)",

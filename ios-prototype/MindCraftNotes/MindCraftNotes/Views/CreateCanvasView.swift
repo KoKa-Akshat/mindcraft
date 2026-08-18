@@ -70,6 +70,13 @@ struct CreateCanvasView: View {
             let board = CGSize(width: artboard.width * scale, height: artboard.height * scale)
             ZStack {
                 Color.white.ignoresSafeArea()
+                // Same dotted-grid treatment as the Work dashboard
+                // (2026-08-18, explicit ask: "all other panels should
+                // have polka dots too") - duplicated per-file, matching
+                // this codebase's existing convention
+                // (DottedDeskGrid/DottedLearnGrid/DottedDesignGrid).
+                CreateDottedGrid()
+                    .frame(width: geo.size.width, height: geo.size.height)
                 ZStack(alignment: .topLeading) {
                     artboardContent(scale: scale)
                 }
@@ -524,6 +531,25 @@ struct CreateCanvasView: View {
         instructionLog.append(text)
         askText = ""
         // Transcript is the instruction stream. Do not fake a finished slide.
+    }
+}
+
+/// Same dotted-grid treatment as `DeskGridDashboardView.DottedDeskGrid` /
+/// `LearnStudioView.DottedLearnGrid` / `DesignStudioView.DottedDesignGrid` -
+/// duplicated per-file by convention in this codebase rather than shared,
+/// same step/size/color.
+private struct CreateDottedGrid: View {
+    var body: some View {
+        Canvas { context, size in
+            let step: CGFloat = 16
+            for x in stride(from: 8, through: size.width, by: step) {
+                for y in stride(from: 8, through: size.height, by: step) {
+                    let dot = Path(ellipseIn: CGRect(x: x, y: y, width: 1.4, height: 1.4))
+                    context.fill(dot, with: .color(Color(createHex: "d7d0c2")))
+                }
+            }
+        }
+        .allowsHitTesting(false)
     }
 }
 

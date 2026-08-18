@@ -259,7 +259,19 @@ struct DeskGridDashboardView: View {
         // One explicit ZStack child only. Tiles may .position() inside
         // the hard-framed board; the board itself must not.
         GeometryReader { geo in
-            let scale = min(geo.size.width / artboard.width, geo.size.height / artboard.height)
+            // The left sidebar (2026-08-18) sits ON TOP of the board as a
+            // ZStack sibling, not inline in the layout, so the board's own
+            // centering has to leave room for it explicitly - otherwise it
+            // centers across the FULL width and the sidebar overlaps
+            // whatever tile happens to sit closest to the left edge
+            // (confirmed live: "Homework Help"'s title was half-hidden
+            // behind it). `sidebarInset` matches the sidebar's real
+            // footprint (76pt box + 14pt leading padding); halving it in
+            // the offset below (see the centering math in that comment)
+            // shifts the whole board right by exactly that amount instead
+            // of just shrinking it centered.
+            let sidebarInset: CGFloat = 106
+            let scale = min((geo.size.width - sidebarInset) / artboard.width, geo.size.height / artboard.height)
             let board = CGSize(width: artboard.width * scale, height: artboard.height * scale)
             ZStack {
                 // Black, not the old cream (2026-08-18, explicit ask:
@@ -268,7 +280,7 @@ struct DeskGridDashboardView: View {
                 Color.black.ignoresSafeArea()
                 tileBoard(scale: scale, board: board)
                     .scaleEffect(spaceZoom * liveZoom)
-                    .offset(x: spacePan.width + livePan.width, y: spacePan.height + livePan.height)
+                    .offset(x: sidebarInset / 2 + spacePan.width + livePan.width, y: spacePan.height + livePan.height)
                 // Same dimmed-background + centered-card popup family as
                 // Intel/Binder/Homework Help - was a .sheet() with its own
                 // NavigationStack/toolbar, visually inconsistent with the
@@ -1311,60 +1323,77 @@ struct DeskGridDashboardView: View {
     /// `GET /knowledge-graph/{uid}` data `KnowledgeMapView`'s full-screen
     /// map already renders - real x/y PCA coordinates and real
     /// mastery/status per concept, not a mock or a static illustration.
+    /// Visual pass (2026-08-18, explicit ask: "why his look so cool ours
+    /// look bad"): glowing radial-gradient nodes sized by real engagement
+    /// (`eventCount`) instead of flat same-size dots, a legend instead of
+    /// unlabeled colors, and a real single-node "empty" state instead of
+    /// plain text - "should show as an empty node before you start to
+    /// learn anything."
     @ViewBuilder
     private func knowledgeGraphTileBody() -> some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(spacing: 10) {
             if knowledgeGraphClient.nodes.isEmpty {
+                Spacer(minLength: 0)
                 if knowledgeGraphClient.isLoading {
-                    HStack(spacing: 6) {
-                        ProgressView().tint(tileInk)
-                        Text("Mapping your knowledge\u{2026}")
-                            .font(.system(size: 12, weight: .bold, design: .rounded))
-                            .foregroundColor(tileInk)
-                    }
+                    ProgressView().tint(tileInk)
                 } else {
-                    Text("Your knowledge graph will grow here as you learn and engage with new things.")
-                        .font(.system(size: 12, weight: .semibold, design: .rounded))
-                        .foregroundColor(tileInk.opacity(0.7))
-                        .fixedSize(horizontal: false, vertical: true)
+                    emptyGraphSeed
                 }
+                Text(knowledgeGraphClient.isLoading
+                    ? "Mapping your knowledge\u{2026}"
+                    : "This grows as you learn and engage with new things.")
+                    .font(.system(size: 12, weight: .semibold, design: .rounded))
+                    .foregroundColor(tileInk.opacity(0.7))
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+                Spacer(minLength: 0)
             } else {
-                let mastered = knowledgeGraphClient.nodes.filter { $0.status == "mastered" }.count
-                Text("\(mastered)/\(knowledgeGraphClient.nodes.count) concepts mastered")
-                    .font(.system(size: 11, weight: .heavy, design: .rounded))
-                    .foregroundColor(tileInk.opacity(0.75))
-                Canvas { context, size in
-                    let nodes = knowledgeGraphClient.nodes
-                    func point(_ node: KnowledgeGraphNode) -> CGPoint? {
-                        guard let x = node.x, let y = node.y else { return nil }
-                        return CGPoint(x: x * size.width, y: y * size.height)
-                    }
-                    var positions: [String: CGPoint] = [:]
-                    for node in nodes { positions[node.id] = point(node) }
-
-                    for edge in knowledgeGraphClient.edges {
-                        guard let from = positions[edge.from], let to = positions[edge.to] else { continue }
-                        var path = Path()
-                        path.move(to: from)
-                        path.addLine(to: to)
-                        context.stroke(path, with: .color(Color(gridHex: "5b3e8f").opacity(0.18)), lineWidth: 1)
-                    }
-                    for node in nodes {
-                        guard let p = point(node) else { continue }
-                        let dotColor: Color
-                        switch node.status {
-                        case "mastered": dotColor = Color(gridHex: "3fae5a")
-                        case "in_progress": dotColor = Color(gridHex: "d9a441")
-                        case "struggling": dotColor = Color(gridHex: "c1121f")
-                        default: dotColor = Color(gridHex: "b7aed6")
-                        }
-                        let r: CGFloat = 4
-                        context.fill(Path(ellipseIn: CGRect(x: p.x - r, y: p.y - r, width: r * 2, height: r * 2)), with: .color(dotColor))
-                    }
+                HStack(spacing: 10) {
+                    let mastered = knowledgeGraphClient.nodes.filter { $0.status == "mastered" }.count
+                    Text("\(mastered)/\(knowledgeGraphClient.nodes.count) concepts mastered")
+                        .font(.system(size: 11, weight: .heavy, design: .rounded))
+                        .foregroundColor(tileInk.opacity(0.75))
+                    Spacer(minLength: 0)
+                    knowledgeGraphLegend
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .accessibilityIdentifier("deskGridKnowledgeGraphCanvas")
+                KnowledgeGraphCanvas(nodes: knowledgeGraphClient.nodes, edges: knowledgeGraphClient.edges)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .accessibilityIdentifier("deskGridKnowledgeGraphCanvas")
             }
+        }
+    }
+
+    /// A single, real node glyph standing in for "you, before you've
+    /// learned anything yet" - not a fabricated preview node, just this
+    /// tile's own node-drawing style applied once, centered, gently
+    /// pulsing to read as alive/waiting rather than static.
+    private var emptyGraphSeed: some View {
+        ZStack {
+            Circle()
+                .fill(RadialGradient(colors: [Color(gridHex: "b7aed6"), Color(gridHex: "b7aed6").opacity(0)], center: .center, startRadius: 0, endRadius: 22))
+                .frame(width: 44, height: 44)
+            Circle()
+                .fill(Color(gridHex: "b7aed6"))
+                .frame(width: 10, height: 10)
+                .overlay(Circle().strokeBorder(Color.white.opacity(0.85), lineWidth: 1.5))
+        }
+        .modifier(PulseEffect())
+    }
+
+    private var knowledgeGraphLegend: some View {
+        HStack(spacing: 8) {
+            legendDot("3fae5a", "Mastered")
+            legendDot("d9a441", "Learning")
+            legendDot("c1121f", "Struggling")
+        }
+    }
+
+    private func legendDot(_ hex: String, _ label: String) -> some View {
+        HStack(spacing: 3) {
+            Circle().fill(Color(gridHex: hex)).frame(width: 6, height: 6)
+            Text(label)
+                .font(.system(size: 9, weight: .semibold, design: .rounded))
+                .foregroundColor(tileInk.opacity(0.55))
         }
     }
 
@@ -1633,37 +1662,58 @@ struct DeskGridDashboardView: View {
     /// Flows has its own dock: Binder/Calendar/Memo/Gmail don't apply inside
     /// that rail, so it's just a way back + a search optimized for flows.
     @ViewBuilder
-    /// First real slice of the left toolbar from the reference redesign
-    /// (2026-08-18, explicit ask: "a big toolbar with a setting under it
-    /// - clicking that setting will open what happens when you click the
-    /// logo"). Deliberately minimal tonight - just the one real, working
-    /// control (Manage, same destination the old top-left logo opened).
-    /// The fuller vision (a real nav rail jumping between Learn/
-    /// Presentation/Resume/Book/Design sections on a pannable canvas) is
-    /// a genuinely large, separate IA piece - written up rather than
-    /// rushed, see CURSOR_HANDOFF.md.
+    /// The real nav rail (2026-08-18, second pass on the same-night
+    /// redesign): "the flows should move to setting column... lock on
+    /// the screen on the dash... we only go to other panels... through
+    /// the setting column by pressing on different flows." Presentation/
+    /// GDoc/Resume/Book/Design (the old `flowsRail`'s rows, previously
+    /// only reachable by toggling the "Flows" dock chip open) live here
+    /// now, always visible, icon-only - Settings/Manage anchored at the
+    /// bottom. Styled as its own rounded "box" with the same dotted
+    /// texture as the board (explicit ask: "it should be a box too
+    /// looks weird right now the settings column").
     private var leftSidebar: some View {
-        VStack {
+        VStack(spacing: 14) {
+            sidebarIcon("rectangle.on.rectangle", label: "Presentation") { onOpenCreate(.presentation) }
+            sidebarIcon("doc.text", label: "GDoc") { onOpenCreate(.gdoc) }
+            sidebarIcon("person.text.rectangle", label: "Resume") { onOpenFlow("resume") }
+            sidebarIcon("book", label: "Book") { onOpenFlow("book") }
+            sidebarIcon("square.grid.2x2.fill", label: "Design") { onOpenFlow("design") }
             Spacer(minLength: 0)
-            Button(action: onOpenManage) {
-                Image(systemName: "gearshape.fill")
-                    .font(.system(size: 18, weight: .semibold))
-                    .foregroundColor(.white.opacity(0.85))
-                    .frame(width: 44, height: 44)
-                    .background(Circle().fill(Color.white.opacity(0.08)))
-            }
-            .buttonStyle(.plain)
-            .accessibilityIdentifier("deskGridSidebarManage")
-            .padding(.bottom, 24)
+            sidebarIcon("gearshape.fill", label: "Settings", identifier: "deskGridSidebarManage", action: onOpenManage)
         }
-        .frame(width: 64)
+        .padding(.vertical, 20)
+        .frame(width: 76)
         .frame(maxHeight: .infinity)
-        .background(Color.white.opacity(0.04))
-        .overlay(alignment: .trailing) {
-            Rectangle().fill(Color.white.opacity(0.08)).frame(width: 1)
-        }
+        .background(
+            ZStack {
+                RoundedRectangle(cornerRadius: 22, style: .continuous)
+                    .fill(Color(gridHex: "141416"))
+                DottedDeskGrid()
+                    .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+            }
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 22, style: .continuous)
+                .strokeBorder(Color.white.opacity(0.08), lineWidth: 1)
+        )
+        .padding(.leading, 14)
+        .padding(.vertical, 14)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
         .ignoresSafeArea()
+    }
+
+    private func sidebarIcon(_ system: String, label: String, identifier: String? = nil, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Image(systemName: system)
+                .font(.system(size: 17, weight: .semibold))
+                .foregroundColor(.white.opacity(0.85))
+                .frame(width: 44, height: 44)
+                .background(Circle().fill(Color.white.opacity(0.08)))
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier(identifier ?? "deskGridSidebar_\(label)")
+        .accessibilityLabel(label)
     }
 
     @ViewBuilder
@@ -1694,7 +1744,13 @@ struct DeskGridDashboardView: View {
         // anymore. Flag this if that's not what was meant.
         HStack(spacing: 8) {
             dockChip("Archive", system: "archivebox.fill", identifier: "deskGridDock_Archive", action: onOpenArchive)
-            dockChip("Flows", system: "bolt.fill", identifier: "deskGridDock_Flows") { setRail(rail == .flows ? .none : .flows) }
+            // "Flows" chip removed (2026-08-18, explicit ask: "the flows
+            // should move to setting column... we only go to other
+            // panels... through the setting column") - Presentation/
+            // GDoc/Resume/Book/Design now live as always-visible icons in
+            // `leftSidebar` instead of a toggled popup. +Book kept as its
+            // own quick chip since it was already a direct one-tap
+            // action, not a rail toggle.
             dockChip("+Book", system: "book.fill", identifier: "deskGridDock_Book") { onOpenFlow("book") }
             searchField(placeholder: "Search", identifier: "deskGridDashboardSearch", onSubmit: submitSearch)
         }
@@ -1932,6 +1988,83 @@ private enum WorkArtboard {
     // Nudged closer to the true bottom edge again (was y: 698, leaving a
     // 16pt gap under a 96pt-tall dock on an 810pt board) - tiles untouched.
     static let dock = CGRect(x: 96, y: 706, width: 1321, height: 96)
+}
+
+/// Gentle, always-on pulse for the Knowledge Graph tile's empty-state seed
+/// node - unlike `JesseMiniWaveform`'s conditional pulse elsewhere in this
+/// app, this one never needs to stop (it's replaced by the real canvas the
+/// moment real nodes exist), so a plain `.onAppear`-triggered
+/// `repeatForever` is safe here.
+private struct PulseEffect: ViewModifier {
+    @State private var pulsing = false
+    func body(content: Content) -> some View {
+        content
+            .scaleEffect(pulsing ? 1.15 : 0.85)
+            .opacity(pulsing ? 1 : 0.55)
+            .onAppear {
+                withAnimation(.easeInOut(duration: 1.3).repeatForever(autoreverses: true)) {
+                    pulsing = true
+                }
+            }
+    }
+}
+
+/// The Knowledge Graph tile's real drawing surface - glowing radial-
+/// gradient nodes sized by real engagement (`eventCount`), colored by
+/// real status, edges weighted by their real Beta-Binomial posterior
+/// (`edge.weight`). A visual pass (2026-08-18, explicit ask: "why his
+/// look so cool ours look bad") over the original flat, same-size dots.
+private struct KnowledgeGraphCanvas: View {
+    let nodes: [KnowledgeGraphNode]
+    let edges: [KnowledgeGraphEdge]
+
+    var body: some View {
+        Canvas { context, size in
+            func point(_ node: KnowledgeGraphNode) -> CGPoint? {
+                guard let x = node.x, let y = node.y else { return nil }
+                return CGPoint(x: x * size.width, y: y * size.height)
+            }
+            var positions: [String: CGPoint] = [:]
+            for node in nodes { positions[node.id] = point(node) }
+
+            for edge in edges {
+                guard let from = positions[edge.from], let to = positions[edge.to] else { continue }
+                var path = Path()
+                path.move(to: from)
+                path.addLine(to: to)
+                context.stroke(
+                    path,
+                    with: .color(Color(gridHex: "5b3e8f").opacity(0.12 + edge.weight * 0.25)),
+                    lineWidth: 1 + edge.weight * 1.5
+                )
+            }
+            for node in nodes {
+                guard let p = point(node) else { continue }
+                let dotColor: Color
+                switch node.status {
+                case "mastered": dotColor = Color(gridHex: "3fae5a")
+                case "in_progress": dotColor = Color(gridHex: "d9a441")
+                case "struggling": dotColor = Color(gridHex: "c1121f")
+                default: dotColor = Color(gridHex: "b7aed6")
+                }
+                let engagement = min(1, Double(node.eventCount ?? 0) / 10)
+                let r: CGFloat = 3.5 + CGFloat(engagement) * 3.5
+                let glowRadius = r * 2.2
+                context.fill(
+                    Path(ellipseIn: CGRect(x: p.x - glowRadius, y: p.y - glowRadius, width: glowRadius * 2, height: glowRadius * 2)),
+                    with: .radialGradient(
+                        Gradient(colors: [dotColor.opacity(0.35), dotColor.opacity(0)]),
+                        center: p, startRadius: 0, endRadius: glowRadius
+                    )
+                )
+                context.fill(Path(ellipseIn: CGRect(x: p.x - r, y: p.y - r, width: r * 2, height: r * 2)), with: .color(dotColor))
+                context.stroke(
+                    Path(ellipseIn: CGRect(x: p.x - r, y: p.y - r, width: r * 2, height: r * 2)),
+                    with: .color(.white.opacity(0.7)), lineWidth: 1
+                )
+            }
+        }
+    }
 }
 
 private struct DottedDeskGrid: View {

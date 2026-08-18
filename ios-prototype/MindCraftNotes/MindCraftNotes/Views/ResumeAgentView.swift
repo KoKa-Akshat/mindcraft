@@ -44,6 +44,12 @@ struct ResumeAgentView: View {
             let scale = min(geo.size.width / artboard.width, geo.size.height / artboard.height)
             ZStack {
                 Color.white.ignoresSafeArea()
+                // Same dotted-grid treatment as the Work dashboard
+                // (2026-08-18, explicit ask: "all other panels should
+                // have polka dots too") - duplicated per-file, matching
+                // this codebase's existing convention.
+                ResumeDottedGrid()
+                    .frame(width: geo.size.width, height: geo.size.height)
                 ZStack(alignment: .topLeading) {
                     pin(ResumeArtboard.content, scale: scale) { contentBox }
                     pin(ResumeArtboard.jesseRail, scale: scale) {
@@ -296,6 +302,27 @@ struct ResumeAgentView: View {
 private enum ResumeArtboard {
     static let content = CGRect(x: 28, y: 48, width: 920, height: 560)
     static let jesseRail = CGRect(x: 980, y: 48, width: 432, height: 560)
+}
+
+/// Same dotted-grid treatment as `DeskGridDashboardView.DottedDeskGrid` /
+/// `LearnStudioView.DottedLearnGrid` / `DesignStudioView.DottedDesignGrid` -
+/// duplicated per-file by convention in this codebase rather than shared,
+/// same step/size/color (this file has no local hex-string Color
+/// initializer, so the color is spelled out as `Color(red:green:blue:)`
+/// like the rest of this file already does).
+private struct ResumeDottedGrid: View {
+    var body: some View {
+        Canvas { context, size in
+            let step: CGFloat = 16
+            for x in stride(from: 8, through: size.width, by: step) {
+                for y in stride(from: 8, through: size.height, by: step) {
+                    let dot = Path(ellipseIn: CGRect(x: x, y: y, width: 1.4, height: 1.4))
+                    context.fill(dot, with: .color(Color(red: 215 / 255, green: 208 / 255, blue: 194 / 255)))
+                }
+            }
+        }
+        .allowsHitTesting(false)
+    }
 }
 
 private struct ResumeAgentWebView: UIViewRepresentable {
