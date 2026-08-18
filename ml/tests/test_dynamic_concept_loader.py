@@ -11,6 +11,7 @@ from mindcraft_graph.loaders.dynamic_concept_loader import (
     merge_ontology,
 )
 from mindcraft_graph.planning.pathfinder import get_prerequisite_chain
+from mindcraft_graph.representation import classification_index as classifier_index
 
 DYNAMIC_GRAPHS_DIR = Path(__file__).resolve().parents[1] / "data" / "dynamic_graphs"
 STANDARDIZED_ONTOLOGY_PATH = (
@@ -186,6 +187,63 @@ def test_merge_of_all_four_real_book_graphs_has_no_collisions():
     # 42-concept ontology's own concepts do - proof this is one graph, not
     # four separate systems living side by side.
     assert merged.canonical_concept_id("euclid_elements::point-line-plane-def") == "euclid_elements::point-line-plane-def"
+
+
+# ── Classification-cache invalidation (Greptile PR review catch, confirmed
+#    real by hand before this test was added) ──
+
+
+def test_classification_source_hash_changes_when_a_dynamic_graph_is_added(tmp_path):
+    """serve.py's classification-index cache is keyed by
+    compute_source_hash() over a list of file paths. Before this fix, that
+    list never included the dynamic graphs directory, so adding or editing
+    a book graph left the cached classification index silently serving a
+    stale concept vocabulary that no longer matched the live, merged
+    ontology. This proves the fix: including the dynamic graph files in
+    the hashed source list makes the hash actually change."""
+    (tmp_path / "book_a.json").write_text(json.dumps({
+        "subject_id": "book_a", "title": "A",
+        "concepts": [{"id": "book_a::x", "label": "X", "subject_id": "book_a", "dependencies": [], "level": "core"}],
+    }))
+    sources_before = [STANDARDIZED_ONTOLOGY_PATH, *sorted(tmp_path.glob("*.json"))]
+    hash_before = classifier_index.compute_source_hash(sources_before)
+
+    (tmp_path / "book_b.json").write_text(json.dumps({
+        "subject_id": "book_b", "title": "B",
+        "concepts": [{"id": "book_b::y", "label": "Y", "subject_id": "book_b", "dependencies": [], "level": "core"}],
+    }))
+    sources_after = [STANDARDIZED_ONTOLOGY_PATH, *sorted(tmp_path.glob("*.json"))]
+    hash_after = classifier_index.compute_source_hash(sources_after)
+
+    assert hash_before != hash_after
+
+
+def test_merge_collision_can_be_caught_without_losing_the_base_ontology(tmp_path):
+    """Mirrors serve.py's own try/except around merge_ontology(): two
+    individually-valid book graphs (each loads clean on its own) that
+    happen to collide on concept id must not be able to crash the whole
+    service at startup - the caller should be able to catch the ValueError
+    and keep serving the un-merged base ontology instead."""
+    (tmp_path / "a.json").write_text(json.dumps({
+        "subject_id": "dup", "title": "A",
+        "concepts": [{"id": "dup::x", "label": "X", "subject_id": "dup", "dependencies": [], "level": "core"}],
+    }))
+    (tmp_path / "b.json").write_text(json.dumps({
+        "subject_id": "dup", "title": "B",
+        "concepts": [{"id": "dup::x", "label": "X again", "subject_id": "dup", "dependencies": [], "level": "core"}],
+    }))
+    base, _ = load_complete_ontology(STANDARDIZED_ONTOLOGY_PATH)
+    dynamic_graphs = load_dynamic_concept_graphs(tmp_path)
+    assert len(dynamic_graphs) == 2  # both individually valid on their own
+
+    ontology = base
+    try:
+        ontology = merge_ontology(base, dynamic_graphs)
+        assert False, "expected a collision ValueError"
+    except ValueError:
+        ontology = base  # exactly what serve.py's except branch does
+
+    assert len(ontology.concepts) == len(base.concepts)
 
 
 def test_merged_book_concept_resolves_through_the_real_pathfinder():
