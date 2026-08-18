@@ -944,29 +944,61 @@ struct DeskGridDashboardView: View {
                 text += (doc.page(at: i)?.string ?? "") + "\n"
                 if text.count > 4000 { break }
             }
-            homeworkUploading = false
             let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
-            guard !trimmed.isEmpty else {
-                homeworkError = "Couldn\u{2019}t find any text in that PDF. Try a photo instead."
+            if !trimmed.isEmpty {
+                await solveHomeworkProblem(trimmed, fileName: url.lastPathComponent)
                 return
             }
-            await solveHomeworkProblem(trimmed, fileName: url.lastPathComponent)
+            // Real gap found live (2026-08-18: "i uploaded a pdf but
+            // nothing happening") - most real homework PDFs are a phone
+            // scan with NO text layer, so PDFKit's `.string` (a real text
+            // extraction, not OCR) correctly finds nothing. Fall back to
+            // rasterizing page 1 and running it through the exact same
+            // vision-model OCR path photos already use, instead of just
+            // erroring out on a case that's actually the common one.
+            guard let page = doc.page(at: 0) else {
+                homeworkError = "Couldn\u{2019}t find any text in that PDF. Try a photo instead."
+                homeworkUploading = false
+                return
+            }
+            let pageRect = page.bounds(for: .mediaBox)
+            let scale: CGFloat = 2
+            let renderSize = CGSize(width: pageRect.width * scale, height: pageRect.height * scale)
+            let pageImage = page.thumbnail(of: renderSize, for: .mediaBox)
+            guard let imageData = pageImage.jpegData(compressionQuality: 0.9) else {
+                homeworkError = "Couldn\u{2019}t find any text in that PDF. Try a photo instead."
+                homeworkUploading = false
+                return
+            }
+            await runImageOCR(imageData, fileName: url.lastPathComponent)
             return
         }
 
-        let (result, _) = await HomeworkClient.parseAndCreateSession(imageData: data, fileName: url.lastPathComponent)
-        homeworkUploading = false
+        await runImageOCR(data, fileName: url.lastPathComponent)
+    }
+
+    private func runImageOCR(_ imageData: Data, fileName: String) async {
+        // homeworkUploading (drives the tile's "Reading..." state) stays
+        // true through this whole OCR + solve chain, not just the initial
+        // file read - it used to flip false right here, before the actual
+        // network round trips, so the tile sat idle-looking with no
+        // spinner for however long those took. That silent gap is part of
+        // what read as "nothing happening."
+        let (result, _) = await HomeworkClient.parseAndCreateSession(imageData: imageData, fileName: fileName)
         switch result {
         case .success(let questions):
             guard let first = questions.first else {
                 homeworkError = "Couldn\u{2019}t find a question on that page. Try another photo."
+                homeworkUploading = false
                 return
             }
-            await solveHomeworkProblem(first.text, fileName: url.lastPathComponent)
+            await solveHomeworkProblem(first.text, fileName: fileName)
         case .unavailable:
             homeworkError = "Couldn\u{2019}t find questions on that page. Try another photo, or this may be temporarily unavailable."
+            homeworkUploading = false
         case .notSignedIn:
             homeworkError = "Please sign in again."
+            homeworkUploading = false
         }
     }
 
@@ -988,6 +1020,7 @@ struct DeskGridDashboardView: View {
         case .unavailable:
             homeworkError = "Couldn't get an answer - try again in a bit."
         }
+        homeworkUploading = false
     }
 
     /// Only Binder participates in `DeskBoxBus`'s grow/shrink negotiation -
@@ -1074,7 +1107,17 @@ struct DeskGridDashboardView: View {
             // the card (explicit ask, 2026-08-18) - via headerTrailing,
             // same functionality the main dock/old Intel connect row had,
             // just relocated, not rebuilt.
-            JesseRailView(studentName: studentName, context: "workDashboard", headerTrailing: AnyView(jesseBoxIconRow))
+            // .clipped() is load-bearing: Intel's box shrank to a compact
+            // stacked-column slot (2026-08-18) and JesseRailView's own
+            // intrinsic content (avatar row + greeting + call button +
+            // transcript space) wants more height than that - confirmed
+            // live via screenshot, the card was bleeding straight through
+            // the dock below it. A plain `.frame` from an ancestor only
+            // PROPOSES a size, it doesn't forcibly compress a child that
+            // wants more room; only an explicit clip here actually cuts
+            // the overflow instead of letting it render past the tile.
+            JesseRailView(studentName: studentName, context: "workDashboard", headerTrailing: AnyView(jesseBoxIconRow), compact: true)
+                .clipped()
                 .accessibilityIdentifier("deskGridJesseCall")
         } else if kind == .homeworkHelp {
             tileInnerCard { homeworkHelpTileBody(ink: ink) }
@@ -1689,23 +1732,24 @@ struct DeskGridDashboardView: View {
     }
 }
 
-/// 1440×810 boxes measured from Presentation_Screen.pdf, with two later
-/// departures from the original PDF layout (2026-08-17): Email/Gcal are no
-/// longer separate boxes - their content lives inside Intel's box, which
-/// took over their combined footprint on the right - and Homework Help is
-/// new, in Intel's original top-left slot.
+/// 1440×810 boxes measured from Presentation_Screen.pdf, with later
+/// departures from the original PDF layout: Email/Gcal are no longer
+/// separate boxes - their content lives inside Intel's box (2026-08-17) -
+/// and (2026-08-18, explicit ask) Intel/Homework Help/Moodle now stack as
+/// one compact left column (each the same width/height) and Binder
+/// expands to fill everything else - the union of its own old footprint
+/// and Intel's old top-right slot - since a filing system genuinely
+/// benefits from more room more than a three-way tie for space did.
 private enum WorkArtboard {
-    static let p4HomeworkHelp = CGRect(x: 81, y: 118, width: 376, height: 227)
-    static let p4Moodle = CGRect(x: 115, y: 378, width: 315, height: 222)
-    static let p4Binder = CGRect(x: 492, y: 61, width: 505, height: 568)
-    /// Was Email (1033,107,381,212) + Gcal (1032,343,392,286) stacked.
-    static let p4Intel = CGRect(x: 1032, y: 107, width: 392, height: 522)
+    static let p4HomeworkHelp = CGRect(x: 81, y: 54, width: 376, height: 200)
+    static let p4Moodle = CGRect(x: 81, y: 270, width: 376, height: 200)
+    static let p4Intel = CGRect(x: 81, y: 486, width: 376, height: 200)
+    static let p4Binder = CGRect(x: 492, y: 54, width: 932, height: 632)
 
-    static let p5HomeworkHelp = CGRect(x: 76, y: 103, width: 319, height: 192)
-    static let p5Moodle = CGRect(x: 106, y: 323, width: 267, height: 188)
-    static let p5Binder = CGRect(x: 425, y: 54, width: 428, height: 524)
-    /// Was Email (884,93,322,180) + Gcal (884,295,332,325) stacked.
-    static let p5Intel = CGRect(x: 884, y: 93, width: 332, height: 527)
+    static let p5HomeworkHelp = CGRect(x: 76, y: 54, width: 319, height: 200)
+    static let p5Moodle = CGRect(x: 76, y: 270, width: 319, height: 200)
+    static let p5Intel = CGRect(x: 76, y: 486, width: 319, height: 200)
+    static let p5Binder = CGRect(x: 430, y: 54, width: 786, height: 632)
     static let memoRail = CGRect(x: 1231, y: 193, width: 199, height: 194)
     static let flowsRail = CGRect(x: 1231, y: 54, width: 199, height: 566)
     // Only the dock's own box moves toward the board's bottom edge (was

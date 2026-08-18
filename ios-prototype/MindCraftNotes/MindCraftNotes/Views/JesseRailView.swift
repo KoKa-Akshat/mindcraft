@@ -20,6 +20,12 @@ struct JesseRailView: View {
     /// other screen carrying this shared card (Resume/Book/Learn/
     /// Presentation/Design Studio) compiles unchanged.
     var headerTrailing: AnyView? = nil
+    /// Tighter spacing/padding, and drops the least essential line ("or
+    /// continue in chat") - the Work dashboard's Intel slot shrank to a
+    /// compact stacked-column box (2026-08-18) too small for this card's
+    /// normal spacing without truncating the call button/transcript.
+    /// Every other screen carrying this card keeps the roomier default.
+    var compact: Bool = false
 
     @EnvironmentObject private var jesseCall: JesseCallSession
     @State private var instructionLog: [String] = []
@@ -38,7 +44,7 @@ struct JesseRailView: View {
     }()
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 14) {
+        VStack(alignment: .leading, spacing: compact ? 8 : 14) {
             HStack(spacing: 10) {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12, style: .continuous)
@@ -46,9 +52,9 @@ struct JesseRailView: View {
                     Self.raccoonImage
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 30, height: 30)
+                        .frame(width: compact ? 20 : 30, height: compact ? 20 : 30)
                 }
-                .frame(width: 52, height: 52)
+                .frame(width: compact ? 36 : 52, height: compact ? 36 : 52)
                 VStack(alignment: .leading, spacing: 4) {
                     JesseMiniWaveform(active: jesseCall.isSpeaking || jesseCall.isListening)
                     Text(jesseCall.isActive ? "On the line" : "Just now")
@@ -62,9 +68,9 @@ struct JesseRailView: View {
             }
 
             Text("Hi \(studentName), Jesse here.")
-                .font(.system(size: 15, weight: .semibold, design: .rounded))
+                .font(.system(size: compact ? 13 : 15, weight: .semibold, design: .rounded))
                 .foregroundColor(Color(jrHex: "143a2e"))
-                .padding(12)
+                .padding(compact ? 8 : 12)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .background(
                     RoundedRectangle(cornerRadius: 14, style: .continuous)
@@ -77,12 +83,12 @@ struct JesseRailView: View {
                         Image(systemName: jesseCall.isActive ? "phone.down.fill" : "phone.fill")
                         Text(jesseCall.isActive ? "End call" : "Jump on a call with Jesse")
                         Spacer(minLength: 0)
-                        if !jesseCall.isActive { Image(systemName: "arrow.right") }
+                        if !jesseCall.isActive, !compact { Image(systemName: "arrow.right") }
                     }
-                    .font(.system(size: 14, weight: .bold, design: .rounded))
+                    .font(.system(size: compact ? 12 : 14, weight: .bold, design: .rounded))
                     .foregroundColor(.white)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 14)
+                    .padding(.horizontal, compact ? 12 : 16)
+                    .padding(.vertical, compact ? 9 : 14)
                     .background(Capsule().fill(jesseCall.isActive ? Color(jrHex: "b0473f") : Color.black))
                 }
                 .buttonStyle(.plain)
@@ -97,9 +103,9 @@ struct JesseRailView: View {
                         jesseCall.isListening ? jesseCall.stopListening() : jesseCall.startListening()
                     } label: {
                         Image(systemName: jesseCall.isListening ? "mic.fill" : "mic.slash.fill")
-                            .font(.system(size: 16, weight: .bold))
+                            .font(.system(size: compact ? 13 : 16, weight: .bold))
                             .foregroundColor(.white)
-                            .frame(width: 48, height: 48)
+                            .frame(width: compact ? 36 : 48, height: compact ? 36 : 48)
                             .background(Circle().fill(jesseCall.isListening ? Color(jrHex: "247a4d") : Color(jrHex: "8a8478")))
                     }
                     .buttonStyle(.plain)
@@ -132,8 +138,8 @@ struct JesseRailView: View {
                         }
                     }
                 }
-                .frame(maxHeight: 240)
-                .padding(10)
+                .frame(maxHeight: compact ? 90 : 240)
+                .padding(compact ? 6 : 10)
                 .background(
                     RoundedRectangle(cornerRadius: 14, style: .continuous)
                         .fill(Color(jrHex: "f3f1ec"))
@@ -141,10 +147,12 @@ struct JesseRailView: View {
                 .accessibilityIdentifier("jesseRailTranscript")
             }
 
-            Text("or continue in chat")
-                .font(.system(size: 12, weight: .medium, design: .rounded))
-                .foregroundColor(Color(jrHex: "143a2e").opacity(0.4))
-                .frame(maxWidth: .infinity)
+            if !compact {
+                Text("or continue in chat")
+                    .font(.system(size: 12, weight: .medium, design: .rounded))
+                    .foregroundColor(Color(jrHex: "143a2e").opacity(0.4))
+                    .frame(maxWidth: .infinity)
+            }
 
             if let status = jesseCall.status {
                 Text(status)
@@ -154,7 +162,7 @@ struct JesseRailView: View {
 
             Spacer(minLength: 0)
         }
-        .padding(18)
+        .padding(compact ? 10 : 18)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(
             RoundedRectangle(cornerRadius: 18, style: .continuous)
