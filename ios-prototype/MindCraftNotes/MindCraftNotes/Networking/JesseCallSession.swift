@@ -69,6 +69,13 @@ final class JesseCallSession: NSObject, ObservableObject {
     /// say "Jesse - still on the line" without caring about the call's
     /// internal state machine.
     @Published private(set) var context: String?
+    /// Book's live draft (Assignment F, 2026-08-18) - set only while
+    /// `context == "book"`, updated from the real `/api/book-agent` round
+    /// trip on every turn (see `askJesseBook`) so `BookWorkflowView` can
+    /// render chapters live as the student talks instead of the old
+    /// WKWebView-only draft. Reset in `begin()` so a fresh call never shows
+    /// a previous book's chapters before the first reply.
+    @Published private(set) var bookDraft: BookAgentDraft?
     /// Learn Studio's live study plan (Assignment G, 2026-08-18) - set only
     /// while `context == "learnStudio"`, regenerated fresh from the running
     /// conversation on every turn (see `askJesseLearnStudio`) so
@@ -137,6 +144,9 @@ final class JesseCallSession: NSObject, ObservableObject {
         if context == "learnStudio" {
             studyPlan = nil
             studyPlanError = nil
+        }
+        if context == "book" {
+            bookDraft = nil
         }
         status = nil
     }
@@ -332,13 +342,19 @@ final class JesseCallSession: NSObject, ObservableObject {
         guard !isAmbient else { return }
         isThinking = true
 
-        // Learn Studio (Assignment G) drives its own real study-plan
-        // machinery instead of the generic archive-RAG path below - see
-        // askJesseLearnStudio's doc comment. Checked before the Work
+        // Book (Assignment F) and Learn Studio (Assignment G) each drive
+        // their own real backend instead of the generic archive-RAG path
+        // below - see their doc comments. Checked before the Work
         // dashboard's DeskBoxBus briefing on purpose: that briefing ("the
         // Work boxes are helpers, quote them") is specific to the Work
         // dashboard and would be actively wrong context to inject into a
-        // study-plan conversation happening on a different screen entirely.
+        // book-writing or study-plan conversation happening on a different
+        // screen entirely.
+        if context == "book" {
+            await askJesseBook(message)
+            isThinking = false
+            return
+        }
         if context == "learnStudio" {
             await askJesseLearnStudio(message)
             isThinking = false
@@ -363,6 +379,28 @@ final class JesseCallSession: NSObject, ObservableObject {
         guard isActive else { isThinking = false; return } // call may have ended while awaiting
         await speak(reply ?? "I didn't quite catch that. Try again?")
         isThinking = false
+    }
+
+    // MARK: - Book (Assignment F, 2026-08-18)
+
+    /// Real `/api/book-agent` round trip - mirrors `agent.js`'s `ask()`
+    /// exactly (same URL, same `{ message, draft }` request, same
+    /// `{ reply, draft, readyToPublish }` response). `bookDraft` is the one
+    /// piece of state `BookWorkflowView` observes to render chapters live
+    /// as the student talks; `readyToPublish` is available on the reply if
+    /// a future pass wants to surface it, not consumed yet - the left
+    /// panel derives its own "ready" state from `title`/`chapters` directly,
+    /// same rule `agent.js`'s own publish-button-disabled check already used.
+    private func askJesseBook(_ message: String) async {
+        let draft = bookDraft ?? .empty
+        guard let result = await BookAgentClient.ask(message: message, draft: draft) else {
+            guard isActive else { return }
+            await speak("I couldn't reach the book desk just now. Keep talking and I'll catch up.")
+            return
+        }
+        guard isActive else { return }
+        bookDraft = result.draft
+        await speak(result.reply)
     }
 
     // MARK: - Learn Studio (Assignment G, 2026-08-18)
