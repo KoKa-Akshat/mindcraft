@@ -121,24 +121,38 @@ struct JesseRailView: View {
             // show, just rendered in place instead of behind a second
             // presentation.
             if !jesseCall.turns.isEmpty || !instructionLog.isEmpty || jesseCall.isListening || jesseCall.isThinking {
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 10) {
-                        ForEach(jesseCall.turns) { turn in
-                            transcriptLine(turn.speaker == "jesse" ? "Jesse" : studentName, turn.text)
-                        }
-                        if jesseCall.isListening, !jesseCall.liveTranscript.isEmpty {
-                            transcriptLine(studentName, jesseCall.liveTranscript)
-                                .opacity(0.55)
-                        }
-                        ForEach(Array(instructionLog.enumerated()), id: \.offset) { _, line in
-                            transcriptLine("Dock", line)
-                        }
-                        if jesseCall.isThinking {
-                            Text("Jesse is working")
-                                .font(.system(size: 12, weight: .semibold, design: .rounded))
-                                .foregroundColor(Color(jrHex: "247a4d"))
+                ScrollViewReader { scrollProxy in
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: 10) {
+                            ForEach(jesseCall.turns) { turn in
+                                transcriptLine(turn.speaker == "jesse" ? "Jesse" : studentName, turn.text)
+                                    .id(turn.id)
+                            }
+                            if jesseCall.isListening, !jesseCall.liveTranscript.isEmpty {
+                                transcriptLine(studentName, jesseCall.liveTranscript)
+                                    .opacity(0.55)
+                                    .id("liveTranscript")
+                            }
+                            ForEach(Array(instructionLog.enumerated()), id: \.offset) { offset, line in
+                                transcriptLine("Dock", line)
+                                    .id("instruction-\(offset)")
+                            }
+                            if jesseCall.isThinking {
+                                Text("Jesse is working")
+                                    .font(.system(size: 12, weight: .semibold, design: .rounded))
+                                    .foregroundColor(Color(jrHex: "247a4d"))
+                                    .id("thinking")
+                            }
                         }
                     }
+                    // Keeps the most recent line in view as the conversation
+                    // grows, instead of staying pinned at the top (2026-08-18,
+                    // explicit ask - this box got taller once Binder/Intel
+                    // merged, so there's more to scroll through now).
+                    .onChange(of: jesseCall.turns.count) { _, _ in scrollToBottom(scrollProxy) }
+                    .onChange(of: jesseCall.liveTranscript) { _, _ in scrollToBottom(scrollProxy) }
+                    .onChange(of: instructionLog.count) { _, _ in scrollToBottom(scrollProxy) }
+                    .onChange(of: jesseCall.isThinking) { _, _ in scrollToBottom(scrollProxy) }
                 }
                 .frame(maxHeight: compact ? 90 : 240)
                 .padding(compact ? 6 : 10)
@@ -193,6 +207,19 @@ struct JesseRailView: View {
 
     private func endCall() {
         _ = jesseCall.end()
+    }
+
+    private func scrollToBottom(_ proxy: ScrollViewProxy) {
+        let target: String? = {
+            if jesseCall.isThinking { return "thinking" }
+            if jesseCall.isListening, !jesseCall.liveTranscript.isEmpty { return "liveTranscript" }
+            if !instructionLog.isEmpty { return "instruction-\(instructionLog.count - 1)" }
+            return jesseCall.turns.last?.id
+        }()
+        guard let target else { return }
+        withAnimation(.easeOut(duration: 0.2)) {
+            proxy.scrollTo(target, anchor: .bottom)
+        }
     }
 
     private func transcriptLine(_ who: String, _ text: String) -> some View {

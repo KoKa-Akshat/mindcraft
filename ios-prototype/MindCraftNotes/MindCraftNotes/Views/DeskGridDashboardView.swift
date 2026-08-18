@@ -136,6 +136,26 @@ struct DeskGridDashboardView: View {
     /// press on it to keep continuing to Jesse"). nil = normal layout.
     @State private var viewingUpload: HomeworkUploadSummary?
 
+    /// In-canvas pan navigation for the sidebar's five destinations
+    /// (2026-08-18, explicit ask, second time asked more forcefully after
+    /// the first pass deferred it: "when I press on Presentation, it
+    /// should not open a completely new screen. Instead, it should be an
+    /// animation of our current screen moving to the left... and it sits
+    /// down in a nice, empty space... in the same big canvas in one place
+    /// instead of opening to a new tab"). Rendered as a second same-size
+    /// pane beside the dashboard's own board (see `body`'s HStack) and
+    /// slid into view with an offset animation instead of going back out
+    /// through `onOpenCreate`/`onOpenFlow` into FieldDeskView's separate
+    /// full-screen-cover overlays - those still exist for other entry
+    /// points (the dock's own "+Book" chip, the long-press Flows rail),
+    /// deliberately untouched since this ask was specifically about the
+    /// sidebar.
+    @State private var activeSidebarFlow: SidebarFlow?
+
+    private enum SidebarFlow: Equatable {
+        case presentation, gdoc, resume, book, design
+    }
+
     // MARK: - Agent takeover (any real ask, not just the email/draft case)
     // Any request longer than a quick nav keyword borrows Binder and/or
     // Intel in place instead of spawning a new floating box - Akshat's
@@ -280,7 +300,14 @@ struct DeskGridDashboardView: View {
             let sidebarInset: CGFloat = 106
             let scale = min((geo.size.width - sidebarInset) / artboard.width, geo.size.height / artboard.height)
             let board = CGSize(width: artboard.width * scale, height: artboard.height * scale)
-            ZStack {
+            // Two same-size panes side by side - the dashboard, then
+            // whichever sidebar destination is active - slid horizontally
+            // instead of each destination presenting as its own covering
+            // overlay (2026-08-18, explicit ask, see `activeSidebarFlow`'s
+            // doc comment). `flowPane` mounts lazily (only when non-nil,
+            // via the Group below) so there's no cost while idle.
+            HStack(spacing: 0) {
+            ZStack(alignment: .top) {
                 // Back to cream (2026-08-18, reverted: "the black polka
                 // dots is take it back to white polka dots please I don't
                 // like this I like the white polka dots better").
@@ -294,6 +321,14 @@ struct DeskGridDashboardView: View {
                 // below too").
                 DottedDeskGrid()
                     .frame(width: geo.size.width, height: geo.size.height)
+                // Top-aligned, not centered (2026-08-18, explicit ask:
+                // "push Homework Help and Intel all the way up... right at
+                // the top of the screen"). The 1440x810 artboard is wider
+                // than this device's own aspect ratio, so `scale` is
+                // bounded by width - centering the board left real empty
+                // margin above AND below it; top-aligning removes the
+                // above-margin entirely so the tile column actually sits
+                // at the screen's top edge instead of floating mid-screen.
                 tileBoard(scale: scale, board: board)
                     .scaleEffect(spaceZoom * liveZoom)
                     .offset(x: sidebarInset / 2 + spacePan.width + livePan.width, y: spacePan.height + livePan.height)
@@ -305,7 +340,18 @@ struct DeskGridDashboardView: View {
                     moodleOverlayLayer
                         .transition(.opacity)
                 }
-                leftSidebar
+                // Screen-space, not part of the scaled artboard (2026-08-18,
+                // explicit ask: "the settings' lower bottom boundary, and
+                // that's where the lower boundary of our toolbar should
+                // also match"). The dock used to live inside `tileBoard`,
+                // sized by the artboard's own `scale` - since that scale is
+                // bounded by width on this device (see the top-align note
+                // above), the dock's bottom edge landed well short of the
+                // sidebar's, which fills the real screen height the same
+                // way `leftSidebar` already does. Same screen-space
+                // bottom-pin pattern here instead of another scale-bound
+                // position.
+                bottomDock
             }
             .frame(width: geo.size.width, height: geo.size.height)
             .contentShape(Rectangle())
@@ -331,6 +377,33 @@ struct DeskGridDashboardView: View {
                     viewingUpload = seed
                 }
             }
+
+            Group {
+                if let activeSidebarFlow {
+                    // Leading padding, not a change to the flow view
+                    // itself - these views own-center within whatever
+                    // GeometryReader size they're given (same artboard
+                    // pattern as this screen's own board), so narrowing
+                    // their available width here is enough to keep their
+                    // content clear of the sidebar without touching their
+                    // own layout code.
+                    flowPane(activeSidebarFlow)
+                        .padding(.leading, 90)
+                        .id(activeSidebarFlow)
+                } else {
+                    Color.clear
+                }
+            }
+            .frame(width: geo.size.width, height: geo.size.height)
+            }
+            .frame(width: geo.size.width * 2, height: geo.size.height, alignment: .leading)
+            .offset(x: activeSidebarFlow == nil ? 0 : -geo.size.width)
+            // Persistent across both panes (2026-08-18, explicit ask: "if
+            // you press GDocs again... if you say Resume, it goes to
+            // Resume" - switching directly between flows without
+            // returning to the dashboard first needs the sidebar visible
+            // the whole time, not just on the dashboard's own page).
+            leftSidebar
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .ignoresSafeArea()
@@ -408,7 +481,6 @@ struct DeskGridDashboardView: View {
                         }
                     }
             }
-            pin(WorkArtboard.dock, scale: scale) { activeDock }
             if expanded {
                 pin(rail == .memo ? WorkArtboard.memoRail : WorkArtboard.flowsRail, scale: scale) {
                     if rail == .memo { memoRail } else { flowsRail }
@@ -1833,11 +1905,11 @@ struct DeskGridDashboardView: View {
     /// looks weird right now the settings column").
     private var leftSidebar: some View {
         VStack(spacing: 14) {
-            sidebarIcon("rectangle.on.rectangle", label: "Presentation") { onOpenCreate(.presentation) }
-            sidebarIcon("doc.text", label: "GDoc") { onOpenCreate(.gdoc) }
-            sidebarIcon("person.text.rectangle", label: "Resume") { onOpenFlow("resume") }
-            sidebarIcon("book", label: "Book") { onOpenFlow("book") }
-            sidebarIcon("square.grid.2x2.fill", label: "Design") { onOpenFlow("design") }
+            sidebarIcon("rectangle.on.rectangle", label: "Presentation") { openSidebarFlow(.presentation) }
+            sidebarIcon("doc.text", label: "GDoc") { openSidebarFlow(.gdoc) }
+            sidebarIcon("person.text.rectangle", label: "Resume") { openSidebarFlow(.resume) }
+            sidebarIcon("book", label: "Book") { openSidebarFlow(.book) }
+            sidebarIcon("square.grid.2x2.fill", label: "Design") { openSidebarFlow(.design) }
             Spacer(minLength: 0)
             sidebarIcon("gearshape.fill", label: "Settings", identifier: "deskGridSidebarManage", action: onOpenManage)
         }
@@ -1862,6 +1934,20 @@ struct DeskGridDashboardView: View {
         .ignoresSafeArea()
     }
 
+    /// Screen-space, matching `leftSidebar`'s own bottom inset exactly
+    /// (14pt outer + 20pt inner vertical padding = 34pt off the true
+    /// bottom edge) so the dock's lower boundary lines up with the
+    /// Settings icon's lower boundary (2026-08-18, explicit ask).
+    private var bottomDock: some View {
+        activeDock
+            .frame(height: 72)
+            .padding(.leading, 110)
+            .padding(.trailing, 24)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+            .padding(.bottom, 34)
+            .ignoresSafeArea()
+    }
+
     private func sidebarIcon(_ system: String, label: String, identifier: String? = nil, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             Image(systemName: system)
@@ -1873,6 +1959,36 @@ struct DeskGridDashboardView: View {
         .buttonStyle(.plain)
         .accessibilityIdentifier(identifier ?? "deskGridSidebar_\(label)")
         .accessibilityLabel(label)
+    }
+
+    private func openSidebarFlow(_ flow: SidebarFlow) {
+        withAnimation(.easeInOut(duration: 0.35)) { activeSidebarFlow = flow }
+    }
+
+    private func closeSidebarFlow() {
+        withAnimation(.easeInOut(duration: 0.35)) { activeSidebarFlow = nil }
+    }
+
+    /// The pane that slides in from the right when a sidebar destination
+    /// is active - each of these views is already self-contained
+    /// (`onClose` + `studentName`, own `@StateObject`/`@EnvironmentObject`
+    /// state), the same shape they'd need to be presented as a
+    /// `.fullScreenCover` elsewhere, so embedding them directly here needs
+    /// no changes to the views themselves.
+    @ViewBuilder
+    private func flowPane(_ flow: SidebarFlow) -> some View {
+        switch flow {
+        case .presentation:
+            CreateCanvasView(kind: .presentation, studentName: studentName, onClose: closeSidebarFlow)
+        case .gdoc:
+            CreateCanvasView(kind: .gdoc, studentName: studentName, onClose: closeSidebarFlow)
+        case .resume:
+            ResumeAgentView(onClose: closeSidebarFlow, studentName: studentName)
+        case .book:
+            BookWorkflowView(onClose: closeSidebarFlow, studentName: studentName)
+        case .design:
+            DesignStudioView(studentName: studentName, onClose: closeSidebarFlow)
+        }
     }
 
     @ViewBuilder
@@ -2150,10 +2266,18 @@ private enum WorkArtboard {
     // the column before the dock. The whole layout shifted left (was
     // x:81 leftmost / x:1424 rightmost - now x:40 / x:1420) instead of
     // hugging the right edge.
-    static let p4HomeworkHelp = CGRect(x: 40, y: 40, width: 420, height: 280)
-    static let p4Moodle = CGRect(x: 40, y: 340, width: 420, height: 340)
-    static let p4Binder = CGRect(x: 490, y: 40, width: 500, height: 640)
-    static let p4Intel = CGRect(x: 1020, y: 40, width: 400, height: 640)
+    // Fifth pass (2026-08-18, explicit ask): "push Homework Help and
+    // Intel all the way up... move them a little bit up... take the space
+    // from Homework Help upwards to the upper border, from Knowledge
+    // Graph to the down border... expand binder vertically and intel
+    // vertically too." The dock no longer lives inside this board (see
+    // `bottomDock`), so the column can run almost the full board height
+    // instead of stopping short to leave it room - top moved 40 -> 24,
+    // bottom moved ~680 -> 790 (20pt short of the board's true 810 edge).
+    static let p4HomeworkHelp = CGRect(x: 40, y: 24, width: 420, height: 373)
+    static let p4Moodle = CGRect(x: 40, y: 417, width: 420, height: 373)
+    static let p4Binder = CGRect(x: 490, y: 24, width: 500, height: 766)
+    static let p4Intel = CGRect(x: 1020, y: 24, width: 400, height: 766)
 
     static let p5HomeworkHelp = CGRect(x: 35, y: 35, width: 340, height: 230)
     static let p5Moodle = CGRect(x: 35, y: 280, width: 340, height: 280)
@@ -2161,14 +2285,6 @@ private enum WorkArtboard {
     static let p5Intel = CGRect(x: 825, y: 35, width: 340, height: 525)
     static let memoRail = CGRect(x: 1231, y: 193, width: 199, height: 194)
     static let flowsRail = CGRect(x: 1231, y: 54, width: 199, height: 566)
-    // Only the dock's own box moves toward the board's bottom edge (was
-    // y: 632, leaving an 82pt empty gap below it out of an 810pt-tall
-    // board). Tile boxes above are untouched - bottom-aligning the whole
-    // ZStack instead moved the tiles too, which is explicitly wrong.
-    // Nudged closer to the true bottom edge again (was y: 698, leaving a
-    // 16pt gap under a 96pt-tall dock on an 810pt board) - tiles untouched.
-    static let dock = CGRect(x: 96, y: 706, width: 1321, height: 96)
-
     /// Content-viewer mode (2026-08-18, explicit ask: tap an uploaded
     /// file, Binder "mixes with Intel to get all that space on the
     /// right"). The union of Binder's and Intel's own p4 footprints -
@@ -2177,7 +2293,7 @@ private enum WorkArtboard {
     /// instead moves down to our search bar and instead of the search
     /// you see the raccoon" is the search field's own leading icon
     /// swapping to the raccoon (see `searchField`), not a second tile.
-    static let contentViewerBinder = CGRect(x: 490, y: 40, width: 930, height: 640)
+    static let contentViewerBinder = CGRect(x: 490, y: 24, width: 930, height: 766)
 }
 
 /// Gentle, always-on pulse for the Knowledge Graph tile's empty-state seed
@@ -2210,9 +2326,28 @@ private struct KnowledgeGraphCanvas: View {
 
     var body: some View {
         Canvas { context, size in
+            // Real node x/y are raw PCA-axis projections from the ML
+            // backend (mean-centered, roughly [-3, 3], NOT already
+            // normalized to [0,1]) - multiplying them directly by canvas
+            // size treated them as if they were, which put the graph off
+            // -center and, for a real node spread, genuinely garbled
+            // (2026-08-18, explicit ask: "the knowledge graph still is not
+            // centered... it's displaying shit"). Remap the graph's own
+            // real bounding box into a padded square that fills the
+            // canvas instead of assuming a fixed range.
+            let padding = 0.12
+            let xs = nodes.compactMap(\.x)
+            let ys = nodes.compactMap(\.y)
+            let minX = xs.min() ?? 0, maxX = xs.max() ?? 1
+            let minY = ys.min() ?? 0, maxY = ys.max() ?? 1
+            let spanX = max(maxX - minX, 0.0001)
+            let spanY = max(maxY - minY, 0.0001)
+
             func point(_ node: KnowledgeGraphNode) -> CGPoint? {
                 guard let x = node.x, let y = node.y else { return nil }
-                return CGPoint(x: x * size.width, y: y * size.height)
+                let nx = padding + (x - minX) / spanX * (1 - 2 * padding)
+                let ny = padding + (y - minY) / spanY * (1 - 2 * padding)
+                return CGPoint(x: nx * size.width, y: ny * size.height)
             }
             var positions: [String: CGPoint] = [:]
             for node in nodes { positions[node.id] = point(node) }

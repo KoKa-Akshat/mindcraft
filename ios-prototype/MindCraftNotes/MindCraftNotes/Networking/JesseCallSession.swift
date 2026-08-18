@@ -203,7 +203,7 @@ final class JesseCallSession: NSObject, ObservableObject {
             // my input"). A narrow, context-gated `speak()` call before
             // any listening starts - not a generalized entry point (see
             // CURSOR_HANDOFF.md Assignment J's own note on this).
-            Task { await speak("Hi \(studentName), what would you like to learn today?") }
+            Task { await speak("Hi \(studentName), what would you like to learn today?", useKokoro: false) }
         }
         status = nil
     }
@@ -267,13 +267,20 @@ final class JesseCallSession: NSObject, ObservableObject {
     /// keeps talking either way, just less naturally on the fallback path.
     /// `speakGeneration` guards against a slow Kokoro response landing
     /// after the student has since paused or ended the call.
-    private func speak(_ text: String, voice: KokoroVoice = .heart) async {
+    /// `useKokoro: false` skips straight to the native voice - for the
+    /// call-opening greeting specifically (2026-08-18, explicit ask:
+    /// "Jesse is mad slow to speak when I start a call"). Kokoro's own
+    /// timeout is 55s (real HF Space cold-start headroom), which is fine
+    /// for content the student is already waiting on after asking a real
+    /// question, but not for the very first thing said on a call, where
+    /// instant beats natural.
+    private func speak(_ text: String, voice: KokoroVoice = .heart, useKokoro: Bool = true) async {
         guard !isPaused, !isAmbient else { return }
         turns.append(JesseCallTurn(id: UUID().uuidString, speaker: "jesse", text: text, at: Date()))
         configureAudioSession()
 
         let generation = speakGeneration
-        if let wav = await KokoroTTSClient.synthesize(text: text, voice: voice) {
+        if useKokoro, let wav = await KokoroTTSClient.synthesize(text: text, voice: voice) {
             guard generation == speakGeneration, isActive, !isPaused else { return }
             do {
                 let player = try AVAudioPlayer(data: wav)

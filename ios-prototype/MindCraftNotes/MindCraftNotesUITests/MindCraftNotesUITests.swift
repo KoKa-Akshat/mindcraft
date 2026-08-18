@@ -2290,6 +2290,30 @@ final class MindCraftNotesUITests: XCTestCase {
         XCTAssertTrue(app.buttons["deskGridTile_Intel"].waitForExistence(timeout: 5), "expected Intel's own tile back after closing")
     }
 
+    /// Regression for the in-canvas pan navigation (2026-08-18, explicit
+    /// ask, second time asked more forcefully after the first pass
+    /// deferred it): sidebar destinations slide into the same canvas
+    /// instead of opening a separate full-screen cover, the sidebar stays
+    /// reachable the whole time (so a second destination can be opened
+    /// directly, without returning to the dashboard first), and closing
+    /// lands back on the dashboard.
+    func testSidebarFlowsPanInPlaceAndStaySwitchable() {
+        let app = launchFieldDeskApp()
+        XCUIDevice.shared.orientation = .landscapeLeft
+        XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 15))
+
+        app.buttons["deskGridSidebar_Presentation"].tap()
+        XCTAssertTrue(app.descendants(matching: .any)["createCanvasSlide"].waitForExistence(timeout: 10), "expected Presentation's own content, not a separate cover with no dashboard trace")
+        XCTAssertTrue(app.buttons["deskGridSidebar_GDoc"].waitForExistence(timeout: 5), "expected the sidebar to stay reachable while a flow is open")
+
+        app.buttons["deskGridSidebar_GDoc"].tap()
+        XCTAssertTrue(app.descendants(matching: .any)["createCanvasGdoc"].waitForExistence(timeout: 10), "expected switching directly to GDoc without returning to the dashboard first")
+        XCTAssertFalse(app.descendants(matching: .any)["createCanvasSlide"].exists, "expected Presentation's content to be gone once GDoc took over the same pane")
+
+        app.buttons["createCanvasDone"].tap()
+        XCTAssertTrue(app.buttons["deskGridTile_Homework Help"].waitForExistence(timeout: 10), "expected closing a flow to land back on the dashboard")
+    }
+
     func testHomeworkHelpTileTapOpensDocumentPicker() {
         let app = launchFieldDeskApp()
         XCUIDevice.shared.orientation = .landscapeLeft

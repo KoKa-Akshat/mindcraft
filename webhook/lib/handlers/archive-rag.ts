@@ -47,6 +47,15 @@ function tokens(s: string): string[] {
     .filter((w) => w.length > 2 && !STOP.has(w))
 }
 
+// Below this, a hit is riding on a single coincidental body-text mention
+// of a generic word rather than any real title/slug relevance - returning
+// it as "I opened X" reads as a confident match when it is really noise
+// (e.g. a query for a topic with no real book in the corpus landing on an
+// unrelated book that happens to use one of the query's words once in
+// passing). Title/slug hits (weight 4/2) clear this alone; a bare body
+// hit (weight 1) does not - it needs corroboration from a second signal.
+const MIN_RELEVANT_SCORE = 3
+
 export function retrieve(query: string, limit = 3): Hit[] {
   const q = tokens(query)
   if (!q.length) return []
@@ -60,7 +69,7 @@ export function retrieve(query: string, limit = 3): Hit[] {
       if (body.includes(t)) score += 1
       if (c.bookSlug.replace(/-/g, ' ').includes(t)) score += 2
     }
-    if (score > 0) scored.push({ ...c, score })
+    if (score >= MIN_RELEVANT_SCORE) scored.push({ ...c, score })
   }
   scored.sort((a, b) => b.score - a.score)
   const seen = new Set<string>()
