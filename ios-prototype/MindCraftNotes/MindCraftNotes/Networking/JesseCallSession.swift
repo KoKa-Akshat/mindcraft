@@ -566,13 +566,33 @@ final class JesseCallSession: NSObject, ObservableObject {
     }
 
     /// "Check the archive for lessons on it, extract things, create a
-    /// lesson plan" - real bundled book concept graphs
-    /// (`BookGraphLoader.all`, the same data Learn Studio's "Study a Book"
-    /// already browses) are checked FIRST, honestly, before ever
-    /// generating anything. Most topics (e.g. "calculus") won't match any
-    /// of the handful of bundled books - that's the expected, honest
-    /// outcome, not a bug, and falls through to a real generation call
-    /// instead of pretending archived material exists.
+    /// lesson plan." Two REAL archives get checked, in order, before ever
+    /// generating anything:
+    /// 1. `BookGraphLoader.all` - the 5 bundled literary/philosophy book
+    ///    concept graphs (Learn Studio's "Study a Book" data).
+    /// 2. Dan McCreary's real open-textbook archive (`ArchiveRagClient`,
+    ///    the same backend the Archive workflow's own call already uses)
+    ///    - genuinely covers Calculus, Algebra I, Geometry, Linear
+    ///    Algebra, Biology, Chemistry, Physics, Computer Science, and
+    ///    more (confirmed by reading the real corpus,
+    ///    `webhook/data/dans-archive-chunks.json`). Correction
+    ///    (2026-08-18): this file originally only checked (1), which
+    ///    genuinely doesn't cover something like "calculus" - but (2)
+    ///    does, and was already live, just not wired into this flow.
+    ///    Only step 3, generation, gets skipped when a topic has no real
+    ///    archived material anywhere.
+    ///
+    /// Deliberately NOT wired in here: `mindcraft-content-engine`'s
+    /// ~4,650 real extracted McCreary MicroSims (a much richer, genuinely
+    /// interactive p5.js corpus that includes ~120 calculus sims alone) -
+    /// that data lives in a sibling repo, isn't served by any endpoint
+    /// this app can reach yet, AND carries a real CC BY-NC-SA
+    /// (non-commercial) license that needs an explicit decision before
+    /// embedding those simulations' actual HTML/JS inside a commercial
+    /// app - the archive-rag pattern above (cite + link, never rehost)
+    /// is the licensing-safe shape; rehosting a MicroSim's real source
+    /// is a different, bigger question. Flagging this rather than
+    /// silently wiring it in unresolved.
     private func askJesseWorkDashboard(topic: String) async {
         let loweredTopic = topic.lowercased()
         if let match = BookGraphLoader.all.first(where: { book in
@@ -591,6 +611,25 @@ final class JesseCallSession: NSObject, ObservableObject {
                 question: nil
             )
             await speak("Good news - I already have \(match.title) in your archive. Here's the table of contents: \(chapters.joined(separator: ", ")).")
+            return
+        }
+
+        if let answer = await ArchiveRagClient.askDetailed(message: "Give me a short table of contents for \(topic)", studentWeakness: studentWeakness),
+           !answer.hits.isEmpty {
+            guard isActive else { return }
+            var seenTitles = Set<String>()
+            let chapters = answer.hits.compactMap { hit -> String? in
+                guard seenTitles.insert(hit.pageTitle).inserted else { return nil }
+                return hit.pageTitle
+            }
+            workDashboardLesson = WorkDashboardLesson(
+                topic: topic,
+                source: .archive(bookTitle: answer.hits[0].bookTitle),
+                chapters: chapters,
+                definition: answer.reply,
+                question: nil
+            )
+            await speak(answer.reply)
             return
         }
 
