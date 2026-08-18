@@ -9,6 +9,14 @@ private enum ShrineBeatPhase: Equatable {
     case starting
 }
 
+/// One solved item in a Homework Help session - a filename (or "Typed
+/// problem" for the non-upload path) plus its real AI-generated cards.
+private struct HomeworkUploadSummary: Identifiable {
+    let id = UUID()
+    let fileName: String
+    let cards: [IngredientHintsClient.HintCard]
+}
+
 /// Real iOS 26 Liquid Glass for nav/control chrome (dock, floating chips,
 /// pills) - never on card/content bodies, which stay opaque paper. Matches
 /// Apple's own glass-vs-content split: glass is for the floating control
@@ -126,6 +134,13 @@ struct FieldDeskView: View {
     @State private var homeworkSolving = false
     @State private var homeworkResultCards: [IngredientHintsClient.HintCard] = []
     @State private var homeworkError: String?
+    /// Every solve this session (upload or typed), newest first - explicit
+    /// ask: "shows the names of attached files and a little AI summary
+    /// under each item... if it runs over the length we can scroll inside
+    /// the box." Filing to Binder still happens (see
+    /// fileHomeworkHelpToBinder) but no longer yanks the student away from
+    /// this box to show it.
+    @State private var homeworkUploads: [HomeworkUploadSummary] = []
     /// One upload button, photo or PDF - explicit ask: "just needs an
     /// upload button for now that's it." `.fileImporter` (Files browser,
     /// which itself reaches Photos too) replaces the old images-only
@@ -3420,10 +3435,40 @@ struct FieldDeskView: View {
                     .foregroundColor(Color(fdHex: "b3261e"))
                     .accessibilityIdentifier("fieldDeskHomeworkHelpResult")
             }
+
+            if !homeworkUploads.isEmpty {
+                ScrollView(showsIndicators: true) {
+                    VStack(alignment: .leading, spacing: 10) {
+                        ForEach(homeworkUploads) { upload in
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(upload.fileName)
+                                    .font(.system(size: 12, weight: .heavy, design: .rounded))
+                                    .foregroundColor(Color(fdHex: "0c1207"))
+                                ForEach(upload.cards, id: \.title) { card in
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        Text(card.title)
+                                            .font(.system(size: 11, weight: .bold, design: .rounded))
+                                            .foregroundColor(Color(fdHex: "247a4d"))
+                                        Text(card.body)
+                                            .font(.system(size: 12, weight: .medium, design: .rounded))
+                                            .foregroundColor(Color(fdHex: "1c1a17"))
+                                    }
+                                }
+                            }
+                            .padding(10)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(Color.white))
+                            .accessibilityIdentifier("fieldDeskHomeworkUpload_\(upload.id)")
+                        }
+                    }
+                }
+                .frame(maxHeight: 180)
+                .accessibilityIdentifier("fieldDeskHomeworkUploads")
+            }
         }
     }
 
-    private func solveHomeworkProblem() async {
+    private func solveHomeworkProblem(fileName: String? = nil) async {
         homeworkError = nil
         homeworkSolving = true
         defer { homeworkSolving = false }
@@ -3431,6 +3476,7 @@ struct FieldDeskView: View {
         case .cards(let cards):
             homeworkResultCards = cards
             fileHomeworkHelpToBinder(problem: homeworkProblemDraft, cards: cards)
+            homeworkUploads.insert(HomeworkUploadSummary(fileName: fileName ?? "Typed problem", cards: cards), at: 0)
         case .keyRejected:
             homeworkError = "That AI key was rejected. Open Settings to update it."
         case .unavailable:
@@ -3438,13 +3484,12 @@ struct FieldDeskView: View {
         }
     }
 
-    /// A solved problem doesn't stay trapped in this popup's own result
-    /// list - it files as a real Binder Doc and this popup hands off to
-    /// the Binder screen, which already shows it live (Firestore-backed).
-    /// Also drops an Intel line the same way the Gmail digest does
-    /// (`store.prependIntel`) - Intel's own takeover view already renders
-    /// fresh lines inline on the dashboard, so this needs no popup of its
-    /// own (explicit ask: "it doesn't need its own pop up").
+    /// Files as a real Binder Doc (still happens, still real) and drops an
+    /// Intel line the same way the Gmail digest does (`store.prependIntel`)
+    /// - but no longer yanks the student away from this box to see it.
+    /// Explicit ask: "a nice space under to show ai summaries of uploaded
+    /// content" - the summary needs to actually stay visible here, not
+    /// auto-navigate to Binder the instant it's ready.
     private func fileHomeworkHelpToBinder(problem: String, cards: [IngredientHintsClient.HintCard]) {
         let trimmed = problem.trimmingCharacters(in: .whitespacesAndNewlines)
         let title = trimmed.isEmpty ? "Homework help" : String(trimmed.prefix(60))
@@ -3453,10 +3498,6 @@ struct FieldDeskView: View {
         let line = "Homework · \(title)"
         if !store.intelLines.contains(line) {
             store.prependIntel(line)
-        }
-        withAnimation(.easeInOut(duration: 0.2)) {
-            showHomeworkHelpOverlay = false
-            showBinderOverlay = true
         }
     }
 
@@ -3499,7 +3540,7 @@ struct FieldDeskView: View {
             }
             homeworkProblemDraft = trimmed
             homeworkUploadNote = "Got it - solving now."
-            await solveHomeworkProblem()
+            await solveHomeworkProblem(fileName: url.lastPathComponent)
             return
         }
 
@@ -3515,7 +3556,7 @@ struct FieldDeskView: View {
             homeworkUploadNote = questions.count > 1
                 ? "Found \(questions.count) questions - solving the first."
                 : "Got it - solving now."
-            await solveHomeworkProblem()
+            await solveHomeworkProblem(fileName: url.lastPathComponent)
         case .unavailable:
             homeworkError = "Couldn\u{2019}t find questions on that page. Try another photo, or this may be temporarily unavailable."
         case .notSignedIn:

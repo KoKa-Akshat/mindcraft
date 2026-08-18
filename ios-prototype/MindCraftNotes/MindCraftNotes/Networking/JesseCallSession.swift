@@ -102,6 +102,16 @@ final class JesseCallSession: NSObject, ObservableObject {
     private var audioPlayer: AVAudioPlayer?
     private var request: SFSpeechAudioBufferRecognitionRequest?
     private var task: SFSpeechRecognitionTask?
+    /// Apple's on-device recognizer's own `result.isFinal` does not reliably
+    /// fire after a pause on a live `SFSpeechAudioBufferRecognitionRequest`
+    /// (that's built for a real end-of-utterance signal that mostly never
+    /// comes on a streaming mic input) - the ONLY way a turn used to submit
+    /// was the explicit mic-toggle button. Real conversational turn-taking
+    /// needs pause detection instead: reset this timer on every new partial
+    /// result, and treat 4 uninterrupted seconds of silence as "the
+    /// instruction is done" the same way `isFinal` already does.
+    private var silenceTimer: Timer?
+    private static let silenceTimeout: TimeInterval = 4.0
     private var studentWeakness: (conceptId: String, label: String)?
     private var speakGeneration = 0
     /// Index into `turns` at the start of this session so `end()` can
@@ -297,6 +307,7 @@ final class JesseCallSession: NSObject, ObservableObject {
                 guard let self else { return }
                 if let result {
                     self.liveTranscript = result.bestTranscription.formattedString
+                    self.resetSilenceTimer()
                     if result.isFinal { self.finishListeningTurn() }
                 }
                 if error != nil {
@@ -304,6 +315,21 @@ final class JesseCallSession: NSObject, ObservableObject {
                     self.stopListening()
                     if shouldResume { self.startListening() }
                 }
+            }
+        }
+    }
+
+    /// Ambient mode deliberately does NOT get silence-based auto-submit -
+    /// it's recording a whole room's conversation, not taking a single
+    /// instruction, and a 4-second lull in a real meeting is normal, not a
+    /// signal to cut the transcript there.
+    private func resetSilenceTimer() {
+        guard !isAmbient, !liveTranscript.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
+        silenceTimer?.invalidate()
+        silenceTimer = Timer.scheduledTimer(withTimeInterval: Self.silenceTimeout, repeats: false) { [weak self] _ in
+            Task { @MainActor in
+                guard let self, self.isListening else { return }
+                self.finishListeningTurn()
             }
         }
     }
@@ -323,6 +349,8 @@ final class JesseCallSession: NSObject, ObservableObject {
     }
 
     func stopListening() {
+        silenceTimer?.invalidate()
+        silenceTimer = nil
         if audioEngine.isRunning {
             audioEngine.stop()
             audioEngine.inputNode.removeTap(onBus: 0)
