@@ -106,7 +106,7 @@ private struct ResumeAgentWebView: UIViewRepresentable {
            let url = URL(string: override) {
             return url
         }
-        return URL(string: "https://mindcraft-93858.web.app/desk-os/workflows/resume/?v=r7")!
+        return URL(string: "https://mindcraft-93858.web.app/desk-os/workflows/resume/?v=r8")!
     }
 
     func makeCoordinator() -> Coord { Coord(onApply: onApply) }

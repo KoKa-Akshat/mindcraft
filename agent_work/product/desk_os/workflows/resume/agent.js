@@ -450,5 +450,7 @@
   $('applyBack').addEventListener('click', () => show('desk'));
 
   renderResume();
-  setTimeout(() => speak('Hi. I’m Jesse. I’ll help you build a resume that sounds like you.'), 700);
+  // No auto-speak-on-load here - the native JesseRailView greets out loud/
+  // in text on the right now. Two "Hi, I'm Jesse"s (one spoken here, one
+  // shown there) was the exact "two Jesses" bug this fixes.
 })();
