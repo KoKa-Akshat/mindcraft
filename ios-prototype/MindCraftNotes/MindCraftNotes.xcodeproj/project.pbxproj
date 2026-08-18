@@ -69,6 +69,7 @@
 		A8BFBB951F764F03AE79B888 /* DrawingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B50609A6CA341D392B5BC37 /* DrawingStore.swift */; };
 		A99B09C9A6E7F8091B2C3D4E /* DeskPanCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99B09C9A6E7F8091B2C3D4E /* DeskPanCanvas.swift */; };
 		B0C259017B6359197378F0FD /* LearnStudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1858B772F353A476A8023F /* LearnStudioView.swift */; };
+		DDE6FE79749CA9A22EBDA201 /* DesignStudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600BDD909110482BB76AF2B6 /* DesignStudioView.swift */; };
 		B2C50496636E2ED7186E0232 /* DiagnosticGateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9818B2D6693B4381129CB08 /* DiagnosticGateView.swift */; };
 		B2C588BED4E177EC84C2B5D1 /* QuestionBankLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DAA6B2A396F72A1E1B6C97 /* QuestionBankLoader.swift */; };
 		B3D89B38899B7A196FE908B0 /* ContentsRoadmapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CA309BCDE2728C6DFBAC50 /* ContentsRoadmapView.swift */; };
@@ -197,6 +198,7 @@
 		9668CDF69E284D128DF3FCBB /* StickerCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerCatalog.swift; sourceTree = "<group>"; };
 		9C5A189A567C149C7E1D34F1 /* conceptGraph.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = conceptGraph.json; sourceTree = "<group>"; };
 		9F1858B772F353A476A8023F /* LearnStudioView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LearnStudioView.swift; sourceTree = "<group>"; };
+		600BDD909110482BB76AF2B6 /* DesignStudioView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DesignStudioView.swift; sourceTree = "<group>"; };
 		9F8533094AB64B10828A047B /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		9FAB6A727D2FD6844F72EAF7 /* ConceptGraphLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConceptGraphLoader.swift; sourceTree = "<group>"; };
 		A05918461089BFC725BB84F8 /* questionBank.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = questionBank.json; sourceTree = "<group>"; };
@@ -458,6 +460,7 @@
 				C9BOOKWORKF01A2B3C4 /* BookWorkflowView.swift */,
 				C9FRIENDSVIEW01A2B3 /* FriendsView.swift */,
 				9F1858B772F353A476A8023F /* LearnStudioView.swift */,
+				600BDD909110482BB76AF2B6 /* DesignStudioView.swift */,
 				5A10EB3BDDE04216B5B57403 /* JesseRailView.swift */,
 			);
 			path = Views;
@@ -760,6 +763,7 @@
 				A89B08C8A6E7F8091B2C3D4E /* SpeechCaptureController.swift in Sources */,
 				A99B09C9A6E7F8091B2C3D4E /* DeskPanCanvas.swift in Sources */,
 				B0C259017B6359197378F0FD /* LearnStudioView.swift in Sources */,
+				DDE6FE79749CA9A22EBDA201 /* DesignStudioView.swift in Sources */,
 				D9FE32A2CBC826477D6BCDA2 /* ChatHistoryImportParser.swift in Sources */,
 				D82368581E38D584FD93B658 /* JesseRailView.swift in Sources */,
 			);

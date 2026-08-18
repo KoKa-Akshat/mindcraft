@@ -167,6 +167,13 @@ final class StudentAIKeyStore: ObservableObject {
         return await complete(system: Self.deskAssistantSystemPrompt, user: user)
     }
 
+    /// General-purpose ask for Design Studio's Ask boxes - one goal per box
+    /// (set by whoever built the box), not a fixed persona the way
+    /// solveHomework/generateStudyPlan/answerDeskQuestion each are.
+    func ask(systemPrompt: String, userPrompt: String) async -> Result<String, SolveError> {
+        await complete(system: systemPrompt, user: userPrompt)
+    }
+
     private func complete(system: String, user: String) async -> Result<String, SolveError> {
         guard let creds = readCredentials() else { return .failure(.noKey) }
         switch creds.provider {

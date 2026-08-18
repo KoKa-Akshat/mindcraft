@@ -1482,6 +1482,7 @@ struct DeskGridDashboardView: View {
             // resolves (see FieldDeskView) so nothing else calling it
             // silently breaks - it opens Resume now, not a standalone
             // Apply screen.
+            flowRow("+ Design", system: "square.grid.2x2.fill") { onOpenFlow("design") }
             Spacer(minLength: 0)
         }
         .padding(12)

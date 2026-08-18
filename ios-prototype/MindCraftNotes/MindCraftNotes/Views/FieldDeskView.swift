@@ -90,6 +90,7 @@ struct FieldDeskView: View {
     @State private var showResumeAgent = false
     @State private var showArchiveWorkflow = false
     @State private var showBookWorkflow = false
+    @State private var showDesignStudio = false
     @State private var showApplyToday = false
     @State private var showSchedulingWorkflows = false
     @State private var schedulingWorkflowsMinimized = false
@@ -741,6 +742,7 @@ struct FieldDeskView: View {
                                 // access points, not the standalone Flow
                                 // that was actually asked to go away.
                                 case "apply": showResumeAgent = true
+                                case "design": showDesignStudio = true
                                 default: break
                                 }
                             }
@@ -1310,6 +1312,10 @@ struct FieldDeskView: View {
         }
         .fullScreenCover(isPresented: $showLearnStudio) {
             LearnStudioView(studentName: deskChromeName ?? "there", onClose: { showLearnStudio = false })
+                .environmentObject(jesseCall)
+        }
+        .fullScreenCover(isPresented: $showDesignStudio) {
+            DesignStudioView(studentName: deskChromeName ?? "there", onClose: { showDesignStudio = false })
                 .environmentObject(jesseCall)
         }
         .fileImporter(
