@@ -1,0 +1,524 @@
+{
+  "subject_id": "adam_smith_wealth_of_nations",
+  "title": "The Wealth of Nations: Foundations of Classical Political Economy",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "Capital Theory": {
+      "classifier_name": "Capital Theory",
+      "color": "SteelBlue"
+    },
+    "Historical Development": {
+      "classifier_name": "Historical Development",
+      "color": "SteelBlue"
+    },
+    "Physiocratic System": {
+      "classifier_name": "Physiocratic System",
+      "color": "SteelBlue"
+    },
+    "Price & Distribution": {
+      "classifier_name": "Price & Distribution",
+      "color": "SteelBlue"
+    },
+    "Course Structure": {
+      "classifier_name": "Course Structure",
+      "color": "SteelBlue"
+    },
+    "Mercantile System": {
+      "classifier_name": "Mercantile System",
+      "color": "SteelBlue"
+    },
+    "Applied Synthesis": {
+      "classifier_name": "Applied Synthesis",
+      "color": "SteelBlue"
+    },
+    "Division of Labour": {
+      "classifier_name": "Division of Labour",
+      "color": "SteelBlue"
+    },
+    "Systems Comparison": {
+      "classifier_name": "Systems Comparison",
+      "color": "SteelBlue"
+    },
+    "Public Finance": {
+      "classifier_name": "Public Finance",
+      "color": "SteelBlue"
+    },
+    "Money & Value": {
+      "classifier_name": "Money & Value",
+      "color": "SteelBlue"
+    }
+  },
+  "concepts": [
+    {
+      "id": "adam_smith_wealth_of_nations::human-propensity-truck-barter",
+      "label": "The propensity to truck, barter, and exchange",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [],
+      "taxonomy_id": "Division of Labour",
+      "level": "foundational"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::five-books-structure",
+      "label": "Structure of the five books of the Wealth of Nations",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [],
+      "taxonomy_id": "Course Structure",
+      "level": "foundational"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::division-of-labour",
+      "label": "Division of labour",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::human-propensity-truck-barter"
+      ],
+      "taxonomy_id": "Division of Labour",
+      "level": "foundational"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::pin-factory-example",
+      "label": "The pin-factory illustration",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::division-of-labour"
+      ],
+      "taxonomy_id": "Division of Labour",
+      "level": "foundational"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::causes-of-division-of-labour",
+      "label": "Causes of increased productivity (dexterity, time, machinery)",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::division-of-labour",
+        "adam_smith_wealth_of_nations::pin-factory-example"
+      ],
+      "taxonomy_id": "Division of Labour",
+      "level": "core"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::extent-of-market",
+      "label": "Division of labour limited by extent of the market",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::division-of-labour"
+      ],
+      "taxonomy_id": "Division of Labour",
+      "level": "core"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::talent-differences-argument",
+      "label": "Natural talent vs. differences from division of labour and habit",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::causes-of-division-of-labour"
+      ],
+      "taxonomy_id": "Division of Labour",
+      "level": "core"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::origin-of-money",
+      "label": "Origin of money from inconveniences of barter",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::division-of-labour",
+        "adam_smith_wealth_of_nations::extent-of-market"
+      ],
+      "taxonomy_id": "Money & Value",
+      "level": "core"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::functions-of-money",
+      "label": "Functions of money as medium of exchange",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::origin-of-money"
+      ],
+      "taxonomy_id": "Money & Value",
+      "level": "core"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::real-vs-nominal-price",
+      "label": "Real vs. nominal price and labour as measure of value",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::functions-of-money"
+      ],
+      "taxonomy_id": "Money & Value",
+      "level": "core"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::component-parts-of-price",
+      "label": "Component parts of price: wages, profit, rent",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::real-vs-nominal-price"
+      ],
+      "taxonomy_id": "Price & Distribution",
+      "level": "core"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::natural-price",
+      "label": "Theory of natural price",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::component-parts-of-price"
+      ],
+      "taxonomy_id": "Price & Distribution",
+      "level": "core"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::market-price",
+      "label": "Theory of market price",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::natural-price"
+      ],
+      "taxonomy_id": "Price & Distribution",
+      "level": "core"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::theory-of-wages",
+      "label": "Theory of wages",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::component-parts-of-price"
+      ],
+      "taxonomy_id": "Price & Distribution",
+      "level": "core"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::theory-of-profit",
+      "label": "Theory of profit",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::component-parts-of-price"
+      ],
+      "taxonomy_id": "Price & Distribution",
+      "level": "core"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::theory-of-rent",
+      "label": "Theory of rent",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::component-parts-of-price"
+      ],
+      "taxonomy_id": "Price & Distribution",
+      "level": "core"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::wage-profit-inverse-relation",
+      "label": "Inverse relationship between wages and profits",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::theory-of-wages",
+        "adam_smith_wealth_of_nations::theory-of-profit"
+      ],
+      "taxonomy_id": "Price & Distribution",
+      "level": "advanced"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::capital-stock-concept",
+      "label": "Concept of capital stock",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::division-of-labour",
+        "adam_smith_wealth_of_nations::functions-of-money"
+      ],
+      "taxonomy_id": "Capital Theory",
+      "level": "core"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::fixed-vs-circulating-capital",
+      "label": "Fixed versus circulating capital",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::capital-stock-concept"
+      ],
+      "taxonomy_id": "Capital Theory",
+      "level": "core"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::accumulation-of-capital",
+      "label": "Accumulation of capital stock",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::capital-stock-concept"
+      ],
+      "taxonomy_id": "Capital Theory",
+      "level": "core"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::productive-unproductive-labour",
+      "label": "Productive versus unproductive labour",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::capital-stock-concept",
+        "adam_smith_wealth_of_nations::component-parts-of-price"
+      ],
+      "taxonomy_id": "Capital Theory",
+      "level": "core"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::capital-and-productive-labour",
+      "label": "Relationship between capital accumulation and productive labour employed",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::accumulation-of-capital",
+        "adam_smith_wealth_of_nations::productive-unproductive-labour"
+      ],
+      "taxonomy_id": "Capital Theory",
+      "level": "advanced"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::agricultural-resistance-to-division",
+      "label": "Why agriculture resists division of labour differently",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::causes-of-division-of-labour",
+        "adam_smith_wealth_of_nations::extent-of-market"
+      ],
+      "taxonomy_id": "Historical Development",
+      "level": "core"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::natural-progress-of-opulence",
+      "label": "Natural progress of opulence: agriculture, towns, commerce",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::agricultural-resistance-to-division",
+        "adam_smith_wealth_of_nations::capital-and-productive-labour",
+        "adam_smith_wealth_of_nations::five-books-structure"
+      ],
+      "taxonomy_id": "Historical Development",
+      "level": "core"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::feudal-system-decline",
+      "label": "Decline of the feudal system",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::natural-progress-of-opulence"
+      ],
+      "taxonomy_id": "Historical Development",
+      "level": "advanced"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::towns-and-commerce-growth",
+      "label": "Growth of towns and commerce",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::natural-progress-of-opulence"
+      ],
+      "taxonomy_id": "Historical Development",
+      "level": "advanced"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::mercantile-system-doctrine",
+      "label": "The mercantile system's doctrine of wealth as money",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::origin-of-money",
+        "adam_smith_wealth_of_nations::functions-of-money",
+        "adam_smith_wealth_of_nations::five-books-structure"
+      ],
+      "taxonomy_id": "Mercantile System",
+      "level": "core"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::annual-produce-as-wealth-measure",
+      "label": "Annual produce of land and labour as true measure of wealth",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::component-parts-of-price",
+        "adam_smith_wealth_of_nations::capital-and-productive-labour"
+      ],
+      "taxonomy_id": "Mercantile System",
+      "level": "core"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::critique-of-trade-restraints",
+      "label": "Critique of trade restraints, bounties, and colonies",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::mercantile-system-doctrine",
+        "adam_smith_wealth_of_nations::natural-price",
+        "adam_smith_wealth_of_nations::annual-produce-as-wealth-measure"
+      ],
+      "taxonomy_id": "Mercantile System",
+      "level": "core"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::bounties-and-drawbacks",
+      "label": "Bounties, drawbacks, and export incentives",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::critique-of-trade-restraints"
+      ],
+      "taxonomy_id": "Mercantile System",
+      "level": "advanced"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::colonial-trade-policy",
+      "label": "Colonial trade policy critique",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::critique-of-trade-restraints",
+        "adam_smith_wealth_of_nations::natural-progress-of-opulence"
+      ],
+      "taxonomy_id": "Mercantile System",
+      "level": "advanced"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::physiocratic-system",
+      "label": "Agricultural (physiocratic) system of political economy",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::natural-progress-of-opulence",
+        "adam_smith_wealth_of_nations::productive-unproductive-labour",
+        "adam_smith_wealth_of_nations::five-books-structure"
+      ],
+      "taxonomy_id": "Physiocratic System",
+      "level": "core"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::critique-of-physiocracy",
+      "label": "Critique of the physiocratic system",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::physiocratic-system",
+        "adam_smith_wealth_of_nations::annual-produce-as-wealth-measure"
+      ],
+      "taxonomy_id": "Physiocratic System",
+      "level": "advanced"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::mercantile-vs-physiocratic-comparison",
+      "label": "Comparing mercantile and physiocratic systems",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::critique-of-trade-restraints",
+        "adam_smith_wealth_of_nations::critique-of-physiocracy"
+      ],
+      "taxonomy_id": "Systems Comparison",
+      "level": "cross_cutting"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::role-of-government-expenditure",
+      "label": "Role and categories of government expenditure",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::productive-unproductive-labour",
+        "adam_smith_wealth_of_nations::capital-and-productive-labour"
+      ],
+      "taxonomy_id": "Public Finance",
+      "level": "core"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::public-revenue-sources",
+      "label": "Sources of public revenue",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::theory-of-rent",
+        "adam_smith_wealth_of_nations::theory-of-profit",
+        "adam_smith_wealth_of_nations::theory-of-wages",
+        "adam_smith_wealth_of_nations::five-books-structure"
+      ],
+      "taxonomy_id": "Public Finance",
+      "level": "core"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::taxation-principles",
+      "label": "Principles (canons) of taxation",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::public-revenue-sources"
+      ],
+      "taxonomy_id": "Public Finance",
+      "level": "core"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::public-debt",
+      "label": "Public debt and its consequences",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::public-revenue-sources",
+        "adam_smith_wealth_of_nations::role-of-government-expenditure"
+      ],
+      "taxonomy_id": "Public Finance",
+      "level": "advanced"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::self-interest-exchange-model",
+      "label": "Self-interest and exchange as market mechanism",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::human-propensity-truck-barter",
+        "adam_smith_wealth_of_nations::division-of-labour"
+      ],
+      "taxonomy_id": "Applied Synthesis",
+      "level": "cross_cutting"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::modern-application-division-of-labour",
+      "label": "Applying division-of-labour framework to modern industry",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::causes-of-division-of-labour",
+        "adam_smith_wealth_of_nations::self-interest-exchange-model"
+      ],
+      "taxonomy_id": "Applied Synthesis",
+      "level": "advanced"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::trade-policy-critique-application",
+      "label": "Applying Smith's mercantile critique to current trade policy",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::critique-of-trade-restraints",
+        "adam_smith_wealth_of_nations::annual-produce-as-wealth-measure"
+      ],
+      "taxonomy_id": "Applied Synthesis",
+      "level": "advanced"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::four-stage-model",
+      "label": "Four-stage model: skill, capital, labour allocation, policy",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::division-of-labour",
+        "adam_smith_wealth_of_nations::capital-and-productive-labour",
+        "adam_smith_wealth_of_nations::natural-progress-of-opulence",
+        "adam_smith_wealth_of_nations::role-of-government-expenditure"
+      ],
+      "taxonomy_id": "Applied Synthesis",
+      "level": "cross_cutting"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::woollen-coat-supply-chain",
+      "label": "Woollen coat example applied to modern supply chains",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::four-stage-model",
+        "adam_smith_wealth_of_nations::capital-stock-concept",
+        "adam_smith_wealth_of_nations::division-of-labour"
+      ],
+      "taxonomy_id": "Applied Synthesis",
+      "level": "advanced"
+    },
+    {
+      "id": "adam_smith_wealth_of_nations::smithian-policy-brief",
+      "label": "Policy brief grounded in Book V principles",
+      "subject_id": "adam_smith_wealth_of_nations",
+      "dependencies": [
+        "adam_smith_wealth_of_nations::public-revenue-sources",
+        "adam_smith_wealth_of_nations::taxation-principles",
+        "adam_smith_wealth_of_nations::critique-of-trade-restraints"
+      ],
+      "taxonomy_id": "Applied Synthesis",
+      "level": "advanced"
+    }
+  ]
+}

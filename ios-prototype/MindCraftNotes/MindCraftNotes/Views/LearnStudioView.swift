@@ -30,6 +30,7 @@ struct LearnStudioView: View {
     @State private var planError: String?
     @State private var plan: StudyPlan?
     @State private var showArchive = false
+    @State private var showBookLibrary = false
 
     @State private var probeAnswers: [String: Int] = [:]
     @State private var probeChecked: Set<String> = []
@@ -85,6 +86,13 @@ struct LearnStudioView: View {
         }
         .fullScreenCover(isPresented: $showArchive) {
             ArchiveWorkflowView(onClose: { showArchive = false })
+        }
+        .sheet(isPresented: $showBookLibrary) {
+            BookLibraryPickerView { concept, book in
+                showBookLibrary = false
+                topicDraft = "\(concept.label) - from \(book.title)"
+                Task { await createPlan() }
+            }
         }
         .overlay(alignment: .topLeading) {
             jesseLiveControl
@@ -254,6 +262,40 @@ struct LearnStudioView: View {
                 }
                 .buttonStyle(.plain)
                 .accessibilityIdentifier("learnStudioBrowseArchive")
+
+                // "Put in any book, get tracked lessons" - real, validated
+                // concept graphs from the mindcraft-content-engine pipeline
+                // (book -> BookSummarizer -> generate_concept_graph()),
+                // bundled from Resources/BookGraphs/. Picking a real concept
+                // here kicks off the exact same createPlan() the typed-topic
+                // path uses - no separate rendering system, no fabricated
+                // practice bank (matchedConceptId honestly comes back nil
+                // for anything outside SampleQuestion.all's ACT-math ids).
+                if !BookGraphLoader.all.isEmpty {
+                    Button {
+                        showBookLibrary = true
+                    } label: {
+                        VStack(spacing: 6) {
+                            Image(systemName: "books.vertical.fill")
+                                .font(.system(size: 18, weight: .semibold))
+                            Text("Study a\nBook")
+                                .font(.system(size: 11, weight: .bold, design: .rounded))
+                                .multilineTextAlignment(.center)
+                        }
+                        .foregroundColor(Color(lsHex: "143a2e"))
+                        .frame(width: 84, height: 90)
+                        .background(
+                            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                .fill(Color.white)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                        .stroke(Color(lsHex: "e4dcc8"), lineWidth: 1)
+                                )
+                        )
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityIdentifier("learnStudioStudyBook")
+                }
             }
 
             HStack(spacing: 8) {
@@ -706,6 +748,93 @@ private struct DottedLearnGrid: View {
             }
         }
         .allowsHitTesting(false)
+    }
+}
+
+/// Browse real, validated book concept graphs and pick a concept to study.
+/// Two levels deep (book list -> that book's concepts), nothing fancier -
+/// this is a picker, not a graph visualizer. Picking a concept hands
+/// (concept, book) back to the caller and does nothing else; LearnStudioView
+/// itself decides what that means (pre-fill the topic, start generating).
+private struct BookLibraryPickerView: View {
+    var onPick: (BookConceptRecord, BookConceptGraph) -> Void
+
+    @Environment(\.dismiss) private var dismiss
+    @State private var openBook: BookConceptGraph?
+
+    var body: some View {
+        NavigationStack {
+            List(BookGraphLoader.all) { book in
+                Button {
+                    openBook = book
+                } label: {
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text(book.title)
+                            .font(.system(size: 15, weight: .bold, design: .rounded))
+                            .foregroundColor(.primary)
+                        Text("\(book.concepts.count) concepts")
+                            .font(.system(size: 12, weight: .medium, design: .rounded))
+                            .foregroundColor(.secondary)
+                    }
+                    .padding(.vertical, 4)
+                }
+                .accessibilityIdentifier("bookLibraryBook_\(book.subjectId)")
+            }
+            .navigationTitle("Study a Book")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Close") { dismiss() }
+                }
+            }
+            .navigationDestination(item: $openBook) { book in
+                BookConceptListView(book: book) { concept in
+                    onPick(concept, book)
+                }
+            }
+        }
+        .accessibilityIdentifier("bookLibraryPicker")
+    }
+}
+
+private struct BookConceptListView: View {
+    let book: BookConceptGraph
+    var onPick: (BookConceptRecord) -> Void
+
+    var body: some View {
+        List {
+            ForEach(book.groupedByTaxonomy, id: \.taxonomy) { group in
+                Section(group.taxonomy) {
+                    ForEach(group.concepts) { concept in
+                        Button {
+                            onPick(concept)
+                        } label: {
+                            HStack {
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text(concept.label)
+                                        .font(.system(size: 14, weight: .semibold, design: .rounded))
+                                        .foregroundColor(.primary)
+                                    if !concept.dependencies.isEmpty {
+                                        Text("Builds on \(concept.dependencies.count) earlier concept\(concept.dependencies.count == 1 ? "" : "s")")
+                                            .font(.system(size: 11, weight: .medium, design: .rounded))
+                                            .foregroundColor(.secondary)
+                                    }
+                                }
+                                Spacer(minLength: 8)
+                                Text(concept.level)
+                                    .font(.system(size: 10, weight: .heavy, design: .rounded))
+                                    .tracking(0.4)
+                                    .foregroundColor(.secondary)
+                            }
+                            .padding(.vertical, 2)
+                        }
+                        .accessibilityIdentifier("bookLibraryConcept_\(concept.id)")
+                    }
+                }
+            }
+        }
+        .navigationTitle(book.title)
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
