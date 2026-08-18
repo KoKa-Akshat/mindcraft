@@ -37,10 +37,19 @@ struct ResumeAgentView: View {
         HStack(spacing: 16) {
             ZStack(alignment: .topLeading) {
                 Color(red: 244 / 255, green: 239 / 255, blue: 230 / 255)
-                ResumeAgentWebView(onApply: {
-                    onApply?()
-                    showApplyToday = true
-                })
+                // Applications swaps in HERE, on the left, in place of the
+                // web view - not a .fullScreenCover anymore (explicit ask:
+                // "the box that opens should be on the left in resume").
+                // JesseRailView on the right stays mounted the whole time
+                // either way, same as every other content swap in this app.
+                if showApplyToday {
+                    JobOSShellView(onClose: { showApplyToday = false })
+                } else {
+                    ResumeAgentWebView(onApply: {
+                        onApply?()
+                        showApplyToday = true
+                    })
+                }
             }
             .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
             .shadow(color: .black.opacity(0.12), radius: 16, y: 8)
@@ -49,13 +58,13 @@ struct ResumeAgentView: View {
             VStack(spacing: 12) {
                 JesseRailView(studentName: studentName, context: "resume")
                 Button {
-                    showApplyToday = true
+                    showApplyToday.toggle()
                 } label: {
                     HStack(spacing: 8) {
                         Image(systemName: "briefcase.fill")
-                        Text(jobOSStore.state.roles.isEmpty ? "Applications" : "\(jobOSStore.state.roles.count) tracked roles")
+                        Text(showApplyToday ? "Back to draft" : (jobOSStore.state.roles.isEmpty ? "Applications" : "\(jobOSStore.state.roles.count) tracked roles"))
                         Spacer(minLength: 0)
-                        Image(systemName: "chevron.right")
+                        Image(systemName: showApplyToday ? "arrow.uturn.left" : "chevron.right")
                     }
                     .font(.system(size: 13, weight: .bold, design: .rounded))
                     .foregroundColor(Color(red: 20 / 255, green: 58 / 255, blue: 46 / 255))
@@ -92,9 +101,6 @@ struct ResumeAgentView: View {
         }
         .statusBarHidden(true)
         .accessibilityIdentifier("resumeAgentRoot")
-        .fullScreenCover(isPresented: $showApplyToday) {
-            JobOSShellView(onClose: { showApplyToday = false })
-        }
     }
 }
 
