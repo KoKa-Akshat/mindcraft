@@ -127,6 +127,12 @@ struct FieldDeskView: View {
     @State private var homeworkPhotoItem: PhotosPickerItem?
     @State private var homeworkUploading = false
     @State private var homeworkUploadNote: String?
+    /// Learn Studio — the five-pane concept-study screen, reachable from the
+    /// `+` Add panel for now (lowest-risk entry point tonight; Binder/ACT
+    /// Field Book wiring is a separate, more invasive pass into an
+    /// already-high-risk file).
+    @State private var showLearnStudio = false
+    @State private var learnStudioConceptId = "fractions_decimals"
     /// Real nav-intent target ("study quadratic equations" via Ask The Desk
     /// -> `study_concept` action) - threaded into `DashboardView` so it
     /// opens straight to that concept's chapter instead of just the roadmap.
@@ -1289,6 +1295,10 @@ struct FieldDeskView: View {
         }
         .fullScreenCover(isPresented: $showByobStudio) {
             CreateInstanceStudioView(binderStore: binderStore) { _ in }
+        }
+        .fullScreenCover(isPresented: $showLearnStudio) {
+            LearnStudioView(conceptId: learnStudioConceptId, onClose: { showLearnStudio = false })
+                .environmentObject(jesseCall)
         }
         .fileImporter(
             isPresented: $showImporter,
@@ -3855,6 +3865,17 @@ struct FieldDeskView: View {
                     showDeskGridDashboard = true
                 }
                 .accessibilityIdentifier("fieldDeskAddFlows")
+
+                addMenuRow(
+                    title: "Learn Studio",
+                    subtitle: "Definition, context, worked example, practice",
+                    system: "square.grid.2x2.fill",
+                    enabled: true
+                ) {
+                    showAddPanel = false
+                    showLearnStudio = true
+                }
+                .accessibilityIdentifier("fieldDeskAddLearnStudio")
 
                 addMenuRow(
                     title: "Binder",
