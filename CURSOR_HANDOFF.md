@@ -697,6 +697,136 @@ material (photo/PDF) drives the same generation. "Save & Exit" files to
 Binder and resets the dashboard. `xcodebuild build` green, confirmed on a
 real device with a real saved AI key.
 
+**Update (2026-08-18, later same session) — most of this is now actually
+built**, not just spec'd: `askJesseWorkDashboard` in `JesseCallSession.swift`
+does the real check-repo-first flow (bundled book graphs, then Dan
+McCreary's real `archive-rag` open-textbook archive, then honest generation
+as the last resort), routes into Binder/Homework Help, and matched real
+McCreary MicroSims (Calculus, 123 real interactive p5.js sims) show as
+tappable rows opening a real `WKWebView`. **Still not built**: the voice
+greeting on arrival, Homework Help's upload-target visual highlight tied to
+a real "no match found" state, dynamic tile collapse/grow via `DeskBoxBus`,
+and — the two pieces below carry forward unchanged — **Save & Exit** and
+**voice-triggered resume**.
+
+---
+
+#### Assignment K — Dashboard visual redesign: black canvas, left nav rail, dynamic per-student knowledge graph, "swirl-around" work canvas
+
+**Context.** Akshat shared three reference screenshots from a Gemini product
+launch (a "Where should we start?" prompt over floating 3D stat-card icons;
+a glassmorphic chat UI with a left icon rail + settings gear, and a 2×2
+content grid: file-summary box / person+transcript pairing / a
+knowledge-graph-shaped box) and asked for the Work Dashboard to move toward
+that visual language. Given the scope (new onboarding animation, a new nav
+model, a real dynamic knowledge graph, and an entirely new pannable canvas)
+this was split: the safely-scoped visual pieces shipped the same night (see
+below); everything else is written up here rather than rushed.
+
+**Shipped the same night:**
+- Dashboard board background is black, not cream (`Color.black`, was
+  `Color(gridHex: "fff8e9")`) — tile title labels switched to white
+  (`.foregroundColor(.white)`, were dark green — unreadable on black).
+- The MindCraft raccoon logo moved from top-left to top-right *specifically
+  on the Work Dashboard* (`FieldDeskView.swift`'s chrome overlay now keys
+  its alignment off `showDeskGridDashboard`) — every other screen (Jesse's
+  Kitchen, Create Studio) keeps the logo at top-left, unchanged.
+- A real left sidebar (`leftSidebar` in `DeskGridDashboardView.swift`, 64pt
+  wide, translucent) with one real, working control today: a gear icon that
+  opens the same Manage page the old top-left logo used to (`onOpenManage`,
+  wired from `FieldDeskView` to `openManageFromChrome()`). This is
+  deliberately the *first slice* of "a big toolbar," not the finished rail
+  — see the nav-model item below for what a finished version needs.
+
+**Real gap found, not silently worked around:** Akshat described "113 of
+Dan's [McCreary's] books" with real cover art driving a coalescing
+onboarding animation. Checked directly (`find` across both this repo and
+`mindcraft-content-engine`) — **no book-cover image assets exist anywhere**.
+What's real: book *titles* (18 in `webhook/data/dans-archive-chunks.json`,
+~30 subjects' worth of MicroSim metadata in the sibling repo) and a text
+description per MicroSim, but zero actual cover art. Before building the
+onboarding animation, this needs one of: (a) commission/source real cover
+art, (b) design a text/color-based placeholder card system (title + subject
++ a generated accent color, no real art needed — matches how `BookGraphs`
+already has zero cover art and gets by fine with text-first cards), or (c)
+scope the animation around a different, real visual asset this app already
+has. Don't build the animation assuming art that isn't there.
+
+**Not yet built — real, scoped pieces for a future pass:**
+
+1. **A real, multi-destination left nav rail.** Today's `leftSidebar` is one
+   gear icon. The reference vision wants it to jump between Learn (today's
+   dashboard), Presentation, Resume, Book, and Design — i.e., replace (or
+   sit alongside) the existing Flows-rail/dock-chip navigation with a
+   persistent left-edge rail. This touches `FieldDeskView.swift`'s whole
+   `show___` overlay-boolean navigation model (see CLAUDE.md's own flagged,
+   deliberately-deferred "collapse into one `activeOverlay: OverlayKind?`
+   enum" note) — a real architectural decision, not a quick add.
+
+2. **A pannable "swirl-around" canvas with rectangular work sections**
+   (Presentation / Resume / Book / Design, per Akshat's list — the
+   dashboard/Learn stays the anchor, not one of the swirl sections).
+   `DeskGridDashboardView` already has real pan/zoom (`spaceGesture`,
+   `DragGesture` + `MagnificationGesture`) and `CreateCanvasView` is a real,
+   working precedent for a single pannable work surface — the real design
+   question is whether this becomes ONE big canvas with all sections laid
+   out at different coordinates (reusing `spaceGesture`'s existing
+   pan/zoom, extending `WorkArtboard`-style fixed rects further out along
+   one axis) or stays multiple separate screens reached via the nav rail.
+   Akshat's "you move around and navigate every screen with that toolbar"
+   phrasing suggests the rail *jumps* between sections rather than the
+   student physically panning between them — worth confirming before
+   building, since the two are meaningfully different amounts of work.
+   Each section resetting its own Binder view on entry needs a real
+   decision too: does Binder show ONLY that section's filed items, or
+   everything with a section filter? (`BinderStore.addDoc`'s `source`
+   field already carries enough to filter by if that's the shape wanted.)
+
+3. **A real, dynamic, per-student/per-upload knowledge graph** (the
+   "dog box" in the reference image) — Akshat's explicit ask: "instead of
+   being static, hard-coded 42 concepts, it grows dynamically as I learn
+   new things... or maybe it's for whatever PDF I upload... it'll be better
+   if it's my long-run graph." What's real and already shipped tonight:
+   `KnowledgeGraphClient` reads the student's live per-concept mastery from
+   `GET /knowledge-graph/{uid}` and a compact Canvas rendering shows it in
+   the old Moodle slot. What's NOT real yet: that endpoint serves the
+   *static* 42-concept `ml/data/5_level_ontology` ontology only — it has no
+   path for a concept graph to grow from something a student uploads.
+   The real foundation for this already exists in the Engine lane, unmerged:
+   **PR #49** (`engine/dynamic-concept-graphs` branch) adds
+   `ml/mindcraft_graph/loaders/dynamic_concept_loader.py` — real,
+   DAG-validated loading + `merge_ontology()` of per-book dynamic concept
+   graphs into the base ontology, with 18 passing tests. It was deliberately
+   NOT merged to `main` out of respect for Blake's Engine-lane ownership.
+   Making the knowledge-graph tile genuinely per-student-and-per-upload
+   means: (a) get PR #49 reviewed/merged (Blake's call), (b) a real pipeline
+   from "student uploads a PDF in Homework Help" → book/concept-graph
+   generation (the same `mindcraft-content-engine` pipeline that produced
+   the 5 bundled `BookGraphs` and the McCreary MicroSim extracts) → the
+   dynamic loader, and (c) `/knowledge-graph/{uid}` (or a new endpoint)
+   actually returning the merged, per-student graph instead of the fixed
+   ontology. This is real, buildable, cross-lane work — not a client-side
+   tweak, and shouldn't be attempted as one.
+
+4. **File-upload directly from the dashboard's own search bar** (the
+   "Ask Gemini" bar in the reference attaches files inline). Today, upload
+   only happens by tapping the Homework Help tile directly
+   (`.fileImporter`/`HomeworkDocumentPicker`, both real and working) — the
+   main search field (`deskGridDashboardSearch`) has no attach affordance.
+   A real addition, not a big one: add an attach button to the search bar
+   reusing the same `HomeworkDocumentPicker`/`handleHomeworkFileUpload`
+   pipeline Homework Help already has, rather than building a second upload
+   path.
+
+**Files likely in scope for the above:** `Views/DeskGridDashboardView.swift`
+(nav rail, swirl canvas or section screens, search-bar attach),
+`Views/FieldDeskView.swift` (nav-rail-driven overlay routing, if the
+`show___` boolean model gets touched), `ml/mindcraft_graph/loaders/
+dynamic_concept_loader.py` + `ml/serve.py` (PR #49, Engine lane — coordinate
+with Blake, don't just merge it solo), a new or extended `/knowledge-graph`
+endpoint, `Networking/KnowledgeGraphClient.swift` (consuming whatever that
+endpoint returns once it's real).
+
 ---
 
 ### Cursor's last report

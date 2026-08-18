@@ -750,6 +750,7 @@ struct FieldDeskView: View {
                         onSyncCalendar: { Task { await refreshDeskCalendar() } },
                         onOpenLearnStudio: { showLearnStudio = true },
                         onOpenArchive: { showArchiveWorkflow = true },
+                        onOpenManage: { openManageFromChrome() },
                         studentName: deskChromeName ?? "there"
                     )
                     .id(dashboardStartRail)
@@ -1093,7 +1094,7 @@ struct FieldDeskView: View {
             // onto the Work dashboard too - previously deskOverlayChromeBlocked
             // hid it there entirely, so the dashboard had no logo/call/sign-out
             // at all (Done was the dashboard's only way to interact with chrome).
-            .overlay(alignment: .topLeading) {
+            .overlay(alignment: showDeskGridDashboard ? .topTrailing : .topLeading) {
                 if !deskOverlayChromeBlocked || showDeskGridDashboard {
                     HStack(spacing: 10) {
                         Button {
@@ -1119,7 +1120,15 @@ struct FieldDeskView: View {
                         // screen (dashboard included) clean.
                     }
                     .padding(.top, 12)
-                    .padding(.leading, 16)
+                    // On the Work dashboard specifically, the mark moved to
+                    // the top-right (2026-08-18, explicit ask) - that
+                    // corner is otherwise empty there (modeToggleBar below
+                    // is explicitly excluded while showDeskGridDashboard),
+                    // and the dashboard's own new left sidebar (Manage
+                    // reachable from its gear icon too) took over the
+                    // top-left spot. Every other screen keeps the mark at
+                    // top-left, unchanged.
+                    .padding(showDeskGridDashboard ? .trailing : .leading, 16)
                     .zIndex(80)
                 }
             }

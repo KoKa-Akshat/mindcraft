@@ -96,6 +96,10 @@ struct DeskGridDashboardView: View {
     var onSyncCalendar: () -> Void = {}
     var onOpenLearnStudio: () -> Void = {}
     var onOpenArchive: () -> Void = {}
+    /// The left sidebar's gear icon now opens the same Manage page the
+    /// top-left logo used to (2026-08-18, explicit ask - the mark itself
+    /// moved to top-right, see FieldDeskView's chrome overlay).
+    var onOpenManage: () -> Void = {}
     /// For the Jesse-call box now living in Intel's old tile slot
     /// (explicit ask: "instead of intel put the jesse call thing in dash").
     var studentName: String = "there"
@@ -195,6 +199,7 @@ struct DeskGridDashboardView: View {
         onSyncCalendar: @escaping () -> Void = {},
         onOpenLearnStudio: @escaping () -> Void = {},
         onOpenArchive: @escaping () -> Void = {},
+        onOpenManage: @escaping () -> Void = {},
         studentName: String = "there"
     ) {
         self.initialRail = initialRail
@@ -219,6 +224,7 @@ struct DeskGridDashboardView: View {
         self.onSyncCalendar = onSyncCalendar
         self.onOpenLearnStudio = onOpenLearnStudio
         self.onOpenArchive = onOpenArchive
+        self.onOpenManage = onOpenManage
         self.studentName = studentName
         _rail = State(initialValue: initialRail)
         _memoDraft = State(initialValue: initialMemoText)
@@ -256,7 +262,10 @@ struct DeskGridDashboardView: View {
             let scale = min(geo.size.width / artboard.width, geo.size.height / artboard.height)
             let board = CGSize(width: artboard.width * scale, height: artboard.height * scale)
             ZStack {
-                Color(gridHex: "fff8e9").ignoresSafeArea()
+                // Black, not the old cream (2026-08-18, explicit ask:
+                // "the background... should be black instead of white, so
+                // the raccoon pops out").
+                Color.black.ignoresSafeArea()
                 tileBoard(scale: scale, board: board)
                     .scaleEffect(spaceZoom * liveZoom)
                     .offset(x: spacePan.width + livePan.width, y: spacePan.height + livePan.height)
@@ -268,6 +277,7 @@ struct DeskGridDashboardView: View {
                     moodleOverlayLayer
                         .transition(.opacity)
                 }
+                leftSidebar
             }
             .frame(width: geo.size.width, height: geo.size.height)
             .contentShape(Rectangle())
@@ -465,9 +475,12 @@ struct DeskGridDashboardView: View {
         let phase = mascotPhase(kind)
         let awake = phase != .sleeping
         return VStack(alignment: .leading, spacing: 6) {
+            // White, not the old dark green - the board background is
+            // black now (2026-08-18, explicit ask: "so the raccoon
+            // pops out"), and dark-on-black is unreadable.
             Text(kind.title)
                 .font(.system(size: 15, weight: .bold, design: .rounded))
-                .foregroundColor(Color(gridHex: "143a2e"))
+                .foregroundColor(.white)
             Button {
                 handleTile(kind)
             } label: {
@@ -1619,6 +1632,40 @@ struct DeskGridDashboardView: View {
 
     /// Flows has its own dock: Binder/Calendar/Memo/Gmail don't apply inside
     /// that rail, so it's just a way back + a search optimized for flows.
+    @ViewBuilder
+    /// First real slice of the left toolbar from the reference redesign
+    /// (2026-08-18, explicit ask: "a big toolbar with a setting under it
+    /// - clicking that setting will open what happens when you click the
+    /// logo"). Deliberately minimal tonight - just the one real, working
+    /// control (Manage, same destination the old top-left logo opened).
+    /// The fuller vision (a real nav rail jumping between Learn/
+    /// Presentation/Resume/Book/Design sections on a pannable canvas) is
+    /// a genuinely large, separate IA piece - written up rather than
+    /// rushed, see CURSOR_HANDOFF.md.
+    private var leftSidebar: some View {
+        VStack {
+            Spacer(minLength: 0)
+            Button(action: onOpenManage) {
+                Image(systemName: "gearshape.fill")
+                    .font(.system(size: 18, weight: .semibold))
+                    .foregroundColor(.white.opacity(0.85))
+                    .frame(width: 44, height: 44)
+                    .background(Circle().fill(Color.white.opacity(0.08)))
+            }
+            .buttonStyle(.plain)
+            .accessibilityIdentifier("deskGridSidebarManage")
+            .padding(.bottom, 24)
+        }
+        .frame(width: 64)
+        .frame(maxHeight: .infinity)
+        .background(Color.white.opacity(0.04))
+        .overlay(alignment: .trailing) {
+            Rectangle().fill(Color.white.opacity(0.08)).frame(width: 1)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+        .ignoresSafeArea()
+    }
+
     @ViewBuilder
     private var activeDock: some View {
         if rail == .flows {
