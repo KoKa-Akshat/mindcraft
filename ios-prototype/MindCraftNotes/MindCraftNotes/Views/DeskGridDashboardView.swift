@@ -22,6 +22,37 @@ private struct HomeworkUploadSummary: Identifiable {
     let cards: [IngredientHintsClient.HintCard]
 }
 
+/// Manual `UIDocumentPickerViewController` wrapper, not SwiftUI's own
+/// `.fileImporter` - confirmed via a diagnostic UI test that `.fileImporter`
+/// here flips `isPresented` correctly (the tap/state wiring was never the
+/// problem) but the system picker never actually appears, regardless of
+/// whether the modifier sits on the tile's own Button or the screen root.
+/// Driving `UIDocumentPickerViewController` directly through `.sheet`
+/// sidesteps whatever's silently swallowing `.fileImporter`'s own
+/// presentation here.
+private struct HomeworkDocumentPicker: UIViewControllerRepresentable {
+    var onPick: (URL) -> Void
+
+    func makeUIViewController(context: Context) -> UIDocumentPickerViewController {
+        let picker = UIDocumentPickerViewController(forOpeningContentTypes: [.image, .pdf])
+        picker.delegate = context.coordinator
+        picker.allowsMultipleSelection = false
+        return picker
+    }
+
+    func updateUIViewController(_ uiViewController: UIDocumentPickerViewController, context: Context) {}
+
+    func makeCoordinator() -> Coordinator { Coordinator(onPick: onPick) }
+
+    final class Coordinator: NSObject, UIDocumentPickerDelegate {
+        let onPick: (URL) -> Void
+        init(onPick: @escaping (URL) -> Void) { self.onPick = onPick }
+        func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+            if let url = urls.first { onPick(url) }
+        }
+    }
+}
+
 /// Work canvas from Presentation Screen.pdf pages 4–5.
 /// Tiles sit on a measured 1440×810 artboard (scaled to the iPad).
 /// Page 4 = five photo cards + one dock. Page 5 = tiles shrink left, right rail opens.
@@ -233,14 +264,6 @@ struct DeskGridDashboardView: View {
         .ignoresSafeArea()
         .onChange(of: intelLines) { _, lines in boxBus.intelLines = lines }
         .onChange(of: binderTitles) { _, titles in boxBus.binderTitles = titles }
-        .fileImporter(
-            isPresented: $showHomeworkImporter,
-            allowedContentTypes: [.image, .pdf],
-            allowsMultipleSelection: false
-        ) { result in
-            guard case .success(let urls) = result, let url = urls.first else { return }
-            Task { await handleHomeworkFileUpload(url) }
-        }
         // No Exit control here anymore - moved into the Manage page
         // (logo tap) so the dashboard itself stays clean. onClose is still
         // wired from FieldDeskView but nothing on this screen calls it now.
@@ -292,7 +315,20 @@ struct DeskGridDashboardView: View {
                 photoTile(.binder)
             }
             pin(boxRect(.homeworkHelp), scale: scale) {
+                // `.sheet` + a manual UIDocumentPickerViewController, not
+                // `.fileImporter` - confirmed via a diagnostic UI test that
+                // the tap/state wiring was already correct (handleTile
+                // fired, showHomeworkImporter flipped true, both when the
+                // modifier sat on the screen root and right here on the
+                // tile) but `.fileImporter`'s own picker never actually
+                // presented either way. See HomeworkDocumentPicker's doc
+                // comment.
                 photoTile(.homeworkHelp)
+                    .sheet(isPresented: $showHomeworkImporter) {
+                        HomeworkDocumentPicker { url in
+                            Task { await handleHomeworkFileUpload(url) }
+                        }
+                    }
             }
             pin(WorkArtboard.dock, scale: scale) { activeDock }
             if expanded {
@@ -441,7 +477,7 @@ struct DeskGridDashboardView: View {
                             x: tileShowsContent(kind) ? 48 : 0,
                             y: tileShowsContent(kind) ? -28 : -8
                         )
-                    } else if kind.mascotSlug == nil, kind != .intel, !(kind == .binder && tileShowsContent(kind)) {
+                    } else if kind.mascotSlug == nil, kind != .intel, kind != .homeworkHelp, !(kind == .binder && tileShowsContent(kind)) {
                         Image(systemName: kind.symbol)
                             .font(.system(size: kind == .binder ? 54 : 36, weight: .medium))
                             .foregroundColor(.white.opacity(awake ? 0.88 : 0.35))
@@ -1033,15 +1069,13 @@ struct DeskGridDashboardView: View {
             // dash: nothing else." Reuses the exact same JesseRailView card
             // every other screen with Jesse carries (Resume/Book/Learn/
             // Presentation/Design Studio), not a new one-off. Memo/
-            // Transcribe/Email/Calendar moved here as a compact icon row
-            // above the greeting (explicit ask, 2026-08-18) - same
-            // functionality the main dock/old Intel connect row had, just
-            // relocated, not rebuilt.
-            VStack(spacing: 8) {
-                jesseBoxIconRow
-                JesseRailView(studentName: studentName, context: "workDashboard")
-            }
-            .accessibilityIdentifier("deskGridJesseCall")
+            // Transcribe/Email/Calendar moved here as a compact icon row -
+            // to the right of "Just now" in the header, not stacked above
+            // the card (explicit ask, 2026-08-18) - via headerTrailing,
+            // same functionality the main dock/old Intel connect row had,
+            // just relocated, not rebuilt.
+            JesseRailView(studentName: studentName, context: "workDashboard", headerTrailing: AnyView(jesseBoxIconRow))
+                .accessibilityIdentifier("deskGridJesseCall")
         } else if kind == .homeworkHelp {
             tileInnerCard { homeworkHelpTileBody(ink: ink) }
         } else if tileShowsContent(kind) {
@@ -1093,7 +1127,6 @@ struct DeskGridDashboardView: View {
                 }
             }
             .accessibilityIdentifier("deskGridJesseIcon_Calendar")
-            Spacer(minLength: 0)
         }
     }
 

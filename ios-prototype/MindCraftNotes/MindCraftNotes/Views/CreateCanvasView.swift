@@ -563,7 +563,13 @@ struct JesseMiniWaveform: View {
                     .frame(width: 3, height: active ? CGFloat([8, 14, 20, 12, 18, 10, 7][i]) : 7)
             }
         }
-        .animation(.easeInOut(duration: 0.28).repeatForever(autoreverses: true), value: active)
+        // Real bug (reported: bars kept pulsing after ending a call/
+        // transcribe): a `.repeatForever` animation bound only via
+        // `value:` doesn't reliably cancel when that value flips back to
+        // false - a known SwiftUI quirk. Fix: only repeat WHILE active;
+        // the return-to-rest transition uses a normal, non-repeating
+        // animation instead of trying to interrupt a live infinite loop.
+        .animation(active ? .easeInOut(duration: 0.28).repeatForever(autoreverses: true) : .easeInOut(duration: 0.2), value: active)
     }
 }
 

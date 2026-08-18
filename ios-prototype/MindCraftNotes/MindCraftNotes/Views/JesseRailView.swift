@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 /// The one "Jesse is here" card design, shared by every screen that carries
 /// it - extracted from `CreateCanvasView.jesseRail` (Presentation/GDoc's
@@ -12,19 +13,40 @@ import SwiftUI
 struct JesseRailView: View {
     var studentName: String
     var context: String
+    /// Optional controls shown to the right of "Just now"/"On the line" in
+    /// the header row - the Work dashboard's Memo/Transcribe/Email/Calendar
+    /// icons (2026-08-18, explicit ask: "the icons should be on the right
+    /// of Just now not above"). Type-erased and defaulted nil so every
+    /// other screen carrying this shared card (Resume/Book/Learn/
+    /// Presentation/Design Studio) compiles unchanged.
+    var headerTrailing: AnyView? = nil
 
     @EnvironmentObject private var jesseCall: JesseCallSession
     @State private var instructionLog: [String] = []
+
+    /// The MindCraft raccoon mark, real asset (`Resources/stickers/
+    /// raccoon-mascot.png`, same loading pattern `StickerCatalog` already
+    /// uses) - not the placeholder smiley. Cached once per process, same
+    /// reasoning as `StickerCatalog.imageCache`.
+    private static let raccoonImage: Image = {
+        if let url = Bundle.main.url(forResource: "raccoon-mascot", withExtension: "png", subdirectory: "stickers"),
+           let data = try? Data(contentsOf: url),
+           let uiImage = UIImage(data: data) {
+            return Image(uiImage: uiImage)
+        }
+        return Image(systemName: "face.smiling")
+    }()
 
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
             HStack(spacing: 10) {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12, style: .continuous)
-                        .fill(Color(jrHex: "e8f3ec"))
-                    Image(systemName: "face.smiling")
-                        .font(.system(size: 22, weight: .medium))
-                        .foregroundColor(Color(jrHex: "247a4d"))
+                        .fill(Color.black)
+                    Self.raccoonImage
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 30, height: 30)
                 }
                 .frame(width: 52, height: 52)
                 VStack(alignment: .leading, spacing: 4) {
@@ -34,6 +56,9 @@ struct JesseRailView: View {
                         .foregroundColor(Color(jrHex: "143a2e").opacity(0.45))
                 }
                 Spacer(minLength: 0)
+                if let headerTrailing {
+                    headerTrailing
+                }
             }
 
             Text("Hi \(studentName), Jesse here.")
