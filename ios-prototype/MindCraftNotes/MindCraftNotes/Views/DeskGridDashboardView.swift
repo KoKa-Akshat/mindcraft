@@ -42,6 +42,10 @@ struct DeskGridDashboardView: View {
     var binderTitles: [String] = []
     var onSyncCalendar: () -> Void = {}
     var onOpenLearnStudio: () -> Void = {}
+    var onOpenArchive: () -> Void = {}
+    /// For the Jesse-call box now living in Intel's old tile slot
+    /// (explicit ask: "instead of intel put the jesse call thing in dash").
+    var studentName: String = "there"
 
     @ObservedObject private var gmail = GmailClient.shared
     @ObservedObject private var moodle = MoodleClient.shared
@@ -49,6 +53,7 @@ struct DeskGridDashboardView: View {
     @ObservedObject private var digestStore = GmailDigestStore.shared
     @ObservedObject private var boxBus = DeskBoxBus.shared
     @ObservedObject private var aiKeys = StudentAIKeyStore.shared
+    @EnvironmentObject private var jesseCall: JesseCallSession
     @State private var showMoodleSheet = false
 
     // MARK: - Agent takeover (any real ask, not just the email/draft case)
@@ -119,7 +124,9 @@ struct DeskGridDashboardView: View {
         intelLines: [String] = [],
         binderTitles: [String] = [],
         onSyncCalendar: @escaping () -> Void = {},
-        onOpenLearnStudio: @escaping () -> Void = {}
+        onOpenLearnStudio: @escaping () -> Void = {},
+        onOpenArchive: @escaping () -> Void = {},
+        studentName: String = "there"
     ) {
         self.initialRail = initialRail
         self.initialMemoText = initialMemoText
@@ -142,6 +149,8 @@ struct DeskGridDashboardView: View {
         self.binderTitles = binderTitles
         self.onSyncCalendar = onSyncCalendar
         self.onOpenLearnStudio = onOpenLearnStudio
+        self.onOpenArchive = onOpenArchive
+        self.studentName = studentName
         _rail = State(initialValue: initialRail)
         _memoDraft = State(initialValue: initialMemoText)
     }
@@ -891,12 +900,13 @@ struct DeskGridDashboardView: View {
         } else if agentTakeoverActive && kind == .intel {
             AnyView(agentIntelTakeoverView())
         } else if kind == .intel {
-            // Merged box: three labeled sub-sections, not one flat list -
-            // each of Email/Calendar/Research keeps its own visible space.
-            ScrollView(showsIndicators: false) {
-                intelSections(ink: .white)
-            }
-            .accessibilityIdentifier("deskGridEmailSummaries")
+            // Intel's old email/calendar/research sections are gone -
+            // explicit ask: "instead of intel put the jesse call thing in
+            // dash: nothing else." Reuses the exact same JesseRailView card
+            // every other screen with Jesse carries (Resume/Book/Learn/
+            // Presentation/Design Studio), not a new one-off.
+            JesseRailView(studentName: studentName, context: "workDashboard")
+                .accessibilityIdentifier("deskGridJesseCall")
         } else if tileShowsContent(kind) {
             VStack(alignment: .leading, spacing: 0) {
                 tileContentRows(kind, ink: ink)
@@ -1098,135 +1108,6 @@ struct DeskGridDashboardView: View {
         }
     }
 
-    /// Intel's three merged sections - own research, Email digest, Calendar
-    /// week - each with a small caption header and its own real rows, same
-    /// `DeskContentRow` primitive the popups use. A section only renders
-    /// when it actually has something (or a connect prompt) to show.
-    @ViewBuilder
-    /// Each section is type-erased (`AnyView`) at its own boundary before
-    /// joining the others in one VStack. Three multi-branch conditional
-    /// chains (Research's optional, Email's 4-way if/else-if/else-if/else
-    /// with a nested if+ForEach inside one branch, Calendar's 3-way), left
-    /// as plain sibling `@ViewBuilder` content, compose into a generic type
-    /// complex enough to overflow the Swift runtime's metadata-resolution
-    /// stack on any re-render - a real SIGSEGV on-device (confirmed via the
-    /// device's actual crash log, "Could not determine thread index for
-    /// stack guard region" - the signature of this exact failure class),
-    /// not a hang or a simulator quirk. `AnyView` per section breaks the
-    /// cross-section compounding; do not remove these erasures casually.
-    private func intelSections(ink: Color) -> some View {
-        let muted = Color.white.opacity(0.72)
-        let divider = Color.white.opacity(0.28)
-        return VStack(alignment: .leading, spacing: 12) {
-            AnyView(intelResearchSection(ink: ink, muted: muted, divider: divider))
-            AnyView(intelEmailSection(ink: ink, muted: muted))
-            AnyView(intelCalendarSection(ink: ink, muted: muted))
-        }
-    }
-
-    @ViewBuilder
-    private func intelResearchSection(ink: Color, muted: Color, divider: Color) -> some View {
-        if !intelLines.isEmpty {
-            intelSectionHeader("Research")
-            ForEach(Array(intelLines.prefix(4).enumerated()), id: \.offset) { _, line in
-                DeskContentRow(
-                    title: line, dot: Color.white.opacity(0.75), ink: ink, muted: muted,
-                    divider: divider, showDivider: true, compact: true
-                )
-            }
-        }
-    }
-
-    @ViewBuilder
-    private func intelEmailSection(ink: Color, muted: Color) -> some View {
-        intelSectionHeader("Email")
-        if !gmail.hasGmailScope {
-            intelConnectRow(label: "Connect Gmail")
-        } else if let digest = shownDigest {
-            AnyView(intelEmailDigestBody(digest: digest, ink: ink, muted: muted))
-        } else if !gmail.messages.isEmpty {
-            ForEach(Array(gmail.messages.prefix(3).enumerated()), id: \.offset) { _, msg in
-                DeskContentRow(
-                    title: msg.subject, dot: Color(gridHex: "c1121f"), ink: ink, muted: muted,
-                    showDivider: false, compact: true
-                )
-            }
-        } else {
-            Text("Nothing to summarize yet.")
-                .font(.system(size: 12, weight: .medium, design: .rounded))
-                .foregroundColor(muted)
-        }
-    }
-
-    @ViewBuilder
-    private func intelEmailDigestBody(digest: GmailDigestClient.Digest, ink: Color, muted: Color) -> some View {
-        if !digest.headline.isEmpty {
-            Text(digest.headline)
-                .font(.system(size: 12, weight: .semibold, design: .rounded))
-                .foregroundColor(ink)
-                .fixedSize(horizontal: false, vertical: true)
-        }
-        ForEach(Array(digest.actionItems.prefix(3))) { item in
-            DeskContentRow(
-                title: item.subject, subtitle: item.why.isEmpty ? nil : item.why,
-                dot: Color(gridHex: "c1121f"), ink: ink, muted: muted, showDivider: false, compact: true
-            )
-        }
-    }
-
-    @ViewBuilder
-    private func intelCalendarSection(ink: Color, muted: Color) -> some View {
-        intelSectionHeader("Calendar")
-        if !gmail.hasCalendarScope {
-            // No separate "Connect Calendar" row - connectGoogleMailAndCalendar()
-            // already requests both scopes in one consent screen (explicit
-            // ask: "no need to say calendar after gmail... you get both
-            // permissions in one go"). If Gmail hasn't connected yet, that
-            // single Email-section button is the one real action; if Gmail
-            // IS connected but calendar scope still isn't (Google's consent
-            // screen technically allows a user to uncheck just one scope),
-            // say so plainly instead of offering a second identical button.
-            Text(gmail.hasGmailScope ? "Not granted alongside Gmail." : "Connects together with Gmail above.")
-                .font(.system(size: 12, weight: .medium, design: .rounded))
-                .foregroundColor(muted)
-        } else if !gmail.week.isEmpty {
-            ForEach(Array(gmail.week.prefix(4))) { ev in
-                DeskContentRow(
-                    title: "\(ev.day) · \(ev.title)", dot: Color.white.opacity(0.75), ink: ink, muted: muted,
-                    showDivider: false, compact: true
-                )
-            }
-        } else {
-            Text("Clear this week.")
-                .font(.system(size: 12, weight: .medium, design: .rounded))
-                .foregroundColor(muted)
-        }
-    }
-
-    private func intelSectionHeader(_ title: String) -> some View {
-        Text(title.uppercased())
-            .font(.system(size: 10, weight: .heavy, design: .rounded))
-            .tracking(0.4)
-            .foregroundColor(.white.opacity(0.55))
-    }
-
-    private func intelConnectRow(label: String) -> some View {
-        Button {
-            Task {
-                await gmail.connectGoogleMailAndCalendar()
-                if gmail.hasGmailScope { onGmailLinked(gmail.hasCalendarScope) }
-            }
-        } label: {
-            Text(label)
-                .font(.system(size: 12, weight: .bold, design: .rounded))
-                .foregroundColor(Color(gridHex: "143a2e"))
-                .padding(.horizontal, 10)
-                .padding(.vertical, 6)
-                .background(Capsule().fill(Color.white.opacity(0.85)))
-        }
-        .buttonStyle(.plain)
-    }
-
     private func tileLines(_ kind: TileKind) -> [String] {
         switch kind {
         case .intel:
@@ -1324,14 +1205,22 @@ struct DeskGridDashboardView: View {
     /// reuses the existing `onOpenFlow("book")` callback FieldDeskView
     /// already wires for the Flows rail's own Book row, not a new path.
     private var workDock: some View {
-        // Explicit order (2026-08-18 ask): Memo, Transcribe, Learn, Flows,
-        // +Book. "+Book" (not just "Book") because tapping it starts a book
-        // with Jesse rather than opening a passive library - same "+"
-        // convention as CreateCanvasView's "+ Slide".
+        // Explicit ask (2026-08-18): "the search bar under becomes M | T
+        // where M opens memo and T opens transcribe" - compact single-letter
+        // chips, not the old full-word ones. Learn kept as its own chip
+        // (still opens the real, working LearnStudioView - Study a Book,
+        // live conversational cards) rather than removed, since "let the
+        // dashboard be learn" is about the Jesse-call box now living where
+        // Intel was, not about deleting a real, tested screen - flagging
+        // this scoping call rather than guessing silently. Archive is new
+        // here (was previously only reachable two hops deep, via Learn
+        // Studio's own "Browse Archive" button) - direct now, per the ask
+        // to consolidate Dan's archive + the book graphs there.
         HStack(spacing: 8) {
-            dockChip("Memo", system: "note.text", identifier: "deskGridDashboardAddMemo") { setRail(rail == .memo ? .none : .memo) }
-            dockChip("Transcribe", system: "waveform", identifier: "deskGridDock_Transcribe", action: onTranscribe)
+            dockChip("M", system: "note.text", identifier: "deskGridDashboardAddMemo") { setRail(rail == .memo ? .none : .memo) }
+            dockChip("T", system: "waveform", identifier: "deskGridDock_Transcribe", action: onTranscribe)
             dockChip("Learn", system: "square.grid.2x2.fill", identifier: "deskGridDock_LearnStudio") { onOpenLearnStudio() }
+            dockChip("Archive", system: "archivebox.fill", identifier: "deskGridDock_Archive", action: onOpenArchive)
             dockChip("Flows", system: "bolt.fill", identifier: "deskGridDock_Flows") { setRail(rail == .flows ? .none : .flows) }
             dockChip("+Book", system: "book.fill", identifier: "deskGridDock_Book") { onOpenFlow("book") }
             searchField(placeholder: "Search", identifier: "deskGridDashboardSearch", onSubmit: submitSearch)

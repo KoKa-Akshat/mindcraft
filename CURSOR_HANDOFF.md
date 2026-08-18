@@ -508,6 +508,135 @@ missing without checking first.
 
 ---
 
+#### Assignment J — Work Dashboard becomes the real "Learn" surface: conversational content generation, routed into tiles
+
+**Goal.** The single largest ask of the whole 2026-08-17/18 session (verbatim,
+lightly cleaned up): tapping "Learn" should not open a separate screen — the
+Work Dashboard itself becomes the learning surface. Jesse greets by voice on
+arrival ("Hey, welcome back. What would you like to learn today"), the
+student answers by typing in the search bar or by talking, the system checks
+whether real matched material already exists (the base 42-concept ontology's
+`SampleQuestion.all` bank, or one of the bundled book concept graphs — see
+Assignment(s) above and `BookGraphLoader.swift`) or needs new material
+uploaded, generates content via the student's own AI key (same
+`StudentAIKeyStore` pattern every other screen tonight already uses), and
+routes different pieces of what comes back into different tiles — Binder
+gets the filed artifact, Homework Help shows the question/definition, Moodle
+shows a chapter breakdown, and the tile that used to be Intel (now a
+`JesseRailView` box — see the dashboard-restructure commit right before this
+one) shows the conversation/summary. Tiles with nothing to show collapse;
+neighbors grow to fill the space. A "Save & Exit" button appends the session
+to Binder and resets the dashboard. In a later call, if the student
+references this same work, Jesse should be able to reopen this exact saved
+dashboard state.
+
+**What shipped the same night, already in place for this to build on:**
+- The dashboard tile in Intel's old slot is now a real `JesseRailView`
+  (`DeskGridDashboardView.swift`'s `tileBody`, `kind == .intel` branch) —
+  the box this assignment's generated content needs to route around/through
+  already exists, it just doesn't drive generation yet.
+- `BookGraphLoader.swift` + `Resources/BookGraphs/*.json` — real, bundled,
+  validated book concept graphs (Euclid's Elements, Wealth of Nations,
+  Origin of Species, Meditations, Art of War), already proven working in
+  Learn Studio's "Study a Book" flow (`LearnStudioView.swift`).
+- `StudentAIKeyStore.generateStudyPlan(topic:level:knownConceptIds:)` — the
+  real, working, BYOK generation call every "check if we can make a lesson"
+  step in this assignment should reuse rather than fork a second copy.
+- Homework Help's real upload path (`FieldDeskView.swift`,
+  `handleHomeworkFileUpload`) — photo-or-PDF, already extracts real text via
+  `HomeworkClient`/PDFKit. This is the literal mechanism for "ask for upload
+  material" — reuse it, don't rebuild it.
+- `BinderStore.addDoc`/`addBook` — the real filing calls "Save & Exit" and
+  "this gets appended to your binder" should use.
+
+**Be honest about what does NOT exist yet — do not fake these, flag them
+instead if the spec seems to need them:**
+1. **No live web search anywhere in this codebase.** "Looks up YouTube
+   videos and other resources in Google Scholar" is not buildable as
+   described without a real, deliberate integration decision: YouTube has an
+   official Data API (quota-limited, needs a key); Google Scholar has **no
+   official API at all** — scraping it violates their Terms of Service. If
+   this is still wanted, that's a product/legal call for Akshat to make
+   explicitly (which service, what budget, accept ToS risk or not) before
+   any code gets written — do not silently stub in fake search results that
+   look real.
+2. **No personalized "language preference / English level / learning style"
+   knowledge graph exists anywhere** — not in the iOS app, not in `ml/`. The
+   ask references this as if it's already there ("this graph is more
+   detailed and more personal also it gets its feedback"). It isn't. Building
+   it means a new data model (where does this live — Firestore? the mastery
+   engine's `StudentState`?), a way to actually collect these signals from a
+   student, and UI to show/use them. Scope this as its own piece, not a
+   sub-task assumed to already exist.
+3. **No image generation integration** — "generate images if needed" needs a
+   real image-gen API decision (cost, which provider), same category of
+   decision as (1).
+4. **The tick/cross content-rating idea is real and separate** — Akshat
+   floated it earlier the same session and said "later" explicitly before
+   asking for this dashboard rewrite. Treat it as still later unless told
+   otherwise; don't fold it into this assignment's definition of done.
+
+**What IS honestly buildable, reusing what's real:**
+- Voice greeting: `JesseCallSession` has no "speak a scripted line without a
+  full listen/reply loop" entry point today — `speak(_:)` is private, called
+  only from within `askJesse*` methods after a real round trip. Adding a
+  narrow, explicit "greet" path (context-gated, e.g. `context ==
+  "workDashboard"`) that speaks a fixed line on `begin()` before any
+  listening starts is a small, contained addition — don't generalize
+  `speak()`'s access beyond what this needs.
+- "Checks if we can create a lesson from the repo": a real, honest check —
+  does the spoken/typed topic match a `SampleQuestion.all` concept id
+  (reuse `StudentAIKeyStore.generateStudyPlan`'s existing `matchedConceptId`
+  mechanism) or a `BookConceptRecord.label` (fuzzy match against
+  `BookGraphLoader.all`)? If yes, generate immediately via the existing
+  pipeline. If no, this is the literal "ask for upload material" branch —
+  Homework Help's tile should visually highlight (a real, added state, not
+  a fake pulse animation over nothing) and its real upload flow does the
+  rest.
+- Tile routing: once a `StudyPlan`-shaped result exists, decide per-tile
+  content honestly — Binder gets a real filed doc (`BinderStore.addDoc`),
+  Homework Help shows the real question/definition text, Moodle shows a
+  real chapter/concept breakdown *only when the source was a book graph*
+  (an ACT-math match has no "chapters" — don't fabricate a chapter list for
+  it), the Jesse tile shows the real conversation/turns already flowing
+  through `jesseCall.turns`. No tile should ever show placeholder content
+  dressed up as real.
+- Dynamic layout (tiles collapse when they have nothing, neighbors grow):
+  `DeskBoxBus`'s existing grow/shrink negotiation (`boxBus.requestSpace`,
+  already used by Binder) is the real, proven mechanism for this — extend
+  it, don't build a second layout system alongside it.
+- Save & Exit: file the session to Binder (`BinderStore.addDoc`/`addBook`
+  depending on shape), then reset dashboard state (`phase`-equivalent local
+  `@State` back to idle) — same shape as `LearnStudioView`'s own "New topic"
+  reset button.
+- Voice-triggered resume ("if you say let's do that work... Jesse opens this
+  dash as is"): needs the saved Binder doc to carry enough structured
+  metadata (matched concept/book id, not just prose) that a later call can
+  actually match spoken intent back to it — design this as part of the
+  Save & Exit payload shape, not as a separate retrieval system bolted on
+  after.
+
+**Files likely in scope:** `Views/DeskGridDashboardView.swift` (the Jesse
+tile, tile routing, Save & Exit, dynamic collapse/grow),
+`Networking/JesseCallSession.swift` (the greet path, a new
+`context == "workDashboard"` branch in `askJesse()` mirroring
+`askJesseBook`/`askJesseResume`/`askJesseLearnStudio`'s existing shape),
+`Networking/StudentAIKeyStore.swift` (reuse `generateStudyPlan`, don't fork),
+`Views/FieldDeskView.swift` (Homework Help's upload-highlight state),
+`Networking/BinderStore.swift` (if the Save & Exit payload needs a new
+field for voice-resume matching).
+
+**Definition of done:** open the Work Dashboard, hear Jesse's greeting,
+say or type a topic that has real matched content (an ACT concept or one of
+the 5 bundled books) — real generated content appears in the right tiles,
+no fabricated web search or images anywhere. Say or type something with no
+match — Homework Help visibly becomes the upload target, uploading real
+material (photo/PDF) drives the same generation. "Save & Exit" files to
+Binder and resets the dashboard. `xcodebuild build` green, confirmed on a
+real device with a real saved AI key.
+
+---
+
 ### Cursor's last report
 
 **2026-08-16 — Assignment A (BinderStore + BYOB popup)** — branch `cursor/binder-store-byob-2c98`

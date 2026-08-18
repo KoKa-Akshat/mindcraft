@@ -24,6 +24,20 @@ struct ArchiveWorkflowView: View {
     /// the Flows dock.
     @State private var showJesseCallSheet = false
 
+    /// Consolidates Dan McCreary's archive (the existing web page) with the
+    /// real, validated book concept graphs built tonight - explicit ask:
+    /// "Archive for browsing Dan's archive + the books we built." ACT Field
+    /// Book is NOT folded in here - it already has its own real, working
+    /// entry point inside Binder's popup, and relocating it wasn't a clear
+    /// win worth the risk of breaking that existing path; flagging this
+    /// scoping call rather than silently doing it or silently skipping it.
+    private enum ArchiveTab: String, CaseIterable, Identifiable {
+        case dan = "Dan's Archive"
+        case books = "Book Library"
+        var id: String { rawValue }
+    }
+    @State private var tab: ArchiveTab = .dan
+
     var body: some View {
         // No wrapper .accessibilityIdentifier on the outer ZStack: applying
         // one to a composite view like this clobbers the identifier of the
@@ -31,41 +45,60 @@ struct ArchiveWorkflowView: View {
         // button rendered and worked, but XCUITest queries for either
         // identifier failed until this wrapper identifier was removed; same
         // pattern already documented on SchedulingWorkflowsView).
-        ZStack(alignment: .topTrailing) {
+        ZStack(alignment: .top) {
             Color(red: 244 / 255, green: 239 / 255, blue: 230 / 255).ignoresSafeArea()
-            ArchiveWorkflowWebView(weakness: weakness)
-                .ignoresSafeArea()
-            HStack(spacing: 8) {
-                // Native call - genuinely separate from the WKWebView's own
-                // "meet" screen (JS Web Speech API, dies with this view).
-                // This one keeps running via JesseCallSession even after
-                // Done is tapped.
-                Button(action: startCall) {
-                    Label(jesseCall.isActive ? "On call" : "Call Jesse", systemImage: "phone.fill")
-                        .font(.system(size: 13, weight: .heavy, design: .rounded))
-                        .foregroundColor(Color(red: 20 / 255, green: 58 / 255, blue: 46 / 255))
-                        .padding(.horizontal, 14)
-                        .padding(.vertical, 10)
-                        .background(Capsule().fill(jesseCall.isActive ? Color(red: 196 / 255, green: 245 / 255, blue: 71 / 255) : Color.white.opacity(0.94)))
-                }
-                .buttonStyle(.plain)
-                .disabled(jesseCall.isActive)
-                .accessibilityIdentifier("archiveCallJesse")
-
-                Button(action: onClose) {
-                    Text("Done")
-                        .font(.system(size: 13, weight: .heavy, design: .rounded))
-                        .foregroundColor(Color(red: 20 / 255, green: 58 / 255, blue: 46 / 255))
-                        .padding(.horizontal, 14)
-                        .padding(.vertical, 10)
-                        .background(Capsule().fill(Color.white.opacity(0.94)))
-                }
-                .buttonStyle(.plain)
-                .accessibilityIdentifier("archiveWorkflowBack")
-                .accessibilityLabel("Done")
+            switch tab {
+            case .dan:
+                ArchiveWorkflowWebView(weakness: weakness)
+                    .ignoresSafeArea()
+            case .books:
+                BookLibraryBrowseView()
             }
-            .padding(.top, 12)
-            .padding(.trailing, 16)
+            VStack {
+                Picker("", selection: $tab) {
+                    ForEach(ArchiveTab.allCases) { Text($0.rawValue).tag($0) }
+                }
+                .pickerStyle(.segmented)
+                .frame(width: 320)
+                .padding(.top, 12)
+                .accessibilityIdentifier("archiveTabPicker")
+                Spacer()
+            }
+            VStack {
+                HStack(spacing: 8) {
+                    Spacer()
+                    // Native call - genuinely separate from the WKWebView's
+                    // own "meet" screen (JS Web Speech API, dies with this
+                    // view). This one keeps running via JesseCallSession
+                    // even after Done is tapped.
+                    Button(action: startCall) {
+                        Label(jesseCall.isActive ? "On call" : "Call Jesse", systemImage: "phone.fill")
+                            .font(.system(size: 13, weight: .heavy, design: .rounded))
+                            .foregroundColor(Color(red: 20 / 255, green: 58 / 255, blue: 46 / 255))
+                            .padding(.horizontal, 14)
+                            .padding(.vertical, 10)
+                            .background(Capsule().fill(jesseCall.isActive ? Color(red: 196 / 255, green: 245 / 255, blue: 71 / 255) : Color.white.opacity(0.94)))
+                    }
+                    .buttonStyle(.plain)
+                    .disabled(jesseCall.isActive)
+                    .accessibilityIdentifier("archiveCallJesse")
+
+                    Button(action: onClose) {
+                        Text("Done")
+                            .font(.system(size: 13, weight: .heavy, design: .rounded))
+                            .foregroundColor(Color(red: 20 / 255, green: 58 / 255, blue: 46 / 255))
+                            .padding(.horizontal, 14)
+                            .padding(.vertical, 10)
+                            .background(Capsule().fill(Color.white.opacity(0.94)))
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityIdentifier("archiveWorkflowBack")
+                    .accessibilityLabel("Done")
+                }
+                .padding(.top, 12)
+                .padding(.trailing, 16)
+                Spacer()
+            }
         }
         .statusBarHidden(true)
         .task { await loadWeakness() }
@@ -99,6 +132,62 @@ struct ArchiveWorkflowView: View {
         let label = displays[worst.conceptId]?.label
             ?? worst.conceptId.replacingOccurrences(of: "_", with: " ").capitalized
         weakness = (id: worst.conceptId, label: label)
+    }
+}
+
+/// Read-only browse of the real, validated book concept graphs
+/// (mindcraft-content-engine's book -> concept-graph pipeline output,
+/// bundled in Resources/BookGraphs/ - same data `BookGraphLoader`/
+/// `LearnStudioView`'s "Study a Book" picker reads). Deliberately just
+/// browsing here, not "pick a concept to study" - that action lives in
+/// Learn Studio, this is the archive's own reading/reference view.
+private struct BookLibraryBrowseView: View {
+    var body: some View {
+        NavigationStack {
+            if BookGraphLoader.all.isEmpty {
+                Text("No book graphs bundled yet.")
+                    .font(.system(size: 14, weight: .medium, design: .rounded))
+                    .foregroundColor(.secondary)
+            } else {
+                List(BookGraphLoader.all) { book in
+                    NavigationLink {
+                        List {
+                            ForEach(book.groupedByTaxonomy, id: \.taxonomy) { group in
+                                Section(group.taxonomy) {
+                                    ForEach(group.concepts) { concept in
+                                        VStack(alignment: .leading, spacing: 2) {
+                                            Text(concept.label)
+                                                .font(.system(size: 14, weight: .semibold, design: .rounded))
+                                            if !concept.dependencies.isEmpty {
+                                                Text("Builds on \(concept.dependencies.count) earlier concept\(concept.dependencies.count == 1 ? "" : "s")")
+                                                    .font(.system(size: 11, weight: .medium, design: .rounded))
+                                                    .foregroundColor(.secondary)
+                                            }
+                                        }
+                                        .padding(.vertical, 2)
+                                    }
+                                }
+                            }
+                        }
+                        .navigationTitle(book.title)
+                        .navigationBarTitleDisplayMode(.inline)
+                    } label: {
+                        VStack(alignment: .leading, spacing: 3) {
+                            Text(book.title)
+                                .font(.system(size: 15, weight: .bold, design: .rounded))
+                            Text("\(book.concepts.count) concepts")
+                                .font(.system(size: 12, weight: .medium, design: .rounded))
+                                .foregroundColor(.secondary)
+                        }
+                        .padding(.vertical, 4)
+                    }
+                    .accessibilityIdentifier("archiveBookLibrary_\(book.subjectId)")
+                }
+                .navigationTitle("Book Library")
+                .navigationBarTitleDisplayMode(.inline)
+            }
+        }
+        .accessibilityIdentifier("archiveBookLibraryBrowse")
     }
 }
 

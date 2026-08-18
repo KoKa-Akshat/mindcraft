@@ -774,7 +774,9 @@ struct FieldDeskView: View {
                         intelLines: Array(store.intelLines.prefix(8)),
                         binderTitles: Array(binderStore.items.prefix(6).map(\.title)),
                         onSyncCalendar: { Task { await refreshDeskCalendar() } },
-                        onOpenLearnStudio: { showLearnStudio = true }
+                        onOpenLearnStudio: { showLearnStudio = true },
+                        onOpenArchive: { showArchiveWorkflow = true },
+                        studentName: deskChromeName ?? "there"
                     )
                     .id(dashboardStartRail)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
