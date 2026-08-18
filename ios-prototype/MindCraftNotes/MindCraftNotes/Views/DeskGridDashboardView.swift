@@ -111,6 +111,13 @@ struct DeskGridDashboardView: View {
     @State private var homeworkError: String?
     @State private var homeworkUploads: [HomeworkUploadSummary] = []
 
+    // MARK: - Work Dashboard "I want to learn X" (2026-08-18)
+    // Moodle's chapter display (see tileLines/tileShowsContent/mascotPhase
+    // .moodle cases) - separate from homeworkUploads since it's Moodle's
+    // content, not Homework Help's, even though both come from the same
+    // jesseCall.workDashboardLesson.
+    @State private var workDashboardChapters: [String] = []
+
     // MARK: - Agent takeover (any real ask, not just the email/draft case)
     // Any request longer than a quick nav keyword borrows Binder and/or
     // Intel in place instead of spawning a new floating box - Akshat's
@@ -264,6 +271,7 @@ struct DeskGridDashboardView: View {
         .ignoresSafeArea()
         .onChange(of: intelLines) { _, lines in boxBus.intelLines = lines }
         .onChange(of: binderTitles) { _, titles in boxBus.binderTitles = titles }
+        .onChange(of: jesseCall.workDashboardLesson) { _, lesson in handleNewLesson(lesson) }
         // No Exit control here anymore - moved into the Manage page
         // (logo tap) so the dashboard itself stays clean. onClose is still
         // wired from FieldDeskView but nothing on this screen calls it now.
@@ -507,6 +515,11 @@ struct DeskGridDashboardView: View {
         switch kind {
         case .moodle:
             if moodle.isBusy { return .working }
+            // A generated/archived lesson's chapters show here too (real
+            // ask, 2026-08-18: "in Moodle I should see... chapters") even
+            // when the real LMS isn't connected - a genuine reason to
+            // wake the mascot state that isn't "Moodle itself connected."
+            if !workDashboardChapters.isEmpty { return .awake }
             return moodle.isConnected ? .awake : .sleeping
         case .intel:
             // Merged box: awake once Intel's own research, Gmail, or
@@ -1023,6 +1036,35 @@ struct DeskGridDashboardView: View {
         homeworkUploading = false
     }
 
+    /// Routes a real `WorkDashboardLesson` (from `jesseCall.askJesseWorkDashboard`,
+    /// "I want to learn X") into the three tiles the explicit ask named:
+    /// Binder gets the filed artifact, Homework Help shows the definition/
+    /// question (reusing its existing upload-summary display - no new UI),
+    /// Moodle shows the chapters. Intel's own "table of contents" is
+    /// already visible where Jesse said it, in the transcript this same
+    /// call just spoke into - no separate rendering needed there.
+    private func handleNewLesson(_ lesson: WorkDashboardLesson?) {
+        guard let lesson else { return }
+        var body = lesson.definition
+        if !lesson.chapters.isEmpty {
+            body += "\n\nChapters:\n" + lesson.chapters.map { "- \($0)" }.joined(separator: "\n")
+        }
+        if let question = lesson.question {
+            body += "\n\nPractice question:\n\(question)"
+        }
+        onFileHomeworkToBinder("Lesson · \(lesson.topic.capitalized)", body)
+
+        var cards: [IngredientHintsClient.HintCard] = [
+            IngredientHintsClient.HintCard(title: "Definition", body: lesson.definition),
+        ]
+        if let question = lesson.question {
+            cards.append(IngredientHintsClient.HintCard(title: "Practice question", body: question))
+        }
+        homeworkUploads.insert(HomeworkUploadSummary(fileName: lesson.topic.capitalized, cards: cards), at: 0)
+
+        workDashboardChapters = lesson.chapters
+    }
+
     /// Only Binder participates in `DeskBoxBus`'s grow/shrink negotiation -
     /// the rest map to `.jesse`, the bus's existing "doesn't grow" sentinel
     /// (same treatment `.memo` already had).
@@ -1040,6 +1082,7 @@ struct DeskGridDashboardView: View {
     private func tileShowsContent(_ kind: TileKind) -> Bool {
         switch kind {
         case .moodle:
+            if !workDashboardChapters.isEmpty { return true }
             return moodle.isConnected && (!moodle.assignments.isEmpty || !moodle.grades.isEmpty)
         case .intel:
             let hasEmail = gmail.hasGmailScope && (shownDigest != nil || !gmail.messages.isEmpty)
@@ -1428,7 +1471,9 @@ struct DeskGridDashboardView: View {
         case .moodle:
             let work = moodle.assignments.prefix(5).map { "\($0.name) · \($0.dueLabel)" }
             if !work.isEmpty { return Array(work) }
-            return moodle.grades.prefix(5).map { "\($0.itemName) · \($0.gradeLabel)" }
+            let grades = moodle.grades.prefix(5).map { "\($0.itemName) · \($0.gradeLabel)" }
+            if !grades.isEmpty { return Array(grades) }
+            return workDashboardChapters
         case .binder:
             return binderTitles
         case .homeworkHelp, .memo:

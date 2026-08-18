@@ -150,6 +150,36 @@ final class StudentAIKeyStore: ObservableObject {
         }
     }
 
+    /// Real generation for the Work Dashboard's conversational "I want to
+    /// learn X" flow (2026-08-18) - used only when nothing in the bundled
+    /// book archive (`BookGraphLoader`) already matches the topic. Same
+    /// honesty rule as `generateStudyPlan`: no live web access, no invented
+    /// concept ids outside the known bank, and the chapters are the
+    /// model's own knowledge, not a claim of researched material.
+    func generateTableOfContents(topic: String, knownConceptIds: [String]) async -> Result<LessonOutline, SolveError> {
+        let user = """
+        Topic the student wants to learn: \(topic)
+
+        Known concept ids with a REAL, verified practice question bank today: \(knownConceptIds.joined(separator: ", "))
+
+        Respond with ONLY this JSON shape, no other text:
+        {"definition": "...", "chapters": ["...", "..."], "question": "..." or null, "matchedConceptId": "..." or null}
+
+        - definition: one or two plain sentences stating the core idea, no jargon.
+        - chapters: 4 to 6 short sub-topic titles, in the order a student should learn them.
+        - question: one concrete practice question testing the FIRST chapter, or null if you cannot write one honestly.
+        - matchedConceptId: the exact id string from the known list above ONLY if the topic is genuinely that concept - otherwise null. Never invent an id not in that list.
+        """
+        let result = await complete(system: Self.tableOfContentsSystemPrompt, user: user)
+        switch result {
+        case .success(let text):
+            guard let outline = LessonOutline.parse(text) else { return .failure(.unavailable) }
+            return .success(outline)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+
     /// Any other real question about the student's own desk data (recent
     /// mail, calendar, binder) - the Work Dashboard's search used to route
     /// everything through the shared backend (`DeskAskClient`), which
@@ -339,6 +369,14 @@ final class StudentAIKeyStore: ObservableObject {
     with strict JSON only, matching exactly the shape the user message \
     specifies - no markdown fences, no commentary before or after.
     """
+
+    private static let tableOfContentsSystemPrompt = """
+    You are Jesse, building a short lesson outline for a high-school \
+    student inside The Desk's Work dashboard. You do not have live \
+    internet access - work from your own knowledge only. Respond with \
+    strict JSON only, matching exactly the shape the user message \
+    specifies - no markdown fences, no commentary before or after.
+    """
 }
 
 /// Parsed via `StudyPlan.parse(_:)`, not a plain `Decodable` conformance -
@@ -357,5 +395,23 @@ struct StudyPlan: Decodable, Equatable {
         let jsonSlice = raw[start...end]
         guard let data = jsonSlice.data(using: .utf8) else { return nil }
         return try? JSONDecoder().decode(StudyPlan.self, from: data)
+    }
+}
+
+/// Parsed the same lenient way as `StudyPlan` - see its own doc comment.
+/// Generated fallback for the Work Dashboard's "I want to learn X" flow
+/// when no bundled book archive already covers the topic (see
+/// `JesseCallSession.askJesseWorkDashboard`).
+struct LessonOutline: Decodable, Equatable {
+    let definition: String
+    let chapters: [String]
+    let question: String?
+    let matchedConceptId: String?
+
+    static func parse(_ raw: String) -> LessonOutline? {
+        guard let start = raw.firstIndex(of: "{"), let end = raw.lastIndex(of: "}"), start < end else { return nil }
+        let jsonSlice = raw[start...end]
+        guard let data = jsonSlice.data(using: .utf8) else { return nil }
+        return try? JSONDecoder().decode(LessonOutline.self, from: data)
     }
 }

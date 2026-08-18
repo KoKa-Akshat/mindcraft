@@ -13,6 +13,24 @@ struct JesseCallTurn: Identifiable, Codable, Equatable {
     let at: Date
 }
 
+/// Result of the Work Dashboard's "I want to learn X" flow (2026-08-18) -
+/// either real, bundled archive material or an honestly-labeled generated
+/// outline, never blurred together. `DeskGridDashboardView` reads this to
+/// route content into Binder/Homework Help/Moodle; the table of contents
+/// itself shows up in Intel's own transcript, spoken by Jesse, rather than
+/// needing a second display surface squeezed into an already-compact box.
+struct WorkDashboardLesson: Equatable {
+    enum Source: Equatable {
+        case archive(bookTitle: String)
+        case generated
+    }
+    let topic: String
+    let source: Source
+    let chapters: [String]
+    let definition: String
+    let question: String?
+}
+
 /// App-lifetime voice session for Jesse (native `SFSpeechRecognizer` +
 /// `AVSpeechSynthesizer`, not the old WKWebView JS Web Speech API calls,
 /// which died with the WKWebView the moment its screen closed). Owned once
@@ -95,6 +113,12 @@ final class JesseCallSession: NSObject, ObservableObject {
     /// `askJesseResume`) so `ResumeAgentView` can render the profile live as
     /// the student talks. Reset in `begin()`.
     @Published private(set) var resumeDraft: ResumeAgentDraft?
+    /// Work Dashboard's "I want to learn X" flow (2026-08-18) - set only
+    /// while `context == "workDashboard"`, after a real archive check
+    /// (`BookGraphLoader`) or generation call (see
+    /// `askJesseWorkDashboard`). Reset in `begin()`, same as the other
+    /// per-context state above.
+    @Published private(set) var workDashboardLesson: WorkDashboardLesson?
 
     private let recognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US"))
     private let audioEngine = AVAudioEngine()
@@ -166,6 +190,9 @@ final class JesseCallSession: NSObject, ObservableObject {
         }
         if context == "resume" {
             resumeDraft = nil
+        }
+        if context == "workDashboard" {
+            workDashboardLesson = nil
         }
         status = nil
     }
@@ -402,6 +429,17 @@ final class JesseCallSession: NSObject, ObservableObject {
             isThinking = false
             return
         }
+        // Explicit ask (2026-08-18): "when i said i want to learn calculus
+        // it should now check the archive for lessons on it... create a
+        // lesson plan." Only intercepts genuine "I want to learn X"-shaped
+        // phrasing - anything else on this context (e.g. "what's my next
+        // assignment") falls through to the same generic briefing path as
+        // before this feature existed, unchanged.
+        if context == "workDashboard", let topic = Self.extractLearnTopic(from: message) {
+            await askJesseWorkDashboard(topic: topic)
+            isThinking = false
+            return
+        }
 
         let bus = DeskBoxBus.shared
         if let local = bus.directAnswer(for: message) {
@@ -503,6 +541,78 @@ final class JesseCallSession: NSObject, ObservableObject {
         case .failure(.unavailable):
             studyPlanError = "Couldn't put a plan together from that - try again, or say more about the topic."
             await speak("I couldn't quite put a plan together from that. Tell me a bit more?")
+        }
+    }
+
+    // MARK: - Work Dashboard "I want to learn X" (2026-08-18)
+
+    /// Deliberately narrow: only strips a short, explicit list of real
+    /// lead-in phrases rather than trying to classify arbitrary sentences
+    /// as "wants to learn something" - a false positive here would hijack
+    /// an ordinary desk question (e.g. "what's my next assignment") into
+    /// the lesson-generation path instead of answering it.
+    private static func extractLearnTopic(from message: String) -> String? {
+        let leadIns = [
+            "i want to learn ", "i want to study ", "help me learn ", "help me study ",
+            "teach me ", "i'd like to learn ", "i would like to learn ",
+            "can you teach me ", "let's learn ", "lets learn ",
+        ]
+        let lowered = message.lowercased()
+        for leadIn in leadIns where lowered.hasPrefix(leadIn) {
+            let topic = String(message.dropFirst(leadIn.count)).trimmingCharacters(in: .whitespacesAndNewlines)
+            return topic.isEmpty ? nil : topic
+        }
+        return nil
+    }
+
+    /// "Check the archive for lessons on it, extract things, create a
+    /// lesson plan" - real bundled book concept graphs
+    /// (`BookGraphLoader.all`, the same data Learn Studio's "Study a Book"
+    /// already browses) are checked FIRST, honestly, before ever
+    /// generating anything. Most topics (e.g. "calculus") won't match any
+    /// of the handful of bundled books - that's the expected, honest
+    /// outcome, not a bug, and falls through to a real generation call
+    /// instead of pretending archived material exists.
+    private func askJesseWorkDashboard(topic: String) async {
+        let loweredTopic = topic.lowercased()
+        if let match = BookGraphLoader.all.first(where: { book in
+            book.title.lowercased().contains(loweredTopic) || loweredTopic.contains(book.title.lowercased())
+                || book.concepts.contains {
+                    $0.label.lowercased().contains(loweredTopic) || loweredTopic.contains($0.label.lowercased())
+                }
+        }) {
+            let chapters = Array(match.concepts.prefix(6).map(\.label))
+            guard isActive else { return }
+            workDashboardLesson = WorkDashboardLesson(
+                topic: topic,
+                source: .archive(bookTitle: match.title),
+                chapters: chapters,
+                definition: "Found in your archive: \(match.title).",
+                question: nil
+            )
+            await speak("Good news - I already have \(match.title) in your archive. Here's the table of contents: \(chapters.joined(separator: ", ")).")
+            return
+        }
+
+        let known = Array(Set(SampleQuestion.all.map(\.conceptId)))
+        let result = await StudentAIKeyStore.shared.generateTableOfContents(topic: topic, knownConceptIds: known)
+        guard isActive else { return }
+        switch result {
+        case .success(let outline):
+            workDashboardLesson = WorkDashboardLesson(
+                topic: topic,
+                source: .generated,
+                chapters: outline.chapters,
+                definition: outline.definition,
+                question: outline.question
+            )
+            await speak("Nothing in the archive yet for \(topic), so I put together a fresh outline: \(outline.chapters.joined(separator: ", ")).")
+        case .failure(.noKey):
+            await speak("You'll need to connect an AI key in Settings before I can put a lesson together on \(topic).")
+        case .failure(.rejected):
+            await speak("That AI key isn't working right now. Check it in Settings?")
+        case .failure(.unavailable):
+            await speak("I couldn't put a lesson together on that just now - try again in a bit?")
         }
     }
 
