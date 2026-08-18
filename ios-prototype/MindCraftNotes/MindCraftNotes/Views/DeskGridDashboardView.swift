@@ -1,4 +1,6 @@
 import SwiftUI
+import UniformTypeIdentifiers
+import PDFKit
 
 /// One line of the agent takeover's Binder mail list - structured (not a
 /// pre-joined string) so it can render through `DeskContentRow` like every
@@ -7,6 +9,17 @@ private struct AgentMailLine: Identifiable {
     let id = UUID()
     let from: String
     let subject: String
+}
+
+/// One solved item in a Homework Help session - a filename (or "Typed
+/// problem") plus its real AI-generated cards. The tile itself is the
+/// upload target now (explicit ask: "make the homework help button a space
+/// to directly click on upload... and under it like transcript space
+/// summaries and filenames pop up") - no separate screen.
+private struct HomeworkUploadSummary: Identifiable {
+    let id = UUID()
+    let fileName: String
+    let cards: [IngredientHintsClient.HintCard]
 }
 
 /// Work canvas from Presentation Screen.pdf pages 4–5.
@@ -27,7 +40,12 @@ struct DeskGridDashboardView: View {
     var onOpenCalendar: () -> Void = {}
     var onOpenGmail: () -> Void = {}
     var onOpenIntel: () -> Void = {}
-    var onOpenHomeworkHelp: () -> Void = {}
+    /// Homework Help files directly to Binder now - the tile itself is the
+    /// upload target, no separate screen (explicit ask, 2026-08-18). Real
+    /// side effect (BinderStore.addDoc + an Intel line), owned by
+    /// FieldDeskView since it holds the real BinderStore/FieldDeskStore
+    /// instances this view doesn't.
+    var onFileHomeworkToBinder: (_ title: String, _ body: String) -> Void = { _, _ in }
     var onOpenCreate: (CreateCanvasKind) -> Void = { _ in }
     var onOpenFlow: (String) -> Void = { _ in }
     var onSaveMemo: (String) -> Void = { _ in }
@@ -55,6 +73,12 @@ struct DeskGridDashboardView: View {
     @ObservedObject private var aiKeys = StudentAIKeyStore.shared
     @EnvironmentObject private var jesseCall: JesseCallSession
     @State private var showMoodleSheet = false
+
+    // MARK: - Homework Help (the tile itself is the upload target now)
+    @State private var showHomeworkImporter = false
+    @State private var homeworkUploading = false
+    @State private var homeworkError: String?
+    @State private var homeworkUploads: [HomeworkUploadSummary] = []
 
     // MARK: - Agent takeover (any real ask, not just the email/draft case)
     // Any request longer than a quick nav keyword borrows Binder and/or
@@ -111,7 +135,7 @@ struct DeskGridDashboardView: View {
         onOpenCalendar: @escaping () -> Void = {},
         onOpenGmail: @escaping () -> Void = {},
         onOpenIntel: @escaping () -> Void = {},
-        onOpenHomeworkHelp: @escaping () -> Void = {},
+        onFileHomeworkToBinder: @escaping (_ title: String, _ body: String) -> Void = { _, _ in },
         onOpenCreate: @escaping (CreateCanvasKind) -> Void = { _ in },
         onOpenFlow: @escaping (String) -> Void = { _ in },
         onSaveMemo: @escaping (String) -> Void = { _ in },
@@ -135,7 +159,7 @@ struct DeskGridDashboardView: View {
         self.onOpenCalendar = onOpenCalendar
         self.onOpenGmail = onOpenGmail
         self.onOpenIntel = onOpenIntel
-        self.onOpenHomeworkHelp = onOpenHomeworkHelp
+        self.onFileHomeworkToBinder = onFileHomeworkToBinder
         self.onOpenCreate = onOpenCreate
         self.onOpenFlow = onOpenFlow
         self.onSaveMemo = onSaveMemo
@@ -209,6 +233,14 @@ struct DeskGridDashboardView: View {
         .ignoresSafeArea()
         .onChange(of: intelLines) { _, lines in boxBus.intelLines = lines }
         .onChange(of: binderTitles) { _, titles in boxBus.binderTitles = titles }
+        .fileImporter(
+            isPresented: $showHomeworkImporter,
+            allowedContentTypes: [.image, .pdf],
+            allowsMultipleSelection: false
+        ) { result in
+            guard case .success(let urls) = result, let url = urls.first else { return }
+            Task { await handleHomeworkFileUpload(url) }
+        }
         // No Exit control here anymore - moved into the Manage page
         // (logo tap) so the dashboard itself stays clean. onClose is still
         // wired from FieldDeskView but nothing on this screen calls it now.
@@ -840,9 +872,85 @@ struct DeskGridDashboardView: View {
         case .moodle:
             showMoodleSheet = true
         case .homeworkHelp:
-            onOpenHomeworkHelp()
+            showHomeworkImporter = true
         case .memo:
             setRail(rail == .memo ? .none : .memo)
+        }
+    }
+
+    // MARK: - Homework Help: tile is the upload target, no separate screen
+
+    /// Real upload, not a stub - photos go through `HomeworkClient.
+    /// parseAndCreateSession` (`/api/parse-homework`, real vision-model
+    /// OCR), PDFs get their text extracted locally via PDFKit (same
+    /// technique `DriveClient.pdfText` uses elsewhere). Whichever path
+    /// finds real text, `solveHomeworkProblem` turns it into real AI cards
+    /// via the student's own key.
+    private func handleHomeworkFileUpload(_ url: URL) async {
+        homeworkError = nil
+        homeworkUploading = true
+        let accessed = url.startAccessingSecurityScopedResource()
+        defer { if accessed { url.stopAccessingSecurityScopedResource() } }
+        guard let data = try? Data(contentsOf: url) else {
+            homeworkError = "Couldn\u{2019}t read that file. Try again."
+            homeworkUploading = false
+            return
+        }
+
+        if url.pathExtension.lowercased() == "pdf" {
+            guard let doc = PDFDocument(data: data) else {
+                homeworkError = "Couldn\u{2019}t read that PDF. Try another file."
+                homeworkUploading = false
+                return
+            }
+            var text = ""
+            for i in 0..<doc.pageCount {
+                text += (doc.page(at: i)?.string ?? "") + "\n"
+                if text.count > 4000 { break }
+            }
+            homeworkUploading = false
+            let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !trimmed.isEmpty else {
+                homeworkError = "Couldn\u{2019}t find any text in that PDF. Try a photo instead."
+                return
+            }
+            await solveHomeworkProblem(trimmed, fileName: url.lastPathComponent)
+            return
+        }
+
+        let (result, _) = await HomeworkClient.parseAndCreateSession(imageData: data, fileName: url.lastPathComponent)
+        homeworkUploading = false
+        switch result {
+        case .success(let questions):
+            guard let first = questions.first else {
+                homeworkError = "Couldn\u{2019}t find a question on that page. Try another photo."
+                return
+            }
+            await solveHomeworkProblem(first.text, fileName: url.lastPathComponent)
+        case .unavailable:
+            homeworkError = "Couldn\u{2019}t find questions on that page. Try another photo, or this may be temporarily unavailable."
+        case .notSignedIn:
+            homeworkError = "Please sign in again."
+        }
+    }
+
+    /// Files to Binder via the real callback (`onFileHomeworkToBinder` -
+    /// FieldDeskView owns the actual `BinderStore`/`FieldDeskStore`
+    /// instances this view doesn't) and drops the result into this tile's
+    /// own scrollable summary list - no separate screen, no auto-navigate
+    /// away (explicit ask: "under it like transcript space summaries and
+    /// filenames pop up").
+    private func solveHomeworkProblem(_ problem: String, fileName: String) async {
+        switch await IngredientHintsClient.hints(for: problem) {
+        case .cards(let cards):
+            let title = String(problem.trimmingCharacters(in: .whitespacesAndNewlines).prefix(60))
+            let body = cards.map { "\($0.title)\n\($0.body)" }.joined(separator: "\n\n")
+            onFileHomeworkToBinder(title.isEmpty ? fileName : title, body)
+            homeworkUploads.insert(HomeworkUploadSummary(fileName: fileName, cards: cards), at: 0)
+        case .keyRejected:
+            homeworkError = "That AI key was rejected. Open Settings to update it."
+        case .unavailable:
+            homeworkError = "Couldn't get an answer - try again in a bit."
         }
     }
 
@@ -888,9 +996,29 @@ struct DeskGridDashboardView: View {
 
     private var tileInk: Color { Color(gridHex: "143a2e") }
 
+    /// Same floating card JesseRailView gives Intel - a light, shadowed
+    /// rounded-rect the content sits inside instead of straight on the
+    /// tile's colored wash. Explicit ask (2026-08-18): "i like the design
+    /// on intel the borders and all that, do the same design for binder
+    /// and homework help and moodle."
+    @ViewBuilder
+    private func tileInnerCard<Content: View>(@ViewBuilder _ content: () -> Content) -> some View {
+        content()
+            .padding(14)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .background(
+                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                    .fill(Color(white: 0.985))
+                    .shadow(color: .black.opacity(0.08), radius: 10, y: 5)
+            )
+    }
+
     @ViewBuilder
     private func tileBody(_ kind: TileKind, phase: MascotPhase) -> some View {
-        let ink: Color = (kind == .binder || kind == .moodle) ? tileInk : .white
+        // Homework Help now sits in the same near-white card as Binder/
+        // Moodle (see tileInnerCard) so it needs dark ink like they do -
+        // white text would vanish on that light card.
+        let ink: Color = (kind == .binder || kind == .moodle || kind == .homeworkHelp) ? tileInk : .white
         // Binder only takes over when there's actually binder-shaped
         // content (an email or a list of lines) to show - a reply-only ask
         // ("what's my next assignment") shouldn't blank out Binder's real
@@ -904,20 +1032,131 @@ struct DeskGridDashboardView: View {
             // explicit ask: "instead of intel put the jesse call thing in
             // dash: nothing else." Reuses the exact same JesseRailView card
             // every other screen with Jesse carries (Resume/Book/Learn/
-            // Presentation/Design Studio), not a new one-off.
-            JesseRailView(studentName: studentName, context: "workDashboard")
-                .accessibilityIdentifier("deskGridJesseCall")
-        } else if tileShowsContent(kind) {
-            VStack(alignment: .leading, spacing: 0) {
-                tileContentRows(kind, ink: ink)
+            // Presentation/Design Studio), not a new one-off. Memo/
+            // Transcribe/Email/Calendar moved here as a compact icon row
+            // above the greeting (explicit ask, 2026-08-18) - same
+            // functionality the main dock/old Intel connect row had, just
+            // relocated, not rebuilt.
+            VStack(spacing: 8) {
+                jesseBoxIconRow
+                JesseRailView(studentName: studentName, context: "workDashboard")
             }
-            .accessibilityIdentifier("deskGridTileBody_\(kind.title)")
+            .accessibilityIdentifier("deskGridJesseCall")
+        } else if kind == .homeworkHelp {
+            tileInnerCard { homeworkHelpTileBody(ink: ink) }
+        } else if tileShowsContent(kind) {
+            tileInnerCard {
+                VStack(alignment: .leading, spacing: 0) {
+                    tileContentRows(kind, ink: ink)
+                }
+                .accessibilityIdentifier("deskGridTileBody_\(kind.title)")
+            }
         } else {
             Text(kind.blurb(phase: phase, assignmentCount: moodle.assignments.count))
                 .font(.system(size: 12, weight: .semibold, design: .rounded))
                 .foregroundColor(ink)
                 .lineLimit(2)
                 .multilineTextAlignment(.leading)
+        }
+    }
+
+    /// Compact icon-only row (no dock-style text labels - there's no room
+    /// above the greeting card) for Memo/Transcribe/Email/Calendar - the
+    /// same four actions that used to live in the main dock (Memo/
+    /// Transcribe) and Intel's old connect row (Email/Calendar), just
+    /// relocated per the explicit ask, not reimplemented.
+    private var jesseBoxIconRow: some View {
+        HStack(spacing: 10) {
+            jesseBoxIcon("note.text") { setRail(rail == .memo ? .none : .memo) }
+                .accessibilityIdentifier("deskGridJesseIcon_Memo")
+            jesseBoxIcon("waveform", action: onTranscribe)
+                .accessibilityIdentifier("deskGridJesseIcon_Transcribe")
+            jesseBoxIcon(gmail.hasGmailScope ? "envelope.fill" : "envelope") {
+                if gmail.hasGmailScope {
+                    onOpenGmail()
+                } else {
+                    Task {
+                        await gmail.connectGoogleMailAndCalendar()
+                        if gmail.hasGmailScope { onGmailLinked(gmail.hasCalendarScope) }
+                    }
+                }
+            }
+            .accessibilityIdentifier("deskGridJesseIcon_Email")
+            jesseBoxIcon(gmail.hasCalendarScope ? "calendar.circle.fill" : "calendar") {
+                if gmail.hasCalendarScope {
+                    onOpenCalendar()
+                } else {
+                    Task {
+                        await gmail.connectGoogleMailAndCalendar()
+                        if gmail.hasGmailScope { onGmailLinked(gmail.hasCalendarScope) }
+                    }
+                }
+            }
+            .accessibilityIdentifier("deskGridJesseIcon_Calendar")
+            Spacer(minLength: 0)
+        }
+    }
+
+    private func jesseBoxIcon(_ system: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Image(systemName: system)
+                .font(.system(size: 14, weight: .semibold))
+                .foregroundColor(Color(gridHex: "143a2e"))
+                .frame(width: 30, height: 30)
+                .background(Circle().fill(Color.white.opacity(0.85)))
+        }
+        .buttonStyle(.plain)
+    }
+
+    /// The whole tile is the upload target - tapping anywhere on it
+    /// (handled by `handleTile`) opens the file picker directly, no
+    /// intermediate screen. This is just the display: an upload hint when
+    /// empty, or a scrollable "transcript space" of every solved item this
+    /// session (filename + real AI summary) once there's something to show.
+    @ViewBuilder
+    private func homeworkHelpTileBody(ink: Color) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack(spacing: 6) {
+                if homeworkUploading {
+                    ProgressView().tint(ink)
+                } else {
+                    Image(systemName: "square.and.arrow.up")
+                        .foregroundColor(ink)
+                }
+                Text(homeworkUploading ? "Reading\u{2026}" : "Tap to upload a photo or PDF")
+                    .font(.system(size: 12, weight: .bold, design: .rounded))
+                    .foregroundColor(ink)
+            }
+            if let homeworkError {
+                Text(homeworkError)
+                    .font(.system(size: 11, weight: .semibold, design: .rounded))
+                    .foregroundColor(Color(gridHex: "b0473f"))
+                    .fixedSize(horizontal: false, vertical: true)
+                    .accessibilityIdentifier("deskGridHomeworkError")
+            }
+            if !homeworkUploads.isEmpty {
+                ScrollView(showsIndicators: true) {
+                    VStack(alignment: .leading, spacing: 8) {
+                        ForEach(homeworkUploads) { upload in
+                            VStack(alignment: .leading, spacing: 3) {
+                                Text(upload.fileName)
+                                    .font(.system(size: 11, weight: .heavy, design: .rounded))
+                                    .foregroundColor(ink)
+                                ForEach(upload.cards, id: \.title) { card in
+                                    Text(card.body)
+                                        .font(.system(size: 11, weight: .medium, design: .rounded))
+                                        .foregroundColor(ink.opacity(0.85))
+                                        .lineLimit(4)
+                                }
+                            }
+                            .padding(8)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(RoundedRectangle(cornerRadius: 8, style: .continuous).fill(Color(gridHex: "f3f1ec")))
+                        }
+                    }
+                }
+                .accessibilityIdentifier("deskGridHomeworkUploads")
+            }
         }
     }
 
@@ -1019,18 +1258,16 @@ struct DeskGridDashboardView: View {
                     .foregroundColor(.white.opacity(0.85))
                     .fixedSize(horizontal: false, vertical: true)
                 if !aiKeys.hasKey {
-                    Button {
-                        closeAgentTakeover()
-                        onOpenHomeworkHelp()
-                    } label: {
-                        Text("Connect your AI")
-                            .font(.system(size: 12, weight: .bold, design: .rounded))
-                            .foregroundColor(Color(gridHex: "143a2e"))
-                            .padding(.horizontal, 10)
-                            .padding(.vertical, 6)
-                            .background(Capsule().fill(Color.white.opacity(0.9)))
-                    }
-                    .buttonStyle(.plain)
+                    // Used to redirect into Homework Help's own "Connect
+                    // your AI key" prompt - that prompt no longer exists
+                    // now that Homework Help is a direct upload target with
+                    // no settings screen of its own. No other "jump straight
+                    // to AI key settings" callback exists in this view, so
+                    // this points at the real destination (Manage) instead
+                    // of a fabricated shortcut.
+                    Text("Connect your AI key from Manage to draft replies.")
+                        .font(.system(size: 12, weight: .semibold, design: .rounded))
+                        .foregroundColor(.white.opacity(0.85))
                 }
             } else {
                 ScrollView(showsIndicators: false) {
@@ -1205,21 +1442,16 @@ struct DeskGridDashboardView: View {
     /// reuses the existing `onOpenFlow("book")` callback FieldDeskView
     /// already wires for the Flows rail's own Book row, not a new path.
     private var workDock: some View {
-        // Explicit ask (2026-08-18): "the search bar under becomes M | T
-        // where M opens memo and T opens transcribe" - compact single-letter
-        // chips, not the old full-word ones. Learn kept as its own chip
-        // (still opens the real, working LearnStudioView - Study a Book,
-        // live conversational cards) rather than removed, since "let the
-        // dashboard be learn" is about the Jesse-call box now living where
-        // Intel was, not about deleting a real, tested screen - flagging
-        // this scoping call rather than guessing silently. Archive is new
-        // here (was previously only reachable two hops deep, via Learn
-        // Studio's own "Browse Archive" button) - direct now, per the ask
-        // to consolidate Dan's archive + the book graphs there.
+        // Explicit ask (2026-08-18, second pass): "i just want the search
+        // bar to be clean Archive Flows and Book for now." Memo/Transcribe
+        // moved to the icon row above Jesse's greeting (see
+        // jesseBoxIconRow); Learn removed too now that it's been clarified
+        // twice - "the dashboard IS learn" means the dock doesn't also need
+        // a separate Learn destination. Note: this makes LearnStudioView
+        // (including "Study a Book") unreachable from this dock - the
+        // screen and its code are untouched, just not linked to from here
+        // anymore. Flag this if that's not what was meant.
         HStack(spacing: 8) {
-            dockChip("M", system: "note.text", identifier: "deskGridDashboardAddMemo") { setRail(rail == .memo ? .none : .memo) }
-            dockChip("T", system: "waveform", identifier: "deskGridDock_Transcribe", action: onTranscribe)
-            dockChip("Learn", system: "square.grid.2x2.fill", identifier: "deskGridDock_LearnStudio") { onOpenLearnStudio() }
             dockChip("Archive", system: "archivebox.fill", identifier: "deskGridDock_Archive", action: onOpenArchive)
             dockChip("Flows", system: "bolt.fill", identifier: "deskGridDock_Flows") { setRail(rail == .flows ? .none : .flows) }
             dockChip("+Book", system: "book.fill", identifier: "deskGridDock_Book") { onOpenFlow("book") }
@@ -1294,16 +1526,14 @@ struct DeskGridDashboardView: View {
             .background(Capsule().fill(Color.white.opacity(0.12)))
 
             if !aiKeys.hasKey {
-                // No nested .accessibilityIdentifier here - the outer one
-                // below already identifies this whole control, and a second
-                // one on this overlay would clobber it (same family as the
-                // dock/workDock clobbering CLAUDE.md documents). The popup
-                // this opens (`fieldDeskHomeworkHelpOverlay`) is what a test
-                // should assert on, not this transparent tap-catcher.
-                Color.clear
-                    .contentShape(Rectangle())
-                    .onTapGesture { onOpenHomeworkHelp() }
-                    .accessibilityLabel("Connect your AI to power search")
+                // Used to redirect into Homework Help's own "Connect your AI
+                // key" prompt - that prompt no longer exists now that
+                // Homework Help is a direct upload target with no settings
+                // screen of its own (see onFileHomeworkToBinder). Left as a
+                // plain disabled state rather than a broken redirect;
+                // Manage is the real destination for connecting a key.
+                EmptyView()
+                    .accessibilityLabel("Connect your AI key from Manage to power search")
             }
         }
         .accessibilityIdentifier(identifier)

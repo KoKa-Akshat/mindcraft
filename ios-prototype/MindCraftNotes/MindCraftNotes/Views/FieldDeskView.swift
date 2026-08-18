@@ -9,14 +9,6 @@ private enum ShrineBeatPhase: Equatable {
     case starting
 }
 
-/// One solved item in a Homework Help session - a filename (or "Typed
-/// problem" for the non-upload path) plus its real AI-generated cards.
-private struct HomeworkUploadSummary: Identifiable {
-    let id = UUID()
-    let fileName: String
-    let cards: [IngredientHintsClient.HintCard]
-}
-
 /// Real iOS 26 Liquid Glass for nav/control chrome (dock, floating chips,
 /// pills) - never on card/content bodies, which stay opaque paper. Matches
 /// Apple's own glass-vs-content split: glass is for the floating control
@@ -126,28 +118,6 @@ struct FieldDeskView: View {
     @State private var showBinderOverlay = false
     /// BYOB "Cook a Field Book" from the Binder popup.
     @State private var showByobStudio = false
-    /// Homework Help tapped from the Work dashboard — paste a problem,
-    /// uses the student's own AI key (`StudentAIKeyStore`) when saved.
-    @State private var showHomeworkHelpOverlay = false
-    @ObservedObject private var homeworkKeys = StudentAIKeyStore.shared
-    @State private var homeworkProblemDraft = ""
-    @State private var homeworkSolving = false
-    @State private var homeworkResultCards: [IngredientHintsClient.HintCard] = []
-    @State private var homeworkError: String?
-    /// Every solve this session (upload or typed), newest first - explicit
-    /// ask: "shows the names of attached files and a little AI summary
-    /// under each item... if it runs over the length we can scroll inside
-    /// the box." Filing to Binder still happens (see
-    /// fileHomeworkHelpToBinder) but no longer yanks the student away from
-    /// this box to show it.
-    @State private var homeworkUploads: [HomeworkUploadSummary] = []
-    /// One upload button, photo or PDF - explicit ask: "just needs an
-    /// upload button for now that's it." `.fileImporter` (Files browser,
-    /// which itself reaches Photos too) replaces the old images-only
-    /// `PhotosPicker`.
-    @State private var showHomeworkImporter = false
-    @State private var homeworkUploading = false
-    @State private var homeworkUploadNote: String?
     /// Learn Studio — the five-pane concept-study screen, reachable from the
     /// `+` Add panel for now (lowest-risk entry point tonight; Binder/ACT
     /// Field Book wiring is a separate, more invasive pass into an
@@ -451,7 +421,6 @@ struct FieldDeskView: View {
             || showDeskGridDashboard
             || showCreateCanvas
             || showBinderOverlay
-            || showHomeworkHelpOverlay
     }
 
     /// Jesse kitchen Ask/dock only — Work/Create own their own prompt bars.
@@ -678,18 +647,6 @@ struct FieldDeskView: View {
                     )
                 }
 
-                if showHomeworkHelpOverlay {
-                    // No wrapper .accessibilityIdentifier — this popup has
-                    // its own distinct field/button ids inside (same
-                    // clobbering trap as Binder's popup above); carries
-                    // fieldDeskHomeworkHelpOverlay on its own marker instead.
-                    AnyView(
-                        homeworkHelpOverlayLayer
-                            .transition(.opacity)
-                            .zIndex(89)
-                    )
-                }
-
                 if showDeskGridDashboard {
                     AnyView(
                     DeskGridDashboardView(
@@ -723,9 +680,11 @@ struct FieldDeskView: View {
                                 showIntelOverlay = true
                             }
                         },
-                        onOpenHomeworkHelp: {
-                            withAnimation(.easeInOut(duration: 0.2)) {
-                                showHomeworkHelpOverlay = true
+                        onFileHomeworkToBinder: { title, body in
+                            binderStore.addDoc(title: title, body: body, source: "homework_help")
+                            let line = "Homework · \(title)"
+                            if !store.intelLines.contains(line) {
+                                store.prependIntel(line)
                             }
                         },
                         onOpenCreate: { kind in
@@ -3263,310 +3222,6 @@ struct FieldDeskView: View {
         withAnimation(.easeInOut(duration: 0.2)) {
             showBinderOverlay = false
             showActFieldBook = true
-        }
-    }
-
-    /// Homework Help box's popup - paste a problem, get help from the
-    /// student's own AI key (`StudentAIKeyStore`, Assignment C) when one's
-    /// saved. No key yet -> a connect prompt straight into Settings, same
-    /// place `AccountManageView`'s "Homework help" section already lives.
-    /// Upload/write/full web-version parity is later, separately scoped work
-    /// (see `CURSOR_HANDOFF.md`) - this ships the paste-a-problem path for
-    /// real today, not a stub.
-    private var homeworkHelpOverlayLayer: some View {
-        ZStack {
-            Color.black.opacity(0.35)
-                .ignoresSafeArea()
-                .onTapGesture { closeHomeworkHelpOverlay() }
-
-            VStack(alignment: .leading, spacing: 12) {
-                HStack(spacing: 10) {
-                    Text("Homework Help")
-                        .font(.system(size: 16, weight: .bold, design: .rounded))
-                        .foregroundColor(Color(fdHex: "0c1207"))
-                    Spacer(minLength: 0)
-                    Button(action: closeHomeworkHelpOverlay) {
-                        Text("Done")
-                            .font(.system(size: 12, weight: .bold, design: .rounded))
-                            .foregroundColor(Color(fdHex: "0c1207"))
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 8)
-                            .background(Capsule().fill(Color(fdHex: "c4f547")))
-                    }
-                    .buttonStyle(.plain)
-                    .accessibilityIdentifier("fieldDeskHomeworkHelpDone")
-                }
-
-                if homeworkKeys.hasKey {
-                    homeworkHelpSolverBody
-                } else {
-                    homeworkHelpConnectPrompt
-                }
-            }
-            .padding(18)
-            .frame(width: 420, height: 480)
-            .background(
-                RoundedRectangle(cornerRadius: 20, style: .continuous)
-                    .fill(Color(fdHex: "fff8e9"))
-                    .shadow(color: .black.opacity(0.35), radius: 24, y: 12)
-            )
-            .accessibilityElement(children: .contain)
-            .overlay(alignment: .topLeading) {
-                Text(verbatim: "homework").font(.system(size: 1)).foregroundColor(.clear)
-                    .accessibilityIdentifier("fieldDeskHomeworkHelpOverlay")
-                    .allowsHitTesting(false)
-            }
-        }
-    }
-
-    private var homeworkHelpConnectPrompt: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Image(systemName: "sparkles")
-                .font(.system(size: 28, weight: .medium))
-                .foregroundColor(Color(fdHex: "7a9e2e"))
-            Text("Connect your AI first")
-                .font(.system(size: 15, weight: .bold, design: .rounded))
-                .foregroundColor(Color(fdHex: "0c1207"))
-            Text("Paste a free Groq key (or Anthropic) in Settings and Homework Help solves on your own quota - MindCraft's engine is down on shared credits right now. The key stays on this device, never uploaded.")
-                .font(.system(size: 13, weight: .medium, design: .rounded))
-                .foregroundColor(Color(fdHex: "8a8478"))
-                .fixedSize(horizontal: false, vertical: true)
-            Button {
-                showHomeworkHelpOverlay = false
-                showManage = true
-            } label: {
-                Text("Open Settings")
-                    .font(.system(size: 13, weight: .bold, design: .rounded))
-                    .foregroundColor(Color(fdHex: "0c1207"))
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 10)
-                    .background(Capsule().fill(Color(fdHex: "c4f547")))
-            }
-            .buttonStyle(.plain)
-            .accessibilityIdentifier("fieldDeskHomeworkHelpConnect")
-            Spacer(minLength: 0)
-        }
-    }
-
-    /// Upload leads (explicit ask: "should be Upload instead of Get Help") -
-    /// typing a problem out is the fallback, not the default. Either path
-    /// ends the same way: a solved result files into Binder and this popup
-    /// hands off to the Binder screen instead of holding its own copy of
-    /// the answer (see `fileHomeworkHelpToBinder`).
-    private var homeworkHelpSolverBody: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Button {
-                showHomeworkImporter = true
-            } label: {
-                HStack(spacing: 8) {
-                    if homeworkUploading {
-                        ProgressView().tint(Color(fdHex: "0c1207"))
-                    } else {
-                        Image(systemName: "square.and.arrow.up")
-                        Text("Upload")
-                    }
-                }
-                .font(.system(size: 13, weight: .bold, design: .rounded))
-                .foregroundColor(Color(fdHex: "0c1207"))
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 12)
-            }
-            .buttonStyle(.plain)
-            .background(Capsule().fill(Color(fdHex: "c4f547")))
-            .disabled(homeworkUploading)
-            .accessibilityIdentifier("fieldDeskHomeworkHelpUpload")
-            .accessibilityLabel("Upload a photo or PDF of the problem")
-            .fileImporter(
-                isPresented: $showHomeworkImporter,
-                allowedContentTypes: [.image, .pdf],
-                allowsMultipleSelection: false
-            ) { result in
-                guard case .success(let urls) = result, let url = urls.first else { return }
-                Task { await handleHomeworkFileUpload(url) }
-            }
-
-            if let homeworkUploadNote {
-                Text(homeworkUploadNote)
-                    .font(.system(size: 11, weight: .semibold, design: .rounded))
-                    .foregroundColor(Color(fdHex: "7a9e2e"))
-            }
-
-            Text("or type it out")
-                .font(.system(size: 11, weight: .semibold, design: .rounded))
-                .foregroundColor(Color(fdHex: "8a8478"))
-
-            TextEditor(text: $homeworkProblemDraft)
-                .font(.system(size: 14, weight: .medium, design: .rounded))
-                .frame(height: 90)
-                .padding(8)
-                .background(
-                    RoundedRectangle(cornerRadius: 10, style: .continuous)
-                        .fill(Color.white)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                .stroke(Color(fdHex: "e4dcc8"), lineWidth: 1)
-                        )
-                )
-                .accessibilityIdentifier("fieldDeskHomeworkHelpProblemField")
-
-            Button {
-                Task { await solveHomeworkProblem() }
-            } label: {
-                if homeworkSolving {
-                    ProgressView().tint(Color(fdHex: "0c1207"))
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 10)
-                } else {
-                    Text("Solve")
-                        .font(.system(size: 13, weight: .bold, design: .rounded))
-                        .foregroundColor(Color(fdHex: "0c1207"))
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 10)
-                }
-            }
-            .buttonStyle(.plain)
-            .background(Capsule().fill(Color(fdHex: "e4dcc8")))
-            .disabled(homeworkProblemDraft.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || homeworkSolving)
-            .accessibilityIdentifier("fieldDeskHomeworkHelpSolve")
-
-            if let homeworkError {
-                Text(homeworkError)
-                    .font(.system(size: 12, weight: .semibold, design: .rounded))
-                    .foregroundColor(Color(fdHex: "b3261e"))
-                    .accessibilityIdentifier("fieldDeskHomeworkHelpResult")
-            }
-
-            if !homeworkUploads.isEmpty {
-                ScrollView(showsIndicators: true) {
-                    VStack(alignment: .leading, spacing: 10) {
-                        ForEach(homeworkUploads) { upload in
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text(upload.fileName)
-                                    .font(.system(size: 12, weight: .heavy, design: .rounded))
-                                    .foregroundColor(Color(fdHex: "0c1207"))
-                                ForEach(upload.cards, id: \.title) { card in
-                                    VStack(alignment: .leading, spacing: 2) {
-                                        Text(card.title)
-                                            .font(.system(size: 11, weight: .bold, design: .rounded))
-                                            .foregroundColor(Color(fdHex: "247a4d"))
-                                        Text(card.body)
-                                            .font(.system(size: 12, weight: .medium, design: .rounded))
-                                            .foregroundColor(Color(fdHex: "1c1a17"))
-                                    }
-                                }
-                            }
-                            .padding(10)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(Color.white))
-                            .accessibilityIdentifier("fieldDeskHomeworkUpload_\(upload.id)")
-                        }
-                    }
-                }
-                .frame(maxHeight: 180)
-                .accessibilityIdentifier("fieldDeskHomeworkUploads")
-            }
-        }
-    }
-
-    private func solveHomeworkProblem(fileName: String? = nil) async {
-        homeworkError = nil
-        homeworkSolving = true
-        defer { homeworkSolving = false }
-        switch await IngredientHintsClient.hints(for: homeworkProblemDraft) {
-        case .cards(let cards):
-            homeworkResultCards = cards
-            fileHomeworkHelpToBinder(problem: homeworkProblemDraft, cards: cards)
-            homeworkUploads.insert(HomeworkUploadSummary(fileName: fileName ?? "Typed problem", cards: cards), at: 0)
-        case .keyRejected:
-            homeworkError = "That AI key was rejected. Open Settings to update it."
-        case .unavailable:
-            homeworkError = "Couldn't get an answer - try again in a bit."
-        }
-    }
-
-    /// Files as a real Binder Doc (still happens, still real) and drops an
-    /// Intel line the same way the Gmail digest does (`store.prependIntel`)
-    /// - but no longer yanks the student away from this box to see it.
-    /// Explicit ask: "a nice space under to show ai summaries of uploaded
-    /// content" - the summary needs to actually stay visible here, not
-    /// auto-navigate to Binder the instant it's ready.
-    private func fileHomeworkHelpToBinder(problem: String, cards: [IngredientHintsClient.HintCard]) {
-        let trimmed = problem.trimmingCharacters(in: .whitespacesAndNewlines)
-        let title = trimmed.isEmpty ? "Homework help" : String(trimmed.prefix(60))
-        let body = cards.map { "\($0.title)\n\($0.body)" }.joined(separator: "\n\n")
-        binderStore.addDoc(title: title, body: body, source: "homework_help")
-        let line = "Homework · \(title)"
-        if !store.intelLines.contains(line) {
-            store.prependIntel(line)
-        }
-    }
-
-    /// Real upload, not a stub - one button, photo or PDF. Photos still go
-    /// through `HomeworkClient.parseAndCreateSession` (`/api/parse-homework`,
-    /// same client `WorkPracticeView` already uses) since that endpoint does
-    /// real vision-model OCR a plain text extractor can't. PDFs have no such
-    /// endpoint - extracted locally via PDFKit instead (same technique
-    /// `DriveClient.pdfText` already uses elsewhere in this app) and fed
-    /// straight into the existing type-it-out -> Solve path, since a PDF
-    /// homework page is usually already real text, not a photo needing OCR.
-    private func handleHomeworkFileUpload(_ url: URL) async {
-        homeworkError = nil
-        homeworkUploadNote = nil
-        homeworkUploading = true
-        let accessed = url.startAccessingSecurityScopedResource()
-        defer { if accessed { url.stopAccessingSecurityScopedResource() } }
-        guard let data = try? Data(contentsOf: url) else {
-            homeworkError = "Couldn\u{2019}t read that file. Try again."
-            homeworkUploading = false
-            return
-        }
-
-        if url.pathExtension.lowercased() == "pdf" {
-            guard let doc = PDFDocument(data: data) else {
-                homeworkError = "Couldn\u{2019}t read that PDF. Try another file."
-                homeworkUploading = false
-                return
-            }
-            var text = ""
-            for i in 0..<doc.pageCount {
-                text += (doc.page(at: i)?.string ?? "") + "\n"
-                if text.count > 4000 { break }
-            }
-            homeworkUploading = false
-            let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
-            guard !trimmed.isEmpty else {
-                homeworkError = "Couldn\u{2019}t find any text in that PDF. Try a photo instead."
-                return
-            }
-            homeworkProblemDraft = trimmed
-            homeworkUploadNote = "Got it - solving now."
-            await solveHomeworkProblem(fileName: url.lastPathComponent)
-            return
-        }
-
-        let (result, _) = await HomeworkClient.parseAndCreateSession(imageData: data, fileName: url.lastPathComponent)
-        homeworkUploading = false
-        switch result {
-        case .success(let questions):
-            guard let first = questions.first else {
-                homeworkError = "Couldn\u{2019}t find a question on that page. Try another photo."
-                return
-            }
-            homeworkProblemDraft = first.text
-            homeworkUploadNote = questions.count > 1
-                ? "Found \(questions.count) questions - solving the first."
-                : "Got it - solving now."
-            await solveHomeworkProblem(fileName: url.lastPathComponent)
-        case .unavailable:
-            homeworkError = "Couldn\u{2019}t find questions on that page. Try another photo, or this may be temporarily unavailable."
-        case .notSignedIn:
-            homeworkError = "Please sign in again."
-        }
-    }
-
-    private func closeHomeworkHelpOverlay() {
-        withAnimation(.easeInOut(duration: 0.2)) {
-            showHomeworkHelpOverlay = false
         }
     }
 
