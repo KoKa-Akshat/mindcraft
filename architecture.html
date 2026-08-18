@@ -938,7 +938,7 @@
         <div class="gap-note" onclick="openDetail('gap-homework')"><strong>🔴 Homework</strong> — mindcraft-homework DOWN (Anthropic credits exhausted). Falls back to /recommend-ingredients template only.</div>
         <div class="gap-note" onclick="openDetail('gap-figures')"><strong>🟡 Figures</strong> — Diagram questions render alt-text as "(Diagram: ...)" callout only. No GeoGebra/Desmos interactive figures yet.</div>
         <div class="gap-note" onclick="openDetail('gap-eedi')"><strong>🟡 Eedi misconceptions</strong> — misconception_id links to eedi_misconceptions.json (1,749 entries) but label enrichment pass not done (needs Anthropic credits).</div>
-        <div class="gap-note" onclick="openDetail('gap-mcdiag')"><strong>🟡 mc-diagnostic.js overlay</strong> — In-world Projects sign still POSTs to dead /learning-event. Main onboarding flow is fixed; overlay is fast-follow.</div>
+        <div class="gap-note" onclick="openDetail('gap-mcdiag')"><strong>🟢 mc-diagnostic.js overlay</strong> — CLOSED (2026-08-16). File is 41 lines with zero fetch calls; no /learning-event reference remains anywhere in the tree.</div>
         <div class="gap-note" onclick="openDetail('gap-ml-deploy')"><strong>🟡 ML unreleased</strong> — Local commits beyond rev 00014 (auth, displacement, bridge-gap detection, exam-concepts) deployed. Cloud Build + gcloud run deploy needed.</div>
       </div>
 
@@ -1376,7 +1376,7 @@ const DETAILS = {
   'gap-mcdiag': {
     sys: 'Gap', col: '#f59e0b', status: 'partial',
     title: '🟡 World Diagnostic Overlay',
-    sub: 'mc-diagnostic.js in-world overlay (Projects sign → MC_onProjectsOpen()) still POSTs to dead /learning-event. Main onboarding flow is fixed.',
+    sub: 'mc-diagnostic.js in-world overlay — CLOSED (2026-08-16). Zero fetch calls remain; no /learning-event reference anywhere in the tree.',
     files: ['worlds/world2/mc-diagnostic.js'],
     endpoints: ['/learning-event (DEAD)'],
     inputs: [],

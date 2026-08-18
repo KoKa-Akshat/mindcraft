@@ -8,23 +8,37 @@ from __future__ import annotations
 
 from typing import Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
 from mindcraft_graph.config import INGREDIENT_PRIOR_PSEUDO_COUNTS
 
 
 class Ingredient(BaseModel):
     """
-    An atomic mental model inside a concept.
+    An atomic mental model belonging to one or more concepts.
     """
 
     id: str
-    concept_id: str
+    concept_ids: list[str] = Field(min_length=1)
     name: str
     description: str
     tags: list[str] = Field(default_factory=list)
     depends_on: list[str] = Field(default_factory=list)
     failure_prior: float = 0.5
+
+    @model_validator(mode="before")
+    @classmethod
+    def _accept_legacy_concept_id(cls, data):
+        """Keep the stale standalone ingredient ontology readable."""
+        if isinstance(data, dict) and "concept_ids" not in data and "concept_id" in data:
+            data = dict(data)
+            data["concept_ids"] = [data.pop("concept_id")]
+        return data
+
+    @property
+    def concept_id(self) -> str:
+        """Return the primary membership for compatibility with existing readers."""
+        return self.concept_ids[0]
 
 
 class Bridge(BaseModel):

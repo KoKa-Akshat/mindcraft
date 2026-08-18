@@ -10,6 +10,7 @@ imported lazily here only — the pure-function core stays offline-testable.
 This is scaffolding: it is correct and ready, but with n~1 student the numbers are
 noise. Do not interpret output yet.
 """
+
 from __future__ import annotations
 
 import json
@@ -52,8 +53,10 @@ def _load_observations(student_ids: list[str] | None) -> list[dict]:
 
     # --all: discover distinct students from the observation collection.
     try:
-        ids = {(d.to_dict() or {}).get("studentId")
-               for d in db.collection("attempt_observations").stream()}
+        ids = {
+            (d.to_dict() or {}).get("studentId")
+            for d in db.collection("attempt_observations").stream()
+        }
         ids.discard(None)
         out = []
         for sid in ids:
@@ -68,6 +71,11 @@ def run(student_ids: list[str] | None) -> dict:
     observations = _load_observations(student_ids)
     rows = build_replay_table(observations, _difficulty_by_concept())
     base_rate = sum(r.actual_outcome for r in rows) / len(rows) if rows else None
+    # Imported here to avoid a module cycle: fit_predictor reuses the I/O helpers
+    # above, while the CLI must expose its complete four-arm evaluation.
+    from .fit_predictor import report as predictor_report
+
+    predictor_evaluation = predictor_report(observations)
     return {
         "students": student_ids or "ALL",
         "observations": len(observations),
@@ -76,6 +84,7 @@ def run(student_ids: list[str] | None) -> dict:
         "brier_mastery_baseline": _brier(rows, lambda row: row.concept_mastery_before),
         "brier_constant": _brier(rows, lambda _row: base_rate),
         "brier_predictor": _brier(rows, lambda row: row.predicted),
+        "predictor_evaluation": predictor_evaluation,
         "calibration_concept": calibration_report(rows, field="concept"),
         "calibration_format": calibration_report(rows, field="format"),
         "format_separability": separability_report(rows),

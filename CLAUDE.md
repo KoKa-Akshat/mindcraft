@@ -65,20 +65,21 @@ without a team discussion first.
  `app/src/data/`, ontology in `ml/data/5_level_ontology/`, generated content
  caches out of git). New pipelines should be rerunnable scripts, not one-offs.
 
-### Lane ownership — prevents AI agent collisions
+### Lanes — prevents AI agent collisions
 
-Two lanes own **disjoint** trees. Coordinate before crossing a lane boundary.
+Two lanes cover **disjoint** trees. They are path scopes for routing parallel
+agents, not people. Crossing a lane boundary is allowed — do it in a separate,
+clearly-labelled commit so the diff stays reviewable per tree.
 
-| Lane | Owner | Tree |
-|------|-------|------|
-| **Engine** | Blake | `ml/**`, `webhook/**`, `data/**`, `worlds/**` |
-| **Product** | Akshat | `app/**`, `ios-prototype/**`, `index.html`, `blog.html`, root marketing files |
+| Lane | Tree |
+|------|------|
+| **Engine** | `ml/**`, `webhook/**`, `data/**`, `worlds/**` |
+| **Product** | `app/**`, `ios-prototype/**`, `index.html`, `blog.html`, root marketing files |
 
-`webhook/**` is Engine-owned infrastructure but Product actively adds
-iOS-facing endpoints to it (see "iOS native app" below) — coordinate there
-even though it's listed under Engine.
+`webhook/**` is Engine infrastructure, but the iOS-facing endpoints in it are
+Product work (see "iOS native app" below) — expect edits from both directions.
 
-Shared seam files (coordinate before changing):
+Shared seam files (high blast radius — change deliberately):
 - `app/src/lib/questionBank.ts` — question shape contract (C5)
 - `app/src/lib/mlApi.ts` — API client
 - `firebase/firestore.rules` — both web and iOS write to the same Firestore
@@ -183,7 +184,10 @@ must NOT redefine core meanings (`meta.canonical_id_contract` in every file).
 
 ID formats (the join keys across layers):
 - `concept_id` — snake_case slug, e.g. `right_triangle_geometry`
-- `ingredient_id` — `{concept_id}__{slug}`, e.g. `right_triangle__pythagorean_theorem`
+- `ingredient_id` — an opaque, frozen historical ID, often shaped like
+  `{concept_id}__{slug}` (for example `right_triangle__pythagorean_theorem`).
+  Its prefix is not a containment claim; use `Ingredient.concept_ids` for
+  concept membership and never re-mint an ingredient ID when membership changes.
 - `archetype_id` — `act_{family}_{distinguishing_bridge_or_representation}`
 - `question_instance_id` — `{exam}_{source_test}_{question_number}`, e.g. `act_test001_q010`
 - `misconception_id` — `mis_{concept_or_archetype}_{short_error}`
@@ -831,10 +835,12 @@ Sources:
 - Concept gains: `geometric_transformations` (47 q), `linear_inequalities` (28),
   `functions_basics` (47), `systems_of_linear_equations` (11), `circles_geometry` (7).
 
-**Still-uncovered concepts** (not in UK KS3/4 curriculum, Eedi can't help):
-  `combinatorics`, `matrices`, `complex_numbers`, `rational_expressions`,
-  `logarithmic_functions`. `trigonometry_basics` (SOHCAHTOA) needs ACT/SAT sources
-  or manual authoring — Eedi's trig questions are all diagram-dependent.
+**Thinly-covered concepts** (not in UK KS3/4 curriculum, Eedi can't help):
+  `matrices` (0 q), `logarithmic_functions` (2), `complex_numbers` (4),
+  `rational_expressions` (9). `trigonometry_basics` (SOHCAHTOA, 15) needs ACT/SAT
+  sources or manual authoring — Eedi's trig questions are all diagram-dependent.
+  NOTE: `combinatorics` is **not an L1 concept id** — it is a bank alias of
+  `basic_probability` (46 q). See the zero-coverage list under "Known gotchas".
 
 **Misconceptions**: 1,749 minted at `ml/data/eedi_misconceptions.json`
   (`mis_{concept}__{slug}`). Enrichment pass (embed → propose ingredient links) is
@@ -859,20 +865,59 @@ Sources:
   `questionCount` resolve ontology→bank via `BANK_ALIASES`. `getQuestions` takes
   optional `format` arg — prefers format-matched questions, falls back to concept pool.
   The format axis now has real questions in all 5 format slots (word_problem,
-  symbolic_expression, diagram, coordinate_graph, number_line). **5 concepts still
-  zero-coverage**: combinatorics, matrices, complex_numbers, rational_expressions,
-  logarithmic_functions — need AMC/SAT sources or manual authoring.
-- **Generation paused** (`ml/generation/`): verify pass ran (104 kept / 45 dropped,
-  ~30% bad key rate). Too high to scale — generation prompt needs arithmetic
-  hardening before `--tested --formats all`. 104 verified items committed but NOT
+  symbolic_expression, diagram, coordinate_graph, number_line). **13 L1 concepts
+  are zero-coverage** (measured 2026-08-15, `CLASSIFIER_INGREDIENT_AUDIT.md` §4):
+  `basic_equations`, `representation_translation`, `act_strategy`, `matrices`,
+  `vectors`, `conic_sections`, `probability_distributions`,
+  `inferential_statistics`, and the 5 calculus concepts (`limits_continuity`,
+  `derivatives`, `applications_of_derivatives`, `integrals`,
+  `applications_of_integrals`). The first three are the ones that matter —
+  foundational and ACT-central; the calculus block is off-ACT and deferrable.
+  **The old "5 zero-coverage concepts" list here was wrong on 4 of 5** — only
+  `matrices` was genuinely zero.
+- **Bank size is 1,942 rows**, not ~1,500 (eedi 1,508 / questionBank.ts 227 /
+  actMaster 205 / generated 2).
+- **Classifier accuracy**: the shipped config (k=10, unweighted, raw ids) scores
+  **0.7593** held-out top-1, and **0.545 on ACT-tagged items specifically**. The
+  widely-repeated **0.80 is scope-stripped** — it reproduces only at k=5 +
+  cosine weighting + alias canonicalization + the 20 concepts with ≥20 bank rows
+  (0.7978). `ml/data/problem_classifier_eval.json` already says 0.7672. k=10 is
+  the worst setting swept; k=5 is worth ~2pp for free.
+- **Eedi distractor harvest — DONE (2026-08-16).** Live bank carries
+  **3,835/4,524 wrong-answer slots (84.8%)**, up from 1,508 (33.3%); every
+  tagged slot has `error_type: "misconception"` and a `student_thinking` equal
+  to its misconception's `eedi_name`. Two specs, both landed:
+  `EEDI_DISTRACTOR_HARVEST_BUILD.md` (S4 fixed the `break` in `ingest_eedi.py`)
+  and `EEDI_JOIN_UNIFY_BUILD.md` (corrected the join itself).
+  **The gotcha worth carrying:** the join was implemented 3× across 2 files and
+  the copies disagreed — `promote_questions.build_numeric_to_slug` collapsed
+  concept-scoped slugs last-wins (205/1,437 Eedi ids map to >1 concept), which
+  mis-scoped 25.4% of the first harvest. It is now keyed on
+  **(concept_id, numeric)**; `build_numeric_to_slug` survives at
+  `promote_questions.py:160` as **dead code — never use it on a write path.**
+- **Never re-run `ingest_eedi.py` to fix bank data.** It has the correct join
+  but regenerating **wipes `storyContext` on all 1,508 questions** and reverts
+  two manually-cleaned `choices` arrays (`eedi_147`, `eedi_839`). Field fixes
+  go through `ml/scripts/backfill_distractor_misconceptions.py` (idempotent,
+  invariant-asserting). There is no Groq explain cache — the explanations are
+  template output, so that is *not* the reason to avoid a re-ingest.
+- **Generation paused** (`ml/generation/`): verify pass ran (104 kept / 45 dropped).
+  **The "~30% bad key rate" is NOT a measured key-error rate** — all 45 drops carry
+  the single reason `solver_disagreed` (one LLM disagreeing with another, 0
+  `solver_failed`), and the dropped items' text was never persisted, so no failure
+  taxonomy can be built from the artifact. The standing "it's arithmetic" hypothesis
+  has never had evidence either way; the verifier must be rebuilt (and drops
+  retained) before any generation-quality number is worth acting on. 104 verified
+  items committed but NOT
   yet synced into the live bank (`syncGeneratedQuestions.mjs` → B4 step; inert
   until a cleaner batch exists). `ml/data/generated_questions.verify_report.json`
   has the drop list for diagnosis.
-- **`mc-diagnostic.js` overlay** (in-world Projects sign → `MC_onProjectsOpen()`)
-  still POSTs to dead `/learning-event`. The main onboarding flow ("Click Me"
-  arrow → React `/diagnostic`) is fixed; this secondary overlay is a fast-follow.
-  Retarget its 3 `fetch` calls to `/seed-assessment` + `/record-outcomes` (same
-  mapping as Diagnostic.tsx).
+- **Firestore loaders swallow exceptions silently** — `firestore_adapter.py` has
+  8 bare `except Exception: return []` handlers and **7 still do not log**,
+  including `load_student_events:87`, which feeds the entire mastery graph. Only
+  `load_attempt_observations:224` logs. This shape has already hidden two
+  multi-feature outages (a missing ASC index silently returned `[]` to the whole
+  validation harness). Make them log.
 - **`HomeworkProgress.tsx` / `LastSession.tsx`** are unused.
 - **Role/link assignment is server-authoritative**: `Login.tsx` calls
   `grant-admin` for allowlisted admins; `ParentDashboard.tsx` calls
@@ -944,7 +989,9 @@ Status:
   generation prompt, re-run `--verify`, confirm drop rate < ~10%, then scale.
 - ❌ **Scale generation** (`--tested --formats all` → ~342 Qs) → after prompt fix.
 - ❌ **B4 sync** (`node app/scripts/syncGeneratedQuestions.mjs`) → after clean batch.
-- ❌ **`mc-diagnostic.js` overlay retarget** — fast-follow; Lane B, see gotchas.
+- ✅ **`mc-diagnostic.js` overlay** — closed. The file is 41 lines with **zero**
+  `fetch` calls; no `/learning-event` reference exists anywhere in the tree.
+  (`architecture.html` still describes it as open — that page is stale.)
 - Embedding-based essence (embed un-annotated past papers via
   `representation/embeddings.py`) is the heavier ALT, unused while Layer 3 covers
   seeds. Original seed data: `ml/data/sample_questions/`, `ml/data/past_papers/`.

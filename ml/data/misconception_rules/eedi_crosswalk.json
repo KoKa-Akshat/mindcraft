@@ -1,0 +1,65 @@
+{
+  "_comment": [
+    "Diagnostic crosswalk from MindCraft-minted rule misconception ids to the",
+    "Eedi-derived ids used by the inherited question bank. NOT SHIPPED and NOT",
+    "referenced by the generator: generated items carry only mis_rule_* ids so",
+    "the generated corpus stays free of any upstream licence dependency.",
+    "",
+    "This file exists so diagnosis can still correlate a generated item's",
+    "misconception with the same misconception as observed on Eedi-sourced bank",
+    "rows, for as long as those rows remain. If the Eedi licence question",
+    "resolves against us and those rows are dropped, this file can be deleted",
+    "with no effect on generation.",
+    "",
+    "Eedi data is CC BY-NC 4.0 -- see data/SOURCES.md and NEXT_SESSION.md SS1."
+  ],
+  "_provenance": {
+    "eedi_ids_from": "ml/data/eedi_misconceptions.json",
+    "created": "2026-08-17",
+    "spec": "agent_work/engine/EXTERNAL_DATA_SOURCING_BUILD.md S3"
+  },
+  "crosswalk": [
+    {
+      "rule_misconception_id": "mis_rule_inverse_operations__subtracts_coefficient",
+      "eedi_misconception_id": 1190,
+      "eedi_slug_id": "mis_linear_equations__solving_equation_subtracts_instead_dividing",
+      "eedi_name": "When solving an equation, subtracts instead of dividing",
+      "confidence": "high",
+      "note": "Exact behavioural match: the rule computes constant - coefficient."
+    },
+    {
+      "rule_misconception_id": "mis_rule_isolate_variable__stops_before_dividing",
+      "eedi_misconception_id": 1417,
+      "eedi_slug_id": "mis_linear_equations__solving_equation_forgets_eliminate_coefficient",
+      "eedi_name": "When solving an equation forgets to eliminate the coefficient in front",
+      "confidence": "high",
+      "note": "Exact behavioural match."
+    },
+    {
+      "rule_misconception_id": "mis_rule_both_sides__changes_one_side_only",
+      "eedi_misconception_id": 245,
+      "eedi_slug_id": "mis_linear_equations__does_not_realise_maintain_balance",
+      "eedi_name": "Does not realise that to maintain balance in an equation they must add",
+      "confidence": "high",
+      "note": "Matches the ontology's own canonical_misconception_family for basic_equations__do_same_to_both_sides."
+    },
+    {
+      "rule_misconception_id": "mis_rule_equals_balance__chains_running_total",
+      "eedi_misconception_id": null,
+      "eedi_slug_id": null,
+      "eedi_name": null,
+      "confidence": "none",
+      "note": "No Eedi counterpart. Minted originally; unchanged by S3."
+    }
+  ],
+  "ontology_corrections_filed": [
+    {
+      "ingredient_id": "basic_equations__inverse_operations",
+      "current_canonical_misconception_family": "mis_linear_equations__thinks_inverse_subtraction_multiplication",
+      "current_family_eedi_id": 481,
+      "current_family_name": "Thinks the inverse of subtraction is multiplication",
+      "issue": "Describes a different error than this ingredient's own failure_mode, which is 'solving 3x = 12 by writing x = 12 minus 3'. That behaviour is eedi 1190 ('subtracts instead of dividing'), not 481. The ontology's canonical_misconception_family for this ingredient appears to be mis-assigned.",
+      "status": "filed, not yet applied to Layer 1"
+    }
+  ]
+}

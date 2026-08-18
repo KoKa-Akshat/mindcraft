@@ -1,8 +1,24 @@
 from __future__ import annotations
 
 from datetime import datetime
+from pathlib import Path
 
 from mindcraft_graph.firestore_adapter import load_affective_state
+
+
+def test_all_firestore_exception_handlers_log_tracebacks() -> None:
+    source_path = Path(__file__).parents[1] / "mindcraft_graph" / "firestore_adapter.py"
+    lines = source_path.read_text().splitlines()
+    silent_handlers = []
+
+    for line_number, line in enumerate(lines, start=1):
+        if "except Exception" in line:
+            handler_start = line_number
+            handler_body = "\n".join(lines[handler_start:handler_start + 3])
+            if "logger.exception" not in handler_body:
+                silent_handlers.append(line_number)
+
+    assert silent_handlers == []
 
 
 class _FakeDoc:

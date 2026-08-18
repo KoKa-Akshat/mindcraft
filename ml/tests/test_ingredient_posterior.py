@@ -45,7 +45,7 @@ def test_alternating_results_converge_to_half_instead_of_ratchet():
 def test_unattempted_ingredient_reads_ontology_prior_in_dag():
     ingredient = Ingredient(
         id="ingredient",
-        concept_id="concept",
+        concept_ids=["concept"],
         name="Ingredient",
         description="",
         failure_prior=0.3,

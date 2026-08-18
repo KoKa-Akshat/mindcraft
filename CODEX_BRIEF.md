@@ -248,12 +248,12 @@ independence model over time.
 
 ### Lane ownership — prevents collisions
 
-| Lane | Owner | Tree |
-|------|-------|------|
-| Engine | Blake (co-founder) | `ml/**`, `webhook/**`, `data/**`, `worlds/**` |
-| Product | Akshat | `app/**`, `index.html`, `blog.html`, root marketing files |
+| Lane | Tree |
+|------|------|
+| Engine | `ml/**`, `webhook/**`, `data/**`, `worlds/**` |
+| Product | `app/**`, `ios-prototype/**`, `index.html`, `blog.html`, root marketing files |
 
-Shared seam files — coordinate before changing:
+Shared seam files — high blast radius, change deliberately:
 - `app/src/lib/questionBank.ts` — question shape contract
 - `app/src/lib/mlApi.ts` — API client
 - `CLAUDE.md` — the repo's instruction file

@@ -1,0 +1,7 @@
+{
+  "acceptance_threshold": 0.8,
+  "decision_status": "pre_test_declared_default",
+  "dev_fraction": 0.5,
+  "rationale": "Initial conservative operating point; revise only from the dev precision-at-coverage curve before scoring test.",
+  "split_seed": "misconception-ingredient-remap-v2"
+}
