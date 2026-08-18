@@ -119,6 +119,7 @@
 		D9BOOTMOTIV01A2B3C4 /* BootMotivationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BOOTMOTIV01A2B3C4 /* BootMotivationClient.swift */; };
 		D9DESKASKCLIENT01A2 /* DeskAskClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DESKASKCLIENT01A2 /* DeskAskClient.swift */; };
 		D9DESKRECORDSH01A2 /* DeskRecordSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DESKRECORDSH01A2 /* DeskRecordSheet.swift */; };
+		D9FE32A2CBC826477D6BCDA2 /* ChatHistoryImportParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72A5BC65A2BF357B121A531 /* ChatHistoryImportParser.swift */; };
 		D9FRIENDSTORE01A2B3 /* FriendsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FRIENDSTORE01A2B3 /* FriendsStore.swift */; };
 		D9FRIENDSVIEW01A2B3 /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FRIENDSVIEW01A2B3 /* FriendsView.swift */; };
 		D9JESSEOVERLAY01A2 /* JesseCallOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9JESSEOVERLAY01A2 /* JesseCallOverlay.swift */; };
@@ -260,6 +261,7 @@
 		CD38C7392605523E1A10E7F6 /* TutorDirectoryClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorDirectoryClient.swift; sourceTree = "<group>"; };
 		CF2846DA5EC14603B4929385 /* ConceptStoryLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConceptStoryLoader.swift; sourceTree = "<group>"; };
 		D0E6F420718293B4C5D6E7F8 /* ActFieldChrome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActFieldChrome.swift; sourceTree = "<group>"; };
+		D72A5BC65A2BF357B121A531 /* ChatHistoryImportParser.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ChatHistoryImportParser.swift; sourceTree = "<group>"; };
 		D85B66E366E7264EAE7C1DED /* WeeklyReviewWalkthroughView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyReviewWalkthroughView.swift; sourceTree = "<group>"; };
 		D85EC6FCFFB7752E3F55BC22 /* PlottablePointsExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlottablePointsExtractor.swift; sourceTree = "<group>"; };
 		DA7262B1A341CC17EEC08DFE /* LiveSessionClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveSessionClient.swift; sourceTree = "<group>"; };
@@ -321,6 +323,7 @@
 				20548665090C49E3A52E9BE8 /* LaTeXMath.swift */,
 				F652917CF738425093DEE541 /* LaTeXDisplayText.swift */,
 				45F3BB8E68F90068711F0AD0 /* DashboardModels.swift */,
+				D72A5BC65A2BF357B121A531 /* ChatHistoryImportParser.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -754,6 +757,7 @@
 				A89B08C8A6E7F8091B2C3D4E /* SpeechCaptureController.swift in Sources */,
 				A99B09C9A6E7F8091B2C3D4E /* DeskPanCanvas.swift in Sources */,
 				B0C259017B6359197378F0FD /* LearnStudioView.swift in Sources */,
+				D9FE32A2CBC826477D6BCDA2 /* ChatHistoryImportParser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
