@@ -20,6 +20,10 @@ private struct HomeworkUploadSummary: Identifiable {
     let id = UUID()
     let fileName: String
     let cards: [IngredientHintsClient.HintCard]
+    /// Real, matched MicroSims from the same `WorkDashboardLesson`, if
+    /// any (empty for a plain photo/PDF solve) - tappable, opens
+    /// `MicroSimView`.
+    var microsims: [MicroSimRecord] = []
 }
 
 /// Manual `UIDocumentPickerViewController` wrapper, not SwiftUI's own
@@ -104,19 +108,22 @@ struct DeskGridDashboardView: View {
     @ObservedObject private var aiKeys = StudentAIKeyStore.shared
     @EnvironmentObject private var jesseCall: JesseCallSession
     @State private var showMoodleSheet = false
+    /// Real, live per-student mastery graph (`GET /knowledge-graph/{uid}`,
+    /// the same backend `KnowledgeMapView` already uses) - powers the
+    /// Knowledge Graph tile (the old Moodle slot, 2026-08-18: "remove
+    /// moodle completely... this box will be used to show the knowledge
+    /// graph... live evolving as you learn"). Not a singleton - `@StateObject`
+    /// owns one fresh instance per dashboard session, matching how
+    /// `KnowledgeGraphClient` is already used elsewhere (its own doc
+    /// comment: "this client only has one caller today").
+    @StateObject private var knowledgeGraphClient = KnowledgeGraphClient()
 
     // MARK: - Homework Help (the tile itself is the upload target now)
     @State private var showHomeworkImporter = false
     @State private var homeworkUploading = false
     @State private var homeworkError: String?
     @State private var homeworkUploads: [HomeworkUploadSummary] = []
-
-    // MARK: - Work Dashboard "I want to learn X" (2026-08-18)
-    // Moodle's chapter display (see tileLines/tileShowsContent/mascotPhase
-    // .moodle cases) - separate from homeworkUploads since it's Moodle's
-    // content, not Homework Help's, even though both come from the same
-    // jesseCall.workDashboardLesson.
-    @State private var workDashboardChapters: [String] = []
+    @State private var presentedMicroSim: MicroSimRecord?
 
     // MARK: - Agent takeover (any real ask, not just the email/draft case)
     // Any request longer than a quick nav keyword borrows Binder and/or
@@ -272,6 +279,9 @@ struct DeskGridDashboardView: View {
         .onChange(of: intelLines) { _, lines in boxBus.intelLines = lines }
         .onChange(of: binderTitles) { _, titles in boxBus.binderTitles = titles }
         .onChange(of: jesseCall.workDashboardLesson) { _, lesson in handleNewLesson(lesson) }
+        .fullScreenCover(item: $presentedMicroSim) { sim in
+            MicroSimView(sim: sim) { presentedMicroSim = nil }
+        }
         // No Exit control here anymore - moved into the Manage page
         // (logo tap) so the dashboard itself stays clean. onClose is still
         // wired from FieldDeskView but nothing on this screen calls it now.
@@ -369,32 +379,19 @@ struct DeskGridDashboardView: View {
         var title: String {
             switch self {
             case .intel: return "Intel"
-            case .moodle: return "Moodle"
+            case .moodle: return "Knowledge Graph"
             case .binder: return "Binder"
             case .homeworkHelp: return "Homework Help"
             case .memo: return "Memo"
             }
         }
 
-        /// Binder and the merged Intel box always show real content (each
-        /// section has its own empty/connect state built in) - neither
-        /// gets a mascot moment anymore. Homework Help has no commissioned
-        /// art; SF Symbol fallback in `mascotArt` covers it. Moodle keeps
-        /// its slug (identity for the accessibility marker + tap-to-connect
-        /// hint) but its `desk_mascot_moodle_*` art assets were deleted -
-        /// they were MindCraft's own generic raccoon mascot recolored, not
-        /// real Moodle branding, and read as a mismatch (flagged, not
-        /// fixed, in an earlier session; Akshat asked to remove it rather
-        /// than keep shipping the wrong brand). `UIImage(named:)` now
-        /// misses for moodle too, so it falls back to the same SF Symbol
-        /// path as Homework Help (`graduationcap.fill` - already
-        /// brand-neutral) until real art exists.
-        var mascotSlug: String? {
-            switch self {
-            case .moodle: return "moodle"
-            case .intel, .binder, .homeworkHelp, .memo: return nil
-            }
-        }
+        /// No tile gets a mascot moment anymore. The `.moodle` case is the
+        /// real Moodle LMS connector no longer (2026-08-18, explicit ask:
+        /// "remove moodle completely for now") - this slot now shows a
+        /// live per-student knowledge graph instead (see `tileBody`'s
+        /// `.moodle` branch), always real content, no connect flow.
+        var mascotSlug: String? { nil }
 
         func mascotAssetName(state: MascotPhase) -> String? {
             guard let mascotSlug else { return nil }
@@ -404,7 +401,11 @@ struct DeskGridDashboardView: View {
         var wash: [Color] {
             switch self {
             case .intel: return [Color(gridHex: "247a4d"), Color(gridHex: "143a2e")]
-            case .moodle: return [Color(gridHex: "d7e4d4"), Color(gridHex: "b7c9b4")]
+            // Violet, not green - matches the app's own existing "Learn"
+            // accent (PawHub's violet toe, see CLAUDE.md) rather than
+            // reusing Intel's or Homework Help's colors for a third,
+            // different kind of box.
+            case .moodle: return [Color(gridHex: "b19cd9"), Color(gridHex: "5b3e8f")]
             case .binder: return [Color(gridHex: "f3efe4"), Color(gridHex: "e4dcc8")]
             case .homeworkHelp: return [Color(gridHex: "c4f547"), Color(gridHex: "7a9e2e")]
             case .memo: return [Color(gridHex: "fff8e9"), Color(gridHex: "efe6cf")]
@@ -414,7 +415,7 @@ struct DeskGridDashboardView: View {
         var symbol: String {
             switch self {
             case .intel: return "sparkles"
-            case .moodle: return "graduationcap.fill"
+            case .moodle: return "point.3.filled.connected.trianglepath.dotted"
             case .binder: return "person.crop.circle.fill"
             // Upload arrow, not a camera or a lightbulb - the tile opens a
             // dialogue with one Upload button (photo or PDF), it doesn't
@@ -485,7 +486,7 @@ struct DeskGridDashboardView: View {
                             x: tileShowsContent(kind) ? 48 : 0,
                             y: tileShowsContent(kind) ? -28 : -8
                         )
-                    } else if kind.mascotSlug == nil, kind != .intel, kind != .homeworkHelp, !(kind == .binder && tileShowsContent(kind)) {
+                    } else if kind.mascotSlug == nil, kind != .intel, kind != .homeworkHelp, kind != .moodle, !(kind == .binder && tileShowsContent(kind)) {
                         Image(systemName: kind.symbol)
                             .font(.system(size: kind == .binder ? 54 : 36, weight: .medium))
                             .foregroundColor(.white.opacity(awake ? 0.88 : 0.35))
@@ -514,13 +515,9 @@ struct DeskGridDashboardView: View {
     private func mascotPhase(_ kind: TileKind) -> MascotPhase {
         switch kind {
         case .moodle:
-            if moodle.isBusy { return .working }
-            // A generated/archived lesson's chapters show here too (real
-            // ask, 2026-08-18: "in Moodle I should see... chapters") even
-            // when the real LMS isn't connected - a genuine reason to
-            // wake the mascot state that isn't "Moodle itself connected."
-            if !workDashboardChapters.isEmpty { return .awake }
-            return moodle.isConnected ? .awake : .sleeping
+            // Knowledge Graph now, not the Moodle LMS connector - always
+            // "awake" (real per-student data, no connect-first state).
+            return knowledgeGraphClient.isLoading ? .working : .awake
         case .intel:
             // Merged box: awake once Intel's own research, Gmail, or
             // Calendar has anything to show.
@@ -919,7 +916,9 @@ struct DeskGridDashboardView: View {
         case .intel:
             onOpenIntel()
         case .moodle:
-            showMoodleSheet = true
+            // Knowledge Graph now - a tap refreshes the real live data
+            // instead of opening the old Moodle LMS connect sheet.
+            Task { await knowledgeGraphClient.load() }
         case .homeworkHelp:
             showHomeworkImporter = true
         case .memo:
@@ -1037,10 +1036,12 @@ struct DeskGridDashboardView: View {
     }
 
     /// Routes a real `WorkDashboardLesson` (from `jesseCall.askJesseWorkDashboard`,
-    /// "I want to learn X") into the three tiles the explicit ask named:
-    /// Binder gets the filed artifact, Homework Help shows the definition/
-    /// question (reusing its existing upload-summary display - no new UI),
-    /// Moodle shows the chapters. Intel's own "table of contents" is
+    /// "I want to learn X") into Binder (filed artifact) and Homework Help
+    /// (definition/chapters/question - reuses its existing upload-summary
+    /// display, no new UI). The Knowledge Graph tile shows the student's
+    /// real live mastery graph, not this lesson's chapters (2026-08-18,
+    /// explicit ask: "remove moodle completely... this box will be used
+    /// to show the knowledge graph"). Intel's own "table of contents" is
     /// already visible where Jesse said it, in the transcript this same
     /// call just spoke into - no separate rendering needed there.
     private func handleNewLesson(_ lesson: WorkDashboardLesson?) {
@@ -1057,12 +1058,13 @@ struct DeskGridDashboardView: View {
         var cards: [IngredientHintsClient.HintCard] = [
             IngredientHintsClient.HintCard(title: "Definition", body: lesson.definition),
         ]
+        if !lesson.chapters.isEmpty {
+            cards.append(IngredientHintsClient.HintCard(title: "Chapters", body: lesson.chapters.joined(separator: "\n")))
+        }
         if let question = lesson.question {
             cards.append(IngredientHintsClient.HintCard(title: "Practice question", body: question))
         }
-        homeworkUploads.insert(HomeworkUploadSummary(fileName: lesson.topic.capitalized, cards: cards), at: 0)
-
-        workDashboardChapters = lesson.chapters
+        homeworkUploads.insert(HomeworkUploadSummary(fileName: lesson.topic.capitalized, cards: cards, microsims: lesson.microsims), at: 0)
     }
 
     /// Only Binder participates in `DeskBoxBus`'s grow/shrink negotiation -
@@ -1082,8 +1084,9 @@ struct DeskGridDashboardView: View {
     private func tileShowsContent(_ kind: TileKind) -> Bool {
         switch kind {
         case .moodle:
-            if !workDashboardChapters.isEmpty { return true }
-            return moodle.isConnected && (!moodle.assignments.isEmpty || !moodle.grades.isEmpty)
+            // Knowledge Graph renders through its own tileBody branch now,
+            // not this generic content-rows path.
+            return false
         case .intel:
             let hasEmail = gmail.hasGmailScope && (shownDigest != nil || !gmail.messages.isEmpty)
             let hasCalendar = gmail.hasCalendarScope && !gmail.week.isEmpty
@@ -1130,7 +1133,10 @@ struct DeskGridDashboardView: View {
         // Homework Help now sits in the same near-white card as Binder/
         // Moodle (see tileInnerCard) so it needs dark ink like they do -
         // white text would vanish on that light card.
-        let ink: Color = (kind == .binder || kind == .moodle || kind == .homeworkHelp) ? tileInk : .white
+        // Knowledge Graph now sits in the same near-white tileInnerCard as
+        // Binder/Homework Help, so it needs dark ink like they do, even
+        // though its own tile wash (violet) is dark.
+        let ink: Color = (kind == .binder || kind == .homeworkHelp || kind == .moodle) ? tileInk : .white
         // Binder only takes over when there's actually binder-shaped
         // content (an email or a list of lines) to show - a reply-only ask
         // ("what's my next assignment") shouldn't blank out Binder's real
@@ -1150,20 +1156,12 @@ struct DeskGridDashboardView: View {
             // the card (explicit ask, 2026-08-18) - via headerTrailing,
             // same functionality the main dock/old Intel connect row had,
             // just relocated, not rebuilt.
-            // .clipped() is load-bearing: Intel's box shrank to a compact
-            // stacked-column slot (2026-08-18) and JesseRailView's own
-            // intrinsic content (avatar row + greeting + call button +
-            // transcript space) wants more height than that - confirmed
-            // live via screenshot, the card was bleeding straight through
-            // the dock below it. A plain `.frame` from an ancestor only
-            // PROPOSES a size, it doesn't forcibly compress a child that
-            // wants more room; only an explicit clip here actually cuts
-            // the overflow instead of letting it render past the tile.
-            JesseRailView(studentName: studentName, context: "workDashboard", headerTrailing: AnyView(jesseBoxIconRow), compact: true)
-                .clipped()
+            JesseRailView(studentName: studentName, context: "workDashboard", headerTrailing: AnyView(jesseBoxIconRow))
                 .accessibilityIdentifier("deskGridJesseCall")
         } else if kind == .homeworkHelp {
             tileInnerCard { homeworkHelpTileBody(ink: ink) }
+        } else if kind == .moodle {
+            tileInnerCard { knowledgeGraphTileBody() }
         } else if tileShowsContent(kind) {
             tileInnerCard {
                 VStack(alignment: .leading, spacing: 0) {
@@ -1267,6 +1265,19 @@ struct DeskGridDashboardView: View {
                                         .foregroundColor(ink.opacity(0.85))
                                         .lineLimit(4)
                                 }
+                                ForEach(upload.microsims) { sim in
+                                    Button { presentedMicroSim = sim } label: {
+                                        HStack(spacing: 4) {
+                                            Image(systemName: "play.circle.fill")
+                                            Text(sim.title)
+                                                .lineLimit(1)
+                                        }
+                                        .font(.system(size: 11, weight: .bold, design: .rounded))
+                                        .foregroundColor(Color(gridHex: "5b3e8f"))
+                                    }
+                                    .buttonStyle(.plain)
+                                    .accessibilityIdentifier("deskGridMicroSim_\(sim.id)")
+                                }
                             }
                             .padding(8)
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -1275,6 +1286,71 @@ struct DeskGridDashboardView: View {
                     }
                 }
                 .accessibilityIdentifier("deskGridHomeworkUploads")
+            }
+        }
+    }
+
+    /// Real, live per-student mastery graph - the old Moodle LMS slot's
+    /// new job (2026-08-18, explicit ask: "this box will be used to show
+    /// the knowledge graph of this topic or your knowledge graph live
+    /// evolving as you learn"). Draws straight from
+    /// `knowledgeGraphClient.nodes`/`.edges`, the SAME live
+    /// `GET /knowledge-graph/{uid}` data `KnowledgeMapView`'s full-screen
+    /// map already renders - real x/y PCA coordinates and real
+    /// mastery/status per concept, not a mock or a static illustration.
+    @ViewBuilder
+    private func knowledgeGraphTileBody() -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            if knowledgeGraphClient.nodes.isEmpty {
+                if knowledgeGraphClient.isLoading {
+                    HStack(spacing: 6) {
+                        ProgressView().tint(tileInk)
+                        Text("Mapping your knowledge\u{2026}")
+                            .font(.system(size: 12, weight: .bold, design: .rounded))
+                            .foregroundColor(tileInk)
+                    }
+                } else {
+                    Text("Your knowledge graph will grow here as you learn and engage with new things.")
+                        .font(.system(size: 12, weight: .semibold, design: .rounded))
+                        .foregroundColor(tileInk.opacity(0.7))
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            } else {
+                let mastered = knowledgeGraphClient.nodes.filter { $0.status == "mastered" }.count
+                Text("\(mastered)/\(knowledgeGraphClient.nodes.count) concepts mastered")
+                    .font(.system(size: 11, weight: .heavy, design: .rounded))
+                    .foregroundColor(tileInk.opacity(0.75))
+                Canvas { context, size in
+                    let nodes = knowledgeGraphClient.nodes
+                    func point(_ node: KnowledgeGraphNode) -> CGPoint? {
+                        guard let x = node.x, let y = node.y else { return nil }
+                        return CGPoint(x: x * size.width, y: y * size.height)
+                    }
+                    var positions: [String: CGPoint] = [:]
+                    for node in nodes { positions[node.id] = point(node) }
+
+                    for edge in knowledgeGraphClient.edges {
+                        guard let from = positions[edge.from], let to = positions[edge.to] else { continue }
+                        var path = Path()
+                        path.move(to: from)
+                        path.addLine(to: to)
+                        context.stroke(path, with: .color(Color(gridHex: "5b3e8f").opacity(0.18)), lineWidth: 1)
+                    }
+                    for node in nodes {
+                        guard let p = point(node) else { continue }
+                        let dotColor: Color
+                        switch node.status {
+                        case "mastered": dotColor = Color(gridHex: "3fae5a")
+                        case "in_progress": dotColor = Color(gridHex: "d9a441")
+                        case "struggling": dotColor = Color(gridHex: "c1121f")
+                        default: dotColor = Color(gridHex: "b7aed6")
+                        }
+                        let r: CGFloat = 4
+                        context.fill(Path(ellipseIn: CGRect(x: p.x - r, y: p.y - r, width: r * 2, height: r * 2)), with: .color(dotColor))
+                    }
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .accessibilityIdentifier("deskGridKnowledgeGraphCanvas")
             }
         }
     }
@@ -1469,11 +1545,7 @@ struct DeskGridDashboardView: View {
         case .intel:
             return intelLines
         case .moodle:
-            let work = moodle.assignments.prefix(5).map { "\($0.name) · \($0.dueLabel)" }
-            if !work.isEmpty { return Array(work) }
-            let grades = moodle.grades.prefix(5).map { "\($0.itemName) · \($0.gradeLabel)" }
-            if !grades.isEmpty { return Array(grades) }
-            return workDashboardChapters
+            return []
         case .binder:
             return binderTitles
         case .homeworkHelp, .memo:
@@ -1521,6 +1593,7 @@ struct DeskGridDashboardView: View {
     private func syncConnectedBoxes() async {
         boxBus.intelLines = intelLines
         boxBus.binderTitles = binderTitles
+        await knowledgeGraphClient.load()
         await gmail.restoreSessionIfNeeded()
         if gmail.hasGmailScope {
             await gmail.fetchInbox()
@@ -1786,15 +1859,23 @@ struct DeskGridDashboardView: View {
 /// and Intel's old top-right slot - since a filing system genuinely
 /// benefits from more room more than a three-way tie for space did.
 private enum WorkArtboard {
-    static let p4HomeworkHelp = CGRect(x: 81, y: 54, width: 376, height: 200)
-    static let p4Moodle = CGRect(x: 81, y: 270, width: 376, height: 200)
-    static let p4Intel = CGRect(x: 81, y: 486, width: 376, height: 200)
-    static let p4Binder = CGRect(x: 492, y: 54, width: 932, height: 632)
+    // Reverted (2026-08-18, explicit ask: "why is it like that from the
+    // start bring that back to its place... binder... looks ugly as
+    // f*** right now") - the same-day "stack Intel under Moodle, Binder
+    // fills the rest" layout is gone. Intel is back at its original,
+    // roomy top-right slot; Binder is back to its original, proportionate
+    // size instead of a mostly-empty 932pt-wide box. The .moodle slot's
+    // POSITION is unchanged from the original layout - only its content
+    // changed (Knowledge Graph, not the LMS connector - see tileBody).
+    static let p4HomeworkHelp = CGRect(x: 81, y: 118, width: 376, height: 227)
+    static let p4Moodle = CGRect(x: 115, y: 378, width: 315, height: 222)
+    static let p4Binder = CGRect(x: 492, y: 61, width: 505, height: 568)
+    static let p4Intel = CGRect(x: 1032, y: 107, width: 392, height: 522)
 
-    static let p5HomeworkHelp = CGRect(x: 76, y: 54, width: 319, height: 200)
-    static let p5Moodle = CGRect(x: 76, y: 270, width: 319, height: 200)
-    static let p5Intel = CGRect(x: 76, y: 486, width: 319, height: 200)
-    static let p5Binder = CGRect(x: 430, y: 54, width: 786, height: 632)
+    static let p5HomeworkHelp = CGRect(x: 76, y: 103, width: 319, height: 192)
+    static let p5Moodle = CGRect(x: 106, y: 323, width: 267, height: 188)
+    static let p5Binder = CGRect(x: 425, y: 54, width: 428, height: 524)
+    static let p5Intel = CGRect(x: 884, y: 93, width: 332, height: 527)
     static let memoRail = CGRect(x: 1231, y: 193, width: 199, height: 194)
     static let flowsRail = CGRect(x: 1231, y: 54, width: 199, height: 566)
     // Only the dock's own box moves toward the board's bottom edge (was

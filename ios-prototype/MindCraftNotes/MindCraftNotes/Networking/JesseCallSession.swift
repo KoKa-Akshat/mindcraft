@@ -29,6 +29,10 @@ struct WorkDashboardLesson: Equatable {
     let chapters: [String]
     let definition: String
     let question: String?
+    /// Real, matched interactive MicroSims (`MicroSimLoader.matching`) -
+    /// not fabricated placeholders. Empty for any topic outside the
+    /// bundled Calculus set today.
+    let microsims: [MicroSimRecord]
 }
 
 /// App-lifetime voice session for Jesse (native `SFSpeechRecognizer` +
@@ -566,7 +570,7 @@ final class JesseCallSession: NSObject, ObservableObject {
     }
 
     /// "Check the archive for lessons on it, extract things, create a
-    /// lesson plan." Two REAL archives get checked, in order, before ever
+    /// lesson plan." Real archives get checked, in order, before ever
     /// generating anything:
     /// 1. `BookGraphLoader.all` - the 5 bundled literary/philosophy book
     ///    concept graphs (Learn Studio's "Study a Book" data).
@@ -579,22 +583,27 @@ final class JesseCallSession: NSObject, ObservableObject {
     ///    (2026-08-18): this file originally only checked (1), which
     ///    genuinely doesn't cover something like "calculus" - but (2)
     ///    does, and was already live, just not wired into this flow.
-    ///    Only step 3, generation, gets skipped when a topic has no real
-    ///    archived material anywhere.
+    /// 3. `MicroSimLoader.matching` - real, bundled, interactive p5.js
+    ///    MicroSims (today: the 123-sim Calculus set; more subjects follow
+    ///    the same bundling pattern). Originally CC BY-NC-SA
+    ///    (non-commercial); wired in with explicit authorization
+    ///    (2026-08-18) via MindCraft's advisor relationship with Dan
+    ///    McCreary, the content's own creator - see `MicroSimRecord`'s doc
+    ///    comment. Additive to whichever branch below actually produces a
+    ///    lesson, not a fourth competing source.
     ///
-    /// Deliberately NOT wired in here: `mindcraft-content-engine`'s
-    /// ~4,650 real extracted McCreary MicroSims (a much richer, genuinely
-    /// interactive p5.js corpus that includes ~120 calculus sims alone) -
-    /// that data lives in a sibling repo, isn't served by any endpoint
-    /// this app can reach yet, AND carries a real CC BY-NC-SA
-    /// (non-commercial) license that needs an explicit decision before
-    /// embedding those simulations' actual HTML/JS inside a commercial
-    /// app - the archive-rag pattern above (cite + link, never rehost)
-    /// is the licensing-safe shape; rehosting a MicroSim's real source
-    /// is a different, bigger question. Flagging this rather than
-    /// silently wiring it in unresolved.
+    /// Only generation (the final fallback) gets skipped when a topic has
+    /// no real archived material anywhere.
     private func askJesseWorkDashboard(topic: String) async {
         let loweredTopic = topic.lowercased()
+        // Real, matched interactive MicroSims (Dan McCreary's, licensed
+        // for commercial use via MindCraft's advisor relationship with
+        // him - 2026-08-18) - checked once, attached to whichever branch
+        // below actually produces a lesson, since they're additive to any
+        // source, not a fourth competing archive.
+        let microsims = MicroSimLoader.matching(topic: topic)
+        let microsimNote = microsims.isEmpty ? "" : " I also found \(microsims.count) interactive simulation\(microsims.count == 1 ? "" : "s") you can play with."
+
         if let match = BookGraphLoader.all.first(where: { book in
             book.title.lowercased().contains(loweredTopic) || loweredTopic.contains(book.title.lowercased())
                 || book.concepts.contains {
@@ -608,9 +617,10 @@ final class JesseCallSession: NSObject, ObservableObject {
                 source: .archive(bookTitle: match.title),
                 chapters: chapters,
                 definition: "Found in your archive: \(match.title).",
-                question: nil
+                question: nil,
+                microsims: microsims
             )
-            await speak("Good news - I already have \(match.title) in your archive. Here's the table of contents: \(chapters.joined(separator: ", ")).")
+            await speak("Good news - I already have \(match.title) in your archive. Here's the table of contents: \(chapters.joined(separator: ", ")).\(microsimNote)")
             return
         }
 
@@ -627,9 +637,10 @@ final class JesseCallSession: NSObject, ObservableObject {
                 source: .archive(bookTitle: answer.hits[0].bookTitle),
                 chapters: chapters,
                 definition: answer.reply,
-                question: nil
+                question: nil,
+                microsims: microsims
             )
-            await speak(answer.reply)
+            await speak(answer.reply + microsimNote)
             return
         }
 
@@ -643,9 +654,10 @@ final class JesseCallSession: NSObject, ObservableObject {
                 source: .generated,
                 chapters: outline.chapters,
                 definition: outline.definition,
-                question: outline.question
+                question: outline.question,
+                microsims: microsims
             )
-            await speak("Nothing in the archive yet for \(topic), so I put together a fresh outline: \(outline.chapters.joined(separator: ", ")).")
+            await speak("Nothing in the archive yet for \(topic), so I put together a fresh outline: \(outline.chapters.joined(separator: ", ")).\(microsimNote)")
         case .failure(.noKey):
             await speak("You'll need to connect an AI key in Settings before I can put a lesson together on \(topic).")
         case .failure(.rejected):
