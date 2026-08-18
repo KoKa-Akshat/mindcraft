@@ -69,6 +69,19 @@ struct LearnStudioView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .ignoresSafeArea()
+        // Opening Learn Studio must always land on the intake screen, never
+        // silently resume a stale plan/call from earlier in the session -
+        // jesseCall is an app-lifetime singleton (@EnvironmentObject), so
+        // studyPlan from a completely unrelated earlier test can still be
+        // sitting there ("goes straight to a study session" bug report -
+        // confirmed the real cause: this view's own .onChange(of:
+        // jesseCall.studyPlan) reacting to an already-set value it inherited
+        // rather than a genuinely new one). A student who wants to keep an
+        // actually-active call going still can - this only forces the
+        // SCREEN to start at intake, it doesn't touch jesseCall itself.
+        .onAppear {
+            phase = .intake
+        }
         .overlay(alignment: .topTrailing) {
             // Same Done capsule every overlay in the app uses.
             Button(action: onClose) {
