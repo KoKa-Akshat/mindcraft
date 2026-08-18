@@ -6,6 +6,14 @@ import UniformTypeIdentifiers
 /// Starts empty until resume upload + LinkedIn connect.
 struct JobOSShellView: View {
     var onClose: (() -> Void)? = nil
+    /// True when embedded in a fixed-width pane (Resume's left content
+    /// area) rather than shown full-screen with open desk space around it.
+    /// `placeOnRight` sizes the board to ~48% of whatever canvas it's given
+    /// and hugs the right edge - correct for a free-drag desk card with
+    /// room to roam, but inside an already-narrow pane that left over half
+    /// of it looking blank ("that left screen is pretty much blank there").
+    /// This makes the board fill the pane instead.
+    var fillsAvailableSpace: Bool = false
 
     @Environment(\.dismiss) private var dismiss
     @StateObject private var store = JobOSStore()
@@ -73,12 +81,12 @@ struct JobOSShellView: View {
             .contentShape(boardHitPath(in: canvas))
             .onAppear {
                 guard !didPlace else { return }
-                placeOnRight(in: canvas)
+                if fillsAvailableSpace { placeFilled(in: canvas) } else { placeOnRight(in: canvas) }
                 didPlace = true
             }
             .onChange(of: canvas) { _, newSize in
                 guard !didPlace else { return }
-                placeOnRight(in: newSize)
+                if fillsAvailableSpace { placeFilled(in: newSize) } else { placeOnRight(in: newSize) }
                 didPlace = true
             }
         }
@@ -213,6 +221,18 @@ struct JobOSShellView: View {
             x: max(24, canvas.width - w - 28),
             y: 52
         )
+        boardDrag = .zero
+        boardFocused = true
+    }
+
+    /// Nearly the whole pane, small margin all round - still draggable/
+    /// resizable afterward (the gestures are unconditional), just doesn't
+    /// start out looking like a small card lost in empty space.
+    private func placeFilled(in canvas: CGSize) {
+        let w = max(320, canvas.width - 48)
+        let h = max(420, canvas.height - 80)
+        boardSize = CGSize(width: w, height: h)
+        boardOrigin = CGPoint(x: 24, y: 40)
         boardDrag = .zero
         boardFocused = true
     }

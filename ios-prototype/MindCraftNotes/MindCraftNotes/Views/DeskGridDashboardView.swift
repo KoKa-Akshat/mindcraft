@@ -1175,7 +1175,17 @@ struct DeskGridDashboardView: View {
     private func intelCalendarSection(ink: Color, muted: Color) -> some View {
         intelSectionHeader("Calendar")
         if !gmail.hasCalendarScope {
-            intelConnectRow(label: "Connect Calendar")
+            // No separate "Connect Calendar" row - connectGoogleMailAndCalendar()
+            // already requests both scopes in one consent screen (explicit
+            // ask: "no need to say calendar after gmail... you get both
+            // permissions in one go"). If Gmail hasn't connected yet, that
+            // single Email-section button is the one real action; if Gmail
+            // IS connected but calendar scope still isn't (Google's consent
+            // screen technically allows a user to uncheck just one scope),
+            // say so plainly instead of offering a second identical button.
+            Text(gmail.hasGmailScope ? "Not granted alongside Gmail." : "Connects together with Gmail above.")
+                .font(.system(size: 12, weight: .medium, design: .rounded))
+                .foregroundColor(muted)
         } else if !gmail.week.isEmpty {
             ForEach(Array(gmail.week.prefix(4))) { ev in
                 DeskContentRow(

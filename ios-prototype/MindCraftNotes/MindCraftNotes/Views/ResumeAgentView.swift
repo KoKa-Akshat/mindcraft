@@ -43,7 +43,7 @@ struct ResumeAgentView: View {
                 // JesseRailView on the right stays mounted the whole time
                 // either way, same as every other content swap in this app.
                 if showApplyToday {
-                    JobOSShellView(onClose: { showApplyToday = false })
+                    JobOSShellView(onClose: { showApplyToday = false }, fillsAvailableSpace: true)
                 } else {
                     ResumeAgentWebView(onApply: {
                         onApply?()
