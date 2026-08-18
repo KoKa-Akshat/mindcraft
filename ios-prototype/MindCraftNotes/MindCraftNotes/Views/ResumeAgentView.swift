@@ -33,63 +33,31 @@ struct ResumeAgentView: View {
     @State private var showApplyToday = false
     @StateObject private var jobOSStore = JobOSStore()
 
-    var body: some View {
-        HStack(spacing: 16) {
-            ZStack(alignment: .topLeading) {
-                Color(red: 244 / 255, green: 239 / 255, blue: 230 / 255)
-                // Applications swaps in HERE, on the left, in place of the
-                // web view - not a .fullScreenCover anymore (explicit ask:
-                // "the box that opens should be on the left in resume").
-                // JesseRailView on the right stays mounted the whole time
-                // either way, same as every other content swap in this app.
-                if showApplyToday {
-                    JobOSShellView(onClose: { showApplyToday = false }, fillsAvailableSpace: true)
-                } else {
-                    ResumeAgentWebView(onApply: {
-                        onApply?()
-                        showApplyToday = true
-                    })
-                }
-            }
-            .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
-            .shadow(color: .black.opacity(0.12), radius: 16, y: 8)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+    private let artboard = CGSize(width: 1440, height: 810)
 
-            VStack(spacing: 12) {
-                JesseRailView(studentName: studentName, context: "resume")
-                Button {
-                    showApplyToday.toggle()
-                } label: {
-                    HStack(spacing: 8) {
-                        Image(systemName: "briefcase.fill")
-                        Text(showApplyToday ? "Back to draft" : (jobOSStore.state.roles.isEmpty ? "Applications" : "\(jobOSStore.state.roles.count) tracked roles"))
-                        Spacer(minLength: 0)
-                        Image(systemName: showApplyToday ? "arrow.uturn.left" : "chevron.right")
+    var body: some View {
+        GeometryReader { geo in
+            let scale = min(geo.size.width / artboard.width, geo.size.height / artboard.height)
+            ZStack {
+                Color.white.ignoresSafeArea()
+                ZStack(alignment: .topLeading) {
+                    pin(ResumeArtboard.content, scale: scale) { contentBox }
+                    pin(ResumeArtboard.jesseRail, scale: scale) {
+                        JesseRailView(studentName: studentName, context: "resume")
                     }
-                    .font(.system(size: 13, weight: .bold, design: .rounded))
-                    .foregroundColor(Color(red: 20 / 255, green: 58 / 255, blue: 46 / 255))
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 12)
-                    .background(
-                        RoundedRectangle(cornerRadius: 14, style: .continuous)
-                            .fill(Color.white)
-                            .shadow(color: .black.opacity(0.08), radius: 10, y: 4)
-                    )
                 }
-                .buttonStyle(.plain)
-                .accessibilityIdentifier("resumeOpenApplyToday")
+                .frame(width: artboard.width * scale, height: artboard.height * scale)
             }
-            .frame(width: 380)
+            .frame(width: geo.size.width, height: geo.size.height)
         }
-        .padding(18)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color(red: 244 / 255, green: 239 / 255, blue: 230 / 255).ignoresSafeArea())
+        .ignoresSafeArea()
         .overlay(alignment: .topTrailing) {
             Button(action: onClose) {
                 Text("Done")
-                    .font(.system(size: 12, weight: .bold, design: .rounded))
+                    .font(.system(size: 13, weight: .bold, design: .rounded))
                     .foregroundColor(Color(red: 12 / 255, green: 18 / 255, blue: 7 / 255))
-                    .padding(.horizontal, 12)
+                    .padding(.horizontal, 14)
                     .padding(.vertical, 8)
                     .background(Capsule().fill(Color(red: 196 / 255, green: 245 / 255, blue: 71 / 255)))
             }
@@ -100,8 +68,82 @@ struct ResumeAgentView: View {
             .accessibilityLabel("Done")
         }
         .statusBarHidden(true)
-        .accessibilityIdentifier("resumeAgentRoot")
+        .accessibilityElement(children: .contain)
+        .overlay(alignment: .topLeading) {
+            Text(verbatim: "resume").font(.system(size: 1)).foregroundColor(.clear)
+                .accessibilityIdentifier("resumeAgentRoot")
+                .allowsHitTesting(false)
+        }
     }
+
+    private var contentBox: some View {
+        ZStack(alignment: .topLeading) {
+            Color(red: 244 / 255, green: 239 / 255, blue: 230 / 255)
+            // Applications swaps in HERE, in place of the web view - not a
+            // .fullScreenCover (explicit ask: "the box that opens should be
+            // on the left in resume"). JesseRailView stays mounted the
+            // whole time either way, same as every other content swap.
+            if showApplyToday {
+                JobOSShellView(onClose: { showApplyToday = false }, fillsAvailableSpace: true)
+            } else {
+                ResumeAgentWebView(onApply: {
+                    onApply?()
+                    showApplyToday = true
+                })
+            }
+            VStack {
+                Spacer()
+                HStack {
+                    Spacer()
+                    applicationsToggle
+                        .padding(16)
+                }
+            }
+        }
+        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .shadow(color: .black.opacity(0.12), radius: 16, y: 8)
+    }
+
+    private var applicationsToggle: some View {
+        Button {
+            showApplyToday.toggle()
+        } label: {
+            HStack(spacing: 8) {
+                Image(systemName: "briefcase.fill")
+                Text(showApplyToday ? "Back to draft" : (jobOSStore.state.roles.isEmpty ? "Applications" : "\(jobOSStore.state.roles.count) tracked roles"))
+                Image(systemName: showApplyToday ? "arrow.uturn.left" : "chevron.right")
+            }
+            .font(.system(size: 13, weight: .bold, design: .rounded))
+            .foregroundColor(Color(red: 20 / 255, green: 58 / 255, blue: 46 / 255))
+            .padding(.horizontal, 16)
+            .padding(.vertical, 12)
+            .background(
+                Capsule().fill(Color.white)
+                    .shadow(color: .black.opacity(0.14), radius: 10, y: 4)
+            )
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier("resumeOpenApplyToday")
+    }
+
+    private func pin<Content: View>(_ box: CGRect, scale: CGFloat, @ViewBuilder content: () -> Content) -> some View {
+        content()
+            .frame(width: box.width * scale, height: box.height * scale)
+            .position(
+                x: (box.minX + box.width / 2) * scale,
+                y: (box.minY + box.height / 2) * scale
+            )
+    }
+}
+
+/// Same content/jesseRail proportions as `CreateCanvasView`'s GDoc idle
+/// state (`CreateArtboard.idleStage`/`.jesseRailIdle`) - explicit ask:
+/// "Jesse occupies same space as in GDoc... left space box... occupying
+/// same space as it does currently." Values duplicated rather than shared
+/// cross-file, same convention as `DottedLearnGrid`/`DottedDesignGrid`.
+private enum ResumeArtboard {
+    static let content = CGRect(x: 28, y: 48, width: 920, height: 560)
+    static let jesseRail = CGRect(x: 980, y: 48, width: 432, height: 560)
 }
 
 private struct ResumeAgentWebView: UIViewRepresentable {

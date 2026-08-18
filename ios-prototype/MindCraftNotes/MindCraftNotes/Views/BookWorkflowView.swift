@@ -42,23 +42,31 @@ struct BookWorkflowView: View {
     private var draft: BookAgentDraft { jesseCall.bookDraft ?? .empty }
     private var canPublish: Bool { !draft.title.isEmpty && !draft.chapters.isEmpty }
 
-    var body: some View {
-        HStack(spacing: 16) {
-            bookPanel
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+    private let artboard = CGSize(width: 1440, height: 810)
 
-            JesseRailView(studentName: studentName, context: "book")
-                .frame(width: 380)
+    var body: some View {
+        GeometryReader { geo in
+            let scale = min(geo.size.width / artboard.width, geo.size.height / artboard.height)
+            ZStack {
+                Color.white.ignoresSafeArea()
+                ZStack(alignment: .topLeading) {
+                    pin(BookArtboard.content, scale: scale) { bookPanel }
+                    pin(BookArtboard.jesseRail, scale: scale) {
+                        JesseRailView(studentName: studentName, context: "book")
+                    }
+                }
+                .frame(width: artboard.width * scale, height: artboard.height * scale)
+            }
+            .frame(width: geo.size.width, height: geo.size.height)
         }
-        .padding(18)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(BookColor.cream.ignoresSafeArea())
+        .ignoresSafeArea()
         .overlay(alignment: .topTrailing) {
             Button(action: onClose) {
                 Text("Done")
-                    .font(.system(size: 12, weight: .bold, design: .rounded))
+                    .font(.system(size: 13, weight: .bold, design: .rounded))
                     .foregroundColor(Color(red: 12 / 255, green: 18 / 255, blue: 7 / 255))
-                    .padding(.horizontal, 12)
+                    .padding(.horizontal, 14)
                     .padding(.vertical, 8)
                     .background(Capsule().fill(Color(red: 196 / 255, green: 245 / 255, blue: 71 / 255)))
             }
@@ -70,6 +78,15 @@ struct BookWorkflowView: View {
         }
         .statusBarHidden(true)
         .task { await tutorDirectory.load() }
+    }
+
+    private func pin<Content: View>(_ box: CGRect, scale: CGFloat, @ViewBuilder content: () -> Content) -> some View {
+        content()
+            .frame(width: box.width * scale, height: box.height * scale)
+            .position(
+                x: (box.minX + box.width / 2) * scale,
+                y: (box.minY + box.height / 2) * scale
+            )
     }
 
     // MARK: - Left panel
@@ -367,4 +384,14 @@ private enum BookColor {
     static let cream = Color(red: 244 / 255, green: 239 / 255, blue: 230 / 255)
     static let green = Color(red: 36 / 255, green: 122 / 255, blue: 77 / 255)
     static let errorRed = Color(red: 0.7, green: 0.2, blue: 0.16)
+}
+
+/// Same content/jesseRail proportions as `CreateCanvasView`'s GDoc idle
+/// state and `ResumeArtboard` - explicit ask: "why lol are these two so
+/// different" (Resume and Book had each grown their own layout). Values
+/// duplicated rather than shared cross-file, same convention as
+/// `DottedLearnGrid`/`DottedDesignGrid`.
+private enum BookArtboard {
+    static let content = CGRect(x: 28, y: 48, width: 920, height: 560)
+    static let jesseRail = CGRect(x: 980, y: 48, width: 432, height: 560)
 }
