@@ -49,9 +49,7 @@ struct LearnStudioView: View {
             let board = CGSize(width: artboard.width * scale, height: artboard.height * scale)
             ZStack {
                 Color(lsHex: "fff8e9").ignoresSafeArea()
-                studioBoard(scale: scale)
-                    .frame(width: board.width, height: board.height)
-                    .position(x: geo.size.width / 2, y: geo.size.height / 2)
+                studioBoard(scale: scale, board: board)
             }
             .frame(width: geo.size.width, height: geo.size.height)
         }
@@ -78,8 +76,12 @@ struct LearnStudioView: View {
         }
     }
 
-    // MARK: - Jesse reachability (unchanged pattern, both states)
-
+    /// Same call-to-action as `CreateCanvasView.jesseRail`'s "Jump on a call
+    /// with Jesse" button (black capsule, phone icon, identical copy) - the
+    /// board here has no room for that rail's full card (avatar, greeting,
+    /// transcript), but the button itself matches exactly rather than
+    /// inventing a different lime-dot pill nobody else in the app uses.
+    /// Once active, same `JesseCallPill` every other screen uses.
     @ViewBuilder
     private var jesseReachOverlay: some View {
         if jesseCall.isActive {
@@ -90,15 +92,15 @@ struct LearnStudioView: View {
                 showJesseCallSheet = true
             } label: {
                 HStack(spacing: 8) {
-                    Circle().fill(Color(lsHex: "c4f547")).frame(width: 8, height: 8)
-                    Text("Talk to Jesse")
-                        .font(.system(size: 12, weight: .bold, design: .rounded))
-                        .foregroundColor(.white)
+                    Image(systemName: "phone.fill")
+                    Text("Jump on a call with Jesse")
+                    Image(systemName: "arrow.right")
                 }
-                .padding(.horizontal, 12)
-                .padding(.vertical, 8)
-                .background(Capsule().fill(Color.black.opacity(0.82)))
-                .overlay(Capsule().strokeBorder(Color.white.opacity(0.18), lineWidth: 1))
+                .font(.system(size: 13, weight: .bold, design: .rounded))
+                .foregroundColor(.white)
+                .padding(.horizontal, 14)
+                .padding(.vertical, 10)
+                .background(Capsule().fill(Color.black))
             }
             .buttonStyle(.plain)
             .padding(.top, 10)
@@ -109,11 +111,11 @@ struct LearnStudioView: View {
 
     // MARK: - Board
 
-    private func studioBoard(scale: CGFloat) -> some View {
+    private func studioBoard(scale: CGFloat, board: CGSize) -> some View {
         ZStack(alignment: .topLeading) {
-            Color.clear.frame(width: artboard.width, height: artboard.height)
+            Color.clear.frame(width: board.width, height: board.height)
             DottedLearnGrid()
-                .frame(width: artboard.width, height: artboard.height)
+                .frame(width: board.width, height: board.height)
 
             pin(LearnBoard.definition, scale: scale) {
                 pane(title: "Definition", accent: Color(lsHex: "247a4d")) {

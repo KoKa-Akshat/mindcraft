@@ -1303,14 +1303,19 @@ struct DeskGridDashboardView: View {
         }
     }
 
+    /// Binder/Calendar/Gmail dropped from here on purpose (2026-08-17,
+    /// explicit ask) - they're already reachable as their own tiles on the
+    /// board, so the dock chips were a redundant second path that was
+    /// crowding this strip. Book added alongside Learn as a direct
+    /// entry point instead of being buried one level inside Flows -
+    /// reuses the existing `onOpenFlow("book")` callback FieldDeskView
+    /// already wires for the Flows rail's own Book row, not a new path.
     private var workDock: some View {
         HStack(spacing: 8) {
-            dockChip("Binder", system: "books.vertical.fill") { handleTile(.binder) }
-            dockChip("Calendar", system: "calendar", action: onOpenCalendar)
             dockChip("Memo", system: "note.text", identifier: "deskGridDashboardAddMemo") { setRail(rail == .memo ? .none : .memo) }
-            dockChip("Gmail", system: "envelope.fill", action: onOpenGmail)
             dockChip("Flows", system: "bolt.fill", identifier: "deskGridDock_Flows") { setRail(rail == .flows ? .none : .flows) }
             dockChip("Learn", system: "square.grid.2x2.fill", identifier: "deskGridDock_LearnStudio") { onOpenLearnStudio() }
+            dockChip("Book", system: "book.fill", identifier: "deskGridDock_Book") { onOpenFlow("book") }
             searchField(placeholder: "Search", identifier: "deskGridDashboardSearch", onSubmit: submitSearch)
         }
         .padding(.horizontal, 16)
