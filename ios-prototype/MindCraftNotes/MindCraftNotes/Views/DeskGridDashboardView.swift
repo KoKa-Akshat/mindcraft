@@ -941,6 +941,7 @@ struct DeskGridDashboardView: View {
             flowRow("Archive", system: "books.vertical") { onOpenFlow("archive") }
             flowRow("Book", system: "book") { onOpenFlow("book") }
             flowRow("Apply", system: "briefcase") { onOpenFlow("apply") }
+            flowRow("+ Design", system: "square.grid.2x2.fill") { onOpenFlow("design") }
             Spacer(minLength: 0)
         }
         .padding(12)

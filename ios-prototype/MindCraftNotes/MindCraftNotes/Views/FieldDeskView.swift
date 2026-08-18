@@ -90,6 +90,7 @@ struct FieldDeskView: View {
     @State private var showResumeAgent = false
     @State private var showArchiveWorkflow = false
     @State private var showBookWorkflow = false
+    @State private var showDesignStudio = false
     @State private var showApplyToday = false
     @State private var showSchedulingWorkflows = false
     @State private var schedulingWorkflowsMinimized = false
@@ -116,6 +117,22 @@ struct FieldDeskView: View {
     @State private var showBinderOverlay = false
     /// BYOB "Cook a Field Book" from the Binder popup.
     @State private var showByobStudio = false
+    /// Homework Help tapped from the Work dashboard — paste a problem,
+    /// uses the student's own AI key (`StudentAIKeyStore`) when saved.
+    @State private var showHomeworkHelpOverlay = false
+    @ObservedObject private var homeworkKeys = StudentAIKeyStore.shared
+    @State private var homeworkProblemDraft = ""
+    @State private var homeworkSolving = false
+    @State private var homeworkResultCards: [IngredientHintsClient.HintCard] = []
+    @State private var homeworkError: String?
+    @State private var homeworkPhotoItem: PhotosPickerItem?
+    @State private var homeworkUploading = false
+    @State private var homeworkUploadNote: String?
+    /// Learn Studio — the five-pane concept-study screen, reachable from the
+    /// `+` Add panel for now (lowest-risk entry point tonight; Binder/ACT
+    /// Field Book wiring is a separate, more invasive pass into an
+    /// already-high-risk file).
+    @State private var showLearnStudio = false
     /// Real nav-intent target ("study quadratic equations" via Ask The Desk
     /// -> `study_concept` action) - threaded into `DashboardView` so it
     /// opens straight to that concept's chapter instead of just the roadmap.
@@ -414,6 +431,7 @@ struct FieldDeskView: View {
             || showDeskGridDashboard
             || showCreateCanvas
             || showBinderOverlay
+            || showHomeworkHelpOverlay
     }
 
     /// Jesse kitchen Ask/dock only — Work/Create own their own prompt bars.
@@ -559,76 +577,101 @@ struct FieldDeskView: View {
                 // right identifier, just never received touches).
                 if deskChromeLive {
                     let panZoomCatcherBlocked = floatDockBlocked || showAddPanel || activeGuideId != nil || polkaProgress > 0.001
-                    PassThroughOverlay(
-                        solidRects: panZoomCatcherBlocked ? [] : [CGRect(origin: .zero, size: viewport)]
-                    ) {
-                        deskBackgroundPanZoomLayer(viewport: viewport)
-                    }
-                    .frame(width: viewport.width, height: viewport.height)
-                    .zIndex(20)
+                    AnyView(
+                        PassThroughOverlay(
+                            solidRects: panZoomCatcherBlocked ? [] : [CGRect(origin: .zero, size: viewport)]
+                        ) {
+                            deskBackgroundPanZoomLayer(viewport: viewport)
+                        }
+                        .frame(width: viewport.width, height: viewport.height)
+                        .zIndex(20)
+                    )
                 }
 
                 if showActStage && actStageMaximized {
-                    actStageMaximizedLayer(viewport: viewport)
-                        .zIndex(30)
+                    AnyView(
+                        actStageMaximizedLayer(viewport: viewport)
+                            .zIndex(30)
+                    )
                 }
 
                 // ACT Field Book (dash + notes) as an in-desk popup — not a new tab.
                 if showActFieldBook {
-                    ActInstanceShellView(onMinimize: {
-                        withAnimation(.easeInOut(duration: 0.2)) {
-                            showActFieldBook = false
-                            // Dashboard was kept alive underneath (see onOpenBinder
-                            // below) - minimizing just reveals it directly, no
-                            // need to also surface the free-drag Binder card. Only
-                            // fall back to that when Field Book was opened from a
-                            // non-dashboard path (binderBody, AI study_concept
-                            // action), where the dashboard was never showing.
-                            if !showDeskGridDashboard {
-                                showBinderPanel = true
-                                binderOpen = true
+                    AnyView(
+                        ActInstanceShellView(onMinimize: {
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                showActFieldBook = false
+                                // Dashboard was kept alive underneath (see onOpenBinder
+                                // below) - minimizing just reveals it directly, no
+                                // need to also surface the free-drag Binder card. Only
+                                // fall back to that when Field Book was opened from a
+                                // non-dashboard path (binderBody, AI study_concept
+                                // action), where the dashboard was never showing.
+                                if !showDeskGridDashboard {
+                                    showBinderPanel = true
+                                    binderOpen = true
+                                }
                             }
-                        }
-                    })
-                    .environmentObject(studentStore)
-                    .environmentObject(authService)
-                    .transition(.opacity)
-                    // Above Dashboard's zIndex(88) so it layers on top rather
-                    // than requiring the dashboard to close first - closing
-                    // first briefly exposed Jesse's Kitchen underneath during
-                    // the transition gap.
-                    .zIndex(89)
-                    .accessibilityIdentifier("fieldDeskActNotesPopup")
+                        })
+                        .environmentObject(studentStore)
+                        .environmentObject(authService)
+                        .transition(.opacity)
+                        // Above Dashboard's zIndex(88) so it layers on top rather
+                        // than requiring the dashboard to close first - closing
+                        // first briefly exposed Jesse's Kitchen underneath during
+                        // the transition gap.
+                        .zIndex(89)
+                        .accessibilityIdentifier("fieldDeskActNotesPopup")
+                    )
                 }
 
                 // Gcal box as an in-desk popup over the dashboard, same
                 // shape as ACT Field Book above — not the free-drag desk card.
                 if showCalendarOverlay {
-                    calendarOverlayLayer
-                        .transition(.opacity)
-                        .zIndex(89)
-                        .accessibilityIdentifier("fieldDeskCalendarOverlay")
+                    AnyView(
+                        calendarOverlayLayer
+                            .transition(.opacity)
+                            .zIndex(89)
+                            .accessibilityIdentifier("fieldDeskCalendarOverlay")
+                    )
                 }
 
                 // Intel box as an in-desk popup over the dashboard, same
                 // shape as Gcal/Binder above.
                 if showIntelOverlay {
-                    intelOverlayLayer
-                        .transition(.opacity)
-                        .zIndex(89)
-                        .accessibilityIdentifier("fieldDeskIntelOverlay")
+                    AnyView(
+                        intelOverlayLayer
+                            .transition(.opacity)
+                            .zIndex(89)
+                            .accessibilityIdentifier("fieldDeskIntelOverlay")
+                    )
                 }
 
                 if showBinderOverlay {
-                    binderOverlayLayer
-                        .transition(.opacity)
-                        .zIndex(89)
                     // No wrapper .accessibilityIdentifier here — that clobbers
                     // Memo/Doc/BYOB section ids (same family as workDock).
                     // binderOverlayLayer carries fieldDeskBinderOverlay on a marker.
+                    AnyView(
+                        binderOverlayLayer
+                            .transition(.opacity)
+                            .zIndex(89)
+                    )
+                }
+
+                if showHomeworkHelpOverlay {
+                    // No wrapper .accessibilityIdentifier — this popup has
+                    // its own distinct field/button ids inside (same
+                    // clobbering trap as Binder's popup above); carries
+                    // fieldDeskHomeworkHelpOverlay on its own marker instead.
+                    AnyView(
+                        homeworkHelpOverlayLayer
+                            .transition(.opacity)
+                            .zIndex(89)
+                    )
                 }
 
                 if showDeskGridDashboard {
+                    AnyView(
                     DeskGridDashboardView(
                         initialRail: dashboardStartRail,
                         initialMemoText: store.memoText,
@@ -677,9 +720,24 @@ struct FieldDeskView: View {
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                                 switch id {
                                 case "resume": showResumeAgent = true
-                                case "archive": showArchiveWorkflow = true
+                                // Archive redirects into Learn Studio now
+                                // (2026-08-17, explicit ask) - Learn's own
+                                // "Browse Archive" button opens the real
+                                // ArchiveWorkflowView from there.
+                                case "archive": showLearnStudio = true
                                 case "book": showBookWorkflow = true
-                                case "apply": showApplyToday = true
+                                // Apply no longer opens its own standalone
+                                // screen from here - redirects to Resume,
+                                // which now carries Apply Today/JobOS
+                                // itself (2026-08-17). Scheduling's own
+                                // "Also: Apply today board" secondary path
+                                // and the long-press workflow library are
+                                // untouched - deliberately out of scope
+                                // tonight, already documented as secondary
+                                // access points, not the standalone Flow
+                                // that was actually asked to go away.
+                                case "apply": showResumeAgent = true
+                                case "design": showDesignStudio = true
                                 default: break
                                 }
                             }
@@ -720,14 +778,17 @@ struct FieldDeskView: View {
                     // as workDock, one layer further out - confirmed via a live
                     // accessibility-tree dump showing both nodes wrongly reporting
                     // 'fieldDeskGridDashboardOverlay' instead of 'deskGridDashboard').
+                    )
                 }
 
                 if showApplyToday {
-                    JobOSShellView(onClose: { showApplyToday = false })
-                        .transition(.opacity)
-                        // Above Work/Create web surfaces so workflows use the big area.
-                        .zIndex(90)
-                        .accessibilityIdentifier("fieldDeskApplyTodayOverlay")
+                    AnyView(
+                        JobOSShellView(onClose: { showApplyToday = false })
+                            .transition(.opacity)
+                            // Above Work/Create web surfaces so workflows use the big area.
+                            .zIndex(90)
+                            .accessibilityIdentifier("fieldDeskApplyTodayOverlay")
+                    )
                 }
 
                 if showSchedulingWorkflows && !schedulingWorkflowsMinimized {
@@ -737,158 +798,174 @@ struct FieldDeskView: View {
                     // real accessibility-tree dump - e.g. schedulingWorkflowsBack
                     // reporting as this wrapper's id instead of its own).
                     // SchedulingWorkflowsView already tags its own root.
-                    ZStack(alignment: .topTrailing) {
-                        SchedulingWorkflowsView(
-                            onClose: {
-                                showSchedulingWorkflows = false
-                                schedulingWorkflowsMinimized = false
-                            },
-                            onOpenApplyToday: { showApplyToday = true }
-                        )
-                        // Corner-only minimize, same treatment as ACT stage's
-                        // - collapses to a reconnectable chip on the desk
-                        // instead of fully closing, so other cards stay
-                        // reachable without losing the workflow's progress.
-                        Button {
-                            withAnimation(.easeInOut(duration: 0.2)) { schedulingWorkflowsMinimized = true }
-                        } label: {
-                            Image(systemName: "arrow.down.right.and.arrow.up.left")
-                                .font(.system(size: 12, weight: .bold))
-                                .foregroundColor(.white)
-                                .padding(10)
-                                .background(Circle().fill(Color.black.opacity(0.55)))
+                    AnyView(
+                        ZStack(alignment: .topTrailing) {
+                            SchedulingWorkflowsView(
+                                onClose: {
+                                    showSchedulingWorkflows = false
+                                    schedulingWorkflowsMinimized = false
+                                },
+                                onOpenApplyToday: { showApplyToday = true }
+                            )
+                            // Corner-only minimize, same treatment as ACT stage's
+                            // - collapses to a reconnectable chip on the desk
+                            // instead of fully closing, so other cards stay
+                            // reachable without losing the workflow's progress.
+                            Button {
+                                withAnimation(.easeInOut(duration: 0.2)) { schedulingWorkflowsMinimized = true }
+                            } label: {
+                                Image(systemName: "arrow.down.right.and.arrow.up.left")
+                                    .font(.system(size: 12, weight: .bold))
+                                    .foregroundColor(.white)
+                                    .padding(10)
+                                    .background(Circle().fill(Color.black.opacity(0.55)))
+                            }
+                            .buttonStyle(.plain)
+                            .padding(28)
+                            .accessibilityIdentifier("fieldDeskWorkflowsMinimize")
+                            .accessibilityLabel("Minimize workflow")
                         }
-                        .buttonStyle(.plain)
-                        .padding(28)
-                        .accessibilityIdentifier("fieldDeskWorkflowsMinimize")
-                        .accessibilityLabel("Minimize workflow")
-                    }
-                    .transition(.opacity)
-                    .zIndex(90)
+                        .transition(.opacity)
+                        .zIndex(90)
+                    )
                 }
 
                 if showGmailBox {
-                    GmailWorkflowBoxView(
-                        onClose: {
-                            showGmailBox = false
-                            gmailStartReconnect = false
-                            gmailOpenTopReply = false
-                        },
-                        onConnected: { calendarToo in
-                            _ = store.markConnected("gmail")
-                            if calendarToo {
-                                _ = store.markConnected("gcal")
-                                Task { await refreshDeskCalendar() }
-                            }
-                            gmailStartReconnect = false
-                            if store.allConnectorsLinked {
-                                flash("All linked · add Calendar · Connect · Memo from +")
-                            } else {
-                                flash(calendarToo ? "Connected · Gmail + Calendar" : "Connected · Gmail")
-                            }
-                        },
-                        onDisconnected: {
-                            _ = store.disconnect("gmail")
-                        },
-                        onInboxLoaded: { msgs in
-                            for msg in msgs.prefix(5).reversed() {
-                                let line = "Mail · \(msg.from): \(msg.subject)"
-                                if !store.intelLines.contains(line) {
-                                    store.prependIntel(line)
+                    AnyView(
+                        GmailWorkflowBoxView(
+                            onClose: {
+                                showGmailBox = false
+                                gmailStartReconnect = false
+                                gmailOpenTopReply = false
+                            },
+                            onConnected: { calendarToo in
+                                _ = store.markConnected("gmail")
+                                if calendarToo {
+                                    _ = store.markConnected("gcal")
+                                    Task { await refreshDeskCalendar() }
                                 }
-                            }
-                        },
-                        startInReconnect: gmailStartReconnect,
-                        startWithTopReply: gmailOpenTopReply
+                                gmailStartReconnect = false
+                                if store.allConnectorsLinked {
+                                    flash("All linked · add Calendar · Connect · Memo from +")
+                                } else {
+                                    flash(calendarToo ? "Connected · Gmail + Calendar" : "Connected · Gmail")
+                                }
+                            },
+                            onDisconnected: {
+                                _ = store.disconnect("gmail")
+                            },
+                            onInboxLoaded: { msgs in
+                                for msg in msgs.prefix(5).reversed() {
+                                    let line = "Mail · \(msg.from): \(msg.subject)"
+                                    if !store.intelLines.contains(line) {
+                                        store.prependIntel(line)
+                                    }
+                                }
+                            },
+                            startInReconnect: gmailStartReconnect,
+                            startWithTopReply: gmailOpenTopReply
+                        )
+                        .transition(.opacity)
+                        // Above Dashboard's zIndex(88), same tier as Binder/
+                        // Calendar - was 56 (below the dashboard), which is how
+                        // Jesse's Kitchen showed through the box's margins once
+                        // the dashboard was torn down to open it.
+                        .zIndex(89)
+                        .accessibilityIdentifier("fieldDeskGmailOverlay")
                     )
-                    .transition(.opacity)
-                    // Above Dashboard's zIndex(88), same tier as Binder/
-                    // Calendar - was 56 (below the dashboard), which is how
-                    // Jesse's Kitchen showed through the box's margins once
-                    // the dashboard was torn down to open it.
-                    .zIndex(89)
-                    .accessibilityIdentifier("fieldDeskGmailOverlay")
                 }
 
                 if showProjectsPanel {
-                    ZStack {
-                        Color.black.opacity(0.55)
-                            .ignoresSafeArea()
-                            .onTapGesture { closeProjectsPanel() }
-                        projectsToolsPanel
-                            .frame(maxWidth: min(520, viewport.width - 48))
-                            .padding(20)
-                    }
-                    .zIndex(70)
-                    .transition(.opacity)
-                    .accessibilityIdentifier("fieldDeskProjectsPanel")
+                    AnyView(
+                        ZStack {
+                            Color.black.opacity(0.55)
+                                .ignoresSafeArea()
+                                .onTapGesture { closeProjectsPanel() }
+                            projectsToolsPanel
+                                .frame(maxWidth: min(520, viewport.width - 48))
+                                .padding(20)
+                        }
+                        .zIndex(70)
+                        .transition(.opacity)
+                        .accessibilityIdentifier("fieldDeskProjectsPanel")
+                    )
                 }
 
                 // Projects screen — the Malevolent Shrine project, neatly on
                 // a white void. Tapping the shrine enters the work area.
                 if showProjectsScreen {
-                    projectsScreen
-                        .zIndex(83)
-                        .transition(.opacity)
+                    AnyView(
+                        projectsScreen
+                            .zIndex(83)
+                            .transition(.opacity)
+                    )
                 }
 
                 // Standalone Desk — full separation from the kitchen.
                 if showStandaloneDesk {
-                    StandaloneDeskView(
-                        onBackToKitchen: { closeStandaloneDesk() },
-                        onManage: { openManageHubFromDesk() },
-                        onOpenAct: {
-                            closeStandaloneDesk()
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
-                                openActDashOnDesk()
+                    AnyView(
+                        StandaloneDeskView(
+                            onBackToKitchen: { closeStandaloneDesk() },
+                            onManage: { openManageHubFromDesk() },
+                            onOpenAct: {
+                                closeStandaloneDesk()
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+                                    openActDashOnDesk()
+                                }
+                            },
+                            onWorkflows: {
+                                showWorkflowLibrary = true
+                            },
+                            onSound: { on in
+                                kitchenSoundOn = on
                             }
-                        },
-                        onWorkflows: {
-                            showWorkflowLibrary = true
-                        },
-                        onSound: { on in
-                            kitchenSoundOn = on
-                        }
+                        )
+                        .zIndex(85)
                     )
-                    .zIndex(85)
                 }
 
                 // Spatial Create — same polka doorway, cream orbital board.
                 if showCreateStudio {
-                    CreateStudioView(onClose: { closeCreateStudio() })
-                        .zIndex(86)
-                        .transition(.opacity)
+                    AnyView(
+                        CreateStudioView(onClose: { closeCreateStudio() })
+                            .zIndex(86)
+                            .transition(.opacity)
+                    )
                 }
 
                 if showCreateCanvas {
-                    CreateCanvasView(
-                        kind: createCanvasKind,
-                        studentName: deskChromeName ?? "there",
-                        // Explicit re-assert, not just relying on
-                        // showDeskGridDashboard having stayed true the whole
-                        // time Create Canvas was open - Done was landing back
-                        // on Create Canvas instead of the dashboard without
-                        // this (confirmed via UI test + screen recording).
-                        onClose: {
-                            withAnimation(.easeInOut(duration: 0.28)) {
-                                showCreateCanvas = false
-                                showDeskGridDashboard = true
+                    AnyView(
+                        CreateCanvasView(
+                            kind: createCanvasKind,
+                            studentName: deskChromeName ?? "there",
+                            // Explicit re-assert, not just relying on
+                            // showDeskGridDashboard having stayed true the whole
+                            // time Create Canvas was open - Done was landing back
+                            // on Create Canvas instead of the dashboard without
+                            // this (confirmed via UI test + screen recording).
+                            onClose: {
+                                withAnimation(.easeInOut(duration: 0.28)) {
+                                    showCreateCanvas = false
+                                    showDeskGridDashboard = true
+                                }
                             }
-                        }
+                        )
+                        .zIndex(89)
+                        // Slides in from the right / back out to the right
+                        // instead of a plain crossfade - reads as an adjacent
+                        // panel on the same screen (Work stays put underneath,
+                        // never actually leaves) rather than teleporting to a
+                        // disconnected space.
+                        .transition(.move(edge: .trailing))
                     )
-                    .zIndex(89)
-                    // Slides in from the right / back out to the right
-                    // instead of a plain crossfade - reads as an adjacent
-                    // panel on the same screen (Work stays put underneath,
-                    // never actually leaves) rather than teleporting to a
-                    // disconnected space.
-                    .transition(.move(edge: .trailing))
                 }
 
                 // Polka doorway sheet rides above both worlds while crossing.
                 if polkaProgress > 0.001 {
-                    PolkaTransitionOverlay(progress: polkaProgress)
-                        .zIndex(95)
+                    AnyView(
+                        PolkaTransitionOverlay(progress: polkaProgress)
+                            .zIndex(95)
+                    )
                 }
 
                 // ⚠️ Adding another full-screen `if show___ { ... .zIndex(N) }`
@@ -911,36 +988,42 @@ struct FieldDeskView: View {
                     // (confirmed via a full accessibility-tree dump showing
                     // every row - Close included - reporting isHittable:
                     // false). Same pattern as connectGuide below.
-                    ZStack {
-                        Color.black.opacity(0.45).onTapGesture { showAddPanel = false }
-                        addPanel.frame(maxWidth: min(440, viewport.width - 80))
-                    }
-                    .zIndex(70)
+                    AnyView(
+                        ZStack {
+                            Color.black.opacity(0.45).onTapGesture { showAddPanel = false }
+                            addPanel.frame(maxWidth: min(440, viewport.width - 80))
+                        }
+                        .zIndex(70)
+                    )
                 }
 
                 if let guideId = activeGuideId, let connector = store.connector(id: guideId) {
-                    ZStack {
-                        Color.black.opacity(0.45).onTapGesture { activeGuideId = nil }
-                        connectGuide(connector)
-                            .frame(maxWidth: min(480, viewport.width - 64))
-                            .padding(20)
-                    }
-                    .zIndex(60)
+                    AnyView(
+                        ZStack {
+                            Color.black.opacity(0.45).onTapGesture { activeGuideId = nil }
+                            connectGuide(connector)
+                                .frame(maxWidth: min(480, viewport.width - 64))
+                                .padding(20)
+                        }
+                        .zIndex(60)
+                    )
                 }
 
                 if let toast {
-                    VStack {
-                        Spacer()
-                        Text(toast)
-                            .font(.system(size: 14, weight: .semibold, design: .rounded))
-                            .foregroundColor(Color(fdHex: "f4f7f4"))
-                            .padding(.horizontal, 16).padding(.vertical, 10)
-                            .background(Capsule().fill(Color(fdHex: "1f2a22")))
-                            .padding(.bottom, 100)
-                            .accessibilityIdentifier("fieldDeskToast")
-                    }
-                    .zIndex(40)
-                    .allowsHitTesting(false)
+                    AnyView(
+                        VStack {
+                            Spacer()
+                            Text(toast)
+                                .font(.system(size: 14, weight: .semibold, design: .rounded))
+                                .foregroundColor(Color(fdHex: "f4f7f4"))
+                                .padding(.horizontal, 16).padding(.vertical, 10)
+                                .background(Capsule().fill(Color(fdHex: "1f2a22")))
+                                .padding(.bottom, 100)
+                                .accessibilityIdentifier("fieldDeskToast")
+                        }
+                        .zIndex(40)
+                        .allowsHitTesting(false)
+                    )
                 }
 
                 Text(verbatim: "desk-window")
@@ -1178,12 +1261,9 @@ struct FieldDeskView: View {
         .fullScreenCover(isPresented: $showResumeAgent) {
             ResumeAgentView(
                 onClose: { showResumeAgent = false },
+                studentName: deskChromeName ?? "there",
                 onApply: {
                     _ = store.fileArtifact(title: "Resume draft", note: "Filed from Jesse resume.", source: .resume)
-                    showResumeAgent = false
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-                        showApplyToday = true
-                    }
                 }
             )
         }
@@ -1193,6 +1273,7 @@ struct FieldDeskView: View {
         .fullScreenCover(isPresented: $showBookWorkflow) {
             BookWorkflowView(
                 onClose: { showBookWorkflow = false },
+                studentName: deskChromeName ?? "there",
                 onPublished: { title, body in
                     _ = store.fileArtifact(title: title, note: body, source: .book)
                     flash("Filed to your Binder")
@@ -1222,6 +1303,14 @@ struct FieldDeskView: View {
         }
         .fullScreenCover(isPresented: $showByobStudio) {
             CreateInstanceStudioView(binderStore: binderStore) { _ in }
+        }
+        .fullScreenCover(isPresented: $showLearnStudio) {
+            LearnStudioView(studentName: deskChromeName ?? "there", onClose: { showLearnStudio = false })
+                .environmentObject(jesseCall)
+        }
+        .fullScreenCover(isPresented: $showDesignStudio) {
+            DesignStudioView(studentName: deskChromeName ?? "there", onClose: { showDesignStudio = false })
+                .environmentObject(jesseCall)
         }
         .fileImporter(
             isPresented: $showImporter,
@@ -3149,6 +3238,254 @@ struct FieldDeskView: View {
         }
     }
 
+    /// Homework Help box's popup - paste a problem, get help from the
+    /// student's own AI key (`StudentAIKeyStore`, Assignment C) when one's
+    /// saved. No key yet -> a connect prompt straight into Settings, same
+    /// place `AccountManageView`'s "Homework help" section already lives.
+    /// Upload/write/full web-version parity is later, separately scoped work
+    /// (see `CURSOR_HANDOFF.md`) - this ships the paste-a-problem path for
+    /// real today, not a stub.
+    private var homeworkHelpOverlayLayer: some View {
+        ZStack {
+            Color.black.opacity(0.35)
+                .ignoresSafeArea()
+                .onTapGesture { closeHomeworkHelpOverlay() }
+
+            VStack(alignment: .leading, spacing: 12) {
+                HStack(spacing: 10) {
+                    Text("Homework Help")
+                        .font(.system(size: 16, weight: .bold, design: .rounded))
+                        .foregroundColor(Color(fdHex: "0c1207"))
+                    Spacer(minLength: 0)
+                    Button(action: closeHomeworkHelpOverlay) {
+                        Text("Done")
+                            .font(.system(size: 12, weight: .bold, design: .rounded))
+                            .foregroundColor(Color(fdHex: "0c1207"))
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 8)
+                            .background(Capsule().fill(Color(fdHex: "c4f547")))
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityIdentifier("fieldDeskHomeworkHelpDone")
+                }
+
+                if homeworkKeys.hasKey {
+                    homeworkHelpSolverBody
+                } else {
+                    homeworkHelpConnectPrompt
+                }
+            }
+            .padding(18)
+            .frame(width: 420, height: 480)
+            .background(
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .fill(Color(fdHex: "fff8e9"))
+                    .shadow(color: .black.opacity(0.35), radius: 24, y: 12)
+            )
+            .accessibilityElement(children: .contain)
+            .overlay(alignment: .topLeading) {
+                Text(verbatim: "homework").font(.system(size: 1)).foregroundColor(.clear)
+                    .accessibilityIdentifier("fieldDeskHomeworkHelpOverlay")
+                    .allowsHitTesting(false)
+            }
+        }
+    }
+
+    private var homeworkHelpConnectPrompt: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Image(systemName: "sparkles")
+                .font(.system(size: 28, weight: .medium))
+                .foregroundColor(Color(fdHex: "7a9e2e"))
+            Text("Connect your AI first")
+                .font(.system(size: 15, weight: .bold, design: .rounded))
+                .foregroundColor(Color(fdHex: "0c1207"))
+            Text("Paste a free Groq key (or Anthropic) in Settings and Homework Help solves on your own quota - MindCraft's engine is down on shared credits right now. The key stays on this device, never uploaded.")
+                .font(.system(size: 13, weight: .medium, design: .rounded))
+                .foregroundColor(Color(fdHex: "8a8478"))
+                .fixedSize(horizontal: false, vertical: true)
+            Button {
+                showHomeworkHelpOverlay = false
+                showManage = true
+            } label: {
+                Text("Open Settings")
+                    .font(.system(size: 13, weight: .bold, design: .rounded))
+                    .foregroundColor(Color(fdHex: "0c1207"))
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 10)
+                    .background(Capsule().fill(Color(fdHex: "c4f547")))
+            }
+            .buttonStyle(.plain)
+            .accessibilityIdentifier("fieldDeskHomeworkHelpConnect")
+            Spacer(minLength: 0)
+        }
+    }
+
+    /// Upload leads (explicit ask: "should be Upload instead of Get Help") -
+    /// typing a problem out is the fallback, not the default. Either path
+    /// ends the same way: a solved result files into Binder and this popup
+    /// hands off to the Binder screen instead of holding its own copy of
+    /// the answer (see `fileHomeworkHelpToBinder`).
+    private var homeworkHelpSolverBody: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            PhotosPicker(selection: $homeworkPhotoItem, matching: .images) {
+                HStack(spacing: 8) {
+                    if homeworkUploading {
+                        ProgressView().tint(Color(fdHex: "0c1207"))
+                    } else {
+                        Image(systemName: "camera.fill")
+                        Text("Upload a photo")
+                    }
+                }
+                .font(.system(size: 13, weight: .bold, design: .rounded))
+                .foregroundColor(Color(fdHex: "0c1207"))
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 12)
+            }
+            .buttonStyle(.plain)
+            .background(Capsule().fill(Color(fdHex: "c4f547")))
+            .disabled(homeworkUploading)
+            .accessibilityIdentifier("fieldDeskHomeworkHelpUpload")
+            .accessibilityLabel("Upload a photo of the problem")
+            .onChange(of: homeworkPhotoItem) { _, item in
+                guard let item else { return }
+                Task {
+                    await handleHomeworkPhotoPicked(item)
+                    homeworkPhotoItem = nil
+                }
+            }
+
+            if let homeworkUploadNote {
+                Text(homeworkUploadNote)
+                    .font(.system(size: 11, weight: .semibold, design: .rounded))
+                    .foregroundColor(Color(fdHex: "7a9e2e"))
+            }
+
+            Text("or type it out")
+                .font(.system(size: 11, weight: .semibold, design: .rounded))
+                .foregroundColor(Color(fdHex: "8a8478"))
+
+            TextEditor(text: $homeworkProblemDraft)
+                .font(.system(size: 14, weight: .medium, design: .rounded))
+                .frame(height: 90)
+                .padding(8)
+                .background(
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .fill(Color.white)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                .stroke(Color(fdHex: "e4dcc8"), lineWidth: 1)
+                        )
+                )
+                .accessibilityIdentifier("fieldDeskHomeworkHelpProblemField")
+
+            Button {
+                Task { await solveHomeworkProblem() }
+            } label: {
+                if homeworkSolving {
+                    ProgressView().tint(Color(fdHex: "0c1207"))
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 10)
+                } else {
+                    Text("Solve")
+                        .font(.system(size: 13, weight: .bold, design: .rounded))
+                        .foregroundColor(Color(fdHex: "0c1207"))
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 10)
+                }
+            }
+            .buttonStyle(.plain)
+            .background(Capsule().fill(Color(fdHex: "e4dcc8")))
+            .disabled(homeworkProblemDraft.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || homeworkSolving)
+            .accessibilityIdentifier("fieldDeskHomeworkHelpSolve")
+
+            if let homeworkError {
+                Text(homeworkError)
+                    .font(.system(size: 12, weight: .semibold, design: .rounded))
+                    .foregroundColor(Color(fdHex: "b3261e"))
+                    .accessibilityIdentifier("fieldDeskHomeworkHelpResult")
+            }
+        }
+    }
+
+    private func solveHomeworkProblem() async {
+        homeworkError = nil
+        homeworkSolving = true
+        defer { homeworkSolving = false }
+        switch await IngredientHintsClient.hints(for: homeworkProblemDraft) {
+        case .cards(let cards):
+            homeworkResultCards = cards
+            fileHomeworkHelpToBinder(problem: homeworkProblemDraft, cards: cards)
+        case .keyRejected:
+            homeworkError = "That AI key was rejected. Open Settings to update it."
+        case .unavailable:
+            homeworkError = "Couldn't get an answer - try again in a bit."
+        }
+    }
+
+    /// A solved problem doesn't stay trapped in this popup's own result
+    /// list - it files as a real Binder Doc and this popup hands off to
+    /// the Binder screen, which already shows it live (Firestore-backed).
+    /// Also drops an Intel line the same way the Gmail digest does
+    /// (`store.prependIntel`) - Intel's own takeover view already renders
+    /// fresh lines inline on the dashboard, so this needs no popup of its
+    /// own (explicit ask: "it doesn't need its own pop up").
+    private func fileHomeworkHelpToBinder(problem: String, cards: [IngredientHintsClient.HintCard]) {
+        let trimmed = problem.trimmingCharacters(in: .whitespacesAndNewlines)
+        let title = trimmed.isEmpty ? "Homework help" : String(trimmed.prefix(60))
+        let body = cards.map { "\($0.title)\n\($0.body)" }.joined(separator: "\n\n")
+        binderStore.addDoc(title: title, body: body, source: "homework_help")
+        let line = "Homework · \(title)"
+        if !store.intelLines.contains(line) {
+            store.prependIntel(line)
+        }
+        withAnimation(.easeInOut(duration: 0.2)) {
+            showHomeworkHelpOverlay = false
+            showBinderOverlay = true
+        }
+    }
+
+    /// Real upload, not a stub - same `HomeworkClient.parseAndCreateSession`
+    /// (`/api/parse-homework`) already used by the older Work tab
+    /// (`WorkPracticeView`), just reused here instead of duplicated. A
+    /// worksheet photo can parse into several questions; this popup only
+    /// solves one problem at a time, so the first parsed question's text
+    /// fills the draft field and solving starts immediately - a note says
+    /// how many more were found so nothing looks silently dropped.
+    private func handleHomeworkPhotoPicked(_ item: PhotosPickerItem) async {
+        homeworkError = nil
+        homeworkUploadNote = nil
+        homeworkUploading = true
+        guard let data = try? await item.loadTransferable(type: Data.self) else {
+            homeworkError = "Couldn\u{2019}t read that photo. Try a clearer shot."
+            homeworkUploading = false
+            return
+        }
+        let (result, _) = await HomeworkClient.parseAndCreateSession(imageData: data, fileName: "homework.jpg")
+        homeworkUploading = false
+        switch result {
+        case .success(let questions):
+            guard let first = questions.first else {
+                homeworkError = "Couldn\u{2019}t find a question on that page. Try another photo."
+                return
+            }
+            homeworkProblemDraft = first.text
+            homeworkUploadNote = questions.count > 1
+                ? "Found \(questions.count) questions - solving the first."
+                : "Got it - solving now."
+            await solveHomeworkProblem()
+        case .unavailable:
+            homeworkError = "Couldn\u{2019}t find questions on that page. Try another photo, or this may be temporarily unavailable."
+        case .notSignedIn:
+            homeworkError = "Please sign in again."
+        }
+    }
+
+    private func closeHomeworkHelpOverlay() {
+        withAnimation(.easeInOut(duration: 0.2)) {
+            showHomeworkHelpOverlay = false
+        }
+    }
+
     private var calendarBody: some View {
         VStack(alignment: .leading, spacing: 6) {
             if store.events.isEmpty {
@@ -3557,6 +3894,17 @@ struct FieldDeskView: View {
                     showDeskGridDashboard = true
                 }
                 .accessibilityIdentifier("fieldDeskAddFlows")
+
+                addMenuRow(
+                    title: "Learn Studio",
+                    subtitle: "Definition, context, worked example, practice",
+                    system: "square.grid.2x2.fill",
+                    enabled: true
+                ) {
+                    showAddPanel = false
+                    showLearnStudio = true
+                }
+                .accessibilityIdentifier("fieldDeskAddLearnStudio")
 
                 addMenuRow(
                     title: "Binder",

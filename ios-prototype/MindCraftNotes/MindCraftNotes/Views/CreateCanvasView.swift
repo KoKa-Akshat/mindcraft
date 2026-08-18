@@ -118,13 +118,13 @@ struct CreateCanvasView: View {
         // to a new tab instead of the conversation just continuing.
         if callLive || showSlidesRail {
             placed(CreateArtboard.liveSlide, scale: scale) { slideOrDoc }
-            placed(CreateArtboard.jesseRail, scale: scale) { jesseRail }
+            placed(CreateArtboard.jesseRailLive, scale: scale) { jesseRail }
             if showSlidesRail {
                 placed(CreateArtboard.slidesRail, scale: scale) { slidesRail }
             }
         } else {
             placed(CreateArtboard.idleStage, scale: scale) { slideOrDoc }
-            placed(CreateArtboard.jesseRail, scale: scale) { jesseRail }
+            placed(CreateArtboard.jesseRailIdle, scale: scale) { jesseRail }
         }
 
         placed(CreateArtboard.dock, scale: scale) { createDock }
@@ -427,17 +427,29 @@ struct CreateCanvasView: View {
 
     // MARK: - Dock + call
 
+    /// Nested search-styled capsule (magnifying glass + white-opacity
+    /// pill inside the dark dock) matches `DeskGridDashboardView.
+    /// searchField` - the same family of dock every screen should read
+    /// as, not a one-off plain text field.
     private var createDock: some View {
         HStack(spacing: 12) {
             Image(systemName: "paperclip")
                 .font(.system(size: 16, weight: .semibold))
                 .foregroundColor(.white.opacity(0.85))
-            TextField("Ask AI…", text: $askText)
-                .textFieldStyle(.plain)
-                .font(.system(size: 15, weight: .medium, design: .rounded))
-                .foregroundColor(.white)
-                .onSubmit { sendAsk() }
-                .accessibilityIdentifier("createCanvasAsk")
+            HStack(spacing: 6) {
+                Image(systemName: "magnifyingglass")
+                    .foregroundColor(.white.opacity(0.45))
+                TextField("Ask AI…", text: $askText)
+                    .textFieldStyle(.plain)
+                    .font(.system(size: 15, weight: .medium, design: .rounded))
+                    .foregroundColor(.white)
+                    .onSubmit { sendAsk() }
+                    .accessibilityIdentifier("createCanvasAsk")
+            }
+            .padding(.horizontal, 12)
+            .padding(.vertical, 8)
+            .background(Capsule().fill(Color.white.opacity(0.12)))
+            .frame(maxWidth: .infinity)
             Button(action: sendAsk) {
                 Text("Send")
                     .font(.system(size: 12, weight: .bold, design: .rounded))
@@ -522,12 +534,22 @@ private struct CreateSlide: Identifiable {
 }
 
 private enum CreateArtboard {
-    /// 1440×810 boxes from Presentation_Screen.pdf.
-    static let idleStage = CGRect(x: 96, y: 53, width: 840, height: 493)
-    static let jesseRail = CGRect(x: 988, y: 53, width: 376, height: 544)
-    static let liveSlide = CGRect(x: 30, y: 74, width: 840, height: 493)
-    static let slidesRail = CGRect(x: 1225, y: 74, width: 196, height: 481)
-    static let dock = CGRect(x: 96, y: 632, width: 1321, height: 96)
+    /// 1440×810. Tightened margins (28pt outer, not the old 96/76 split)
+    /// and, critically, TWO separate Jesse-rail widths instead of one box
+    /// reused for both layouts - the old single `jesseRail` (x:988,
+    /// width:376, so it spanned to x:1364) was reused as-is for the
+    /// 3-column live/multi-slide row too, where `slidesRail` starts at
+    /// x:1225 - a 139pt overlap that was live on every normal load (the
+    /// seed deck ships 3 slides, so `showSlidesRail` is true from the
+    /// first frame, not just during a call). Real bug, not just a spacing
+    /// preference - fixed by giving the 3-column row its own narrower
+    /// rail width instead of borrowing the 2-column one.
+    static let idleStage = CGRect(x: 28, y: 48, width: 920, height: 560)
+    static let jesseRailIdle = CGRect(x: 980, y: 48, width: 432, height: 560)
+    static let liveSlide = CGRect(x: 28, y: 48, width: 739, height: 560)
+    static let jesseRailLive = CGRect(x: 787, y: 48, width: 403, height: 560)
+    static let slidesRail = CGRect(x: 1210, y: 48, width: 202, height: 560)
+    static let dock = CGRect(x: 28, y: 632, width: 1384, height: 96)
 }
 
 struct JesseMiniWaveform: View {

@@ -84,27 +84,107 @@ final class StudentAIKeyStore: ObservableObject {
 
     /// Tiny request against the provider's own host. Never logs the key.
     func testConnection() async -> Result<Void, SolveError> {
-        await solve(problemText: "Reply with the single word: ok")
+        await complete(system: Self.tutorSystemPrompt, user: "Reply with the single word: ok")
             .map { _ in () }
     }
 
     /// Homework answer from the student's key, or an error. Does not fall
     /// back to MindCraft's engine — caller does that only when `hasKey` is false.
     func solveHomework(problemText: String) async -> Result<String, SolveError> {
-        await solve(problemText: problemText)
+        await complete(system: Self.tutorSystemPrompt, user: problemText)
     }
 
-    private func solve(problemText: String) async -> Result<String, SolveError> {
-        guard let creds = readCredentials() else { return .failure(.noKey) }
-        switch creds.provider {
-        case .groq:
-            return await groqChat(key: creds.key, problemText: problemText)
-        case .anthropic:
-            return await anthropicMessage(key: creds.key, problemText: problemText)
+    /// Real AI-drafted email reply from the student's own key - the Work
+    /// Dashboard's "open my recent email and draft a response" ask used to
+    /// fall back to a hardcoded template (`GmailClient.suggestedReply`)
+    /// that never read the actual email; this is what makes "draft a
+    /// response" mean something real once a key is connected.
+    func draftEmailReply(from sender: String, subject: String, snippet: String) async -> Result<String, SolveError> {
+        let user = """
+        From: \(sender)
+        Subject: \(subject)
+
+        \(snippet)
+
+        Write a reply.
+        """
+        return await complete(system: Self.emailDraftSystemPrompt, user: user)
+    }
+
+    /// A real, honest study-plan generation call for Learn Studio's intake
+    /// (2026-08-17). Deliberately does NOT claim to browse the live web -
+    /// nothing in this app has a real search-API integration (confirmed
+    /// tonight: no live web-search capability exists anywhere in the
+    /// codebase), so the prompt only draws on the model's own knowledge
+    /// plus whatever real bank content is available - claiming "researched
+    /// online" when it didn't would be exactly the kind of fake capability
+    /// this app has avoided all night. `matchedConceptId` is the honest
+    /// part: rather than have the LLM invent unverified practice questions
+    /// (no firewall/oracle exists for arbitrary topics the way Blake's
+    /// ingredient-first pipeline has for math), it's asked to name a real
+    /// concept id from the list actually available in `SampleQuestion.all`
+    /// if the topic matches one - `nil` means honestly "no verified
+    /// practice bank for this yet," not a fabricated question set.
+    func generateStudyPlan(topic: String, level: String, knownConceptIds: [String]) async -> Result<StudyPlan, SolveError> {
+        let user = """
+        Topic the student wants to study: \(topic)
+        Their self-described level: \(level)
+
+        Known concept ids with a REAL, verified practice question bank today: \(knownConceptIds.joined(separator: ", "))
+
+        Respond with ONLY this JSON shape, no other text:
+        {"definition": "...", "context": "...", "layout": "full|quick|practiceOnly", "matchedConceptId": "..." or null}
+
+        - definition: one or two plain sentences stating the core idea, no jargon.
+        - context: one or two sentences on why this matters / where it fits, second person, warm.
+        - layout: "full" if the topic genuinely has a definition, a context, and a worked example worth separating; "quick" if definition and context naturally belong together; "practiceOnly" if the student clearly just wants to practice, not be taught.
+        - matchedConceptId: the exact id string from the known list above ONLY if the topic is genuinely that concept - otherwise null. Never invent an id not in that list.
+        """
+        let result = await complete(system: Self.studyPlanSystemPrompt, user: user)
+        switch result {
+        case .success(let text):
+            guard let plan = StudyPlan.parse(text) else { return .failure(.unavailable) }
+            return .success(plan)
+        case .failure(let error):
+            return .failure(error)
         }
     }
 
-    private func groqChat(key: String, problemText: String) async -> Result<String, SolveError> {
+    /// Any other real question about the student's own desk data (recent
+    /// mail, calendar, binder) - the Work Dashboard's search used to route
+    /// everything through the shared backend (`DeskAskClient`), which
+    /// silently falls back to a generic "Opening your Gmail box." template
+    /// whenever its own LLM call fails, indistinguishable from a real
+    /// answer. Answering directly with the student's own key means "tell
+    /// me more about this recurring email" actually reads their real
+    /// recent mail instead of returning a canned navigation string.
+    func answerDeskQuestion(question: String, context: String) async -> Result<String, SolveError> {
+        let user = """
+        \(context)
+
+        Question: \(question)
+        """
+        return await complete(system: Self.deskAssistantSystemPrompt, user: user)
+    }
+
+    /// General-purpose ask for Design Studio's Ask boxes - one goal per box
+    /// (set by whoever built the box), not a fixed persona the way
+    /// solveHomework/generateStudyPlan/answerDeskQuestion each are.
+    func ask(systemPrompt: String, userPrompt: String) async -> Result<String, SolveError> {
+        await complete(system: systemPrompt, user: userPrompt)
+    }
+
+    private func complete(system: String, user: String) async -> Result<String, SolveError> {
+        guard let creds = readCredentials() else { return .failure(.noKey) }
+        switch creds.provider {
+        case .groq:
+            return await groqChat(key: creds.key, system: system, user: user)
+        case .anthropic:
+            return await anthropicMessage(key: creds.key, system: system, user: user)
+        }
+    }
+
+    private func groqChat(key: String, system: String, user: String) async -> Result<String, SolveError> {
         guard let url = URL(string: "https://api.groq.com/openai/v1/chat/completions"),
               url.host == Provider.groq.host
         else { return .failure(.unavailable) }
@@ -118,8 +198,8 @@ final class StudentAIKeyStore: ObservableObject {
             "max_completion_tokens": 1024,
             "reasoning_effort": "low",
             "messages": [
-                ["role": "system", "content": Self.tutorSystemPrompt],
-                ["role": "user", "content": problemText],
+                ["role": "system", "content": system],
+                ["role": "user", "content": user],
             ],
         ])
         return await decodeProviderText(request: request) { json in
@@ -129,7 +209,7 @@ final class StudentAIKeyStore: ObservableObject {
         }
     }
 
-    private func anthropicMessage(key: String, problemText: String) async -> Result<String, SolveError> {
+    private func anthropicMessage(key: String, system: String, user: String) async -> Result<String, SolveError> {
         guard let url = URL(string: "https://api.anthropic.com/v1/messages"),
               url.host == Provider.anthropic.host
         else { return .failure(.unavailable) }
@@ -141,9 +221,9 @@ final class StudentAIKeyStore: ObservableObject {
         request.httpBody = try? JSONSerialization.data(withJSONObject: [
             "model": "claude-haiku-4-5-20251001",
             "max_tokens": 1024,
-            "system": Self.tutorSystemPrompt,
+            "system": system,
             "messages": [
-                ["role": "user", "content": problemText],
+                ["role": "user", "content": user],
             ],
         ])
         return await decodeProviderText(request: request) { json in
@@ -231,4 +311,51 @@ final class StudentAIKeyStore: ObservableObject {
     You are a homework tutor for a high-school student. Solve the problem \
     they paste. Show the steps briefly, then the answer. Do not mention API keys.
     """
+
+    private static let emailDraftSystemPrompt = """
+    You are drafting a short, polite reply to an email on behalf of a \
+    high-school student. Given the sender, subject, and preview of an email \
+    they received, write ONLY the reply body text - a natural greeting, a \
+    few sentences that actually respond to what the email says, then a \
+    sign-off. No subject line, no "Here is a draft" preamble, no mention of \
+    API keys or that you are an AI.
+    """
+
+    private static let deskAssistantSystemPrompt = """
+    You are a helpful assistant inside a high-school student's desk/\
+    dashboard app called The Desk. Answer their question using ONLY the \
+    context given below - recent emails, calendar events, and binder \
+    items. Be concise and specific (name the actual sender/subject/date \
+    when relevant instead of speaking generally). If the context doesn't \
+    have enough to answer, say so honestly instead of guessing. Do not \
+    mention API keys or that you are an AI.
+    """
+
+    private static let studyPlanSystemPrompt = """
+    You are Jesse, planning a study session for a high-school student \
+    inside The Desk. You do not have live internet access - work from \
+    your own knowledge only, and say so honestly in the definition/context \
+    text if you are uncertain rather than inventing specifics. Respond \
+    with strict JSON only, matching exactly the shape the user message \
+    specifies - no markdown fences, no commentary before or after.
+    """
+}
+
+/// Parsed via `StudyPlan.parse(_:)`, not a plain `Decodable` conformance -
+/// the model sometimes wraps JSON in prose or code fences despite
+/// instructions not to, so this extracts the first `{...}` object before
+/// decoding rather than failing outright on a technically-invalid response
+/// that a human would still recognize as "the JSON, plus noise."
+struct StudyPlan: Decodable {
+    let definition: String
+    let context: String
+    let layout: String
+    let matchedConceptId: String?
+
+    static func parse(_ raw: String) -> StudyPlan? {
+        guard let start = raw.firstIndex(of: "{"), let end = raw.lastIndex(of: "}"), start < end else { return nil }
+        let jsonSlice = raw[start...end]
+        guard let data = jsonSlice.data(using: .utf8) else { return nil }
+        return try? JSONDecoder().decode(StudyPlan.self, from: data)
+    }
 }
