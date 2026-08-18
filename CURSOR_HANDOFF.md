@@ -413,6 +413,101 @@ as today, not a silent no-op).
 
 ---
 
+#### Assignment H — Resume: one native Jesse loop, same shape as Book (Assignment F)
+
+**Goal.** Same gap Assignment F fixed for Book, now for Resume:
+`JesseCallSession.askJesse()` has no `context == "resume"` branch, so
+talking to Jesse on Resume's native rail falls through to the generic
+`ArchiveRagClient` — search-RAG replies to a resume-building conversation,
+which doesn't make sense functionally. Meanwhile `ResumeAgentView`'s left
+side still loads the old `WKWebView` (`agent_work/product/desk_os/
+workflows/resume/`), which has its own real, working resume-drafting loop
+— LinkedIn/Drive/PDF extraction, a `state`/`renderResume()` draft — but it's
+JS-side, invisible to the native call. Akshat's ask tonight: "make sure the
+conversational feature is wired and built into all Jesse/scoped and
+specific functionality" — Resume is the next, most valuable gap, and the
+backend already exists (same shape as Book's discovery in Assignment F).
+
+**The backend is already real and portable — confirmed by reading
+`webhook/lib/handlers/resume-agent.ts` directly, not assumed.**
+`POST https://mindcraft-webhook.vercel.app/api/resume-agent`:
+- Request: `{ message: string, draft: Partial<ResumeDraft>, sources?: { linkedinUrl?, linkedinText?, driveFiles?: {name,text}[], resumeText?, resumeFileName? } }`
+- `ResumeDraft`: `{ name, headline, school, email, location, skills: string[], roles: { title, org, when, bullets: string[] }[], education: string[], projects: string[], files: string[], linkedinUrl, drive: bool }`
+- Response: `{ reply, draft: ResumeDraft, readyToApply: bool, suggestedRoles: { company, role, why, query }[], actions: { type: string }[] }`
+`agent_work/product/desk_os/workflows/resume/agent.js`'s `askJesse()` is
+the reference request/response cycle, same relationship `BookAgentClient`
+has to `agent.js`'s `ask()` in the Book workflow.
+
+**Same shared-code mechanics as Assignment F, same care needed:**
+add a `ResumeAgentClient.swift` (mirror `BookAgentClient.swift`'s shape
+exactly — `Reply`/`ResponseWire`/`ask(message:draft:)`), a new
+`if context == "resume"` branch in `askJesse()` (checked alongside the
+existing `book`/`learnStudio` branches, before the `DeskBoxBus` briefing —
+same reasoning: that briefing is Work-dashboard-specific), and a published
+`resumeDraft: ResumeAgentDraft?` on `JesseCallSession`, reset in `begin()`
+same as `bookDraft`. Verify the other branches (`book`, `learnStudio`, and
+the generic fallback for `create`/`archive`/`designStudio`) are unaffected
+after adding this one.
+
+**The one real open design question, not a files-in-scope item — decide
+this before writing code:** does Resume go **fully native** (retire the
+WKWebView entirely, same as Book did) or does the native call become a
+**second entry point into the same web-driven draft**? Full-native is the
+cleaner long-term shape (one draft, one place it lives) but means porting
+LinkedIn/Drive/PDF-upload — not fabricating them, they're real and already
+native-reachable (`DriveClient.shared.connectAndReadFolder()` is the exact
+same call the web bridge already makes; `sources.driveFiles`/
+`resumeText` would come from there instead of JS). Given the size of that
+port, it's fine to ship a first pass where the native call drives
+`resumeDraft` with `sources` mostly empty (voice-only conversation, no
+LinkedIn/Drive/upload yet) and the WKWebView stays for those — but if that's
+the choice, the left panel needs to show ONE draft, not two divergent ones,
+which likely means rendering `jesseCall.resumeDraft` when it has content
+and falling back to the web view's own view otherwise, or another shape
+entirely. Flag the decision made and why in the report, don't silently pick
+one.
+
+**Files in scope:** new `ios-prototype/MindCraftNotes/MindCraftNotes/
+Networking/ResumeAgentClient.swift`, `Networking/JesseCallSession.swift`
+(the one added branch), `Views/ResumeAgentView.swift` (left-panel rendering
+— now on the shared GDoc artboard shape as of tonight's layout pass, keep
+that intact). Do not touch `agent_work/product/desk_os/workflows/resume/**`
+unless the "fully native" path is chosen and confirmed — if so, note it
+explicitly, since retiring that page changes what needs a web deploy vs. an
+iOS build. Don't touch `JesseRailView.swift`.
+
+**Definition of done:** talk to Jesse on Resume's native rail, get replies
+that are actually about building a resume (name/skills/roles), not generic
+archive search. `xcodebuild build` green, confirmed on a real device.
+
+---
+
+#### Assignment I — Presentation: native call is still decorative (harder, not scoped yet)
+
+Same underlying gap (`context == "create"` has no branch, falls through to
+`ArchiveRagClient`), but a different shape of problem than Book/Learn/
+Resume: those three drive a single draft **blob** (chapters, a study plan,
+a resume) that a backend can return whole each turn. Presentation would
+need to edit **live, already-existing structured state** — `slides: [
+CreateSlide]`, `slideIndex` — via voice ("add a slide about X," "make slide
+2 shorter"), which likely needs either a different response shape (an
+edit/patch instruction, not a whole-draft replace) or a new webhook
+entirely. Not scoped into a files-in-scope/definition-of-done spec yet —
+whoever picks this up should start by deciding that response shape, not by
+copying Assignment F/H's pattern verbatim, since the "replace the whole
+draft every turn" trick those use doesn't fit editing a slide deck a
+student is actively looking at without visibly flickering/reordering it.
+
+**Archive is very likely already correct, not a gap** — `context ==
+"archive"` falling through to `ArchiveRagClient` isn't a fallback masking a
+missing feature the way Resume/Book/Presentation's gaps are; `ArchiveRagClient`
+IS the archive-search backend by name and by what it does. Worth a quick
+confirmation read of `ArchiveWorkflowView.swift`'s own context string before
+assuming, but don't build new scoped Archive wiring on the assumption it's
+missing without checking first.
+
+---
+
 ### Cursor's last report
 
 **2026-08-16 — Assignment A (BinderStore + BYOB popup)** — branch `cursor/binder-store-byob-2c98`
