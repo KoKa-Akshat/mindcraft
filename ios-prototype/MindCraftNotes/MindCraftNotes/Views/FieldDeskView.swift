@@ -753,7 +753,8 @@ struct FieldDeskView: View {
                         onMoodleDisconnected: { _ = store.disconnect("moodle") },
                         intelLines: Array(store.intelLines.prefix(8)),
                         binderTitles: Array(binderStore.items.prefix(6).map(\.title)),
-                        onSyncCalendar: { Task { await refreshDeskCalendar() } }
+                        onSyncCalendar: { Task { await refreshDeskCalendar() } },
+                        onOpenLearnStudio: { showLearnStudio = true }
                     )
                     .id(dashboardStartRail)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)

@@ -41,6 +41,7 @@ struct DeskGridDashboardView: View {
     /// Titles from `BinderStore`, not `FieldDeskStore.FiledItem`.
     var binderTitles: [String] = []
     var onSyncCalendar: () -> Void = {}
+    var onOpenLearnStudio: () -> Void = {}
 
     @ObservedObject private var gmail = GmailClient.shared
     @ObservedObject private var moodle = MoodleClient.shared
@@ -117,7 +118,8 @@ struct DeskGridDashboardView: View {
         onMoodleDisconnected: @escaping () -> Void = {},
         intelLines: [String] = [],
         binderTitles: [String] = [],
-        onSyncCalendar: @escaping () -> Void = {}
+        onSyncCalendar: @escaping () -> Void = {},
+        onOpenLearnStudio: @escaping () -> Void = {}
     ) {
         self.initialRail = initialRail
         self.initialMemoText = initialMemoText
@@ -139,6 +141,7 @@ struct DeskGridDashboardView: View {
         self.intelLines = intelLines
         self.binderTitles = binderTitles
         self.onSyncCalendar = onSyncCalendar
+        self.onOpenLearnStudio = onOpenLearnStudio
         _rail = State(initialValue: initialRail)
         _memoDraft = State(initialValue: initialMemoText)
     }
@@ -1307,6 +1310,7 @@ struct DeskGridDashboardView: View {
             dockChip("Memo", system: "note.text", identifier: "deskGridDashboardAddMemo") { setRail(rail == .memo ? .none : .memo) }
             dockChip("Gmail", system: "envelope.fill", action: onOpenGmail)
             dockChip("Flows", system: "bolt.fill", identifier: "deskGridDock_Flows") { setRail(rail == .flows ? .none : .flows) }
+            dockChip("Learn", system: "square.grid.2x2.fill", identifier: "deskGridDock_LearnStudio") { onOpenLearnStudio() }
             searchField(placeholder: "Search", identifier: "deskGridDashboardSearch", onSubmit: submitSearch)
         }
         .padding(.horizontal, 16)
