@@ -1,6 +1,7 @@
 import SwiftUI
 import UniformTypeIdentifiers
 import PhotosUI
+import PDFKit
 
 private enum ShrineBeatPhase: Equatable {
     case idle
@@ -125,7 +126,11 @@ struct FieldDeskView: View {
     @State private var homeworkSolving = false
     @State private var homeworkResultCards: [IngredientHintsClient.HintCard] = []
     @State private var homeworkError: String?
-    @State private var homeworkPhotoItem: PhotosPickerItem?
+    /// One upload button, photo or PDF - explicit ask: "just needs an
+    /// upload button for now that's it." `.fileImporter` (Files browser,
+    /// which itself reaches Photos too) replaces the old images-only
+    /// `PhotosPicker`.
+    @State private var showHomeworkImporter = false
     @State private var homeworkUploading = false
     @State private var homeworkUploadNote: String?
     /// Learn Studio — the five-pane concept-study screen, reachable from the
@@ -3333,13 +3338,15 @@ struct FieldDeskView: View {
     /// the answer (see `fileHomeworkHelpToBinder`).
     private var homeworkHelpSolverBody: some View {
         VStack(alignment: .leading, spacing: 10) {
-            PhotosPicker(selection: $homeworkPhotoItem, matching: .images) {
+            Button {
+                showHomeworkImporter = true
+            } label: {
                 HStack(spacing: 8) {
                     if homeworkUploading {
                         ProgressView().tint(Color(fdHex: "0c1207"))
                     } else {
-                        Image(systemName: "camera.fill")
-                        Text("Upload a photo")
+                        Image(systemName: "square.and.arrow.up")
+                        Text("Upload")
                     }
                 }
                 .font(.system(size: 13, weight: .bold, design: .rounded))
@@ -3351,13 +3358,14 @@ struct FieldDeskView: View {
             .background(Capsule().fill(Color(fdHex: "c4f547")))
             .disabled(homeworkUploading)
             .accessibilityIdentifier("fieldDeskHomeworkHelpUpload")
-            .accessibilityLabel("Upload a photo of the problem")
-            .onChange(of: homeworkPhotoItem) { _, item in
-                guard let item else { return }
-                Task {
-                    await handleHomeworkPhotoPicked(item)
-                    homeworkPhotoItem = nil
-                }
+            .accessibilityLabel("Upload a photo or PDF of the problem")
+            .fileImporter(
+                isPresented: $showHomeworkImporter,
+                allowedContentTypes: [.image, .pdf],
+                allowsMultipleSelection: false
+            ) { result in
+                guard case .success(let urls) = result, let url = urls.first else { return }
+                Task { await handleHomeworkFileUpload(url) }
             }
 
             if let homeworkUploadNote {
@@ -3450,23 +3458,50 @@ struct FieldDeskView: View {
         }
     }
 
-    /// Real upload, not a stub - same `HomeworkClient.parseAndCreateSession`
-    /// (`/api/parse-homework`) already used by the older Work tab
-    /// (`WorkPracticeView`), just reused here instead of duplicated. A
-    /// worksheet photo can parse into several questions; this popup only
-    /// solves one problem at a time, so the first parsed question's text
-    /// fills the draft field and solving starts immediately - a note says
-    /// how many more were found so nothing looks silently dropped.
-    private func handleHomeworkPhotoPicked(_ item: PhotosPickerItem) async {
+    /// Real upload, not a stub - one button, photo or PDF. Photos still go
+    /// through `HomeworkClient.parseAndCreateSession` (`/api/parse-homework`,
+    /// same client `WorkPracticeView` already uses) since that endpoint does
+    /// real vision-model OCR a plain text extractor can't. PDFs have no such
+    /// endpoint - extracted locally via PDFKit instead (same technique
+    /// `DriveClient.pdfText` already uses elsewhere in this app) and fed
+    /// straight into the existing type-it-out -> Solve path, since a PDF
+    /// homework page is usually already real text, not a photo needing OCR.
+    private func handleHomeworkFileUpload(_ url: URL) async {
         homeworkError = nil
         homeworkUploadNote = nil
         homeworkUploading = true
-        guard let data = try? await item.loadTransferable(type: Data.self) else {
-            homeworkError = "Couldn\u{2019}t read that photo. Try a clearer shot."
+        let accessed = url.startAccessingSecurityScopedResource()
+        defer { if accessed { url.stopAccessingSecurityScopedResource() } }
+        guard let data = try? Data(contentsOf: url) else {
+            homeworkError = "Couldn\u{2019}t read that file. Try again."
             homeworkUploading = false
             return
         }
-        let (result, _) = await HomeworkClient.parseAndCreateSession(imageData: data, fileName: "homework.jpg")
+
+        if url.pathExtension.lowercased() == "pdf" {
+            guard let doc = PDFDocument(data: data) else {
+                homeworkError = "Couldn\u{2019}t read that PDF. Try another file."
+                homeworkUploading = false
+                return
+            }
+            var text = ""
+            for i in 0..<doc.pageCount {
+                text += (doc.page(at: i)?.string ?? "") + "\n"
+                if text.count > 4000 { break }
+            }
+            homeworkUploading = false
+            let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !trimmed.isEmpty else {
+                homeworkError = "Couldn\u{2019}t find any text in that PDF. Try a photo instead."
+                return
+            }
+            homeworkProblemDraft = trimmed
+            homeworkUploadNote = "Got it - solving now."
+            await solveHomeworkProblem()
+            return
+        }
+
+        let (result, _) = await HomeworkClient.parseAndCreateSession(imageData: data, fileName: url.lastPathComponent)
         homeworkUploading = false
         switch result {
         case .success(let questions):

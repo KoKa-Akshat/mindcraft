@@ -331,9 +331,10 @@ struct DeskGridDashboardView: View {
             case .intel: return "sparkles"
             case .moodle: return "graduationcap.fill"
             case .binder: return "person.crop.circle.fill"
-            // Camera, not a lightbulb - matches the tile's actual primary
-            // action now (Upload a photo leads, "Get help" no longer does).
-            case .homeworkHelp: return "camera.fill"
+            // Upload arrow, not a camera or a lightbulb - the tile opens a
+            // dialogue with one Upload button (photo or PDF), it doesn't
+            // jump straight into a camera.
+            case .homeworkHelp: return "square.and.arrow.up"
             case .memo: return "note.text"
             }
         }
