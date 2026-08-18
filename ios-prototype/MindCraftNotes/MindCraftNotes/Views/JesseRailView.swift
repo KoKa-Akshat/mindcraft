@@ -46,21 +46,41 @@ struct JesseRailView: View {
                         .fill(Color(jrHex: "eef1ec"))
                 )
 
-            Button(action: jesseCall.isActive ? endCall : jumpOnCall) {
-                HStack {
-                    Image(systemName: jesseCall.isActive ? "phone.down.fill" : "phone.fill")
-                    Text(jesseCall.isActive ? "End call" : "Jump on a call with Jesse")
-                    Spacer(minLength: 0)
-                    if !jesseCall.isActive { Image(systemName: "arrow.right") }
+            HStack(spacing: 10) {
+                Button(action: jesseCall.isActive ? endCall : jumpOnCall) {
+                    HStack {
+                        Image(systemName: jesseCall.isActive ? "phone.down.fill" : "phone.fill")
+                        Text(jesseCall.isActive ? "End call" : "Jump on a call with Jesse")
+                        Spacer(minLength: 0)
+                        if !jesseCall.isActive { Image(systemName: "arrow.right") }
+                    }
+                    .font(.system(size: 14, weight: .bold, design: .rounded))
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 14)
+                    .background(Capsule().fill(jesseCall.isActive ? Color(jrHex: "b0473f") : Color.black))
                 }
-                .font(.system(size: 14, weight: .bold, design: .rounded))
-                .foregroundColor(.white)
-                .padding(.horizontal, 16)
-                .padding(.vertical, 14)
-                .background(Capsule().fill(jesseCall.isActive ? Color(jrHex: "b0473f") : Color.black))
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("jesseRailCall")
+
+                // Listening starts automatically once the call connects
+                // (see jumpOnCall) - this toggle is for muting mid-call,
+                // matching JesseCallOverlay's own mic button
+                // (tap-to-toggle, never hold-to-talk, per CLAUDE.md).
+                if jesseCall.isActive {
+                    Button {
+                        jesseCall.isListening ? jesseCall.stopListening() : jesseCall.startListening()
+                    } label: {
+                        Image(systemName: jesseCall.isListening ? "mic.fill" : "mic.slash.fill")
+                            .font(.system(size: 16, weight: .bold))
+                            .foregroundColor(.white)
+                            .frame(width: 48, height: 48)
+                            .background(Circle().fill(jesseCall.isListening ? Color(jrHex: "247a4d") : Color(jrHex: "8a8478")))
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityIdentifier("jesseRailMic")
+                }
             }
-            .buttonStyle(.plain)
-            .accessibilityIdentifier("jesseRailCall")
 
             // Auto-transcribes inline, on the screen itself - not a separate
             // full-screen call sheet. This IS the "live call thing" - the
@@ -124,8 +144,16 @@ struct JesseRailView: View {
         }
     }
 
+    /// `begin()` only starts the call session - it never starts speech
+    /// capture on its own (confirmed reading JesseCallSession.swift
+    /// directly). The original full-screen call sheet required an
+    /// explicit separate mic tap for this; auto-starting it here is the
+    /// actual fix for "why isn't it transcribing what I say" - talking
+    /// should just work the moment the call connects, not require knowing
+    /// about a second control first.
     private func jumpOnCall() {
         jesseCall.begin(context: context)
+        jesseCall.startListening()
     }
 
     private func endCall() {
