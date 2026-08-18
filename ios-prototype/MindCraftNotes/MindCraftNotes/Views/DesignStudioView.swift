@@ -28,7 +28,12 @@ struct DesignStudioView: View {
     @State private var selectedId: String?
     @State private var dragStart: [String: CGPoint] = [:]
 
-    @State private var runningId: String?
+    // Per-box, not a single shared id - a second box's Run tap used to
+    // stomp this and its own completion could then null out the FIRST
+    // box's still-running indicator (or worse, a Reset Flow mid-await
+    // let a stale response write into a box id that no longer exists).
+    // Flagged by Greptile on the PR, real finding, fixed here.
+    @State private var runningIds: Set<String> = []
     @State private var results: [String: String] = [:]
     @State private var errors: [String: String] = [:]
     @State private var promptDrafts: [String: String] = [:]
@@ -149,7 +154,7 @@ struct DesignStudioView: View {
 
     private func statusDot(for id: String) -> some View {
         let color: Color
-        if runningId == id { color = Color(dsHex: "f5c542") }
+        if runningIds.contains(id) { color = Color(dsHex: "f5c542") }
         else if errors[id] != nil { color = Color(dsHex: "e05a4e") }
         else if results[id] != nil { color = Color(dsHex: "c4f547") }
         else { color = .white.opacity(0.35) }
@@ -231,7 +236,7 @@ struct DesignStudioView: View {
                 Button {
                     Task { await runAsk(box) }
                 } label: {
-                    if runningId == box.id {
+                    if runningIds.contains(box.id) {
                         HStack(spacing: 6) { ProgressView().tint(.white); Text("Running\u{2026}") }
                     } else {
                         Text("Run")
@@ -243,7 +248,7 @@ struct DesignStudioView: View {
                 .padding(.vertical, 10)
                 .background(Capsule().fill(Color.black))
                 .buttonStyle(.plain)
-                .disabled(!aiKeys.hasKey || runningId == box.id)
+                .disabled(!aiKeys.hasKey || runningIds.contains(box.id))
                 .opacity(!aiKeys.hasKey ? 0.5 : 1)
                 .accessibilityIdentifier("designStudioRun_\(box.id)")
 
@@ -291,11 +296,20 @@ struct DesignStudioView: View {
     }
 
     private func runAsk(_ box: DesignBox) async {
-        runningId = box.id
+        guard !runningIds.contains(box.id) else { return }
+        runningIds.insert(box.id)
         errors[box.id] = nil
         let prompt = promptDrafts[box.id] ?? box.subtitle
         let system = "You are Jesse, doing one focused task inside a student's own custom flow called \"\(box.title)\". Do exactly what's asked, concisely, no preamble."
-        switch await aiKeys.ask(systemPrompt: system, userPrompt: prompt) {
+        let response = await aiKeys.ask(systemPrompt: system, userPrompt: prompt)
+        // The box (or the whole flow) may have been removed/reset while
+        // this was in flight - don't resurrect a result for an id that's
+        // no longer part of the flow.
+        guard boxes.contains(where: { $0.id == box.id }) else {
+            runningIds.remove(box.id)
+            return
+        }
+        switch response {
         case .success(let text):
             results[box.id] = text
         case .failure(.noKey):
@@ -305,7 +319,7 @@ struct DesignStudioView: View {
         case .failure(.unavailable):
             errors[box.id] = "Couldn\u{2019}t reach the model \u{2014} try again in a bit."
         }
-        runningId = nil
+        runningIds.remove(box.id)
     }
 
     private func removeBox(_ id: String) {
@@ -479,7 +493,10 @@ private enum DesignBoard {
     static let canvas = CGRect(x: 40, y: 40, width: 760, height: 656)
     static let jesseRail = CGRect(x: 828, y: 40, width: 340, height: 656)
     static let inspector = CGRect(x: 1196, y: 40, width: 204, height: 656)
-    static let addButton = CGRect(x: 40, y: 40, width: 44, height: 44)
+    // Bottom-right corner of canvas, clear of every demoFlow box (all four
+    // sit in x:20-730/y:0-232) - was pinned at (40,40), directly on top of
+    // the first box's own top-left corner. Real overlap, not a style nit.
+    static let addButton = CGRect(x: canvas.maxX - 60, y: canvas.maxY - 60, width: 44, height: 44)
     static let dock = CGRect(x: 96, y: 706, width: 1321, height: 96)
 }
 

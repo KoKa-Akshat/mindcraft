@@ -1,5 +1,14 @@
 import SwiftUI
 
+/// One line of the agent takeover's Binder mail list - structured (not a
+/// pre-joined string) so it can render through `DeskContentRow` like every
+/// other tile row instead of looking like a raw text dump.
+private struct AgentMailLine: Identifiable {
+    let id = UUID()
+    let from: String
+    let subject: String
+}
+
 /// Work canvas from Presentation Screen.pdf pages 4–5.
 /// Tiles sit on a measured 1440×810 artboard (scaled to the iPad).
 /// Page 4 = five photo cards + one dock. Page 5 = tiles shrink left, right rail opens.
@@ -18,6 +27,7 @@ struct DeskGridDashboardView: View {
     var onOpenCalendar: () -> Void = {}
     var onOpenGmail: () -> Void = {}
     var onOpenIntel: () -> Void = {}
+    var onOpenHomeworkHelp: () -> Void = {}
     var onOpenCreate: (CreateCanvasKind) -> Void = { _ in }
     var onOpenFlow: (String) -> Void = { _ in }
     var onSaveMemo: (String) -> Void = { _ in }
@@ -31,13 +41,49 @@ struct DeskGridDashboardView: View {
     /// Titles from `BinderStore`, not `FieldDeskStore.FiledItem`.
     var binderTitles: [String] = []
     var onSyncCalendar: () -> Void = {}
+    var onOpenLearnStudio: () -> Void = {}
 
     @ObservedObject private var gmail = GmailClient.shared
     @ObservedObject private var moodle = MoodleClient.shared
     @ObservedObject private var digest = GmailDigestClient.shared
     @ObservedObject private var digestStore = GmailDigestStore.shared
     @ObservedObject private var boxBus = DeskBoxBus.shared
+    @ObservedObject private var aiKeys = StudentAIKeyStore.shared
     @State private var showMoodleSheet = false
+
+    // MARK: - Agent takeover (any real ask, not just the email/draft case)
+    // Any request longer than a quick nav keyword borrows Binder and/or
+    // Intel in place instead of spawning a new floating box - Akshat's
+    // explicit spec after the search-triggered Gmail box felt disconnected
+    // from the dashboard's own tile grid ("this mechanism of using screen +
+    // 1 box is great... make this happen across any and all request").
+    // Two content shapes share the same on/off switch:
+    //  - the email/draft case (agentEmail/agentDraftText/...) - richer,
+    //    uses the student's own AI key for a real drafted reply, not just
+    //    whatever the shared backend says.
+    //  - everything else (agentBinderLines/agentReplyText) - a plain
+    //    Desk Ask round trip (same agent Jesse's Kitchen's own Ask bar
+    //    calls), shown as short lines in Binder and the reply text in
+    //    Intel. A handful of asks (Apply Today, a full connect flow, a
+    //    specific concept's Field Book) still open their own existing
+    //    screen instead of a tile - the "screen + 1 box" model's one-box
+    //    allowance, routed through the same callbacks already passed in
+    //    from FieldDeskView rather than a new floating overlay.
+    // Done (top-right) reverts every tile to its normal content; nothing
+    // here persists past that.
+    @State private var agentTakeoverActive = false
+    @State private var agentEmail: GmailClient.Message?
+    @State private var agentDraftText = ""
+    @State private var agentDraftBusy = false
+    @State private var agentDraftError: String?
+    @State private var agentSending = false
+    @State private var agentBinderLines: [AgentMailLine]?
+    @State private var agentReplyText: String?
+    /// Separate from `agentDraftBusy` - that one also gates Binder's
+    /// spinner (it fetches the email first), but a general ask only ever
+    /// affects Intel, so reusing it would flash Binder's spinner then
+    /// silently drop it for every non-email request.
+    @State private var agentAskBusy = false
 
     @State private var rail: Rail
     @State private var memoDraft: String
@@ -60,6 +106,7 @@ struct DeskGridDashboardView: View {
         onOpenCalendar: @escaping () -> Void = {},
         onOpenGmail: @escaping () -> Void = {},
         onOpenIntel: @escaping () -> Void = {},
+        onOpenHomeworkHelp: @escaping () -> Void = {},
         onOpenCreate: @escaping (CreateCanvasKind) -> Void = { _ in },
         onOpenFlow: @escaping (String) -> Void = { _ in },
         onSaveMemo: @escaping (String) -> Void = { _ in },
@@ -71,7 +118,8 @@ struct DeskGridDashboardView: View {
         onMoodleDisconnected: @escaping () -> Void = {},
         intelLines: [String] = [],
         binderTitles: [String] = [],
-        onSyncCalendar: @escaping () -> Void = {}
+        onSyncCalendar: @escaping () -> Void = {},
+        onOpenLearnStudio: @escaping () -> Void = {}
     ) {
         self.initialRail = initialRail
         self.initialMemoText = initialMemoText
@@ -80,6 +128,7 @@ struct DeskGridDashboardView: View {
         self.onOpenCalendar = onOpenCalendar
         self.onOpenGmail = onOpenGmail
         self.onOpenIntel = onOpenIntel
+        self.onOpenHomeworkHelp = onOpenHomeworkHelp
         self.onOpenCreate = onOpenCreate
         self.onOpenFlow = onOpenFlow
         self.onSaveMemo = onSaveMemo
@@ -92,6 +141,7 @@ struct DeskGridDashboardView: View {
         self.intelLines = intelLines
         self.binderTitles = binderTitles
         self.onSyncCalendar = onSyncCalendar
+        self.onOpenLearnStudio = onOpenLearnStudio
         _rail = State(initialValue: initialRail)
         _memoDraft = State(initialValue: initialMemoText)
     }
@@ -132,6 +182,14 @@ struct DeskGridDashboardView: View {
                 tileBoard(scale: scale, board: board)
                     .scaleEffect(spaceZoom * liveZoom)
                     .offset(x: spacePan.width + livePan.width, y: spacePan.height + livePan.height)
+                // Same dimmed-background + centered-card popup family as
+                // Intel/Binder/Homework Help - was a .sheet() with its own
+                // NavigationStack/toolbar, visually inconsistent with the
+                // rest of the boxes.
+                if showMoodleSheet {
+                    moodleOverlayLayer
+                        .transition(.opacity)
+                }
             }
             .frame(width: geo.size.width, height: geo.size.height)
             .contentShape(Rectangle())
@@ -142,13 +200,6 @@ struct DeskGridDashboardView: View {
         .ignoresSafeArea()
         .onChange(of: intelLines) { _, lines in boxBus.intelLines = lines }
         .onChange(of: binderTitles) { _, titles in boxBus.binderTitles = titles }
-        .sheet(isPresented: $showMoodleSheet) {
-            MoodleBoxSheet(
-                client: moodle,
-                onLinked: onMoodleLinked,
-                onDisconnected: onMoodleDisconnected
-            )
-        }
         // No Exit control here anymore - moved into the Manage page
         // (logo tap) so the dashboard itself stays clean. onClose is still
         // wired from FieldDeskView but nothing on this screen calls it now.
@@ -160,6 +211,27 @@ struct DeskGridDashboardView: View {
             Text(verbatim: "dashboard").font(.system(size: 1)).foregroundColor(.clear)
                 .accessibilityIdentifier("deskGridDashboard")
                 .allowsHitTesting(false)
+        }
+        // Pinned to the actual screen corner, not the pannable/zoomable
+        // board coordinate space - Binder/Intel can be panned off-center,
+        // but Done needs to stay reachable regardless.
+        .overlay(alignment: .topTrailing) {
+            if agentTakeoverActive {
+                Button(action: closeAgentTakeover) {
+                    Text("Done")
+                        .font(.system(size: 13, weight: .bold, design: .rounded))
+                        .foregroundColor(Color(gridHex: "143a2e"))
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 10)
+                        .background(Capsule().fill(Color(gridHex: "c4f547")))
+                        .shadow(color: .black.opacity(0.18), radius: 10, y: 4)
+                }
+                .buttonStyle(.plain)
+                .padding(.top, 16)
+                .padding(.trailing, 16)
+                .accessibilityIdentifier("deskGridAgentDone")
+                .transition(.opacity)
+            }
         }
     }
 
@@ -178,11 +250,8 @@ struct DeskGridDashboardView: View {
             pin(boxRect(.binder), scale: scale) {
                 photoTile(.binder)
             }
-            pin(boxRect(.emailSummaries), scale: scale) {
-                photoTile(.emailSummaries)
-            }
-            pin(boxRect(.gcal), scale: scale) {
-                photoTile(.gcal)
+            pin(boxRect(.homeworkHelp), scale: scale) {
+                photoTile(.homeworkHelp)
             }
             pin(WorkArtboard.dock, scale: scale) { activeDock }
             if expanded {
@@ -210,27 +279,35 @@ struct DeskGridDashboardView: View {
     // MARK: - Tiles
 
     private enum TileKind {
-        case intel, moodle, binder, emailSummaries, gcal, memo
+        case intel, moodle, binder, homeworkHelp, memo
 
         var title: String {
             switch self {
             case .intel: return "Intel"
             case .moodle: return "Moodle"
             case .binder: return "Binder"
-            case .emailSummaries: return "Email Summaries"
-            case .gcal: return "Gcal"
+            case .homeworkHelp: return "Homework Help"
             case .memo: return "Memo"
             }
         }
 
+        /// Binder and the merged Intel box always show real content (each
+        /// section has its own empty/connect state built in) - neither
+        /// gets a mascot moment anymore. Homework Help has no commissioned
+        /// art; SF Symbol fallback in `mascotArt` covers it. Moodle keeps
+        /// its slug (identity for the accessibility marker + tap-to-connect
+        /// hint) but its `desk_mascot_moodle_*` art assets were deleted -
+        /// they were MindCraft's own generic raccoon mascot recolored, not
+        /// real Moodle branding, and read as a mismatch (flagged, not
+        /// fixed, in an earlier session; Akshat asked to remove it rather
+        /// than keep shipping the wrong brand). `UIImage(named:)` now
+        /// misses for moodle too, so it falls back to the same SF Symbol
+        /// path as Homework Help (`graduationcap.fill` - already
+        /// brand-neutral) until real art exists.
         var mascotSlug: String? {
             switch self {
-            case .intel: return "intel"
             case .moodle: return "moodle"
-            case .binder: return "binder"
-            case .emailSummaries: return "email"
-            case .gcal: return "gcal"
-            case .memo: return nil
+            case .intel, .binder, .homeworkHelp, .memo: return nil
             }
         }
 
@@ -244,8 +321,7 @@ struct DeskGridDashboardView: View {
             case .intel: return [Color(gridHex: "247a4d"), Color(gridHex: "143a2e")]
             case .moodle: return [Color(gridHex: "d7e4d4"), Color(gridHex: "b7c9b4")]
             case .binder: return [Color(gridHex: "f3efe4"), Color(gridHex: "e4dcc8")]
-            case .emailSummaries: return [Color(gridHex: "c8ddd0"), Color(gridHex: "8fb89a")]
-            case .gcal: return [Color(gridHex: "1f3d2e"), Color(gridHex: "0c1512")]
+            case .homeworkHelp: return [Color(gridHex: "c4f547"), Color(gridHex: "7a9e2e")]
             case .memo: return [Color(gridHex: "fff8e9"), Color(gridHex: "efe6cf")]
             }
         }
@@ -255,8 +331,7 @@ struct DeskGridDashboardView: View {
             case .intel: return "sparkles"
             case .moodle: return "graduationcap.fill"
             case .binder: return "person.crop.circle.fill"
-            case .emailSummaries: return "headphones"
-            case .gcal: return "calendar"
+            case .homeworkHelp: return "lightbulb.fill"
             case .memo: return "note.text"
             }
         }
@@ -271,22 +346,16 @@ struct DeskGridDashboardView: View {
                         : "\(assignmentCount) assignment\(assignmentCount == 1 ? "" : "s") from Moodle."
                 }
                 return "Tap the sleeping mascot to connect."
-            case .emailSummaries:
-                if phase == .sleeping { return "Tap the sleeping mascot to connect Gmail." }
-                if phase == .working { return "Connecting Gmail…" }
-                return "Listen through what actually needs you."
-            case .gcal:
-                if phase == .sleeping { return "Tap the sleeping mascot to connect Calendar." }
-                if phase == .working { return "Connecting Calendar…" }
-                return "This week, already on the page."
             case .intel:
                 return phase == .sleeping
-                    ? "Empty until Gmail, Calendar, or Moodle fetch something."
-                    : "Jesse pulled three things from this week."
+                    ? "Connect Gmail, Calendar, or Moodle to fill this in."
+                    : "Email, calendar, and what Jesse's pulled this week."
             case .binder:
                 return phase == .sleeping
                     ? "Empty until Jesse files something here."
                     : "Memo, docs, and your own books."
+            case .homeworkHelp:
+                return "Paste a problem, upload a page, or write it out."
             case .memo:
                 return "Pin a note on the right rail."
             }
@@ -318,17 +387,21 @@ struct DeskGridDashboardView: View {
                         .fill(LinearGradient(colors: kind.wash, startPoint: .topLeading, endPoint: .bottomTrailing))
                     // Grown + real data: rows replace the mascot. Sleeping /
                     // working / not-yet-grown keep the mascot (Assignment B).
+                    // Binder is a filing system, not a connector - it never
+                    // gets a mascot/icon moment once it has real items,
+                    // always just its own neat rows (`tileBody`) below.
                     if kind.mascotSlug != nil, !tileIsGrown(kind) {
                         mascotArt(kind, phase: phase)
                         .scaleEffect(tileShowsContent(kind) ? 0.55 : 1)
                         .offset(
                             x: tileShowsContent(kind) ? 48 : 0,
-                            y: kind == .binder && binderPulled ? 18 : (tileShowsContent(kind) ? -28 : -8)
+                            y: tileShowsContent(kind) ? -28 : -8
                         )
-                    } else if kind.mascotSlug == nil {
+                    } else if kind.mascotSlug == nil, kind != .intel, !(kind == .binder && tileShowsContent(kind)) {
                         Image(systemName: kind.symbol)
-                            .font(.system(size: 36, weight: .medium))
+                            .font(.system(size: kind == .binder ? 54 : 36, weight: .medium))
                             .foregroundColor(.white.opacity(awake ? 0.88 : 0.35))
+                            .offset(y: kind == .binder && binderPulled ? 18 : 0)
                     }
                     VStack(alignment: .leading, spacing: 6) {
                         if !tileIsGrown(kind) { Spacer(minLength: 0) }
@@ -352,20 +425,17 @@ struct DeskGridDashboardView: View {
 
     private func mascotPhase(_ kind: TileKind) -> MascotPhase {
         switch kind {
-        case .emailSummaries:
-            if gmail.isBusy { return .working }
-            return gmail.hasGmailScope ? .awake : .sleeping
-        case .gcal:
-            if gmail.isBusy { return .working }
-            return gmail.hasCalendarScope ? .awake : .sleeping
         case .moodle:
             if moodle.isBusy { return .working }
             return moodle.isConnected ? .awake : .sleeping
         case .intel:
-            return intelHasData ? .awake : .sleeping
+            // Merged box: awake once Intel's own research, Gmail, or
+            // Calendar has anything to show.
+            if gmail.isBusy { return .working }
+            return (intelHasData || gmail.hasGmailScope || gmail.hasCalendarScope) ? .awake : .sleeping
         case .binder:
             return binderHasData ? .awake : .sleeping
-        case .memo:
+        case .homeworkHelp, .memo:
             return .awake
         }
     }
@@ -375,10 +445,45 @@ struct DeskGridDashboardView: View {
     /// a parent's `.accessibilityIdentifier` stomps a plain child's own id.
     @ViewBuilder
     private func mascotArt(_ kind: TileKind, phase: MascotPhase) -> some View {
+        let content = mascotContent(kind, phase: phase)
+        if mascotTappable(kind) {
+            Button(action: { connectMascot(kind) }) { content }
+                .buttonStyle(.plain)
+                .accessibilityHint("Connect this box")
+        } else {
+            content
+        }
+    }
+
+    /// Plain (non-`@ViewBuilder`) function - it just returns whichever
+    /// content applies, so an ordinary `if/else` with `return` works
+    /// without `@ViewBuilder` trying to treat the branches themselves as
+    /// view-producing statements.
+    private func mascotContent(_ kind: TileKind, phase: MascotPhase) -> AnyView {
         if let assetName = kind.mascotAssetName(state: phase), let image = UIImage(named: assetName) {
-            let content = Image(uiImage: image)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
+            return AnyView(
+                Image(uiImage: image)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .overlay(alignment: .topLeading) {
+                        Text(verbatim: "mascot-\(kind.mascotSlug ?? "")")
+                            .font(.system(size: 1))
+                            .foregroundColor(.clear)
+                            .accessibilityIdentifier("deskGridMascot_\(kind.mascotSlug ?? "")")
+                            .allowsHitTesting(false)
+                    }
+                    .accessibilityLabel("\(kind.title) mascot, \(phase.rawValue)")
+                    .accessibilityAddTraits(.isImage)
+            )
+        }
+        // No commissioned art for this tile (Homework Help never had any;
+        // Moodle's raccoon illustration was pulled - it was MindCraft's own
+        // generic mascot recolored, not actual Moodle branding, and read as
+        // a mismatch). SF Symbol fallback, same treatment either way.
+        return AnyView(
+            Image(systemName: kind.symbol)
+                .font(.system(size: kind == .binder ? 54 : 36, weight: .medium))
+                .foregroundColor(.white.opacity(phase != .sleeping ? 0.88 : 0.35))
                 .overlay(alignment: .topLeading) {
                     Text(verbatim: "mascot-\(kind.mascotSlug ?? "")")
                         .font(.system(size: 1))
@@ -387,121 +492,355 @@ struct DeskGridDashboardView: View {
                         .allowsHitTesting(false)
                 }
                 .accessibilityLabel("\(kind.title) mascot, \(phase.rawValue)")
-            if mascotTappable(kind) {
-                Button(action: { connectMascot(kind) }) { content }
-                    .buttonStyle(.plain)
-                    .accessibilityHint("Connect this box")
-            } else {
-                content.accessibilityAddTraits(.isImage)
-            }
-        } else {
-            Image(systemName: kind.symbol)
-                .font(.system(size: kind == .binder ? 54 : 36, weight: .medium))
-                .foregroundColor(.white.opacity(phase != .sleeping ? 0.88 : 0.35))
-        }
+        )
     }
 
     private func mascotTappable(_ kind: TileKind) -> Bool {
         switch kind {
         case .moodle: return !moodle.isConnected
-        case .emailSummaries: return !gmail.hasGmailScope
-        case .gcal: return !gmail.hasCalendarScope
         default: return false
         }
     }
 
     private func connectMascot(_ kind: TileKind) {
-        switch kind {
-        case .moodle:
+        // Only Moodle's mascot is tap-to-connect now (`mascotTappable`
+        // gates this) - Gmail/Calendar connect from inside Intel's popup,
+        // since one mascot tap can no longer mean "connect the one thing
+        // this box is for" once Intel covers three sources at once.
+        if kind == .moodle {
             showMoodleSheet = true
-        case .emailSummaries, .gcal:
-            Task {
-                await gmail.connectGoogleMailAndCalendar()
-                if gmail.hasGmailScope {
-                    onGmailLinked(gmail.hasCalendarScope)
-                }
-            }
-        default:
-            break
         }
     }
 
+    private var moodleOverlayLayer: some View {
+        MoodleBoxSheet(
+            client: moodle,
+            onLinked: onMoodleLinked,
+            onDisconnected: onMoodleDisconnected,
+            onClose: { showMoodleSheet = false }
+        )
+    }
+
     /// The search field had no wired behavior at all - typing did nothing,
-    /// submitting did nothing (reported explicitly). Matches against the
-    /// same real destinations the dock chips and tiles already open, so
-    /// "search" genuinely jumps somewhere instead of being a decorative box.
+    /// submitting did nothing (reported explicitly). Short static keywords
+    /// still jump straight to the matching destination (fast, no network),
+    /// same as the dock chips and tiles. Anything else - a real
+    /// natural-language ask - goes to `startAgentTakeover`, which borrows
+    /// Binder/Intel (or one of the existing full-screen flows for the
+    /// handful of asks that genuinely need their own screen) instead of
+    /// silently doing nothing just because it isn't one of the ~6
+    /// recognized keywords.
     private func submitSearch() {
-        let query = searchQuery.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        let raw = searchQuery.trimmingCharacters(in: .whitespacesAndNewlines)
+        let query = raw.lowercased()
         defer { searchQuery = "" }
         guard !query.isEmpty else { return }
-        if "binder".contains(query) || "act field book".contains(query) {
+        // A short 1-3 word query ("gmail", "open calendar") is almost
+        // always someone naming a destination - keep that instant, no
+        // network round trip. Anything longer is a real instruction
+        // ("open my recent email and draft a response") - a single-keyword
+        // match on a long sentence would silently drop everything after
+        // the matched word (e.g. routing straight to onOpenGmail() and
+        // never acting on "and draft a response").
+        guard raw.split(separator: " ").count <= 3 else {
+            startAgentTakeover(raw)
+            return
+        }
+        if query.contains("binder") || query.contains("act field book") {
             handleTile(.binder)
-        } else if "calendar".contains(query) || "gcal".contains(query) {
+        } else if query.contains("calendar") || query.contains("gcal") {
             onOpenCalendar()
-        } else if "gmail".contains(query) || "email".contains(query) || "email summaries".contains(query) {
+        } else if query.contains("gmail") || query.contains("email") {
             onOpenGmail()
-        } else if "memo".contains(query) {
+        } else if query.contains("homework") {
+            handleTile(.homeworkHelp)
+        } else if query.contains("memo") {
             setRail(rail == .memo ? .none : .memo)
-        } else if "flows".contains(query) || "presentation".contains(query) || "gdoc".contains(query)
-            || "resume".contains(query) || "archive".contains(query) || "book".contains(query) || "apply".contains(query) {
+        } else if query.contains("flows") || query.contains("presentation") || query.contains("gdoc")
+            || query.contains("resume") || query.contains("archive") || query.contains("book") || query.contains("apply") {
             setRail(rail == .flows ? .none : .flows)
+        } else {
+            startAgentTakeover(raw)
         }
     }
 
     /// Flows-only search - already inside the rail, so a match opens the
     /// flow directly instead of just toggling the rail (which is already open).
     private func submitFlowsSearch() {
-        let query = flowsSearchQuery.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        let raw = flowsSearchQuery.trimmingCharacters(in: .whitespacesAndNewlines)
+        let query = raw.lowercased()
         defer { flowsSearchQuery = "" }
         guard !query.isEmpty else { return }
-        if "presentation".contains(query) || "slide".contains(query) {
+        guard raw.split(separator: " ").count <= 3 else {
+            startAgentTakeover(raw)
+            return
+        }
+        if query.contains("presentation") || query.contains("slide") {
             onOpenCreate(.presentation)
-        } else if "gdoc".contains(query) || "doc".contains(query) {
+        } else if query.contains("gdoc") || query.contains("doc") {
             onOpenCreate(.gdoc)
-        } else if "resume".contains(query) {
+        } else if query.contains("resume") {
             onOpenFlow("resume")
-        } else if "archive".contains(query) {
+        } else if query.contains("archive") {
             onOpenFlow("archive")
-        } else if "book".contains(query) {
+        } else if query.contains("book") {
             onOpenFlow("book")
-        } else if "apply".contains(query) || "job".contains(query) {
+        } else if query.contains("apply") || query.contains("job") {
             onOpenFlow("apply")
+        } else {
+            startAgentTakeover(raw)
         }
     }
 
-    private func handleTile(_ kind: TileKind) {
-        let box = boxID(kind)
-        if tileShowsContent(kind), boxBus.hungry != box {
-            boxBus.requestSpace(for: box)
+    private func isEmailDraftRequest(_ query: String) -> Bool {
+        let mailWords = ["email", "mail", "inbox"]
+        let draftWords = ["draft", "reply", "response", "respond", "write"]
+        return mailWords.contains(where: query.contains) && draftWords.contains(where: query.contains)
+    }
+
+    /// Fetches the most recent email and a real AI-drafted reply (the
+    /// student's own connected key - `GmailClient.suggestedReply` was only
+    /// ever a hardcoded template, never a real answer), then shows the
+    /// email in Binder and the draft in Intel in place of their normal
+    /// content until `closeAgentTakeover()`.
+    private func startEmailDraftTakeover() {
+        withAnimation(.easeInOut(duration: 0.2)) {
+            agentTakeoverActive = true
+        }
+        resetAgentTakeoverFields()
+        agentDraftBusy = true
+        Task {
+            gmail.refreshScopeStatus()
+            guard gmail.hasGmailScope else {
+                agentDraftError = "Connect Gmail first - Search \u{201C}gmail\u{201D} or open it from Intel."
+                agentDraftBusy = false
+                return
+            }
+            if gmail.messages.isEmpty {
+                await gmail.fetchInbox()
+            }
+            guard let top = gmail.messages.first else {
+                agentDraftError = "No recent email found."
+                agentDraftBusy = false
+                return
+            }
+            agentEmail = top
+            guard aiKeys.hasKey else {
+                agentDraftError = "Connect your AI key to draft a real reply, not a template."
+                agentDraftBusy = false
+                return
+            }
+            switch await aiKeys.draftEmailReply(from: top.from, subject: top.subject, snippet: top.snippet) {
+            case .success(let text):
+                agentDraftText = text
+            case .failure(.rejected), .failure(.noKey):
+                agentDraftError = "That AI key was rejected. Open Settings to update it."
+            case .failure(.unavailable):
+                agentDraftError = "Couldn\u{2019}t draft a reply - try again in a bit."
+            }
+            agentDraftBusy = false
+        }
+    }
+
+    private func closeAgentTakeover() {
+        withAnimation(.easeInOut(duration: 0.2)) {
+            agentTakeoverActive = false
+        }
+        resetAgentTakeoverFields()
+    }
+
+    private func sendAgentDraft() async {
+        guard let email = agentEmail else { return }
+        let body = agentDraftText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !body.isEmpty else { return }
+        agentSending = true
+        let ok = await gmail.sendReply(to: email, body: body)
+        agentSending = false
+        if ok {
+            closeAgentTakeover()
+        }
+    }
+
+    /// Clears every field either takeover flow writes to. Both entry points
+    /// call this first - a second request while a first was still showing
+    /// (a real reported bug: a fresh general ask left the previous draft's
+    /// stale `agentDraftText` non-empty, so `agentIntelTakeoverView`'s
+    /// `isDraftFlow` check stayed true and kept showing the OLD draft
+    /// instead of the new answer) must never inherit anything from
+    /// whatever ran before it.
+    private func resetAgentTakeoverFields() {
+        agentEmail = nil
+        agentDraftText = ""
+        agentDraftError = nil
+        agentDraftBusy = false
+        agentAskBusy = false
+        agentSending = false
+        agentBinderLines = nil
+        agentReplyText = nil
+    }
+
+    /// General entry point for any ask that isn't a quick nav keyword.
+    /// The email/draft case gets the richer, dedicated flow above. A
+    /// question with the student's own AI key connected gets answered
+    /// directly from real on-device context (their actual recent mail/
+    /// calendar/binder, not a canned string) - the shared backend
+    /// (`DeskAskClient`) is only the fallback when no key is connected,
+    /// since it can silently degrade to a generic template whenever its
+    /// own LLM call fails (confirmed: the endpoint itself is reachable -
+    /// a bare unauthenticated POST returns 401, not a network error - so a
+    /// literal "Opening your Gmail box." reply is the hardcoded fallback
+    /// string, not a real answer that happened to be short).
+    private func startAgentTakeover(_ text: String) {
+        let lower = text.lowercased()
+        if isEmailDraftRequest(lower) {
+            startEmailDraftTakeover()
             return
+        }
+        // Apply Today is its own board, not tile content - check before
+        // spending an AI call on it.
+        if lower.contains("apply") || lower.contains("job") {
+            onOpenFlow("apply")
+            return
+        }
+        withAnimation(.easeInOut(duration: 0.2)) {
+            agentTakeoverActive = true
+        }
+        resetAgentTakeoverFields()
+        agentAskBusy = true
+        let mentionsMail = ["email", "mail", "inbox"].contains(where: lower.contains)
+        if mentionsMail, !gmail.messages.isEmpty {
+            agentBinderLines = gmail.messages.prefix(5).map { AgentMailLine(from: $0.from, subject: $0.subject) }
+        }
+        Task {
+            if aiKeys.hasKey {
+                let context = buildAskContextText()
+                switch await aiKeys.answerDeskQuestion(question: text, context: context) {
+                case .success(let answer):
+                    agentReplyText = answer
+                case .failure(.rejected), .failure(.noKey):
+                    agentReplyText = "That AI key was rejected. Open Settings to update it."
+                case .failure(.unavailable):
+                    agentReplyText = "Couldn\u{2019}t get an answer - try again in a bit."
+                }
+            } else {
+                let context = buildDeskAskContext()
+                let result = await DeskAskClient.ask(message: text, context: context)
+                    ?? DeskAskClient.localFallback(message: text, context: context)
+                applyGeneralAgentResult(result)
+            }
+            agentAskBusy = false
+        }
+    }
+
+    /// Plain-text context for the student's own key (`StudentAIKeyStore`) -
+    /// real recent mail/calendar/binder content, not just titles, so a
+    /// question like "tell me more about this recurring email" is actually
+    /// answerable instead of only ever producing a canned navigation reply.
+    private func buildAskContextText() -> String {
+        var parts: [String] = []
+        if !intelLines.isEmpty {
+            parts.append("Recent activity:\n" + intelLines.prefix(12).map { "- \($0)" }.joined(separator: "\n"))
+        }
+        if !gmail.messages.isEmpty {
+            let mail = gmail.messages.prefix(10)
+                .map { "- From \($0.from): \"\($0.subject)\" - \($0.snippet)" }
+                .joined(separator: "\n")
+            parts.append("Recent emails:\n\(mail)")
+        }
+        if !gmail.week.isEmpty {
+            let cal = gmail.week.prefix(10).map { "- \($0.day): \($0.title)" }.joined(separator: "\n")
+            parts.append("This week's calendar:\n\(cal)")
+        }
+        if !binderTitles.isEmpty {
+            parts.append("Binder items:\n" + binderTitles.prefix(20).map { "- \($0)" }.joined(separator: "\n"))
+        }
+        return parts.isEmpty ? "No connected data yet." : parts.joined(separator: "\n\n")
+    }
+
+    private func buildDeskAskContext() -> DeskAskClient.DeskContext {
+        var connected: [String] = []
+        if gmail.hasGmailScope { connected.append("gmail") }
+        if gmail.hasCalendarScope { connected.append("gcal") }
+        if moodle.isConnected { connected.append("moodle") }
+        return DeskAskClient.DeskContext(
+            intelLines: Array(intelLines.prefix(12)),
+            binderItems: binderTitles.prefix(20).map { DeskAskClient.BinderItem(title: $0, course: "") },
+            calendarEvents: gmail.week.prefix(10).map { DeskAskClient.CalendarEvent(day: $0.day, title: $0.title) },
+            connected: connected,
+            openSurface: "dashboard"
+        )
+    }
+
+    /// Maps a Desk Ask result onto Binder/Intel where the content is
+    /// short enough to belong in a tile. A few action types are inherently
+    /// full-screen (Apply Today's board, a connect flow, a specific
+    /// concept's Field Book) - those close the takeover and use the same
+    /// existing callback FieldDeskView already wired in for that surface,
+    /// rather than squeezing something that doesn't fit into a tile.
+    private func applyGeneralAgentResult(_ result: DeskAskClient.Result) {
+        for action in result.actions {
+            switch action.type {
+            case "open_gmail_top_reply":
+                startEmailDraftTakeover()
+                return
+            case "open_gmail":
+                agentBinderLines = gmail.messages.prefix(5).map { AgentMailLine(from: $0.from, subject: $0.subject) }
+            case "refresh_calendar":
+                onSyncCalendar()
+            case "open_apply":
+                closeAgentTakeover()
+                onOpenFlow("apply")
+                return
+            case "open_connect":
+                closeAgentTakeover()
+                onOpenIntel()
+                return
+            case "study_concept":
+                closeAgentTakeover()
+                onOpenBinder()
+                return
+            default:
+                break
+            }
+        }
+        agentReplyText = result.reply.isEmpty ? "Done." : result.reply
+    }
+
+    /// Binder is the only tile that still grows-in-place on first tap
+    /// (`DeskBoxBus.requestSpace`, borrowing height from neighbors) - Intel/
+    /// Moodle/Homework Help each already have a fixed, generous slot (Intel
+    /// doubled in size absorbing Email/Gcal) and open their destination
+    /// directly on tap instead.
+    private func handleTile(_ kind: TileKind) {
+        if kind == .binder {
+            let box = boxID(kind)
+            if tileShowsContent(kind), boxBus.hungry != box {
+                boxBus.requestSpace(for: box)
+                return
+            }
         }
         switch kind {
         case .binder:
             withAnimation(.spring(response: 0.42, dampingFraction: 0.78)) { binderPulled = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.28) { onOpenBinder() }
-        case .gcal:
-            onOpenCalendar()
-        case .emailSummaries:
-            onOpenGmail()
-        case .memo:
-            setRail(rail == .memo ? .none : .memo)
         case .intel:
             onOpenIntel()
         case .moodle:
             showMoodleSheet = true
-        default:
-            break
+        case .homeworkHelp:
+            onOpenHomeworkHelp()
+        case .memo:
+            setRail(rail == .memo ? .none : .memo)
         }
     }
 
+    /// Only Binder participates in `DeskBoxBus`'s grow/shrink negotiation -
+    /// the rest map to `.jesse`, the bus's existing "doesn't grow" sentinel
+    /// (same treatment `.memo` already had).
     private func boxID(_ kind: TileKind) -> DeskBoxBus.Box {
         switch kind {
-        case .intel: return .intel
-        case .moodle: return .moodle
         case .binder: return .binder
-        case .emailSummaries: return .email
-        case .gcal: return .gcal
-        case .memo: return .jesse
+        case .intel, .moodle, .homeworkHelp, .memo: return .jesse
         }
     }
 
@@ -511,17 +850,15 @@ struct DeskGridDashboardView: View {
 
     private func tileShowsContent(_ kind: TileKind) -> Bool {
         switch kind {
-        case .emailSummaries:
-            return gmail.hasGmailScope && (shownDigest != nil || !gmail.messages.isEmpty)
-        case .gcal:
-            return gmail.hasCalendarScope && !gmail.week.isEmpty
         case .moodle:
             return moodle.isConnected && (!moodle.assignments.isEmpty || !moodle.grades.isEmpty)
         case .intel:
-            return !intelLines.isEmpty
+            let hasEmail = gmail.hasGmailScope && (shownDigest != nil || !gmail.messages.isEmpty)
+            let hasCalendar = gmail.hasCalendarScope && !gmail.week.isEmpty
+            return !intelLines.isEmpty || hasEmail || hasCalendar
         case .binder:
             return !binderTitles.isEmpty
-        case .memo:
+        case .homeworkHelp, .memo:
             return false
         }
     }
@@ -541,12 +878,27 @@ struct DeskGridDashboardView: View {
 
     @ViewBuilder
     private func tileBody(_ kind: TileKind, phase: MascotPhase) -> some View {
-        let ink: Color = (kind == .binder || kind == .moodle || kind == .emailSummaries) ? tileInk : .white
-        if tileShowsContent(kind) {
+        let ink: Color = (kind == .binder || kind == .moodle) ? tileInk : .white
+        // Binder only takes over when there's actually binder-shaped
+        // content (an email or a list of lines) to show - a reply-only ask
+        // ("what's my next assignment") shouldn't blank out Binder's real
+        // titles just because Intel is showing an answer.
+        if agentTakeoverActive && kind == .binder && (agentEmail != nil || agentDraftBusy || agentBinderLines != nil) {
+            AnyView(agentBinderTakeoverView(ink: ink))
+        } else if agentTakeoverActive && kind == .intel {
+            AnyView(agentIntelTakeoverView())
+        } else if kind == .intel {
+            // Merged box: three labeled sub-sections, not one flat list -
+            // each of Email/Calendar/Research keeps its own visible space.
+            ScrollView(showsIndicators: false) {
+                intelSections(ink: .white)
+            }
+            .accessibilityIdentifier("deskGridEmailSummaries")
+        } else if tileShowsContent(kind) {
             VStack(alignment: .leading, spacing: 0) {
                 tileContentRows(kind, ink: ink)
             }
-            .accessibilityIdentifier(kind == .emailSummaries ? "deskGridEmailSummaries" : "deskGridTileBody_\(kind.title)")
+            .accessibilityIdentifier("deskGridTileBody_\(kind.title)")
         } else {
             Text(kind.blurb(phase: phase, assignmentCount: moodle.assignments.count))
                 .font(.system(size: 12, weight: .semibold, design: .rounded))
@@ -556,106 +908,323 @@ struct DeskGridDashboardView: View {
         }
     }
 
+    private func agentTakeoverLabel(_ text: String, ink: Color) -> some View {
+        Text(text.uppercased())
+            .font(.system(size: 10, weight: .heavy, design: .rounded))
+            .tracking(0.4)
+            .foregroundColor(ink.opacity(0.55))
+    }
+
+    /// Binder's half of the takeover - the fetched email (draft-reply ask)
+    /// or a short list of relevant lines (any other ask that touched
+    /// Binder-shaped content), in place of Binder's normal Memo/Doc/BYOB
+    /// titles. Uses `DeskContentRow` (dot/title/subtitle/divider) - the
+    /// same primitive every other tile's real content already renders
+    /// through - instead of stacked plain `Text`, so this reads as part of
+    /// the dashboard's own visual language rather than a raw dump.
+    @ViewBuilder
+    private func agentBinderTakeoverView(ink: Color) -> some View {
+        let dot = Color(gridHex: "c1121f")
+        let muted = Color(gridHex: "8a8478")
+        let divider = Color(gridHex: "d9d2c5").opacity(0.85)
+        if let email = agentEmail {
+            AnyView(
+                VStack(alignment: .leading, spacing: 8) {
+                    agentTakeoverLabel("Agent \u{00B7} Email", ink: ink)
+                    DeskContentRow(
+                        title: email.subject.isEmpty ? "(no subject)" : email.subject,
+                        subtitle: email.from,
+                        dot: dot, ink: ink, muted: muted, divider: divider,
+                        showDivider: false, compact: true
+                    )
+                    Text(email.snippet)
+                        .font(.system(size: 12, weight: .medium, design: .rounded))
+                        .foregroundColor(ink.opacity(0.85))
+                        .lineLimit(6)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .accessibilityIdentifier("deskGridAgentEmail")
+            )
+        } else if let lines = agentBinderLines {
+            AnyView(
+                VStack(alignment: .leading, spacing: 4) {
+                    agentTakeoverLabel("Agent \u{00B7} Mail", ink: ink)
+                    ForEach(Array(lines.prefix(5).enumerated()), id: \.element.id) { i, line in
+                        DeskContentRow(
+                            title: line.subject.isEmpty ? "(no subject)" : line.subject,
+                            subtitle: line.from,
+                            dot: dot, ink: ink, muted: muted, divider: divider,
+                            showDivider: i < lines.prefix(5).count - 1, compact: true
+                        )
+                    }
+                }
+                .accessibilityIdentifier("deskGridAgentEmail")
+            )
+        } else if agentDraftBusy {
+            AnyView(
+                ProgressView().tint(ink)
+                    .accessibilityIdentifier("deskGridAgentEmail")
+            )
+        } else {
+            AnyView(
+                Text(agentDraftError ?? "No recent email found.")
+                    .font(.system(size: 12, weight: .medium, design: .rounded))
+                    .foregroundColor(ink.opacity(0.7))
+                    .accessibilityIdentifier("deskGridAgentEmail")
+            )
+        }
+    }
+
+    /// Intel's half of the takeover. Two modes share one tile: the
+    /// draft-reply flow (busy/error/draft+Send, keyed off `agentEmail`/
+    /// `agentDraftBusy`/`agentDraftError`/`agentDraftText`) and a plain
+    /// answer from the general agent (`agentAskBusy`/`agentReplyText`) for
+    /// every other ask - "what's due this week," "check my grades," etc.
+    @ViewBuilder
+    private func agentIntelTakeoverView() -> some View {
+        let isDraftFlow = agentEmail != nil || agentDraftBusy || agentDraftError != nil || !agentDraftText.isEmpty
+        if isDraftFlow {
+            AnyView(agentIntelDraftBody())
+        } else {
+            AnyView(agentIntelReplyBody())
+        }
+    }
+
+    private func agentIntelDraftBody() -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            agentTakeoverLabel("Agent \u{00B7} Draft reply", ink: .white)
+            if agentDraftBusy {
+                HStack(spacing: 8) {
+                    ProgressView().tint(.white)
+                    Text("Writing a reply\u{2026}")
+                        .font(.system(size: 12, weight: .medium, design: .rounded))
+                        .foregroundColor(.white.opacity(0.85))
+                }
+            } else if let error = agentDraftError {
+                Text(error)
+                    .font(.system(size: 12, weight: .medium, design: .rounded))
+                    .foregroundColor(.white.opacity(0.85))
+                    .fixedSize(horizontal: false, vertical: true)
+                if !aiKeys.hasKey {
+                    Button {
+                        closeAgentTakeover()
+                        onOpenHomeworkHelp()
+                    } label: {
+                        Text("Connect your AI")
+                            .font(.system(size: 12, weight: .bold, design: .rounded))
+                            .foregroundColor(Color(gridHex: "143a2e"))
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 6)
+                            .background(Capsule().fill(Color.white.opacity(0.9)))
+                    }
+                    .buttonStyle(.plain)
+                }
+            } else {
+                ScrollView(showsIndicators: false) {
+                    Text(agentDraftText)
+                        .font(.system(size: 13, weight: .medium, design: .rounded))
+                        .foregroundColor(.white)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                Button {
+                    Task { await sendAgentDraft() }
+                } label: {
+                    if agentSending {
+                        ProgressView().tint(Color(gridHex: "143a2e"))
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 8)
+                    } else {
+                        Text("Send")
+                            .font(.system(size: 12, weight: .bold, design: .rounded))
+                            .foregroundColor(Color(gridHex: "143a2e"))
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 8)
+                    }
+                }
+                .buttonStyle(.plain)
+                .background(Capsule().fill(Color(gridHex: "c4f547")))
+                .disabled(agentSending || agentDraftText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                .accessibilityIdentifier("deskGridAgentDraftSend")
+            }
+        }
+        .accessibilityIdentifier("deskGridAgentDraft")
+    }
+
+    private func agentIntelReplyBody() -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            agentTakeoverLabel("Agent", ink: .white)
+            if agentAskBusy {
+                HStack(spacing: 8) {
+                    ProgressView().tint(.white)
+                    Text("Thinking\u{2026}")
+                        .font(.system(size: 12, weight: .medium, design: .rounded))
+                        .foregroundColor(.white.opacity(0.85))
+                }
+            } else {
+                ScrollView(showsIndicators: false) {
+                    Text(agentReplyText ?? "")
+                        .font(.system(size: 13, weight: .medium, design: .rounded))
+                        .foregroundColor(.white)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+            }
+        }
+        .accessibilityIdentifier("deskGridAgentDraft")
+    }
+
     /// Popup-matching rows (dot + title + optional subtitle/divider), not
-    /// a scaled mascot sitting behind stacked `Text`. Grown tiles show more.
+    /// a scaled mascot sitting behind stacked `Text`.
     @ViewBuilder
     private func tileContentRows(_ kind: TileKind, ink: Color) -> some View {
-        let grown = tileIsGrown(kind)
-        let limit = grown ? 7 : 3
-        let muted = kind == .emailSummaries || kind == .binder || kind == .moodle
-            ? Color(gridHex: "8a8478")
-            : Color.white.opacity(0.72)
-        let dot = kind == .emailSummaries
-            ? Color(gridHex: "c1121f")
-            : (kind == .binder || kind == .moodle ? Color(gridHex: "c4a484").opacity(0.85) : Color.white.opacity(0.75))
-        let divider = kind == .emailSummaries || kind == .binder || kind == .moodle
-            ? Color(gridHex: "d9d2c5").opacity(0.85)
-            : Color.white.opacity(0.28)
-        if kind == .emailSummaries {
-            emailTileRows(grown: grown, limit: limit, ink: ink, muted: muted)
-        } else {
-            ForEach(Array(tileLines(kind).prefix(limit).enumerated()), id: \.offset) { _, line in
+        let limit = 3
+        let muted = kind == .binder || kind == .moodle ? Color(gridHex: "8a8478") : Color.white.opacity(0.72)
+        let dot = kind == .binder || kind == .moodle ? Color(gridHex: "c4a484").opacity(0.85) : Color.white.opacity(0.75)
+        let divider = kind == .binder || kind == .moodle ? Color(gridHex: "d9d2c5").opacity(0.85) : Color.white.opacity(0.28)
+        ForEach(Array(tileLines(kind).prefix(limit).enumerated()), id: \.offset) { _, line in
+            DeskContentRow(
+                title: line,
+                dot: dot,
+                ink: ink,
+                muted: muted,
+                divider: divider,
+                showDivider: true,
+                compact: true
+            )
+        }
+    }
+
+    /// Intel's three merged sections - own research, Email digest, Calendar
+    /// week - each with a small caption header and its own real rows, same
+    /// `DeskContentRow` primitive the popups use. A section only renders
+    /// when it actually has something (or a connect prompt) to show.
+    @ViewBuilder
+    /// Each section is type-erased (`AnyView`) at its own boundary before
+    /// joining the others in one VStack. Three multi-branch conditional
+    /// chains (Research's optional, Email's 4-way if/else-if/else-if/else
+    /// with a nested if+ForEach inside one branch, Calendar's 3-way), left
+    /// as plain sibling `@ViewBuilder` content, compose into a generic type
+    /// complex enough to overflow the Swift runtime's metadata-resolution
+    /// stack on any re-render - a real SIGSEGV on-device (confirmed via the
+    /// device's actual crash log, "Could not determine thread index for
+    /// stack guard region" - the signature of this exact failure class),
+    /// not a hang or a simulator quirk. `AnyView` per section breaks the
+    /// cross-section compounding; do not remove these erasures casually.
+    private func intelSections(ink: Color) -> some View {
+        let muted = Color.white.opacity(0.72)
+        let divider = Color.white.opacity(0.28)
+        return VStack(alignment: .leading, spacing: 12) {
+            AnyView(intelResearchSection(ink: ink, muted: muted, divider: divider))
+            AnyView(intelEmailSection(ink: ink, muted: muted))
+            AnyView(intelCalendarSection(ink: ink, muted: muted))
+        }
+    }
+
+    @ViewBuilder
+    private func intelResearchSection(ink: Color, muted: Color, divider: Color) -> some View {
+        if !intelLines.isEmpty {
+            intelSectionHeader("Research")
+            ForEach(Array(intelLines.prefix(4).enumerated()), id: \.offset) { _, line in
                 DeskContentRow(
-                    title: line,
-                    dot: dot,
-                    ink: ink,
-                    muted: muted,
-                    divider: divider,
-                    showDivider: true,
-                    compact: true
+                    title: line, dot: Color.white.opacity(0.75), ink: ink, muted: muted,
+                    divider: divider, showDivider: true, compact: true
                 )
             }
         }
     }
 
     @ViewBuilder
-    private func emailTileRows(grown: Bool, limit: Int, ink: Color, muted: Color) -> some View {
-        if let digest = shownDigest {
-            if grown, !digest.headline.isEmpty {
-                Text(digest.headline)
-                    .font(.system(size: 13, weight: .semibold, design: .rounded))
-                    .foregroundColor(ink)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .padding(.bottom, 4)
-            }
-            ForEach(Array(digest.actionItems.prefix(limit))) { item in
+    private func intelEmailSection(ink: Color, muted: Color) -> some View {
+        intelSectionHeader("Email")
+        if !gmail.hasGmailScope {
+            intelConnectRow(label: "Connect Gmail")
+        } else if let digest = shownDigest {
+            AnyView(intelEmailDigestBody(digest: digest, ink: ink, muted: muted))
+        } else if !gmail.messages.isEmpty {
+            ForEach(Array(gmail.messages.prefix(3).enumerated()), id: \.offset) { _, msg in
                 DeskContentRow(
-                    title: item.subject,
-                    // Subtitle only when grown - a 2-line title + 2-line
-                    // subtitle row (~64pt) doesn't fit 3-up in the compact,
-                    // non-grown tile (~381x212 pre-scale); grown has 7-row
-                    // room, same shape as the popup. Greptile P1 on #45.
-                    subtitle: (grown && !item.why.isEmpty) ? item.why : nil,
-                    dot: Color(gridHex: "c1121f"),
-                    ink: ink,
-                    muted: muted,
-                    showDivider: false,
-                    compact: true
+                    title: msg.subject, dot: Color(gridHex: "c1121f"), ink: ink, muted: muted,
+                    showDivider: false, compact: true
                 )
-            }
-            if grown, !digest.fyi.isEmpty {
-                Text("\(digest.fyi.count) more, routine")
-                    .font(.system(size: 11, weight: .medium, design: .rounded))
-                    .foregroundColor(muted)
-                    .padding(.top, 4)
             }
         } else {
-            ForEach(Array(gmail.messages.prefix(limit).enumerated()), id: \.offset) { _, msg in
+            Text("Nothing to summarize yet.")
+                .font(.system(size: 12, weight: .medium, design: .rounded))
+                .foregroundColor(muted)
+        }
+    }
+
+    @ViewBuilder
+    private func intelEmailDigestBody(digest: GmailDigestClient.Digest, ink: Color, muted: Color) -> some View {
+        if !digest.headline.isEmpty {
+            Text(digest.headline)
+                .font(.system(size: 12, weight: .semibold, design: .rounded))
+                .foregroundColor(ink)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        ForEach(Array(digest.actionItems.prefix(3))) { item in
+            DeskContentRow(
+                title: item.subject, subtitle: item.why.isEmpty ? nil : item.why,
+                dot: Color(gridHex: "c1121f"), ink: ink, muted: muted, showDivider: false, compact: true
+            )
+        }
+    }
+
+    @ViewBuilder
+    private func intelCalendarSection(ink: Color, muted: Color) -> some View {
+        intelSectionHeader("Calendar")
+        if !gmail.hasCalendarScope {
+            intelConnectRow(label: "Connect Calendar")
+        } else if !gmail.week.isEmpty {
+            ForEach(Array(gmail.week.prefix(4))) { ev in
                 DeskContentRow(
-                    title: msg.subject,
-                    dot: Color(gridHex: "c1121f"),
-                    ink: ink,
-                    muted: muted,
-                    showDivider: false,
-                    compact: true
+                    title: "\(ev.day) · \(ev.title)", dot: Color.white.opacity(0.75), ink: ink, muted: muted,
+                    showDivider: false, compact: true
                 )
             }
+        } else {
+            Text("Clear this week.")
+                .font(.system(size: 12, weight: .medium, design: .rounded))
+                .foregroundColor(muted)
         }
+    }
+
+    private func intelSectionHeader(_ title: String) -> some View {
+        Text(title.uppercased())
+            .font(.system(size: 10, weight: .heavy, design: .rounded))
+            .tracking(0.4)
+            .foregroundColor(.white.opacity(0.55))
+    }
+
+    private func intelConnectRow(label: String) -> some View {
+        Button {
+            Task {
+                await gmail.connectGoogleMailAndCalendar()
+                if gmail.hasGmailScope { onGmailLinked(gmail.hasCalendarScope) }
+            }
+        } label: {
+            Text(label)
+                .font(.system(size: 12, weight: .bold, design: .rounded))
+                .foregroundColor(Color(gridHex: "143a2e"))
+                .padding(.horizontal, 10)
+                .padding(.vertical, 6)
+                .background(Capsule().fill(Color.white.opacity(0.85)))
+        }
+        .buttonStyle(.plain)
     }
 
     private func tileLines(_ kind: TileKind) -> [String] {
         switch kind {
-        case .emailSummaries:
-            if let digest = shownDigest {
-                var lines = [digest.headline]
-                lines.append(contentsOf: digest.actionItems.prefix(4).map(\.subject))
-                if lines.count < 3 {
-                    lines.append(contentsOf: digest.fyi.prefix(2).map(\.subject))
-                }
-                return lines.filter { !$0.isEmpty }
-            }
-            return gmail.messages.prefix(5).map(\.subject).filter { !$0.isEmpty }
-        case .gcal:
-            return gmail.week.prefix(6).map { "\($0.day) · \($0.title)" }
+        case .intel:
+            return intelLines
         case .moodle:
             let work = moodle.assignments.prefix(5).map { "\($0.name) · \($0.dueLabel)" }
             if !work.isEmpty { return Array(work) }
             return moodle.grades.prefix(5).map { "\($0.itemName) · \($0.gradeLabel)" }
-        case .intel:
-            return intelLines
         case .binder:
             return binderTitles
-        case .memo:
+        case .homeworkHelp, .memo:
             return []
         }
     }
@@ -666,96 +1235,34 @@ struct DeskGridDashboardView: View {
         case .intel: base = expanded ? WorkArtboard.p5Intel : WorkArtboard.p4Intel
         case .moodle: base = expanded ? WorkArtboard.p5Moodle : WorkArtboard.p4Moodle
         case .binder: base = expanded ? WorkArtboard.p5Binder : WorkArtboard.p4Binder
-        case .emailSummaries: base = expanded ? WorkArtboard.p5Email : WorkArtboard.p4Email
-        case .gcal: base = expanded ? WorkArtboard.p5Gcal : WorkArtboard.p4Gcal
+        case .homeworkHelp: base = expanded ? WorkArtboard.p5HomeworkHelp : WorkArtboard.p4HomeworkHelp
         case .memo: return WorkArtboard.memoRail
         }
         guard let hungry = boxBus.hungry else { return base }
         return negotiated(kind, hungry: hungry, page5: expanded, base: base)
     }
 
-    /// A cramped box asks its neighbors to shrink so it can show content.
-    /// Restores when another box asks, or when hungry is cleared.
+    /// Binder is the only box that still borrows space from neighbors
+    /// (`DeskBoxBus.requestSpace`) - Intel/Moodle/Homework Help each have
+    /// their own fixed, generous slot now (Intel doubled in size absorbing
+    /// Email/Gcal) and don't compete for room with a neighbor anymore.
     private func negotiated(_ kind: TileKind, hungry: DeskBoxBus.Box, page5: Bool, base: CGRect) -> CGRect {
+        guard hungry == .binder else { return base }
         if page5 {
-            switch hungry {
-            case .email:
-                switch kind {
-                case .emailSummaries: return CGRect(x: 820, y: 54, width: 400, height: 340)
-                case .gcal: return CGRect(x: 820, y: 404, width: 400, height: 216)
-                case .binder: return CGRect(x: 425, y: 54, width: 380, height: 524)
-                default: return base
-                }
-            case .gcal:
-                switch kind {
-                case .gcal: return CGRect(x: 820, y: 180, width: 400, height: 440)
-                case .emailSummaries: return CGRect(x: 820, y: 54, width: 400, height: 116)
-                case .binder: return CGRect(x: 425, y: 54, width: 380, height: 524)
-                default: return base
-                }
-            case .intel:
-                switch kind {
-                case .intel: return CGRect(x: 76, y: 54, width: 340, height: 280)
-                case .moodle: return CGRect(x: 106, y: 344, width: 267, height: 167)
-                default: return base
-                }
-            case .moodle:
-                switch kind {
-                case .moodle: return CGRect(x: 76, y: 250, width: 340, height: 280)
-                case .intel: return CGRect(x: 76, y: 54, width: 319, height: 180)
-                default: return base
-                }
-            case .binder:
-                switch kind {
-                case .binder: return CGRect(x: 380, y: 54, width: 500, height: 560)
-                case .intel: return CGRect(x: 76, y: 103, width: 280, height: 192)
-                case .moodle: return CGRect(x: 76, y: 323, width: 280, height: 188)
-                case .emailSummaries: return CGRect(x: 900, y: 93, width: 300, height: 180)
-                case .gcal: return CGRect(x: 900, y: 295, width: 300, height: 325)
-                default: return base
-                }
-            case .jesse:
-                return base
+            switch kind {
+            case .binder: return CGRect(x: 380, y: 54, width: 500, height: 560)
+            case .intel: return CGRect(x: 76, y: 103, width: 280, height: 192)
+            case .moodle: return CGRect(x: 76, y: 323, width: 280, height: 188)
+            case .homeworkHelp: return CGRect(x: 76, y: 54, width: 280, height: 192)
+            default: return base
             }
         }
-        switch hungry {
-        case .email:
-            switch kind {
-            case .emailSummaries: return CGRect(x: 900, y: 90, width: 510, height: 400)
-            case .gcal: return CGRect(x: 900, y: 500, width: 510, height: 170)
-            case .binder: return CGRect(x: 492, y: 61, width: 390, height: 568)
-            default: return base
-            }
-        case .gcal:
-            switch kind {
-            case .gcal: return CGRect(x: 900, y: 200, width: 510, height: 470)
-            case .emailSummaries: return CGRect(x: 900, y: 90, width: 510, height: 100)
-            case .binder: return CGRect(x: 492, y: 61, width: 390, height: 568)
-            default: return base
-            }
-        case .intel:
-            switch kind {
-            case .intel: return CGRect(x: 81, y: 70, width: 400, height: 320)
-            case .moodle: return CGRect(x: 115, y: 400, width: 315, height: 200)
-            default: return base
-            }
-        case .moodle:
-            switch kind {
-            case .moodle: return CGRect(x: 81, y: 280, width: 400, height: 340)
-            case .intel: return CGRect(x: 81, y: 70, width: 376, height: 190)
-            default: return base
-            }
-        case .binder:
-            switch kind {
-            case .binder: return CGRect(x: 430, y: 50, width: 580, height: 600)
-            case .intel: return CGRect(x: 81, y: 118, width: 330, height: 227)
-            case .moodle: return CGRect(x: 81, y: 378, width: 330, height: 222)
-            case .emailSummaries: return CGRect(x: 1033, y: 107, width: 370, height: 212)
-            case .gcal: return CGRect(x: 1033, y: 343, width: 370, height: 286)
-            default: return base
-            }
-        case .jesse:
-            return base
+        switch kind {
+        case .binder: return CGRect(x: 430, y: 50, width: 580, height: 600)
+        case .intel: return CGRect(x: 1060, y: 107, width: 330, height: 522)
+        case .moodle: return CGRect(x: 81, y: 378, width: 330, height: 222)
+        case .homeworkHelp: return CGRect(x: 81, y: 118, width: 330, height: 227)
+        default: return base
         }
     }
 
@@ -763,10 +1270,6 @@ struct DeskGridDashboardView: View {
         boxBus.intelLines = intelLines
         boxBus.binderTitles = binderTitles
         await gmail.restoreSessionIfNeeded()
-        // Cached digest / seeded inbox can paint before the network round-trip.
-        if tileShowsContent(.emailSummaries) {
-            boxBus.requestSpace(for: .email)
-        }
         if gmail.hasGmailScope {
             await gmail.fetchInbox()
             // Seeded UI tests have messages but no Google user — skip the
@@ -776,9 +1279,6 @@ struct DeskGridDashboardView: View {
                 if let d = digest.digest {
                     digestStore.save(d, messageCount: gmail.messages.count)
                 }
-            }
-            if tileShowsContent(.emailSummaries) {
-                boxBus.requestSpace(for: .email)
             }
         }
         if gmail.hasCalendarScope {
@@ -803,13 +1303,24 @@ struct DeskGridDashboardView: View {
         }
     }
 
+    /// Binder/Calendar/Gmail dropped from here on purpose (2026-08-17,
+    /// explicit ask) - they're already reachable as their own tiles on the
+    /// board, so the dock chips were a redundant second path that was
+    /// crowding this strip. Book added alongside Learn as a direct
+    /// entry point instead of being buried one level inside Flows -
+    /// reuses the existing `onOpenFlow("book")` callback FieldDeskView
+    /// already wires for the Flows rail's own Book row, not a new path.
     private var workDock: some View {
+        // Explicit order (2026-08-18 ask): Memo, Transcribe, Learn, Flows,
+        // +Book. "+Book" (not just "Book") because tapping it starts a book
+        // with Jesse rather than opening a passive library - same "+"
+        // convention as CreateCanvasView's "+ Slide".
         HStack(spacing: 8) {
-            dockChip("Binder", system: "books.vertical.fill") { handleTile(.binder) }
-            dockChip("Calendar", system: "calendar", action: onOpenCalendar)
             dockChip("Memo", system: "note.text", identifier: "deskGridDashboardAddMemo") { setRail(rail == .memo ? .none : .memo) }
-            dockChip("Gmail", system: "envelope.fill", action: onOpenGmail)
+            dockChip("Transcribe", system: "waveform", identifier: "deskGridDock_Transcribe", action: onTranscribe)
+            dockChip("Learn", system: "square.grid.2x2.fill", identifier: "deskGridDock_LearnStudio") { onOpenLearnStudio() }
             dockChip("Flows", system: "bolt.fill", identifier: "deskGridDock_Flows") { setRail(rail == .flows ? .none : .flows) }
+            dockChip("+Book", system: "book.fill", identifier: "deskGridDock_Book") { onOpenFlow("book") }
             searchField(placeholder: "Search", identifier: "deskGridDashboardSearch", onSubmit: submitSearch)
         }
         .padding(.horizontal, 16)
@@ -857,20 +1368,42 @@ struct DeskGridDashboardView: View {
         }
     }
 
+    /// Same connect prompt Homework Help shows when no AI key is saved -
+    /// tapping any search field (dock or Flows rail) before a key exists
+    /// opens that exact popup instead of focusing the field, since search
+    /// itself doesn't need a key but this is the one place every session
+    /// passes through, and it's where the boxes' own AI-powered bits key
+    /// off of (Homework Help today; Intel's research summary later).
     private func searchField(placeholder: String, identifier: String, text: Binding<String>? = nil, onSubmit: @escaping () -> Void) -> some View {
-        HStack(spacing: 6) {
-            Image(systemName: "magnifyingglass")
-                .foregroundColor(.white.opacity(0.45))
-            TextField(placeholder, text: text ?? $searchQuery)
-                .textFieldStyle(.plain)
-                .font(.system(size: 13, weight: .medium, design: .rounded))
-                .foregroundColor(.white)
-                .submitLabel(.search)
-                .onSubmit(onSubmit)
+        ZStack {
+            HStack(spacing: 6) {
+                Image(systemName: "magnifyingglass")
+                    .foregroundColor(.white.opacity(0.45))
+                TextField(placeholder, text: text ?? $searchQuery)
+                    .textFieldStyle(.plain)
+                    .font(.system(size: 13, weight: .medium, design: .rounded))
+                    .foregroundColor(.white)
+                    .submitLabel(.search)
+                    .onSubmit(onSubmit)
+                    .disabled(!aiKeys.hasKey)
+            }
+            .padding(.horizontal, 12)
+            .padding(.vertical, 8)
+            .background(Capsule().fill(Color.white.opacity(0.12)))
+
+            if !aiKeys.hasKey {
+                // No nested .accessibilityIdentifier here - the outer one
+                // below already identifies this whole control, and a second
+                // one on this overlay would clobber it (same family as the
+                // dock/workDock clobbering CLAUDE.md documents). The popup
+                // this opens (`fieldDeskHomeworkHelpOverlay`) is what a test
+                // should assert on, not this transparent tap-catcher.
+                Color.clear
+                    .contentShape(Rectangle())
+                    .onTapGesture { onOpenHomeworkHelp() }
+                    .accessibilityLabel("Connect your AI to power search")
+            }
         }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 8)
-        .background(Capsule().fill(Color.white.opacity(0.12)))
         .accessibilityIdentifier(identifier)
     }
 
@@ -938,10 +1471,18 @@ struct DeskGridDashboardView: View {
             flowRow("Presentation", system: "rectangle.on.rectangle") { onOpenCreate(.presentation) }
             flowRow("GDoc", system: "doc.text") { onOpenCreate(.gdoc) }
             flowRow("Resume", system: "person.text.rectangle") { onOpenFlow("resume") }
-            flowRow("Archive", system: "books.vertical") { onOpenFlow("archive") }
+            // Archive dropped as its own row (2026-08-17, explicit ask) -
+            // blended into Learn Studio (Browse Archive button there) since
+            // it's fundamentally the same "find what you already have"
+            // motion as studying. onOpenFlow("archive") still resolves.
             flowRow("Book", system: "book") { onOpenFlow("book") }
-            flowRow("Apply", system: "briefcase") { onOpenFlow("apply") }
             flowRow("+ Design", system: "square.grid.2x2.fill") { onOpenFlow("design") }
+            // Apply dropped as its own row (2026-08-17, explicit ask) -
+            // Apply Today/JobOS now lives inside Resume, reached from
+            // there instead of as a peer Flow. onOpenFlow("apply") still
+            // resolves (see FieldDeskView) so nothing else calling it
+            // silently breaks - it opens Resume now, not a standalone
+            // Apply screen.
             Spacer(minLength: 0)
         }
         .padding(12)
@@ -983,19 +1524,23 @@ struct DeskGridDashboardView: View {
     }
 }
 
-/// 1440×810 boxes measured from Presentation_Screen.pdf.
+/// 1440×810 boxes measured from Presentation_Screen.pdf, with two later
+/// departures from the original PDF layout (2026-08-17): Email/Gcal are no
+/// longer separate boxes - their content lives inside Intel's box, which
+/// took over their combined footprint on the right - and Homework Help is
+/// new, in Intel's original top-left slot.
 private enum WorkArtboard {
-    static let p4Intel = CGRect(x: 81, y: 118, width: 376, height: 227)
+    static let p4HomeworkHelp = CGRect(x: 81, y: 118, width: 376, height: 227)
     static let p4Moodle = CGRect(x: 115, y: 378, width: 315, height: 222)
     static let p4Binder = CGRect(x: 492, y: 61, width: 505, height: 568)
-    static let p4Email = CGRect(x: 1033, y: 107, width: 381, height: 212)
-    static let p4Gcal = CGRect(x: 1032, y: 343, width: 392, height: 286)
+    /// Was Email (1033,107,381,212) + Gcal (1032,343,392,286) stacked.
+    static let p4Intel = CGRect(x: 1032, y: 107, width: 392, height: 522)
 
-    static let p5Intel = CGRect(x: 76, y: 103, width: 319, height: 192)
+    static let p5HomeworkHelp = CGRect(x: 76, y: 103, width: 319, height: 192)
     static let p5Moodle = CGRect(x: 106, y: 323, width: 267, height: 188)
     static let p5Binder = CGRect(x: 425, y: 54, width: 428, height: 524)
-    static let p5Email = CGRect(x: 884, y: 93, width: 322, height: 180)
-    static let p5Gcal = CGRect(x: 884, y: 295, width: 332, height: 325)
+    /// Was Email (884,93,322,180) + Gcal (884,295,332,325) stacked.
+    static let p5Intel = CGRect(x: 884, y: 93, width: 332, height: 527)
     static let memoRail = CGRect(x: 1231, y: 193, width: 199, height: 194)
     static let flowsRail = CGRect(x: 1231, y: 54, width: 199, height: 566)
     // Only the dock's own box moves toward the board's bottom edge (was
@@ -1036,41 +1581,70 @@ private extension Color {
 
 /// Moodle box sheet: connect form when sleeping, real assignments/grades
 /// when connected. Never invents homework.
+/// Same cream-card / dimmed-background popup family as Intel/Binder/Homework
+/// Help (was a `.sheet()` with its own NavigationStack + toolbar Close
+/// button, visually inconsistent with the rest of the boxes).
 private struct MoodleBoxSheet: View {
     @ObservedObject var client: MoodleClient
     var onLinked: () -> Void
     var onDisconnected: () -> Void
-    @Environment(\.dismiss) private var dismiss
+    var onClose: () -> Void
 
     @State private var site = ""
     @State private var username = ""
     @State private var password = ""
 
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 14) {
-                    if client.isConnected {
-                        connectedBody
-                    } else {
-                        connectForm
+        ZStack {
+            Color.black.opacity(0.35)
+                .ignoresSafeArea()
+                .onTapGesture { onClose() }
+
+            VStack(alignment: .leading, spacing: 12) {
+                HStack(spacing: 10) {
+                    Text("Moodle")
+                        .font(.system(size: 16, weight: .bold, design: .rounded))
+                        .foregroundColor(Color(gridHex: "143a2e"))
+                    Spacer(minLength: 0)
+                    Button(action: onClose) {
+                        Text("Done")
+                            .font(.system(size: 12, weight: .bold, design: .rounded))
+                            .foregroundColor(Color(gridHex: "0c1207"))
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 8)
+                            .background(Capsule().fill(Color(gridHex: "c4f547")))
                     }
-                    if let err = client.lastError, !err.isEmpty {
-                        Text(err)
-                            .font(.system(size: 13, weight: .medium, design: .rounded))
-                            .foregroundColor(Color(gridHex: "b0473f"))
+                    .buttonStyle(.plain)
+                    .accessibilityIdentifier("moodleSheetClose")
+                }
+
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 14) {
+                        if client.isConnected {
+                            connectedBody
+                        } else {
+                            connectForm
+                        }
+                        if let err = client.lastError, !err.isEmpty {
+                            Text(err)
+                                .font(.system(size: 13, weight: .medium, design: .rounded))
+                                .foregroundColor(Color(gridHex: "b0473f"))
+                        }
                     }
                 }
-                .padding(20)
             }
-            .background(Color(gridHex: "fff8e9").ignoresSafeArea())
-            .navigationTitle("Moodle")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Close") { dismiss() }
-                        .accessibilityIdentifier("moodleSheetClose")
-                }
+            .padding(18)
+            .frame(width: 420, height: 480)
+            .background(
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .fill(Color(gridHex: "fff8e9"))
+                    .shadow(color: .black.opacity(0.35), radius: 24, y: 12)
+            )
+            .accessibilityElement(children: .contain)
+            .overlay(alignment: .topLeading) {
+                Text(verbatim: "moodle").font(.system(size: 1)).foregroundColor(.clear)
+                    .accessibilityIdentifier("moodleSheetOverlay")
+                    .allowsHitTesting(false)
             }
         }
     }
