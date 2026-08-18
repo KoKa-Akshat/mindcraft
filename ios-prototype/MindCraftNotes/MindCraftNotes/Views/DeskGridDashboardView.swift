@@ -1466,9 +1466,17 @@ struct DeskGridDashboardView: View {
             flowRow("Presentation", system: "rectangle.on.rectangle") { onOpenCreate(.presentation) }
             flowRow("GDoc", system: "doc.text") { onOpenCreate(.gdoc) }
             flowRow("Resume", system: "person.text.rectangle") { onOpenFlow("resume") }
-            flowRow("Archive", system: "books.vertical") { onOpenFlow("archive") }
+            // Archive dropped as its own row (2026-08-17, explicit ask) -
+            // blended into Learn Studio (Browse Archive button there) since
+            // it's fundamentally the same "find what you already have"
+            // motion as studying. onOpenFlow("archive") still resolves.
             flowRow("Book", system: "book") { onOpenFlow("book") }
-            flowRow("Apply", system: "briefcase") { onOpenFlow("apply") }
+            // Apply dropped as its own row (2026-08-17, explicit ask) -
+            // Apply Today/JobOS now lives inside Resume, reached from
+            // there instead of as a peer Flow. onOpenFlow("apply") still
+            // resolves (see FieldDeskView) so nothing else calling it
+            // silently breaks - it opens Resume now, not a standalone
+            // Apply screen.
             Spacer(minLength: 0)
         }
         .padding(12)

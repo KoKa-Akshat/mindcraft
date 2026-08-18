@@ -6,22 +6,41 @@ import WebKit
 /// supervision; publishing writes straight to Binder via `BinderStore`, the
 /// same native-side-write bridge shape as `ResumeAgentView`'s "apply" - the
 /// web page never needs its own Firebase Auth session.
+///
+/// Rebuilt to the GDoc split (2026-08-17, explicit ask - "add Jesse there
+/// since it's our signature on each screen"): the existing web content
+/// stays exactly as it was, on the left, untouched; `JesseRailView` (the
+/// same shared card Resume/Learn Studio/Presentation all carry) added on
+/// the right instead of just a Done button floating over the whole page.
 struct BookWorkflowView: View {
     var onClose: () -> Void
+    var studentName: String = "there"
     var onPublished: ((String, String) -> Void)? = nil
 
     var body: some View {
-        ZStack(alignment: .topTrailing) {
-            Color(red: 244 / 255, green: 239 / 255, blue: 230 / 255).ignoresSafeArea()
-            BookWorkflowWebView(onPublished: onPublished)
-                .ignoresSafeArea()
+        HStack(spacing: 16) {
+            ZStack(alignment: .topLeading) {
+                Color(red: 244 / 255, green: 239 / 255, blue: 230 / 255)
+                BookWorkflowWebView(onPublished: onPublished)
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+            .shadow(color: .black.opacity(0.12), radius: 16, y: 8)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+            JesseRailView(studentName: studentName, context: "book")
+                .frame(width: 380)
+        }
+        .padding(18)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color(red: 244 / 255, green: 239 / 255, blue: 230 / 255).ignoresSafeArea())
+        .overlay(alignment: .topTrailing) {
             Button(action: onClose) {
                 Text("Done")
-                    .font(.system(size: 13, weight: .heavy, design: .rounded))
-                    .foregroundColor(Color(red: 20 / 255, green: 58 / 255, blue: 46 / 255))
-                    .padding(.horizontal, 14)
-                    .padding(.vertical, 10)
-                    .background(Capsule().fill(Color.white.opacity(0.94)))
+                    .font(.system(size: 12, weight: .bold, design: .rounded))
+                    .foregroundColor(Color(red: 12 / 255, green: 18 / 255, blue: 7 / 255))
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 8)
+                    .background(Capsule().fill(Color(red: 196 / 255, green: 245 / 255, blue: 71 / 255)))
             }
             .buttonStyle(.plain)
             .padding(.top, 12)
@@ -30,8 +49,6 @@ struct BookWorkflowView: View {
             .accessibilityLabel("Done")
         }
         .statusBarHidden(true)
-        // No wrapper .accessibilityIdentifier on the outer ZStack - see
-        // ArchiveWorkflowView for why (clobbers the nested Done button).
     }
 }
 

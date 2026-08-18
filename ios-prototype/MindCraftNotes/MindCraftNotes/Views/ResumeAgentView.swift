@@ -2,70 +2,99 @@ import SwiftUI
 import WebKit
 
 /// Jesse resume agent — live `/desk-os/workflows/resume/`.
-/// Native bridge: Drive folder read (PDFKit) + Apply today ingest.
-/// The web page still has its own separate voice call (browser
-/// SpeechRecognition/speechSynthesis, dies with this view) - untouched,
-/// out of scope here. This adds the SAME native "Call Jesse" +
-/// JesseCallSheetView already used by Archive/Presentation/the Hub/Flows,
-/// as a real alternative that keeps running via JesseCallSession
-/// independent of the web view, same shape as Archive's native call.
+/// Native bridge: Drive folder read (PDFKit) + Apply Today ingest.
+/// Rebuilt to the GDoc split (2026-08-17, explicit ask - "uniform platform
+/// experience," not five screens each inventing their own Jesse chrome):
+/// content on the left, the same `JesseRailView` every screen with Jesse
+/// carries on the right, inline auto-transcribe instead of a separate
+/// full-screen call sheet. The web page still has its own separate voice
+/// call (browser SpeechRecognition/speechSynthesis, dies with this view) -
+/// untouched, out of scope here; `JesseRailView`'s native call is the real
+/// alternative, running via the shared `JesseCallSession` independent of
+/// the web view.
+///
+/// Apply Today/JobOS folded in here rather than staying a separate
+/// top-level Flow (explicit ask - "that box should be in the resume box").
+/// `JobOSStore`/`JobOSShellView` themselves are untouched - full
+/// role/contact/application-tracking depth stays real, just reached from
+/// inside Resume now instead of as a peer entry point. The web page's own
+/// "apply" ingest message already fed `JobOSStore` before this change; nothing
+/// about that pipe changed, only how a student gets to see the result.
 struct ResumeAgentView: View {
     var onClose: () -> Void
+    var studentName: String = "there"
+    /// Fires once, right when the web page's own "apply" message has
+    /// finished ingesting into JobOSStore (real side effect the caller may
+    /// still want - e.g. filing a resume-draft artifact) - Resume itself
+    /// stays open and shows Apply Today as a nested cover rather than
+    /// closing, unlike the old flow this replaces.
     var onApply: (() -> Void)? = nil
 
-    @EnvironmentObject private var jesseCall: JesseCallSession
-    @State private var showJesseCallSheet = false
+    @State private var showApplyToday = false
+    @StateObject private var jobOSStore = JobOSStore()
 
     var body: some View {
-        ZStack(alignment: .topTrailing) {
-            Color(red: 244 / 255, green: 239 / 255, blue: 230 / 255).ignoresSafeArea()
-            ResumeAgentWebView(onApply: onApply)
-                .ignoresSafeArea()
-            HStack(spacing: 8) {
-                Button(action: startCall) {
-                    Label(jesseCall.isActive ? "On call" : "Call Jesse", systemImage: "phone.fill")
-                        .font(.system(size: 13, weight: .heavy, design: .rounded))
-                        .foregroundColor(Color(red: 20 / 255, green: 58 / 255, blue: 46 / 255))
-                        .padding(.horizontal, 14)
-                        .padding(.vertical, 10)
-                        .background(Capsule().fill(jesseCall.isActive ? Color(red: 196 / 255, green: 245 / 255, blue: 71 / 255) : Color.white.opacity(0.94)))
-                }
-                .buttonStyle(.plain)
-                .disabled(jesseCall.isActive)
-                .accessibilityIdentifier("resumeCallJesse")
-
-                Button(action: onClose) {
-                    Text("Done")
-                        .font(.system(size: 13, weight: .heavy, design: .rounded))
-                        .foregroundColor(Color(red: 20 / 255, green: 58 / 255, blue: 46 / 255))
-                        .padding(.horizontal, 14)
-                        .padding(.vertical, 10)
-                        .background(Capsule().fill(Color.white.opacity(0.94)))
-                }
-                .buttonStyle(.plain)
-                .accessibilityIdentifier("resumeAgentBack")
-                .accessibilityLabel("Done")
+        HStack(spacing: 16) {
+            ZStack(alignment: .topLeading) {
+                Color(red: 244 / 255, green: 239 / 255, blue: 230 / 255)
+                ResumeAgentWebView(onApply: {
+                    onApply?()
+                    showApplyToday = true
+                })
             }
+            .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+            .shadow(color: .black.opacity(0.12), radius: 16, y: 8)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+            VStack(spacing: 12) {
+                JesseRailView(studentName: studentName, context: "resume")
+                Button {
+                    showApplyToday = true
+                } label: {
+                    HStack(spacing: 8) {
+                        Image(systemName: "briefcase.fill")
+                        Text(jobOSStore.state.roles.isEmpty ? "Applications" : "\(jobOSStore.state.roles.count) tracked roles")
+                        Spacer(minLength: 0)
+                        Image(systemName: "chevron.right")
+                    }
+                    .font(.system(size: 13, weight: .bold, design: .rounded))
+                    .foregroundColor(Color(red: 20 / 255, green: 58 / 255, blue: 46 / 255))
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 12)
+                    .background(
+                        RoundedRectangle(cornerRadius: 14, style: .continuous)
+                            .fill(Color.white)
+                            .shadow(color: .black.opacity(0.08), radius: 10, y: 4)
+                    )
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("resumeOpenApplyToday")
+            }
+            .frame(width: 380)
+        }
+        .padding(18)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color(red: 244 / 255, green: 239 / 255, blue: 230 / 255).ignoresSafeArea())
+        .overlay(alignment: .topTrailing) {
+            Button(action: onClose) {
+                Text("Done")
+                    .font(.system(size: 12, weight: .bold, design: .rounded))
+                    .foregroundColor(Color(red: 12 / 255, green: 18 / 255, blue: 7 / 255))
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 8)
+                    .background(Capsule().fill(Color(red: 196 / 255, green: 245 / 255, blue: 71 / 255)))
+            }
+            .buttonStyle(.plain)
             .padding(.top, 12)
             .padding(.trailing, 16)
+            .accessibilityIdentifier("resumeAgentBack")
+            .accessibilityLabel("Done")
         }
         .statusBarHidden(true)
         .accessibilityIdentifier("resumeAgentRoot")
-        .sheet(isPresented: $showJesseCallSheet) {
-            JesseCallSheetView(
-                call: jesseCall,
-                onClose: { showJesseCallSheet = false },
-                onEnd: {
-                    jesseCall.end()
-                    showJesseCallSheet = false
-                }
-            )
+        .fullScreenCover(isPresented: $showApplyToday) {
+            JobOSShellView(onClose: { showApplyToday = false })
         }
-    }
-
-    private func startCall() {
-        jesseCall.begin(context: "resume")
-        showJesseCallSheet = true
     }
 }
 

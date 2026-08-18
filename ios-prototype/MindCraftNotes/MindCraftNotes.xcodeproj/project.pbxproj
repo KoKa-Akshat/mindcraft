@@ -112,6 +112,7 @@
 		D7JOBOSDETAIL01A2B3 /* JobOSRoleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7JOBOSDETAIL01A2B3 /* JobOSRoleDetailView.swift */; };
 		D7MOODLECLIENT01A2 /* MoodleClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7MOODLECLIENT01A2 /* MoodleClient.swift */; };
 		D7STUDENTAIKEY01 /* StudentAIKeyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7STUDENTAIKEY01 /* StudentAIKeyStore.swift */; };
+		D82368581E38D584FD93B658 /* JesseRailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A10EB3BDDE04216B5B57403 /* JesseRailView.swift */; };
 		D8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift */; };
 		D8DESKCALLOAD01A2B3 /* DeskCalendarLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DESKCALLOAD01A2B3 /* DeskCalendarLoader.swift */; };
 		D9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift */; };
@@ -176,6 +177,7 @@
 		4D3894FD26F293BA8CCA0712 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		54EE348EA08742A29688BF10 /* FormulaCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormulaCardView.swift; sourceTree = "<group>"; };
 		556F5046AF8C8C22E031B975 /* PracticeSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeSessionView.swift; sourceTree = "<group>"; };
+		5A10EB3BDDE04216B5B57403 /* JesseRailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JesseRailView.swift; sourceTree = "<group>"; };
 		5A9A2FA726DCF7636F59A480 /* SessionNotesClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionNotesClient.swift; sourceTree = "<group>"; };
 		5B50609A6CA341D392B5BC37 /* DrawingStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingStore.swift; sourceTree = "<group>"; };
 		670F10E849C346E2127D94CF /* DeskShellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskShellView.swift; sourceTree = "<group>"; };
@@ -456,6 +458,7 @@
 				C9BOOKWORKF01A2B3C4 /* BookWorkflowView.swift */,
 				C9FRIENDSVIEW01A2B3 /* FriendsView.swift */,
 				9F1858B772F353A476A8023F /* LearnStudioView.swift */,
+				5A10EB3BDDE04216B5B57403 /* JesseRailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -758,6 +761,7 @@
 				A99B09C9A6E7F8091B2C3D4E /* DeskPanCanvas.swift in Sources */,
 				B0C259017B6359197378F0FD /* LearnStudioView.swift in Sources */,
 				D9FE32A2CBC826477D6BCDA2 /* ChatHistoryImportParser.swift in Sources */,
+				D82368581E38D584FD93B658 /* JesseRailView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -111,6 +111,45 @@ final class StudentAIKeyStore: ObservableObject {
         return await complete(system: Self.emailDraftSystemPrompt, user: user)
     }
 
+    /// A real, honest study-plan generation call for Learn Studio's intake
+    /// (2026-08-17). Deliberately does NOT claim to browse the live web -
+    /// nothing in this app has a real search-API integration (confirmed
+    /// tonight: no live web-search capability exists anywhere in the
+    /// codebase), so the prompt only draws on the model's own knowledge
+    /// plus whatever real bank content is available - claiming "researched
+    /// online" when it didn't would be exactly the kind of fake capability
+    /// this app has avoided all night. `matchedConceptId` is the honest
+    /// part: rather than have the LLM invent unverified practice questions
+    /// (no firewall/oracle exists for arbitrary topics the way Blake's
+    /// ingredient-first pipeline has for math), it's asked to name a real
+    /// concept id from the list actually available in `SampleQuestion.all`
+    /// if the topic matches one - `nil` means honestly "no verified
+    /// practice bank for this yet," not a fabricated question set.
+    func generateStudyPlan(topic: String, level: String, knownConceptIds: [String]) async -> Result<StudyPlan, SolveError> {
+        let user = """
+        Topic the student wants to study: \(topic)
+        Their self-described level: \(level)
+
+        Known concept ids with a REAL, verified practice question bank today: \(knownConceptIds.joined(separator: ", "))
+
+        Respond with ONLY this JSON shape, no other text:
+        {"definition": "...", "context": "...", "layout": "full|quick|practiceOnly", "matchedConceptId": "..." or null}
+
+        - definition: one or two plain sentences stating the core idea, no jargon.
+        - context: one or two sentences on why this matters / where it fits, second person, warm.
+        - layout: "full" if the topic genuinely has a definition, a context, and a worked example worth separating; "quick" if definition and context naturally belong together; "practiceOnly" if the student clearly just wants to practice, not be taught.
+        - matchedConceptId: the exact id string from the known list above ONLY if the topic is genuinely that concept - otherwise null. Never invent an id not in that list.
+        """
+        let result = await complete(system: Self.studyPlanSystemPrompt, user: user)
+        switch result {
+        case .success(let text):
+            guard let plan = StudyPlan.parse(text) else { return .failure(.unavailable) }
+            return .success(plan)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+
     /// Any other real question about the student's own desk data (recent
     /// mail, calendar, binder) - the Work Dashboard's search used to route
     /// everything through the shared backend (`DeskAskClient`), which
@@ -284,4 +323,32 @@ final class StudentAIKeyStore: ObservableObject {
     have enough to answer, say so honestly instead of guessing. Do not \
     mention API keys or that you are an AI.
     """
+
+    private static let studyPlanSystemPrompt = """
+    You are Jesse, planning a study session for a high-school student \
+    inside The Desk. You do not have live internet access - work from \
+    your own knowledge only, and say so honestly in the definition/context \
+    text if you are uncertain rather than inventing specifics. Respond \
+    with strict JSON only, matching exactly the shape the user message \
+    specifies - no markdown fences, no commentary before or after.
+    """
+}
+
+/// Parsed via `StudyPlan.parse(_:)`, not a plain `Decodable` conformance -
+/// the model sometimes wraps JSON in prose or code fences despite
+/// instructions not to, so this extracts the first `{...}` object before
+/// decoding rather than failing outright on a technically-invalid response
+/// that a human would still recognize as "the JSON, plus noise."
+struct StudyPlan: Decodable {
+    let definition: String
+    let context: String
+    let layout: String
+    let matchedConceptId: String?
+
+    static func parse(_ raw: String) -> StudyPlan? {
+        guard let start = raw.firstIndex(of: "{"), let end = raw.lastIndex(of: "}"), start < end else { return nil }
+        let jsonSlice = raw[start...end]
+        guard let data = jsonSlice.data(using: .utf8) else { return nil }
+        return try? JSONDecoder().decode(StudyPlan.self, from: data)
+    }
 }

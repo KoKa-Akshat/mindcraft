@@ -132,7 +132,6 @@ struct FieldDeskView: View {
     /// Field Book wiring is a separate, more invasive pass into an
     /// already-high-risk file).
     @State private var showLearnStudio = false
-    @State private var learnStudioConceptId = "fractions_decimals"
     /// Real nav-intent target ("study quadratic equations" via Ask The Desk
     /// -> `study_concept` action) - threaded into `DashboardView` so it
     /// opens straight to that concept's chapter instead of just the roadmap.
@@ -725,9 +724,23 @@ struct FieldDeskView: View {
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                                 switch id {
                                 case "resume": showResumeAgent = true
-                                case "archive": showArchiveWorkflow = true
+                                // Archive redirects into Learn Studio now
+                                // (2026-08-17, explicit ask) - Learn's own
+                                // "Browse Archive" button opens the real
+                                // ArchiveWorkflowView from there.
+                                case "archive": showLearnStudio = true
                                 case "book": showBookWorkflow = true
-                                case "apply": showApplyToday = true
+                                // Apply no longer opens its own standalone
+                                // screen from here - redirects to Resume,
+                                // which now carries Apply Today/JobOS
+                                // itself (2026-08-17). Scheduling's own
+                                // "Also: Apply today board" secondary path
+                                // and the long-press workflow library are
+                                // untouched - deliberately out of scope
+                                // tonight, already documented as secondary
+                                // access points, not the standalone Flow
+                                // that was actually asked to go away.
+                                case "apply": showResumeAgent = true
                                 default: break
                                 }
                             }
@@ -1252,12 +1265,9 @@ struct FieldDeskView: View {
         .fullScreenCover(isPresented: $showResumeAgent) {
             ResumeAgentView(
                 onClose: { showResumeAgent = false },
+                studentName: deskChromeName ?? "there",
                 onApply: {
                     _ = store.fileArtifact(title: "Resume draft", note: "Filed from Jesse resume.", source: .resume)
-                    showResumeAgent = false
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-                        showApplyToday = true
-                    }
                 }
             )
         }
@@ -1267,6 +1277,7 @@ struct FieldDeskView: View {
         .fullScreenCover(isPresented: $showBookWorkflow) {
             BookWorkflowView(
                 onClose: { showBookWorkflow = false },
+                studentName: deskChromeName ?? "there",
                 onPublished: { title, body in
                     _ = store.fileArtifact(title: title, note: body, source: .book)
                     flash("Filed to your Binder")
@@ -1298,7 +1309,7 @@ struct FieldDeskView: View {
             CreateInstanceStudioView(binderStore: binderStore) { _ in }
         }
         .fullScreenCover(isPresented: $showLearnStudio) {
-            LearnStudioView(conceptId: learnStudioConceptId, onClose: { showLearnStudio = false })
+            LearnStudioView(studentName: deskChromeName ?? "there", onClose: { showLearnStudio = false })
                 .environmentObject(jesseCall)
         }
         .fileImporter(
