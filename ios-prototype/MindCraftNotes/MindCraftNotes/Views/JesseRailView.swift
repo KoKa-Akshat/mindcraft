@@ -185,7 +185,7 @@ struct JesseRailView: View {
     /// should just work the moment the call connects, not require knowing
     /// about a second control first.
     private func jumpOnCall() {
-        jesseCall.begin(context: context)
+        jesseCall.begin(context: context, studentName: studentName)
         jesseCall.startListening()
     }
 

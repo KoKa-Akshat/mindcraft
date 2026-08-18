@@ -274,10 +274,19 @@ struct DeskGridDashboardView: View {
             let scale = min((geo.size.width - sidebarInset) / artboard.width, geo.size.height / artboard.height)
             let board = CGSize(width: artboard.width * scale, height: artboard.height * scale)
             ZStack {
-                // Black, not the old cream (2026-08-18, explicit ask:
-                // "the background... should be black instead of white, so
-                // the raccoon pops out").
-                Color.black.ignoresSafeArea()
+                // Back to cream (2026-08-18, reverted: "the black polka
+                // dots is take it back to white polka dots please I don't
+                // like this I like the white polka dots better").
+                Color(gridHex: "fff8e9").ignoresSafeArea()
+                // Full-screen, not just the board's own scaled size - on a
+                // device whose aspect ratio doesn't match the 1440x810
+                // artboard exactly, the board is letterboxed (real empty
+                // margin above/below or left/right), and dots confined to
+                // the board left that margin looking like dead space
+                // (explicit ask: "expand the polka dots to go above and
+                // below too").
+                DottedDeskGrid()
+                    .frame(width: geo.size.width, height: geo.size.height)
                 tileBoard(scale: scale, board: board)
                     .scaleEffect(spaceZoom * liveZoom)
                     .offset(x: sidebarInset / 2 + spacePan.width + livePan.width, y: spacePan.height + livePan.height)
@@ -342,8 +351,6 @@ struct DeskGridDashboardView: View {
     private func tileBoard(scale: CGFloat, board: CGSize) -> some View {
         ZStack(alignment: .topLeading) {
             Color.clear
-                .frame(width: board.width, height: board.height)
-            DottedDeskGrid()
                 .frame(width: board.width, height: board.height)
             pin(boxRect(.intel), scale: scale) {
                 photoTile(.intel)
@@ -487,12 +494,12 @@ struct DeskGridDashboardView: View {
         let phase = mascotPhase(kind)
         let awake = phase != .sleeping
         return VStack(alignment: .leading, spacing: 6) {
-            // White, not the old dark green - the board background is
-            // black now (2026-08-18, explicit ask: "so the raccoon
-            // pops out"), and dark-on-black is unreadable.
+            // Back to dark green - the board background reverted to
+            // cream (2026-08-18, "take it back to white polka dots"),
+            // and white-on-cream is unreadable.
             Text(kind.title)
                 .font(.system(size: 15, weight: .bold, design: .rounded))
-                .foregroundColor(.white)
+                .foregroundColor(Color(gridHex: "143a2e"))
             Button {
                 handleTile(kind)
             } label: {
@@ -522,7 +529,10 @@ struct DeskGridDashboardView: View {
                         tileBody(kind, phase: phase)
                         if tileIsGrown(kind) { Spacer(minLength: 0) }
                     }
-                    .padding(10)
+                    // Thinner colored "border" around the inner card
+                    // (was 10 - explicit ask, 2026-08-18: "reduce the
+                    // border in those boxes make them very thin").
+                    .padding(5)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
@@ -1144,7 +1154,10 @@ struct DeskGridDashboardView: View {
     @ViewBuilder
     private func tileInnerCard<Content: View>(@ViewBuilder _ content: () -> Content) -> some View {
         content()
-            .padding(14)
+            // Tighter internal padding (was 14 - explicit ask,
+            // 2026-08-18: "the padding is too big right now for all the
+            // boxes... give them more space internally").
+            .padding(8)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .background(
                 RoundedRectangle(cornerRadius: 16, style: .continuous)
@@ -1962,23 +1975,24 @@ struct DeskGridDashboardView: View {
 /// and Intel's old top-right slot - since a filing system genuinely
 /// benefits from more room more than a three-way tie for space did.
 private enum WorkArtboard {
-    // Reverted (2026-08-18, explicit ask: "why is it like that from the
-    // start bring that back to its place... binder... looks ugly as
-    // f*** right now") - the same-day "stack Intel under Moodle, Binder
-    // fills the rest" layout is gone. Intel is back at its original,
-    // roomy top-right slot; Binder is back to its original, proportionate
-    // size instead of a mostly-empty 932pt-wide box. The .moodle slot's
-    // POSITION is unchanged from the original layout - only its content
-    // changed (Knowledge Graph, not the LMS connector - see tileBody).
-    static let p4HomeworkHelp = CGRect(x: 81, y: 118, width: 376, height: 227)
-    static let p4Moodle = CGRect(x: 115, y: 378, width: 315, height: 222)
-    static let p4Binder = CGRect(x: 492, y: 61, width: 505, height: 568)
-    static let p4Intel = CGRect(x: 1032, y: 107, width: 392, height: 522)
+    // Fourth pass (2026-08-18, explicit ask): "move everything a little
+    // bit left... increase the size of the boxes vertically... knowledge
+    // graph expand it, make it horizontally the same length as homework
+    // help... expand binder vertically and intel vertically too." Homework
+    // Help and Knowledge Graph now share one width (were 376/315, two
+    // different sizes); every box is taller, with less empty space below
+    // the column before the dock. The whole layout shifted left (was
+    // x:81 leftmost / x:1424 rightmost - now x:40 / x:1420) instead of
+    // hugging the right edge.
+    static let p4HomeworkHelp = CGRect(x: 40, y: 40, width: 420, height: 280)
+    static let p4Moodle = CGRect(x: 40, y: 340, width: 420, height: 340)
+    static let p4Binder = CGRect(x: 490, y: 40, width: 500, height: 640)
+    static let p4Intel = CGRect(x: 1020, y: 40, width: 400, height: 640)
 
-    static let p5HomeworkHelp = CGRect(x: 76, y: 103, width: 319, height: 192)
-    static let p5Moodle = CGRect(x: 106, y: 323, width: 267, height: 188)
-    static let p5Binder = CGRect(x: 425, y: 54, width: 428, height: 524)
-    static let p5Intel = CGRect(x: 884, y: 93, width: 332, height: 527)
+    static let p5HomeworkHelp = CGRect(x: 35, y: 35, width: 340, height: 230)
+    static let p5Moodle = CGRect(x: 35, y: 280, width: 340, height: 280)
+    static let p5Binder = CGRect(x: 390, y: 35, width: 420, height: 525)
+    static let p5Intel = CGRect(x: 825, y: 35, width: 340, height: 525)
     static let memoRail = CGRect(x: 1231, y: 193, width: 199, height: 194)
     static let flowsRail = CGRect(x: 1231, y: 54, width: 199, height: 566)
     // Only the dock's own box moves toward the board's bottom edge (was

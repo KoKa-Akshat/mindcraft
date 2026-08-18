@@ -175,7 +175,7 @@ final class JesseCallSession: NSObject, ObservableObject {
 
     // MARK: - Lifecycle
 
-    func begin(context: String, studentWeakness: (conceptId: String, label: String)? = nil) {
+    func begin(context: String, studentWeakness: (conceptId: String, label: String)? = nil, studentName: String = "there") {
         guard !isActive else { return }
         self.context = context
         self.studentWeakness = studentWeakness
@@ -197,6 +197,13 @@ final class JesseCallSession: NSObject, ObservableObject {
         }
         if context == "workDashboard" {
             workDashboardLesson = nil
+            // Real voice greeting on arrival (2026-08-18, explicit ask:
+            // "the first thing you should do is say hi Akshat what can I
+            // help you study today - it says nothing, it's waiting for
+            // my input"). A narrow, context-gated `speak()` call before
+            // any listening starts - not a generalized entry point (see
+            // CURSOR_HANDOFF.md Assignment J's own note on this).
+            Task { await speak("Hi \(studentName), what would you like to learn today?") }
         }
         status = nil
     }
@@ -555,16 +562,29 @@ final class JesseCallSession: NSObject, ObservableObject {
     /// as "wants to learn something" - a false positive here would hijack
     /// an ordinary desk question (e.g. "what's my next assignment") into
     /// the lesson-generation path instead of answering it.
+    /// Real bug, confirmed live (2026-08-18): "hi Jesse can you please
+    /// teach me calculus" fell through to the generic path entirely -
+    /// `hasPrefix` required the lead-in to be the very first words, so
+    /// "hi Jesse..." and "...please teach me..." (real, natural filler a
+    /// strict prefix match doesn't survive) both broke the match, and
+    /// Jesse ended up talking about an unrelated archive hit instead of
+    /// running the real learn flow at all. Fixed to search anywhere in
+    /// the message, not just at the start, and widened the phrase list
+    /// to cover "please".
     private static func extractLearnTopic(from message: String) -> String? {
         let leadIns = [
-            "i want to learn ", "i want to study ", "help me learn ", "help me study ",
-            "teach me ", "i'd like to learn ", "i would like to learn ",
-            "can you teach me ", "let's learn ", "lets learn ",
+            "i want to learn about ", "i want to learn ",
+            "i want to study ", "help me learn ", "help me study ",
+            "can you please teach me ", "can you teach me ", "please teach me ",
+            "teach me about ", "teach me ",
+            "i'd like to learn ", "i would like to learn ",
+            "let's learn ", "lets learn ",
         ]
         let lowered = message.lowercased()
-        for leadIn in leadIns where lowered.hasPrefix(leadIn) {
-            let topic = String(message.dropFirst(leadIn.count)).trimmingCharacters(in: .whitespacesAndNewlines)
-            return topic.isEmpty ? nil : topic
+        for leadIn in leadIns {
+            guard let range = lowered.range(of: leadIn) else { continue }
+            let topic = String(message[range.upperBound...]).trimmingCharacters(in: .whitespacesAndNewlines)
+            if !topic.isEmpty { return topic }
         }
         return nil
     }

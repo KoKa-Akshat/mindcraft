@@ -1094,8 +1094,16 @@ struct FieldDeskView: View {
             // onto the Work dashboard too - previously deskOverlayChromeBlocked
             // hid it there entirely, so the dashboard had no logo/call/sign-out
             // at all (Done was the dashboard's only way to interact with chrome).
-            .overlay(alignment: showDeskGridDashboard ? .topTrailing : .topLeading) {
-                if !deskOverlayChromeBlocked || showDeskGridDashboard {
+            .overlay(alignment: .topLeading) {
+                // Removed entirely on the Work dashboard (2026-08-18,
+                // explicit ask: "remove the logo because it has no
+                // functionality... now instead we just have the settings
+                // button" - the sidebar's gear already reaches Manage, and
+                // the logo was also sitting on top of "Done" buttons on
+                // other panels, making them hard to press). Every other
+                // screen (Jesse's Kitchen, Create Studio) keeps it -
+                // Manage has no other entry point there.
+                if !deskOverlayChromeBlocked && !showDeskGridDashboard {
                     HStack(spacing: 10) {
                         Button {
                             openManageFromChrome()
@@ -1120,15 +1128,7 @@ struct FieldDeskView: View {
                         // screen (dashboard included) clean.
                     }
                     .padding(.top, 12)
-                    // On the Work dashboard specifically, the mark moved to
-                    // the top-right (2026-08-18, explicit ask) - that
-                    // corner is otherwise empty there (modeToggleBar below
-                    // is explicitly excluded while showDeskGridDashboard),
-                    // and the dashboard's own new left sidebar (Manage
-                    // reachable from its gear icon too) took over the
-                    // top-left spot. Every other screen keeps the mark at
-                    // top-left, unchanged.
-                    .padding(showDeskGridDashboard ? .trailing : .leading, 16)
+                    .padding(.leading, 16)
                     .zIndex(80)
                 }
             }
