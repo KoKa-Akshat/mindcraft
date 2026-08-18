@@ -17,7 +17,6 @@ struct CreateCanvasView: View {
 
     @EnvironmentObject private var jesseCall: JesseCallSession
 
-    @State private var askText = ""
     @State private var slides: [CreateSlide] = [
         CreateSlide(title: "You were never bad at this.", body: "You were working alone. The page was hard because nobody who had done it was in the room."),
         CreateSlide(title: "Office hours from your room.", body: "Show the actual page. Someone who has done this walks in already knowing where you left off."),
@@ -26,6 +25,16 @@ struct CreateCanvasView: View {
     @State private var slideIndex = 0
     @State private var docText = ""
     @State private var instructionLog: [String] = []
+    /// Real upload target, same capability as the dashboard's own
+    /// Homework Help tile (2026-08-18, explicit ask: "the search bar in
+    /// presentation is not needed... you can just talk to Jesse instead...
+    /// bring the homework help feature here" - the old Ask-AI bar didn't
+    /// do anything an LLM call couldn't (`sendAsk` just logged the typed
+    /// text, no real send), so it's replaced rather than kept alongside).
+    @State private var showHomeworkImporter = false
+    @State private var homeworkUploading = false
+    @State private var homeworkError: String?
+    @State private var homeworkUploads: [CreateHomeworkUpload] = []
     @State private var spacePan: CGSize = .zero
     @State private var spaceZoom: CGFloat = 1
     @GestureState private var livePan: CGSize = .zero
@@ -434,66 +443,84 @@ struct CreateCanvasView: View {
 
     // MARK: - Dock + call
 
-    /// Nested search-styled capsule (magnifying glass + white-opacity
-    /// pill inside the dark dock) matches `DeskGridDashboardView.
-    /// searchField` - the same family of dock every screen should read
-    /// as, not a one-off plain text field.
+    /// Real upload target, not the old Ask-AI text field (2026-08-18,
+    /// explicit ask: "the search bar in presentation is not needed... you
+    /// can just talk to Jesse instead... bring the homework help feature
+    /// here" - `jesseRail`'s own call button already covers "ask
+    /// something," and the old field's `sendAsk` never actually sent
+    /// anything to an LLM, just logged the typed text). Same real
+    /// pipeline the dashboard's Homework Help tile uses
+    /// (`HomeworkUploadPipeline`), a second real upload surface rather
+    /// than a reskinned stub.
     private var createDock: some View {
-        HStack(spacing: 12) {
-            Image(systemName: "paperclip")
-                .font(.system(size: 16, weight: .semibold))
-                .foregroundColor(.white.opacity(0.85))
-            HStack(spacing: 6) {
-                Image(systemName: "magnifyingglass")
-                    .foregroundColor(.white.opacity(0.45))
-                TextField("Ask AI…", text: $askText)
-                    .textFieldStyle(.plain)
-                    .font(.system(size: 15, weight: .medium, design: .rounded))
-                    .foregroundColor(.white)
-                    .onSubmit { sendAsk() }
-                    .accessibilityIdentifier("createCanvasAsk")
-            }
-            .padding(.horizontal, 12)
-            .padding(.vertical, 8)
-            .background(Capsule().fill(Color.white.opacity(0.12)))
-            .frame(maxWidth: .infinity)
-            Button(action: sendAsk) {
-                Text("Send")
-                    .font(.system(size: 12, weight: .bold, design: .rounded))
-                    .foregroundColor(Color(createHex: "0c1207"))
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 6)
-                    .background(Capsule().fill(Color(createHex: "c4f547")))
-            }
-            .buttonStyle(.plain)
-            .opacity(askText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? 0.35 : 1)
-            .disabled(askText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
-
+        HStack(alignment: .top, spacing: 16) {
             Button {
-                toggleMic()
+                showHomeworkImporter = true
             } label: {
-                Image(systemName: jesseCall.isListening ? "mic.fill" : "mic")
-                    .font(.system(size: 16, weight: .bold))
-                    .foregroundColor(jesseCall.isListening ? Color(createHex: "0c1207") : .white)
-                    .frame(width: 36, height: 36)
-                    .background(Circle().fill(jesseCall.isListening ? Color(createHex: "c4f547") : Color.white.opacity(0.12)))
+                HStack(spacing: 8) {
+                    if homeworkUploading {
+                        ProgressView().tint(.white)
+                    } else {
+                        Image(systemName: "square.and.arrow.up")
+                            .foregroundColor(.white.opacity(0.85))
+                    }
+                    Text(homeworkUploading ? "Reading\u{2026}" : "Tap to upload a photo or PDF")
+                        .font(.system(size: 13, weight: .bold, design: .rounded))
+                        .foregroundColor(.white)
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 12)
+                .background(Capsule().fill(Color.white.opacity(0.12)))
             }
             .buttonStyle(.plain)
-            .accessibilityIdentifier("createCanvasMic")
+            .accessibilityIdentifier("createCanvasUpload")
 
-            JesseMiniWaveform(active: jesseCall.isListening || jesseCall.isSpeaking)
-                .frame(width: 28, height: 28)
+            if let homeworkError {
+                Text(homeworkError)
+                    .font(.system(size: 11, weight: .semibold, design: .rounded))
+                    .foregroundColor(Color(createHex: "e8877a"))
+                    .frame(maxWidth: 220, alignment: .leading)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+
+            if !homeworkUploads.isEmpty {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 10) {
+                        ForEach(homeworkUploads) { upload in
+                            VStack(alignment: .leading, spacing: 3) {
+                                Text(upload.fileName)
+                                    .font(.system(size: 11, weight: .heavy, design: .rounded))
+                                    .foregroundColor(.white)
+                                    .lineLimit(1)
+                                if let first = upload.cards.first {
+                                    Text(first.body)
+                                        .font(.system(size: 11, weight: .medium, design: .rounded))
+                                        .foregroundColor(.white.opacity(0.7))
+                                        .lineLimit(2)
+                                }
+                            }
+                            .padding(10)
+                            .frame(width: 210, alignment: .leading)
+                            .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(Color.white.opacity(0.08)))
+                        }
+                    }
+                }
+            }
+            Spacer(minLength: 0)
         }
         .padding(.horizontal, 22)
         .padding(.vertical, 14)
-        .background(Capsule().fill(Color(createHex: "1c1c1e")))
-        // Not a direct .accessibilityIdentifier() - would clobber
-        // createCanvasAsk and createCanvasMic's own identifiers.
+        .background(RoundedRectangle(cornerRadius: 24, style: .continuous).fill(Color(createHex: "1c1c1e")))
         .accessibilityElement(children: .contain)
         .overlay(alignment: .topLeading) {
             Text(verbatim: "create-dock").font(.system(size: 1)).foregroundColor(.clear)
                 .accessibilityIdentifier("createCanvasDock")
                 .allowsHitTesting(false)
+        }
+        .sheet(isPresented: $showHomeworkImporter) {
+            HomeworkDocumentPicker { url in
+                Task { await handleHomeworkUpload(url) }
+            }
         }
     }
 
@@ -514,23 +541,16 @@ struct CreateCanvasView: View {
         jesseCall.end()
     }
 
-    private func toggleMic() {
-        if !jesseCall.isActive {
-            jesseCall.begin(context: "create")
+    private func handleHomeworkUpload(_ url: URL) async {
+        homeworkError = nil
+        homeworkUploading = true
+        switch await HomeworkUploadPipeline.process(fileURL: url) {
+        case .cards(let fileName, let cards):
+            homeworkUploads.insert(CreateHomeworkUpload(fileName: fileName, cards: cards), at: 0)
+        case .error(let message):
+            homeworkError = message
         }
-        if jesseCall.isListening {
-            jesseCall.stopListening()
-        } else {
-            jesseCall.startListening()
-        }
-    }
-
-    private func sendAsk() {
-        let text = askText.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !text.isEmpty else { return }
-        instructionLog.append(text)
-        askText = ""
-        // Transcript is the instruction stream. Do not fake a finished slide.
+        homeworkUploading = false
     }
 }
 
@@ -559,6 +579,17 @@ private struct CreateSlide: Identifiable {
     var body: String
 }
 
+/// One solved upload's real AI cards - own copy of the shape
+/// `DeskGridDashboardView.HomeworkUploadSummary` uses (that one is
+/// `private` to its own file and carries a `microsims` field this screen
+/// doesn't need), same per-file-struct convention this codebase already
+/// uses for its dotted-grid backgrounds.
+private struct CreateHomeworkUpload: Identifiable {
+    let id = UUID()
+    let fileName: String
+    let cards: [IngredientHintsClient.HintCard]
+}
+
 private enum CreateArtboard {
     /// 1440×810. Tightened margins (28pt outer, not the old 96/76 split)
     /// and, critically, TWO separate Jesse-rail widths instead of one box
@@ -575,7 +606,11 @@ private enum CreateArtboard {
     static let liveSlide = CGRect(x: 28, y: 48, width: 739, height: 560)
     static let jesseRailLive = CGRect(x: 787, y: 48, width: 403, height: 560)
     static let slidesRail = CGRect(x: 1210, y: 48, width: 202, height: 560)
-    static let dock = CGRect(x: 28, y: 632, width: 1384, height: 96)
+    // Taller than the old 96pt Ask-AI bar (2026-08-18) - it now carries
+    // real upload summaries, not just a single-line text field, and the
+    // board has slack below it (632+150=782, still 28pt short of the true
+    // 810 edge, matching the outer margin).
+    static let dock = CGRect(x: 28, y: 632, width: 1384, height: 150)
 }
 
 struct JesseMiniWaveform: View {

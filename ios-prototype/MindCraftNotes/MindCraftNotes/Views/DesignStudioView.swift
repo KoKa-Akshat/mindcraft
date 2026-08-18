@@ -23,8 +23,13 @@ struct DesignStudioView: View {
     @EnvironmentObject private var jesseCall: JesseCallSession
     @ObservedObject private var aiKeys = StudentAIKeyStore.shared
 
-    @State private var boxes: [DesignBox] = DesignBox.demoFlow
-    @State private var edges: [DesignEdge] = DesignEdge.demoFlow
+    // Empty canvas, not the seeded demo flow (2026-08-18, explicit ask:
+    // "the 4 boxes 3 connections thing remove it") - `DesignBox.demoFlow`/
+    // `DesignEdge.demoFlow` still exist as reference data (their own doc
+    // comments explain the intended shape of a real flow) but no longer
+    // seed a fresh session.
+    @State private var boxes: [DesignBox] = []
+    @State private var edges: [DesignEdge] = []
     @State private var selectedId: String?
     @State private var dragStart: [String: CGPoint] = [:]
 
@@ -474,8 +479,13 @@ struct DesignEdge: Identifiable {
 /// `IntakeBoard.jesseRail`, dock matches `LearnBoard.dock` exactly (same
 /// artboard, same dock should look identical across every Flow).
 private enum DesignBoard {
-    static let canvas = CGRect(x: 40, y: 40, width: 760, height: 656)
-    static let jesseRail = CGRect(x: 828, y: 40, width: 340, height: 656)
+    // Jesse rail narrowed (2026-08-18, explicit ask: "shrink call Jesse to
+    // the left so there's more space to add boxes") - 340 -> 260, its own
+    // right edge held fixed (still a 28pt gap before `inspector`, matching
+    // this artboard's usual margin), and the canvas grows to fill exactly
+    // the width that freed up (760 -> 840) instead of leaving it empty.
+    static let canvas = CGRect(x: 40, y: 40, width: 840, height: 656)
+    static let jesseRail = CGRect(x: 908, y: 40, width: 260, height: 656)
     static let inspector = CGRect(x: 1196, y: 40, width: 204, height: 656)
     // Bottom-right corner of canvas, clear of every demoFlow box (all four
     // sit in x:20-730/y:0-232) - was pinned at (40,40), directly on top of

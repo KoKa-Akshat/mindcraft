@@ -1,6 +1,7 @@
 import Foundation
 import FirebaseAuth
 import FirebaseFirestore
+import PDFKit
 
 /// One parsed homework question - mirrors `HomeworkQuestion` in
 /// `app/src/lib/homework.ts` exactly (same field names) so a session created
@@ -196,5 +197,86 @@ enum IngredientHintsClient {
             return .unavailable
         }
         return .cards(rawCards.map { HintCard(title: $0["title"] as? String ?? "Hint", body: $0["body"] as? String ?? "") })
+    }
+}
+
+/// The real upload -> text -> AI-cards pipeline, factored out of
+/// `DeskGridDashboardView`'s own upload handling (2026-08-18, explicit
+/// ask: "bring the homework help feature here [Presentation/GDoc]" - a
+/// second screen needed the exact same real capability, not a reskinned
+/// stub). Returns a result instead of mutating any view's own `@State` so
+/// any screen can call it and decide what to do with the outcome -
+/// `DeskGridDashboardView` still owns its own upload list/Binder-filing
+/// side effects, this just does the actual work once.
+enum HomeworkUploadPipeline {
+    enum Outcome {
+        case cards(fileName: String, cards: [IngredientHintsClient.HintCard])
+        case error(String)
+    }
+
+    static func process(fileURL url: URL) async -> Outcome {
+        let accessed = url.startAccessingSecurityScopedResource()
+        defer { if accessed { url.stopAccessingSecurityScopedResource() } }
+        guard let data = try? Data(contentsOf: url) else {
+            return .error("Couldn\u{2019}t read that file. Try again.")
+        }
+
+        if url.pathExtension.lowercased() == "pdf" {
+            guard let doc = PDFDocument(data: data) else {
+                return .error("Couldn\u{2019}t read that PDF. Try another file.")
+            }
+            var text = ""
+            for i in 0..<doc.pageCount {
+                text += (doc.page(at: i)?.string ?? "") + "\n"
+                if text.count > 4000 { break }
+            }
+            let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+            if !trimmed.isEmpty {
+                return await solve(trimmed, fileName: url.lastPathComponent)
+            }
+            // Most real homework PDFs are a phone scan with no text layer -
+            // PDFKit's `.string` (real text extraction, not OCR) correctly
+            // finds nothing for those. Fall back to rasterizing page 1 and
+            // running it through the same vision-model OCR path photos use.
+            guard let page = doc.page(at: 0) else {
+                return .error("Couldn\u{2019}t find any text in that PDF. Try a photo instead.")
+            }
+            let pageRect = page.bounds(for: .mediaBox)
+            let scale: CGFloat = 2
+            let renderSize = CGSize(width: pageRect.width * scale, height: pageRect.height * scale)
+            let pageImage = page.thumbnail(of: renderSize, for: .mediaBox)
+            guard let imageData = pageImage.jpegData(compressionQuality: 0.9) else {
+                return .error("Couldn\u{2019}t find any text in that PDF. Try a photo instead.")
+            }
+            return await runImageOCR(imageData, fileName: url.lastPathComponent)
+        }
+
+        return await runImageOCR(data, fileName: url.lastPathComponent)
+    }
+
+    private static func runImageOCR(_ imageData: Data, fileName: String) async -> Outcome {
+        let (result, _) = await HomeworkClient.parseAndCreateSession(imageData: imageData, fileName: fileName)
+        switch result {
+        case .success(let questions):
+            guard let first = questions.first else {
+                return .error("Couldn\u{2019}t find a question on that page. Try another photo.")
+            }
+            return await solve(first.text, fileName: fileName)
+        case .unavailable:
+            return .error("Couldn\u{2019}t find questions on that page. Try another photo, or this may be temporarily unavailable.")
+        case .notSignedIn:
+            return .error("Please sign in again.")
+        }
+    }
+
+    private static func solve(_ problem: String, fileName: String) async -> Outcome {
+        switch await IngredientHintsClient.hints(for: problem) {
+        case .cards(let cards):
+            return .cards(fileName: fileName, cards: cards)
+        case .keyRejected:
+            return .error("That AI key was rejected. Open Settings to update it.")
+        case .unavailable:
+            return .error("Couldn't get an answer - try again in a bit.")
+        }
     }
 }

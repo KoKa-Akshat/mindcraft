@@ -33,8 +33,9 @@ private struct HomeworkUploadSummary: Identifiable {
 /// whether the modifier sits on the tile's own Button or the screen root.
 /// Driving `UIDocumentPickerViewController` directly through `.sheet`
 /// sidesteps whatever's silently swallowing `.fileImporter`'s own
-/// presentation here.
-private struct HomeworkDocumentPicker: UIViewControllerRepresentable {
+/// presentation here. Not `private` - `CreateCanvasView` reuses this exact
+/// picker for its own upload target (2026-08-18) rather than a second copy.
+struct HomeworkDocumentPicker: UIViewControllerRepresentable {
     var onPick: (URL) -> Void
 
     func makeUIViewController(context: Context) -> UIDocumentPickerViewController {
@@ -2031,7 +2032,15 @@ struct DeskGridDashboardView: View {
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 10)
-        .background(Capsule().fill(Color(gridHex: "1c1c1e")))
+        // White/cream, not the old black capsule (2026-08-18, explicit
+        // ask: "why is the background for the toolbar not the same like
+        // the white") - matches every other card on this dashboard
+        // (`tileInnerCard`'s own near-white fill + soft shadow) instead of
+        // being the one dark element floating on the cream board.
+        .background(
+            Capsule().fill(Color(white: 0.985))
+                .shadow(color: .black.opacity(0.08), radius: 10, y: 4)
+        )
         // NOT .accessibilityIdentifier() directly on this container - that
         // clobbers every child dockChip's own identifier with this one
         // (confirmed live: each chip reported identifier
@@ -2065,7 +2074,10 @@ struct DeskGridDashboardView: View {
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 10)
-        .background(Capsule().fill(Color(gridHex: "1c1c1e")))
+        .background(
+            Capsule().fill(Color(white: 0.985))
+                .shadow(color: .black.opacity(0.08), radius: 10, y: 4)
+        )
         .accessibilityElement(children: .contain)
         .overlay(alignment: .topLeading) {
             Text(verbatim: "toolbar").font(.system(size: 1)).foregroundColor(.clear)
@@ -2103,12 +2115,12 @@ struct DeskGridDashboardView: View {
                     .accessibilityLabel("Continue with Jesse")
                 } else {
                     Image(systemName: "magnifyingglass")
-                        .foregroundColor(.white.opacity(0.45))
+                        .foregroundColor(tileInk.opacity(0.45))
                 }
                 TextField(placeholder, text: text ?? $searchQuery)
                     .textFieldStyle(.plain)
                     .font(.system(size: 13, weight: .medium, design: .rounded))
-                    .foregroundColor(.white)
+                    .foregroundColor(tileInk)
                     .submitLabel(.search)
                     .onSubmit(onSubmit)
                     .disabled(!aiKeys.hasKey)
@@ -2116,7 +2128,7 @@ struct DeskGridDashboardView: View {
             }
             .padding(.horizontal, 12)
             .padding(.vertical, 8)
-            .background(Capsule().fill(Color.white.opacity(0.12)))
+            .background(Capsule().fill(Color(gridHex: "f3f1ec")))
 
             if !aiKeys.hasKey {
                 // Used to redirect into Homework Help's own "Connect your AI
@@ -2138,7 +2150,7 @@ struct DeskGridDashboardView: View {
                 Text(title)
             }
             .font(.system(size: 12, weight: .bold, design: .rounded))
-            .foregroundColor(.white)
+            .foregroundColor(tileInk)
             .padding(.horizontal, 10)
             .padding(.vertical, 8)
         }
@@ -2272,12 +2284,17 @@ private enum WorkArtboard {
     // Graph to the down border... expand binder vertically and intel
     // vertically too." The dock no longer lives inside this board (see
     // `bottomDock`), so the column can run almost the full board height
-    // instead of stopping short to leave it room - top moved 40 -> 24,
-    // bottom moved ~680 -> 790 (20pt short of the board's true 810 edge).
-    static let p4HomeworkHelp = CGRect(x: 40, y: 24, width: 420, height: 373)
-    static let p4Moodle = CGRect(x: 40, y: 417, width: 420, height: 373)
-    static let p4Binder = CGRect(x: 490, y: 24, width: 500, height: 766)
-    static let p4Intel = CGRect(x: 1020, y: 24, width: 400, height: 766)
+    // instead of stopping short to leave it room.
+    // Sixth pass, same session, after seeing it live (explicit ask: "move
+    // everything a little bit down... increase size of the four boxes...
+    // Binder/Intel/Knowledge Graph close to the search bar below") - top
+    // eased back down slightly (24 -> 40, it read as too tight against
+    // the very top edge), bottom pushed further down (790 -> 800, now
+    // only 10pt short of the board's true 810 edge instead of 20).
+    static let p4HomeworkHelp = CGRect(x: 40, y: 40, width: 420, height: 370)
+    static let p4Moodle = CGRect(x: 40, y: 430, width: 420, height: 370)
+    static let p4Binder = CGRect(x: 490, y: 40, width: 500, height: 760)
+    static let p4Intel = CGRect(x: 1020, y: 40, width: 400, height: 760)
 
     static let p5HomeworkHelp = CGRect(x: 35, y: 35, width: 340, height: 230)
     static let p5Moodle = CGRect(x: 35, y: 280, width: 340, height: 280)
@@ -2293,7 +2310,7 @@ private enum WorkArtboard {
     /// instead moves down to our search bar and instead of the search
     /// you see the raccoon" is the search field's own leading icon
     /// swapping to the raccoon (see `searchField`), not a second tile.
-    static let contentViewerBinder = CGRect(x: 490, y: 24, width: 930, height: 766)
+    static let contentViewerBinder = CGRect(x: 490, y: 40, width: 930, height: 760)
 }
 
 /// Gentle, always-on pulse for the Knowledge Graph tile's empty-state seed
