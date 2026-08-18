@@ -339,7 +339,7 @@ final class StudentAIKeyStore: ObservableObject {
 /// instructions not to, so this extracts the first `{...}` object before
 /// decoding rather than failing outright on a technically-invalid response
 /// that a human would still recognize as "the JSON, plus noise."
-struct StudyPlan: Decodable {
+struct StudyPlan: Decodable, Equatable {
     let definition: String
     let context: String
     let layout: String
