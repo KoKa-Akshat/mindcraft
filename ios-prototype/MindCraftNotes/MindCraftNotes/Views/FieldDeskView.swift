@@ -703,11 +703,6 @@ struct FieldDeskView: View {
                                 showIntelOverlay = true
                             }
                         },
-                        onOpenHomeworkHelp: {
-                            withAnimation(.easeInOut(duration: 0.2)) {
-                                showHomeworkHelpOverlay = true
-                            }
-                        },
                         onOpenCreate: { kind in
                             createCanvasKind = kind
                             withAnimation(.easeInOut(duration: 0.28)) {
@@ -768,8 +763,7 @@ struct FieldDeskView: View {
                         onMoodleDisconnected: { _ = store.disconnect("moodle") },
                         intelLines: Array(store.intelLines.prefix(8)),
                         binderTitles: Array(binderStore.items.prefix(6).map(\.title)),
-                        onSyncCalendar: { Task { await refreshDeskCalendar() } },
-                        onOpenLearnStudio: { showLearnStudio = true }
+                        onSyncCalendar: { Task { await refreshDeskCalendar() } }
                     )
                     .id(dashboardStartRail)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
