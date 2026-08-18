@@ -1,0 +1,1831 @@
+{
+ "_meta": {
+  "generated": "2026-08-18",
+  "source_ontology": "ml/data/5_level_ontology/01_mindcraft_concept_ontology_v2_6_with_combinations.json",
+  "criterion": "An ingredient is 'executable' if a student committing its failure_mode produces a characteristic wrong VALUE that can be computed from the problem and placed in an answer option; 'interpretation' if the value computed is correct but is misread, mislabelled, or unexplainable; 'meta' if the ingredient is a strategy, verification, or self-monitoring skill that yields no value at all.",
+  "method": "Hand-classified by reading each failure_mode; no LLM call. Judged by the mechanism described, not by whether the wording contains digits. Under-claiming preferred: genuinely torn entries are marked non-executable with confidence 'low' and the tension recorded in 'note'.",
+  "total": 179,
+  "counts_by_class": {
+   "interpretation": 22,
+   "executable": 144,
+   "meta": 13
+  },
+  "counts_by_confidence": {
+   "high": 122,
+   "medium": 53,
+   "low": 4
+  },
+  "executable_symbolically_tractable": 129,
+  "counts_by_failure_signature": {
+   "omission": 46,
+   "substitution": 75,
+   "sequencing": 9,
+   "overgeneralized_rule": 13
+  },
+  "field_semantics": {
+   "failure_signature": "executable only; omission = required step skipped, substitution = wrong operation/value used in place of the right one, sequencing = correct steps in the wrong order, overgeneralized_rule = valid rule applied outside its domain",
+   "symbolically_tractable": "executable only; true if a SymPy-style engine could compute the wrong value from an algebraic problem statement, false if it needs diagram/geometry/chart reading or natural-language judgement"
+  },
+  "corrections": [
+   {
+    "ingredient_id": "basic_equations__equals_sign_balance",
+    "from": "interpretation",
+    "to": "executable",
+    "date": "2026-08-18",
+    "reason": "Contradicted a shipped, oracle-verified rule; see ml/generation/rules/basic_equations.py"
+   }
+  ]
+ },
+ "candidates": [
+  {
+   "ingredient_id": "fractions_decimals__part_whole_meaning",
+   "concept_id": "fractions_decimals",
+   "failure_mode": "Students treat numerator and denominator as two separate unrelated numbers rather than as a ratio describing parts of a single whole",
+   "class": "interpretation",
+   "confidence": "medium",
+   "failure_signature": null,
+   "symbolically_tractable": null,
+   "note": "Describes a missing sense of fraction-as-ratio rather than a procedure, so no particular wrong number follows."
+  },
+  {
+   "ingredient_id": "fractions_decimals__equivalent_fractions",
+   "concept_id": "fractions_decimals",
+   "failure_mode": "Students add or subtract the same number from both top and bottom instead of multiplying, producing non-equivalent fractions",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Adds a constant to numerator and denominator instead of scaling, e.g. 1/2 -> 4/5 rather than 3/6."
+  },
+  {
+   "ingredient_id": "fractions_decimals__fraction_arithmetic",
+   "concept_id": "fractions_decimals",
+   "failure_mode": "Students add numerators and denominators separately: 1/2 + 1/3 = 2/5 instead of the correct 5/6",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Adds numerators and denominators componentwise: a/b + c/d -> (a+c)/(b+d)."
+  },
+  {
+   "ingredient_id": "fractions_decimals__decimal_place_value",
+   "concept_id": "fractions_decimals",
+   "failure_mode": "Students order decimals by digit count not value: concluding 0.25 is greater than 0.7 because 25 is greater than 7",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "overgeneralized_rule",
+   "symbolically_tractable": true,
+   "note": "Compares decimals as if the digit strings were integers, so it picks the wrong element in an ordering or comparison."
+  },
+  {
+   "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+   "concept_id": "fractions_decimals",
+   "failure_mode": "Students write 3/4 as 0.34 or 3.4 by simply concatenating digits without performing the division",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Concatenates numerator and denominator digits instead of dividing: 3/4 -> 0.34."
+  },
+  {
+   "ingredient_id": "ratios_proportions__ratio_as_comparison",
+   "concept_id": "ratios_proportions",
+   "failure_mode": "Students interpret ratio additively: ratio 3:1 means A is 2 more than B, not that A is 3 times B",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Applies the ratio additively, returning a difference where a multiplicative factor is required."
+  },
+  {
+   "ingredient_id": "ratios_proportions__unit_rate",
+   "concept_id": "ratios_proportions",
+   "failure_mode": "Students cannot identify which quantity goes in the denominator when setting up a unit rate from a word problem",
+   "class": "executable",
+   "confidence": "medium",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Inverts the rate by putting the wrong quantity in the denominator, yielding the reciprocal of the correct unit rate."
+  },
+  {
+   "ingredient_id": "ratios_proportions__proportion_setup",
+   "concept_id": "ratios_proportions",
+   "failure_mode": "Students mix which values go in numerator vs denominator when translating a word problem into a proportion equation",
+   "class": "executable",
+   "confidence": "medium",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Swaps a numerator and denominator across the proportion, so cross-multiplication solves for a specific wrong value."
+  },
+  {
+   "ingredient_id": "ratios_proportions__cross_multiply_meaning",
+   "concept_id": "ratios_proportions",
+   "failure_mode": "Students apply cross multiplication to non-proportion situations or forget it only applies when exactly two fractions are set equal",
+   "class": "executable",
+   "confidence": "medium",
+   "failure_signature": "overgeneralized_rule",
+   "symbolically_tractable": true,
+   "note": "Cross-multiplies an expression that is not two equated fractions, producing a specific spurious result."
+  },
+  {
+   "ingredient_id": "order_of_operations__precedence_hierarchy",
+   "concept_id": "order_of_operations",
+   "failure_mode": "Students evaluate strictly left-to-right regardless of operation type, computing 2 + 3 times 4 as 20 instead of 14",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "sequencing",
+   "symbolically_tractable": true,
+   "note": "Evaluates strictly left to right, so 2 + 3*4 -> 20."
+  },
+  {
+   "ingredient_id": "order_of_operations__parentheses_override",
+   "concept_id": "order_of_operations",
+   "failure_mode": "Students distribute into parentheses before evaluating inside them: 2(3+4) computed as 6+4 = 10 instead of 2 times 7 = 14",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "sequencing",
+   "symbolically_tractable": true,
+   "note": "Distributes into the parentheses before evaluating inside them: 2(3+4) -> 6+4 = 10."
+  },
+  {
+   "ingredient_id": "order_of_operations__left_to_right_rule",
+   "concept_id": "order_of_operations",
+   "failure_mode": "Students compute 12 divided by 4 times 3 as 12 divided by 12 = 1 instead of 3 times 3 = 9 because they multiply 4 and 3 first",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "sequencing",
+   "symbolically_tractable": true,
+   "note": "Performs the later same-precedence operation first: 12/4*3 -> 12/12 = 1."
+  },
+  {
+   "ingredient_id": "order_of_operations__exponent_before_multiply",
+   "concept_id": "order_of_operations",
+   "failure_mode": "Students compute 2x squared as (2x) squared when x=3, getting 36 instead of the correct 2 times 9 = 18",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "sequencing",
+   "symbolically_tractable": true,
+   "note": "Applies the exponent to the coefficient too: 2x^2 at x=3 -> (2*3)^2 = 36."
+  },
+  {
+   "ingredient_id": "basic_equations__equals_sign_balance",
+   "concept_id": "basic_equations",
+   "failure_mode": "Students chain computations through equals signs: writing 5+3=8+2=10, using equals as meaning the answer so far is",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "sequencing",
+   "symbolically_tractable": true,
+   "note": "Treats '=' as 'and then', accumulating every visible term into one running total: on 7x = 7 this yields 14 rather than 1. CORRECTED 2026-08-18 from interpretation/low \u2014 a shipped rule (mis_rule_equals_balance__chains_running_total) already produces 28 oracle-verified distractors from this ingredient, so the empirical answer settles the ambiguity the classification pass recorded."
+  },
+  {
+   "ingredient_id": "basic_equations__inverse_operations",
+   "concept_id": "basic_equations",
+   "failure_mode": "Students subtract instead of dividing when undoing multiplication: solving 3x = 12 by writing x = 12 minus 3 = 9",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Undoes multiplication by subtracting the coefficient: 3x = 12 -> x = 9."
+  },
+  {
+   "ingredient_id": "basic_equations__do_same_to_both_sides",
+   "concept_id": "basic_equations",
+   "failure_mode": "Students apply an operation to only one side of the equation, breaking the balance without realizing it",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Applies the balancing operation to one side only, so the solved value is off by exactly that untransformed term."
+  },
+  {
+   "ingredient_id": "basic_equations__isolate_variable",
+   "concept_id": "basic_equations",
+   "failure_mode": "Students stop at 2x = 8 without dividing by the coefficient, leaving the variable with a coefficient other than 1",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Stops before dividing by the coefficient, reporting the right-hand side (8) instead of the solution (4)."
+  },
+  {
+   "ingredient_id": "basic_equations__solution_verification",
+   "concept_id": "basic_equations",
+   "failure_mode": "Students skip verification entirely, missing sign errors or arithmetic mistakes that substitution would immediately catch",
+   "class": "meta",
+   "confidence": "high",
+   "failure_signature": null,
+   "symbolically_tractable": null,
+   "note": "Skipping the substitution check produces no value of its own; it only fails to catch an error made elsewhere."
+  },
+  {
+   "ingredient_id": "linear_equations__slope_meaning",
+   "concept_id": "linear_equations",
+   "failure_mode": "Students compute slope correctly but state it as a bare number without units or meaning: slope is 3, not y increases by 3 for every 1 unit increase in x",
+   "class": "interpretation",
+   "confidence": "high",
+   "failure_signature": null,
+   "symbolically_tractable": null,
+   "note": "The slope is computed correctly; only its units and contextual meaning are missing."
+  },
+  {
+   "ingredient_id": "linear_equations__y_intercept_meaning",
+   "concept_id": "linear_equations",
+   "failure_mode": "Students think b is just a vertical shift with no real-world meaning and cannot identify the y-intercept from a word problem description",
+   "class": "interpretation",
+   "confidence": "medium",
+   "failure_signature": null,
+   "symbolically_tractable": null,
+   "note": "Describes an inability to attach real-world meaning to b rather than a procedure that yields a wrong intercept."
+  },
+  {
+   "ingredient_id": "linear_equations__slope_intercept_form",
+   "concept_id": "linear_equations",
+   "failure_mode": "Students cannot identify m and b when the equation is not already in slope-intercept form: from 2y = 6x + 4 they say slope is 6",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Reads m off an unnormalised equation: from 2y = 6x + 4 reports slope 6 instead of 3."
+  },
+  {
+   "ingredient_id": "linear_equations__two_points_determine_line",
+   "concept_id": "linear_equations",
+   "failure_mode": "Students try to determine slope from a single point alone or confuse which point goes in which position of the slope formula",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Mismatches the subtraction order in the slope formula, producing the negated slope."
+  },
+  {
+   "ingredient_id": "linear_equations__parallel_perpendicular",
+   "concept_id": "linear_equations",
+   "failure_mode": "Students write the perpendicular slope as just the negative of a slope, forgetting to also take the reciprocal: writing minus 2 as perpendicular to 2 instead of minus 1/2",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Negates the slope but omits the reciprocal: perpendicular to 2 reported as -2 instead of -1/2."
+  },
+  {
+   "ingredient_id": "functions_basics__function_as_machine",
+   "concept_id": "functions_basics",
+   "failure_mode": "Students cannot recognize when a relation is not a function because they do not check whether any input maps to multiple outputs",
+   "class": "executable",
+   "confidence": "medium",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Skips the one-input-one-output check, so a relation with a repeated input is classified as a function - a selectable wrong answer."
+  },
+  {
+   "ingredient_id": "functions_basics__function_notation_meaning",
+   "concept_id": "functions_basics",
+   "failure_mode": "Students compute f(3) for f(x) = 2x + 1 as f multiplied by 3 giving an undefined product instead of 2(3) + 1 = 7",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Reads f(3) as a product f*3 instead of evaluating the rule at 3."
+  },
+  {
+   "ingredient_id": "functions_basics__domain_range",
+   "concept_id": "functions_basics",
+   "failure_mode": "Students confuse domain and range or cannot identify domain restrictions caused by division by zero or square roots of negatives",
+   "class": "executable",
+   "confidence": "medium",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Omits the zero-denominator or negative-radicand restriction (or reports the range set for the domain), giving a specific wrong set."
+  },
+  {
+   "ingredient_id": "functions_basics__function_composition",
+   "concept_id": "functions_basics",
+   "failure_mode": "Students compute f(g(x)) as f(x) times g(x) or reverse the order by applying f before g",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "sequencing",
+   "symbolically_tractable": true,
+   "note": "Applies f before g, or multiplies f(x)*g(x), producing a specific wrong composed expression."
+  },
+  {
+   "ingredient_id": "functions_basics__one_to_one_invertibility",
+   "concept_id": "functions_basics",
+   "failure_mode": "Students attempt to find inverses of non-one-to-one functions like x squared without first restricting the domain",
+   "class": "executable",
+   "confidence": "medium",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Omits the domain restriction and reports an unrestricted inverse such as sqrt(x) for x^2."
+  },
+  {
+   "ingredient_id": "functions_basics__piecewise_context_threshold",
+   "concept_id": "functions_basics",
+   "failure_mode": "Students multiply the rate by total input instead of only by the amount beyond the threshold, e.g. using 0.25m instead of 50 + 0.25(m - 1000).",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Applies the marginal rate to the whole input instead of only the excess above the threshold: 0.25m instead of 50 + 0.25(m-1000)."
+  },
+  {
+   "ingredient_id": "right_triangle__pythagorean_theorem",
+   "concept_id": "right_triangle_geometry",
+   "failure_mode": "Students apply the Pythagorean theorem to non-right triangles or add the sides without squaring first",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Omits the squaring step (a + b = c) or applies the theorem to a non-right triangle, giving a specific wrong side length."
+  },
+  {
+   "ingredient_id": "right_triangle__side_naming",
+   "concept_id": "right_triangle_geometry",
+   "failure_mode": "Students label opposite and adjacent once and treat those labels as fixed properties of the triangle regardless of which angle is being used",
+   "class": "executable",
+   "confidence": "medium",
+   "failure_signature": "substitution",
+   "symbolically_tractable": false,
+   "note": "Keeps opposite/adjacent labels fixed when the reference angle changes, so the trig ratio uses the swapped side; identifying the sides needs the figure."
+  },
+  {
+   "ingredient_id": "right_triangle__sohcahtoa_setup",
+   "concept_id": "right_triangle_geometry",
+   "failure_mode": "Students use the wrong trig ratio because they confused opposite and adjacent, or they flip the numerator and denominator",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Uses the wrong ratio or inverts numerator and denominator, giving a specific wrong angle or length."
+  },
+  {
+   "ingredient_id": "right_triangle__special_triangles",
+   "concept_id": "right_triangle_geometry",
+   "failure_mode": "Students place root-3 on the wrong side in a 30-60-90 triangle, putting it opposite 30 degrees instead of opposite 60 degrees",
+   "class": "executable",
+   "confidence": "medium",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Places the root-3 leg opposite 30 instead of 60, so the reported side length is swapped with the other leg."
+  },
+  {
+   "ingredient_id": "right_triangle__coordinate_distance_formula",
+   "concept_id": "right_triangle_geometry",
+   "failure_mode": "Students subtract coordinates inconsistently or add the raw changes instead of squaring horizontal and vertical differences.",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Adds |dx| + |dy| instead of sqrt(dx^2 + dy^2), giving the taxicab distance."
+  },
+  {
+   "ingredient_id": "trig_basics__angle_as_rotation",
+   "concept_id": "trigonometry_basics",
+   "failure_mode": "Students believe angles can only be between 0 and 180 degrees and cannot conceptualize angles like 270 degrees or negative angles",
+   "class": "interpretation",
+   "confidence": "medium",
+   "failure_signature": null,
+   "symbolically_tractable": null,
+   "note": "Describes a bounded mental model of angle measure, not a procedure that yields a particular wrong number."
+  },
+  {
+   "ingredient_id": "trig_basics__unit_circle_coordinates",
+   "concept_id": "trigonometry_basics",
+   "failure_mode": "Students know sin and cos as triangle ratios but cannot locate them on the unit circle or apply them to angles beyond 90 degrees",
+   "class": "interpretation",
+   "confidence": "medium",
+   "failure_signature": null,
+   "symbolically_tractable": null,
+   "note": "Describes an inability to transfer the ratio definition onto the circle; no faulty procedure with a computable output is given."
+  },
+  {
+   "ingredient_id": "trig_basics__sin_as_vertical_component",
+   "concept_id": "trigonometry_basics",
+   "failure_mode": "Students know sin as opposite over hypotenuse but cannot connect it to the vertical component of a rotating vector, causing failure on circular motion problems like y = 30 + 18 sin(theta)",
+   "class": "interpretation",
+   "confidence": "medium",
+   "failure_signature": null,
+   "symbolically_tractable": null,
+   "note": "A missing connection between the ratio definition and vertical displacement; the failure is blank non-transfer, not a wrong value."
+  },
+  {
+   "ingredient_id": "trig_basics__cos_as_horizontal_component",
+   "concept_id": "trigonometry_basics",
+   "failure_mode": "Students swap sin and cos in applied problems, using cos for vertical height and sin for horizontal position",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Swaps sin and cos in the applied model, so the vertical and horizontal values are exchanged."
+  },
+  {
+   "ingredient_id": "trig_basics__reference_angle",
+   "concept_id": "trigonometry_basics",
+   "failure_mode": "Students compute trig values of angles like 150 or 225 degrees from scratch instead of using the reference angle and adjusting only the sign",
+   "class": "meta",
+   "confidence": "low",
+   "failure_signature": null,
+   "symbolically_tractable": null,
+   "note": "As written the failure is choosing the long route rather than the reference-angle shortcut, which still lands on the right value. Borderline: the implied sign slip would be executable."
+  },
+  {
+   "ingredient_id": "trig_basics__pythagorean_trig_identity",
+   "concept_id": "trigonometry_basics",
+   "failure_mode": "Students treat this as an isolated memorized formula rather than recognizing it as the Pythagorean theorem applied directly to the unit circle",
+   "class": "interpretation",
+   "confidence": "high",
+   "failure_signature": null,
+   "symbolically_tractable": null,
+   "note": "Treating the identity as a memorised formula rather than the unit-circle Pythagorean theorem changes understanding, not any computed value."
+  },
+  {
+   "ingredient_id": "limits__approaching_not_reaching",
+   "concept_id": "limits_continuity",
+   "failure_mode": "Students evaluate limits by plugging in the limit point even when the function is undefined there, entirely missing the conceptual purpose",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Substitutes the limit point directly, returning the undefined/removed value instead of the limiting value."
+  },
+  {
+   "ingredient_id": "limits__limit_vs_value_distinction",
+   "concept_id": "limits_continuity",
+   "failure_mode": "Students assume the limit always equals the function value and cannot explain why a limit existing is different from f(a) existing",
+   "class": "executable",
+   "confidence": "medium",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Reports f(a) in place of the limit, which differs by a computable amount at a removable discontinuity."
+  },
+  {
+   "ingredient_id": "limits__one_sided_limits",
+   "concept_id": "limits_continuity",
+   "failure_mode": "Students declare a limit exists based on checking only one side, missing jump discontinuities where the two sides disagree",
+   "class": "executable",
+   "confidence": "medium",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Checks one side only and reports that one-sided value where the two-sided limit does not exist."
+  },
+  {
+   "ingredient_id": "limits__continuity_definition",
+   "concept_id": "limits_continuity",
+   "failure_mode": "Students declare continuity based on the graph looking smooth, missing removable discontinuities that are invisible at normal scale",
+   "class": "executable",
+   "confidence": "medium",
+   "failure_signature": "omission",
+   "symbolically_tractable": false,
+   "note": "Judges continuity from the look of the graph, so a removable discontinuity is classified as continuous; the judgement is graph-based."
+  },
+  {
+   "ingredient_id": "limits__limit_as_derivative_setup",
+   "concept_id": "limits_continuity",
+   "failure_mode": "Students memorize derivative rules without knowing they come from this limit definition, making it impossible to understand why the rules work or derive new ones",
+   "class": "interpretation",
+   "confidence": "high",
+   "failure_signature": null,
+   "symbolically_tractable": null,
+   "note": "Knowing the rules without their limit origin does not change any derivative value that gets computed."
+  },
+  {
+   "ingredient_id": "derivatives__derivative_as_slope",
+   "concept_id": "derivatives",
+   "failure_mode": "Students compute f-prime(x) and treat the result as a single slope value rather than recognizing it is a function that gives slope at any point",
+   "class": "interpretation",
+   "confidence": "medium",
+   "failure_signature": null,
+   "symbolically_tractable": null,
+   "note": "The derivative is computed correctly; only its status as a function rather than a single number is misread."
+  },
+  {
+   "ingredient_id": "derivatives__power_rule",
+   "concept_id": "derivatives",
+   "failure_mode": "Students forget to reduce the exponent: writing the derivative of x cubed as 3x cubed instead of 3x squared",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Multiplies by the exponent but omits decrementing it: d/dx x^3 -> 3x^3."
+  },
+  {
+   "ingredient_id": "derivatives__chain_rule",
+   "concept_id": "derivatives",
+   "failure_mode": "Students differentiate only the outer function or only the inner function, forgetting to multiply by the derivative of the inner function entirely",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Differentiates the outer function only, omitting the inner derivative factor."
+  },
+  {
+   "ingredient_id": "derivatives__product_quotient_rule",
+   "concept_id": "derivatives",
+   "failure_mode": "Students differentiate products as f-prime times g-prime, incorrectly treating differentiation as distributing over multiplication",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Distributes differentiation over the product: (fg)' -> f'g'."
+  },
+  {
+   "ingredient_id": "derivatives__derivative_as_rate",
+   "concept_id": "derivatives",
+   "failure_mode": "Students compute derivatives correctly but cannot interpret what f-prime(3) = 5 means in a word problem context",
+   "class": "interpretation",
+   "confidence": "high",
+   "failure_signature": null,
+   "symbolically_tractable": null,
+   "note": "The derivative value is correct; only its contextual meaning is missing."
+  },
+  {
+   "ingredient_id": "linear_inequalities__inequality_as_region",
+   "concept_id": "linear_inequalities",
+   "failure_mode": "Students write x = 3 instead of x greater than 3, treating the inequality as if it has one solution like an equation",
+   "class": "executable",
+   "confidence": "medium",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Reports the boundary value as an equation (x = 3) instead of the solution region, a directly selectable wrong answer."
+  },
+  {
+   "ingredient_id": "linear_inequalities__flip_rule",
+   "concept_id": "linear_inequalities",
+   "failure_mode": "Students divide by a negative coefficient without flipping: solving negative-2x greater than 6 and writing x greater than negative-3 instead of x less than negative-3",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Divides by a negative coefficient without reversing the relation, giving the complementary interval."
+  },
+  {
+   "ingredient_id": "linear_inequalities__open_closed_circles",
+   "concept_id": "linear_inequalities",
+   "failure_mode": "Students draw closed circles for strict inequalities, incorrectly including the boundary point in the solution",
+   "class": "executable",
+   "confidence": "medium",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Includes the boundary point in a strict inequality, giving the closed rather than open interval."
+  },
+  {
+   "ingredient_id": "linear_inequalities__compound_inequalities",
+   "concept_id": "linear_inequalities",
+   "failure_mode": "Students solve each part of a compound inequality separately and present two disconnected answers instead of the intersection as one interval",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Reports the two branch solutions separately instead of their intersection, a specific wrong solution set."
+  },
+  {
+   "ingredient_id": "linear_inequalities__absolute_value_split_greater_than",
+   "concept_id": "linear_inequalities",
+   "failure_mode": "Students solve only A > k and forget A < -k, or incorrectly write the answer as a middle interval.",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Solves only A > k (dropping A < -k) or returns the middle interval, both concrete wrong solution sets."
+  },
+  {
+   "ingredient_id": "systems__solution_as_intersection",
+   "concept_id": "systems_of_linear_equations",
+   "failure_mode": "Students find an x-value by eliminating y but then forget to substitute back to find the y-value, reporting an incomplete solution",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Stops after eliminating one variable and reports that coordinate alone, omitting the back-substitution."
+  },
+  {
+   "ingredient_id": "systems__substitution_method",
+   "concept_id": "systems_of_linear_equations",
+   "failure_mode": "Students substitute the expression back into the same equation they used to solve it instead of the other equation, producing a tautology",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Substitutes back into the source equation instead of the other one, collapsing to an identity and a spurious conclusion."
+  },
+  {
+   "ingredient_id": "systems__elimination_method",
+   "concept_id": "systems_of_linear_equations",
+   "failure_mode": "Students subtract equations when they should add, or forget to multiply the entire equation (not just one term) before adding",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Adds where subtraction is required (or scales only one term of an equation), giving a specific wrong solution pair."
+  },
+  {
+   "ingredient_id": "systems__no_solution_infinite",
+   "concept_id": "systems_of_linear_equations",
+   "failure_mode": "Students reach 0 = 5 mid-elimination and think they made an arithmetic error, erasing correct work instead of recognizing the system has no solution",
+   "class": "interpretation",
+   "confidence": "medium",
+   "failure_signature": null,
+   "symbolically_tractable": null,
+   "note": "The contradiction 0 = 5 is computed correctly; the failure is misreading it as an arithmetic slip rather than producing a wrong number."
+  },
+  {
+   "ingredient_id": "exponent_rules__product_rule",
+   "concept_id": "exponent_rules",
+   "failure_mode": "Students multiply the exponents instead of adding: x squared times x cubed becomes x to the sixth instead of x to the fifth",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Multiplies exponents instead of adding: x^2 * x^3 -> x^6."
+  },
+  {
+   "ingredient_id": "exponent_rules__quotient_rule",
+   "concept_id": "exponent_rules",
+   "failure_mode": "Students subtract in the wrong order, computing denominator minus numerator instead of numerator minus denominator",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "sequencing",
+   "symbolically_tractable": true,
+   "note": "Subtracts the exponents in the reverse order, negating the resulting exponent."
+  },
+  {
+   "ingredient_id": "exponent_rules__power_rule",
+   "concept_id": "exponent_rules",
+   "failure_mode": "Students add exponents instead of multiplying: (x squared) cubed becomes x to the fifth instead of x to the sixth",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Adds exponents instead of multiplying: (x^2)^3 -> x^5."
+  },
+  {
+   "ingredient_id": "exponent_rules__negative_exponents",
+   "concept_id": "exponent_rules",
+   "failure_mode": "Students make the base negative: x to the negative-2 becomes negative x squared instead of 1 over x squared",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Moves the sign onto the base: x^-2 -> -x^2 instead of 1/x^2."
+  },
+  {
+   "ingredient_id": "exponent_rules__zero_and_rational",
+   "concept_id": "exponent_rules",
+   "failure_mode": "Students compute x to the zero as zero, and x to the (1/2) as x over 2 instead of the square root of x",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Evaluates x^0 as 0 and x^(1/2) as x/2."
+  },
+  {
+   "ingredient_id": "polynomials__like_terms",
+   "concept_id": "polynomials",
+   "failure_mode": "Students combine unlike terms: adding 3x squared and 2x to get 5x squared or 5x instead of leaving them separate",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "overgeneralized_rule",
+   "symbolically_tractable": true,
+   "note": "Combines terms of different degree: 3x^2 + 2x -> 5x^2."
+  },
+  {
+   "ingredient_id": "polynomials__distributive_property",
+   "concept_id": "polynomials",
+   "failure_mode": "Students multiply the first term only: 3(x squared + 2x + 1) becomes 3x squared + 2x + 1 instead of 3x squared + 6x + 3",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Multiplies the first term only: 3(x^2 + 2x + 1) -> 3x^2 + 2x + 1."
+  },
+  {
+   "ingredient_id": "polynomials__foil_expansion",
+   "concept_id": "polynomials",
+   "failure_mode": "Students multiply only the first terms and last terms: (x+2)(x+3) becomes x squared + 6 instead of x squared + 5x + 6",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Multiplies first and last terms only: (x+2)(x+3) -> x^2 + 6, omitting the cross terms."
+  },
+  {
+   "ingredient_id": "polynomials__degree_identification",
+   "concept_id": "polynomials",
+   "failure_mode": "Students identify degree as the largest single exponent rather than the largest sum of exponents in a term: calling x squared y cubed degree 3 instead of degree 5",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Reports the largest single exponent instead of the largest term-total: x^2*y^3 -> degree 3."
+  },
+  {
+   "ingredient_id": "polynomials__greatest_common_factor_factoring",
+   "concept_id": "polynomials",
+   "failure_mode": "Students factor out a number but not the common variables, or subtract exponents incorrectly when dividing monomials.",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Extracts the numeric GCF but omits the common variable factors, or subtracts monomial exponents wrongly."
+  },
+  {
+   "ingredient_id": "factoring_polynomials__gcf_extraction",
+   "concept_id": "factoring_polynomials",
+   "failure_mode": "Students jump to other factoring techniques without extracting the GCF, leaving unnecessarily large numbers that make the remaining steps harder",
+   "class": "meta",
+   "confidence": "medium",
+   "failure_signature": null,
+   "symbolically_tractable": null,
+   "note": "Skipping the GCF first makes the remaining work harder but does not by itself produce a wrong factorisation."
+  },
+  {
+   "ingredient_id": "factoring_polynomials__factor_pairs",
+   "concept_id": "factoring_polynomials",
+   "failure_mode": "Students find pairs that multiply to c but ignore the sum condition, or find pairs that add to b but forget to check the product",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Enforces only one of the product/sum conditions, yielding a specific wrong factor pair."
+  },
+  {
+   "ingredient_id": "factoring_polynomials__ac_method",
+   "concept_id": "factoring_polynomials",
+   "failure_mode": "Students apply the simple factor pairs method to ax squared + bx + c with a not 1 and get wrong factors because they only look for pairs multiplying to c not to ac",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "overgeneralized_rule",
+   "symbolically_tractable": true,
+   "note": "Searches for pairs multiplying to c rather than ac when a != 1, giving concrete wrong binomial factors."
+  },
+  {
+   "ingredient_id": "factoring_polynomials__special_patterns",
+   "concept_id": "factoring_polynomials",
+   "failure_mode": "Students do not recognize these patterns and apply the full ac method unnecessarily, or they factor a squared minus b squared as (a-b) squared",
+   "class": "executable",
+   "confidence": "medium",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Factors a^2 - b^2 as (a-b)^2, a specific wrong factorisation."
+  },
+  {
+   "ingredient_id": "radicals__root_as_inverse",
+   "concept_id": "radical_expressions",
+   "failure_mode": "Students compute the square root of 25 as 12.5 (dividing by 2) instead of 5, confusing the square root with halving",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Halves instead of taking a root: sqrt(25) -> 12.5."
+  },
+  {
+   "ingredient_id": "radicals__simplification",
+   "concept_id": "radical_expressions",
+   "failure_mode": "Students divide the radicand by 2 instead of factoring, or pull out factors that are not perfect squares",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Divides the radicand by 2 or extracts a non-square factor, giving a specific wrong simplified radical."
+  },
+  {
+   "ingredient_id": "radicals__adding_radicals",
+   "concept_id": "radical_expressions",
+   "failure_mode": "Students add the radicands: 2 times square root of 3 plus 3 times square root of 3 becomes 5 times square root of 6 instead of 5 times square root of 3",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Adds the radicands as well as the coefficients: 2sqrt(3) + 3sqrt(3) -> 5sqrt(6)."
+  },
+  {
+   "ingredient_id": "radicals__rationalizing",
+   "concept_id": "radical_expressions",
+   "failure_mode": "Students add the radical to the denominator instead of multiplying, or only multiply the denominator and not the numerator",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Multiplies only the denominator by the conjugate/radical, leaving an unbalanced and numerically different expression."
+  },
+  {
+   "ingredient_id": "quadratics__solutions_as_x_intercepts",
+   "concept_id": "quadratic_equations",
+   "failure_mode": "Students solve quadratics algebraically without any connection to the graph, making it impossible to catch unreasonable answers",
+   "class": "meta",
+   "confidence": "medium",
+   "failure_signature": null,
+   "symbolically_tractable": null,
+   "note": "Not linking roots to the graph removes a sanity check; it produces no characteristic wrong value of its own."
+  },
+  {
+   "ingredient_id": "quadratics__vertex_from_roots",
+   "concept_id": "quadratic_equations",
+   "failure_mode": "Students use the formula x = negative b over 2a without understanding why it works, so they cannot verify it or adapt when the formula is unfamiliar",
+   "class": "interpretation",
+   "confidence": "medium",
+   "failure_signature": null,
+   "symbolically_tractable": null,
+   "note": "The vertex formula is applied correctly; what is missing is the reasoning that would let the student verify or adapt it."
+  },
+  {
+   "ingredient_id": "quadratics__factoring_method",
+   "concept_id": "quadratic_equations",
+   "failure_mode": "Students factor correctly but then add the constants: (x-2)(x-3) = 0 gives x = 5 because they add 2 and 3 instead of setting each factor to zero",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Adds the factor constants instead of zeroing each factor: (x-2)(x-3)=0 -> x = 5."
+  },
+  {
+   "ingredient_id": "quadratics__quadratic_formula",
+   "concept_id": "quadratic_equations",
+   "failure_mode": "Students compute negative b as positive b (ignoring the negative) or evaluate 2a as 2 instead of twice the leading coefficient",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Uses +b for -b, or 2 in place of 2a, giving specific wrong roots."
+  },
+  {
+   "ingredient_id": "quadratics__discriminant_meaning",
+   "concept_id": "quadratic_equations",
+   "failure_mode": "Students compute the discriminant correctly but cannot state what it means for the graph or for the number of solutions without re-solving from scratch",
+   "class": "interpretation",
+   "confidence": "high",
+   "failure_signature": null,
+   "symbolically_tractable": null,
+   "note": "The discriminant value is computed correctly; only its interpretation as a root count is absent."
+  },
+  {
+   "ingredient_id": "descriptive_statistics__mean_as_balance",
+   "concept_id": "descriptive_statistics",
+   "failure_mode": "Students compute the mean correctly but cannot explain what it represents or why outliers pull it far from the center of most values",
+   "class": "interpretation",
+   "confidence": "high",
+   "failure_signature": null,
+   "symbolically_tractable": null,
+   "note": "The mean is computed correctly; only the explanation of what it represents is missing."
+  },
+  {
+   "ingredient_id": "descriptive_statistics__median_as_middle",
+   "concept_id": "descriptive_statistics",
+   "failure_mode": "Students find the median of an even-count dataset by picking one of the two middle values instead of averaging both",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Omits averaging the two central values of an even-count dataset, reporting one of them instead."
+  },
+  {
+   "ingredient_id": "descriptive_statistics__mean_vs_median",
+   "concept_id": "descriptive_statistics",
+   "failure_mode": "Students report the mean as the best measure of center in all situations, not recognizing when it is misleading due to outliers",
+   "class": "executable",
+   "confidence": "medium",
+   "failure_signature": "overgeneralized_rule",
+   "symbolically_tractable": true,
+   "note": "Always reports the mean, so on skewed data the mean value is offered where the median is required."
+  },
+  {
+   "ingredient_id": "descriptive_statistics__spread_measures",
+   "concept_id": "descriptive_statistics",
+   "failure_mode": "Students interpret a large standard deviation as meaning the data is wrong rather than understanding it describes natural variability in the dataset",
+   "class": "interpretation",
+   "confidence": "high",
+   "failure_signature": null,
+   "symbolically_tractable": null,
+   "note": "The standard deviation is computed correctly; the failure is misreading spread as data error."
+  },
+  {
+   "ingredient_id": "descriptive_statistics__categorical_chart_reading",
+   "concept_id": "descriptive_statistics",
+   "failure_mode": "Students do arithmetic correctly but use the wrong category value from the chart or fail to combine the requested categories.",
+   "class": "executable",
+   "confidence": "medium",
+   "failure_signature": "substitution",
+   "symbolically_tractable": false,
+   "note": "Runs the correct arithmetic on the wrong category value, which requires reading the chart to reproduce."
+  },
+  {
+   "ingredient_id": "basic_probability__probability_as_ratio",
+   "concept_id": "basic_probability",
+   "failure_mode": "Students count favorable outcomes but forget to count the total sample space, reporting a count rather than a ratio",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Reports the favourable count instead of dividing by the sample-space size."
+  },
+  {
+   "ingredient_id": "basic_probability__complement_rule",
+   "concept_id": "basic_probability",
+   "failure_mode": "Students compute complement by subtracting from the favorable count rather than from 1, giving values outside the 0 to 1 range",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Subtracts from the favourable count instead of from 1, giving a value outside [0,1]."
+  },
+  {
+   "ingredient_id": "basic_probability__and_or_distinction",
+   "concept_id": "basic_probability",
+   "failure_mode": "Students use the multiplication rule for OR problems and the addition rule for AND problems \u2014 they mix up which formula goes with which word",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Multiplies for OR and adds for AND, producing a specific wrong probability."
+  },
+  {
+   "ingredient_id": "basic_probability__conditional_probability",
+   "concept_id": "basic_probability",
+   "failure_mode": "Students compute P(A given B) as P(A and B) divided by total outcomes instead of dividing by P(B), not recognizing that the sample space has shrunk",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Divides P(A and B) by the total sample space instead of by P(B)."
+  },
+  {
+   "ingredient_id": "exponential_functions__base_and_exponent",
+   "concept_id": "exponential_functions",
+   "failure_mode": "Students confuse exponential functions with power functions: f(x) = x squared (power) vs f(x) = 2 to the x (exponential) \u2014 the roles of base and exponent are swapped",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Evaluates x^b where b^x is meant (or vice versa), giving a specific wrong function value."
+  },
+  {
+   "ingredient_id": "exponential_functions__growth_vs_decay",
+   "concept_id": "exponential_functions",
+   "failure_mode": "Students cannot determine growth or decay without computing multiple values \u2014 they do not recognize the base value as the direct indicator",
+   "class": "interpretation",
+   "confidence": "medium",
+   "failure_signature": null,
+   "symbolically_tractable": null,
+   "note": "Computing several values still yields the right growth/decay verdict; what is missing is reading the base as the indicator."
+  },
+  {
+   "ingredient_id": "exponential_functions__constant_ratio",
+   "concept_id": "exponential_functions",
+   "failure_mode": "Students describe exponential growth as adding the same amount each step (linear thinking) rather than multiplying by the same factor",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Extends the sequence by adding a constant difference instead of multiplying by the ratio, giving specific wrong later terms."
+  },
+  {
+   "ingredient_id": "exponential_functions__initial_value",
+   "concept_id": "exponential_functions",
+   "failure_mode": "Students confuse a and b, thinking a determines growth rate and b is just a stretch factor",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Swaps the roles of a and b in a*b^x, so the evaluated value uses the wrong base and multiplier."
+  },
+  {
+   "ingredient_id": "logarithmic_functions__log_as_inverse_exp",
+   "concept_id": "logarithmic_functions",
+   "failure_mode": "Students treat log base b of x as b divided by x or b times x, having no conceptual anchor for what the log operation does",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Treats log_b(x) as b*x or b/x, producing a specific wrong number."
+  },
+  {
+   "ingredient_id": "logarithmic_functions__log_product_rule",
+   "concept_id": "logarithmic_functions",
+   "failure_mode": "Students apply the product rule in reverse incorrectly: writing log(A) + log(B) = log(A + B) instead of log(A times B)",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Writes log(A) + log(B) as log(A+B) instead of log(AB)."
+  },
+  {
+   "ingredient_id": "logarithmic_functions__log_power_rule",
+   "concept_id": "logarithmic_functions",
+   "failure_mode": "Students write log(x squared) as (log x) squared, squaring the log instead of moving the exponent to the front as a coefficient",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Writes log(x^2) as (log x)^2 instead of 2 log x."
+  },
+  {
+   "ingredient_id": "logarithmic_functions__log_properties_combined",
+   "concept_id": "logarithmic_functions",
+   "failure_mode": "Students try to apply two rules simultaneously and get the order wrong, or apply a rule to only part of a complex expression",
+   "class": "executable",
+   "confidence": "medium",
+   "failure_signature": "sequencing",
+   "symbolically_tractable": true,
+   "note": "Applies the log rules in the wrong order or to only part of the expression, giving a specific wrong simplification."
+  },
+  {
+   "ingredient_id": "logarithmic_functions__basic_log_equation_conversion",
+   "concept_id": "logarithmic_functions",
+   "failure_mode": "Students treat log_b(x)=y like multiplication or division instead of converting to b^y=x.",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Treats log_b(x)=y as a product or quotient rather than converting to b^y = x, giving a specific wrong x."
+  },
+  {
+   "ingredient_id": "sequences__arithmetic_identification",
+   "concept_id": "sequences_series",
+   "failure_mode": "Students confuse arithmetic and geometric sequences, calling a sequence with multiplied terms arithmetic because the differences appear to follow a pattern",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Classifies a geometric sequence as arithmetic and then extends it with a constant difference."
+  },
+  {
+   "ingredient_id": "sequences__geometric_identification",
+   "concept_id": "sequences_series",
+   "failure_mode": "Students check differences rather than ratios when testing for a geometric sequence, missing that the defining property involves multiplication not addition",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Tests successive differences instead of ratios, so the sequence type and the extended terms are both wrong."
+  },
+  {
+   "ingredient_id": "sequences__nth_term_formula",
+   "concept_id": "sequences_series",
+   "failure_mode": "Students use n instead of (n minus 1) as the multiplier, causing every term to be off by one position",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Uses n instead of (n-1) as the multiplier, shifting every term by one position."
+  },
+  {
+   "ingredient_id": "sequences__geometric_series_sum",
+   "concept_id": "sequences_series",
+   "failure_mode": "Students add terms one by one instead of using the formula, or confuse the formula for arithmetic series with the geometric series formula",
+   "class": "executable",
+   "confidence": "medium",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Applies the arithmetic-series sum formula to a geometric series, giving a specific wrong total."
+  },
+  {
+   "ingredient_id": "lines_angles__supplementary_complementary",
+   "concept_id": "lines_angles",
+   "failure_mode": "Students swap supplementary and complementary \u2014 they use 90 for supplementary and 180 for complementary",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Subtracts from 90 where 180 is required (and vice versa), giving a specific wrong angle."
+  },
+  {
+   "ingredient_id": "lines_angles__vertical_angles",
+   "concept_id": "lines_angles",
+   "failure_mode": "Students think adjacent angles at an intersection are equal instead of vertical (opposite) angles",
+   "class": "executable",
+   "confidence": "medium",
+   "failure_signature": "substitution",
+   "symbolically_tractable": false,
+   "note": "Equates adjacent rather than opposite angles, so the reported angle is the supplement; identifying the pair requires the figure."
+  },
+  {
+   "ingredient_id": "lines_angles__transversal_angles",
+   "concept_id": "lines_angles",
+   "failure_mode": "Students cannot distinguish alternate interior, corresponding, and co-interior angle pairs and apply the wrong relationship (equal vs supplementary)",
+   "class": "executable",
+   "confidence": "medium",
+   "failure_signature": "substitution",
+   "symbolically_tractable": false,
+   "note": "Applies the equal relation where supplementary is required (or vice versa), returning 180-x instead of x; depends on reading the figure."
+  },
+  {
+   "ingredient_id": "lines_angles__parallel_line_angle_chasing",
+   "concept_id": "lines_angles",
+   "failure_mode": "Students use one memorized angle fact in isolation and miss that a figure may require combining vertical angles, supplementary pairs, transversals, and triangle angle sum.",
+   "class": "executable",
+   "confidence": "medium",
+   "failure_signature": "omission",
+   "symbolically_tractable": false,
+   "note": "Stops after one angle fact instead of chaining, reporting the partial-chain angle; the chain is defined by the figure."
+  },
+  {
+   "ingredient_id": "triangles__angle_sum",
+   "concept_id": "triangles_congruence",
+   "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "overgeneralized_rule",
+   "symbolically_tractable": true,
+   "note": "Applies the 180-degree sum outside triangles or omits one of the three angles, giving a specific wrong measure."
+  },
+  {
+   "ingredient_id": "triangles__congruence_criteria",
+   "concept_id": "triangles_congruence",
+   "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases",
+   "class": "executable",
+   "confidence": "medium",
+   "failure_signature": "overgeneralized_rule",
+   "symbolically_tractable": false,
+   "note": "Accepts SSA as a congruence criterion, so a congruence question is answered the wrong way; the judgement is geometric."
+  },
+  {
+   "ingredient_id": "triangles__similarity_ratios",
+   "concept_id": "triangles_congruence",
+   "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios",
+   "class": "executable",
+   "confidence": "medium",
+   "failure_signature": "substitution",
+   "symbolically_tractable": false,
+   "note": "Pairs sides by written position rather than correspondence, giving a specific wrong ratio and scaled length."
+  },
+  {
+   "ingredient_id": "circles__arc_length_sector",
+   "concept_id": "circles_geometry",
+   "failure_mode": "Students use the diameter instead of radius in the arc length formula, or forget that the angle must be expressed as a fraction of 360",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Uses the diameter for r, or omits the theta/360 fraction, giving a specific wrong arc length."
+  },
+  {
+   "ingredient_id": "circles__inscribed_angle",
+   "concept_id": "circles_geometry",
+   "failure_mode": "Students double the central angle to get the inscribed angle instead of halving it, reversing the relationship",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Doubles the central angle instead of halving it, giving exactly 4x the correct inscribed angle."
+  },
+  {
+   "ingredient_id": "circles__tangent_properties",
+   "concept_id": "circles_geometry",
+   "failure_mode": "Students draw the tangent line through the center instead of touching only one point, confusing tangent with secant",
+   "class": "interpretation",
+   "confidence": "low",
+   "failure_signature": null,
+   "symbolically_tractable": null,
+   "note": "As written this is a construction/definition confusion between tangent and secant rather than a stated procedure with an output. Borderline: a tangent-length problem answered as a secant would be executable."
+  },
+  {
+   "ingredient_id": "circles__semicircle_area_from_diameter",
+   "concept_id": "circles_geometry",
+   "failure_mode": "Students use the diameter as the radius or forget to divide the full circle area by two for a semicircle.",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Uses the diameter as r or omits the halving, giving 4x or 2x the correct semicircle area."
+  },
+  {
+   "ingredient_id": "area_volume__standard_formulas",
+   "concept_id": "area_volume",
+   "failure_mode": "Students use the slant height of a triangle as the height in the formula instead of the perpendicular height",
+   "class": "executable",
+   "confidence": "medium",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Substitutes the slant height for the perpendicular height in the area formula, giving a specific larger area."
+  },
+  {
+   "ingredient_id": "area_volume__composite_figures",
+   "concept_id": "area_volume",
+   "failure_mode": "Students add all shape areas including the overlapping regions, double-counting the shared section",
+   "class": "executable",
+   "confidence": "medium",
+   "failure_signature": "omission",
+   "symbolically_tractable": false,
+   "note": "Omits the overlap subtraction and double-counts the shared region; the decomposition comes from the figure."
+  },
+  {
+   "ingredient_id": "area_volume__volume_as_base_times_height",
+   "concept_id": "area_volume",
+   "failure_mode": "Students use a linear dimension as the base instead of the area of the base, giving volume in square units rather than cubic units",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Uses a linear base dimension instead of the base area, giving a value short by one dimension."
+  },
+  {
+   "ingredient_id": "area_volume__rectangular_prism_face_areas",
+   "concept_id": "area_volume",
+   "failure_mode": "Students compute only the initially visible face area and forget that the third dimension creates other faces that may be larger.",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Counts only the visible face and omits the faces created by the third dimension."
+  },
+  {
+   "ingredient_id": "area_volume__square_side_from_area",
+   "concept_id": "area_volume",
+   "failure_mode": "Students treat area as side length directly or divide by four as if area were perimeter.",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Returns the area itself or area/4 instead of sqrt(area) as the side length."
+  },
+  {
+   "ingredient_id": "transformations__translation_rules",
+   "concept_id": "geometric_transformations",
+   "failure_mode": "Students subtract instead of add for translations in the negative direction, or translate only some vertices instead of all of them",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Subtracts where the translation vector adds (or moves only some vertices), giving specific wrong image coordinates."
+  },
+  {
+   "ingredient_id": "transformations__reflection_rules",
+   "concept_id": "geometric_transformations",
+   "failure_mode": "Students negate both coordinates when reflecting across the x-axis instead of only the y-coordinate",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Negates both coordinates for an x-axis reflection instead of only y."
+  },
+  {
+   "ingredient_id": "transformations__rotation_rules",
+   "concept_id": "geometric_transformations",
+   "failure_mode": "Students swap x and y for both clockwise and counterclockwise rotations, forgetting that the direction determines which coordinate gets negated",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Uses the same coordinate swap for both rotation directions, negating the wrong coordinate."
+  },
+  {
+   "ingredient_id": "rational_expressions__factor_first",
+   "concept_id": "rational_expressions",
+   "failure_mode": "Students cancel terms rather than factors: in (x squared + 2x)/(x + 2) they cancel the x squared and the 2 instead of factoring x out first",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "overgeneralized_rule",
+   "symbolically_tractable": true,
+   "note": "Cancels matching terms rather than factors, e.g. cancelling x^2 and 2 in (x^2+2x)/(x+2)."
+  },
+  {
+   "ingredient_id": "rational_expressions__lcd_method",
+   "concept_id": "rational_expressions",
+   "failure_mode": "Students multiply the denominators together instead of finding the LCD, creating unnecessarily complex expressions that are harder to simplify",
+   "class": "meta",
+   "confidence": "medium",
+   "failure_signature": null,
+   "symbolically_tractable": null,
+   "note": "Multiplying denominators instead of using the LCD yields an unsimplified but still correct expression; the cost is effort, not accuracy."
+  },
+  {
+   "ingredient_id": "rational_expressions__excluded_values",
+   "concept_id": "rational_expressions",
+   "failure_mode": "Students simplify correctly but forget to state the excluded values, not realizing cancellation hides them from the simplified form",
+   "class": "executable",
+   "confidence": "medium",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Omits the excluded values that cancellation hides, so the reported domain restriction set is a specific incomplete one."
+  },
+  {
+   "ingredient_id": "complex_numbers__i_definition",
+   "concept_id": "complex_numbers",
+   "failure_mode": "Students treat i as a variable like x, not recognizing that i squared has a specific value of negative-1 and must be simplified",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Leaves i^2 unsimplified as if i were a variable, so the result keeps an i^2 term instead of -1."
+  },
+  {
+   "ingredient_id": "complex_numbers__powers_of_i",
+   "concept_id": "complex_numbers",
+   "failure_mode": "Students compute i to the large powers by multiplying step by step for many steps instead of using the period-4 pattern",
+   "class": "meta",
+   "confidence": "medium",
+   "failure_signature": null,
+   "symbolically_tractable": null,
+   "note": "Stepwise multiplication is slow but arrives at the correct power of i; the missing period-4 shortcut costs time only."
+  },
+  {
+   "ingredient_id": "complex_numbers__complex_arithmetic",
+   "concept_id": "complex_numbers",
+   "failure_mode": "Students multiply complex numbers using FOIL correctly but forget to apply i squared = negative-1 to the last term, leaving i squared in the answer",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Expands correctly but omits the i^2 = -1 substitution, so the real part is off by that term."
+  },
+  {
+   "ingredient_id": "vectors__component_decomposition",
+   "concept_id": "vectors",
+   "failure_mode": "Students swap the sin and cos components, assigning cos to the vertical and sin to the horizontal",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Assigns cos to the vertical and sin to the horizontal, swapping the two components."
+  },
+  {
+   "ingredient_id": "vectors__vector_addition",
+   "concept_id": "vectors",
+   "failure_mode": "Students add magnitudes of vectors instead of components, getting a scalar instead of a new vector",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Adds magnitudes instead of components, giving a scalar sum rather than the resultant magnitude."
+  },
+  {
+   "ingredient_id": "vectors__dot_product_meaning",
+   "concept_id": "vectors",
+   "failure_mode": "Students compute dot products correctly but report the scalar result as a vector, or cannot interpret a zero dot product as perpendicularity",
+   "class": "interpretation",
+   "confidence": "high",
+   "failure_signature": null,
+   "symbolically_tractable": null,
+   "note": "The dot product is computed correctly; only its scalar nature and the perpendicularity reading are misstated."
+  },
+  {
+   "ingredient_id": "matrices__dimensions_and_compatibility",
+   "concept_id": "matrices",
+   "failure_mode": "Students attempt to multiply matrices in any order without checking dimension compatibility, producing meaningless results",
+   "class": "executable",
+   "confidence": "medium",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Omits the dimension-compatibility check and asserts a product that is undefined, a selectable wrong answer."
+  },
+  {
+   "ingredient_id": "matrices__multiplication_order",
+   "concept_id": "matrices",
+   "failure_mode": "Students reverse the order of matrix multiplication when it is more convenient, not realizing this gives a completely different result",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "sequencing",
+   "symbolically_tractable": true,
+   "note": "Computes BA where AB is required, giving a different and specific matrix."
+  },
+  {
+   "ingredient_id": "matrices__row_operations",
+   "concept_id": "matrices",
+   "failure_mode": "Students apply a row operation to only one element in the row instead of all elements across the entire row",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Applies the row operation to one entry instead of the whole row, giving a specific wrong matrix."
+  },
+  {
+   "ingredient_id": "conics__identification",
+   "concept_id": "conic_sections",
+   "failure_mode": "Students classify an ellipse as a circle when they see both x squared and y squared, missing that unequal coefficients make it an ellipse",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "overgeneralized_rule",
+   "symbolically_tractable": true,
+   "note": "Classifies any x^2 + y^2 equation as a circle, ignoring unequal coefficients that make it an ellipse."
+  },
+  {
+   "ingredient_id": "conics__completing_the_square",
+   "concept_id": "conic_sections",
+   "failure_mode": "Students add the completing-the-square constant to one side only, forgetting to add it to the other side of the equation as well",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Adds the completing constant to one side only, shifting the resulting radius/constant by that amount."
+  },
+  {
+   "ingredient_id": "conics__circle_standard_form",
+   "concept_id": "conic_sections",
+   "failure_mode": "Students read center as (negative-h, negative-k) from (x-h) and (y-k), getting the signs backwards",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Reads the centre as (-h,-k) from (x-h)^2 + (y-k)^2, giving sign-flipped coordinates."
+  },
+  {
+   "ingredient_id": "prob_dist__distribution_as_model",
+   "concept_id": "probability_distributions",
+   "failure_mode": "Students assign probabilities that sum to more or less than 1, not recognizing this violates the fundamental requirement",
+   "class": "executable",
+   "confidence": "medium",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Omits the sum-to-1 constraint, so an invalid distribution (or a probability derived from one) is offered as the answer."
+  },
+  {
+   "ingredient_id": "prob_dist__normal_empirical_rule",
+   "concept_id": "probability_distributions",
+   "failure_mode": "Students apply the 68-95-99.7 percentages to non-symmetric ranges without adjusting: computing P(mu to mu + sigma) as 68% instead of 34%",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "overgeneralized_rule",
+   "symbolically_tractable": true,
+   "note": "Applies the full 68% to a one-sided range that should be 34%."
+  },
+  {
+   "ingredient_id": "prob_dist__z_score_transformation",
+   "concept_id": "probability_distributions",
+   "failure_mode": "Students compute z-scores correctly but then look up the wrong tail in the z-table, finding P(Z less than z) when the problem asks for P(Z greater than z)",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Reads the opposite tail of the z-table, returning 1 - p instead of p."
+  },
+  {
+   "ingredient_id": "deriv_apps__critical_points",
+   "concept_id": "applications_of_derivatives",
+   "failure_mode": "Students set f equal to zero instead of f-prime equal to zero, finding x-intercepts instead of critical points",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Solves f(x) = 0 instead of f'(x) = 0, returning x-intercepts as critical points."
+  },
+  {
+   "ingredient_id": "deriv_apps__first_derivative_test",
+   "concept_id": "applications_of_derivatives",
+   "failure_mode": "Students evaluate f-prime at the critical point itself (getting zero) instead of on either side of it to determine sign changes",
+   "class": "executable",
+   "confidence": "medium",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Evaluates f' at the critical point itself rather than on either side, so the extremum is classified wrongly."
+  },
+  {
+   "ingredient_id": "deriv_apps__second_derivative_test",
+   "concept_id": "applications_of_derivatives",
+   "failure_mode": "Students confuse concave up with maximum \u2014 they think the bowl shape of concave up means it is at the top",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Reads concave up as a maximum, returning the wrong extremum classification."
+  },
+  {
+   "ingredient_id": "deriv_apps__optimization_setup",
+   "concept_id": "applications_of_derivatives",
+   "failure_mode": "Students differentiate the objective function with multiple variables without first using the constraint to eliminate one variable",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Differentiates the multivariable objective without first substituting the constraint, yielding a specific wrong optimum."
+  },
+  {
+   "ingredient_id": "integrals__antiderivative_concept",
+   "concept_id": "integrals",
+   "failure_mode": "Students forget the plus-C constant of integration for indefinite integrals, losing the family of solutions",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Omits the +C, so the reported indefinite integral is the single-antiderivative form."
+  },
+  {
+   "ingredient_id": "integrals__definite_integral_as_area",
+   "concept_id": "integrals",
+   "failure_mode": "Students compute the definite integral without recognizing that regions below the x-axis contribute negative area, getting incorrect total areas",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Omits the sign handling below the axis, so signed integral and total area are conflated into a specific wrong number."
+  },
+  {
+   "ingredient_id": "integrals__fundamental_theorem",
+   "concept_id": "integrals",
+   "failure_mode": "Students forget to subtract F(a) and report only F(b), missing the subtraction entirely",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Reports F(b) without subtracting F(a)."
+  },
+  {
+   "ingredient_id": "integrals__definite_vs_indefinite",
+   "concept_id": "integrals",
+   "failure_mode": "Students add plus-C to definite integrals or omit it from indefinite integrals \u2014 they do not distinguish which type they are computing",
+   "class": "executable",
+   "confidence": "medium",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Attaches +C to a definite integral or drops it from an indefinite one, giving the wrong answer form."
+  },
+  {
+   "ingredient_id": "integral_apps__area_between_curves",
+   "concept_id": "applications_of_integrals",
+   "failure_mode": "Students integrate only the upper function without subtracting the lower, computing the area between the upper function and the x-axis instead of between the two curves",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Integrates the upper curve alone, omitting the lower-curve subtraction."
+  },
+  {
+   "ingredient_id": "integral_apps__net_change_theorem",
+   "concept_id": "applications_of_integrals",
+   "failure_mode": "Students confuse net change with total distance traveled \u2014 for motion problems they do not recognize that negative velocity means the object moved backward",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Reports the signed net change where total distance is asked (or vice versa), two different computable numbers."
+  },
+  {
+   "ingredient_id": "inferential__sampling_variability",
+   "concept_id": "inferential_statistics",
+   "failure_mode": "Students expect the sample mean to exactly equal the population mean and interpret any difference as evidence the sample is wrong",
+   "class": "interpretation",
+   "confidence": "high",
+   "failure_signature": null,
+   "symbolically_tractable": null,
+   "note": "The sample statistic is computed correctly; the failure is expecting it to match the parameter exactly."
+  },
+  {
+   "ingredient_id": "inferential__hypothesis_structure",
+   "concept_id": "inferential_statistics",
+   "failure_mode": "Students write the alternative hypothesis as the status quo and the null as the new claim, reversing the logical structure of hypothesis testing",
+   "class": "executable",
+   "confidence": "medium",
+   "failure_signature": "substitution",
+   "symbolically_tractable": false,
+   "note": "Swaps null and alternative, so the stated hypothesis pair is a specific wrong option; the swap needs natural-language reading of the claim."
+  },
+  {
+   "ingredient_id": "inferential__p_value_interpretation",
+   "concept_id": "inferential_statistics",
+   "failure_mode": "Students interpret p = 0.03 as meaning there is a 3% chance the null hypothesis is true, when it actually means there is a 3% chance of getting data this extreme if the null were true",
+   "class": "interpretation",
+   "confidence": "high",
+   "failure_signature": null,
+   "symbolically_tractable": null,
+   "note": "The p-value is correct; the error is reading it as P(null is true) rather than a wrong number."
+  },
+  {
+   "ingredient_id": "number_properties__factor_definition",
+   "concept_id": "number_properties",
+   "failure_mode": "Students list numbers near n rather than testing divisibility, or confuse factors with multiples.",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Lists multiples or neighbouring integers instead of divisors, giving a specific wrong factor list or count."
+  },
+  {
+   "ingredient_id": "number_properties__prime_composite",
+   "concept_id": "number_properties",
+   "failure_mode": "Students say 1 is prime or think every odd number is prime.",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "overgeneralized_rule",
+   "symbolically_tractable": true,
+   "note": "Counts 1 as prime or every odd as prime, producing specific wrong classifications and counts."
+  },
+  {
+   "ingredient_id": "number_properties__factor_pairs",
+   "concept_id": "number_properties",
+   "failure_mode": "Students double-count factor pairs or stop too early before reaching square root.",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Double-counts a pair or stops before sqrt(n), so the factor count is off by a determinate amount."
+  },
+  {
+   "ingredient_id": "number_properties__perfect_square_odd_factors",
+   "concept_id": "number_properties",
+   "failure_mode": "Students list factors correctly but fail to notice the square-root factor is counted once.",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Counts the square-root factor twice, turning an odd factor count into an even one."
+  },
+  {
+   "ingredient_id": "number_properties__factor_count_exactly_three",
+   "concept_id": "number_properties",
+   "failure_mode": "Students brute-force every integer and miss the structural shortcut that 4=2\u00b2, 9=3\u00b2, 25=5\u00b2, etc.",
+   "class": "meta",
+   "confidence": "medium",
+   "failure_signature": null,
+   "symbolically_tractable": null,
+   "note": "Brute force is slow but reaches the right answer; the missing structural shortcut costs time, not correctness."
+  },
+  {
+   "ingredient_id": "number_properties__parity_even_odd_product_sum",
+   "concept_id": "number_properties",
+   "failure_mode": "Students list factor pairs without using parity to eliminate impossible sum choices quickly, or they incorrectly assume an even product implies both numbers are even.",
+   "class": "executable",
+   "confidence": "medium",
+   "failure_signature": "overgeneralized_rule",
+   "symbolically_tractable": true,
+   "note": "Infers from an even product that both factors are even, eliminating the wrong candidate pairs and yielding a specific wrong sum."
+  },
+  {
+   "ingredient_id": "number_properties__factor_pair_sum_search",
+   "concept_id": "number_properties",
+   "failure_mode": "Students create equations with two variables but do not restrict x and y to integer factor pairs, leading to unnecessary algebra or impossible cases.",
+   "class": "meta",
+   "confidence": "medium",
+   "failure_signature": null,
+   "symbolically_tractable": null,
+   "note": "Not restricting to integer factor pairs adds algebra and dead ends rather than producing a characteristic wrong value."
+  },
+  {
+   "ingredient_id": "measurement_units__unit_label_consistency",
+   "concept_id": "measurement_units",
+   "failure_mode": "Students divide the wrong way because they ignore whether the answer should be hours per room or rooms per hour.",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Divides in the wrong direction, returning the reciprocal of the asked rate."
+  },
+  {
+   "ingredient_id": "measurement_units__unit_rate_per_one",
+   "concept_id": "measurement_units",
+   "failure_mode": "Students can compute total work but cannot answer per-item or per-time questions.",
+   "class": "interpretation",
+   "confidence": "low",
+   "failure_signature": null,
+   "symbolically_tractable": null,
+   "note": "Stated as an inability to answer per-unit questions rather than a procedure. Borderline: reporting the total where the per-unit rate is asked would be an executable substitution."
+  },
+  {
+   "ingredient_id": "measurement_units__linear_vs_square_units",
+   "concept_id": "measurement_units",
+   "failure_mode": "Students use 2-foot side length as if it covers 2 square feet instead of 4 square feet.",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Uses the linear measure as the area measure, e.g. 2 ft treated as 2 sq ft instead of 4."
+  },
+  {
+   "ingredient_id": "measurement_units__compound_unit_conversion",
+   "concept_id": "measurement_units",
+   "failure_mode": "Students convert hours to minutes but forget that area conversion squares the conversion factor.",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Omits squaring the conversion factor for area, so the result is off by that factor."
+  },
+  {
+   "ingredient_id": "algebraic_manipulation__like_terms",
+   "concept_id": "algebraic_manipulation",
+   "failure_mode": "Students combine unlike terms such as 5x and 5x\u00b2 or fail to combine 5x+2x.",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "overgeneralized_rule",
+   "symbolically_tractable": true,
+   "note": "Combines 5x with 5x^2, or leaves 5x + 2x uncombined, giving a specific wrong expression."
+  },
+  {
+   "ingredient_id": "algebraic_manipulation__symbolic_substitution",
+   "concept_id": "algebraic_manipulation",
+   "failure_mode": "Students substitute into only one occurrence or forget parentheses around negative numbers.",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Substitutes into one occurrence only, or drops parentheses around a negative, giving a specific wrong evaluation."
+  },
+  {
+   "ingredient_id": "algebraic_manipulation__literal_equation_rearrangement",
+   "concept_id": "algebraic_manipulation",
+   "failure_mode": "Students freeze because multiple letters appear, or divide by the wrong symbol, or do not know what \u201cin terms of\u201d means.",
+   "class": "executable",
+   "confidence": "medium",
+   "failure_signature": "substitution",
+   "symbolically_tractable": true,
+   "note": "Divides by the wrong symbol when solving for a named variable, giving a specific wrong rearranged form."
+  },
+  {
+   "ingredient_id": "algebraic_manipulation__equivalent_forms",
+   "concept_id": "algebraic_manipulation",
+   "failure_mode": "Students evaluate the prompt correctly but cannot match it to an answer choice written in equivalent form.",
+   "class": "interpretation",
+   "confidence": "high",
+   "failure_signature": null,
+   "symbolically_tractable": null,
+   "note": "The value is computed correctly; the failure is not recognising the equivalent form among the options."
+  },
+  {
+   "ingredient_id": "algebraic_manipulation__clearing_fractions",
+   "concept_id": "algebraic_manipulation",
+   "failure_mode": "Students multiply only some terms or forget that every term on both sides must be multiplied.",
+   "class": "executable",
+   "confidence": "high",
+   "failure_signature": "omission",
+   "symbolically_tractable": true,
+   "note": "Multiplies only some terms by the LCD, leaving the untouched terms unscaled."
+  },
+  {
+   "ingredient_id": "representation_translation__words_to_equation",
+   "concept_id": "representation_translation",
+   "failure_mode": "Students add random x and y variables or translate operations in the wrong order.",
+   "class": "executable",
+   "confidence": "medium",
+   "failure_signature": "sequencing",
+   "symbolically_tractable": false,
+   "note": "Translates the operations in the wrong order (e.g. '5 less than x' as 5 - x), giving a specific wrong equation; requires reading the prose."
+  },
+  {
+   "ingredient_id": "representation_translation__number_line_to_inequality",
+   "concept_id": "representation_translation",
+   "failure_mode": "Students know inequality symbols but cannot read them from a picture, or reverse endpoint inclusions.",
+   "class": "executable",
+   "confidence": "medium",
+   "failure_signature": "substitution",
+   "symbolically_tractable": false,
+   "note": "Reverses the endpoint inclusion or direction read off the picture, giving a specific wrong inequality."
+  },
+  {
+   "ingredient_id": "representation_translation__diagram_to_ratio",
+   "concept_id": "representation_translation",
+   "failure_mode": "Students pick random sides rather than corresponding sides, or confuse similarity with congruence.",
+   "class": "executable",
+   "confidence": "medium",
+   "failure_signature": "substitution",
+   "symbolically_tractable": false,
+   "note": "Pairs non-corresponding sides from the diagram, giving a specific wrong ratio."
+  },
+  {
+   "ingredient_id": "representation_translation__graph_to_rate",
+   "concept_id": "representation_translation",
+   "failure_mode": "Students memorize the slope formula but cannot see rise/run in a graph, or swap x and y changes.",
+   "class": "executable",
+   "confidence": "medium",
+   "failure_signature": "substitution",
+   "symbolically_tractable": false,
+   "note": "Swaps the x and y changes when reading rise/run, returning the reciprocal slope; the read is graphical."
+  },
+  {
+   "ingredient_id": "representation_translation__implicit_structure_detection",
+   "concept_id": "representation_translation",
+   "failure_mode": "Students can execute a procedure only after being told which procedure to use; they fail when the structure is implicit.",
+   "class": "meta",
+   "confidence": "medium",
+   "failure_signature": null,
+   "symbolically_tractable": null,
+   "note": "Recognising which procedure a problem calls for is a strategy-selection skill; failing it stalls the student rather than producing a wrong value."
+  },
+  {
+   "ingredient_id": "act_strategy__plug_in_answer_choices",
+   "concept_id": "act_strategy",
+   "failure_mode": "Students waste time deriving when substitution into choices would be faster.",
+   "class": "meta",
+   "confidence": "high",
+   "failure_signature": null,
+   "symbolically_tractable": null,
+   "note": "A time/method-choice skill; not using backsolving costs time and produces no characteristic wrong value."
+  },
+  {
+   "ingredient_id": "act_strategy__estimate_and_eliminate",
+   "concept_id": "act_strategy",
+   "failure_mode": "Students compute blindly and accept answers that have impossible units or magnitude.",
+   "class": "meta",
+   "confidence": "high",
+   "failure_signature": null,
+   "symbolically_tractable": null,
+   "note": "A self-monitoring skill; failing to sanity-check lets other errors through rather than generating one."
+  },
+  {
+   "ingredient_id": "act_strategy__draw_auxiliary_diagram",
+   "concept_id": "act_strategy",
+   "failure_mode": "Students try to hold geometry verbally in working memory and miss the helpful line/shape.",
+   "class": "meta",
+   "confidence": "high",
+   "failure_signature": null,
+   "symbolically_tractable": null,
+   "note": "A working-memory offloading strategy; not drawing the diagram blocks progress rather than yielding a wrong number."
+  },
+  {
+   "ingredient_id": "act_strategy__strategy_selection",
+   "concept_id": "act_strategy",
+   "failure_mode": "Students apply their favorite method to every problem even when another pathway would be faster or safer.",
+   "class": "meta",
+   "confidence": "high",
+   "failure_signature": null,
+   "symbolically_tractable": null,
+   "note": "A method-selection skill; the default method is usually still correct, only slower or riskier."
+  }
+ ]
+}
