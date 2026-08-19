@@ -2195,40 +2195,45 @@ final class MindCraftNotesUITests: XCTestCase {
         XCUIDevice.shared.orientation = .portrait
     }
 
-    /// Assignment F: Book is fully native now (no WKWebView) - opening it
-    /// shows the real left panel (tools/boxes, chapters, publish button)
-    /// plus the shared Jesse rail on the right, and Done closes it cleanly.
+    /// The Jesse book flow now runs SCOPED inside a Design Studio
+    /// `.chapter` box (2026-08-19 canvas unification - the old Develop
+    /// Workflows/Books toggle is gone): adding a Chapter box and tapping
+    /// the inspector's "Write it with Jesse" opens the same native
+    /// BookWorkflowView (tools checklist, chapters panel, Jesse rail),
+    /// with its action button reading "Save to canvas" instead of
+    /// "Publish to Binder" - publish belongs to the whole graph now.
     /// Doesn't exercise a live call (no real network device available in
-    /// this environment) - covers that the new native surface actually
-    /// renders instead of the old dual-Jesse WKWebView.
-    /// Entry point updated (2026-08-18, explicit ask: "combine workflows
-    /// and books and design something called Develop... remove Book" from
-    /// the dock) - the dock's own chip now opens the merged Develop
-    /// shell (`deskGridDock_Design`), defaulting to its Workflows side;
-    /// Books is one toggle tap away (`developToggle_books`), not a
-    /// separate dock chip anymore.
-    func testBookWorkflowIsNativeWithToolsAndJesseRail() {
+    /// this environment) - covers that the scoped surface actually opens
+    /// from a box and closes back onto the canvas.
+    func testChapterBoxOpensScopedBookFlow() {
         let app = launchFieldDeskApp()
         XCUIDevice.shared.orientation = .landscapeLeft
         XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 15))
 
         let designChip = app.buttons["deskGridDock_Design"]
-        XCTAssertTrue(designChip.waitForExistence(timeout: 10), "expected Design dock chip (opens the merged Develop shell)")
+        XCTAssertTrue(designChip.waitForExistence(timeout: 10), "expected Design dock chip (opens the content canvas)")
         designChip.tap()
 
-        let booksToggle = app.buttons["developToggle_books"]
-        XCTAssertTrue(booksToggle.waitForExistence(timeout: 10), "expected Develop's Books/Workflows toggle")
-        booksToggle.tap()
+        let addChapter = app.buttons["designStudioAdd_chapter"]
+        XCTAssertTrue(addChapter.waitForExistence(timeout: 10), "expected the Chapter tool pill on the canvas dock")
+        addChapter.tap()
+
+        let openFlow = app.buttons["designStudioOpenChapterFlow"]
+        XCTAssertTrue(openFlow.waitForExistence(timeout: 5), "expected the chapter inspector's Write-it-with-Jesse button (a new box self-selects)")
+        openFlow.tap()
 
         XCTAssertTrue(app.buttons["bookWorkflowBack"].waitForExistence(timeout: 10), "expected book workflow Done control")
         XCTAssertTrue(app.descendants(matching: .any)["bookWorkflowTools"].waitForExistence(timeout: 5), "expected native what-we-need-from-you tools panel")
         XCTAssertTrue(app.descendants(matching: .any)["bookWorkflowChapters"].waitForExistence(timeout: 5), "expected native chapters panel")
-        XCTAssertTrue(app.buttons["bookWorkflowPublish"].waitForExistence(timeout: 5), "expected Publish to Binder button")
+        let saveButton = app.buttons["bookWorkflowPublish"]
+        XCTAssertTrue(saveButton.waitForExistence(timeout: 5), "expected the flow's action button")
+        XCTAssertEqual(saveButton.label, "Save to canvas", "expected the scoped flow to save to the canvas, not publish to Binder")
         XCTAssertTrue(app.descendants(matching: .any)["jesseRail"].waitForExistence(timeout: 5), "expected the one shared Jesse rail on the right")
         XCTAssertTrue(app.buttons["jesseRailCall"].waitForExistence(timeout: 5), "expected the one native call control")
 
         app.buttons["bookWorkflowBack"].tap()
         XCTAssertFalse(app.buttons["bookWorkflowBack"].waitForExistence(timeout: 3), "expected book workflow closed")
+        XCTAssertTrue(app.buttons["designStudioAdd_chapter"].waitForExistence(timeout: 5), "expected to land back on the canvas, not the dashboard")
         XCUIDevice.shared.orientation = .portrait
     }
 
@@ -2373,21 +2378,106 @@ final class MindCraftNotesUITests: XCTestCase {
         XCTAssertFalse(app.descendants(matching: .any)["studySessionRoot"].waitForExistence(timeout: 3), "expected closing to dismiss the session")
     }
 
-    func testDevelopStudioTogglesWorkflowsAndBooks() {
+    /// Live gated generation, verified outcome (closed test,
+    /// LIVE_GATED_GENERATION_TEST_SPEC.md): a gate-passed generated sim
+    /// opens in `GeneratedSimView` carrying the real AI-generated
+    /// attribution line, and the Study Session's own GENERATED SIM section
+    /// lists it with the same disclosure. A real verdict needs the
+    /// deployed generation service (deliberately not deployed pending
+    /// Blake - see LiveGatedGeneration's doc comment) plus a 60s+ poll
+    /// loop, so `--ui-testing-generated-sim` seeds the terminal state
+    /// directly and presents the viewer - the section's own open button
+    /// sits inside the same non-publishing ScrollView as the tab pills
+    /// (see StudySessionView's `content` doc comment), so the section
+    /// copy is asserted through the studySessionActiveContent marker,
+    /// same as every other assertion at that depth.
+    func testGeneratedSimVerifiedShowsAttributionAndSectionCopy() {
+        let app = launchFieldDeskApp(extraArgs: ["--ui-testing-generated-sim"])
+        XCUIDevice.shared.orientation = .landscapeLeft
+
+        let simView = app.descendants(matching: .any)["generatedSimView"]
+        XCTAssertTrue(simView.waitForExistence(timeout: 15), "expected the seeded GeneratedSimView cover")
+        let attribution = app.staticTexts["generatedSimAttribution"]
+        XCTAssertTrue(attribution.exists, "expected the attribution line in the viewer chrome")
+        XCTAssertTrue(attribution.label.contains("AI-generated"), "expected explicit AI-generated disclosure, got: \(attribution.label)")
+
+        app.buttons["generatedSimClose"].tap()
+        XCTAssertFalse(simView.waitForExistence(timeout: 3), "expected closing to dismiss the viewer")
+
+        // Behind the cover: the seeded Study Session, whose chapter view
+        // carries the verified sim row + its own AI-generated label.
+        XCTAssertTrue(app.descendants(matching: .any)["studySessionRoot"].waitForExistence(timeout: 10))
+        let activeContent = app.staticTexts["studySessionActiveContent"]
+        XCTAssertTrue(activeContent.waitForExistence(timeout: 5))
+        app.buttons["chevron.right"].tap() // Contents -> chapter 1
+        XCTAssertTrue(activeContent.label.contains("Tangent Slope Explorer"), "expected the verified sim's title in the chapter section")
+        XCTAssertTrue(activeContent.label.contains("AI-generated - passed the quality checks"), "expected the section's own disclosure line")
+    }
+
+    /// Live gated generation, honest no-good outcome - the NORMAL case at
+    /// the pipeline's real 1/10-6/10 yield, so the copy under test is
+    /// exactly the honesty contract: the "couldn't make a good one"
+    /// headline, the pipeline's own reason, and the adjacent angle the
+    /// automatic retry also tried. Seeded for the same reason as the
+    /// verified test above.
+    func testGeneratedSimNoGoodResultReadsAsNormalOutcome() {
+        let app = launchFieldDeskApp(extraArgs: ["--ui-testing-generated-sim-nogood"])
+        XCUIDevice.shared.orientation = .landscapeLeft
+
+        XCTAssertTrue(app.descendants(matching: .any)["studySessionRoot"].waitForExistence(timeout: 15), "expected the seeded Study Session")
+        let activeContent = app.staticTexts["studySessionActiveContent"]
+        XCTAssertTrue(activeContent.waitForExistence(timeout: 5))
+        app.buttons["chevron.right"].tap() // Contents -> chapter 1
+        XCTAssertTrue(activeContent.label.contains("Couldn't make a good one for that yet."), "expected the honest headline")
+        XCTAssertTrue(activeContent.label.contains("Too broad an umbrella"), "expected the pipeline's own reason to surface")
+        XCTAssertTrue(activeContent.label.contains("Also tried \"the power rule\""), "expected the auto-retried adjacent angle to be named")
+    }
+
+    /// The unified content canvas, end to end minus the network: add a
+    /// Chapter and a Checkpoint from the tool pills, then actually CREATE
+    /// an edge (select the chapter, inspector "Connect to...", tap the
+    /// checkpoint) - the interaction the old canvas never had (`edges`
+    /// could render but nothing appended to it). The reading-order strip's
+    /// invisible marker (`designStudioTimelineOrder`, same pattern as
+    /// deskGridArchiveSummary) then proves the real graph walk saw the
+    /// connection, not just the counter label.
+    ///
+    /// Persistence across relaunch is deliberately NOT asserted here:
+    /// `--ui-testing-in-memory` makes ContentGraphStore skip UserDefaults
+    /// on purpose (the suite reuses one app install - a saved canvas would
+    /// leak into every later test, the documented cross-test-state bug
+    /// class), so a relaunch check under this flag would be testing the
+    /// bypass, not the persistence.
+    func testDesignCanvasAddsBoxesAndConnectsThem() {
         let app = launchFieldDeskApp()
         XCUIDevice.shared.orientation = .landscapeLeft
         XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 15))
 
         app.buttons["deskGridDock_Design"].tap()
-        XCTAssertTrue(app.buttons["designStudioAdd_ask"].waitForExistence(timeout: 10), "expected Workflows' own tool row by default")
-        XCTAssertTrue(app.staticTexts["0 boxes \u{00b7} 0 connections"].exists, "expected an empty canvas, not the old seeded demo flow")
+        XCTAssertTrue(app.buttons["designStudioAdd_chapter"].waitForExistence(timeout: 10), "expected the content-type tool pills")
+        XCTAssertTrue(app.staticTexts["0 boxes \u{00b7} 0 connections"].exists, "expected an empty canvas")
 
-        app.buttons["designStudioAdd_ask"].tap()
-        XCTAssertTrue(app.staticTexts["1 boxes \u{00b7} 0 connections"].waitForExistence(timeout: 5), "expected the tool row to actually add a box")
+        app.buttons["designStudioAdd_chapter"].tap()
+        XCTAssertTrue(app.staticTexts["1 boxes \u{00b7} 0 connections"].waitForExistence(timeout: 5), "expected the Chapter pill to add a box")
 
-        app.buttons["developToggle_books"].tap()
-        XCTAssertTrue(app.staticTexts["Untitled book"].waitForExistence(timeout: 10), "expected Books' real content after the toggle")
-        XCTAssertFalse(app.buttons["designStudioAdd_ask"].exists, "expected Workflows' own tool row to be gone while on Books")
+        app.buttons["designStudioAdd_checkpoint"].tap()
+        XCTAssertTrue(app.staticTexts["2 boxes \u{00b7} 0 connections"].waitForExistence(timeout: 5), "expected the Checkpoint pill to add a second box")
+
+        // Select the chapter box (the checkpoint self-selected when added),
+        // then run the connect flow: Connect to... -> tap the target box.
+        let chapterCard = app.staticTexts["New Chapter"]
+        XCTAssertTrue(chapterCard.waitForExistence(timeout: 5), "expected the chapter box's title on the canvas")
+        chapterCard.tap()
+        let connect = app.buttons["designStudioConnect"]
+        XCTAssertTrue(connect.waitForExistence(timeout: 5), "expected the inspector's Connect button once a box is selected")
+        connect.tap()
+        XCTAssertTrue(app.descendants(matching: .any)["designStudioConnectBanner"].waitForExistence(timeout: 5), "expected the connect-mode banner")
+        app.staticTexts["New Checkpoint"].tap()
+
+        XCTAssertTrue(app.staticTexts["2 boxes \u{00b7} 1 connections"].waitForExistence(timeout: 5), "expected tapping the target to actually create the edge")
+        let order = app.staticTexts["designStudioTimelineOrder"]
+        XCTAssertTrue(order.waitForExistence(timeout: 5), "expected the reading-order marker")
+        XCTAssertEqual(order.label, "New Chapter > New Checkpoint", "expected the graph walk to order chapter before its connected checkpoint")
     }
 
     /// Real regression coverage for the Binder+Intel content-merge
@@ -2429,17 +2519,22 @@ final class MindCraftNotesUITests: XCTestCase {
     /// we dont need them yet"), so this now exercises Resume -> Develop
     /// instead - same pan-in-place + stay-switchable mechanic, just a
     /// different pair of destinations that are still actually reachable.
+    /// Entry point updated again (2026-08-19): the left sidebar only
+    /// renders WHILE a flow pane is active now (it stopped reserving width
+    /// against tileBoard on the plain dashboard - see leftSidebar's call
+    /// site), so the first flow must open from the dock's own Resume chip;
+    /// the sidebar then appears and is what keeps flows switchable.
     func testSidebarFlowsPanInPlaceAndStaySwitchable() {
         let app = launchFieldDeskApp()
         XCUIDevice.shared.orientation = .landscapeLeft
         XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 15))
 
-        app.buttons["deskGridSidebar_Resume"].tap()
+        app.buttons["deskGridDock_Resume"].tap()
         XCTAssertTrue(app.descendants(matching: .any)["resumeAgentRoot"].waitForExistence(timeout: 10), "expected Resume's own content, not a separate cover with no dashboard trace")
         XCTAssertTrue(app.buttons["deskGridSidebar_Develop"].waitForExistence(timeout: 5), "expected the sidebar to stay reachable while a flow is open")
 
         app.buttons["deskGridSidebar_Develop"].tap()
-        XCTAssertTrue(app.buttons["designStudioAdd_ask"].waitForExistence(timeout: 10), "expected switching directly to Develop without returning to the dashboard first")
+        XCTAssertTrue(app.buttons["designStudioAdd_chapter"].waitForExistence(timeout: 10), "expected switching directly to Develop without returning to the dashboard first")
         XCTAssertFalse(app.descendants(matching: .any)["resumeAgentRoot"].exists, "expected Resume's content to be gone once Develop took over the same pane")
 
         app.buttons["designStudioDone"].tap()

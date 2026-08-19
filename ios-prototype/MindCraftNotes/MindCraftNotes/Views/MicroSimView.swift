@@ -99,6 +99,18 @@ struct GeneratedSimView: View {
             MicroSimInlineWebView(html: sim.html, baseURL: nil)
         }
         .background(Color.white)
-        .accessibilityIdentifier("generatedSimView")
+        // NOT a plain .accessibilityIdentifier() on the root - that
+        // reproduced this codebase's documented identifier-clobbering bug
+        // class live (2026-08-19: the cover resolved as generatedSimView
+        // but generatedSimAttribution/generatedSimClose inside it stopped
+        // resolving entirely, caught by the first UI-test run of this
+        // view). Same contain-group + invisible-marker fix
+        // StudySessionView's own root already uses for the same reason.
+        .accessibilityElement(children: .contain)
+        .overlay(alignment: .topLeading) {
+            Text(verbatim: "generated-sim").font(.system(size: 1)).foregroundColor(.clear)
+                .accessibilityIdentifier("generatedSimView")
+                .allowsHitTesting(false)
+        }
     }
 }
