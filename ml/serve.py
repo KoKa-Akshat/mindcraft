@@ -74,6 +74,7 @@ DISTRACTOR_PRIORS_DIR = DATA_DIR / "distractor_priors"
 COMBINATION_MIN_OVERLAP = 0.5
 
 from mindcraft_graph.loaders.complete_ontology_loader import load_complete_ontology
+from mindcraft_graph.loaders.dynamic_concept_loader import load_dynamic_concept_graphs, merge_ontology
 
 if STANDARDIZED_ONTOLOGY_PATH.exists():
     ontology, ingredient_ontology = load_complete_ontology(STANDARDIZED_ONTOLOGY_PATH)
@@ -85,6 +86,34 @@ else:
     ontology = Ontology.model_validate_json(LEGACY_ONTOLOGY_PATH.read_text())
     ingredient_ontology = IngredientOntology.model_validate_json(LEGACY_INGREDIENT_PATH.read_text())
     _ontology_source = LEGACY_ONTOLOGY_PATH.name
+
+# Dynamic, book-derived concept graphs (mindcraft-content-engine pipeline
+# output — book -> concept graph -> validated, namespaced Ontology) merge
+# into the SAME live ontology every downstream system already reads: the
+# embedding/classification rebuild below, ingredient_graph, edges/decay/
+# pathfinder. The graph "scales organically" by growing this one object,
+# not by running a second parallel system. strict=False here on purpose —
+# see load_dynamic_concept_graphs' docstring — a live service must not go
+# down because one book graph in a growing, semi-automated directory is bad.
+#
+# The merge itself gets the same resilience, not just per-file loading
+# (Greptile catch, confirmed real): two individually-valid book graphs can
+# still collide with each other (or, in principle, with the base ontology)
+# on concept id — merge_ontology() correctly raises ValueError for that via
+# Ontology.concept_id_registry(), but that raise happening unguarded at
+# *module import time* would take the whole service down on next restart.
+# A directory that will keep growing from a semi-automated pipeline must
+# not be able to do that — fall back to the un-merged base ontology and
+# keep serving instead.
+DYNAMIC_GRAPHS_DIR = DATA_DIR / "dynamic_graphs"
+_dynamic_graphs = load_dynamic_concept_graphs(DYNAMIC_GRAPHS_DIR)
+if _dynamic_graphs:
+    try:
+        ontology = merge_ontology(ontology, _dynamic_graphs)
+        _ontology_source = f"{_ontology_source} + {len(_dynamic_graphs)} dynamic graph(s)"
+    except ValueError as exc:
+        print(f"[startup] WARNING: dynamic concept graph merge failed ({exc}) — serving base ontology only")
+        _dynamic_graphs = []
 
 ingredient_graph = IngredientGraph(ingredient_ontology)
 _standardized_ontology_data = (
@@ -121,9 +150,18 @@ else:
     _embedding_source = f"computed from {_ontology_source} (no cache)"
 
 
+# Dynamic graph files are real hashed sources here too (Greptile catch,
+# confirmed real) — without this, the classification-index cache's hash
+# only depended on the fixed ontology/layer files, so adding a new book
+# graph (or editing an existing one) would never invalidate the cache and
+# /recommend's classification would keep running against a stale concept
+# vocabulary that no longer matches the live, merged ontology. Sorted glob,
+# same order load_dynamic_concept_graphs itself reads them in, so the hash
+# is deterministic across restarts.
 _classification_sources = [
     STANDARDIZED_ONTOLOGY_PATH, LAYER2_PATH, LAYER3_PATH,
     BANK_INDEX_PATH, BANK_METADATA_PATH,
+    *sorted(DYNAMIC_GRAPHS_DIR.glob("*.json")),
 ]
 _classification_source_hash = classifier_index.compute_source_hash(_classification_sources)
 

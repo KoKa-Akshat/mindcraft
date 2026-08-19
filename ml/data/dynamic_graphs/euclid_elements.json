@@ -1,0 +1,557 @@
+{
+  "subject_id": "euclid_elements",
+  "title": "Euclidean Plane Geometry: The First Six Books of Euclid's Elements",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "Solids": {
+      "classifier_name": "Solids",
+      "color": "SteelBlue"
+    },
+    "Congruence": {
+      "classifier_name": "Congruence",
+      "color": "SteelBlue"
+    },
+    "Logical Foundations": {
+      "classifier_name": "Logical Foundations",
+      "color": "SteelBlue"
+    },
+    "Area": {
+      "classifier_name": "Area",
+      "color": "SteelBlue"
+    },
+    "Foundational Definitions": {
+      "classifier_name": "Foundational Definitions",
+      "color": "SteelBlue"
+    },
+    "Synthesis": {
+      "classifier_name": "Synthesis",
+      "color": "SteelBlue"
+    },
+    "Parallel Lines": {
+      "classifier_name": "Parallel Lines",
+      "color": "SteelBlue"
+    },
+    "Ratio and Proportion": {
+      "classifier_name": "Ratio and Proportion",
+      "color": "SteelBlue"
+    },
+    "Similarity": {
+      "classifier_name": "Similarity",
+      "color": "SteelBlue"
+    },
+    "Proof Technique": {
+      "classifier_name": "Proof Technique",
+      "color": "SteelBlue"
+    },
+    "Circles": {
+      "classifier_name": "Circles",
+      "color": "SteelBlue"
+    },
+    "Constructions": {
+      "classifier_name": "Constructions",
+      "color": "SteelBlue"
+    },
+    "Isosceles Triangles": {
+      "classifier_name": "Isosceles Triangles",
+      "color": "SteelBlue"
+    }
+  },
+  "concepts": [
+    {
+      "id": "euclid_elements::point-line-plane-def",
+      "label": "Point, Line, and Plane",
+      "subject_id": "euclid_elements",
+      "dependencies": [],
+      "taxonomy_id": "Foundational Definitions",
+      "level": "foundational"
+    },
+    {
+      "id": "euclid_elements::angle-def",
+      "label": "Definition of Angle",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::point-line-plane-def"
+      ],
+      "taxonomy_id": "Foundational Definitions",
+      "level": "foundational"
+    },
+    {
+      "id": "euclid_elements::triangle-polygon-def",
+      "label": "Triangles and Polygons",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::angle-def"
+      ],
+      "taxonomy_id": "Foundational Definitions",
+      "level": "foundational"
+    },
+    {
+      "id": "euclid_elements::circle-def",
+      "label": "Definition of Circle",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::point-line-plane-def"
+      ],
+      "taxonomy_id": "Foundational Definitions",
+      "level": "foundational"
+    },
+    {
+      "id": "euclid_elements::geometric-notation",
+      "label": "Standard Geometric Notation",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::triangle-polygon-def",
+        "euclid_elements::circle-def"
+      ],
+      "taxonomy_id": "Foundational Definitions",
+      "level": "foundational"
+    },
+    {
+      "id": "euclid_elements::postulates",
+      "label": "Euclid's Five Postulates",
+      "subject_id": "euclid_elements",
+      "dependencies": [],
+      "taxonomy_id": "Logical Foundations",
+      "level": "foundational"
+    },
+    {
+      "id": "euclid_elements::axioms",
+      "label": "Euclid's Twelve Axioms",
+      "subject_id": "euclid_elements",
+      "dependencies": [],
+      "taxonomy_id": "Logical Foundations",
+      "level": "foundational"
+    },
+    {
+      "id": "euclid_elements::theorem-problem-distinction",
+      "label": "Theorem vs. Problem",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::postulates",
+        "euclid_elements::axioms"
+      ],
+      "taxonomy_id": "Logical Foundations",
+      "level": "foundational"
+    },
+    {
+      "id": "euclid_elements::hypothesis-conclusion",
+      "label": "Hypothesis and Conclusion",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::theorem-problem-distinction"
+      ],
+      "taxonomy_id": "Logical Foundations",
+      "level": "foundational"
+    },
+    {
+      "id": "euclid_elements::converse-contrapositive-obverse",
+      "label": "Converse, Contrapositive, Obverse",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::hypothesis-conclusion"
+      ],
+      "taxonomy_id": "Logical Foundations",
+      "level": "core"
+    },
+    {
+      "id": "euclid_elements::deductive-proof-structure",
+      "label": "Structure of Deductive Proof",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::hypothesis-conclusion",
+        "euclid_elements::axioms"
+      ],
+      "taxonomy_id": "Logical Foundations",
+      "level": "cross_cutting"
+    },
+    {
+      "id": "euclid_elements::straightedge-compass-postulates",
+      "label": "Straightedge-and-Compass Postulates",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::postulates"
+      ],
+      "taxonomy_id": "Constructions",
+      "level": "foundational"
+    },
+    {
+      "id": "euclid_elements::construct-equilateral-triangle",
+      "label": "Constructing an Equilateral Triangle (Prop. I)",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::straightedge-compass-postulates",
+        "euclid_elements::triangle-polygon-def"
+      ],
+      "taxonomy_id": "Constructions",
+      "level": "core"
+    },
+    {
+      "id": "euclid_elements::basic-constructions",
+      "label": "Basic Straightedge-Compass Constructions",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::construct-equilateral-triangle"
+      ],
+      "taxonomy_id": "Constructions",
+      "level": "core"
+    },
+    {
+      "id": "euclid_elements::construction-validity-evaluation",
+      "label": "Evaluating Construction Validity",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::basic-constructions",
+        "euclid_elements::deductive-proof-structure"
+      ],
+      "taxonomy_id": "Constructions",
+      "level": "advanced"
+    },
+    {
+      "id": "euclid_elements::superposition",
+      "label": "Superposition as a Proof Technique",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::deductive-proof-structure",
+        "euclid_elements::triangle-polygon-def"
+      ],
+      "taxonomy_id": "Congruence",
+      "level": "foundational"
+    },
+    {
+      "id": "euclid_elements::sas-congruence",
+      "label": "SAS Congruence (Prop. IV)",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::superposition"
+      ],
+      "taxonomy_id": "Congruence",
+      "level": "core"
+    },
+    {
+      "id": "euclid_elements::isosceles-triangle-properties",
+      "label": "Properties of Isosceles Triangles (Prop. V)",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::sas-congruence"
+      ],
+      "taxonomy_id": "Isosceles Triangles",
+      "level": "core"
+    },
+    {
+      "id": "euclid_elements::prop-v-alternative-proof",
+      "label": "Alternative Proof of Prop. V",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::isosceles-triangle-properties",
+        "euclid_elements::superposition"
+      ],
+      "taxonomy_id": "Isosceles Triangles",
+      "level": "advanced"
+    },
+    {
+      "id": "euclid_elements::converse-isosceles",
+      "label": "Converse of the Isosceles Triangle Theorem (Prop. VI)",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::isosceles-triangle-properties",
+        "euclid_elements::converse-contrapositive-obverse"
+      ],
+      "taxonomy_id": "Isosceles Triangles",
+      "level": "core"
+    },
+    {
+      "id": "euclid_elements::indirect-proof-reductio",
+      "label": "Indirect Proof (Reductio ad Absurdum)",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::converse-contrapositive-obverse",
+        "euclid_elements::converse-isosceles"
+      ],
+      "taxonomy_id": "Logical Foundations",
+      "level": "cross_cutting"
+    },
+    {
+      "id": "euclid_elements::sss-congruence",
+      "label": "SSS Congruence (Prop. VII-VIII)",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::sas-congruence",
+        "euclid_elements::indirect-proof-reductio"
+      ],
+      "taxonomy_id": "Congruence",
+      "level": "core"
+    },
+    {
+      "id": "euclid_elements::case-division-proof",
+      "label": "Case Division in Proofs",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::sss-congruence"
+      ],
+      "taxonomy_id": "Congruence",
+      "level": "advanced"
+    },
+    {
+      "id": "euclid_elements::asa-congruence",
+      "label": "ASA Congruence (Prop. XXVI)",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::sas-congruence"
+      ],
+      "taxonomy_id": "Congruence",
+      "level": "core"
+    },
+    {
+      "id": "euclid_elements::angle-relationships",
+      "label": "Vertical, Supplementary, and Exterior Angles",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::angle-def",
+        "euclid_elements::axioms"
+      ],
+      "taxonomy_id": "Parallel Lines",
+      "level": "core"
+    },
+    {
+      "id": "euclid_elements::parallel-lines-def",
+      "label": "Parallel Lines and the Parallel Postulate",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::angle-relationships",
+        "euclid_elements::postulates"
+      ],
+      "taxonomy_id": "Parallel Lines",
+      "level": "core"
+    },
+    {
+      "id": "euclid_elements::parallel-line-theorems",
+      "label": "Theorems on Parallel Lines",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::parallel-lines-def"
+      ],
+      "taxonomy_id": "Parallel Lines",
+      "level": "core"
+    },
+    {
+      "id": "euclid_elements::triangle-angle-sum",
+      "label": "Sum of the Angles of a Triangle",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::parallel-line-theorems",
+        "euclid_elements::triangle-polygon-def"
+      ],
+      "taxonomy_id": "Parallel Lines",
+      "level": "core"
+    },
+    {
+      "id": "euclid_elements::parallelograms",
+      "label": "Properties of Parallelograms",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::parallel-line-theorems",
+        "euclid_elements::sas-congruence"
+      ],
+      "taxonomy_id": "Parallel Lines",
+      "level": "core"
+    },
+    {
+      "id": "euclid_elements::axis-of-symmetry",
+      "label": "Axis of Symmetry (Isosceles Triangles and Lozenges)",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::isosceles-triangle-properties",
+        "euclid_elements::parallelograms"
+      ],
+      "taxonomy_id": "Isosceles Triangles",
+      "level": "core"
+    },
+    {
+      "id": "euclid_elements::equivalent-areas",
+      "label": "Equivalence of Areas",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::parallelograms"
+      ],
+      "taxonomy_id": "Area",
+      "level": "advanced"
+    },
+    {
+      "id": "euclid_elements::geometric-algebra-book-ii",
+      "label": "Geometric Algebra of Areas (Book II)",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::equivalent-areas"
+      ],
+      "taxonomy_id": "Area",
+      "level": "advanced"
+    },
+    {
+      "id": "euclid_elements::pythagorean-theorem",
+      "label": "The Pythagorean Theorem (Prop. XLVII)",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::equivalent-areas",
+        "euclid_elements::sas-congruence"
+      ],
+      "taxonomy_id": "Area",
+      "level": "advanced"
+    },
+    {
+      "id": "euclid_elements::circle-chords-tangents",
+      "label": "Chords, Tangents, and Secants",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::circle-def",
+        "euclid_elements::sss-congruence"
+      ],
+      "taxonomy_id": "Circles",
+      "level": "core"
+    },
+    {
+      "id": "euclid_elements::inscribed-angle-theorem",
+      "label": "Inscribed Angle Theorem",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::circle-chords-tangents",
+        "euclid_elements::triangle-angle-sum"
+      ],
+      "taxonomy_id": "Circles",
+      "level": "advanced"
+    },
+    {
+      "id": "euclid_elements::circle-constructions",
+      "label": "Inscribing and Circumscribing Figures",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::inscribed-angle-theorem",
+        "euclid_elements::basic-constructions"
+      ],
+      "taxonomy_id": "Circles",
+      "level": "advanced"
+    },
+    {
+      "id": "euclid_elements::ratio-proportion-theory",
+      "label": "Theory of Ratio and Proportion (Book V)",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::axioms",
+        "euclid_elements::deductive-proof-structure"
+      ],
+      "taxonomy_id": "Ratio and Proportion",
+      "level": "core"
+    },
+    {
+      "id": "euclid_elements::similar-figures",
+      "label": "Similar Figures (Book VI)",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::ratio-proportion-theory",
+        "euclid_elements::parallelograms"
+      ],
+      "taxonomy_id": "Similarity",
+      "level": "advanced"
+    },
+    {
+      "id": "euclid_elements::similar-triangle-theorems",
+      "label": "Theorems on Similar Triangles",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::similar-figures",
+        "euclid_elements::sas-congruence"
+      ],
+      "taxonomy_id": "Similarity",
+      "level": "advanced"
+    },
+    {
+      "id": "euclid_elements::geometric-mean-applications",
+      "label": "Geometric Mean and Mean Proportionals",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::similar-triangle-theorems",
+        "euclid_elements::pythagorean-theorem"
+      ],
+      "taxonomy_id": "Similarity",
+      "level": "advanced"
+    },
+    {
+      "id": "euclid_elements::solid-geometry-intro",
+      "label": "Lines and Planes in Space (Book XI, I-XXI)",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::parallel-line-theorems",
+        "euclid_elements::angle-relationships"
+      ],
+      "taxonomy_id": "Solids",
+      "level": "advanced"
+    },
+    {
+      "id": "euclid_elements::solids-of-revolution",
+      "label": "Cylinder, Sphere, and Cone",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::solid-geometry-intro",
+        "euclid_elements::circle-chords-tangents"
+      ],
+      "taxonomy_id": "Solids",
+      "level": "advanced"
+    },
+    {
+      "id": "euclid_elements::proof-analysis-decomposition",
+      "label": "Decomposing Multi-Step Proofs",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::deductive-proof-structure",
+        "euclid_elements::sas-congruence"
+      ],
+      "taxonomy_id": "Proof Technique",
+      "level": "cross_cutting"
+    },
+    {
+      "id": "euclid_elements::proof-critique-rigor",
+      "label": "Critiquing Proof Rigor",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::proof-analysis-decomposition",
+        "euclid_elements::prop-v-alternative-proof"
+      ],
+      "taxonomy_id": "Proof Technique",
+      "level": "cross_cutting"
+    },
+    {
+      "id": "euclid_elements::original-proof-construction",
+      "label": "Constructing Original Proofs",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::proof-critique-rigor",
+        "euclid_elements::sss-congruence",
+        "euclid_elements::parallelograms"
+      ],
+      "taxonomy_id": "Synthesis",
+      "level": "advanced"
+    },
+    {
+      "id": "euclid_elements::original-exercise-design",
+      "label": "Designing Original Exercises",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::original-proof-construction"
+      ],
+      "taxonomy_id": "Synthesis",
+      "level": "advanced"
+    },
+    {
+      "id": "euclid_elements::capstone-annotation",
+      "label": "Capstone: Extending a Proposition",
+      "subject_id": "euclid_elements",
+      "dependencies": [
+        "euclid_elements::original-proof-construction",
+        "euclid_elements::similar-triangle-theorems",
+        "euclid_elements::solids-of-revolution"
+      ],
+      "taxonomy_id": "Synthesis",
+      "level": "advanced"
+    }
+  ]
+}

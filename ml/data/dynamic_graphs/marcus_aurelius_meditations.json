@@ -1,0 +1,374 @@
+{
+  "subject_id": "marcus_aurelius_meditations",
+  "title": "Stoic Philosophy and Self-Governance: A Reading of Marcus Aurelius's Meditations",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "Critical Evaluation": {
+      "classifier_name": "Critical Evaluation",
+      "color": "SteelBlue"
+    },
+    "Stoic Ethics": {
+      "classifier_name": "Stoic Ethics",
+      "color": "SteelBlue"
+    },
+    "Mentors and Influences": {
+      "classifier_name": "Mentors and Influences",
+      "color": "SteelBlue"
+    },
+    "Stoic System": {
+      "classifier_name": "Stoic System",
+      "color": "SteelBlue"
+    },
+    "Comparative Philosophy": {
+      "classifier_name": "Comparative Philosophy",
+      "color": "SteelBlue"
+    },
+    "Roman History": {
+      "classifier_name": "Roman History",
+      "color": "SteelBlue"
+    },
+    "Practical Application": {
+      "classifier_name": "Practical Application",
+      "color": "SteelBlue"
+    },
+    "Meditations Text": {
+      "classifier_name": "Meditations Text",
+      "color": "SteelBlue"
+    },
+    "Stoic Origins": {
+      "classifier_name": "Stoic Origins",
+      "color": "SteelBlue"
+    }
+  },
+  "concepts": [
+    {
+      "id": "marcus_aurelius_meditations::roman-empire-context",
+      "label": "The Roman Empire in the 2nd Century AD",
+      "subject_id": "marcus_aurelius_meditations",
+      "dependencies": [],
+      "taxonomy_id": "Roman History",
+      "level": "foundational"
+    },
+    {
+      "id": "marcus_aurelius_meditations::marcus-aurelius-biography",
+      "label": "Life and Reign of Marcus Aurelius",
+      "subject_id": "marcus_aurelius_meditations",
+      "dependencies": [
+        "marcus_aurelius_meditations::roman-empire-context"
+      ],
+      "taxonomy_id": "Roman History",
+      "level": "foundational"
+    },
+    {
+      "id": "marcus_aurelius_meditations::stoic-origins",
+      "label": "Origins of Stoic Philosophy (Zeno, Chrysippus)",
+      "subject_id": "marcus_aurelius_meditations",
+      "dependencies": [],
+      "taxonomy_id": "Stoic Origins",
+      "level": "foundational"
+    },
+    {
+      "id": "marcus_aurelius_meditations::epicureanism-basics",
+      "label": "Epicurean Philosophy Basics",
+      "subject_id": "marcus_aurelius_meditations",
+      "dependencies": [],
+      "taxonomy_id": "Comparative Philosophy",
+      "level": "foundational"
+    },
+    {
+      "id": "marcus_aurelius_meditations::imitation-of-christ",
+      "label": "The Imitation of Christ and Early Christian Ethics",
+      "subject_id": "marcus_aurelius_meditations",
+      "dependencies": [],
+      "taxonomy_id": "Comparative Philosophy",
+      "level": "foundational"
+    },
+    {
+      "id": "marcus_aurelius_meditations::stoic-threefold-system",
+      "label": "Stoic Threefold Division: Physics, Logic, Ethics",
+      "subject_id": "marcus_aurelius_meditations",
+      "dependencies": [
+        "marcus_aurelius_meditations::stoic-origins"
+      ],
+      "taxonomy_id": "Stoic System",
+      "level": "core"
+    },
+    {
+      "id": "marcus_aurelius_meditations::stoic-physics",
+      "label": "Stoic Physics: Nature, Logos, Providence",
+      "subject_id": "marcus_aurelius_meditations",
+      "dependencies": [
+        "marcus_aurelius_meditations::stoic-threefold-system"
+      ],
+      "taxonomy_id": "Stoic System",
+      "level": "core"
+    },
+    {
+      "id": "marcus_aurelius_meditations::stoic-logic",
+      "label": "Stoic Logic",
+      "subject_id": "marcus_aurelius_meditations",
+      "dependencies": [
+        "marcus_aurelius_meditations::stoic-threefold-system"
+      ],
+      "taxonomy_id": "Stoic System",
+      "level": "core"
+    },
+    {
+      "id": "marcus_aurelius_meditations::stoic-ethics-virtue",
+      "label": "Stoic Ethics: Virtue as the Sole Good",
+      "subject_id": "marcus_aurelius_meditations",
+      "dependencies": [
+        "marcus_aurelius_meditations::stoic-threefold-system"
+      ],
+      "taxonomy_id": "Stoic Ethics",
+      "level": "core"
+    },
+    {
+      "id": "marcus_aurelius_meditations::vice-as-sole-evil",
+      "label": "Vice as the Sole Evil",
+      "subject_id": "marcus_aurelius_meditations",
+      "dependencies": [
+        "marcus_aurelius_meditations::stoic-ethics-virtue"
+      ],
+      "taxonomy_id": "Stoic Ethics",
+      "level": "core"
+    },
+    {
+      "id": "marcus_aurelius_meditations::living-according-to-nature",
+      "label": "Living in Accordance with Nature",
+      "subject_id": "marcus_aurelius_meditations",
+      "dependencies": [
+        "marcus_aurelius_meditations::stoic-physics",
+        "marcus_aurelius_meditations::stoic-ethics-virtue"
+      ],
+      "taxonomy_id": "Stoic Ethics",
+      "level": "core"
+    },
+    {
+      "id": "marcus_aurelius_meditations::dichotomy-of-control",
+      "label": "Dichotomy of Control: What Is and Isn't \"In Our Power\"",
+      "subject_id": "marcus_aurelius_meditations",
+      "dependencies": [
+        "marcus_aurelius_meditations::stoic-ethics-virtue",
+        "marcus_aurelius_meditations::living-according-to-nature"
+      ],
+      "taxonomy_id": "Stoic Ethics",
+      "level": "core"
+    },
+    {
+      "id": "marcus_aurelius_meditations::stoic-apatheia",
+      "label": "Stoic Apatheia: Freedom from Destructive Passion",
+      "subject_id": "marcus_aurelius_meditations",
+      "dependencies": [
+        "marcus_aurelius_meditations::stoic-ethics-virtue",
+        "marcus_aurelius_meditations::dichotomy-of-control"
+      ],
+      "taxonomy_id": "Stoic Ethics",
+      "level": "core"
+    },
+    {
+      "id": "marcus_aurelius_meditations::mentors-influences",
+      "label": "Marcus Aurelius's Debts to Family, Teachers, and Mentors",
+      "subject_id": "marcus_aurelius_meditations",
+      "dependencies": [
+        "marcus_aurelius_meditations::marcus-aurelius-biography",
+        "marcus_aurelius_meditations::stoic-ethics-virtue"
+      ],
+      "taxonomy_id": "Mentors and Influences",
+      "level": "core"
+    },
+    {
+      "id": "marcus_aurelius_meditations::key-mentor-figures",
+      "label": "Key Figures (Verus, Rusticus, Apollonius, Sextus) and Their Virtues",
+      "subject_id": "marcus_aurelius_meditations",
+      "dependencies": [
+        "marcus_aurelius_meditations::mentors-influences"
+      ],
+      "taxonomy_id": "Mentors and Influences",
+      "level": "core"
+    },
+    {
+      "id": "marcus_aurelius_meditations::meditations-structure",
+      "label": "Structure and Autobiographical Nature of the Meditations",
+      "subject_id": "marcus_aurelius_meditations",
+      "dependencies": [
+        "marcus_aurelius_meditations::marcus-aurelius-biography",
+        "marcus_aurelius_meditations::mentors-influences"
+      ],
+      "taxonomy_id": "Meditations Text",
+      "level": "core"
+    },
+    {
+      "id": "marcus_aurelius_meditations::meditations-vs-treatise",
+      "label": "Meditations as Private Journal vs. Public Treatise",
+      "subject_id": "marcus_aurelius_meditations",
+      "dependencies": [
+        "marcus_aurelius_meditations::meditations-structure"
+      ],
+      "taxonomy_id": "Meditations Text",
+      "level": "core"
+    },
+    {
+      "id": "marcus_aurelius_meditations::reign-events",
+      "label": "Major Events of Marcus Aurelius's Reign",
+      "subject_id": "marcus_aurelius_meditations",
+      "dependencies": [
+        "marcus_aurelius_meditations::marcus-aurelius-biography"
+      ],
+      "taxonomy_id": "Roman History",
+      "level": "core"
+    },
+    {
+      "id": "marcus_aurelius_meditations::marcomanni-wars",
+      "label": "The Marcomannic Wars and Military Campaigns",
+      "subject_id": "marcus_aurelius_meditations",
+      "dependencies": [
+        "marcus_aurelius_meditations::reign-events"
+      ],
+      "taxonomy_id": "Roman History",
+      "level": "core"
+    },
+    {
+      "id": "marcus_aurelius_meditations::avidius-cassius-revolt",
+      "label": "The Revolt of Avidius Cassius",
+      "subject_id": "marcus_aurelius_meditations",
+      "dependencies": [
+        "marcus_aurelius_meditations::reign-events"
+      ],
+      "taxonomy_id": "Roman History",
+      "level": "core"
+    },
+    {
+      "id": "marcus_aurelius_meditations::epicurean-ataraxia",
+      "label": "Epicurean Ataraxia",
+      "subject_id": "marcus_aurelius_meditations",
+      "dependencies": [
+        "marcus_aurelius_meditations::epicureanism-basics"
+      ],
+      "taxonomy_id": "Comparative Philosophy",
+      "level": "core"
+    },
+    {
+      "id": "marcus_aurelius_meditations::stoic-vs-epicurean",
+      "label": "Comparing Stoic Apatheia and Epicurean Ataraxia",
+      "subject_id": "marcus_aurelius_meditations",
+      "dependencies": [
+        "marcus_aurelius_meditations::stoic-apatheia",
+        "marcus_aurelius_meditations::epicurean-ataraxia"
+      ],
+      "taxonomy_id": "Comparative Philosophy",
+      "level": "advanced"
+    },
+    {
+      "id": "marcus_aurelius_meditations::stoic-vs-christian-selfexamination",
+      "label": "Stoic Self-Reliance vs. Christian God-Dependent Self-Examination",
+      "subject_id": "marcus_aurelius_meditations",
+      "dependencies": [
+        "marcus_aurelius_meditations::dichotomy-of-control",
+        "marcus_aurelius_meditations::imitation-of-christ"
+      ],
+      "taxonomy_id": "Comparative Philosophy",
+      "level": "advanced"
+    },
+    {
+      "id": "marcus_aurelius_meditations::philosopher-king-tension",
+      "label": "Tension Between Private Philosophy and Public Duty",
+      "subject_id": "marcus_aurelius_meditations",
+      "dependencies": [
+        "marcus_aurelius_meditations::dichotomy-of-control",
+        "marcus_aurelius_meditations::reign-events",
+        "marcus_aurelius_meditations::meditations-vs-treatise"
+      ],
+      "taxonomy_id": "Critical Evaluation",
+      "level": "advanced"
+    },
+    {
+      "id": "marcus_aurelius_meditations::avidius-cassius-evaluation",
+      "label": "Evaluating Marcus's Conduct Toward Avidius Cassius",
+      "subject_id": "marcus_aurelius_meditations",
+      "dependencies": [
+        "marcus_aurelius_meditations::avidius-cassius-revolt",
+        "marcus_aurelius_meditations::philosopher-king-tension"
+      ],
+      "taxonomy_id": "Critical Evaluation",
+      "level": "advanced"
+    },
+    {
+      "id": "marcus_aurelius_meditations::christian-persecution-criticism",
+      "label": "Marcus Aurelius's Treatment of Christians: A Moral Failure?",
+      "subject_id": "marcus_aurelius_meditations",
+      "dependencies": [
+        "marcus_aurelius_meditations::reign-events",
+        "marcus_aurelius_meditations::stoic-vs-christian-selfexamination"
+      ],
+      "taxonomy_id": "Critical Evaluation",
+      "level": "advanced"
+    },
+    {
+      "id": "marcus_aurelius_meditations::stoic-indifference-power",
+      "label": "Practicality of Stoic Indifference for a Person in Power",
+      "subject_id": "marcus_aurelius_meditations",
+      "dependencies": [
+        "marcus_aurelius_meditations::stoic-apatheia",
+        "marcus_aurelius_meditations::philosopher-king-tension"
+      ],
+      "taxonomy_id": "Critical Evaluation",
+      "level": "advanced"
+    },
+    {
+      "id": "marcus_aurelius_meditations::applying-dichotomy-of-control",
+      "label": "Applying the Dichotomy of Control to Modern Life",
+      "subject_id": "marcus_aurelius_meditations",
+      "dependencies": [
+        "marcus_aurelius_meditations::dichotomy-of-control"
+      ],
+      "taxonomy_id": "Practical Application",
+      "level": "cross_cutting"
+    },
+    {
+      "id": "marcus_aurelius_meditations::reflection-on-mentors-exercise",
+      "label": "Composing a Personal Reflection on Formative Influences",
+      "subject_id": "marcus_aurelius_meditations",
+      "dependencies": [
+        "marcus_aurelius_meditations::key-mentor-figures",
+        "marcus_aurelius_meditations::meditations-structure"
+      ],
+      "taxonomy_id": "Practical Application",
+      "level": "cross_cutting"
+    },
+    {
+      "id": "marcus_aurelius_meditations::daily-meditation-exercise",
+      "label": "Drafting a Daily Meditation in the Style of Book I",
+      "subject_id": "marcus_aurelius_meditations",
+      "dependencies": [
+        "marcus_aurelius_meditations::meditations-structure",
+        "marcus_aurelius_meditations::key-mentor-figures"
+      ],
+      "taxonomy_id": "Practical Application",
+      "level": "cross_cutting"
+    },
+    {
+      "id": "marcus_aurelius_meditations::modern-stoic-handbook",
+      "label": "Designing a Modern Handbook of Stoic Maxims",
+      "subject_id": "marcus_aurelius_meditations",
+      "dependencies": [
+        "marcus_aurelius_meditations::applying-dichotomy-of-control",
+        "marcus_aurelius_meditations::daily-meditation-exercise"
+      ],
+      "taxonomy_id": "Practical Application",
+      "level": "advanced"
+    },
+    {
+      "id": "marcus_aurelius_meditations::comparative-essay-suffering",
+      "label": "Comparative Essay: Stoic and Christian Approaches to Suffering",
+      "subject_id": "marcus_aurelius_meditations",
+      "dependencies": [
+        "marcus_aurelius_meditations::stoic-vs-christian-selfexamination",
+        "marcus_aurelius_meditations::stoic-indifference-power"
+      ],
+      "taxonomy_id": "Comparative Philosophy",
+      "level": "advanced"
+    }
+  ]
+}
