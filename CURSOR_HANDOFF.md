@@ -827,6 +827,117 @@ with Blake, don't just merge it solo), a new or extended `/knowledge-graph`
 endpoint, `Networking/KnowledgeGraphClient.swift` (consuming whatever that
 endpoint returns once it's real).
 
+**Update, 2026-08-18/19:** PR #49 merged (Akshat's own explicit go-ahead,
+not solo) — 185 concepts now live in the mastery engine once `ml/` is
+redeployed to the HF Space (needs an HF write token neither Claude Code nor
+this environment has — Akshat or Blake runs `HF_ORG=joinmindcraft
+ml/scripts/deploy_hf.sh`). Everything else above ("shipped the same
+night") is now heavily superseded by same-session work not yet written up
+here in detail — dashboard background reverted back to cream/white (not
+black), left sidebar is a full multi-destination rail (Presentation/GDoc
+parked, not removed; Resume; Develop — a real Workflows/Books toggle
+merging Design Studio + Book Workflow), real book cover art DOES exist
+(`agent_work/product/desk_os/workflows/archive/covers/`, 122 real files —
+the "no cover art" finding above was wrong, corrected live), toolbar
+moved to screen-space and matches the white card style everywhere else.
+Treat this doc's Assignment K body text as a historical snapshot, not
+current state — check `ios-prototype/MindCraftNotes/MindCraftNotes/Views/`
+directly before assuming anything above is still accurate.
+
+---
+
+#### Assignment L — Study Session: tabbed, chapter-by-chapter lesson view (Cardiology reference, 2026-08-18/19)
+
+**Context, verbatim intent (Akshat, product screenshot reference — a
+medical-chart dashboard: dark charcoal panel, a rounded-pill tab row across
+the top for chart sections, a stat row, a scrollable timeline of
+expandable cards connected to date markers, a full-width bottom scrubber
+bar with per-month event ticks).** A concept can span multiple chapters,
+each chapter can span multiple sims/pages, and none of that fits on one
+screen. Desired behavior, explicit:
+
+- Talking to Jesse / uploading to Homework Help must NOT navigate the
+  student away from the dashboard - "the dash was changing... right now,
+  what will happen instead is that once that happens, the dash stays."
+  One thing gets appended to Binder for the session; a new tabbed surface
+  opens **in the same canvas** for the student to work through.
+- The AI decides how many tabs/chapters a topic needs at generation time
+  - not a fixed count. (Ties to the in-progress `mindcraft-content-engine`
+  work training content generation - not live yet, see below.)
+- Tab 1 is the default landing tab. Within a tab, a left/right arrow steps
+  through that tab's own pages (however many the content actually needs -
+  "5, 10, however many pages you need to completely teach that content").
+  The arrow's SECOND click (after the first page's own analysis/load
+  finishes) is what reveals tab 2; tabs unlock as their prerequisite
+  content is actually ready, not all at once.
+- Last tab: sources/citations, properly attributed (matches
+  `ArchiveRagClient`'s real `hits[].pageUrl`/`bookTitle` today, or "AI-
+  generated, no source" when the lesson came from generation instead of
+  the archive).
+- A close control (matches the reference's own top-left X) saves
+  everything real to Binder as one dated entry with a summary, closes
+  every open tab, and resets the dashboard to how it looked on arrival.
+- Starting a NEW "Jump on a call with Jesse" resets back to tab 1 / closes
+  the session - same close-and-save behavior as the explicit close button.
+- Visual language: this session's OWN overlay can use the reference's dark
+  panel aesthetic (it's the one surface Akshat explicitly asked to look
+  like the reference) - this does NOT reopen the "background should be
+  white everywhere" ask from the same session, which was about the
+  dashboard's own toolbar/dock looking inconsistently dark, a fixed,
+  separate, already-shipped complaint.
+
+**What's real today vs. what this needs to build on:**
+- ✅ `JesseCallSession.workDashboardLesson` (`WorkDashboardLesson`: topic,
+  source, `chapters: [String]` - titles only today, `definition`,
+  `question`, `microsims`) - real, live, generated per the archive-check-
+  then-generate pipeline in `askJesseWorkDashboard`/`generateFromMaterials`.
+  This is the real data source for tabs; each `chapters[i]` becomes one
+  tab title.
+- ❌ Chapters are titles only - no per-chapter BODY text exists yet, so a
+  tab has nothing of its own to show beyond a title today. Needs
+  `LessonOutline`/`generateTableOfContents` extended with a parallel
+  `chapterBodies: [String]` (same index as `chapters`) so each tab has
+  real content, not a repeat of the single top-level `definition`. This
+  is a real, scoped, safe prompt change - not blocked on anything.
+- ❌ "However many pages a chapter needs" (multiple pages PER chapter,
+  not one) genuinely needs the richer, structured content-generation
+  pipeline referenced in the live "89 learning graphs" / McCreary MicroSim
+  work in `mindcraft-content-engine` - that pipeline is real and has
+  real, tested progress (see its own `ENGAGEMENT_TRAINING_SIGNAL_SPEC.md`
+  for the separate, gated engagement-training piece specifically), but is
+  not yet wired to produce per-chapter multi-page content this app can
+  consume. Until then, each chapter tab is genuinely one page - honest,
+  not faked as more.
+- ✅ Real MicroSims (`MicroSimLoader.matching`) and real archive citations
+  (`ArchiveRagClient.Hit`) already exist and should populate the
+  simulations/sources tabs directly, no new backend needed for those two.
+- ❌ No Binder-save-and-reset-on-close exists yet for this flow
+  specifically (Homework Help's own upload summaries already file to
+  Binder via `onFileHomeworkToBinder` - the NEW session view needs its own
+  equivalent close handler).
+
+**Proposed shape (subject to revision once building starts - flag any
+deviation here rather than silently diverging):**
+- New `StudySessionView.swift` - a dark-panel overlay, NOT a
+  `.fullScreenCover` (keeps the dashboard mounted underneath per the
+  explicit "dash stays" ask, same reasoning as this session's own
+  Presentation/GDoc pan-nav work in `DeskGridDashboardView`).
+  `DeskGridDashboardView` presents it as a screen-space overlay (matching
+  `bottomDock`/`leftSidebar`'s own screen-space pattern) whenever
+  `jesseCall.workDashboardLesson != nil`, dismissed by either its own
+  close button or a fresh `jumpOnCall()`.
+- Top tab row: one pill per `lesson.chapters[i]`, plus a fixed trailing
+  "Sources" tab. Active tab styled filled/dark, matching the reference.
+- Body: active tab's `chapterBodies[i]` (once that field exists) with
+  left/right arrow paging - single-page-per-chapter for now, architected
+  so a future `[ChapterPage]` array slots in without a rewrite.
+- Bottom strip: small tappable markers, one per chapter, current one
+  highlighted - direct-jump navigation, same spirit as the reference's
+  bottom timeline.
+- Close control: saves `lesson` to Binder (title = topic, body = definition
+  + chapters joined, same shape `onFileHomeworkToBinder` already uses
+  elsewhere) and clears `jesseCall.workDashboardLesson`.
+
 ---
 
 ### Cursor's last report
