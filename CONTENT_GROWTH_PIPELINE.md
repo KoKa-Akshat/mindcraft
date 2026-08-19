@@ -212,24 +212,50 @@ unilaterally — it needs Blake, not a solo commit, before it happens.
   add a third way to move a mastery number.
 
 ## Status
-- ✅ Tagger, reload endpoint, ingest endpoint, engagement endpoint — built,
-  unit-verified, not yet boot-tested against a running server (see above).
+- ✅ Tagger, reload endpoint, ingest endpoint, engagement endpoint — built.
 - ✅ iOS wiring — ingest-on-generate, engagement-on-chapter-view. Full
   project build green.
+- ✅ **Deployed to production and verified live, 2026-08-19.** `git-lfs`
+  wasn't installed on this machine — the Space's git backend now requires it
+  for the `deploy_hf.sh` push step; installed via Homebrew, then the push
+  went through clean (`472fce9`). Confirmed via the Space's own runtime API,
+  not assumed: build completed (`RUNNING_BUILDING` → `RUNNING_APP_STARTING`
+  → `RUNNING`, ~2.5 min), `/health` showed `conceptCount: 185` (the full
+  PR #49 ontology, live). Then ran a REAL end-to-end test through the actual
+  client path (webhook → ml, not a direct ml call) — `POST
+  /api/ingest-lesson-graph` with a 2-chapter fake lesson came back
+  `totalConcepts: 187` with `conceptIds` matching byte-for-byte what the
+  iOS `LessonSlug` port independently computes for the same input, proving
+  the tag → validate → write → reload → serve loop and the client/server
+  slug agreement both work for real, not just in isolated unit checks.
+- ✅ **Found and fixed a real, pre-existing production bug while verifying
+  this**, unrelated to tonight's feature work: the webhook's `ML_URL` env
+  var (114 days old) still pointed at the old Cloud Run service, which has
+  been billing-dormant since the July HF Spaces migration — meaning
+  **JARVIS's `get_student_profile`/`get_recommendations` tool calls and the
+  `/process-summary` session pipeline (`generate-summary.ts`) had likely
+  been silently failing in production for over a month**, swallowed by
+  their own try/catches into generic "not available" messages rather than
+  visible errors. Fixed by correcting `ML_URL` to the live HF Space URL and
+  triggering a redeploy (Vercel bakes env vars into a deployment at build
+  time — changing the value alone doesn't reach already-built functions).
+  Confirmed fixed via the same end-to-end test above, which only started
+  passing once this was corrected.
+- ⚠️ **Confirmed, not hypothetical: the Space has no persistent disk**
+  (`api.space_info(...).runtime.storage` → `None`, free `cpu-basic` tier).
+  Anything `/ingest-lesson-graph` writes to `data/dynamic_graphs/` at
+  runtime lives only in that container's ephemeral filesystem — it will
+  vanish on the Space's next sleep/wake cycle (idle ~48h) or next redeploy,
+  unlike the four git-committed book graphs. The `zzz_test_ingest_verification`
+  concepts from the test above will self-clean the same way — left alone on
+  purpose rather than forcing an extra deploy cycle just to remove two
+  obviously-fake test concepts. **Real open problem for later, not solved
+  here:** student-generated lesson graphs need to survive a restart to be
+  worth anything long-term. Options, unevaluated: pay for a small persistent
+  disk on the Space; have `/ingest-lesson-graph` also commit the file back
+  to the Space's own git repo (adds write-credential-in-the-running-service
+  risk, and a rebuild per lesson); move dynamic graph storage to Firestore
+  and have the reload path read from there instead of local disk. Needs its
+  own design pass, not a rushed fix tonight.
 - ❌ Practice-question grading → `/record-outcomes` — needs answer choices
   to exist first; not started, scoped above.
-- ❌ **HF Space deploy — the one remaining blocker for any of this to be
-  live.** Everything above is real, committed, pushed code that a running
-  ml service would serve correctly — but the deployed HF Space is still
-  whatever `serve.py` looked like before tonight, so `/ingest-lesson-graph`
-  and `/record-engagement` 404 in production right now. The webhook proxy
-  (`/api/ingest-lesson-graph`) IS already live on Vercel (auto-deployed on
-  push) and will start working the moment the ml side deploys — no further
-  webhook change needed once that happens.
-  **To unblock:** an HF write token, scoped to push to `joinmindcraft/mindcraft-ml`.
-  Get one at https://huggingface.co/settings/tokens (logged in as a
-  `joinmindcraft` member) → "Write" access. Two ways to use it:
-  1. **You run it** (keeps the token off this machine's shell history/this
-     conversation): `export HF_TOKEN=hf_xxx && huggingface-cli login --token "$HF_TOKEN" --add-to-git-credential && cd ml && HF_ORG=joinmindcraft ./scripts/deploy_hf.sh`
-  2. **Hand me the token** and I run the same deploy — either works, (1) is
-     just the more careful default for a write credential to a shared org.
