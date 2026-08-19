@@ -37,7 +37,8 @@
     { "source": "/api/gmail-digest", "destination": "/api/app-actions?action=gmail-digest" },
     { "source": "/api/ingest-lesson-graph", "destination": "/api/app-actions?action=ingest-lesson-graph" },
     { "source": "/api/generate-sim", "destination": "/api/app-actions?action=generate-sim" },
-    { "source": "/api/archive-books", "destination": "/api/app-actions?action=archive-books" }
+    { "source": "/api/archive-books", "destination": "/api/app-actions?action=archive-books" },
+    { "source": "/api/english-practice", "destination": "/api/app-actions?action=english-practice" }
   ],
   "crons": [
     { "path": "/api/cron-fireflies", "schedule": "0 6 * * *" },
