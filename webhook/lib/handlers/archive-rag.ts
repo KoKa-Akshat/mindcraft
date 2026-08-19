@@ -20,6 +20,17 @@ const STOP = new Set([
   'the', 'and', 'for', 'with', 'that', 'this', 'from', 'what', 'how', 'why',
   'are', 'was', 'can', 'you', 'your', 'about', 'into', 'book', 'page', 'open',
   'show', 'tell', 'please', 'jesse',
+  // The native client's own fixed wrapper phrase - "Give me a short table
+  // of contents for X" - was itself supplying the dominant match (2026-08-18,
+  // confirmed live: "California bar exams" opened an unrelated Computer
+  // Science page). "table"/"contents" happen to be a near-universal URL
+  // fragment across this whole corpus (".../book-table-of-contents/"),
+  // so those two words alone cleared even a real title-match requirement
+  // regardless of what topic came after "for" - every topic, real or
+  // nonsense, was landing on the same three navigation pages. Stripping
+  // the wrapper's own vocabulary here means only the actual topic words
+  // can ever drive a match, no matter how a future caller phrases the ask.
+  'give', 'short', 'table', 'contents',
 ])
 
 type Chunk = {
@@ -47,14 +58,43 @@ function tokens(s: string): string[] {
     .filter((w) => w.length > 2 && !STOP.has(w))
 }
 
-// Below this, a hit is riding on a single coincidental body-text mention
-// of a generic word rather than any real title/slug relevance - returning
-// it as "I opened X" reads as a confident match when it is really noise
-// (e.g. a query for a topic with no real book in the corpus landing on an
-// unrelated book that happens to use one of the query's words once in
-// passing). Title/slug hits (weight 4/2) clear this alone; a bare body
-// hit (weight 1) does not - it needs corroboration from a second signal.
+// A hit riding on a single coincidental body-text mention of a generic
+// word, with no title/slug relevance at all, reads as a confident match
+// ("I opened X") when it's really noise. The real 2026-08-18 false
+// positive ("California bar exams" -> an unrelated Computer Science page)
+// turned out to be the client's own fixed wrapper phrase ("give me a
+// short table of contents for...") supplying the dominant match via
+// "table"/"contents" - now stripped in STOP above, at the actual source
+// of the pollution. With that fixed, a body-only signal is real enough to
+// keep (verified against "derivatives": two real Calculus pages discuss
+// it in the body without the word ever appearing in their own page
+// title - a hard title-only gate excluded both, a real regression tested
+// and reverted) - MIN_RELEVANT_SCORE stays as the corroboration
+// requirement for a bare body hit specifically.
 const MIN_RELEVANT_SCORE = 3
+
+// No stemming anywhere in this matcher - a plain trailing-s strip is
+// enough to catch the common case (confirmed live: "derivatives" missed
+// two real Calculus pages that only ever say "derivative" singular in
+// their own body text) without pulling in a real stemmer for one suffix.
+function singular(t: string): string | null {
+  return t.length > 3 && t.endsWith('s') ? t.slice(0, -1) : null
+}
+
+function escapeRegExp(s: string): string {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
+// Word-boundary match, not raw substring (confirmed live, 2026-08-18:
+// adding the singular-strip above without this first reintroduced the
+// exact bug it was meant to fix - "exams" -> "exam" then substring-matched
+// inside "example", which is all over an educational corpus, so
+// "California bar exams" started confidently matching again). `\b` on
+// both sides means "exam" matches the word "exam" but not the "exam"
+// inside "example" or "examine".
+function wordMatch(haystack: string, word: string): boolean {
+  return new RegExp(`\\b${escapeRegExp(word)}\\b`).test(haystack)
+}
 
 export function retrieve(query: string, limit = 3): Hit[] {
   const q = tokens(query)
@@ -65,9 +105,10 @@ export function retrieve(query: string, limit = 3): Hit[] {
     const body = `${c.quote}`.toLowerCase()
     let score = 0
     for (const t of q) {
-      if (title.includes(t)) score += 4
-      if (body.includes(t)) score += 1
-      if (c.bookSlug.replace(/-/g, ' ').includes(t)) score += 2
+      const alt = singular(t)
+      if (wordMatch(title, t) || (alt && wordMatch(title, alt))) score += 4
+      if (wordMatch(body, t) || (alt && wordMatch(body, alt))) score += 1
+      if (wordMatch(c.bookSlug.replace(/-/g, ' '), t)) score += 2
     }
     if (score >= MIN_RELEVANT_SCORE) scored.push({ ...c, score })
   }
