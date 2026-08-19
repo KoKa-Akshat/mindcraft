@@ -185,23 +185,55 @@ struct DeskGridDashboardView: View {
     /// too") - the small in-tile `knowledgeGraphTileBody()` canvas stays as
     /// the at-a-glance view; this is the same live data, just full-size.
     @State private var viewingKnowledgeGraphInBinder = false
+    /// Archive mode (2026-08-19, explicit ask: "when you press archive
+    /// button... homework help goes blank and binder expands... all the
+    /// books we have Dan's and ours will be there... you can search or
+    /// scroll there itself and if you click on a book it shows content").
+    /// Replaces the old dock behavior (a separate full-screen
+    /// `ArchiveWorkflowView` via `onOpenArchive`) for THIS button - that
+    /// flow stays reachable from `WorkflowLibraryView`'s own "Open Archive"
+    /// entry, just not this one anymore.
+    @State private var viewingArchiveBrowser = false
+    /// The lesson currently shown as a summary + "what you'll learn" card
+    /// in Homework Help WHILE browsing the archive (2026-08-19, explicit
+    /// ask: "per click homework help shows you a book summary and what you
+    /// will learn... like a learning outcome"). nil = the blank/prompt
+    /// state before any book is picked. Deliberately separate from
+    /// `viewingBook` (which drives Binder's own content) even though a tap
+    /// sets both to the SAME lesson at once - Homework Help should keep
+    /// showing this book's summary even if `viewingBook` later changes
+    /// (e.g. a different close/reopen path), and clearing on
+    /// `closeBinderContentViewer` shouldn't accidentally resurrect stale
+    /// upload state.
+    @State private var archiveSummaryLesson: WorkDashboardLesson?
+    @State private var archiveSearchQuery = ""
+    @State private var archiveSearchResults: [ArchiveRagClient.Hit] = []
+    @State private var archiveSearchLoading = false
+    /// Which archive title is mid-open (a real network round trip via
+    /// ArchiveRagClient, unlike the bundled BookGraphLoader books which
+    /// open instantly from local data) - drives a per-row spinner so a tap
+    /// gives immediate feedback instead of looking unresponsive.
+    @State private var archiveOpeningTitle: String?
 
-    /// True whenever Binder should be showing ANY of the three merged-space
+    /// True whenever Binder should be showing ANY of the merged-space
     /// content modes above rather than its own normal titles/blurb - the
     /// single condition every layout/visibility check below reads instead
     /// of each hand-rolling its own `viewingUpload != nil || viewingBook !=
     /// nil || ...` (three call sites already needed this before
     /// `viewingBook`/`viewingKnowledgeGraphInBinder` existed; missing one on
-    /// a future fourth mode is exactly the kind of bug this centralizes
-    /// away).
+    /// a new mode is exactly the kind of bug this centralizes away).
     private var binderContentViewerActive: Bool {
-        viewingUpload != nil || viewingBook != nil || viewingKnowledgeGraphInBinder
+        viewingUpload != nil || viewingBook != nil || viewingKnowledgeGraphInBinder || viewingArchiveBrowser
     }
 
     private func closeBinderContentViewer() {
         viewingUpload = nil
         viewingBook = nil
         viewingKnowledgeGraphInBinder = false
+        viewingArchiveBrowser = false
+        archiveSummaryLesson = nil
+        archiveSearchQuery = ""
+        archiveSearchResults = []
     }
 
     /// In-canvas pan navigation for the sidebar's destinations (2026-08-18,
@@ -355,19 +387,18 @@ struct DeskGridDashboardView: View {
         // One explicit ZStack child only. Tiles may .position() inside
         // the hard-framed board; the board itself must not.
         GeometryReader { geo in
-            // The left sidebar (2026-08-18) sits ON TOP of the board as a
-            // ZStack sibling, not inline in the layout, so the board's own
-            // centering has to leave room for it explicitly - otherwise it
-            // centers across the FULL width and the sidebar overlaps
-            // whatever tile happens to sit closest to the left edge
-            // (confirmed live: "Homework Help"'s title was half-hidden
-            // behind it). `sidebarInset` matches the sidebar's real
-            // footprint (76pt box + 14pt leading padding); halving it in
-            // the offset below (see the centering math in that comment)
-            // shifts the whole board right by exactly that amount instead
-            // of just shrinking it centered.
-            let sidebarInset: CGFloat = 106
-            let scale = min((geo.size.width - sidebarInset) / artboard.width, geo.size.height / artboard.height)
+            // The left sidebar is gone (2026-08-19, explicit ask: "add the
+            // settings and resume to the search bar dock too... use that
+            // space to make the boxes bigger horizontally as well as
+            // vertically" - Develop didn't need its own move, workDock's
+            // "Design" chip already opened the identical destination
+            // (openSidebarFlow(.develop)), so it was already redundant
+            // with the sidebar's own Develop icon). No more reserved inset
+            // to leave room for it - `scale` now uses the FULL width, which
+            // (since this device's aspect ratio is still width-bound - see
+            // the top-align note below) makes the whole board measurably
+            // bigger, not just repositioned.
+            let scale = min(geo.size.width / artboard.width, geo.size.height / artboard.height)
             let board = CGSize(width: artboard.width * scale, height: artboard.height * scale)
             // Two same-size panes side by side - the dashboard, then
             // whichever sidebar destination is active - slid horizontally
@@ -400,7 +431,7 @@ struct DeskGridDashboardView: View {
                 // at the screen's top edge instead of floating mid-screen.
                 tileBoard(scale: scale, board: board)
                     .scaleEffect(spaceZoom * liveZoom)
-                    .offset(x: sidebarInset / 2 + spacePan.width + livePan.width, y: spacePan.height + livePan.height)
+                    .offset(x: spacePan.width + livePan.width, y: spacePan.height + livePan.height)
                 // Same dimmed-background + centered-card popup family as
                 // Intel/Binder/Homework Help - was a .sheet() with its own
                 // NavigationStack/toolbar, visually inconsistent with the
@@ -499,12 +530,23 @@ struct DeskGridDashboardView: View {
             }
             .frame(width: geo.size.width * 2, height: geo.size.height, alignment: .leading)
             .offset(x: activeSidebarFlow == nil ? 0 : -geo.size.width)
-            // Persistent across both panes (2026-08-18, explicit ask: "if
+            // Only while a flow pane is actually showing now (2026-08-19,
+            // explicit ask: "add the settings and resume to the search bar
+            // dock too... use that space to make the boxes bigger" - Resume
+            // and Settings moved into workDock/flowsDock for the plain
+            // dashboard, see those). Still needed here, not deletable
+            // outright: it's the only way to switch directly between flows
+            // (Resume <-> Develop) or back to the dashboard WHILE INSIDE a
+            // flow pane, since bottomDock itself lives inside the sliding
+            // HStack above and is off-screen the whole time a flow is
+            // active (2026-08-18, explicit ask this solved originally: "if
             // you press GDocs again... if you say Resume, it goes to
-            // Resume" - switching directly between flows without
-            // returning to the dashboard first needs the sidebar visible
-            // the whole time, not just on the dashboard's own page).
-            leftSidebar
+            // Resume" - switching directly between flows without returning
+            // to the dashboard first). Hiding it on the plain dashboard is
+            // what actually frees the width tileBoard's scale now uses.
+            if activeSidebarFlow != nil {
+                leftSidebar
+            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .ignoresSafeArea()
@@ -1404,6 +1446,8 @@ struct DeskGridDashboardView: View {
             StudySessionView(lesson: viewingBook.lesson, embedded: true, onClose: closeBinderContentViewer) { sim in
                 presentedMicroSim = sim
             }
+        } else if kind == .binder, viewingArchiveBrowser {
+            tileInnerCard { archiveBrowserBody(ink: ink) }
         } else if kind == .binder, viewingKnowledgeGraphInBinder {
             tileInnerCard { knowledgeGraphContentViewerBody(ink: ink) }
         } else if kind == .binder, let viewingUpload {
@@ -1600,6 +1644,15 @@ struct DeskGridDashboardView: View {
 
     @ViewBuilder
     private func homeworkHelpTileBody(ink: Color) -> some View {
+        // 2026-08-19, explicit ask: "when you press archive button...
+        // homework help goes blank... per click homework help shows you a
+        // book summary and what you will learn... like a learning
+        // outcome." Real content derived from the same lesson Binder is
+        // showing (archiveSummaryLesson), not a separate fabricated blurb -
+        // "what you'll learn" IS the lesson's own real chapter titles.
+        if viewingArchiveBrowser {
+            archiveSummaryBody(ink: ink)
+        } else {
         VStack(alignment: .leading, spacing: 8) {
             HStack(spacing: 6) {
                 if homeworkUploading {
@@ -1680,6 +1733,77 @@ struct DeskGridDashboardView: View {
                     }
                 }
                 .accessibilityIdentifier("deskGridHomeworkUploads")
+            }
+        }
+        }
+    }
+
+    /// The "book summary + what you'll learn" card (2026-08-19) - shown in
+    /// Homework Help while `viewingArchiveBrowser` is active. Blank/prompt
+    /// state before any book is picked, matching the explicit ask exactly
+    /// ("homework help goes blank").
+    @ViewBuilder
+    private func archiveSummaryBody(ink: Color) -> some View {
+        if let lesson = archiveSummaryLesson {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 10) {
+                    Text(lesson.topic.capitalized)
+                        .font(.system(size: 15, weight: .heavy, design: .rounded))
+                        .foregroundColor(ink)
+                    Text(lesson.definition)
+                        .font(.system(size: 12, weight: .medium, design: .rounded))
+                        .foregroundColor(ink.opacity(0.75))
+                        .fixedSize(horizontal: false, vertical: true)
+                    if !lesson.chapters.isEmpty {
+                        Text("WHAT YOU'LL LEARN")
+                            .font(.system(size: 10, weight: .heavy, design: .rounded))
+                            .tracking(0.6)
+                            .foregroundColor(ink.opacity(0.5))
+                            .padding(.top, 4)
+                        ForEach(lesson.chapters, id: \.self) { chapter in
+                            HStack(alignment: .top, spacing: 6) {
+                                Circle().fill(ink.opacity(0.4)).frame(width: 4, height: 4).padding(.top, 6)
+                                Text(chapter)
+                                    .font(.system(size: 12, weight: .medium, design: .rounded))
+                                    .foregroundColor(ink.opacity(0.85))
+                            }
+                        }
+                    }
+                }
+            }
+            // Plain .accessibilityIdentifier() here gets absorbed into the
+            // outer tile Button's own accessibility label instead of
+            // staying queryable as its own element (confirmed via a real
+            // accessibility-tree dump, 2026-08-19 - even adding
+            // .accessibilityElement(children: .contain) didn't stop it).
+            // Same invisible-marker workaround already proven elsewhere in
+            // this file (deskGridDashboard, studySessionRoot,
+            // deskGridContentViewerCardText) - a marker carrying the real
+            // text as its own label, not a container identifier that keeps
+            // getting swallowed.
+            .overlay(alignment: .topLeading) {
+                Text(verbatim: [lesson.topic, lesson.definition, lesson.chapters.joined(separator: " | ")].joined(separator: " | "))
+                    .font(.system(size: 1))
+                    .foregroundColor(.clear)
+                    .accessibilityIdentifier("deskGridArchiveSummary")
+                    .allowsHitTesting(false)
+            }
+        } else {
+            VStack {
+                Spacer(minLength: 0)
+                Text("Pick a book from the Archive to see what it covers.")
+                    .font(.system(size: 12, weight: .semibold, design: .rounded))
+                    .foregroundColor(ink.opacity(0.5))
+                    .multilineTextAlignment(.center)
+                Spacer(minLength: 0)
+            }
+            .frame(maxWidth: .infinity)
+            .overlay(alignment: .topLeading) {
+                Text(verbatim: "archive-summary-empty")
+                    .font(.system(size: 1))
+                    .foregroundColor(.clear)
+                    .accessibilityIdentifier("deskGridArchiveSummaryEmpty")
+                    .allowsHitTesting(false)
             }
         }
     }
@@ -1776,20 +1900,54 @@ struct DeskGridDashboardView: View {
     @ViewBuilder
     private func knowledgeGraphContentViewerBody(ink: Color) -> some View {
         ZStack(alignment: .topTrailing) {
-            KnowledgeMapView(
-                nodes: knowledgeGraphClient.nodes,
-                edges: knowledgeGraphClient.edges,
-                studentPoints: knowledgeGraphClient.studentPoints,
-                axisLabels: knowledgeGraphClient.axisLabels,
-                conceptDisplays: conceptDisplays,
-                // Not wired to a destination in THIS dashboard yet (unlike
-                // DashboardView's own Map tab, which has a chapter/practice
-                // screen to hand off to) - closing back to the graph itself
-                // is an honest, safe fallback rather than a fake navigation.
-                // Real follow-up, not silently skipped.
-                onOpenConcept: { _ in },
-                onQuickPractice: { _ in }
-            )
+            // 2026-08-19, real bug found from a live report ("latency has
+            // increased, screen takes forever to load"): KnowledgeMapView
+            // has no idea knowledgeGraphClient is still loading - its own
+            // empty state ("Your map is still empty... once you've
+            // practiced a few concepts") is flatly WRONG during a real
+            // fetch and reads as broken, not slow. The HF Space free tier
+            // genuinely does sleep and take up to ~60-90s to wake (see
+            // KnowledgeGraphClient's own coldStartTimeout) - that's real
+            // and outside this app's control, but showing nothing honest
+            // about it for up to 90s is a real, fixable regression from
+            // swapping in KnowledgeMapView tonight, which the flat
+            // KnowledgeGraphCanvas this replaced never had (it read
+            // knowledgeGraphClient.isLoading directly).
+            if knowledgeGraphClient.isLoading {
+                VStack(spacing: 10) {
+                    ProgressView().tint(ink)
+                    Text("Waking up the knowledge service\u{2026} can take up to a minute the first time.")
+                        .font(.system(size: 13, weight: .semibold, design: .rounded))
+                        .foregroundColor(ink.opacity(0.7))
+                        .multilineTextAlignment(.center)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: 320)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .accessibilityIdentifier("deskGridKnowledgeGraphLoading")
+            } else {
+                KnowledgeMapView(
+                    nodes: knowledgeGraphClient.nodes,
+                    edges: knowledgeGraphClient.edges,
+                    studentPoints: knowledgeGraphClient.studentPoints,
+                    axisLabels: knowledgeGraphClient.axisLabels,
+                    conceptDisplays: conceptDisplays,
+                    // Not wired to a destination in THIS dashboard yet
+                    // (unlike DashboardView's own Map tab, which has a
+                    // chapter/practice screen to hand off to) - closing
+                    // back to the graph itself is an honest, safe fallback
+                    // rather than a fake navigation. Real follow-up, not
+                    // silently skipped.
+                    onOpenConcept: { _ in },
+                    onQuickPractice: { _ in },
+                    // 2026-08-19, real complaint: "the display of fonts is
+                    // horrible" - this view's type sizes were tuned for a
+                    // full dashboard tab, not this much smaller merged
+                    // space. See KnowledgeMapView's own `embedded` doc
+                    // comment.
+                    embedded: true
+                )
+            }
             Button {
                 withAnimation(.easeInOut(duration: 0.25)) { closeBinderContentViewer() }
             } label: {
@@ -1801,6 +1959,189 @@ struct DeskGridDashboardView: View {
             .buttonStyle(.plain)
             .padding(12)
             .accessibilityIdentifier("deskGridContentViewerClose")
+        }
+    }
+
+    /// Archive mode's body: your own generated books (real, local,
+    /// `BookGraphLoader.all` - the same data `askJesseWorkDashboard`
+    /// already matches against) plus a live search over Dan McCreary's
+    /// wider archive (real `ArchiveRagClient` hits, not a fabricated
+    /// catalog - there is no local manifest of his full library to browse
+    /// by title, only what a real query returns). Tapping any row opens
+    /// that book's real content the same way the rest of tonight's work
+    /// already does (`viewingBook`), and sets `archiveSummaryLesson` so
+    /// Homework Help shows its real "what you'll learn" alongside it.
+    @ViewBuilder
+    private func archiveBrowserBody(ink: Color) -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Text("Archive")
+                    .font(.system(size: 18, weight: .heavy, design: .rounded))
+                    .foregroundColor(ink)
+                Spacer(minLength: 0)
+                Button {
+                    withAnimation(.easeInOut(duration: 0.25)) { closeBinderContentViewer() }
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .font(.system(size: 20))
+                        .foregroundColor(ink.opacity(0.4))
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("deskGridContentViewerClose")
+            }
+
+            HStack(spacing: 8) {
+                Image(systemName: "magnifyingglass")
+                    .foregroundColor(ink.opacity(0.4))
+                TextField("Search Dan's archive\u{2026}", text: $archiveSearchQuery, onCommit: runArchiveSearch)
+                    .font(.system(size: 14, weight: .medium, design: .rounded))
+                    .foregroundColor(ink)
+                    .accessibilityIdentifier("deskGridArchiveSearchField")
+                if archiveSearchLoading {
+                    ProgressView().tint(ink)
+                }
+            }
+            .padding(10)
+            .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(Color(gridHex: "f3f1ec")))
+
+            ScrollView {
+                VStack(alignment: .leading, spacing: 14) {
+                    if !archiveSearchResults.isEmpty {
+                        archiveSection("SEARCH RESULTS", ink: ink) {
+                            ForEach(archiveSearchResults, id: \.pageUrl) { hit in
+                                archiveBookRow(
+                                    title: hit.bookTitle,
+                                    subtitle: hit.pageTitle,
+                                    ink: ink,
+                                    isOpening: archiveOpeningTitle == hit.bookTitle
+                                ) { openArchiveBook(title: hit.bookTitle) }
+                            }
+                        }
+                    }
+                    archiveSection("YOUR BOOKS", ink: ink) {
+                        ForEach(BookGraphLoader.all) { book in
+                            archiveBookRow(
+                                title: book.title,
+                                subtitle: "\(book.concepts.count) concepts",
+                                ink: ink,
+                                isOpening: false
+                            ) { openBundledBook(book) }
+                            .accessibilityIdentifier("deskGridArchiveBook_\(book.id)")
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func archiveSection<Content: View>(_ title: String, ink: Color, @ViewBuilder content: () -> Content) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text(title)
+                .font(.system(size: 10, weight: .heavy, design: .rounded))
+                .tracking(0.6)
+                .foregroundColor(ink.opacity(0.5))
+            content()
+        }
+    }
+
+    private func archiveBookRow(title: String, subtitle: String, ink: Color, isOpening: Bool, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            HStack(spacing: 10) {
+                Image(systemName: "book.closed.fill")
+                    .font(.system(size: 13))
+                    .foregroundColor(ink.opacity(0.5))
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(title)
+                        .font(.system(size: 14, weight: .bold, design: .rounded))
+                        .foregroundColor(ink)
+                        .lineLimit(1)
+                    Text(subtitle)
+                        .font(.system(size: 11, weight: .medium, design: .rounded))
+                        .foregroundColor(ink.opacity(0.55))
+                        .lineLimit(1)
+                }
+                Spacer(minLength: 0)
+                if isOpening {
+                    ProgressView().tint(ink)
+                } else {
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 11, weight: .bold))
+                        .foregroundColor(ink.opacity(0.3))
+                }
+            }
+            .padding(10)
+            .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(Color.white))
+        }
+        .buttonStyle(.plain)
+        .disabled(isOpening)
+    }
+
+    private func runArchiveSearch() {
+        let query = archiveSearchQuery.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !query.isEmpty else {
+            archiveSearchResults = []
+            return
+        }
+        archiveSearchLoading = true
+        Task {
+            let answer = await ArchiveRagClient.askDetailed(message: query, studentWeakness: nil)
+            archiveSearchResults = answer?.hits ?? []
+            archiveSearchLoading = false
+        }
+    }
+
+    /// Opens one of your own real generated book graphs - local data, no
+    /// network round trip, so this is instant unlike `openArchiveBook`.
+    private func openBundledBook(_ book: BookConceptGraph) {
+        let chapters = Array(book.concepts.prefix(12).map(\.label))
+        let lesson = WorkDashboardLesson(
+            topic: book.title,
+            source: .archive(bookTitle: book.title),
+            chapters: chapters,
+            chapterBodies: [],
+            definition: "From your archive: \(book.title).",
+            question: nil,
+            microsims: MicroSimLoader.matching(topic: book.title),
+            citations: []
+        )
+        archiveSummaryLesson = lesson
+        viewingBook = GeneratedBook(lesson: lesson)
+    }
+
+    /// Opens a book from Dan's wider archive - a real network round trip
+    /// (same "table of contents" query `askJesseWorkDashboard`'s own
+    /// archive-match branch already uses), since there's no local manifest
+    /// of his library to build a lesson from offline the way
+    /// `openBundledBook` can.
+    private func openArchiveBook(title: String) {
+        archiveOpeningTitle = title
+        Task {
+            defer { archiveOpeningTitle = nil }
+            guard
+                let answer = await ArchiveRagClient.askDetailed(
+                    message: "Give me a short table of contents for \(title)",
+                    studentWeakness: nil
+                ),
+                !answer.hits.isEmpty
+            else { return }
+            var seenTitles = Set<String>()
+            let chapters = answer.hits.compactMap { hit -> String? in
+                guard seenTitles.insert(hit.pageTitle).inserted else { return nil }
+                return hit.pageTitle
+            }
+            let lesson = WorkDashboardLesson(
+                topic: title,
+                source: .archive(bookTitle: answer.hits[0].bookTitle),
+                chapters: chapters,
+                chapterBodies: [],
+                definition: answer.reply,
+                question: nil,
+                microsims: MicroSimLoader.matching(topic: title),
+                citations: answer.hits.map { LessonCitation(bookTitle: $0.bookTitle, pageTitle: $0.pageTitle, url: $0.pageUrl) }
+            )
+            archiveSummaryLesson = lesson
+            viewingBook = GeneratedBook(lesson: lesson)
         }
     }
 
@@ -2173,10 +2514,16 @@ struct DeskGridDashboardView: View {
     private var bottomDock: some View {
         activeDock
             .frame(height: 60)
-            .padding(.leading, 110)
+            // Leading padding was 110 to clear the left sidebar, which no
+            // longer renders on the plain dashboard (2026-08-19) - kept a
+            // small 24 for symmetry with the trailing edge instead of 0,
+            // now that there's nothing to clear.
+            .padding(.leading, 24)
             .padding(.trailing, 24)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-            .padding(.bottom, 16)
+            // Pushed down further (2026-08-19, explicit ask: "push the
+            // search bar a little bit down now").
+            .padding(.bottom, 8)
             .ignoresSafeArea()
     }
 
@@ -2248,7 +2595,23 @@ struct DeskGridDashboardView: View {
         // screen and its code are untouched, just not linked to from here
         // anymore. Flag this if that's not what was meant.
         HStack(spacing: 8) {
-            dockChip("Archive", system: "archivebox.fill", identifier: "deskGridDock_Archive", action: onOpenArchive)
+            // Resume + Settings moved here from the left sidebar (2026-08-19,
+            // explicit ask: "add the settings and resume to the search bar
+            // dock too... use that space to make the boxes bigger
+            // horizontally as well as vertically") - the sidebar itself now
+            // only renders while a flow pane is active (see leftSidebar's
+            // own call site), so it no longer reserves width against
+            // tileBoard's scale on the plain dashboard.
+            dockChip("Resume", system: "person.text.rectangle", identifier: "deskGridDock_Resume") { openSidebarFlow(.resume) }
+            // 2026-08-19, explicit ask: Archive now opens the in-Binder
+            // browser (see viewingArchiveBrowser) instead of the old
+            // full-screen ArchiveWorkflowView - that flow is still reachable
+            // via WorkflowLibraryView's own "Open Archive" entry (onOpenArchive
+            // stays wired there), just not from this button anymore.
+            dockChip("Archive", system: "archivebox.fill", identifier: "deskGridDock_Archive") {
+                closeBinderContentViewer()
+                viewingArchiveBrowser = true
+            }
             // "+Book" replaced with "Design" (2026-08-18, explicit ask:
             // "next to Archive, should be Design on the search bar... move
             // it from the toolbar to the search bar. Remove Book") - both
@@ -2257,6 +2620,7 @@ struct DeskGridDashboardView: View {
             // same destination the sidebar's own "Develop" icon opens, not
             // a second competing entry point into just one half of it.
             dockChip("Design", system: "square.grid.2x2.fill", identifier: "deskGridDock_Design") { openSidebarFlow(.develop) }
+            dockChip("Settings", system: "gearshape.fill", identifier: "deskGridDock_Settings", action: onOpenManage)
             searchField(placeholder: "Search", identifier: "deskGridDashboardSearch", onSubmit: submitSearch)
         }
         .padding(.horizontal, 16)
@@ -2294,6 +2658,12 @@ struct DeskGridDashboardView: View {
             // (ambient room recording, not a Jesse call) + the flow search.
             dockChip("Memo", system: "note.text", identifier: "deskGridFlowsMemo") { setRail(.memo) }
             dockChip("Transcribe", system: "waveform", identifier: "deskGridFlowsTranscribe", action: onTranscribe)
+            // Resume + Settings here too (2026-08-19, explicit ask: "add the
+            // settings and resume to the search bar dock too across the
+            // flows") - same two chips workDock got, so they're reachable
+            // no matter which dock variant is showing.
+            dockChip("Resume", system: "person.text.rectangle", identifier: "deskGridFlowsResume") { openSidebarFlow(.resume) }
+            dockChip("Settings", system: "gearshape.fill", identifier: "deskGridFlowsSettings", action: onOpenManage)
             searchField(
                 placeholder: "Search Presentation, Resume, Archive, Book…",
                 identifier: "deskGridFlowsSearch",

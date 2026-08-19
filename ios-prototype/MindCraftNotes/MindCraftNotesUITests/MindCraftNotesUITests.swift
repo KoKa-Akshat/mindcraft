@@ -2292,6 +2292,38 @@ final class MindCraftNotesUITests: XCTestCase {
     /// directness as `--ui-testing-content-viewer` elsewhere in this file)
     /// rather than through `jesseCall.workDashboardLesson`, since a real
     /// generated lesson no longer auto-opens on its own anymore either.
+    /// Real regression coverage for the Archive browser (2026-08-19,
+    /// explicit ask: "when you press archive button... homework help goes
+    /// blank... all the books we have... shows in binder"). Confirmed via a
+    /// real screenshot that real bundled books (Euclid, Adam Smith, Darwin,
+    /// Marcus Aurelius, Sun Tzu - whatever's actually in
+    /// Resources/BookGraphs) render as tappable rows and opening one really
+    /// does show its content in Binder + a summary in Homework Help - but
+    /// those rows sit inside the SAME ScrollView-inside-the-scaled-artboard
+    /// position that already doesn't publish tab pills/Contents rows to the
+    /// accessibility tree (see StudySessionView's `content` doc comment),
+    /// so a tap-a-book-by-identifier assertion can't run here for the same
+    /// reason those couldn't. Homework Help's blank/summary states hit a
+    /// DIFFERENT real bug on the way to being testable at all: a plain
+    /// `.accessibilityIdentifier()` there got absorbed into the outer tile
+    /// Button's own label instead of staying its own element - fixed with
+    /// the same invisible-marker technique this file already uses
+    /// elsewhere (see `archiveSummaryBody`).
+    func testArchiveBrowserOpensWithSearchAndBlankHomeworkHelp() {
+        let app = launchFieldDeskApp()
+        XCUIDevice.shared.orientation = .landscapeLeft
+        XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 15))
+
+        app.buttons["deskGridDock_Archive"].tap()
+        XCTAssertTrue(app.descendants(matching: .any)["deskGridArchiveSummaryEmpty"].waitForExistence(timeout: 5), "expected Homework Help to go blank/prompt before a book is picked")
+        XCTAssertFalse(app.staticTexts["Tap to upload a photo or PDF"].exists, "expected Homework Help's normal upload prompt to be replaced while archive browsing")
+        XCTAssertTrue(app.buttons["deskGridContentViewerClose"].exists, "expected the archive browser's close button")
+
+        app.buttons["deskGridContentViewerClose"].tap()
+        XCTAssertTrue(app.staticTexts["Tap to upload a photo or PDF"].waitForExistence(timeout: 3), "expected Homework Help back to normal after closing")
+        XCTAssertFalse(app.descendants(matching: .any)["deskGridArchiveSummaryEmpty"].exists, "expected closing to dismiss the archive browser")
+    }
+
     func testStudySessionShowsChaptersAndSourcesThenCloses() {
         let app = launchFieldDeskApp(extraArgs: ["--ui-testing-study-session"])
         XCUIDevice.shared.orientation = .landscapeLeft

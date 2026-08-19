@@ -26,6 +26,15 @@ struct KnowledgeMapView: View {
     let conceptDisplays: [String: ConceptDisplay]
     let onOpenConcept: (String) -> Void
     let onQuickPractice: (String) -> Void
+    /// True when shown inside a smaller container than this view's native
+    /// full-tab size (2026-08-19: `DeskGridDashboardView`'s merged
+    /// Binder+Intel space, itself already inside the scaled tileBoard
+    /// artboard - a real, reported complaint: "the display of fonts is
+    /// horrible"). This view's own type sizes/padding were tuned for a
+    /// full dashboard tab (`DashboardView`'s Map tab, still `embedded:
+    /// false` there, unchanged); shrinking the loudest offenders here
+    /// rather than leaving them at full-tab scale in a much smaller box.
+    var embedded: Bool = false
 
     @State private var zoom: CGFloat = 1
     @State private var zoomAnchor: CGFloat = 1
@@ -210,19 +219,19 @@ struct KnowledgeMapView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: embedded ? 8 : 10) {
             Text("Map")
-                .font(.system(size: 30, weight: .bold, design: .rounded))
+                .font(.system(size: embedded ? 16 : 30, weight: .bold, design: .rounded))
                 .foregroundColor(MapColor.ink)
-                .padding(.horizontal, 20)
-                .padding(.top, 8)
+                .padding(.horizontal, embedded ? 4 : 20)
+                .padding(.top, embedded ? 0 : 8)
 
             if !nodes.isEmpty {
-                filterChips.padding(.horizontal, 20)
+                filterChips.padding(.horizontal, embedded ? 4 : 20)
             }
 
             if nodes.isEmpty {
-                emptyState.padding(.horizontal, 20)
+                emptyState.padding(.horizontal, embedded ? 4 : 20)
             } else {
                 ZStack(alignment: .topTrailing) {
                     graphCanvas
@@ -235,16 +244,16 @@ struct KnowledgeMapView: View {
                     zoomControls.padding(10)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .padding(.horizontal, 20)
+                .padding(.horizontal, embedded ? 4 : 20)
 
-                legendRow.padding(.horizontal, 20)
+                legendRow.padding(.horizontal, embedded ? 4 : 20)
 
                 if let id = selectedId {
-                    detailOrRoutePanel(for: id).padding(.horizontal, 20).padding(.bottom, 4)
+                    detailOrRoutePanel(for: id).padding(.horizontal, embedded ? 4 : 20).padding(.bottom, 4)
                 }
             }
         }
-        .padding(.bottom, 24)
+        .padding(.bottom, embedded ? 8 : 24)
         .onAppear {
             withAnimation(.easeInOut(duration: 1.6).repeatForever(autoreverses: true)) {
                 pulsePhase = true
