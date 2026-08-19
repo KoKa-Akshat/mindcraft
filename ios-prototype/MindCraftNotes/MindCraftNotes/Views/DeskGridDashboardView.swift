@@ -138,6 +138,16 @@ struct DeskGridDashboardView: View {
     /// `KnowledgeGraphClient` is already used elsewhere (its own doc
     /// comment: "this client only has one caller today").
     @StateObject private var knowledgeGraphClient = KnowledgeGraphClient()
+    /// Local, static, no network - same source `DashboardView`'s own Map
+    /// tab already loads it from. Needed for `KnowledgeMapView`'s real
+    /// zoom/tap-node/mastery-detail/GPS experience (2026-08-19, explicit
+    /// ask: "our original web design... click on individual dots and see
+    /// your mastery and see little notes... and also a learning GPS. What
+    /// happened to that?" - it was never missing, just not reachable from
+    /// this dashboard: `KnowledgeMapView` is a real, already-complete port
+    /// of the web `ConstellationGpsExplorer`, wired into `DashboardView`'s
+    /// Map tab and nowhere else).
+    private let conceptDisplays: [String: ConceptDisplay] = TocDataLoader.loadConceptDisplays()
 
     // MARK: - Homework Help (the tile itself is the upload target now)
     @State private var showHomeworkImporter = false
@@ -1751,49 +1761,46 @@ struct DeskGridDashboardView: View {
         }
     }
 
-    /// The same live graph, big, in the merged Binder+Intel space
-    /// (2026-08-19, explicit ask: "when you click on Knowledge Graph, the
-    /// knowledge graph should be displayed on Binder too"). Same data
-    /// source as the small in-tile version above - `KnowledgeGraphCanvas`
-    /// just gets far more room to actually spread real nodes/edges out.
+    /// The REAL `KnowledgeMapView` in the merged Binder+Intel space
+    /// (2026-08-19, explicit ask: "our original web design... click on
+    /// individual dots and see your mastery and see little notes... and
+    /// also a learning GPS. What happened to that?"). It never went
+    /// anywhere - `KnowledgeMapView` is a complete, already-tested port of
+    /// the web `ConstellationGpsExplorer` (zoom, pan, tap-node detail
+    /// panel, status/level filters, "See path" GPS routing via a real
+    /// `POST /recommend`), just wired only into `DashboardView`'s Map tab
+    /// until now. Reuses the SAME `knowledgeGraphClient` this tile already
+    /// loads from - no second data source. `KnowledgeGraphCanvas` (the flat
+    /// small-tile version) stays as-is for the at-a-glance in-tile view;
+    /// this is the real, interactive one.
     @ViewBuilder
     private func knowledgeGraphContentViewerBody(ink: Color) -> some View {
-        VStack(alignment: .leading, spacing: 12) {
-            HStack {
-                Text("Knowledge Graph")
-                    .font(.system(size: 18, weight: .heavy, design: .rounded))
-                    .foregroundColor(ink)
-                Spacer(minLength: 0)
-                Button {
-                    withAnimation(.easeInOut(duration: 0.25)) { closeBinderContentViewer() }
-                } label: {
-                    Image(systemName: "xmark.circle.fill")
-                        .font(.system(size: 20))
-                        .foregroundColor(ink.opacity(0.4))
-                }
-                .buttonStyle(.plain)
-                .accessibilityIdentifier("deskGridContentViewerClose")
+        ZStack(alignment: .topTrailing) {
+            KnowledgeMapView(
+                nodes: knowledgeGraphClient.nodes,
+                edges: knowledgeGraphClient.edges,
+                studentPoints: knowledgeGraphClient.studentPoints,
+                axisLabels: knowledgeGraphClient.axisLabels,
+                conceptDisplays: conceptDisplays,
+                // Not wired to a destination in THIS dashboard yet (unlike
+                // DashboardView's own Map tab, which has a chapter/practice
+                // screen to hand off to) - closing back to the graph itself
+                // is an honest, safe fallback rather than a fake navigation.
+                // Real follow-up, not silently skipped.
+                onOpenConcept: { _ in },
+                onQuickPractice: { _ in }
+            )
+            Button {
+                withAnimation(.easeInOut(duration: 0.25)) { closeBinderContentViewer() }
+            } label: {
+                Image(systemName: "xmark.circle.fill")
+                    .font(.system(size: 22))
+                    .foregroundColor(ink.opacity(0.4))
+                    .background(Circle().fill(Color.white))
             }
-            if knowledgeGraphClient.nodes.isEmpty {
-                Spacer(minLength: 0)
-                emptyGraphSeed
-                Text("This grows as you learn and engage with new things.")
-                    .font(.system(size: 13, weight: .semibold, design: .rounded))
-                    .foregroundColor(ink.opacity(0.7))
-                Spacer(minLength: 0)
-            } else {
-                HStack(spacing: 10) {
-                    let mastered = knowledgeGraphClient.nodes.filter { $0.status == "mastered" }.count
-                    Text("\(mastered)/\(knowledgeGraphClient.nodes.count) concepts mastered")
-                        .font(.system(size: 12, weight: .heavy, design: .rounded))
-                        .foregroundColor(ink.opacity(0.75))
-                    Spacer(minLength: 0)
-                    knowledgeGraphLegend
-                }
-                KnowledgeGraphCanvas(nodes: knowledgeGraphClient.nodes, edges: knowledgeGraphClient.edges)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .accessibilityIdentifier("deskGridKnowledgeGraphCanvasExpanded")
-            }
+            .buttonStyle(.plain)
+            .padding(12)
+            .accessibilityIdentifier("deskGridContentViewerClose")
         }
     }
 
@@ -2157,13 +2164,19 @@ struct DeskGridDashboardView: View {
     /// (14pt outer + 20pt inner vertical padding = 34pt off the true
     /// bottom edge) so the dock's lower boundary lines up with the
     /// Settings icon's lower boundary (2026-08-18, explicit ask).
+    // Tighter footprint (2026-08-19, explicit ask: "reduce the vertical
+    // padding between Knowledge Graph, Binder, Archive, Design, and Search
+    // Box. There's still so much space") - was height 72 + 34 bottom
+    // padding (106pt of screen-space below the artboard); the dock's own
+    // content doesn't need that much air, and every point recovered here is
+    // a point the artboard tiles below can grow into.
     private var bottomDock: some View {
         activeDock
-            .frame(height: 72)
+            .frame(height: 60)
             .padding(.leading, 110)
             .padding(.trailing, 24)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-            .padding(.bottom, 34)
+            .padding(.bottom, 16)
             .ignoresSafeArea()
     }
 
@@ -2514,10 +2527,19 @@ private enum WorkArtboard {
     // OWN bottom edge stays exactly where the sixth pass put it (800, 10pt
     // shy of the board's true 810 edge) - "padded properly" means keeping
     // that established gap, not pushing flush to the edge.
-    static let p4HomeworkHelp = CGRect(x: 40, y: 40, width: 420, height: 410)
-    static let p4Moodle = CGRect(x: 40, y: 470, width: 420, height: 330)
-    static let p4Binder = CGRect(x: 490, y: 40, width: 500, height: 760)
-    static let p4Intel = CGRect(x: 1020, y: 40, width: 400, height: 760)
+    // Eighth pass (2026-08-19, same session, explicit ask: "make Knowledge
+    // Graph and Binder bigger... stretch them vertically... reduce the
+    // vertical padding... there's still so much space"). Reclaims most of
+    // the seventh pass's bottom cushion - 800 -> 808, 2pt shy of the true
+    // 810 edge instead of 10 - since this ask directly asked for less
+    // padding, not the same padding kept. Left the TOP edge (40) alone: the
+    // sixth pass eased it down from 24 specifically because 24 "read as too
+    // tight against the very top edge" - a real, deliberate visual call,
+    // not slack.
+    static let p4HomeworkHelp = CGRect(x: 40, y: 40, width: 420, height: 418)
+    static let p4Moodle = CGRect(x: 40, y: 470, width: 420, height: 338)
+    static let p4Binder = CGRect(x: 490, y: 40, width: 500, height: 768)
+    static let p4Intel = CGRect(x: 1020, y: 40, width: 400, height: 768)
 
     // Same seventh-pass rebalance as p4 above, scaled to this expanded
     // page's own proportions - Moodle's bottom edge stays at 560 (matching
@@ -2536,7 +2558,7 @@ private enum WorkArtboard {
     /// instead moves down to our search bar and instead of the search
     /// you see the raccoon" is the search field's own leading icon
     /// swapping to the raccoon (see `searchField`), not a second tile.
-    static let contentViewerBinder = CGRect(x: 490, y: 40, width: 930, height: 760)
+    static let contentViewerBinder = CGRect(x: 490, y: 40, width: 930, height: 768)
 }
 
 /// Gentle, always-on pulse for the Knowledge Graph tile's empty-state seed

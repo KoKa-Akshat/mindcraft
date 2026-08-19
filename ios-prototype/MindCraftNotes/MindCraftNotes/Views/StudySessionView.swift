@@ -35,11 +35,16 @@ struct StudySessionView: View {
     var onOpenMicroSim: (MicroSimRecord) -> Void
 
     private enum Tab: Equatable {
+        case contents
         case chapter(Int)
         case sources
     }
 
-    @State private var activeTab: Tab = .chapter(0)
+    // Lands on Contents first, not chapter 0 (2026-08-19, explicit ask:
+    // "go back to Contents, keep reading, and go to the next space" - a
+    // real table-of-contents page distinct from chapter 1, not chapter 1
+    // doubling as one).
+    @State private var activeTab: Tab = .contents
 
     private var chapterCount: Int { lesson.chapters.count }
 
@@ -135,6 +140,10 @@ struct StudySessionView: View {
     private var tabRow: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 6) {
+                tabPill("Contents", isActive: activeTab == .contents) {
+                    activeTab = .contents
+                }
+                .accessibilityIdentifier("studySessionTab_contents")
                 ForEach(Array(lesson.chapters.enumerated()), id: \.offset) { index, title in
                     tabPill(title, isActive: activeTab == .chapter(index)) {
                         activeTab = .chapter(index)
@@ -169,6 +178,8 @@ struct StudySessionView: View {
             ScrollView {
                 Group {
                     switch activeTab {
+                    case .contents:
+                        contentsOverview
                     case .chapter(let index):
                         chapterContent(index)
                     case .sources:
@@ -205,6 +216,8 @@ struct StudySessionView: View {
 
     private var activeContentMarkerText: String {
         switch activeTab {
+        case .contents:
+            return ([lesson.definition] + lesson.chapters).joined(separator: " | ")
         case .chapter(let index):
             var parts = [lesson.chapterBody(at: index)]
             if index == 0, let question = lesson.question { parts.append(question) }
@@ -216,8 +229,87 @@ struct StudySessionView: View {
         }
     }
 
+    /// The lesson's real definition plus a tappable row per chapter (and
+    /// Sources, if there are real citations) - the landing page (2026-08-19,
+    /// explicit ask), not chapter 1 doubling as one.
+    private var contentsOverview: some View {
+        VStack(alignment: .leading, spacing: 18) {
+            Text(lesson.definition)
+                .font(.system(size: 15, weight: .medium, design: .rounded))
+                .foregroundColor(.white.opacity(0.85))
+                .fixedSize(horizontal: false, vertical: true)
+
+            VStack(alignment: .leading, spacing: 8) {
+                Text("CHAPTERS")
+                    .font(.system(size: 10, weight: .heavy, design: .rounded))
+                    .tracking(0.6)
+                    .foregroundColor(.white.opacity(0.5))
+                ForEach(Array(lesson.chapters.enumerated()), id: \.offset) { index, title in
+                    contentsRow(title, systemImage: nil, numbered: index + 1) {
+                        activeTab = .chapter(index)
+                    }
+                    .accessibilityIdentifier("studySessionContentsRow_\(index)")
+                }
+                if !lesson.citations.isEmpty {
+                    contentsRow("Sources", systemImage: "book.closed.fill", numbered: nil) {
+                        activeTab = .sources
+                    }
+                    .accessibilityIdentifier("studySessionContentsRow_sources")
+                }
+            }
+        }
+    }
+
+    private func contentsRow(_ title: String, systemImage: String?, numbered: Int?, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            HStack(spacing: 10) {
+                if let numbered {
+                    Text("\(numbered)")
+                        .font(.system(size: 12, weight: .heavy, design: .rounded))
+                        .foregroundColor(Color(studyHex: "1c1c1e"))
+                        .frame(width: 22, height: 22)
+                        .background(Circle().fill(Color(studyHex: "c4f547")))
+                } else if let systemImage {
+                    Image(systemName: systemImage)
+                        .font(.system(size: 13))
+                        .foregroundColor(.white.opacity(0.6))
+                        .frame(width: 22, height: 22)
+                }
+                Text(title)
+                    .font(.system(size: 14, weight: .bold, design: .rounded))
+                    .foregroundColor(.white)
+                    .lineLimit(1)
+                Spacer(minLength: 0)
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 11, weight: .bold))
+                    .foregroundColor(.white.opacity(0.35))
+            }
+            .padding(12)
+            .background(RoundedRectangle(cornerRadius: 12, style: .continuous).fill(Color.white.opacity(0.06)))
+        }
+        .buttonStyle(.plain)
+    }
+
+    /// "Little button to go back" to the Contents page (2026-08-19, explicit
+    /// ask) - distinct from the chevron arrows (step chapter-to-chapter) and
+    /// the tab-pill row (jump to any tab): this one specifically names where
+    /// it goes, for a student who wants back to the overview rather than
+    /// just backward one step.
+    private var backToContentsButton: some View {
+        Button { activeTab = .contents } label: {
+            HStack(spacing: 4) {
+                Image(systemName: "chevron.left").font(.system(size: 10, weight: .bold))
+                Text("Contents").font(.system(size: 12, weight: .bold, design: .rounded))
+            }
+            .foregroundColor(.white.opacity(0.55))
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier("studySessionBackToContents")
+    }
+
     private func chapterContent(_ index: Int) -> some View {
         VStack(alignment: .leading, spacing: 14) {
+            backToContentsButton
             Text(lesson.chapterBody(at: index))
                 .font(.system(size: 16, weight: .medium, design: .rounded))
                 .foregroundColor(.white.opacity(0.9))
@@ -263,6 +355,7 @@ struct StudySessionView: View {
 
     private var sourcesContent: some View {
         VStack(alignment: .leading, spacing: 12) {
+            backToContentsButton
             if lesson.citations.isEmpty {
                 Text("AI-generated - no archive source for this lesson.")
                     .font(.system(size: 14, weight: .medium, design: .rounded))
@@ -315,7 +408,7 @@ struct StudySessionView: View {
     }
 
     private var canGoBack: Bool {
-        if case .chapter(let index) = activeTab { return index > 0 }
+        if case .contents = activeTab { return false }
         return true
     }
 
@@ -326,17 +419,22 @@ struct StudySessionView: View {
 
     private func step(_ delta: Int) {
         switch activeTab {
+        case .contents:
+            if delta > 0 {
+                activeTab = chapterCount > 0 ? .chapter(0) : .sources
+            }
         case .chapter(let index):
             let next = index + delta
-            if next < 0 { return }
-            if next >= chapterCount {
+            if next < 0 {
+                activeTab = .contents
+            } else if next >= chapterCount {
                 activeTab = .sources
             } else {
                 activeTab = .chapter(next)
             }
         case .sources:
-            if delta < 0, chapterCount > 0 {
-                activeTab = .chapter(chapterCount - 1)
+            if delta < 0 {
+                activeTab = chapterCount > 0 ? .chapter(chapterCount - 1) : .contents
             }
         }
     }

@@ -2302,32 +2302,40 @@ final class MindCraftNotesUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["Derivatives"].exists, "expected the real lesson topic as the session title")
 
         // studySessionActiveContent is a marker carrying whichever content
-        // (chapter body or sources) is currently active as its label - the
-        // real tab-pill buttons and chapter/sources text don't publish into
-        // the accessibility tree at this exact nesting depth (embedded
-        // inside the scaled tileBoard artboard's pin()/.scaleEffect, inside
-        // a Button's own label), confirmed via a real screenshot to be a
+        // (Contents, a chapter body, or sources) is currently active as its
+        // label - the real tab-pill buttons, Contents rows, and chapter/
+        // sources text/buttons don't publish into the accessibility tree at
+        // this exact nesting depth (embedded inside the scaled tileBoard
+        // artboard's pin()/.scaleEffect, inside a Button's own label,
+        // inside a ScrollView), confirmed via a real screenshot to be a
         // query-only limitation, not a rendering or touch-input bug - see
-        // StudySessionView's `content` doc comment. Navigation here uses
-        // the chevron arrow buttons instead of tab pills for the same
-        // reason: they sit outside the ScrollView and do resolve.
+        // StudySessionView's `content` doc comment. This means
+        // studySessionContentsRow_N and studySessionBackToContents (both
+        // real, working, screenshot-confirmed for an actual tap - just not
+        // exercised here) can't be driven this way either, same as the tab
+        // pills and micro-sim buttons already couldn't before tonight -
+        // only the chevron arrows and the close button sit outside the
+        // affected ScrollView and resolve normally.
         let activeContent = app.staticTexts["studySessionActiveContent"]
         XCTAssertTrue(activeContent.waitForExistence(timeout: 5))
-        XCTAssertTrue(activeContent.label.contains("shrinking the interval delta-x toward zero"), "expected chapter 1's own real body text, not a repeat of the definition")
 
-        app.buttons["chevron.right"].tap()
-        app.buttons["chevron.right"].tap()
-        XCTAssertTrue(activeContent.label.contains("differentiate the outside first"), "expected switching chapters to show that chapter's own real content")
+        // 2026-08-19: Contents is the real landing page now, not chapter 1
+        // doubling as one - a definition plus a real row per chapter.
+        XCTAssertTrue(activeContent.label.contains("Framing Concepts Through Delta"), "expected the Contents page to list the real chapter titles")
 
+        // Step forward from Contents onto chapter 1, then back again.
         app.buttons["chevron.right"].tap()
-        app.buttons["chevron.right"].tap()
-        // studySessionSources' own identifier sits inside the same broken
-        // ScrollView subtree as the chapter body was (sourcesContent is
-        // rendered through the exact same Group), so it doesn't resolve
-        // here either - same reasoning as the marker above, checked the
-        // same way instead of assuming the old full-screen-era assertion
-        // still holds now that this is embedded.
-        XCTAssertTrue(activeContent.label.contains("Framing Concepts Through Delta"), "expected navigating past the last chapter to land on Sources with a real citation, not a placeholder")
+        XCTAssertTrue(activeContent.label.contains("shrinking the interval delta-x toward zero"), "expected stepping forward from Contents to land on chapter 1")
+
+        app.buttons["chevron.left"].tap()
+        XCTAssertTrue(activeContent.label.contains("Framing Concepts Through Delta"), "expected stepping back from chapter 1 to return to Contents")
+
+        // Forward through all 4 seeded chapters and onto Sources (Contents
+        // -> ch0 -> ch1 -> ch2 -> ch3 -> Sources = 5 steps).
+        for _ in 0..<5 {
+            app.buttons["chevron.right"].tap()
+        }
+        XCTAssertTrue(activeContent.label.contains("Framing Concepts Through Delta") && activeContent.label.contains("Key Takeaways"), "expected navigating past the last chapter to land on Sources with real citations, not placeholders")
 
         app.buttons["studySessionClose"].tap()
         XCTAssertFalse(app.descendants(matching: .any)["studySessionRoot"].waitForExistence(timeout: 3), "expected closing to dismiss the session")
