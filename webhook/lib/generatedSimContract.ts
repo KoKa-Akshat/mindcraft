@@ -28,6 +28,24 @@
  * a single blocking HTTP call.
  */
 
+/** Real token counts for one job's Anthropic calls (generation + vision
+ * gate; the structural rubric is local/deterministic and costs nothing).
+ * Present on every TERMINAL status (passed, no_good_result, error) that
+ * actually reached the API — a fit-check decline before any generation
+ * call still costs the fit-check call itself, so it reports usage too.
+ * This is what lets the platform budget track real dollars instead of
+ * guessing a flat per-attempt price: failed/discarded attempts spend just
+ * as much as passed ones and MUST be counted (see generationBudget.ts). */
+export interface ServiceJobUsage {
+  input_tokens: number
+  output_tokens: number
+  /** Sonnet-5 pricing at request time, $/million tokens — the service
+   * stamps what it actually paid so the webhook never has to hardcode a
+   * price that drifts out of sync with Anthropic's own billing. */
+  input_price_per_mtok: number
+  output_price_per_mtok: number
+}
+
 /** What the generation service reports for one job. `result` is present
  * only when status is "passed", meaning BatchResult.final_pass — the
  * structural rubric AND the visual/pedagogical vision gate both cleared.
@@ -59,6 +77,9 @@ export interface ServiceJobPayload {
    * "photosynthesis light reactions". Client retries at most once. */
   suggested_retry_topic?: string
   detail?: string // error only
+  /** Real spend for this job so far. Required on every terminal status;
+   * optional/absent on running (cost isn't final until the job ends). */
+  usage?: ServiceJobUsage
 }
 
 /** The client-facing verified result — one self-contained html string
@@ -78,9 +99,23 @@ export interface GeneratedSimResult {
 
 export type NormalizedJobStatus =
   | { status: 'running'; phase: string }
-  | { status: 'passed'; result: GeneratedSimResult }
-  | { status: 'no_good_result'; reason: string; suggestedRetryTopic: string | null }
-  | { status: 'error'; detail: string }
+  | { status: 'passed'; result: GeneratedSimResult; costUsd: number }
+  | { status: 'no_good_result'; reason: string; suggestedRetryTopic: string | null; costUsd: number }
+  | { status: 'error'; detail: string; costUsd: number }
+
+/** Real dollars for one job from its reported token usage — no flat
+ * per-attempt guess. Missing/malformed usage costs $0 rather than
+ * throwing: a billing-plumbing bug in the service must never crash the
+ * student-facing poll response, and $0 undercounts (safe direction) not
+ * overcounts (which would wrongly lock a student out). */
+export function usageCostUsd(usage: ServiceJobUsage | undefined): number {
+  if (!usage) return 0
+  const inTok = Number(usage.input_tokens) || 0
+  const outTok = Number(usage.output_tokens) || 0
+  const inPrice = Number(usage.input_price_per_mtok) || 0
+  const outPrice = Number(usage.output_price_per_mtok) || 0
+  return (inTok / 1_000_000) * inPrice + (outTok / 1_000_000) * outPrice
+}
 
 /**
  * MUST match ml/mindcraft_graph/loaders/lesson_tagger.py's slugify and the
@@ -139,23 +174,26 @@ export function normalizeJobPayload(raw: ServiceJobPayload, requestTopic: string
   if (status === 'queued' || status === 'running') {
     return { status: 'running', phase: clip(raw.phase, 40) || 'running' }
   }
+  const costUsd = usageCostUsd(raw?.usage)
   if (status === 'no_good_result') {
     const suggested = clip(raw.suggested_retry_topic, 200)
     return {
       status: 'no_good_result',
       reason: clip(raw.reason, 600),
       suggestedRetryTopic: suggested || null,
+      costUsd,
     }
   }
   if (status === 'passed') {
     const result = raw.result
     const html = String(result?.html ?? '')
     if (!result || !html) {
-      return { status: 'error', detail: 'service reported passed without renderable html' }
+      return { status: 'error', detail: 'service reported passed without renderable html', costUsd }
     }
     const topic = clip(raw.topic, 200) || clip(requestTopic, 200)
     return {
       status: 'passed',
+      costUsd,
       result: {
         title: clip(result.title, 200) || topic,
         description: clip(result.description, 1200),
@@ -172,5 +210,9 @@ export function normalizeJobPayload(raw: ServiceJobPayload, requestTopic: string
       },
     }
   }
-  return { status: 'error', detail: clip(raw?.detail, 400) || `unrecognized service status: ${clip(status, 60)}` }
+  return {
+    status: 'error',
+    detail: clip(raw?.detail, 400) || `unrecognized service status: ${clip(status, 60)}`,
+    costUsd,
+  }
 }

@@ -42,7 +42,7 @@ import {
   normalizeJobPayload,
   slugifyTopic,
 } from '../generatedSimContract'
-import { checkAndRecordAttempt } from '../generationBudget'
+import { checkAndRecordAttempt, checkPlatformBudget, recordActualSpend } from '../generationBudget'
 
 const CONTENT_ENGINE_BASE = process.env.CONTENT_ENGINE_URL ?? ''
 const CONTENT_ENGINE_SECRET = process.env.CONTENT_ENGINE_SECRET ?? ''
@@ -99,6 +99,19 @@ async function handleStart(uid: string, rawTopic: string, res: VercelResponse) {
   const cached = await libraryLookup(topicSlug)
   if (cached) {
     return res.status(200).json({ status: 'passed', cached: true, result: cached })
+  }
+
+  // Platform-wide dollar ceiling checked first: a global stop doesn't need
+  // to know or care which student is asking, and checking it before the
+  // per-student counter means a request that's going to be refused anyway
+  // never consumes one of that student's limited daily attempts.
+  const platformBudget = await checkPlatformBudget()
+  if (!platformBudget.allowed) {
+    return res.status(429).json({
+      status: 'rate_limited',
+      reason: `This closed test's monthly generation budget is used up ($${platformBudget.spentThisMonthUsd.toFixed(2)}/$${platformBudget.capUsd}). It resets next month.`,
+      platformBudgetExhausted: true,
+    })
   }
 
   const budget = await checkAndRecordAttempt(uid)
@@ -170,6 +183,18 @@ async function handlePoll(rawJobId: string, res: VercelResponse) {
       })
     }
     const normalized = normalizeJobPayload(raw, '')
+    if (normalized.status === 'running') {
+      return res.status(200).json(normalized)
+    }
+    // Every terminal status below spent real money getting here (the
+    // service already made its Anthropic calls) — record it against the
+    // platform budget regardless of which terminal branch this is. A
+    // recording failure is logged, never surfaced to the student: a
+    // billing-plumbing bug must not turn into a false "something went
+    // wrong" on a result that's otherwise perfectly good.
+    recordActualSpend(normalized.costUsd).catch((e) => {
+      console.error('generate-sim: failed to record platform spend', e)
+    })
     if (normalized.status === 'passed') {
       // Persist BEFORE responding so a client that crashes right after
       // seeing "passed" still leaves the library populated for reuse.
@@ -187,9 +212,6 @@ async function handlePoll(rawJobId: string, res: VercelResponse) {
       return res.status(200).json({ status: 'passed', cached: false, result: normalized.result })
     }
     if (normalized.status === 'no_good_result') {
-      return res.status(200).json(normalized)
-    }
-    if (normalized.status === 'running') {
       return res.status(200).json(normalized)
     }
     return res.status(502).json(normalized) // error
