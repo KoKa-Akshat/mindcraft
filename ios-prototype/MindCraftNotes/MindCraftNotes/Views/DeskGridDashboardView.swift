@@ -155,6 +155,12 @@ struct DeskGridDashboardView: View {
     @State private var homeworkError: String?
     @State private var homeworkUploads: [HomeworkUploadSummary] = []
     @State private var presentedMicroSim: MicroSimRecord?
+    /// A gate-passed GENERATED sim being viewed full-screen (closed test,
+    /// LIVE_GATED_GENERATION_TEST_SPEC.md) - same presentation pattern as
+    /// `presentedMicroSim`, deliberately a separate slot because a
+    /// `GeneratedSimResult` is not a `MicroSimRecord` and its viewer
+    /// carries the AI-generated attribution the bundled sims don't need.
+    @State private var presentedGeneratedSim: GeneratedSimResult?
     /// A tapped Homework Help upload being read in the merged Binder+Intel
     /// space. No real trigger sets this anymore (2026-08-19, explicit ask:
     /// "Homework Help should just be a space for uploads" - the tap-to-view
@@ -242,6 +248,35 @@ struct DeskGridDashboardView: View {
         archiveSummaryLesson = nil
         archiveSearchQuery = ""
         archiveSearchResults = []
+        // A live-sim request/verdict belongs to the Study Session that
+        // asked for it - clearing here (which also drops any in-flight
+        // request's eventual verdict, see clearLiveSimState) keeps a stale
+        // outcome from resurfacing under the next book opened.
+        jesseCall.clearLiveSimState()
+    }
+
+    /// The one seeded Study Session lesson every `--ui-testing-*` seed
+    /// path shares (study-session, generated-sim, generated-sim-nogood) -
+    /// extracted from the study-session block so the copies can't drift.
+    private static var uiTestSeedLesson: WorkDashboardLesson {
+        WorkDashboardLesson(
+            topic: "derivatives",
+            source: .archive(bookTitle: "Calculus"),
+            chapters: ["Framing Concepts Through Delta", "The Power Rule", "Chain Rule", "Key Takeaways"],
+            chapterBodies: [
+                "A derivative measures how fast a quantity changes - the slope of the tangent line at a single point, found by shrinking the interval delta-x toward zero.",
+                "For any power of x, bring the exponent down and subtract one from it: the derivative of x^n is n times x^(n-1). This one rule handles most polynomial terms you'll see.",
+                "When a function is built out of another function, differentiate the outside first, then multiply by the derivative of the inside.",
+                "Derivatives turn a curve's shape into numbers you can reason about: where it's rising, falling, or momentarily flat.",
+            ],
+            definition: "A derivative measures the instantaneous rate of change of a function.",
+            question: "If f(x) = x^3, what is f'(x)?",
+            microsims: [],
+            citations: [
+                LessonCitation(bookTitle: "Calculus", pageTitle: "Framing Concepts Through Delta", url: "https://dmccreary.github.io/calculus/chapters/02-limits/framing-concepts-through-delta/"),
+                LessonCitation(bookTitle: "Calculus", pageTitle: "Key Takeaways", url: "https://dmccreary.github.io/calculus/chapters/03-derivatives/key-takeaways/"),
+            ]
+        )
     }
 
     /// In-canvas pan navigation for the sidebar's destinations (2026-08-18,
@@ -482,27 +517,51 @@ struct DeskGridDashboardView: View {
                 // Contents/chapter view itself, same as this flag's name
                 // always meant).
                 if ProcessInfo.processInfo.arguments.contains("--ui-testing-study-session") {
-                    let lesson = WorkDashboardLesson(
-                        topic: "derivatives",
-                        source: .archive(bookTitle: "Calculus"),
-                        chapters: ["Framing Concepts Through Delta", "The Power Rule", "Chain Rule", "Key Takeaways"],
-                        chapterBodies: [
-                            "A derivative measures how fast a quantity changes - the slope of the tangent line at a single point, found by shrinking the interval delta-x toward zero.",
-                            "For any power of x, bring the exponent down and subtract one from it: the derivative of x^n is n times x^(n-1). This one rule handles most polynomial terms you'll see.",
-                            "When a function is built out of another function, differentiate the outside first, then multiply by the derivative of the inside.",
-                            "Derivatives turn a curve's shape into numbers you can reason about: where it's rising, falling, or momentarily flat.",
-                        ],
-                        definition: "A derivative measures the instantaneous rate of change of a function.",
-                        question: "If f(x) = x^3, what is f'(x)?",
-                        microsims: [],
-                        citations: [
-                            LessonCitation(bookTitle: "Calculus", pageTitle: "Framing Concepts Through Delta", url: "https://dmccreary.github.io/calculus/chapters/02-limits/framing-concepts-through-delta/"),
-                            LessonCitation(bookTitle: "Calculus", pageTitle: "Key Takeaways", url: "https://dmccreary.github.io/calculus/chapters/03-derivatives/key-takeaways/"),
-                        ]
-                    )
-                    let book = GeneratedBook(lesson: lesson)
+                    let book = GeneratedBook(lesson: Self.uiTestSeedLesson)
                     generatedBooks = [book]
                     viewingBook = book
+                }
+                // Live gated-generation state seeds (closed test,
+                // LIVE_GATED_GENERATION_TEST_SPEC.md) - a real verdict
+                // needs the deployed generation service (deliberately not
+                // deployed, see LiveGatedGeneration) plus a 60s+ round
+                // trip, so these seed terminal states directly, same
+                // directness as --ui-testing-study-session above. Both
+                // args also enable the LiveGatedGeneration gate itself so
+                // the section renders at all. The verified seed ALSO
+                // presents the GeneratedSimView cover directly: the
+                // section's own open button sits inside the same
+                // non-publishing ScrollView as the tab pills (see
+                // StudySessionView's `content` doc comment), so a test
+                // can't tap it - the cover's chrome, like microSimView's,
+                // resolves normally.
+                let simArgs = ProcessInfo.processInfo.arguments
+                if simArgs.contains("--ui-testing-generated-sim") || simArgs.contains("--ui-testing-generated-sim-nogood") {
+                    let book = GeneratedBook(lesson: Self.uiTestSeedLesson)
+                    generatedBooks = [book]
+                    viewingBook = book
+                    if simArgs.contains("--ui-testing-generated-sim") {
+                        let result = GeneratedSimResult(
+                            title: "Tangent Slope Explorer",
+                            description: "Drag a point along a curve and watch the tangent line's slope update.",
+                            html: "<!DOCTYPE html><html><body><h1>Tangent Slope Explorer</h1><p>Seeded UI-test fixture - not a real generated sim.</p></body></html>",
+                            conceptId: "act_math::derivatives",
+                            conceptLabel: "Derivatives",
+                            learningObjectives: ["Relate a curve's steepness to the derivative's value"],
+                            rubricPercentage: 91.0,
+                            qualityGateScore: 88,
+                            topic: "derivatives",
+                            topicSlug: "derivatives"
+                        )
+                        jesseCall.seedLiveSimStateForTesting(.verified(result, topic: "derivatives", cached: false))
+                        presentedGeneratedSim = result
+                    } else {
+                        jesseCall.seedLiveSimStateForTesting(.noGoodResult(
+                            topic: "derivatives",
+                            reason: "Too broad an umbrella - no single interaction teaches all of derivatives.",
+                            alsoTried: "the power rule"
+                        ))
+                    }
                 }
             }
 
@@ -543,6 +602,9 @@ struct DeskGridDashboardView: View {
         .onChange(of: jesseCall.workDashboardLesson) { _, lesson in handleNewLesson(lesson) }
         .fullScreenCover(item: $presentedMicroSim) { sim in
             MicroSimView(sim: sim) { presentedMicroSim = nil }
+        }
+        .fullScreenCover(item: $presentedGeneratedSim) { sim in
+            GeneratedSimView(sim: sim) { presentedGeneratedSim = nil }
         }
         // No Exit control here anymore - moved into the Manage page
         // (logo tap) so the dashboard itself stays clean. onClose is still
@@ -1431,9 +1493,13 @@ struct DeskGridDashboardView: View {
             // visual identity, see its `embedded` doc comment), which
             // tileInnerCard's white card background would sit uselessly
             // behind/clash with rather than complement.
-            StudySessionView(lesson: viewingBook.lesson, embedded: true, onClose: closeBinderContentViewer) { sim in
-                presentedMicroSim = sim
-            }
+            StudySessionView(
+                lesson: viewingBook.lesson,
+                embedded: true,
+                onClose: closeBinderContentViewer,
+                onOpenMicroSim: { sim in presentedMicroSim = sim },
+                onOpenGeneratedSim: { sim in presentedGeneratedSim = sim }
+            )
         } else if kind == .binder, viewingArchiveBrowser {
             tileInnerCard { archiveBrowserBody(ink: ink) }
         } else if kind == .binder, viewingKnowledgeGraphInBinder {
@@ -2520,7 +2586,11 @@ struct DeskGridDashboardView: View {
         case .resume:
             ResumeAgentView(onClose: closeSidebarFlow, studentName: studentName)
         case .develop:
-            DevelopStudioView(studentName: studentName, onClose: closeSidebarFlow)
+            // Straight into the one content canvas (2026-08-19) - the
+            // Workflows/Books toggle shell (`DevelopStudioView`) is gone.
+            // Book-drafting still exists, but scoped inside a `.chapter`
+            // box on this canvas rather than as a competing top-level mode.
+            DesignStudioView(studentName: studentName, onClose: closeSidebarFlow)
         }
     }
 
@@ -2607,11 +2677,12 @@ struct DeskGridDashboardView: View {
             }
             // "+Book" replaced with "Design" (2026-08-18, explicit ask:
             // "next to Archive, should be Design on the search bar... move
-            // it from the toolbar to the search bar. Remove Book") - both
-            // Book-drafting and the workflow canvas now live behind
-            // Develop's own toggle (`DevelopStudioView`), so this is the
-            // same destination the sidebar's own "Develop" icon opens, not
-            // a second competing entry point into just one half of it.
+            // it from the toolbar to the search bar. Remove Book"). The
+            // Develop toggle shell this used to open is gone (2026-08-19)
+            // - `.develop` now lands directly on the one unified content
+            // canvas (`DesignStudioView`), where Book-drafting lives inside
+            // a `.chapter` box instead of behind a mode switch. Still the
+            // same destination the sidebar's own "Develop" icon opens.
             dockChip("Design", system: "square.grid.2x2.fill", identifier: "deskGridDock_Design") { openSidebarFlow(.develop) }
             dockChip("Settings", system: "gearshape.fill", identifier: "deskGridDock_Settings", action: onOpenManage)
             searchField(placeholder: "Search", identifier: "deskGridDashboardSearch", onSubmit: submitSearch)

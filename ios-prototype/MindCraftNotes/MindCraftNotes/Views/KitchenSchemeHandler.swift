@@ -7,6 +7,7 @@ import WebKit
 /// `mcworld://kitchen/index.html?embed=1&desk=1` → `<bundle>/world2/index.html`
 /// `mcworld://desk/desk.html`                    → `<bundle>/deskweb/desk.html`
 /// `mcworld://studio/index.html?from=jesse`      → `<bundle>/studio/index.html`
+/// `mcworld://simulation/index.html`             → `<bundle>/simulation/index.html`
 final class KitchenSchemeHandler: NSObject, WKURLSchemeHandler {
     static let scheme = "mcworld"
 
@@ -18,6 +19,11 @@ final class KitchenSchemeHandler: NSObject, WKURLSchemeHandler {
         switch host?.lowercased() {
         case "desk": return "deskweb"
         case "studio": return "studio"
+        // Design Studio's Blockly workspace (SimulationStudioView) - the
+        // bundled copy is a folder reference straight at the source of
+        // truth (`agent_work/product/desk_os/studio/simulation`), so the
+        // app never ships a stale fork of the deployed page.
+        case "simulation": return "simulation"
         default: return "world2"
         }
     }
@@ -26,6 +32,7 @@ final class KitchenSchemeHandler: NSObject, WKURLSchemeHandler {
         switch host?.lowercased() {
         case "desk": return "/desk.html"
         case "studio": return "/index.html"
+        case "simulation": return "/index.html"
         default: return "/index.html"
         }
     }
