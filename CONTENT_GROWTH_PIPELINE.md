@@ -81,23 +81,47 @@ test of the three new endpoints against a running server, once it's safe to
 load the sentence-transformer model on this machine again (training done, or
 a second machine). Do that before wiring the client to call them for real.
 
-## What's left (Lane Product — `ios-prototype/**`, mine, next)
-Study Session (`StudySessionView.swift` + `JesseCallSession.swift`) currently
-makes **zero** network calls back to the ml service when a student engages
-with generated content. Three call sites to add:
+## iOS wiring — done (2026-08-19, commit `90b81ac2`)
+Study Session now makes real calls, not zero:
 
-1. **After a lesson generates** (`askJesseWorkDashboard`/`generateFromMaterials`
-   in `JesseCallSession.swift`) → `POST /ingest-lesson-graph` with
-   `{topic, chapter_titles: outline.chapters.map(\.title)}`. This is what
-   makes "yes, it keeps growing" actually true — the moment this call lands,
-   the lesson's concepts exist in the live ontology.
-2. **When a chapter tab is viewed** (`StudySessionView.swift`, tab selection)
-   → `POST /record-engagement` with `event_type: "viewed_chapter"`.
-3. **When the practice question is answered** — this one needs **zero new
-   backend code**: once (1) has run, the chapter's `concept_id` is a real
-   ontology id, so grading the practice question is an ordinary
-   `OutcomeItem` → the **existing** `/record-outcomes`. This is the piece
-   that was already possible tonight and just wasn't wired.
+1. **After a lesson generates** (both `.generated` branches in
+   `JesseCallSession.swift`) → fire-and-forget `POST /api/ingest-lesson-graph`
+   (new webhook proxy, since the ml endpoint is service-key-only and the app
+   holds no such key) → tags the lesson into the live ontology. This is what
+   makes "yes, it keeps growing" actually true.
+2. **When a chapter tab is viewed** (`StudySessionView.swift`, `.task(id: activeTab)`)
+   → `POST /record-engagement` straight to the ml service, real Firebase
+   token, same auth shape `OutcomeClient` already uses. Scoped to
+   `.generated` lessons only — see below.
+3. **The practice question → `/record-outcomes`) is NOT wired.** Checked
+   `StudentAIKeyStore.LessonOutline`/the generation prompt directly:
+   `question: String?` is free text with no `choices`/`correctIndex` — there
+   is no honest binary score to send. Wiring this needs its own scoped
+   design (most likely: generate answer choices at outline time, add a
+   pick-an-answer UI to `StudySessionView`), not a one-line network call.
+   Left undone rather than faked.
+
+`LessonSlug` (new, `LessonGraphTagging.swift`) mirrors `lesson_tagger.py`'s
+`slugify()` client-side so chapter → `concept_id` stays correct without a
+round trip through the ingest call's response (which would race a student
+switching tabs before it returns). Caught a real bug before it shipped: an
+early version used `CharacterSet.lowercaseLetters` (Unicode-aware — keeps
+"é") where Python's regex is ASCII-only (`[a-z0-9]+`, strips "é") — found by
+running the real Python slugify on "Café Culture" and diffing the output,
+not by inspection. Fixed to match exactly, char-by-char port.
+
+`.archive`-sourced lessons deliberately do NOT fire `/record-engagement` —
+their real concept_ids, if any exist in the live ontology at all, come from
+`BookGraphLoader`/`ArchiveRagClient`, a path this doc hasn't investigated;
+guessing a slug for them would log engagement against an id the server
+never minted. Named as an open question, not silently assumed away.
+
+Full project build verified: `xcodebuild build` against the booted iPad
+simulator — `BUILD SUCCEEDED`. (Registering the new Swift file in
+`project.pbxproj` via the `xcodeproj` gem was the one step that failed on
+the first pass — `LessonGraphTagging.swift` existed on disk but wasn't in
+the target yet; same file-registration step this session already
+documented once for `StudySessionView.swift`.)
 
 All three are Product-lane, `X-Service-Key`-authenticated calls the app
 already knows how to make (same pattern as `ArchiveRagClient`).
@@ -190,8 +214,22 @@ unilaterally — it needs Blake, not a solo commit, before it happens.
 ## Status
 - ✅ Tagger, reload endpoint, ingest endpoint, engagement endpoint — built,
   unit-verified, not yet boot-tested against a running server (see above).
-- ❌ iOS wiring (3 call sites above) — not started.
-- ❌ HF Space deploy of PR #49's 185-concept ontology — blocked on an HF
-  write token, unrelated to this doc's changes but on the same critical path
-  (this pipeline's `/ingest-lesson-graph` builds on the same
-  `dynamic_graphs/` mechanism PR #49 shipped).
+- ✅ iOS wiring — ingest-on-generate, engagement-on-chapter-view. Full
+  project build green.
+- ❌ Practice-question grading → `/record-outcomes` — needs answer choices
+  to exist first; not started, scoped above.
+- ❌ **HF Space deploy — the one remaining blocker for any of this to be
+  live.** Everything above is real, committed, pushed code that a running
+  ml service would serve correctly — but the deployed HF Space is still
+  whatever `serve.py` looked like before tonight, so `/ingest-lesson-graph`
+  and `/record-engagement` 404 in production right now. The webhook proxy
+  (`/api/ingest-lesson-graph`) IS already live on Vercel (auto-deployed on
+  push) and will start working the moment the ml side deploys — no further
+  webhook change needed once that happens.
+  **To unblock:** an HF write token, scoped to push to `joinmindcraft/mindcraft-ml`.
+  Get one at https://huggingface.co/settings/tokens (logged in as a
+  `joinmindcraft` member) → "Write" access. Two ways to use it:
+  1. **You run it** (keeps the token off this machine's shell history/this
+     conversation): `export HF_TOKEN=hf_xxx && huggingface-cli login --token "$HF_TOKEN" --add-to-git-credential && cd ml && HF_ORG=joinmindcraft ./scripts/deploy_hf.sh`
+  2. **Hand me the token** and I run the same deploy — either works, (1) is
+     just the more careful default for a write credential to a shared org.
