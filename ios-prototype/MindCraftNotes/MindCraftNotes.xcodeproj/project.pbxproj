@@ -13,6 +13,7 @@
 		03E3A9AC7EC0438791EED1B2 /* LaTeXDisplayText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F652917CF738425093DEE541 /* LaTeXDisplayText.swift */; };
 		044BEB21A5E2D8744455C7F2 /* wizard-doodle-cheer.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BB03A317B6A9CB5F0D8C128 /* wizard-doodle-cheer.png */; };
 		0488FF0AF1C04DCCB33C8ED2 /* OutcomeClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CEEF844EFE4193B796ED23 /* OutcomeClient.swift */; };
+		07D81625C54AD426DC078177 /* LessonGraphTagging.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E93F7564841F90BA62788E /* LessonGraphTagging.swift */; };
 		07E1F3565FD9F6A870432C44 /* PlottablePointsExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85EC6FCFFB7752E3F55BC22 /* PlottablePointsExtractor.swift */; };
 		08767AA809AC30C242D9FBC2 /* BinderStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDBCE2A4A4F89B33A5443D0 /* BinderStore.swift */; };
 		0FB945513AC3BD9B9D898CF2 /* SVGImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A270692D86516903DC8773D /* SVGImageView.swift */; };
@@ -270,6 +271,7 @@
 		C9D5E31F607182A3B4C5D6E7 /* FieldDeskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldDeskView.swift; sourceTree = "<group>"; };
 		C9DESKASKCLIENT01A2 /* DeskAskClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskAskClient.swift; sourceTree = "<group>"; };
 		C9DESKRECORDSH01A2 /* DeskRecordSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskRecordSheet.swift; sourceTree = "<group>"; };
+		C9E93F7564841F90BA62788E /* LessonGraphTagging.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LessonGraphTagging.swift; sourceTree = "<group>"; };
 		C9FRIENDSTORE01A2B3 /* FriendsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsStore.swift; sourceTree = "<group>"; };
 		C9FRIENDSVIEW01A2B3 /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
 		C9JESSEOVERLAY01A2 /* JesseCallOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JesseCallOverlay.swift; sourceTree = "<group>"; };
@@ -411,6 +413,7 @@
 				C0KOKOROTTS01A2 /* KokoroTTSClient.swift */,
 				B0BOOKAGENTCLIENT01 /* BookAgentClient.swift */,
 				CABEC5240A99216D0BB8059C /* ResumeAgentClient.swift */,
+				C9E93F7564841F90BA62788E /* LessonGraphTagging.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -802,6 +805,7 @@
 				5A4BBF95456BC56D43B90E85 /* MicroSimView.swift in Sources */,
 				9F93BBC616145E16B7A1E6C3 /* DevelopStudioView.swift in Sources */,
 				00E78E9826A7228E60B2F09B /* StudySessionView.swift in Sources */,
+				07D81625C54AD426DC078177 /* LessonGraphTagging.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

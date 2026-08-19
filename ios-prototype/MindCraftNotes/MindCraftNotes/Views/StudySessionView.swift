@@ -58,6 +58,35 @@ struct StudySessionView: View {
                 .accessibilityIdentifier("studySessionRoot")
                 .allowsHitTesting(false)
         }
+        // `.task(id:)` re-runs exactly when activeTab changes (including the
+        // very first render, at .chapter(0) - a plain .onChange would miss
+        // that initial view) and auto-cancels a stale in-flight call if the
+        // student flips tabs again before it returns. Ungraded exposure
+        // only - see LessonGraphTagging.swift's file header for why this is
+        // a separate call from anything that touches mastery.
+        .task(id: activeTab) {
+            if case .chapter(let index) = activeTab {
+                await recordChapterView(index)
+            }
+        }
+    }
+
+    /// Only for `.generated` lessons - their concept_ids are exactly what
+    /// LessonGraphIngestClient tagged (see JesseCallSession's two generation
+    /// branches). `.archive` lessons surface real BookGraphLoader/ArchiveRag
+    /// content whose actual concept_ids (if minted at all) come from a
+    /// different, not-yet-wired path - guessing at a slug here would log
+    /// engagement against a concept_id that doesn't match what (if
+    /// anything) the server actually knows this content as.
+    private func recordChapterView(_ index: Int) async {
+        guard case .generated = lesson.source, lesson.chapters.indices.contains(index) else { return }
+        let conceptIds = LessonSlug.conceptIds(topic: lesson.topic, chapterTitles: lesson.chapters)
+        guard conceptIds.indices.contains(index) else { return }
+        await EngagementClient.recordEngagement(
+            subjectId: LessonSlug.subjectId(topic: lesson.topic),
+            conceptId: conceptIds[index],
+            eventType: "viewed_chapter"
+        )
     }
 
     private var header: some View {

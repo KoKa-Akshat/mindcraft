@@ -872,6 +872,12 @@ final class JesseCallSession: NSObject, ObservableObject {
                 microsims: microsims,
                 citations: []
             )
+            // Fire-and-forget: tags this lesson into the live concept graph
+            // (see CONTENT_GROWTH_PIPELINE.md). Never awaited - ontology
+            // bookkeeping must not delay the student hearing their lesson,
+            // and its own failure (a bad graph, a network blip) shouldn't
+            // surface here; generation already succeeded.
+            Task { await LessonGraphIngestClient.ingest(topic: topic, chapterTitles: outline.chapters) }
             await speak("Nothing in the archive yet for \(topic), so I put together a fresh outline: \(outline.chapters.joined(separator: ", ")).\(microsimNote)")
         case .failure(.noKey):
             await speak("You'll need to connect an AI key in Settings before I can put a lesson together on \(topic).")
@@ -906,6 +912,8 @@ final class JesseCallSession: NSObject, ObservableObject {
                 microsims: microsims,
                 citations: []
             )
+            // Same fire-and-forget tagging as the archive-generation path above.
+            Task { await LessonGraphIngestClient.ingest(topic: topic, chapterTitles: outline.chapters) }
             await speak("Built this from \(materials.fileName): \(outline.chapters.joined(separator: ", ")).\(microsimNote)")
         case .failure(.noKey):
             await speak("You'll need to connect an AI key in Settings before I can build a lesson from \(materials.fileName).")

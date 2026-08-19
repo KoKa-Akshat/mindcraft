@@ -29,6 +29,7 @@ import resumeAgent from '../lib/handlers/resume-agent'
 import archiveRag from '../lib/handlers/archive-rag'
 import bookAgent from '../lib/handlers/book-agent'
 import gmailDigest from '../lib/handlers/gmail-digest'
+import ingestLessonGraph from '../lib/handlers/ingest-lesson-graph'
 
 const HANDLERS: Record<string, (req: VercelRequest, res: VercelResponse) => Promise<unknown> | unknown> = {
   'create-classroom': createClassroom,
@@ -52,6 +53,7 @@ const HANDLERS: Record<string, (req: VercelRequest, res: VercelResponse) => Prom
   'archive-rag': archiveRag,
   'book-agent': bookAgent,
   'gmail-digest': gmailDigest,
+  'ingest-lesson-graph': ingestLessonGraph,
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
