@@ -1191,6 +1191,47 @@ builds the boxes" generation, no flow persistence. See
 
 ---
 
+**2026-08-19 — Claude, Design Studio unified into ONE content canvas — branch `design-studio-unification`, not yet a PR**
+
+Supersedes both the Find/Ask/Make/Output vocabulary above AND the
+Develop Workflows/Books toggle (`DevelopStudioView` is deleted; the
+Design dock chip / sidebar Develop icon / Flows "+ Design" row all land
+directly on the rebuilt `DesignStudioView`). Box types are now content:
+`.chapter` (opens the existing `BookWorkflowView` Jesse flow SCOPED to
+that box via its new `ChapterScope` — "Save to canvas" instead of
+publish; extra chapters Jesse writes become new chained boxes),
+`.simulation` (real Blockly workspace in a new `SimulationStudioView`
+WKWebView shell — page source at `agent_work/product/desk_os/studio/
+simulation/`, bundled via folder reference + `mcworld://simulation`),
+`.checkpoint` (small native form), `.branch` (outgoing edges carry
+student-named choice labels — `DesignEdge` gained `label: String?`).
+The two old canvas gaps are closed: edges can actually be created
+(long-press a box or inspector "Connect to…", then tap the target) and
+the graph persists (`ContentGraphStore`, UserDefaults `deskOs.*` draft,
+FieldDeskStore pattern). Publish walks the graph from the no-incoming-
+edges start box(es) into the same `## Chapter` markdown → `BinderStore.
+addBook`; a header Preview shows exactly that walk (with honest
+placeholders for unwritten boxes, which publish drops).
+
+**Known, named gap:** nothing in the app can READ a branching book —
+`StudySessionView` is a flat chapter-list reader and the Binder popup
+has no reader at all — so `.branch` publishes as labeled "If you choose
+X: continue at …" sections. Documented on
+`ContentGraphStore.assembleSections()`, deliberately not papered over.
+
+Standalone `BookWorkflowView` (global draft → Binder publish) is
+untouched and still reachable via the workflow library's "Create a
+book" and the Flows rail's Book row.
+
+Note for the next agent: this session ran CONCURRENTLY with the
+live-gated-generation session on this same checkout (no worktree
+isolation) — histories interleaved; this branch was fast-forwarded over
+that session's commits and my UI-test rewrites rode along inside its
+`f1be9eb1` test commit. Both branches share one linear history; nothing
+was rewritten or lost.
+
+---
+
 ## Handoff note (2026-08-16 night → 2026-08-17 morning): Codex filling in for Claude
 
 Akshat's Claude Code session is ending for the night. A ChatGPT/Codex session
