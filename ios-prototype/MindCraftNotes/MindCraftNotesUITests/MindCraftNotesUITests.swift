@@ -2478,6 +2478,55 @@ final class MindCraftNotesUITests: XCTestCase {
         let order = app.staticTexts["designStudioTimelineOrder"]
         XCTAssertTrue(order.waitForExistence(timeout: 5), "expected the reading-order marker")
         XCTAssertEqual(order.label, "New Chapter > New Checkpoint", "expected the graph walk to order chapter before its connected checkpoint")
+        attachScreenshot(app, name: "design_canvas_connected")
+    }
+
+    /// Branch boxes + the simulation shell, the two content types the
+    /// previous test doesn't touch. A `.branch` box's outgoing connections
+    /// auto-label as choices ("Choice 1") and the walk still reaches the
+    /// chapter behind the branch (asserted via the same reading-order
+    /// marker). Then a `.simulation` box's inspector opens the real
+    /// SimulationStudioView WKWebView shell and Done returns to the canvas.
+    /// What's deliberately NOT asserted: anything inside the Blockly page
+    /// itself - it needs the CDN (network) and canvas-rendered Blockly
+    /// exposes nothing useful to XCUITest, so the honest boundary is "the
+    /// native shell opens, carries the box's title, and closes clean".
+    func testBranchChoicesAndSimulationShell() {
+        let app = launchFieldDeskApp()
+        XCUIDevice.shared.orientation = .landscapeLeft
+        XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 15))
+
+        app.buttons["deskGridDock_Design"].tap()
+        XCTAssertTrue(app.buttons["designStudioAdd_branch"].waitForExistence(timeout: 10), "expected the Branch tool pill")
+
+        app.buttons["designStudioAdd_branch"].tap()
+        app.buttons["designStudioAdd_chapter"].tap()
+
+        // Branch is the connect source: select it, connect to the chapter.
+        app.staticTexts["New Branch"].tap()
+        XCTAssertTrue(app.buttons["designStudioConnect"].waitForExistence(timeout: 5))
+        app.buttons["designStudioConnect"].tap()
+        app.staticTexts["New Chapter"].tap()
+
+        XCTAssertTrue(app.staticTexts["2 boxes \u{00b7} 1 connections"].waitForExistence(timeout: 5), "expected the branch edge to exist")
+        let order = app.staticTexts["designStudioTimelineOrder"]
+        XCTAssertTrue(order.waitForExistence(timeout: 5))
+        XCTAssertEqual(order.label, "New Branch > New Chapter", "expected the walk to pass through the branch into its choice's target")
+        // The auto-minted choice label is editable in the inspector - the
+        // branch stayed selected after connecting, so its edge row is up.
+        XCTAssertTrue(app.descendants(matching: .any).matching(NSPredicate(format: "identifier BEGINSWITH 'designStudioEdgeLabel_'")).firstMatch.waitForExistence(timeout: 5), "expected the branch edge's editable choice-label field")
+
+        // Simulation box -> the WKWebView shell.
+        app.buttons["designStudioAdd_simulation"].tap()
+        let openWorkspace = app.buttons["designStudioOpenWorkspace"]
+        XCTAssertTrue(openWorkspace.waitForExistence(timeout: 5), "expected the simulation inspector's workspace button (new box self-selects)")
+        openWorkspace.tap()
+
+        XCTAssertTrue(app.descendants(matching: .any)["simulationStudioRoot"].waitForExistence(timeout: 10), "expected the simulation workspace shell")
+        XCTAssertTrue(app.staticTexts["New Simulation"].waitForExistence(timeout: 5), "expected the shell header to carry the box's title")
+        attachScreenshot(app, name: "simulation_workspace_shell")
+        app.buttons["simulationStudioDone"].tap()
+        XCTAssertTrue(app.buttons["designStudioAdd_chapter"].waitForExistence(timeout: 5), "expected Done to land back on the canvas")
     }
 
     /// Real regression coverage for the Binder+Intel content-merge
