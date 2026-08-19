@@ -2360,6 +2360,19 @@ final class MindCraftNotesUITests: XCTestCase {
         XCTAssertFalse(app.buttons["deskGridSidebar_Resume"].exists, "expected the old vertical sidebar's Resume icon to be gone")
     }
 
+    func testEnglishPracticeOpensFromDockAndCloses() {
+        let app = launchFieldDeskApp()
+        XCUIDevice.shared.orientation = .landscapeLeft
+        XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 15))
+
+        app.buttons["deskGridDock_Practice"].tap()
+        XCTAssertTrue(app.descendants(matching: .any)["englishPracticeRoot"].waitForExistence(timeout: 5), "expected the English practice screen to open")
+        XCTAssertTrue(app.buttons["englishPracticeDone"].exists, "expected a real Done button, not a dead end")
+
+        app.buttons["englishPracticeDone"].tap()
+        XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 5), "expected Done to land back on the dashboard")
+    }
+
     func testStudySessionShowsChaptersAndSourcesThenCloses() {
         let app = launchFieldDeskApp(extraArgs: ["--ui-testing-study-session"])
         XCUIDevice.shared.orientation = .landscapeLeft

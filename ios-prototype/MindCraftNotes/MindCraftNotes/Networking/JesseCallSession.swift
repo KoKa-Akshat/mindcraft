@@ -165,6 +165,14 @@ final class JesseCallSession: NSObject, ObservableObject {
     /// `askJesseResume`) so `ResumeAgentView` can render the profile live as
     /// the student talks. Reset in `begin()`.
     @Published private(set) var resumeDraft: ResumeAgentDraft?
+    /// English-practice conversation state (2026-08-19) - same lightweight
+    /// shape idea as `resumeDraft`/`bookDraft` but far smaller: just what
+    /// goal/deadline the student stated, so the webhook's system prompt can
+    /// shape register/vocabulary once known instead of asking every turn.
+    /// Set only while `context == "englishPractice"`, updated from the real
+    /// `/api/english-practice` round trip (see `askJesseEnglishPractice`).
+    /// Reset in `begin()`.
+    @Published private(set) var englishPracticeState: EnglishPracticeGoal?
     /// Work Dashboard's "I want to learn X" flow (2026-08-18) - set only
     /// while `context == "workDashboard"`, after a real archive check
     /// (`BookGraphLoader`) or generation call (see
@@ -274,6 +282,10 @@ final class JesseCallSession: NSObject, ObservableObject {
         }
         if context == "resume" {
             resumeDraft = nil
+        }
+        if context == "englishPractice" {
+            englishPracticeState = nil
+            Task { await speak("Hi, I'm Jesse. Let's practice your English together - what are you hoping to get better at, and is there a deadline you're working toward?", useKokoro: false) }
         }
         if context == "workDashboard" {
             workDashboardLesson = nil
@@ -567,6 +579,11 @@ final class JesseCallSession: NSObject, ObservableObject {
             isThinking = false
             return
         }
+        if context == "englishPractice" {
+            await askJesseEnglishPractice(message)
+            isThinking = false
+            return
+        }
         // Explicit ask (2026-08-18): "when i said i want to learn calculus
         // it should now check the archive for lessons on it... create a
         // lesson plan." Only intercepts genuine "I want to learn X"-shaped
@@ -659,6 +676,25 @@ final class JesseCallSession: NSObject, ObservableObject {
         }
         guard isActive else { return }
         resumeDraft = result.draft
+        await speak(result.reply)
+    }
+
+    // MARK: - English practice (2026-08-19)
+
+    /// Real `/api/english-practice` round trip - mirrors `askJesseResume`'s
+    /// shape exactly, just with a lightweight goal/deadline state instead of
+    /// a full document draft. `turns` (this session's own real transcript)
+    /// supplies `recentTurns` directly - no separate history to maintain.
+    private func askJesseEnglishPractice(_ message: String) async {
+        let state = englishPracticeState ?? .empty
+        let recent = turns.suffix(6).map { EnglishPracticeTurn(speaker: $0.speaker, text: $0.text) }
+        guard let result = await EnglishPracticeClient.ask(message: message, recentTurns: Array(recent), state: state) else {
+            guard isActive else { return }
+            await speak("I couldn't reach the practice desk just now. Keep talking and I'll catch up.")
+            return
+        }
+        guard isActive else { return }
+        englishPracticeState = result.state
         await speak(result.reply)
     }
 

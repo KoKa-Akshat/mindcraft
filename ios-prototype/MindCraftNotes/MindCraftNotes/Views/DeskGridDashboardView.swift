@@ -297,7 +297,7 @@ struct DeskGridDashboardView: View {
     @State private var activeSidebarFlow: SidebarFlow?
 
     private enum SidebarFlow: Equatable {
-        case presentation, gdoc, resume, develop
+        case presentation, gdoc, resume, develop, englishPractice
     }
 
     // MARK: - Agent takeover (any real ask, not just the email/draft case)
@@ -2585,6 +2585,8 @@ struct DeskGridDashboardView: View {
             CreateCanvasView(kind: .gdoc, studentName: studentName, onClose: closeSidebarFlow)
         case .resume:
             ResumeAgentView(onClose: closeSidebarFlow, studentName: studentName)
+        case .englishPractice:
+            EnglishPracticeView(onClose: closeSidebarFlow, studentName: studentName)
         case .develop:
             // Straight into the one content canvas (2026-08-19) - the
             // Workflows/Books toggle shell (`DevelopStudioView`) is gone.
@@ -2618,6 +2620,7 @@ struct DeskGridDashboardView: View {
         HStack(spacing: 8) {
             dockChip("Dashboard", system: "square.grid.2x2.fill", identifier: "deskGridDock_BackToDash", action: closeSidebarFlow)
             dockChip("Resume", system: "person.text.rectangle", identifier: "deskGridSidebarDock_Resume") { openSidebarFlow(.resume) }
+            dockChip("Practice", system: "waveform.and.mic", identifier: "deskGridSidebarDock_Practice") { openSidebarFlow(.englishPractice) }
             dockChip("Design", system: "square.grid.2x2.fill", identifier: "deskGridSidebarDock_Design") { openSidebarFlow(.develop) }
             dockChip("Settings", system: "gearshape.fill", identifier: "deskGridSidebarDock_Settings", action: onOpenManage)
             Spacer(minLength: 0)
@@ -2666,6 +2669,9 @@ struct DeskGridDashboardView: View {
             // own call site), so it no longer reserves width against
             // tileBoard's scale on the plain dashboard.
             dockChip("Resume", system: "person.text.rectangle", identifier: "deskGridDock_Resume") { openSidebarFlow(.resume) }
+            // English speaking/writing practice (2026-08-19) - a live Jesse
+            // conversation, same dock-chip pattern as Resume right above.
+            dockChip("Practice", system: "waveform.and.mic", identifier: "deskGridDock_Practice") { openSidebarFlow(.englishPractice) }
             // 2026-08-19, explicit ask: Archive now opens the in-Binder
             // browser (see viewingArchiveBrowser) instead of the old
             // full-screen ArchiveWorkflowView - that flow is still reachable
@@ -2727,6 +2733,7 @@ struct DeskGridDashboardView: View {
             // flows") - same two chips workDock got, so they're reachable
             // no matter which dock variant is showing.
             dockChip("Resume", system: "person.text.rectangle", identifier: "deskGridFlowsResume") { openSidebarFlow(.resume) }
+            dockChip("Practice", system: "waveform.and.mic", identifier: "deskGridFlowsPractice") { openSidebarFlow(.englishPractice) }
             dockChip("Settings", system: "gearshape.fill", identifier: "deskGridFlowsSettings", action: onOpenManage)
             searchField(
                 placeholder: "Search Presentation, Resume, Archive, Book…",

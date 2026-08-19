@@ -45,9 +45,11 @@
 		7B0241FF6DC5A084EEFC9B48 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 4EA3DB63C1CC574240263223 /* FirebaseAuth */; };
 		7CE3B3940E5DECDEA8512DD4 /* MicroSims in Resources */ = {isa = PBXBuildFile; fileRef = 6DB72D8E245D5E205B52EA4E /* MicroSims */; };
 		7E3ECEE138FB623EA7806558 /* ArchiveBooksClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B0DB4BE519576B363713A8 /* ArchiveBooksClient.swift */; };
+		7E52B937AB2CB5CFF01B1F1D /* EnglishPracticeClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76E73D494B2D736553AF91F /* EnglishPracticeClient.swift */; };
 		832F52CD564C2C1CA71BB4CC /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2DEFA331CCE58D98C0F61F /* LoginView.swift */; };
 		87C1DC075E078CFE838ACC26 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 6F5EECD612652564C64E12E5 /* FirebaseFirestore */; };
 		8ACCA09803A0C1DF9B8F19BB /* FirestoreStudentStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EAAFE0F66A60907CDB1C332 /* FirestoreStudentStore.swift */; };
+		956FFB848B59400D15072E59 /* EnglishPracticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91E4C98C95DD18AB704697D /* EnglishPracticeView.swift */; };
 		96E8B917BB811401BE825DDF /* MicroSimLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DD656E755128E29056BA08 /* MicroSimLoader.swift */; };
 		9A6F2325A1FDC007FA06B7CA /* KnowledgeGraphClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333EDEE01284D66F3CAF76DD /* KnowledgeGraphClient.swift */; };
 		9D00117C89A5E8CB2AA33B3D /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3890F71414E363C12CC19397 /* DashboardView.swift */; };
@@ -116,9 +118,9 @@
 		D6JOBOSGRAPH01A2B3C4 /* JobOSLinkedInGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6JOBOSGRAPH01A2B3C4 /* JobOSLinkedInGraph.swift */; };
 		D701D0CAFA36FDCD398C790B /* storyArt in Resources */ = {isa = PBXBuildFile; fileRef = 6C6EE743854CB1274F574739 /* storyArt */; };
 		D7DESKBOXBUS01A2 /* DeskBoxBus.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DESKBOXBUS01A2 /* DeskBoxBus.swift */; };
+		D7GENSIMCL01A2B3C4 /* GeneratedSimClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7GENSIMCL01A2B3C4 /* GeneratedSimClient.swift */; };
 		D7GMAILBOXVW01A2B3C4 /* GmailWorkflowBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7GMAILBOXVW01A2B3C4 /* GmailWorkflowBoxView.swift */; };
 		D7JESSECALL01A2B3 /* JesseCallSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7JESSECALL01A2B3 /* JesseCallSession.swift */; };
-		D7GENSIMCL01A2B3C4 /* GeneratedSimClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7GENSIMCL01A2B3C4 /* GeneratedSimClient.swift */; };
 		D7JOBOSDETAIL01A2B3 /* JobOSRoleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7JOBOSDETAIL01A2B3 /* JobOSRoleDetailView.swift */; };
 		D7MOODLECLIENT01A2 /* MoodleClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7MOODLECLIENT01A2 /* MoodleClient.swift */; };
 		D7STUDENTAIKEY01 /* StudentAIKeyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7STUDENTAIKEY01 /* StudentAIKeyStore.swift */; };
@@ -127,10 +129,8 @@
 		D8DESKCALLOAD01A2B3 /* DeskCalendarLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DESKCALLOAD01A2B3 /* DeskCalendarLoader.swift */; };
 		D9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift */; };
 		D9BOOKWORKF01A2B3C4 /* BookWorkflowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BOOKWORKF01A2B3C4 /* BookWorkflowView.swift */; };
-		D9CONTGRAPH01A2B3C4 /* ContentGraphStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CONTGRAPH01A2B3C4 /* ContentGraphStore.swift */; };
-		D9SIMSTUDIO01A2B3C4 /* SimulationStudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9SIMSTUDIO01A2B3C4 /* SimulationStudioView.swift */; };
-		D9SIMPAGE0RES01A2B3 /* simulation in Resources */ = {isa = PBXBuildFile; fileRef = C9SIMPAGE0REF01A2B3 /* simulation */; };
 		D9BOOTMOTIV01A2B3C4 /* BootMotivationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BOOTMOTIV01A2B3C4 /* BootMotivationClient.swift */; };
+		D9CONTGRAPH01A2B3C4 /* ContentGraphStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CONTGRAPH01A2B3C4 /* ContentGraphStore.swift */; };
 		D9DESKASKCLIENT01A2 /* DeskAskClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DESKASKCLIENT01A2 /* DeskAskClient.swift */; };
 		D9DESKRECORDSH01A2 /* DeskRecordSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DESKRECORDSH01A2 /* DeskRecordSheet.swift */; };
 		D9FE32A2CBC826477D6BCDA2 /* ChatHistoryImportParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72A5BC65A2BF357B121A531 /* ChatHistoryImportParser.swift */; };
@@ -140,6 +140,8 @@
 		D9OPENARCHIVE01A2B3C4 /* OpenLearningArchiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9OPENARCHIVE01A2B3C4 /* OpenLearningArchiveView.swift */; };
 		D9QCALINVITE01A2B3C4 /* QCalInvite.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9QCALINVITE01A2B3C4 /* QCalInvite.swift */; };
 		D9SCHEDWORKF01A2B3C4 /* SchedulingWorkflowsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9SCHEDWORKF01A2B3C4 /* SchedulingWorkflowsView.swift */; };
+		D9SIMPAGE0RES01A2B3 /* simulation in Resources */ = {isa = PBXBuildFile; fileRef = C9SIMPAGE0REF01A2B3 /* simulation */; };
+		D9SIMSTUDIO01A2B3C4 /* SimulationStudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9SIMSTUDIO01A2B3C4 /* SimulationStudioView.swift */; };
 		DAE6F420718293B4C5D6E7F8 /* FieldDeskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D5E31F607182A3B4C5D6E7 /* FieldDeskView.swift */; };
 		DB8E5A9D2D06DFC8246BA1F0 /* WorkPracticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788775E6F0E0DB324F25E292 /* WorkPracticeView.swift */; };
 		DDE6FE79749CA9A22EBDA201 /* DesignStudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600BDD909110482BB76AF2B6 /* DesignStudioView.swift */; };
@@ -260,9 +262,9 @@
 		C6JOBOSGRAPH01A2B3C4 /* JobOSLinkedInGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobOSLinkedInGraph.swift; sourceTree = "<group>"; };
 		C7078B04335739E9939AA984 /* MicroSimView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MicroSimView.swift; sourceTree = "<group>"; };
 		C7DESKBOXBUS01A2 /* DeskBoxBus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskBoxBus.swift; sourceTree = "<group>"; };
+		C7GENSIMCL01A2B3C4 /* GeneratedSimClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneratedSimClient.swift; sourceTree = "<group>"; };
 		C7GMAILBOXVW01A2B3C4 /* GmailWorkflowBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GmailWorkflowBoxView.swift; sourceTree = "<group>"; };
 		C7JESSECALL01A2B3 /* JesseCallSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JesseCallSession.swift; sourceTree = "<group>"; };
-		C7GENSIMCL01A2B3C4 /* GeneratedSimClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneratedSimClient.swift; sourceTree = "<group>"; };
 		C7JOBOSDETAIL01A2B3 /* JobOSRoleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobOSRoleDetailView.swift; sourceTree = "<group>"; };
 		C7MOODLECLIENT01A2 /* MoodleClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodleClient.swift; sourceTree = "<group>"; };
 		C7STUDENTAIKEY01 /* StudentAIKeyStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentAIKeyStore.swift; sourceTree = "<group>"; };
@@ -272,10 +274,8 @@
 		C9818B2D6693B4381129CB08 /* DiagnosticGateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticGateView.swift; sourceTree = "<group>"; };
 		C9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveWorkflowView.swift; sourceTree = "<group>"; };
 		C9BOOKWORKF01A2B3C4 /* BookWorkflowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookWorkflowView.swift; sourceTree = "<group>"; };
-		C9CONTGRAPH01A2B3C4 /* ContentGraphStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentGraphStore.swift; sourceTree = "<group>"; };
-		C9SIMSTUDIO01A2B3C4 /* SimulationStudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimulationStudioView.swift; sourceTree = "<group>"; };
-		C9SIMPAGE0REF01A2B3 /* simulation */ = {isa = PBXFileReference; lastKnownFileType = folder; name = simulation; path = ../../agent_work/product/desk_os/studio/simulation; sourceTree = SOURCE_ROOT; };
 		C9BOOTMOTIV01A2B3C4 /* BootMotivationClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BootMotivationClient.swift; sourceTree = "<group>"; };
+		C9CONTGRAPH01A2B3C4 /* ContentGraphStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentGraphStore.swift; sourceTree = "<group>"; };
 		C9D5E31F607182A3B4C5D6E7 /* FieldDeskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldDeskView.swift; sourceTree = "<group>"; };
 		C9DESKASKCLIENT01A2 /* DeskAskClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskAskClient.swift; sourceTree = "<group>"; };
 		C9DESKRECORDSH01A2 /* DeskRecordSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskRecordSheet.swift; sourceTree = "<group>"; };
@@ -286,6 +286,8 @@
 		C9OPENARCHIVE01A2B3C4 /* OpenLearningArchiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenLearningArchiveView.swift; sourceTree = "<group>"; };
 		C9QCALINVITE01A2B3C4 /* QCalInvite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QCalInvite.swift; sourceTree = "<group>"; };
 		C9SCHEDWORKF01A2B3C4 /* SchedulingWorkflowsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchedulingWorkflowsView.swift; sourceTree = "<group>"; };
+		C9SIMPAGE0REF01A2B3 /* simulation */ = {isa = PBXFileReference; lastKnownFileType = folder; name = simulation; path = ../../agent_work/product/desk_os/studio/simulation; sourceTree = SOURCE_ROOT; };
+		C9SIMSTUDIO01A2B3C4 /* SimulationStudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimulationStudioView.swift; sourceTree = "<group>"; };
 		CABEC5240A99216D0BB8059C /* ResumeAgentClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ResumeAgentClient.swift; sourceTree = "<group>"; };
 		CC3901FD3CB48D913D28033E /* conceptContent.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = conceptContent.json; sourceTree = "<group>"; };
 		CCBA83ACF9DE4E17BFF71157 /* SampleQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleQuestion.swift; sourceTree = "<group>"; };
@@ -295,6 +297,7 @@
 		D72A5BC65A2BF357B121A531 /* ChatHistoryImportParser.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ChatHistoryImportParser.swift; sourceTree = "<group>"; };
 		D85B66E366E7264EAE7C1DED /* WeeklyReviewWalkthroughView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyReviewWalkthroughView.swift; sourceTree = "<group>"; };
 		D85EC6FCFFB7752E3F55BC22 /* PlottablePointsExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlottablePointsExtractor.swift; sourceTree = "<group>"; };
+		D91E4C98C95DD18AB704697D /* EnglishPracticeView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EnglishPracticeView.swift; sourceTree = "<group>"; };
 		DA7262B1A341CC17EEC08DFE /* LiveSessionClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveSessionClient.swift; sourceTree = "<group>"; };
 		DECD1EEEF419421EBDCABAD4 /* StickersShelfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickersShelfView.swift; sourceTree = "<group>"; };
 		DFEC353EF8F1EADA0F99E274 /* DiagnosticClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticClient.swift; sourceTree = "<group>"; };
@@ -310,6 +313,7 @@
 		F694CCC4A5DFC0743DE8A087 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F70C7AF77E584E6BA8B8EC67 /* MindCraftNotesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MindCraftNotesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F71B0E74E82D928A06BE3928 /* AltDiagramSplitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AltDiagramSplitter.swift; sourceTree = "<group>"; };
+		F76E73D494B2D736553AF91F /* EnglishPracticeClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EnglishPracticeClient.swift; sourceTree = "<group>"; };
 		FAAFB7B2FB6B48A2BA5C98FD /* MindCraftNotes.xcdatamodeld */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodeld; path = MindCraftNotes.xcdatamodeld; sourceTree = "<group>"; };
 		W2FOLDERREF01A2B3C4D5E6 /* world2 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = world2; path = ../../worlds/world2; sourceTree = SOURCE_ROOT; };
 		W3DESKWEBREF01A2B3C4D5E6 /* deskweb */ = {isa = PBXFileReference; lastKnownFileType = folder; name = deskweb; path = ../../worlds/deskweb; sourceTree = SOURCE_ROOT; };
@@ -424,6 +428,7 @@
 				CABEC5240A99216D0BB8059C /* ResumeAgentClient.swift */,
 				C9E93F7564841F90BA62788E /* LessonGraphTagging.swift */,
 				31B0DB4BE519576B363713A8 /* ArchiveBooksClient.swift */,
+				F76E73D494B2D736553AF91F /* EnglishPracticeClient.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -501,6 +506,7 @@
 				5A10EB3BDDE04216B5B57403 /* JesseRailView.swift */,
 				C7078B04335739E9939AA984 /* MicroSimView.swift */,
 				E0BAFFB8EAB3F099DB44C2C7 /* StudySessionView.swift */,
+				D91E4C98C95DD18AB704697D /* EnglishPracticeView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -822,6 +828,8 @@
 				00E78E9826A7228E60B2F09B /* StudySessionView.swift in Sources */,
 				07D81625C54AD426DC078177 /* LessonGraphTagging.swift in Sources */,
 				7E3ECEE138FB623EA7806558 /* ArchiveBooksClient.swift in Sources */,
+				956FFB848B59400D15072E59 /* EnglishPracticeView.swift in Sources */,
+				7E52B937AB2CB5CFF01B1F1D /* EnglishPracticeClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
