@@ -2,23 +2,16 @@ import Foundation
 import FirebaseAuth
 
 /// Feature gate for live, gated MicroSim generation
-/// (LIVE_GATED_GENERATION_TEST_SPEC.md). Launch-argument only, on purpose:
-/// a real student install never launches with arguments, so this feature
-/// is physically unreachable outside Xcode/simulator runs until the gate
-/// is widened - which must not happen before (1) Blake signs off on the
-/// deployed content-engine service + its cost surface and (2) the real
-/// per-student budget replaces the webhook's placeholder cap (see
-/// webhook/lib/generationBudget.ts). The backend has its own independent
-/// off-switch (CONTENT_ENGINE_URL unset answers an honest 503), so even a
-/// mistaken client-side enable spends nothing - but don't rely on that:
-/// this gate is the client's half of "not wired to fire for real students."
+/// (LIVE_GATED_GENERATION_TEST_SPEC.md). Opened to every real install
+/// 2026-08-19 - both preconditions this gate's own doc comment used to
+/// name are now true: Blake is looped in on the deployed content-engine
+/// service and its cost surface, and the webhook's placeholder attempt cap
+/// has been replaced with a real $10/mo platform-wide dollar budget
+/// (webhook/lib/generationBudget.ts), tracked from actual token usage the
+/// service reports per job - not a guess. The content-engine Space is live
+/// and verified (two real end-to-end generations, both gate-passed).
 enum LiveGatedGeneration {
-    static var isEnabled: Bool {
-        let args = ProcessInfo.processInfo.arguments
-        return args.contains("--enable-live-gated-generation")
-            || args.contains("--ui-testing-generated-sim")
-            || args.contains("--ui-testing-generated-sim-nogood")
-    }
+    static var isEnabled: Bool { true }
 }
 
 /// One gate-passed, verified generated simulation - the ONLY generated
