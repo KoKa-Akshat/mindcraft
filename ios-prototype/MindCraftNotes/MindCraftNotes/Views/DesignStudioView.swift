@@ -770,6 +770,15 @@ struct DesignStudioView: View {
                     .font(.system(size: 11.5, weight: .medium, design: .rounded))
                     .foregroundColor(Color(dsHex: "8a8478"))
             } else {
+                // The chips are hidden from the accessibility tree ON
+                // PURPOSE: their labels duplicate every box card's own
+                // title ("New Chapter" would resolve to two elements -
+                // confirmed as a real multiple-match failure in
+                // testDesignCanvasAddsBoxesAndConnectsThem), and a strip
+                // of "1 New Chapter chevron 2 ..." fragments is worse
+                // VoiceOver than one summary. The invisible
+                // `designStudioTimelineOrder` marker below IS this strip's
+                // accessible representation.
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 6) {
                         ForEach(Array(order.enumerated()), id: \.element.id) { index, box in
@@ -796,6 +805,7 @@ struct DesignStudioView: View {
                         }
                     }
                 }
+                .accessibilityHidden(true)
             }
             Spacer(minLength: 0)
         }
