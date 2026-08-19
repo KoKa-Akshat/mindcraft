@@ -44,6 +44,7 @@ struct DesignStudioView: View {
     }
 
     @State private var publishState: PublishState = .idle
+    @State private var showPreview = false
 
     private let artboard = CGSize(width: 1440, height: 810)
 
@@ -97,6 +98,13 @@ struct DesignStudioView: View {
             )
             .environmentObject(jesseCall)
         }
+        .fullScreenCover(isPresented: $showPreview) {
+            BookPreviewView(
+                title: graph.resolvedTitle,
+                sections: graph.assembleSections(),
+                onClose: { showPreview = false }
+            )
+        }
         .fullScreenCover(item: $simulationBox) { box in
             SimulationStudioView(
                 boxTitle: box.title,
@@ -149,6 +157,24 @@ struct DesignStudioView: View {
             default:
                 EmptyView()
             }
+
+            Button {
+                showPreview = true
+            } label: {
+                HStack(spacing: 5) {
+                    Image(systemName: "book")
+                    Text("Preview")
+                }
+                .font(.system(size: 12.5, weight: .bold, design: .rounded))
+                .foregroundColor(Color(dsHex: "143a2e"))
+                .padding(.horizontal, 14)
+                .padding(.vertical, 9)
+                .background(Capsule().strokeBorder(Color(dsHex: "143a2e").opacity(0.35), lineWidth: 1.5))
+            }
+            .buttonStyle(.plain)
+            .disabled(graph.boxes.isEmpty)
+            .opacity(graph.boxes.isEmpty ? 0.4 : 1)
+            .accessibilityIdentifier("designStudioPreviewBook")
 
             Button(action: publish) {
                 Text(publishState == .publishing ? "Publishing\u{2026}" : "Publish to Binder")
@@ -936,6 +962,99 @@ private extension CGFloat {
     /// Keeps chrome strokes (arrowheads) from vanishing at small scales
     /// without ballooning at large ones.
     var clampedForChrome: CGFloat { Swift.min(Swift.max(self, 0.75), 1.25) }
+}
+
+/// Read-through of the assembled book, exactly as the graph walk orders it
+/// - the same `ContentGraphStore.assembleSections()` walk publish uses, so
+/// what this shows IS what `Publish to Binder` writes (with one deliberate
+/// difference: unwritten boxes appear here as clearly-labeled gaps, while
+/// publish drops them - a draft preview should show what's missing).
+///
+/// This is deliberately NOT `StudySessionView`: that reader labels its
+/// lessons "AI-generated" (correct for Jesse-generated lessons, a false
+/// attribution for a book the student authored on this canvas), and it's
+/// the flat-list reader anyway - the branching-reader gap documented on
+/// `assembleSections()` applies to it too.
+private struct BookPreviewView: View {
+    let title: String
+    let sections: [ContentGraphStore.BookSection]
+    var onClose: () -> Void
+
+    var body: some View {
+        ZStack {
+            Color(dsHex: "fff8e9").ignoresSafeArea()
+            DottedDesignGrid()
+            ScrollView {
+                VStack(alignment: .leading, spacing: 16) {
+                    Text("PREVIEW · WHAT PUBLISH PRODUCES")
+                        .font(.system(size: 10, weight: .heavy, design: .rounded))
+                        .tracking(1)
+                        .foregroundColor(Color(dsHex: "143a2e").opacity(0.45))
+                    Text(title)
+                        .font(.system(size: 26, weight: .bold, design: .rounded))
+                        .foregroundColor(Color(dsHex: "143a2e"))
+
+                    ForEach(sections) { section in
+                        VStack(alignment: .leading, spacing: 8) {
+                            HStack(spacing: 7) {
+                                Image(systemName: section.type.glyph)
+                                    .font(.system(size: 11, weight: .bold))
+                                Text(section.title)
+                                    .font(.system(size: 16, weight: .bold, design: .rounded))
+                            }
+                            .foregroundColor(Color(dsHex: "143a2e"))
+                            Text(markdownish(section.body))
+                                .font(.system(size: 13.5, weight: .medium, design: .rounded))
+                                .foregroundColor(Color(dsHex: "143a2e").opacity(section.isPlaceholder ? 0.45 : 0.85))
+                                .italic(section.isPlaceholder)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                        .padding(18)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(
+                            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                                .fill(Color(white: 0.985))
+                                .shadow(color: .black.opacity(0.07), radius: 8, y: 3)
+                        )
+                    }
+                }
+                .padding(.vertical, 40)
+                .frame(maxWidth: 720)
+                .frame(maxWidth: .infinity)
+            }
+        }
+        .overlay(alignment: .topTrailing) {
+            Button(action: onClose) {
+                Text("Done")
+                    .font(.system(size: 12.5, weight: .bold, design: .rounded))
+                    .foregroundColor(Color(dsHex: "0c1207"))
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 9)
+                    .background(Capsule().fill(Color(dsHex: "c4f547")))
+            }
+            .buttonStyle(.plain)
+            .padding(.top, 14)
+            .padding(.trailing, 18)
+            .accessibilityIdentifier("designStudioPreviewDone")
+        }
+        .statusBarHidden(true)
+        .accessibilityElement(children: .contain)
+        .overlay(alignment: .topLeading) {
+            Text(verbatim: "book-preview").font(.system(size: 1)).foregroundColor(.clear)
+                .accessibilityIdentifier("designStudioPreviewRoot")
+                .allowsHitTesting(false)
+        }
+    }
+
+    /// Renders the sections' light markdown (bold/italic) inline; keeps
+    /// newlines and literal "- " bullets as-is. Falls back to plain text
+    /// if parsing ever fails - never drops content.
+    private func markdownish(_ body: String) -> AttributedString {
+        (try? AttributedString(
+            markdown: body,
+            options: .init(interpretedSyntax: .inlineOnlyPreservingWhitespace)
+        )) ?? AttributedString(body)
+    }
 }
 
 /// Coordinates on the same 1440x810 artboard every studio surface uses.

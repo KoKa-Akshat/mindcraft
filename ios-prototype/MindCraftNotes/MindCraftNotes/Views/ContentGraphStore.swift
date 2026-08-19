@@ -331,21 +331,35 @@ final class ContentGraphStore: ObservableObject {
         boxes.contains { $0.type == .chapter && !$0.chapterBody.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
     }
 
-    /// Walks the graph into the linear markdown `BinderStore.addBook`
-    /// expects - the same `## Chapter\n\nbody` shape `BookWorkflowView.
-    /// publish()` already writes, so published canvases and published
-    /// straight-line books are indistinguishable to the Binder.
+    /// One rendered stop on the assembled reading path. Backs BOTH the
+    /// in-studio book preview (which shows placeholders for unwritten
+    /// boxes, because a draft preview should show the gaps) and the
+    /// published markdown (which filters placeholders out - publish only
+    /// ships real content). One walk, so the two can't drift.
+    struct BookSection: Identifiable, Equatable {
+        let id: String
+        let type: DesignBoxType
+        let title: String
+        let body: String
+        /// True when the box has no real content yet - preview renders it
+        /// honestly as unwritten; publish drops it.
+        let isPlaceholder: Bool
+    }
+
+    /// The graph walked into linear sections, `startBoxes` first, DFS
+    /// along edges (same traversal as `walkOrder`).
     ///
-    /// HONEST LIMIT, stated rather than hidden: `.branch` choices are
-    /// rendered as labeled sections ("If you choose: ..."), one after
-    /// another, because the Binder's book body is a flat string and the
-    /// only reader that opens books (`StudySessionView`) walks a flat
-    /// chapter list. A real choose-your-path reader is a scoped-out gap,
-    /// not something this flatten pretends to solve.
-    func assembleBook() -> (title: String, body: String)? {
-        guard canPublish else { return nil }
+    /// HONEST LIMIT, stated rather than hidden: `.branch` boxes flatten
+    /// into a section that NAMES each choice and the section it leads to -
+    /// the Binder's book body is a flat string, and no reader in the app
+    /// today can walk a branching structure (`StudySessionView`, the only
+    /// book reader, renders a flat chapter list; the Binder popup itself
+    /// shows a two-line preview and has no reader at all). A real
+    /// choose-your-path reader is a scoped-out gap this flatten does not
+    /// pretend to solve.
+    func assembleSections() -> [BookSection] {
         var visited = Set<String>()
-        var sections: [String] = []
+        var sections: [BookSection] = []
 
         func render(_ box: DesignBox) {
             guard !visited.contains(box.id) else { return }
@@ -354,51 +368,81 @@ final class ContentGraphStore: ObservableObject {
             switch box.type {
             case .chapter:
                 let body = box.chapterBody.trimmingCharacters(in: .whitespacesAndNewlines)
-                if !body.isEmpty {
-                    sections.append("## \(heading)\n\n\(body)")
-                }
-                followPlain(box)
+                sections.append(BookSection(
+                    id: box.id, type: .chapter, title: heading,
+                    body: body.isEmpty ? "This chapter hasn't been written yet." : body,
+                    isPlaceholder: body.isEmpty
+                ))
             case .checkpoint:
-                var lines = ["## Checkpoint · \(heading)"]
+                var lines: [String] = []
                 if !box.checkpointQuestion.isEmpty { lines.append("**\(box.checkpointQuestion)**") }
                 if !box.checkpointAnswer.isEmpty { lines.append("_What a good answer looks like: \(box.checkpointAnswer)_") }
-                if lines.count > 1 { sections.append(lines.joined(separator: "\n\n")) }
-                followPlain(box)
+                sections.append(BookSection(
+                    id: box.id, type: .checkpoint, title: "Checkpoint · \(heading)",
+                    body: lines.isEmpty ? "No question written yet." : lines.joined(separator: "\n\n"),
+                    isPlaceholder: lines.isEmpty
+                ))
             case .simulation:
-                var lines = ["## Simulation · \(heading)"]
+                var lines: [String] = []
                 if !box.subtitle.isEmpty { lines.append(box.subtitle) }
                 if !box.referenceURL.isEmpty { lines.append("Reference: \(box.referenceURL)") }
                 lines.append("_Built as a block workspace in Design Studio - open the canvas to run it._")
-                sections.append(lines.joined(separator: "\n\n"))
-                followPlain(box)
+                sections.append(BookSection(
+                    id: box.id, type: .simulation, title: "Simulation · \(heading)",
+                    body: lines.joined(separator: "\n\n"),
+                    isPlaceholder: false
+                ))
             case .branch:
-                sections.append("## \(heading)")
-                for (index, edge) in edgesFrom(box.id).enumerated() {
+                let outgoing = edgesFrom(box.id)
+                let choiceLines = outgoing.enumerated().map { index, edge -> String in
                     let choice = edge.label ?? "Choice \(index + 1)"
-                    sections.append("### If you choose: \(choice)")
-                    if let next = self.box(edge.to) { render(next) }
+                    let target = self.box(edge.to).map { $0.title.isEmpty ? "Untitled" : $0.title } ?? "?"
+                    return "- If you choose **\(choice)**: continue at \u{201c}\(target)\u{201d}"
                 }
+                sections.append(BookSection(
+                    id: box.id, type: .branch, title: heading,
+                    body: choiceLines.isEmpty
+                        ? "No paths connected yet."
+                        : "Choose a path:\n\n" + choiceLines.joined(separator: "\n"),
+                    isPlaceholder: choiceLines.isEmpty
+                ))
             }
-        }
-
-        func followPlain(_ box: DesignBox) {
             for edge in edgesFrom(box.id) {
                 if let next = self.box(edge.to) { render(next) }
             }
         }
 
         for start in startBoxes { render(start) }
-        guard !sections.isEmpty else { return nil }
+        // Same pure-cycle fallback as walkOrder.
+        if sections.isEmpty, let fallback = boxes.sorted(by: { ($0.position.y, $0.position.x) < ($1.position.y, $1.position.x) }).first {
+            render(fallback)
+        }
+        return sections
+    }
 
-        let resolvedTitle: String = {
-            let trimmed = title.trimmingCharacters(in: .whitespacesAndNewlines)
-            if !trimmed.isEmpty { return trimmed }
-            if let firstChapter = walkOrder.first(where: { $0.type == .chapter && !$0.title.isEmpty }) {
-                return firstChapter.title
-            }
-            return "Untitled book"
-        }()
-        return (resolvedTitle, sections.joined(separator: "\n\n"))
+    /// The publishable book title - the student's own working title, else
+    /// the first named chapter on the path, else honest "Untitled book".
+    var resolvedTitle: String {
+        let trimmed = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !trimmed.isEmpty { return trimmed }
+        if let firstChapter = walkOrder.first(where: { $0.type == .chapter && !$0.title.isEmpty }) {
+            return firstChapter.title
+        }
+        return "Untitled book"
+    }
+
+    /// Walks the graph into the linear markdown `BinderStore.addBook`
+    /// expects - the same `## Chapter\n\nbody` shape `BookWorkflowView.
+    /// publish()` already writes, so published canvases and published
+    /// straight-line books are indistinguishable to the Binder.
+    /// Placeholder (unwritten) sections are dropped: publish ships only
+    /// real content, while the preview shows the draft's gaps.
+    func assembleBook() -> (title: String, body: String)? {
+        guard canPublish else { return nil }
+        let real = assembleSections().filter { !$0.isPlaceholder }
+        guard !real.isEmpty else { return nil }
+        let body = real.map { "## \($0.title)\n\n\($0.body)" }.joined(separator: "\n\n")
+        return (resolvedTitle, body)
     }
 
     func clearAllForTesting() {

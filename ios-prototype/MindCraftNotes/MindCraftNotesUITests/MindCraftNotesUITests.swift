@@ -2479,6 +2479,16 @@ final class MindCraftNotesUITests: XCTestCase {
         XCTAssertTrue(order.waitForExistence(timeout: 5), "expected the reading-order marker")
         XCTAssertEqual(order.label, "New Chapter > New Checkpoint", "expected the graph walk to order chapter before its connected checkpoint")
         attachScreenshot(app, name: "design_canvas_connected")
+
+        // Preview shows the same walk as a readable book - including the
+        // honest unwritten-chapter placeholder (publish drops placeholders;
+        // preview is the draft view that shows the gaps).
+        app.buttons["designStudioPreviewBook"].tap()
+        XCTAssertTrue(app.descendants(matching: .any)["designStudioPreviewRoot"].waitForExistence(timeout: 5), "expected the book preview cover")
+        XCTAssertTrue(app.staticTexts["This chapter hasn't been written yet."].waitForExistence(timeout: 5), "expected the unwritten chapter's honest placeholder in preview")
+        attachScreenshot(app, name: "design_book_preview")
+        app.buttons["designStudioPreviewDone"].tap()
+        XCTAssertTrue(app.buttons["designStudioAdd_chapter"].waitForExistence(timeout: 5), "expected preview Done to land back on the canvas")
     }
 
     /// Branch boxes + the simulation shell, the two content types the
