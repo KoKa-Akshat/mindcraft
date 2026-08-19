@@ -2283,35 +2283,51 @@ final class MindCraftNotesUITests: XCTestCase {
     /// CURSOR_HANDOFF.md - explicit ask, a real product reference image):
     /// a generated lesson opens as a tabbed overlay - one tab per chapter
     /// plus a real Sources tab - with the dashboard still visible/mounted
-    /// underneath (not navigated away from), and closing clears it back to
-    /// the normal dashboard. Real voice generation needs a connected AI
-    /// key and a live network round trip, neither available here - seeded
-    /// via `--ui-testing-study-session` (`JesseCallSession.
-    /// seedWorkDashboardLessonForTesting`), same shape as
-    /// `--ui-testing-content-viewer` elsewhere in this file.
+    /// underneath (not navigated away from - it's rendered embedded inside
+    /// Binder's own tile now, 2026-08-19, not a separate full-screen
+    /// overlay), and closing clears it back to the normal dashboard. Real
+    /// voice generation needs a connected AI key and a live network round
+    /// trip, neither available here - `--ui-testing-study-session` seeds
+    /// straight into `generatedBooks`/`viewingBook` (already open, same
+    /// directness as `--ui-testing-content-viewer` elsewhere in this file)
+    /// rather than through `jesseCall.workDashboardLesson`, since a real
+    /// generated lesson no longer auto-opens on its own anymore either.
     func testStudySessionShowsChaptersAndSourcesThenCloses() {
         let app = launchFieldDeskApp(extraArgs: ["--ui-testing-study-session"])
         XCUIDevice.shared.orientation = .landscapeLeft
         XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 15))
 
-        XCTAssertTrue(app.descendants(matching: .any)["studySessionRoot"].waitForExistence(timeout: 10), "expected the Study Session overlay to open")
+        XCTAssertTrue(app.descendants(matching: .any)["studySessionRoot"].waitForExistence(timeout: 10), "expected the Study Session to open")
         XCTAssertTrue(app.buttons["deskGridTile_Homework Help"].exists, "expected the dashboard to stay mounted underneath, not navigated away from")
         XCTAssertTrue(app.staticTexts["Derivatives"].exists, "expected the real lesson topic as the session title")
 
-        // Long body strings exceed the 128-char limit on the plain string
-        // subscript query - a CONTAINS predicate on a shorter, distinctive
-        // substring sidesteps that instead of asserting on the full text.
-        func bodyContains(_ substring: String) -> XCUIElement {
-            app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", substring)).firstMatch
-        }
-        XCTAssertTrue(bodyContains("shrinking the interval delta-x toward zero").exists, "expected chapter 1's own real body text, not a repeat of the definition")
+        // studySessionActiveContent is a marker carrying whichever content
+        // (chapter body or sources) is currently active as its label - the
+        // real tab-pill buttons and chapter/sources text don't publish into
+        // the accessibility tree at this exact nesting depth (embedded
+        // inside the scaled tileBoard artboard's pin()/.scaleEffect, inside
+        // a Button's own label), confirmed via a real screenshot to be a
+        // query-only limitation, not a rendering or touch-input bug - see
+        // StudySessionView's `content` doc comment. Navigation here uses
+        // the chevron arrow buttons instead of tab pills for the same
+        // reason: they sit outside the ScrollView and do resolve.
+        let activeContent = app.staticTexts["studySessionActiveContent"]
+        XCTAssertTrue(activeContent.waitForExistence(timeout: 5))
+        XCTAssertTrue(activeContent.label.contains("shrinking the interval delta-x toward zero"), "expected chapter 1's own real body text, not a repeat of the definition")
 
-        app.buttons["studySessionTab_2"].tap()
-        XCTAssertTrue(bodyContains("differentiate the outside first").waitForExistence(timeout: 5), "expected switching tabs to show that chapter's own real content")
+        app.buttons["chevron.right"].tap()
+        app.buttons["chevron.right"].tap()
+        XCTAssertTrue(activeContent.label.contains("differentiate the outside first"), "expected switching chapters to show that chapter's own real content")
 
-        app.buttons["studySessionTab_sources"].tap()
-        XCTAssertTrue(app.descendants(matching: .any)["studySessionSources"].waitForExistence(timeout: 5))
-        XCTAssertTrue(app.staticTexts["Framing Concepts Through Delta"].exists, "expected a real citation, not a placeholder")
+        app.buttons["chevron.right"].tap()
+        app.buttons["chevron.right"].tap()
+        // studySessionSources' own identifier sits inside the same broken
+        // ScrollView subtree as the chapter body was (sourcesContent is
+        // rendered through the exact same Group), so it doesn't resolve
+        // here either - same reasoning as the marker above, checked the
+        // same way instead of assuming the old full-screen-era assertion
+        // still holds now that this is embedded.
+        XCTAssertTrue(activeContent.label.contains("Framing Concepts Through Delta"), "expected navigating past the last chapter to land on Sources with a real citation, not a placeholder")
 
         app.buttons["studySessionClose"].tap()
         XCTAssertFalse(app.descendants(matching: .any)["studySessionRoot"].waitForExistence(timeout: 3), "expected closing to dismiss the session")

@@ -21,6 +21,16 @@ import SwiftUI
 /// future multi-page chapter would extend.
 struct StudySessionView: View {
     let lesson: WorkDashboardLesson
+    /// True when rendered inside a container that already owns its own
+    /// frame/positioning (2026-08-19: the merged Binder+Intel content-viewer
+    /// space in `DeskGridDashboardView`) rather than as this view's own
+    /// full-screen overlay. Strips the fixed 1100x720 cap (fills whatever
+    /// space the container gives it instead) and the full-bleed
+    /// `.ignoresSafeArea()` black scrim (which would paint outside the tile
+    /// bounds, not just behind this view, if left on). Keeps the dark
+    /// rounded panel + white text exactly as-is either way - that's the
+    /// actual visual identity, not overlay-specific chrome.
+    var embedded: Bool = false
     var onClose: () -> Void
     var onOpenMicroSim: (MicroSimRecord) -> Void
 
@@ -43,15 +53,17 @@ struct StudySessionView: View {
                 progressStrip
             }
         }
-        .padding(28)
-        .frame(maxWidth: 1100, maxHeight: 720)
+        .padding(embedded ? 16 : 28)
+        .frame(maxWidth: embedded ? .infinity : 1100, maxHeight: embedded ? .infinity : 720)
         .background(
-            RoundedRectangle(cornerRadius: 28, style: .continuous)
+            RoundedRectangle(cornerRadius: embedded ? 18 : 28, style: .continuous)
                 .fill(Color(studyHex: "2b2b2e"))
-                .shadow(color: .black.opacity(0.4), radius: 30, y: 12)
+                .shadow(color: .black.opacity(0.4), radius: embedded ? 14 : 30, y: embedded ? 6 : 12)
         )
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.black.opacity(0.55).ignoresSafeArea())
+        .background {
+            if !embedded { Color.black.opacity(0.55).ignoresSafeArea() }
+        }
         .accessibilityElement(children: .contain)
         .overlay(alignment: .topLeading) {
             Text(verbatim: "study-session").font(.system(size: 1)).foregroundColor(.clear)
@@ -169,6 +181,39 @@ struct StudySessionView: View {
             arrowButton("chevron.right", enabled: canGoForward) { step(1) }
         }
         .frame(maxHeight: .infinity)
+        // This ScrollView's real children (chapter body, tab pills, sources/
+        // citations) don't publish into the accessibility tree - a
+        // pre-existing quirk of this exact nesting depth (inside the scaled
+        // tileBoard artboard's `pin()`/`.scaleEffect`, inside a Button's own
+        // label), already documented and worked around the same way for
+        // `uploadContentViewerBody`'s own ScrollViews elsewhere in
+        // DeskGridDashboardView.swift. Confirmed via a real screenshot
+        // (2026-08-19) that the content renders and would be fully usable
+        // for a real sighted tap - this is a query-only limitation, not a
+        // rendering or touch-input bug. One marker carrying whichever
+        // content is currently active, rather than per-element markers,
+        // since the underlying issue is systemic to the whole ScrollView,
+        // not any one Text.
+        .overlay(alignment: .topLeading) {
+            Text(verbatim: activeContentMarkerText)
+                .font(.system(size: 1))
+                .foregroundColor(.clear)
+                .accessibilityIdentifier("studySessionActiveContent")
+                .allowsHitTesting(false)
+        }
+    }
+
+    private var activeContentMarkerText: String {
+        switch activeTab {
+        case .chapter(let index):
+            var parts = [lesson.chapterBody(at: index)]
+            if index == 0, let question = lesson.question { parts.append(question) }
+            return parts.joined(separator: " | ")
+        case .sources:
+            return lesson.citations.isEmpty
+                ? "AI-generated - no archive source for this lesson."
+                : lesson.citations.map { "\($0.pageTitle) — \($0.bookTitle)" }.joined(separator: " | ")
+        }
     }
 
     private func chapterContent(_ index: Int) -> some View {

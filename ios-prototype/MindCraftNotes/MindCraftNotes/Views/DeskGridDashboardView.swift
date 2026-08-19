@@ -26,6 +26,22 @@ private struct HomeworkUploadSummary: Identifiable {
     var microsims: [MicroSimRecord] = []
 }
 
+/// One lesson Jesse has finished generating - surfaced as its own entry
+/// under Knowledge Graph (2026-08-19), distinct from a raw Homework Help
+/// upload. `id` is the topic itself: two generations of the SAME topic in
+/// one session are intentionally treated as the same book (re-opening shows
+/// the latest), not two list entries - there's no other stable identity a
+/// re-ask of the same topic would have.
+private struct GeneratedBook: Identifiable, Equatable {
+    let id: String
+    let lesson: WorkDashboardLesson
+
+    init(lesson: WorkDashboardLesson) {
+        self.id = lesson.topic
+        self.lesson = lesson
+    }
+}
+
 /// Manual `UIDocumentPickerViewController` wrapper, not SwiftUI's own
 /// `.fileImporter` - confirmed via a diagnostic UI test that `.fileImporter`
 /// here flips `isPresented` correctly (the tap/state wiring was never the
@@ -130,12 +146,53 @@ struct DeskGridDashboardView: View {
     @State private var homeworkUploads: [HomeworkUploadSummary] = []
     @State private var presentedMicroSim: MicroSimRecord?
     /// A tapped Homework Help upload being read in the merged Binder+Intel
-    /// space (2026-08-18, explicit ask: "once you upload things you
-    /// should get to click on that file and that should display on your
-    /// binder... it mixes with Intel to get all that space on the
-    /// right... Intel instead moves down to our search bar... you can
-    /// press on it to keep continuing to Jesse"). nil = normal layout.
+    /// space. No real trigger sets this anymore (2026-08-19, explicit ask:
+    /// "Homework Help should just be a space for uploads" - the tap-to-view
+    /// interaction moved to generated books, see `viewingBook` below) -
+    /// kept structurally rather than deleted, since `uploadContentViewerBody`/
+    /// the merged-space plumbing below still branches on it and a plain
+    /// homework upload's cards are still worth being able to open this way
+    /// later if that's ever wanted back.
     @State private var viewingUpload: HomeworkUploadSummary?
+    /// Every lesson Jesse has finished generating this session (2026-08-19,
+    /// explicit ask - real UX rework, not a tweak: a generated lesson is no
+    /// longer an automatic full-screen takeover the moment it's ready
+    /// (`StudySessionView` used to react to `jesseCall.workDashboardLesson`
+    /// directly). It now becomes a durable "book" entry surfaced under the
+    /// Knowledge Graph tile - `handleNewLesson` appends here instead of
+    /// filing into Binder/Homework Help.
+    @State private var generatedBooks: [GeneratedBook] = []
+    /// The book currently open in the merged Binder+Intel space -
+    /// `StudySessionView`'s Contents/chapter navigation renders embedded
+    /// there (see `tileBody`'s `.binder` branch) instead of as a full-screen
+    /// overlay. Mutually exclusive with `viewingUpload`/
+    /// `viewingKnowledgeGraphInBinder` by construction - every place that
+    /// sets one of the three clears the other two (`closeBinderContentViewer`).
+    @State private var viewingBook: GeneratedBook?
+    /// The live per-student mastery graph, shown big in the merged
+    /// Binder+Intel space (2026-08-19, explicit ask: "when you click on
+    /// Knowledge Graph, the knowledge graph should be displayed on Binder
+    /// too") - the small in-tile `knowledgeGraphTileBody()` canvas stays as
+    /// the at-a-glance view; this is the same live data, just full-size.
+    @State private var viewingKnowledgeGraphInBinder = false
+
+    /// True whenever Binder should be showing ANY of the three merged-space
+    /// content modes above rather than its own normal titles/blurb - the
+    /// single condition every layout/visibility check below reads instead
+    /// of each hand-rolling its own `viewingUpload != nil || viewingBook !=
+    /// nil || ...` (three call sites already needed this before
+    /// `viewingBook`/`viewingKnowledgeGraphInBinder` existed; missing one on
+    /// a future fourth mode is exactly the kind of bug this centralizes
+    /// away).
+    private var binderContentViewerActive: Bool {
+        viewingUpload != nil || viewingBook != nil || viewingKnowledgeGraphInBinder
+    }
+
+    private func closeBinderContentViewer() {
+        viewingUpload = nil
+        viewingBook = nil
+        viewingKnowledgeGraphInBinder = false
+    }
 
     /// In-canvas pan navigation for the sidebar's destinations (2026-08-18,
     /// explicit ask, second time asked more forcefully after the first pass
@@ -378,27 +435,37 @@ struct DeskGridDashboardView: View {
                     homeworkUploads = [seed]
                     viewingUpload = seed
                 }
+                // Seeds directly into `generatedBooks`/`viewingBook`, same
+                // directness as `--ui-testing-content-viewer` above, rather
+                // than round-tripping through `jesseCall.workDashboardLesson`
+                // (2026-08-19: a generated lesson no longer auto-opens the
+                // moment it exists - see `handleNewLesson` - so seeding the
+                // OLD way would land the book in the strip but never open
+                // it, and this flag's whole point is proving the open
+                // Contents/chapter view itself, same as this flag's name
+                // always meant).
                 if ProcessInfo.processInfo.arguments.contains("--ui-testing-study-session") {
-                    jesseCall.seedWorkDashboardLessonForTesting(
-                        WorkDashboardLesson(
-                            topic: "derivatives",
-                            source: .archive(bookTitle: "Calculus"),
-                            chapters: ["Framing Concepts Through Delta", "The Power Rule", "Chain Rule", "Key Takeaways"],
-                            chapterBodies: [
-                                "A derivative measures how fast a quantity changes - the slope of the tangent line at a single point, found by shrinking the interval delta-x toward zero.",
-                                "For any power of x, bring the exponent down and subtract one from it: the derivative of x^n is n times x^(n-1). This one rule handles most polynomial terms you'll see.",
-                                "When a function is built out of another function, differentiate the outside first, then multiply by the derivative of the inside.",
-                                "Derivatives turn a curve's shape into numbers you can reason about: where it's rising, falling, or momentarily flat.",
-                            ],
-                            definition: "A derivative measures the instantaneous rate of change of a function.",
-                            question: "If f(x) = x^3, what is f'(x)?",
-                            microsims: [],
-                            citations: [
-                                LessonCitation(bookTitle: "Calculus", pageTitle: "Framing Concepts Through Delta", url: "https://dmccreary.github.io/calculus/chapters/02-limits/framing-concepts-through-delta/"),
-                                LessonCitation(bookTitle: "Calculus", pageTitle: "Key Takeaways", url: "https://dmccreary.github.io/calculus/chapters/03-derivatives/key-takeaways/"),
-                            ]
-                        )
+                    let lesson = WorkDashboardLesson(
+                        topic: "derivatives",
+                        source: .archive(bookTitle: "Calculus"),
+                        chapters: ["Framing Concepts Through Delta", "The Power Rule", "Chain Rule", "Key Takeaways"],
+                        chapterBodies: [
+                            "A derivative measures how fast a quantity changes - the slope of the tangent line at a single point, found by shrinking the interval delta-x toward zero.",
+                            "For any power of x, bring the exponent down and subtract one from it: the derivative of x^n is n times x^(n-1). This one rule handles most polynomial terms you'll see.",
+                            "When a function is built out of another function, differentiate the outside first, then multiply by the derivative of the inside.",
+                            "Derivatives turn a curve's shape into numbers you can reason about: where it's rising, falling, or momentarily flat.",
+                        ],
+                        definition: "A derivative measures the instantaneous rate of change of a function.",
+                        question: "If f(x) = x^3, what is f'(x)?",
+                        microsims: [],
+                        citations: [
+                            LessonCitation(bookTitle: "Calculus", pageTitle: "Framing Concepts Through Delta", url: "https://dmccreary.github.io/calculus/chapters/02-limits/framing-concepts-through-delta/"),
+                            LessonCitation(bookTitle: "Calculus", pageTitle: "Key Takeaways", url: "https://dmccreary.github.io/calculus/chapters/03-derivatives/key-takeaways/"),
+                        ]
                     )
+                    let book = GeneratedBook(lesson: lesson)
+                    generatedBooks = [book]
+                    viewingBook = book
                 }
             }
 
@@ -428,25 +495,6 @@ struct DeskGridDashboardView: View {
             // returning to the dashboard first needs the sidebar visible
             // the whole time, not just on the dashboard's own page).
             leftSidebar
-            // Study Session (2026-08-19, Assignment L in CURSOR_HANDOFF.md) -
-            // top-level overlay, on top of the sidebar too (a true modal),
-            // screen-space like `bottomDock`/`leftSidebar` rather than a
-            // `.fullScreenCover` so the dashboard genuinely stays mounted
-            // underneath. Closing a lesson via `jesseCall.begin()`'s own
-            // reset (a fresh call) or the view's own Close button both
-            // just clear `workDashboardLesson`, which this already
-            // reacts to.
-            if let lesson = jesseCall.workDashboardLesson {
-                // Not re-identified from here - StudySessionView already
-                // self-identifies internally (`studySessionRoot`), and an
-                // outer identifier at the call site would clobber it, the
-                // same documented bug already hit twice elsewhere this
-                // session.
-                StudySessionView(lesson: lesson, onClose: jesseCall.closeLessonSession) { sim in
-                    presentedMicroSim = sim
-                }
-                .transition(.opacity)
-            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .ignoresSafeArea()
@@ -497,7 +545,7 @@ struct DeskGridDashboardView: View {
                 .frame(width: board.width, height: board.height)
             // Intel's own tile is skipped entirely in content-viewer mode
             // (see boxRect/searchField) - Binder expands into its space.
-            if viewingUpload == nil {
+            if !binderContentViewerActive {
                 pin(boxRect(.intel), scale: scale) {
                     photoTile(.intel)
                 }
@@ -1098,7 +1146,15 @@ struct DeskGridDashboardView: View {
             onOpenIntel()
         case .moodle:
             // Knowledge Graph now - a tap refreshes the real live data
-            // instead of opening the old Moodle LMS connect sheet.
+            // instead of opening the old Moodle LMS connect sheet, AND
+            // opens the same graph big in the merged Binder+Intel space
+            // (2026-08-19, explicit ask). A tap that lands on a specific
+            // book strip inside this tile fires that Button's own action
+            // instead (SwiftUI intercepts it before it reaches this outer
+            // tile action), so this only fires for a tap on the tile
+            // itself.
+            closeBinderContentViewer()
+            viewingKnowledgeGraphInBinder = true
             Task { await knowledgeGraphClient.load() }
         case .homeworkHelp:
             showHomeworkImporter = true
@@ -1222,35 +1278,20 @@ struct DeskGridDashboardView: View {
     }
 
     /// Routes a real `WorkDashboardLesson` (from `jesseCall.askJesseWorkDashboard`,
-    /// "I want to learn X") into Binder (filed artifact) and Homework Help
-    /// (definition/chapters/question - reuses its existing upload-summary
-    /// display, no new UI). The Knowledge Graph tile shows the student's
-    /// real live mastery graph, not this lesson's chapters (2026-08-18,
-    /// explicit ask: "remove moodle completely... this box will be used
-    /// to show the knowledge graph"). Intel's own "table of contents" is
-    /// already visible where Jesse said it, in the transcript this same
-    /// call just spoke into - no separate rendering needed there.
+    /// "I want to learn X") into `generatedBooks` (2026-08-19, reworked from
+    /// the earlier Binder/Homework-Help filing below) - it becomes a book
+    /// entry under Knowledge Graph, opened on demand, not an automatic
+    /// takeover the moment generation finishes. `workDashboardLesson` was
+    /// only ever a transient "Jesse just finished" signal for the old
+    /// auto-overlay; `closeLessonSession()` consumes it immediately here so
+    /// nothing upstream keeps reacting to a signal this view has already
+    /// turned into durable state.
     private func handleNewLesson(_ lesson: WorkDashboardLesson?) {
         guard let lesson else { return }
-        var body = lesson.definition
-        if !lesson.chapters.isEmpty {
-            body += "\n\nChapters:\n" + lesson.chapters.map { "- \($0)" }.joined(separator: "\n")
-        }
-        if let question = lesson.question {
-            body += "\n\nPractice question:\n\(question)"
-        }
-        onFileHomeworkToBinder("Lesson · \(lesson.topic.capitalized)", body)
-
-        var cards: [IngredientHintsClient.HintCard] = [
-            IngredientHintsClient.HintCard(title: "Definition", body: lesson.definition),
-        ]
-        if !lesson.chapters.isEmpty {
-            cards.append(IngredientHintsClient.HintCard(title: "Chapters", body: lesson.chapters.joined(separator: "\n")))
-        }
-        if let question = lesson.question {
-            cards.append(IngredientHintsClient.HintCard(title: "Practice question", body: question))
-        }
-        homeworkUploads.insert(HomeworkUploadSummary(fileName: lesson.topic.capitalized, cards: cards, microsims: lesson.microsims), at: 0)
+        let book = GeneratedBook(lesson: lesson)
+        generatedBooks.removeAll { $0.id == book.id }
+        generatedBooks.insert(book, at: 0)
+        jesseCall.closeLessonSession()
     }
 
     /// Only Binder participates in `DeskBoxBus`'s grow/shrink negotiation -
@@ -1278,7 +1319,18 @@ struct DeskGridDashboardView: View {
             let hasCalendar = gmail.hasCalendarScope && !gmail.week.isEmpty
             return !intelLines.isEmpty || hasEmail || hasCalendar
         case .binder:
-            return !binderTitles.isEmpty
+            // Also true for the three merged-space content modes
+            // (2026-08-19) - this feeds tileIsGrown's Spacer placement AND
+            // the mascot-icon exclusion condition in photoTile, both of
+            // which need to know "Binder has real full-size content right
+            // now" regardless of whether binderTitles itself happens to be
+            // non-empty. Missing this was a real bug, not a hypothetical:
+            // a book opened this way rendered with a stray person-icon
+            // underneath it and its content pushed toward the tile's
+            // bottom edge by an unwanted leading Spacer, caught by
+            // testStudySessionShowsChaptersAndSourcesThenCloses actually
+            // failing to find chapter 1's body text, not by inspection.
+            return !binderTitles.isEmpty || binderContentViewerActive
         case .homeworkHelp, .memo:
             return false
         }
@@ -1327,9 +1379,24 @@ struct DeskGridDashboardView: View {
         // though its own tile wash (violet) is dark.
         let ink: Color = (kind == .binder || kind == .homeworkHelp || kind == .moodle) ? tileInk : .white
         // Content-viewer mode takes priority over every other Binder
-        // state - a real, tapped upload's content, not Binder's normal
-        // titles/blurb (2026-08-18, explicit ask).
-        if kind == .binder, let viewingUpload {
+        // state - a real, tapped book/upload/knowledge-graph, not Binder's
+        // normal titles/blurb. A book takes priority over an upload (2026-08-19:
+        // opening a book while an old upload was mid-view should show the
+        // book, not silently no-op) - in practice `closeBinderContentViewer`
+        // already keeps these mutually exclusive, this ordering is a second,
+        // cheap guarantee, not the only one.
+        if kind == .binder, let viewingBook {
+            // Deliberately NOT wrapped in tileInnerCard - StudySessionView
+            // paints its own dark rounded panel + white text (its real
+            // visual identity, see its `embedded` doc comment), which
+            // tileInnerCard's white card background would sit uselessly
+            // behind/clash with rather than complement.
+            StudySessionView(lesson: viewingBook.lesson, embedded: true, onClose: closeBinderContentViewer) { sim in
+                presentedMicroSim = sim
+            }
+        } else if kind == .binder, viewingKnowledgeGraphInBinder {
+            tileInnerCard { knowledgeGraphContentViewerBody(ink: ink) }
+        } else if kind == .binder, let viewingUpload {
             tileInnerCard { uploadContentViewerBody(viewingUpload, ink: ink) }
         } else if agentTakeoverActive && kind == .binder && (agentEmail != nil || agentDraftBusy || agentBinderLines != nil) {
             AnyView(agentBinderTakeoverView(ink: ink))
@@ -1436,7 +1503,7 @@ struct DeskGridDashboardView: View {
                     .foregroundColor(ink)
                 Spacer(minLength: 0)
                 Button {
-                    withAnimation(.easeInOut(duration: 0.25)) { viewingUpload = nil }
+                    withAnimation(.easeInOut(duration: 0.25)) { closeBinderContentViewer() }
                 } label: {
                     Image(systemName: "xmark.circle.fill")
                         .font(.system(size: 20))
@@ -1590,11 +1657,14 @@ struct DeskGridDashboardView: View {
                             .padding(8)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .background(RoundedRectangle(cornerRadius: 8, style: .continuous).fill(Color(gridHex: "f3f1ec")))
-                            // Tap the row itself (not the microsim button
-                            // inside it) to open this upload's real content
-                            // in the merged Binder+Intel space.
-                            .contentShape(Rectangle())
-                            .onTapGesture { withAnimation(.easeInOut(duration: 0.25)) { viewingUpload = upload } }
+                            // No longer tappable into the merged Binder+Intel
+                            // space (2026-08-19, explicit ask: "Homework Help
+                            // should just be a space for uploads" - that
+                            // interaction now belongs to generated books
+                            // under Knowledge Graph, see `viewingBook`).
+                            // Filename + summary here is still real, useful
+                            // confirmation the upload worked, just not a
+                            // launch point anymore.
                             .accessibilityIdentifier("deskGridHomeworkUploadRow_\(upload.id)")
                         }
                     }
@@ -1621,6 +1691,35 @@ struct DeskGridDashboardView: View {
     @ViewBuilder
     private func knowledgeGraphTileBody() -> some View {
         VStack(spacing: 10) {
+            // Generated books (2026-08-19, explicit ask: "the generated
+            // book then appears under Knowledge Graph, with its book name
+            // and a small rectangular button-like strip") - a real Button
+            // per book, not a tap gesture, so it correctly intercepts its
+            // own tap instead of bubbling up to the tile's outer
+            // handleTile(.moodle) (same nesting microsim buttons elsewhere
+            // in this file already rely on).
+            if !generatedBooks.isEmpty {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 8) {
+                        ForEach(generatedBooks) { book in
+                            Button {
+                                closeBinderContentViewer()
+                                viewingBook = book
+                            } label: {
+                                Text(book.lesson.topic.capitalized)
+                                    .font(.system(size: 11, weight: .bold, design: .rounded))
+                                    .lineLimit(1)
+                                    .foregroundColor(tileInk)
+                                    .padding(.horizontal, 10)
+                                    .padding(.vertical, 6)
+                                    .background(RoundedRectangle(cornerRadius: 8, style: .continuous).fill(Color(gridHex: "b19cd9").opacity(0.35)))
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityIdentifier("deskGridGeneratedBook_\(book.id)")
+                        }
+                    }
+                }
+            }
             if knowledgeGraphClient.nodes.isEmpty {
                 Spacer(minLength: 0)
                 if knowledgeGraphClient.isLoading {
@@ -1648,6 +1747,52 @@ struct DeskGridDashboardView: View {
                 KnowledgeGraphCanvas(nodes: knowledgeGraphClient.nodes, edges: knowledgeGraphClient.edges)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .accessibilityIdentifier("deskGridKnowledgeGraphCanvas")
+            }
+        }
+    }
+
+    /// The same live graph, big, in the merged Binder+Intel space
+    /// (2026-08-19, explicit ask: "when you click on Knowledge Graph, the
+    /// knowledge graph should be displayed on Binder too"). Same data
+    /// source as the small in-tile version above - `KnowledgeGraphCanvas`
+    /// just gets far more room to actually spread real nodes/edges out.
+    @ViewBuilder
+    private func knowledgeGraphContentViewerBody(ink: Color) -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Text("Knowledge Graph")
+                    .font(.system(size: 18, weight: .heavy, design: .rounded))
+                    .foregroundColor(ink)
+                Spacer(minLength: 0)
+                Button {
+                    withAnimation(.easeInOut(duration: 0.25)) { closeBinderContentViewer() }
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .font(.system(size: 20))
+                        .foregroundColor(ink.opacity(0.4))
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("deskGridContentViewerClose")
+            }
+            if knowledgeGraphClient.nodes.isEmpty {
+                Spacer(minLength: 0)
+                emptyGraphSeed
+                Text("This grows as you learn and engage with new things.")
+                    .font(.system(size: 13, weight: .semibold, design: .rounded))
+                    .foregroundColor(ink.opacity(0.7))
+                Spacer(minLength: 0)
+            } else {
+                HStack(spacing: 10) {
+                    let mastered = knowledgeGraphClient.nodes.filter { $0.status == "mastered" }.count
+                    Text("\(mastered)/\(knowledgeGraphClient.nodes.count) concepts mastered")
+                        .font(.system(size: 12, weight: .heavy, design: .rounded))
+                        .foregroundColor(ink.opacity(0.75))
+                    Spacer(minLength: 0)
+                    knowledgeGraphLegend
+                }
+                KnowledgeGraphCanvas(nodes: knowledgeGraphClient.nodes, edges: knowledgeGraphClient.edges)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .accessibilityIdentifier("deskGridKnowledgeGraphCanvasExpanded")
             }
         }
     }
@@ -1889,7 +2034,7 @@ struct DeskGridDashboardView: View {
         // Binder expands to the Binder+Intel union; Intel's own tile is
         // skipped entirely (see tileBoard), so its rect is never asked
         // for while this is active.
-        if viewingUpload != nil, kind == .binder {
+        if binderContentViewerActive, kind == .binder {
             return WorkArtboard.contentViewerBinder
         }
         let base: CGRect
@@ -2166,15 +2311,15 @@ struct DeskGridDashboardView: View {
     private func searchField(placeholder: String, identifier: String, text: Binding<String>? = nil, onSubmit: @escaping () -> Void) -> some View {
         ZStack {
             HStack(spacing: 6) {
-                // While viewing an upload's content (Binder+Intel merged),
-                // the search icon becomes the raccoon - the real way back
-                // to Jesse without needing Intel's own tile back
-                // (2026-08-18, explicit ask: "instead of the search you
-                // see the raccoon and you can press on it to keep
-                // continuing to Jesse").
-                if viewingUpload != nil {
+                // While Binder+Intel are merged (an upload, a book, or the
+                // knowledge graph, big), the search icon becomes the raccoon
+                // - the real way back to Jesse without needing Intel's own
+                // tile back (2026-08-18, explicit ask: "instead of the
+                // search you see the raccoon and you can press on it to
+                // keep continuing to Jesse").
+                if binderContentViewerActive {
                     Button {
-                        withAnimation(.easeInOut(duration: 0.25)) { viewingUpload = nil }
+                        withAnimation(.easeInOut(duration: 0.25)) { closeBinderContentViewer() }
                     } label: {
                         JesseRailView.raccoonImage
                             .resizable()
@@ -2362,13 +2507,23 @@ private enum WorkArtboard {
     // eased back down slightly (24 -> 40, it read as too tight against
     // the very top edge), bottom pushed further down (790 -> 800, now
     // only 10pt short of the board's true 810 edge instead of 20).
-    static let p4HomeworkHelp = CGRect(x: 40, y: 40, width: 420, height: 370)
-    static let p4Moodle = CGRect(x: 40, y: 430, width: 420, height: 370)
+    // Seventh pass (2026-08-19, explicit ask): "expand Homework Help a
+    // little bit more vertically... push Knowledge Graph a little bit down
+    // ... but pad it properly." Homework Help grows by 40pt; Knowledge
+    // Graph's top moves down by the same 40 and loses 40pt of height so its
+    // OWN bottom edge stays exactly where the sixth pass put it (800, 10pt
+    // shy of the board's true 810 edge) - "padded properly" means keeping
+    // that established gap, not pushing flush to the edge.
+    static let p4HomeworkHelp = CGRect(x: 40, y: 40, width: 420, height: 410)
+    static let p4Moodle = CGRect(x: 40, y: 470, width: 420, height: 330)
     static let p4Binder = CGRect(x: 490, y: 40, width: 500, height: 760)
     static let p4Intel = CGRect(x: 1020, y: 40, width: 400, height: 760)
 
-    static let p5HomeworkHelp = CGRect(x: 35, y: 35, width: 340, height: 230)
-    static let p5Moodle = CGRect(x: 35, y: 280, width: 340, height: 280)
+    // Same seventh-pass rebalance as p4 above, scaled to this expanded
+    // page's own proportions - Moodle's bottom edge stays at 560 (matching
+    // Binder/Intel's own bottom edge on this page, unchanged).
+    static let p5HomeworkHelp = CGRect(x: 35, y: 35, width: 340, height: 255)
+    static let p5Moodle = CGRect(x: 35, y: 305, width: 340, height: 255)
     static let p5Binder = CGRect(x: 390, y: 35, width: 420, height: 525)
     static let p5Intel = CGRect(x: 825, y: 35, width: 340, height: 525)
     static let memoRail = CGRect(x: 1231, y: 193, width: 199, height: 194)
