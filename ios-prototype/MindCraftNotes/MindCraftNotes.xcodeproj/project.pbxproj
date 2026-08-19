@@ -50,7 +50,6 @@
 		96E8B917BB811401BE825DDF /* MicroSimLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DD656E755128E29056BA08 /* MicroSimLoader.swift */; };
 		9A6F2325A1FDC007FA06B7CA /* KnowledgeGraphClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333EDEE01284D66F3CAF76DD /* KnowledgeGraphClient.swift */; };
 		9D00117C89A5E8CB2AA33B3D /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3890F71414E363C12CC19397 /* DashboardView.swift */; };
-		9F93BBC616145E16B7A1E6C3 /* DevelopStudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011EEA07F9F30052D6CF90C6 /* DevelopStudioView.swift */; };
 		A0BOOKAGENTCLIENT01 /* BookAgentClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0BOOKAGENTCLIENT01 /* BookAgentClient.swift */; };
 		A0CREATECANVAS01A2 /* CreateCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CREATECANVAS01A2 /* CreateCanvasView.swift */; };
 		A0DESKCONTENTROW01 /* DeskContentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DESKCONTENTROW01 /* DeskContentRow.swift */; };
@@ -118,6 +117,7 @@
 		D7DESKBOXBUS01A2 /* DeskBoxBus.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DESKBOXBUS01A2 /* DeskBoxBus.swift */; };
 		D7GMAILBOXVW01A2B3C4 /* GmailWorkflowBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7GMAILBOXVW01A2B3C4 /* GmailWorkflowBoxView.swift */; };
 		D7JESSECALL01A2B3 /* JesseCallSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7JESSECALL01A2B3 /* JesseCallSession.swift */; };
+		D7GENSIMCL01A2B3C4 /* GeneratedSimClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7GENSIMCL01A2B3C4 /* GeneratedSimClient.swift */; };
 		D7JOBOSDETAIL01A2B3 /* JobOSRoleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7JOBOSDETAIL01A2B3 /* JobOSRoleDetailView.swift */; };
 		D7MOODLECLIENT01A2 /* MoodleClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7MOODLECLIENT01A2 /* MoodleClient.swift */; };
 		D7STUDENTAIKEY01 /* StudentAIKeyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7STUDENTAIKEY01 /* StudentAIKeyStore.swift */; };
@@ -126,6 +126,9 @@
 		D8DESKCALLOAD01A2B3 /* DeskCalendarLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DESKCALLOAD01A2B3 /* DeskCalendarLoader.swift */; };
 		D9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift */; };
 		D9BOOKWORKF01A2B3C4 /* BookWorkflowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BOOKWORKF01A2B3C4 /* BookWorkflowView.swift */; };
+		D9CONTGRAPH01A2B3C4 /* ContentGraphStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CONTGRAPH01A2B3C4 /* ContentGraphStore.swift */; };
+		D9SIMSTUDIO01A2B3C4 /* SimulationStudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9SIMSTUDIO01A2B3C4 /* SimulationStudioView.swift */; };
+		D9SIMPAGE0RES01A2B3 /* simulation in Resources */ = {isa = PBXBuildFile; fileRef = C9SIMPAGE0REF01A2B3 /* simulation */; };
 		D9BOOTMOTIV01A2B3C4 /* BootMotivationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BOOTMOTIV01A2B3C4 /* BootMotivationClient.swift */; };
 		D9DESKASKCLIENT01A2 /* DeskAskClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DESKASKCLIENT01A2 /* DeskAskClient.swift */; };
 		D9DESKRECORDSH01A2 /* DeskRecordSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DESKRECORDSH01A2 /* DeskRecordSheet.swift */; };
@@ -164,7 +167,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		011EEA07F9F30052D6CF90C6 /* DevelopStudioView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DevelopStudioView.swift; sourceTree = "<group>"; };
 		0317BB30BAEC751F016F6F0F /* HomeworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeworkClient.swift; sourceTree = "<group>"; };
 		037C287CDFB7C16477B6DBF0 /* KnowledgeMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnowledgeMapView.swift; sourceTree = "<group>"; };
 		0A74CA882801493092A9127F /* MindCraftNotesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MindCraftNotesApp.swift; sourceTree = "<group>"; };
@@ -258,6 +260,7 @@
 		C7DESKBOXBUS01A2 /* DeskBoxBus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskBoxBus.swift; sourceTree = "<group>"; };
 		C7GMAILBOXVW01A2B3C4 /* GmailWorkflowBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GmailWorkflowBoxView.swift; sourceTree = "<group>"; };
 		C7JESSECALL01A2B3 /* JesseCallSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JesseCallSession.swift; sourceTree = "<group>"; };
+		C7GENSIMCL01A2B3C4 /* GeneratedSimClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneratedSimClient.swift; sourceTree = "<group>"; };
 		C7JOBOSDETAIL01A2B3 /* JobOSRoleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobOSRoleDetailView.swift; sourceTree = "<group>"; };
 		C7MOODLECLIENT01A2 /* MoodleClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodleClient.swift; sourceTree = "<group>"; };
 		C7STUDENTAIKEY01 /* StudentAIKeyStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentAIKeyStore.swift; sourceTree = "<group>"; };
@@ -267,6 +270,9 @@
 		C9818B2D6693B4381129CB08 /* DiagnosticGateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticGateView.swift; sourceTree = "<group>"; };
 		C9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveWorkflowView.swift; sourceTree = "<group>"; };
 		C9BOOKWORKF01A2B3C4 /* BookWorkflowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookWorkflowView.swift; sourceTree = "<group>"; };
+		C9CONTGRAPH01A2B3C4 /* ContentGraphStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentGraphStore.swift; sourceTree = "<group>"; };
+		C9SIMSTUDIO01A2B3C4 /* SimulationStudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimulationStudioView.swift; sourceTree = "<group>"; };
+		C9SIMPAGE0REF01A2B3 /* simulation */ = {isa = PBXFileReference; lastKnownFileType = folder; name = simulation; path = ../../agent_work/product/desk_os/studio/simulation; sourceTree = SOURCE_ROOT; };
 		C9BOOTMOTIV01A2B3C4 /* BootMotivationClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BootMotivationClient.swift; sourceTree = "<group>"; };
 		C9D5E31F607182A3B4C5D6E7 /* FieldDeskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldDeskView.swift; sourceTree = "<group>"; };
 		C9DESKASKCLIENT01A2 /* DeskAskClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskAskClient.swift; sourceTree = "<group>"; };
@@ -407,6 +413,7 @@
 				C9FRIENDSTORE01A2B3 /* FriendsStore.swift */,
 				C9QCALINVITE01A2B3C4 /* QCalInvite.swift */,
 				C7JESSECALL01A2B3 /* JesseCallSession.swift */,
+				C7GENSIMCL01A2B3C4 /* GeneratedSimClient.swift */,
 				C7MOODLECLIENT01A2 /* MoodleClient.swift */,
 				C7DESKBOXBUS01A2 /* DeskBoxBus.swift */,
 				C8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift */,
@@ -486,9 +493,10 @@
 				C9FRIENDSVIEW01A2B3 /* FriendsView.swift */,
 				9F1858B772F353A476A8023F /* LearnStudioView.swift */,
 				600BDD909110482BB76AF2B6 /* DesignStudioView.swift */,
+				C9CONTGRAPH01A2B3C4 /* ContentGraphStore.swift */,
+				C9SIMSTUDIO01A2B3C4 /* SimulationStudioView.swift */,
 				5A10EB3BDDE04216B5B57403 /* JesseRailView.swift */,
 				C7078B04335739E9939AA984 /* MicroSimView.swift */,
-				011EEA07F9F30052D6CF90C6 /* DevelopStudioView.swift */,
 				E0BAFFB8EAB3F099DB44C2C7 /* StudySessionView.swift */,
 			);
 			path = Views;
@@ -514,6 +522,7 @@
 				W2FOLDERREF01A2B3C4D5E6 /* world2 */,
 				W3DESKWEBREF01A2B3C4D5E6 /* deskweb */,
 				W4STUDIOREF01A2B3C4D5E6 /* studio */,
+				C9SIMPAGE0REF01A2B3 /* simulation */,
 				3BB03A317B6A9CB5F0D8C128 /* wizard-doodle-cheer.png */,
 				287998194C3E67F5403DDF82 /* BookGraphs */,
 				6DB72D8E245D5E205B52EA4E /* MicroSims */,
@@ -669,6 +678,7 @@
 				W2RESBUILD01A2B3C4D5E6F7 /* world2 in Resources */,
 				W3DESKWEBRES01A2B3C4D5E6 /* deskweb in Resources */,
 				W4STUDIORES01A2B3C4D5E6 /* studio in Resources */,
+				D9SIMPAGE0RES01A2B3 /* simulation in Resources */,
 				044BEB21A5E2D8744455C7F2 /* wizard-doodle-cheer.png in Resources */,
 				FBF76380BE333E28BDF3F277 /* BookGraphs in Resources */,
 				7CE3B3940E5DECDEA8512DD4 /* MicroSims in Resources */,
@@ -729,6 +739,7 @@
 				45DD6448870A218F1EA9A065 /* ConceptGraphLoader.swift in Sources */,
 				20FE9273DBB5C8611FB6D861 /* RouteClient.swift in Sources */,
 				D7JESSECALL01A2B3 /* JesseCallSession.swift in Sources */,
+				D7GENSIMCL01A2B3C4 /* GeneratedSimClient.swift in Sources */,
 				D7MOODLECLIENT01A2 /* MoodleClient.swift in Sources */,
 				D7DESKBOXBUS01A2 /* DeskBoxBus.swift in Sources */,
 				D0KOKOROTTS01A2 /* KokoroTTSClient.swift in Sources */,
@@ -796,6 +807,8 @@
 				A99B09C9A6E7F8091B2C3D4E /* DeskPanCanvas.swift in Sources */,
 				B0C259017B6359197378F0FD /* LearnStudioView.swift in Sources */,
 				DDE6FE79749CA9A22EBDA201 /* DesignStudioView.swift in Sources */,
+				D9CONTGRAPH01A2B3C4 /* ContentGraphStore.swift in Sources */,
+				D9SIMSTUDIO01A2B3C4 /* SimulationStudioView.swift in Sources */,
 				D9FE32A2CBC826477D6BCDA2 /* ChatHistoryImportParser.swift in Sources */,
 				D82368581E38D584FD93B658 /* JesseRailView.swift in Sources */,
 				A0BOOKAGENTCLIENT01 /* BookAgentClient.swift in Sources */,
@@ -803,7 +816,6 @@
 				B751BD1AD01F55EF490ACCD6 /* BookGraphLoader.swift in Sources */,
 				96E8B917BB811401BE825DDF /* MicroSimLoader.swift in Sources */,
 				5A4BBF95456BC56D43B90E85 /* MicroSimView.swift in Sources */,
-				9F93BBC616145E16B7A1E6C3 /* DevelopStudioView.swift in Sources */,
 				00E78E9826A7228E60B2F09B /* StudySessionView.swift in Sources */,
 				07D81625C54AD426DC078177 /* LessonGraphTagging.swift in Sources */,
 			);

@@ -33,6 +33,20 @@ struct StudySessionView: View {
     var embedded: Bool = false
     var onClose: () -> Void
     var onOpenMicroSim: (MicroSimRecord) -> Void
+    /// Opens a gate-passed GENERATED sim (closed test, see
+    /// `LiveGatedGeneration`) - separate from `onOpenMicroSim` because a
+    /// `GeneratedSimResult` is not a `MicroSimRecord` and pretending it is
+    /// would blur exactly the provenance line the attribution rules exist
+    /// to keep sharp. Defaulted so existing call sites stay valid.
+    var onOpenGeneratedSim: (GeneratedSimResult) -> Void = { _ in }
+
+    /// For `liveSimState` only - the live gated-generation request lives on
+    /// the session object (it outlives any one screen, and its loading
+    /// state deliberately IS `jesseCall.isThinking` - see that property's
+    /// doc comment). Safe here: this view is only ever created inside
+    /// `DeskGridDashboardView`, which sits under `DeskShellView`'s
+    /// `.environmentObject(jesseCall)`.
+    @EnvironmentObject private var jesseCall: JesseCallSession
 
     private enum Tab: Equatable {
         case contents
@@ -221,6 +235,11 @@ struct StudySessionView: View {
         case .chapter(let index):
             var parts = [lesson.chapterBody(at: index)]
             if index == 0, let question = lesson.question { parts.append(question) }
+            // The generated-sim section renders inside the same
+            // non-publishing ScrollView as everything else here, so its
+            // state copy rides the marker too - it's the only way a UI
+            // test can assert the honest-outcome states at all.
+            if let simMarker = generatedSimMarkerText { parts.append(simMarker) }
             return parts.joined(separator: " | ")
         case .sources:
             return lesson.citations.isEmpty
@@ -350,6 +369,174 @@ struct StudySessionView: View {
                     }
                 }
             }
+
+            if LiveGatedGeneration.isEnabled {
+                generatedSimSection
+            }
+        }
+    }
+
+    // MARK: - Live gated generation (closed test, LIVE_GATED_GENERATION_TEST_SPEC.md)
+
+    /// The session's live-sim state, but only if it belongs to THIS lesson -
+    /// `liveSimState` is one slot on the shared session object, and a
+    /// student who generated for one topic then opened a different book
+    /// should not see the old topic's verdict under the new one. Every
+    /// case carries the ORIGINAL request topic for exactly this check.
+    private var liveSimStateForThisLesson: LiveSimState? {
+        guard let state = jesseCall.liveSimState else { return nil }
+        let stateTopic: String
+        switch state {
+        case .running(let topic, _): stateTopic = topic
+        case .verified(_, let topic, _): stateTopic = topic
+        case .noGoodResult(let topic, _, _): stateTopic = topic
+        case .rateLimited(let topic, _): stateTopic = topic
+        case .unavailable(let topic, _): stateTopic = topic
+        }
+        return stateTopic == lesson.topic ? state : nil
+    }
+
+    /// The full state UI. Two design rules from the spec, load-bearing:
+    /// (1) "couldn't make a good one" is styled and worded as the NORMAL
+    /// outcome (the pipeline's real measured yield is 1/10-6/10 by domain),
+    /// same visual weight as ordinary content, nothing error-red; (2) the
+    /// expectation is set BEFORE the student spends a minute waiting, on
+    /// the request button itself, not sprung on them afterward.
+    @ViewBuilder
+    private var generatedSimSection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("GENERATED SIM")
+                .font(.system(size: 10, weight: .heavy, design: .rounded))
+                .tracking(0.6)
+                .foregroundColor(.white.opacity(0.5))
+
+            switch liveSimStateForThisLesson {
+            case nil:
+                requestSimButton
+            case .running(_, let attemptTopic):
+                HStack(spacing: 8) {
+                    ProgressView().tint(.white)
+                    Text(attemptTopic == nil
+                        ? "Building and checking a sim\u{2026} usually under a minute. It only shows up if it passes every check."
+                        : "That angle didn't pass. Trying \"\(attemptTopic ?? "")\" instead\u{2026}")
+                        .font(.system(size: 12, weight: .semibold, design: .rounded))
+                        .foregroundColor(.white.opacity(0.7))
+                }
+            case .verified(let result, _, let cached):
+                Button { onOpenGeneratedSim(result) } label: {
+                    HStack(spacing: 6) {
+                        Image(systemName: "play.circle.fill")
+                        Text(result.title)
+                    }
+                    .font(.system(size: 13, weight: .bold, design: .rounded))
+                    .foregroundColor(Color(studyHex: "c4f547"))
+                }
+                .buttonStyle(.plain)
+                Text(cached
+                    ? "AI-generated - passed the quality checks. Reused from the sim library."
+                    : "AI-generated - passed the quality checks before being shown.")
+                    .font(.system(size: 11, weight: .medium, design: .rounded))
+                    .foregroundColor(.white.opacity(0.55))
+            case .noGoodResult(_, let reason, let alsoTried):
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Couldn't make a good one for that yet.")
+                        .font(.system(size: 13, weight: .bold, design: .rounded))
+                        .foregroundColor(.white.opacity(0.9))
+                    if let reason, !reason.isEmpty {
+                        Text(reason)
+                            .font(.system(size: 12, weight: .medium, design: .rounded))
+                            .foregroundColor(.white.opacity(0.7))
+                    }
+                    if let alsoTried, !alsoTried.isEmpty {
+                        Text("Also tried \"\(alsoTried)\" - no luck there either.")
+                            .font(.system(size: 12, weight: .medium, design: .rounded))
+                            .foregroundColor(.white.opacity(0.7))
+                    }
+                    Text("That's the usual outcome for a lot of topics - only sims that pass every check get shown.")
+                        .font(.system(size: 11, weight: .medium, design: .rounded))
+                        .foregroundColor(.white.opacity(0.5))
+                    retrySimButton
+                }
+                .padding(12)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(RoundedRectangle(cornerRadius: 12, style: .continuous).fill(Color.white.opacity(0.06)))
+            case .rateLimited(_, let reason):
+                Text(reason ?? "You've used today's sim-building attempts. The library keeps growing - check back tomorrow.")
+                    .font(.system(size: 12, weight: .medium, design: .rounded))
+                    .foregroundColor(.white.opacity(0.7))
+            case .unavailable(_, let note):
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Sim building isn't available right now.")
+                        .font(.system(size: 12, weight: .semibold, design: .rounded))
+                        .foregroundColor(.white.opacity(0.8))
+                    if let note, !note.isEmpty {
+                        Text(note)
+                            .font(.system(size: 11, weight: .medium, design: .rounded))
+                            .foregroundColor(.white.opacity(0.5))
+                    }
+                    retrySimButton
+                }
+            }
+        }
+    }
+
+    private var requestSimButton: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Button {
+                Task { await jesseCall.requestLiveGatedSim(topic: lesson.topic) }
+            } label: {
+                HStack(spacing: 6) {
+                    Image(systemName: "wand.and.stars")
+                    Text("Ask Jesse to build an interactive sim")
+                }
+                .font(.system(size: 13, weight: .bold, design: .rounded))
+                .foregroundColor(Color(studyHex: "c4f547"))
+            }
+            .buttonStyle(.plain)
+            .accessibilityIdentifier("studySessionGenerateSim")
+            Text("Only sims that pass a quality check are ever shown - many topics won't make one, and that's normal.")
+                .font(.system(size: 11, weight: .medium, design: .rounded))
+                .foregroundColor(.white.opacity(0.5))
+        }
+    }
+
+    private var retrySimButton: some View {
+        Button {
+            jesseCall.clearLiveSimState()
+            Task { await jesseCall.requestLiveGatedSim(topic: lesson.topic) }
+        } label: {
+            Text("Try again")
+                .font(.system(size: 12, weight: .bold, design: .rounded))
+                .foregroundColor(Color(studyHex: "c4f547"))
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier("studySessionRetrySim")
+    }
+
+    /// Mirror of `generatedSimSection`'s visible copy for the
+    /// `studySessionActiveContent` marker - see that marker's doc comment
+    /// for why content at this nesting depth can only be asserted through
+    /// it. Kept adjacent to the section so copy edits change both together.
+    private var generatedSimMarkerText: String? {
+        guard LiveGatedGeneration.isEnabled else { return nil }
+        switch liveSimStateForThisLesson {
+        case nil:
+            return "Ask Jesse to build an interactive sim"
+        case .running(_, let attemptTopic):
+            return attemptTopic == nil
+                ? "Building and checking a sim"
+                : "That angle didn't pass. Trying \"\(attemptTopic ?? "")\""
+        case .verified(let result, _, let cached):
+            return "\(result.title) | AI-generated - passed the quality checks\(cached ? ". Reused from the sim library." : " before being shown.")"
+        case .noGoodResult(_, let reason, let alsoTried):
+            var parts = ["Couldn't make a good one for that yet."]
+            if let reason, !reason.isEmpty { parts.append(reason) }
+            if let alsoTried, !alsoTried.isEmpty { parts.append("Also tried \"\(alsoTried)\"") }
+            return parts.joined(separator: " | ")
+        case .rateLimited(_, let reason):
+            return reason ?? "You've used today's sim-building attempts."
+        case .unavailable(_, let note):
+            return "Sim building isn't available right now." + (note.map { " | \($0)" } ?? "")
         }
     }
 

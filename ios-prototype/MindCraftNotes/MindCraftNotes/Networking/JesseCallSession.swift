@@ -64,6 +64,25 @@ struct WorkDashboardLesson: Equatable {
     }
 }
 
+/// State machine for one live gated-generation request
+/// (LIVE_GATED_GENERATION_TEST_SPEC.md) - exactly two real outcomes plus
+/// the two infrastructure states, matching `GeneratedSimVerdict`. `topic`
+/// on every case is the ORIGINAL topic the student asked for (never the
+/// retry angle), so `StudySessionView` can match state to the lesson it
+/// belongs to and ignore stale state from a previously-viewed lesson.
+enum LiveSimState: Equatable {
+    /// `attemptTopic` differs from `topic` only during the one automatic
+    /// adjacent-angle retry (see `requestLiveGatedSim`).
+    case running(topic: String, attemptTopic: String?)
+    case verified(GeneratedSimResult, topic: String, cached: Bool)
+    /// The NORMAL case at the pipeline's real measured yield (1/10-6/10
+    /// depending on domain), not an error state. `alsoTried` names the
+    /// adjacent angle if the automatic retry also came back empty.
+    case noGoodResult(topic: String, reason: String?, alsoTried: String?)
+    case rateLimited(topic: String, reason: String?)
+    case unavailable(topic: String, note: String?)
+}
+
 /// App-lifetime voice session for Jesse (native `SFSpeechRecognizer` +
 /// `AVSpeechSynthesizer`, not the old WKWebView JS Web Speech API calls,
 /// which died with the WKWebView the moment its screen closed). Owned once
@@ -161,6 +180,21 @@ final class JesseCallSession: NSObject, ObservableObject {
     /// very first utterance, with no chance for the student to attach an
     /// upload first. Reset in `begin()`.
     @Published private(set) var pendingLearnTopic: String?
+    /// Live gated-generation request state (LIVE_GATED_GENERATION_TEST_SPEC.md,
+    /// closed-test only - see `LiveGatedGeneration.isEnabled`'s doc comment
+    /// for the gate). Owned here rather than in a view because the request
+    /// outlives any one screen (60-180s) the same way a call does, and
+    /// because the loading state deliberately IS `isThinking` - the same,
+    /// already-validated mechanism every Jesse generation round trip uses
+    /// (call pill, JesseRailView status, the Homework Help tile indicator
+    /// from commit 7b537beb all read it) - not a second parallel one.
+    @Published private(set) var liveSimState: LiveSimState?
+    /// Same staleness guard shape as `speakGeneration`: bumped by
+    /// `clearLiveSimState`, checked before every state write so a request
+    /// finishing after its Study Session closed can't resurrect UI state
+    /// for a lesson nobody is looking at anymore.
+    private var liveSimGeneration = 0
+
     /// Homework Help's own uploads live in `DeskGridDashboardView`'s
     /// local `@State`, not in any shared store - this is the one bridge
     /// DeskGridDashboardView pushes into whenever a real upload finishes
@@ -584,6 +618,19 @@ final class JesseCallSession: NSObject, ObservableObject {
     /// a future pass wants to surface it, not consumed yet - the left
     /// panel derives its own "ready" state from `title`/`chapters` directly,
     /// same rule `agent.js`'s own publish-button-disabled check already used.
+    /// Seeds the book draft from outside - the Design Studio canvas's
+    /// scoped `.chapter` flow uses this so a call about an EXISTING chapter
+    /// starts from that chapter's real text instead of a blank draft
+    /// (`begin(context: "book")` deliberately nils the draft, which is
+    /// right for the standalone flow but would erase a box's work here).
+    /// Guarded to the book context and to an empty live draft so it can
+    /// never stomp a conversation already in progress.
+    func seedBookDraft(_ draft: BookAgentDraft) {
+        guard context == "book" else { return }
+        guard bookDraft == nil || bookDraft?.chapters.isEmpty == true else { return }
+        bookDraft = draft
+    }
+
     private func askJesseBook(_ message: String) async {
         let draft = bookDraft ?? .empty
         guard let result = await BookAgentClient.ask(message: message, draft: draft) else {
@@ -922,6 +969,80 @@ final class JesseCallSession: NSObject, ObservableObject {
         case .failure(.unavailable):
             await speak("I couldn't put a lesson together from that just now - try again in a bit?")
         }
+    }
+
+    // MARK: - Live gated generation (closed test, LIVE_GATED_GENERATION_TEST_SPEC.md)
+
+    /// One student request -> at most TWO billed generation attempts: the
+    /// asked topic, plus one automatic adjacent-angle retry if (and only
+    /// if) the pipeline's own skip reasoning suggested a narrower angle
+    /// (e.g. "too broad an umbrella" -> a concrete sub-topic). The retry
+    /// mirrors the spec's option of using the skip message's own
+    /// information before telling the student it didn't work - and stops
+    /// there, because at the real 1/10-6/10 yield an unbounded retry loop
+    /// is an unbounded bill.
+    ///
+    /// `isThinking` wraps the whole round trip - deliberately the same
+    /// mechanism as every other Jesse generation (see `liveSimState`'s doc
+    /// comment), so every existing thinking indicator lights up without a
+    /// second loading system.
+    func requestLiveGatedSim(topic: String) async {
+        guard LiveGatedGeneration.isEnabled else { return }
+        if case .running = liveSimState { return } // one request at a time
+        let generation = liveSimGeneration
+        isThinking = true
+        defer { isThinking = false }
+
+        liveSimState = .running(topic: topic, attemptTopic: nil)
+        let verdict = await GeneratedSimClient.requestSim(topic: topic)
+        guard generation == liveSimGeneration else { return }
+
+        switch verdict {
+        case .verified(let result, let cached):
+            liveSimState = .verified(result, topic: topic, cached: cached)
+        case .rateLimited(let reason):
+            liveSimState = .rateLimited(topic: topic, reason: reason)
+        case .unavailable(let note):
+            liveSimState = .unavailable(topic: topic, note: note)
+        case .noGoodResult(let reason, let suggestedRetryTopic):
+            guard let retryTopic = suggestedRetryTopic, !retryTopic.isEmpty else {
+                liveSimState = .noGoodResult(topic: topic, reason: reason, alsoTried: nil)
+                return
+            }
+            liveSimState = .running(topic: topic, attemptTopic: retryTopic)
+            let second = await GeneratedSimClient.requestSim(topic: retryTopic)
+            guard generation == liveSimGeneration else { return }
+            switch second {
+            case .verified(let result, let cached):
+                liveSimState = .verified(result, topic: topic, cached: cached)
+            case .noGoodResult(let secondReason, _):
+                // No third attempt even if the retry suggests yet another
+                // angle - the second reason is usually the more specific
+                // one, so it leads.
+                liveSimState = .noGoodResult(topic: topic, reason: secondReason ?? reason, alsoTried: retryTopic)
+            case .rateLimited, .unavailable:
+                // The retry being blocked by budget/infra isn't the
+                // student's answer - the first attempt's honest reason is.
+                liveSimState = .noGoodResult(topic: topic, reason: reason, alsoTried: nil)
+            }
+        }
+    }
+
+    /// Called when the Study Session showing this state closes. Bumps the
+    /// generation counter so an in-flight request's eventual verdict is
+    /// dropped instead of resurrecting state for a dismissed lesson.
+    func clearLiveSimState() {
+        liveSimGeneration += 1
+        liveSimState = nil
+    }
+
+    /// Test-only seam, same shape as `seedWorkDashboardLessonForTesting`:
+    /// a real verdict needs the deployed generation service (deliberately
+    /// not deployed - see LiveGatedGeneration) plus a 60s+ round trip,
+    /// neither available in the UI-testing harness. Only ever called from
+    /// `DeskGridDashboardView`'s `--ui-testing-*`-gated seed hook.
+    func seedLiveSimStateForTesting(_ state: LiveSimState) {
+        liveSimState = state
     }
 
     // MARK: - Persistence
