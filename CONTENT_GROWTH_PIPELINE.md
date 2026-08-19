@@ -112,6 +112,73 @@ them currently reference each other. Resolved:
 | **Layer 4 target schema** (`04_student_learning_state_schema_v1_6.json`) | Designed, not wired into the live engine | The schema's own separation of `student_event_schema` (raw events) from `student_state_schema` (computed mastery) is exactly the boundary this pipeline enforces in practice (`LearningEvent` vs `SessionEvent`) — this doc is a concrete, partial implementation of that separation, using models that already exist in code, not a new parallel system. |
 | **Dan's xAPI / LRS material** (`xapi-course`, `learning-record-store`) | Published, unused anywhere in MindCraft | Not adopted as infrastructure — MindCraft's Beta-Binomial engine is more specific to this product than generic BKT would be, and rebuilding on xAPI's actor/verb/object shape would mean throwing away working, tuned code for a generic one. Used instead as **vocabulary discipline**: `LearningEvent`'s fields (student_id≈actor, event_type≈verb, concept_id≈object, outcome≈result, metadata≈context) already map cleanly onto it. Dan's material doesn't cover graph-growth-from-new-content specifically (checked directly — it isn't there), so the tagging/reload design above is original, not sourced from his books. |
 
+## Grounding in the literature (checked directly, 2026-08-18, not assumed)
+The `SessionEvent`/`LearningEvent` split wasn't just a codebase constraint
+(closed `Literal`, required bounded `outcome`) — it turns out to be exactly
+what the intelligent-tutoring-systems literature independently converged on,
+under a different name, going back to the same lineage MindCraft's own
+Beta-Binomial engine descends from:
+
+- **Corbett & Anderson (1994/1995), "Knowledge Tracing: Modeling the
+  Acquisition of Procedural Knowledge,"** *User Modeling and User-Adapted
+  Interaction* 4:253–278 — the foundational BKT paper. In its own and every
+  standard formulation since, an "opportunity" that updates the model IS a
+  scored attempt (right/wrong) on a step. There is no concept of an ungraded
+  "opportunity" in classic BKT at all — confirming the codebase finding
+  (`compute_concept_profiles` has no safe value for "ungraded exposure")
+  isn't a gap in MindCraft's math, it's consistent with how the field
+  defines evidence in the first place.
+- **Chi, Koedinger, Gordon, Jordan & VanLehn (2011), "Instructional Factors
+  Analysis: A Cognitive Model for Multiple Instructional Interventions,"**
+  *Proc. 4th International Conference on Educational Data Mining*, 61–70 —
+  read directly (not just abstracted), and the single most on-point source
+  found. Their tutoring system logs two kinds of steps: **"elicit"** (the
+  system asks the student, gets a graded right/wrong response) and
+  **"tell"** (the system just tells the student directly — "instructional
+  interventions without immediate direct observations on student's
+  performance"). Their own words on why this needs separate handling: *"KT
+  model is designed mainly for student-driven ITSs in that its parameters
+  are directly learned from the sequences of student's performance (right
+  or wrong)... When there are multiple instructional interventions and some
+  of them do not generate direct observations, it is not very clear how to
+  incorporate these interventions directly into conventional KT models."*
+  Their fix (equation 3): tells get their **own separate count** (`T_ik`,
+  prior tells) with their **own separate learned coefficient** (`ν_k`),
+  structurally distinct from the success/failure counts (`S_ik`/`F_ik`) a
+  graded attempt produces. This is formally the same shape as
+  `SessionEvent` (elicit, graded, feeds mastery) vs `LearningEvent` (tell,
+  ungraded, doesn't) — arrived at independently, then found to match.
+- **Baker, Corbett, Roll & Koedinger (2008), "Developing a Generalizable
+  Detector of When Students Game the System,"** *UMUAI* 18:287–314, and
+  **Beck (2005), "Disengagement Tracing"** — the complementary finding:
+  when a response isn't a sincere attempt (fast-guessing, gaming, or by
+  extension here, no attempt at all), *counting it as ordinary practice
+  evidence measurably biases the mastery estimate*. This is the direct
+  argument for why `outcome=0.0` on a "just viewed it" event would have been
+  a real mistake, not a harmless default — it isn't neutral, it's wrong
+  evidence.
+- **ADL's own xAPI verb registry** draws the identical line at the
+  vocabulary level: `experienced` (exposure, no result) is a distinct
+  canonical verb from `answered`/`passed`/`failed` (which carry a `result`
+  object) — the same split `LearningEvent.event_type` (open, exposure) vs
+  `SessionEvent`+`OutcomeItem` (graded) encodes.
+
+**One honest, not-yet-acted-on finding from IFA worth naming rather than
+sitting on:** their result isn't just "keep tells out of mastery" — it's
+that tells, tracked separately, had a *real, measurable, positive*
+coefficient (`ν_k`) on predicted performance. MindCraft's current
+`LearningEvent` log is a strict subset of that: it records exposure but
+feeds it into **nothing** — mastery treats a viewed-and-never-graded
+chapter identically to a chapter never generated at all. A faithful
+IFA-style next step would be a small, explicitly SEPARATE, low-weight
+"prior exposure count" term in `engine/edge_weights.py`'s Beta-Binomial
+update — its own field, its own tiny prior, easy to ablate — never blended
+into the same `alpha`/`beta` graded evidence updates. This is a genuine
+enhancement, not a gap in tonight's design, but it changes the actual
+mastery math (`engine/edge_weights.py`), which is squarely the
+personalization step this whole doc has been careful not to touch
+unilaterally — it needs Blake, not a solo commit, before it happens.
+
 ## Integrity boundary (the actual answer to "does this stay true to the personalization step")
 - Mastery's only inputs, before and after this doc: `/record-outcomes`
   (`OutcomeItem`) and `/seed-assessment`. Unchanged.
