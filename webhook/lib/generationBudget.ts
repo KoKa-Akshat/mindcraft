@@ -6,8 +6,9 @@
  *
  *   1. PLATFORM_MONTHLY_BUDGET_USD — a real dollar ceiling on total spend
  *      across every student this calendar month. This is the actual number
- *      Akshat set (2026-08-19: $20/mo) for the closed-test phase this spec
- *      describes — not a placeholder. It is deliberately simple (one global
+ *      Akshat set (2026-08-19: $10/mo, revised down from an initial $20/mo
+ *      same night) for the closed-test phase this spec describes — not a
+ *      placeholder. It is deliberately simple (one global
  *      counter, no per-student fairness split) because the closed test only
  *      has a handful of testers; Blake's fuller budget model (per-student
  *      allocation, rolling windows, alerting) still has to happen before any
@@ -36,8 +37,14 @@ import { db } from './firebase'
  * this number blocks all NEW generation starts until next calendar month —
  * in-flight jobs still get their terminal poll answered (a job already
  * running has already spent the money; refusing to relay its own answer
- * doesn't save anything and would strand the student on a spinner). */
-export const PLATFORM_MONTHLY_BUDGET_USD = 20
+ * doesn't save anything and would strand the student on a spinner).
+ *
+ * At the real measured cost of $0.18/attempt (2026-08-19 live test,
+ * serve.py's commit message has the full evidence), $10/mo is roughly 55
+ * attempts platform-wide — at the pipeline's real 1/10-6/10 yield, that's
+ * somewhere around 5-33 shown sims a month. A genuinely small closed-test
+ * budget, not a rollout-scale one. */
+export const PLATFORM_MONTHLY_BUDGET_USD = 10
 
 /** Per-student secondary safety rail — unchanged from the original design.
  * Deliberately conservative so that even if every other safeguard were
