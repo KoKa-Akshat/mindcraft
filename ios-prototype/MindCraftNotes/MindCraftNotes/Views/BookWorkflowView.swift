@@ -19,9 +19,22 @@ import SwiftUI
 /// `GmailClient`. Publish still writes straight to Binder
 /// (`BinderStore.addBook`), same native-side bridge Resume's "apply" uses.
 struct BookWorkflowView: View {
+    /// Scopes this flow to ONE chapter box on the Design Studio canvas
+    /// (2026-08-19) instead of the one global draft: the box's existing
+    /// chapter seeds Jesse's draft when a call starts, and the publish
+    /// button becomes "Save to canvas" (calling `onSave` with the working
+    /// draft) instead of writing to Binder - on the canvas, Binder publish
+    /// is the graph walk's job (`ContentGraphStore.assembleBook`), not any
+    /// single chapter's. Everything else about the flow is untouched.
+    struct ChapterScope {
+        let chapter: BookAgentChapter
+        let onSave: (BookAgentDraft) -> Void
+    }
+
     var onClose: () -> Void
     var studentName: String = "there"
     var onPublished: ((String, String) -> Void)? = nil
+    var chapterScope: ChapterScope? = nil
 
     @EnvironmentObject private var jesseCall: JesseCallSession
     @StateObject private var binder = BinderStore()
@@ -39,8 +52,29 @@ struct BookWorkflowView: View {
     @State private var sendingTutorId: String?
     @State private var sendResult: (tutorId: String, message: String, failed: Bool)?
 
-    private var draft: BookAgentDraft { jesseCall.bookDraft ?? .empty }
-    private var canPublish: Bool { !draft.title.isEmpty && !draft.chapters.isEmpty }
+    /// Scoped mode falls back to the box's own chapter before any call has
+    /// started, so opening a box that already has prose shows that prose -
+    /// not a blank draft implying the work is gone.
+    private var draft: BookAgentDraft {
+        if let live = jesseCall.bookDraft { return live }
+        if let scope = chapterScope { return Self.scopedDraft(from: scope.chapter) }
+        return .empty
+    }
+
+    /// A canvas save only needs a chapter (the box supplies its own title);
+    /// a Binder publish still needs both, same rule as always.
+    private var canPublish: Bool {
+        if chapterScope != nil { return !draft.chapters.isEmpty }
+        return !draft.title.isEmpty && !draft.chapters.isEmpty
+    }
+
+    private static func scopedDraft(from chapter: BookAgentChapter) -> BookAgentDraft {
+        BookAgentDraft(
+            topic: chapter.title,
+            title: chapter.title,
+            chapters: chapter.body.isEmpty ? [] : [chapter]
+        )
+    }
 
     private let artboard = CGSize(width: 1440, height: 810)
 
@@ -84,6 +118,15 @@ struct BookWorkflowView: View {
         }
         .statusBarHidden(true)
         .task { await tutorDirectory.load() }
+        // Seed the scoped chapter into Jesse's draft the moment a book call
+        // connects (begin(context: "book") resets bookDraft to nil, so this
+        // has to happen after, not before). seedBookDraft itself refuses to
+        // stomp a draft that already has content - see its doc comment.
+        .onChange(of: jesseCall.isActive) { _, isActive in
+            guard isActive, jesseCall.context == "book",
+                  let scope = chapterScope, !scope.chapter.body.isEmpty else { return }
+            jesseCall.seedBookDraft(Self.scopedDraft(from: scope.chapter))
+        }
     }
 
     private func pin<Content: View>(_ box: CGRect, scale: CGFloat, @ViewBuilder content: () -> Content) -> some View {
@@ -127,7 +170,7 @@ struct BookWorkflowView: View {
 
     private var header: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text("YOUR BOOK")
+            Text(chapterScope == nil ? "YOUR BOOK" : "THIS CHAPTER")
                 .font(.system(size: 11, weight: .heavy, design: .rounded))
                 .tracking(1.1)
                 .foregroundColor(BookColor.forest.opacity(0.5))
@@ -345,7 +388,9 @@ struct BookWorkflowView: View {
     private var publishButton: some View {
         VStack(alignment: .leading, spacing: 6) {
             Button(action: publish) {
-                Text(publishState == .publishing ? "Publishing\u{2026}" : "Publish to Binder")
+                Text(chapterScope != nil
+                     ? "Save to canvas"
+                     : (publishState == .publishing ? "Publishing\u{2026}" : "Publish to Binder"))
                     .font(.system(size: 14, weight: .bold, design: .rounded))
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
@@ -369,6 +414,13 @@ struct BookWorkflowView: View {
 
     private func publish() {
         guard canPublish else { return }
+        if let scope = chapterScope {
+            // The canvas owns filing this draft back into its boxes (and
+            // closing this cover) - no Binder write from here in scoped
+            // mode, publish belongs to the whole graph.
+            scope.onSave(draft)
+            return
+        }
         publishState = .publishing
         let bodyText = draft.chapters.enumerated().map { index, chapter -> String in
             let title = chapter.title.isEmpty ? "Chapter \(index + 1)" : chapter.title

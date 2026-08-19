@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MindCraft Studio · Simulation Workspace</title>
+<!--
+  Blockly workspace behind a Design Studio ".simulation" box.
+  Loaded by the native SimulationStudioView (WKWebView) - bundled copy via
+  mcworld://simulation/, deployed copy at /desk-os/studio/simulation/.
+
+  Contract with the native side (deskAction bridge, same channel every
+  desk-os page uses):
+    page -> native:  {action:"simulationState", state:"<workspace JSON>"}
+                     (debounced autosave on every real workspace change)
+                     {action:"back"}
+    native -> page:  window.mcLoadWorkspace("<workspace JSON>") after load.
+
+  Blockly itself comes from the CDN (pinned major version). If it can't
+  load (offline), the page says so plainly instead of showing a dead
+  editor - the honest-failure rule every desk-os surface follows.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#fff8e9; --card:#fbfbfa; --line:#e4dcc8;
+  --ink:#143a2e; --muted:#8a8478; --violet:#5b3e8f;
+  --green:#247a4d; --lime:#c4f547; --red:#b3261e;
+}
+*{box-sizing:border-box; margin:0; padding:0}
+html,body{height:100%}
+body{
+  background:var(--cream);
+  color:var(--ink);
+  font-family:'Nunito',system-ui,sans-serif;
+  overflow:hidden;
+  display:flex; flex-direction:column;
+}
+.bar{
+  display:flex; align-items:center; gap:10px;
+  padding:10px 16px;
+  background:var(--card);
+  border-bottom:1px solid var(--line);
+}
+.bar .title{font-weight:900; font-size:14px}
+.bar .status{font-size:11.5px; font-weight:700; color:var(--muted)}
+.bar .spacer{flex:1}
+button{
+  font-family:inherit; cursor:pointer; border:none;
+  font-size:12.5px; font-weight:800;
+  padding:8px 16px; border-radius:999px;
+}
+#runBtn{background:var(--violet); color:#fff}
+#runBtn:disabled{opacity:.4; cursor:default}
+#backBtn{background:var(--lime); color:#0c1207; display:none}
+#stage{flex:1; position:relative}
+#blocklyDiv{position:absolute; inset:0}
+#output{
+  display:none;
+  max-height:130px; overflow:auto;
+  padding:10px 16px;
+  background:var(--card); border-top:1px solid var(--line);
+  font-size:12.5px; font-weight:700; white-space:pre-wrap;
+}
+#output.error{color:var(--red)}
+#fallback{
+  position:absolute; inset:0;
+  display:none; flex-direction:column; align-items:center; justify-content:center;
+  gap:10px; text-align:center; padding:32px;
+}
+#fallback h2{font-size:16px; font-weight:900}
+#fallback p{font-size:13px; font-weight:700; color:var(--muted); max-width:420px}
+</style>
+</head>
+<body>
+  <div class="bar">
+    <button id="backBtn">&#8249; Back</button>
+    <span class="title">Simulation blocks</span>
+    <span class="status" id="saveStatus">Nothing to save yet</span>
+    <span class="spacer"></span>
+    <button id="runBtn" disabled>&#9654; Run</button>
+  </div>
+  <div id="stage">
+    <div id="blocklyDiv"></div>
+    <div id="fallback">
+      <h2>The block editor couldn't load</h2>
+      <p>It needs an internet connection the first time (the editor itself comes from the web). Anything you already built is still saved on your canvas &mdash; reopen this box once you're back online.</p>
+    </div>
+  </div>
+  <div id="output"></div>
+
+  <script src="https://unpkg.com/blockly@10/blockly.min.js"></script>
+  <script>
+  (function(){
+    var bridge = window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.deskAction;
+    var saveStatus = document.getElementById('saveStatus');
+    var runBtn = document.getElementById('runBtn');
+    var backBtn = document.getElementById('backBtn');
+    var output = document.getElementById('output');
+
+    // In-page back only matters when there's no native chrome around us
+    // (plain-browser visits to the deployed page) - the native shell has
+    // its own Done button.
+    if (bridge) {
+      backBtn.style.display = 'inline-block';
+      backBtn.addEventListener('click', function(){ bridge.postMessage({action:'back'}); });
+    }
+
+    if (typeof Blockly === 'undefined') {
+      document.getElementById('fallback').style.display = 'flex';
+      document.getElementById('blocklyDiv').style.display = 'none';
+      saveStatus.textContent = 'Editor unavailable offline';
+      return;
+    }
+
+    var toolbox = {
+      kind: 'categoryToolbox',
+      contents: [
+        { kind: 'category', name: 'Logic', categorystyle: 'logic_category', contents: [
+          { kind: 'block', type: 'controls_if' },
+          { kind: 'block', type: 'logic_compare' },
+          { kind: 'block', type: 'logic_operation' },
+          { kind: 'block', type: 'logic_boolean' },
+          { kind: 'block', type: 'logic_negate' }
+        ]},
+        { kind: 'category', name: 'Loops', categorystyle: 'loop_category', contents: [
+          { kind: 'block', type: 'controls_repeat_ext', inputs: { TIMES: { shadow: { type: 'math_number', fields: { NUM: 10 } } } } },
+          { kind: 'block', type: 'controls_whileUntil' },
+          { kind: 'block', type: 'controls_for', inputs: {
+              FROM: { shadow: { type: 'math_number', fields: { NUM: 1 } } },
+              TO: { shadow: { type: 'math_number', fields: { NUM: 10 } } },
+              BY: { shadow: { type: 'math_number', fields: { NUM: 1 } } }
+          }}
+        ]},
+        { kind: 'category', name: 'Math', categorystyle: 'math_category', contents: [
+          { kind: 'block', type: 'math_number' },
+          { kind: 'block', type: 'math_arithmetic' },
+          { kind: 'block', type: 'math_single' },
+          { kind: 'block', type: 'math_round' },
+          { kind: 'block', type: 'math_random_int', inputs: {
+              FROM: { shadow: { type: 'math_number', fields: { NUM: 1 } } },
+              TO: { shadow: { type: 'math_number', fields: { NUM: 100 } } }
+          }}
+        ]},
+        { kind: 'category', name: 'Text', categorystyle: 'text_category', contents: [
+          { kind: 'block', type: 'text' },
+          { kind: 'block', type: 'text_join' },
+          { kind: 'block', type: 'text_print' }
+        ]},
+        { kind: 'category', name: 'Variables', categorystyle: 'variable_category', custom: 'VARIABLE' },
+        { kind: 'category', name: 'Functions', categorystyle: 'procedure_category', custom: 'PROCEDURE' }
+      ]
+    };
+
+    var ws = Blockly.inject('blocklyDiv', {
+      toolbox: toolbox,
+      renderer: 'zelos',
+      zoom: { controls: true, wheel: true, startScale: 0.9 },
+      grid: { spacing: 24, length: 2, colour: '#e4dcc8', snap: true },
+      trashcan: true
+    });
+
+    // ---- state round trip ----------------------------------------------
+
+    window.mcLoadWorkspace = function (stateJson) {
+      try {
+        var state = JSON.parse(stateJson);
+        Blockly.serialization.workspaces.load(state, ws);
+        saveStatus.textContent = 'Loaded your saved blocks';
+      } catch (e) {
+        // A corrupt blob must not brick the editor - start clean, say so.
+        saveStatus.textContent = "Couldn't read the saved blocks - starting fresh";
+      }
+    };
+
+    var saveTimer = null;
+    ws.addChangeListener(function (e) {
+      if (e.isUiEvent) return;
+      runBtn.disabled = ws.getAllBlocks(false).length === 0;
+      if (!bridge) return;
+      clearTimeout(saveTimer);
+      saveStatus.textContent = 'Saving…';
+      saveTimer = setTimeout(function () {
+        try {
+          var state = Blockly.serialization.workspaces.save(ws);
+          bridge.postMessage({ action: 'simulationState', state: JSON.stringify(state) });
+          saveStatus.textContent = 'Saved to your canvas';
+        } catch (err) {
+          saveStatus.textContent = "Couldn't save - keep the app open and try a change again";
+        }
+      }, 700);
+    });
+
+    // ---- run ------------------------------------------------------------
+
+    // The generator global differs across Blockly bundle versions
+    // (`javascript.javascriptGenerator` in v10+, `Blockly.JavaScript`
+    // before) - resolve whichever this bundle actually ships, and if
+    // neither exists, hide Run rather than faking it.
+    var generator =
+      (typeof javascript !== 'undefined' && javascript.javascriptGenerator) ||
+      (Blockly.JavaScript) || null;
+    if (!generator) {
+      runBtn.style.display = 'none';
+    }
+
+    runBtn.addEventListener('click', function () {
+      if (!generator) return;
+      var code;
+      try {
+        code = generator.workspaceToCode(ws);
+      } catch (e) {
+        showOutput('Could not turn the blocks into a program: ' + e.message, true);
+        return;
+      }
+      var lines = [];
+      // text_print blocks call window.alert in generated code - capture
+      // both it and console.log style output into the strip.
+      var realAlert = window.alert;
+      window.alert = function (v) { lines.push(String(v)); };
+      try {
+        /* eslint-disable no-new-func */
+        new Function(code)();
+        showOutput(lines.length ? lines.join('\n') : 'Ran with nothing to print - add a "print" block to see output.', false);
+      } catch (e) {
+        showOutput('The blocks ran into an error: ' + e.message, true);
+      } finally {
+        window.alert = realAlert;
+      }
+    });
+
+    function showOutput(text, isError) {
+      output.style.display = 'block';
+      output.textContent = text;
+      output.className = isError ? 'error' : '';
+    }
+  })();
+  </script>
+</body>
+</html>
