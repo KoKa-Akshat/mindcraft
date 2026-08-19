@@ -2196,19 +2196,29 @@ final class MindCraftNotesUITests: XCTestCase {
     }
 
     /// Assignment F: Book is fully native now (no WKWebView) - opening it
-    /// from the Work dock shows the real left panel (tools/boxes, chapters,
-    /// publish button) plus the shared Jesse rail on the right, and Done
-    /// closes it cleanly. Doesn't exercise a live call (no real network
-    /// device available in this environment) - covers that the new native
-    /// surface actually renders instead of the old dual-Jesse WKWebView.
+    /// shows the real left panel (tools/boxes, chapters, publish button)
+    /// plus the shared Jesse rail on the right, and Done closes it cleanly.
+    /// Doesn't exercise a live call (no real network device available in
+    /// this environment) - covers that the new native surface actually
+    /// renders instead of the old dual-Jesse WKWebView.
+    /// Entry point updated (2026-08-18, explicit ask: "combine workflows
+    /// and books and design something called Develop... remove Book" from
+    /// the dock) - the dock's own chip now opens the merged Develop
+    /// shell (`deskGridDock_Design`), defaulting to its Workflows side;
+    /// Books is one toggle tap away (`developToggle_books`), not a
+    /// separate dock chip anymore.
     func testBookWorkflowIsNativeWithToolsAndJesseRail() {
         let app = launchFieldDeskApp()
         XCUIDevice.shared.orientation = .landscapeLeft
         XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 15))
 
-        let bookChip = app.buttons["deskGridDock_Book"]
-        XCTAssertTrue(bookChip.waitForExistence(timeout: 10), "expected +Book dock chip")
-        bookChip.tap()
+        let designChip = app.buttons["deskGridDock_Design"]
+        XCTAssertTrue(designChip.waitForExistence(timeout: 10), "expected Design dock chip (opens the merged Develop shell)")
+        designChip.tap()
+
+        let booksToggle = app.buttons["developToggle_books"]
+        XCTAssertTrue(booksToggle.waitForExistence(timeout: 10), "expected Develop's Books/Workflows toggle")
+        booksToggle.tap()
 
         XCTAssertTrue(app.buttons["bookWorkflowBack"].waitForExistence(timeout: 10), "expected book workflow Done control")
         XCTAssertTrue(app.descendants(matching: .any)["bookWorkflowTools"].waitForExistence(timeout: 5), "expected native what-we-need-from-you tools panel")
@@ -2263,6 +2273,29 @@ final class MindCraftNotesUITests: XCTestCase {
     /// (`HomeworkDocumentPicker`), which does present. This only proves the
     /// picker itself appears, not file selection (no real Files data in a
     /// fresh Simulator).
+    /// Regression for the Develop Studio merge (2026-08-18, explicit ask:
+    /// "combine workflows and books and design something called Develop...
+    /// there will be a toggle"): opening it from the dock's "Design" chip
+    /// lands on Workflows by default (its own real tool row - Find/Ask/
+    /// Make/Output pill buttons, not a hidden "+" menu), and the toggle
+    /// switches to Books' real content in the same pane.
+    func testDevelopStudioTogglesWorkflowsAndBooks() {
+        let app = launchFieldDeskApp()
+        XCUIDevice.shared.orientation = .landscapeLeft
+        XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 15))
+
+        app.buttons["deskGridDock_Design"].tap()
+        XCTAssertTrue(app.buttons["designStudioAdd_ask"].waitForExistence(timeout: 10), "expected Workflows' own tool row by default")
+        XCTAssertTrue(app.staticTexts["0 boxes \u{00b7} 0 connections"].exists, "expected an empty canvas, not the old seeded demo flow")
+
+        app.buttons["designStudioAdd_ask"].tap()
+        XCTAssertTrue(app.staticTexts["1 boxes \u{00b7} 0 connections"].waitForExistence(timeout: 5), "expected the tool row to actually add a box")
+
+        app.buttons["developToggle_books"].tap()
+        XCTAssertTrue(app.staticTexts["Untitled book"].waitForExistence(timeout: 10), "expected Books' real content after the toggle")
+        XCTAssertFalse(app.buttons["designStudioAdd_ask"].exists, "expected Workflows' own tool row to be gone while on Books")
+    }
+
     /// Real regression coverage for the Binder+Intel content-merge
     /// (2026-08-18, explicit ask): with a seeded upload already being
     /// viewed, Binder shows its real content, Intel's own tile is gone,
@@ -2297,20 +2330,25 @@ final class MindCraftNotesUITests: XCTestCase {
     /// reachable the whole time (so a second destination can be opened
     /// directly, without returning to the dashboard first), and closing
     /// lands back on the dashboard.
+    /// Presentation/GDoc dropped out of the sidebar itself (2026-08-18,
+    /// explicit ask: "remove presentation and google docs from the flows...
+    /// we dont need them yet"), so this now exercises Resume -> Develop
+    /// instead - same pan-in-place + stay-switchable mechanic, just a
+    /// different pair of destinations that are still actually reachable.
     func testSidebarFlowsPanInPlaceAndStaySwitchable() {
         let app = launchFieldDeskApp()
         XCUIDevice.shared.orientation = .landscapeLeft
         XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 15))
 
-        app.buttons["deskGridSidebar_Presentation"].tap()
-        XCTAssertTrue(app.descendants(matching: .any)["createCanvasSlide"].waitForExistence(timeout: 10), "expected Presentation's own content, not a separate cover with no dashboard trace")
-        XCTAssertTrue(app.buttons["deskGridSidebar_GDoc"].waitForExistence(timeout: 5), "expected the sidebar to stay reachable while a flow is open")
+        app.buttons["deskGridSidebar_Resume"].tap()
+        XCTAssertTrue(app.descendants(matching: .any)["resumeAgentRoot"].waitForExistence(timeout: 10), "expected Resume's own content, not a separate cover with no dashboard trace")
+        XCTAssertTrue(app.buttons["deskGridSidebar_Develop"].waitForExistence(timeout: 5), "expected the sidebar to stay reachable while a flow is open")
 
-        app.buttons["deskGridSidebar_GDoc"].tap()
-        XCTAssertTrue(app.descendants(matching: .any)["createCanvasGdoc"].waitForExistence(timeout: 10), "expected switching directly to GDoc without returning to the dashboard first")
-        XCTAssertFalse(app.descendants(matching: .any)["createCanvasSlide"].exists, "expected Presentation's content to be gone once GDoc took over the same pane")
+        app.buttons["deskGridSidebar_Develop"].tap()
+        XCTAssertTrue(app.buttons["designStudioAdd_ask"].waitForExistence(timeout: 10), "expected switching directly to Develop without returning to the dashboard first")
+        XCTAssertFalse(app.descendants(matching: .any)["resumeAgentRoot"].exists, "expected Resume's content to be gone once Develop took over the same pane")
 
-        app.buttons["createCanvasDone"].tap()
+        app.buttons["designStudioDone"].tap()
         XCTAssertTrue(app.buttons["deskGridTile_Homework Help"].waitForExistence(timeout: 10), "expected closing a flow to land back on the dashboard")
     }
 

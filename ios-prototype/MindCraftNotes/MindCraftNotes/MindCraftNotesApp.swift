@@ -61,6 +61,17 @@ struct MindCraftNotesApp: App {
                 }
             }
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                // Global brand tint (2026-08-18, explicit ask: "why is the
+                // blue still there... looks jarring"). No AccentColor asset
+                // exists anywhere in this app, so every default-styled
+                // system control (a TextEditor's cursor/selection, a
+                // TextField's cursor, an unstyled Toggle) was silently
+                // falling back to Apple's system blue - invisible in a
+                // static screenshot of an unfocused field, but real the
+                // moment a student actually taps in and types. One root-
+                // level tint fixes every occurrence at once instead of
+                // hunting down each individual text field.
+                .tint(Color(red: 0x24 / 255, green: 0x7a / 255, blue: 0x4d / 255))
                 .onOpenURL { url in
                     // Google Sign-In's OAuth callback comes back in via the
                     // REVERSED_CLIENT_ID URL scheme (see Info.plist). GIDSignIn

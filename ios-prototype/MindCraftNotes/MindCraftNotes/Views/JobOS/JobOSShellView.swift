@@ -6,6 +6,13 @@ import UniformTypeIdentifiers
 /// Starts empty until resume upload + LinkedIn connect.
 struct JobOSShellView: View {
     var onClose: (() -> Void)? = nil
+    /// Passed through explicitly, not read via `@EnvironmentObject` (2026-
+    /// 08-18) - `JobOSRoleDetailView` is reached through this view's own
+    /// `.sheet(item:)` below, and `.sheet` content does not automatically
+    /// inherit environment objects from the presenting view. Same explicit-
+    /// param convention this file already uses for `store` rather than a
+    /// second, silently-broken injection path.
+    var resumeDraft: ResumeAgentDraft? = nil
     /// True when embedded in a fixed-width pane (Resume's left content
     /// area) rather than shown full-screen with open desk space around it.
     /// `placeOnRight` sizes the board to ~48% of whatever canvas it's given
@@ -94,6 +101,7 @@ struct JobOSShellView: View {
             JobOSRoleDetailView(
                 store: store,
                 roleId: role.id,
+                resumeDraft: resumeDraft,
                 onClose: { openRole = nil },
                 onLogApplied: {
                     openRole = nil
@@ -321,6 +329,13 @@ struct JobOSShellView: View {
             }
 
             Spacer()
+
+            if store.isBoardReady {
+                Text(store.syncStalenessLabel)
+                    .font(.system(size: 10, weight: .semibold, design: .rounded))
+                    .foregroundColor(Color(jobHex: "8a8478"))
+                    .accessibilityIdentifier("jobOSSyncStaleness")
+            }
 
             Text(store.isBoardReady ? "Ready" : "Set up")
                 .font(.system(size: 11, weight: .heavy, design: .rounded))

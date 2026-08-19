@@ -509,6 +509,41 @@ final class GmailClient: ObservableObject {
         return trimmed.contains("@") ? trimmed : ""
     }
 
+    /// Opens a real, prefilled, UNSENT compose window - never calls the
+    /// Gmail REST API to create it (that needs the `gmail.compose` scope;
+    /// this app only ever requested `gmail.send`, and widening the granted
+    /// scope means re-consent for every already-connected student for one
+    /// button). Tries the Gmail app's own compose deep link first (same
+    /// account context a signed-in student already expects), falls back to
+    /// the universal `mailto:` scheme (opens whatever mail app the device
+    /// has configured) if Gmail isn't installed - either way, a live
+    /// compose UI opens with the student in full control of Send, same
+    /// posture as "we never submit applications" elsewhere in Job OS.
+    @discardableResult
+    func openComposeDraft(to: String, subject: String, body: String) -> Bool {
+        #if canImport(UIKit)
+        func encode(_ s: String) -> String {
+            s.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        }
+        let toParam = encode(to)
+        let subjectParam = encode(subject)
+        let bodyParam = encode(body)
+
+        if let gmailURL = URL(string: "googlegmail://co?to=\(toParam)&subject=\(subjectParam)&body=\(bodyParam)"),
+           UIApplication.shared.canOpenURL(gmailURL) {
+            UIApplication.shared.open(gmailURL)
+            return true
+        }
+        if let mailtoURL = URL(string: "mailto:\(toParam)?subject=\(subjectParam)&body=\(bodyParam)") {
+            UIApplication.shared.open(mailtoURL)
+            return true
+        }
+        return false
+        #else
+        return false
+        #endif
+    }
+
     private static func shortDate(_ raw: String) -> String {
         let parts = raw.split(separator: " ")
         if parts.count >= 4 { return parts.prefix(4).joined(separator: " ") }

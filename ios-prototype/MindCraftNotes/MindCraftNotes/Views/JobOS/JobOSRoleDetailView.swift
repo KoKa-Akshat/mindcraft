@@ -5,6 +5,10 @@ import SwiftUI
 struct JobOSRoleDetailView: View {
     @ObservedObject var store: JobOSStore
     let roleId: String
+    /// See `JobOSShellView`'s own doc comment on this same parameter -
+    /// threaded explicitly through the `.sheet` boundary rather than via
+    /// `@EnvironmentObject`, which `.sheet` content doesn't inherit.
+    var resumeDraft: ResumeAgentDraft? = nil
     var onClose: () -> Void
     var onLogApplied: () -> Void
 
@@ -164,17 +168,40 @@ struct JobOSRoleDetailView: View {
                     labeled("Match rule", person.matchRule)
                     labeled("Ask", person.bestAsk.isEmpty ? "Write a 15-minute advice note. Do not ask for a job in the first line." : person.bestAsk)
                     labeled("Outreach", person.status)
-                    if let url = URL(string: person.profileUrl), !person.profileUrl.isEmpty {
-                        Link(destination: url) {
-                            Text("Open LinkedIn")
+                    HStack(spacing: 14) {
+                        if let url = URL(string: person.profileUrl), !person.profileUrl.isEmpty {
+                            Link(destination: url) {
+                                Text("Open LinkedIn")
+                                    .font(.system(size: 13, weight: .bold, design: .rounded))
+                                    .foregroundColor(Color(jobHex: "143a2e"))
+                                    .underline()
+                            }
+                        } else {
+                            Text("No LinkedIn URL on file.")
+                                .font(.system(size: 12, weight: .medium, design: .rounded))
+                                .foregroundColor(Color(jobHex: "8a8478"))
+                        }
+                        // Opens a real compose window, prefilled, never
+                        // sent (2026-08-18, explicit ask: the matcher
+                        // already knows who and why, nothing turned that
+                        // into a drafted email). No email address exists
+                        // on `JobOSReachOut`/the LinkedIn CSV/CRM import -
+                        // never invent one - so "to" opens blank; the
+                        // student fills it in themselves.
+                        Button {
+                            GmailClient.shared.openComposeDraft(
+                                to: "",
+                                subject: draftEmailSubject(role: role, person: person),
+                                body: draftEmailBody(role: role, person: person)
+                            )
+                        } label: {
+                            Text("Draft email")
                                 .font(.system(size: 13, weight: .bold, design: .rounded))
                                 .foregroundColor(Color(jobHex: "143a2e"))
                                 .underline()
                         }
-                    } else {
-                        Text("No LinkedIn URL on file.")
-                            .font(.system(size: 12, weight: .medium, design: .rounded))
-                            .foregroundColor(Color(jobHex: "8a8478"))
+                        .buttonStyle(.plain)
+                        .accessibilityIdentifier("jobOSReachOutDraftEmail")
                     }
                 }
                 .padding(14)
@@ -200,6 +227,40 @@ struct JobOSRoleDetailView: View {
                     .foregroundColor(Color(jobHex: "8a8478"))
             }
         }
+    }
+
+    private func draftEmailSubject(role: JobOSRole, person: JobOSReachOut) -> String {
+        "Quick question about \(role.company)"
+    }
+
+    /// Built only from real, already-on-screen data - the matched
+    /// person's own `whyShown`/`matchRule`, the role's own `why` (fit),
+    /// and (2026-08-18, explicit ask) a one-line hook from the student's
+    /// own resume draft skills/roles when one has actually been built
+    /// (`resumeDraft` can be nil/empty - a fresh student who hasn't
+    /// talked to Jesse about their resume yet - in which case that hook
+    /// is skipped entirely rather than inventing one).
+    private func draftEmailBody(role: JobOSRole, person: JobOSReachOut) -> String {
+        var lines: [String] = []
+        lines.append("Hi \(person.name.split(separator: " ").first.map(String.init) ?? person.name),")
+        lines.append("")
+        lines.append("I'm a student looking into \(role.role) at \(role.company) (\(person.matchRule)).")
+        if !role.why.isEmpty {
+            lines.append(role.why)
+        }
+        if let draft = resumeDraft {
+            let skillsHook = draft.skills.prefix(3).joined(separator: ", ")
+            if !skillsHook.isEmpty {
+                lines.append("A bit about me: \(skillsHook).")
+            } else if let firstRole = draft.roles.first, !firstRole.title.isEmpty {
+                lines.append("A bit about me: currently \(firstRole.title)\(firstRole.org.isEmpty ? "" : " at \(firstRole.org)").")
+            }
+        }
+        lines.append("")
+        lines.append("Would you have 15 minutes for a quick call? I'd love to hear about your own path.")
+        lines.append("")
+        lines.append("Thank you,")
+        return lines.joined(separator: "\n")
     }
 
     private func section<Content: View>(_ title: String, @ViewBuilder _ content: () -> Content) -> some View {

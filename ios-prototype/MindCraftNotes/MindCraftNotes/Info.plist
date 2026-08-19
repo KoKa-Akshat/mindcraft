@@ -21,5 +21,9 @@
 	<string>The Desk reads your Calendar to show this week's events on the Calendar card.</string>
 	<key>UIAppFonts</key>
 	<array/>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>googlegmail</string>
+	</array>
 </dict>
 </plist>

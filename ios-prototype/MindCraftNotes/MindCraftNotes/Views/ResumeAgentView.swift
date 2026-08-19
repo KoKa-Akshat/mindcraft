@@ -93,7 +93,7 @@ struct ResumeAgentView: View {
             case .profile:
                 resumePanel
             case .applications:
-                JobOSShellView(onClose: { mode = .profile }, fillsAvailableSpace: true)
+                JobOSShellView(onClose: { mode = .profile }, resumeDraft: jesseCall.resumeDraft, fillsAvailableSpace: true)
             case .importWeb:
                 ResumeAgentWebView(onApply: {
                     onApply?()

@@ -205,6 +205,19 @@ final class JesseCallSession: NSObject, ObservableObject {
             // CURSOR_HANDOFF.md Assignment J's own note on this).
             Task { await speak("Hi \(studentName), what would you like to learn today?", useKokoro: false) }
         }
+        if context == "jobOS" {
+            // resumeDraft is NOT reset here, unlike "resume" above - Job
+            // OS reads/writes the exact same draft (2026-08-18 ask: "don't
+            // fork the schema a third time"), so a student who already
+            // built one via the Resume rail should arrive with it intact,
+            // not blanked. Blank-slate intake for a genuinely new student
+            // is just `resumeDraft` already being nil/.empty, not a reset
+            // here wiping real progress for a returning one.
+            let opening = (resumeDraft?.name.isEmpty ?? true)
+                ? "Hi, I'm Jesse. Let's build your Job OS profile - what's your name, and what kind of roles are you targeting?"
+                : "Welcome back, let's keep building your Job OS profile. What would you like to add?"
+            Task { await speak(opening, useKokoro: false) }
+        }
         status = nil
     }
 
@@ -447,6 +460,11 @@ final class JesseCallSession: NSObject, ObservableObject {
             isThinking = false
             return
         }
+        if context == "jobOS" {
+            await askJesseJobOS(message)
+            isThinking = false
+            return
+        }
         // Explicit ask (2026-08-18): "when i said i want to learn calculus
         // it should now check the archive for lessons on it... create a
         // lesson plan." Only intercepts genuine "I want to learn X"-shaped
@@ -518,6 +536,51 @@ final class JesseCallSession: NSObject, ObservableObject {
         guard isActive else { return }
         resumeDraft = result.draft
         await speak(result.reply)
+    }
+
+    // MARK: - Job OS (2026-08-18)
+
+    /// Blank-slate intake for any student, not just the one real seeded
+    /// CRM (`macalesterApplySeed.json` is deliberately empty for everyone
+    /// else - that data must never leak into the public seed). Same
+    /// `ResumeAgentDraft` shape and `/api/resume-agent` round trip
+    /// `askJesseResume` already drives - explicitly NOT a second schema -
+    /// just a different conversational context (interviewing for name/
+    /// target roles/skills/experience rather than resume bullets) and,
+    /// unlike the voice-only resume path, a real mid-conversation Drive
+    /// import: the student can say something like "import my resume from
+    /// drive" and this reuses the exact same `DriveClient.shared.
+    /// connectAndReadFolder()` the resume workflow's own web import
+    /// already calls, not a second Drive integration.
+    private func askJesseJobOS(_ message: String) async {
+        var draft = resumeDraft ?? .empty
+        var driveFiles: [ResumeAgentClient.DriveSourceFile] = []
+
+        if Self.mentionsDriveImport(message) {
+            let files = await DriveClient.shared.connectAndReadFolder()
+            guard isActive else { return }
+            if files.isEmpty {
+                await speak("I didn't find anything in your Drive folder to import - keep talking and I'll build your profile from what you tell me.")
+            } else {
+                driveFiles = files.map { .init(name: $0.name, text: $0.text) }
+                draft.drive = true
+                draft.files = Array(Set(draft.files + files.map(\.name)))
+            }
+        }
+
+        guard let result = await ResumeAgentClient.ask(message: message, draft: draft, driveFiles: driveFiles) else {
+            guard isActive else { return }
+            await speak("I couldn't reach the Job OS desk just now. Keep talking and I'll catch up.")
+            return
+        }
+        guard isActive else { return }
+        resumeDraft = result.draft
+        await speak(result.reply)
+    }
+
+    private static func mentionsDriveImport(_ message: String) -> Bool {
+        let lowered = message.lowercased()
+        return lowered.contains("drive") && (lowered.contains("import") || lowered.contains("resume") || lowered.contains("upload") || lowered.contains("read"))
     }
 
     // MARK: - Learn Studio (Assignment G, 2026-08-18)

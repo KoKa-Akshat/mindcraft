@@ -137,24 +137,25 @@ struct DeskGridDashboardView: View {
     /// press on it to keep continuing to Jesse"). nil = normal layout.
     @State private var viewingUpload: HomeworkUploadSummary?
 
-    /// In-canvas pan navigation for the sidebar's five destinations
-    /// (2026-08-18, explicit ask, second time asked more forcefully after
-    /// the first pass deferred it: "when I press on Presentation, it
-    /// should not open a completely new screen. Instead, it should be an
-    /// animation of our current screen moving to the left... and it sits
-    /// down in a nice, empty space... in the same big canvas in one place
-    /// instead of opening to a new tab"). Rendered as a second same-size
-    /// pane beside the dashboard's own board (see `body`'s HStack) and
-    /// slid into view with an offset animation instead of going back out
-    /// through `onOpenCreate`/`onOpenFlow` into FieldDeskView's separate
-    /// full-screen-cover overlays - those still exist for other entry
-    /// points (the dock's own "+Book" chip, the long-press Flows rail),
-    /// deliberately untouched since this ask was specifically about the
-    /// sidebar.
+    /// In-canvas pan navigation for the sidebar's destinations (2026-08-18,
+    /// explicit ask, second time asked more forcefully after the first pass
+    /// deferred it: "when I press on Presentation, it should not open a
+    /// completely new screen. Instead, it should be an animation of our
+    /// current screen moving to the left... and it sits down in a nice,
+    /// empty space... in the same big canvas in one place instead of
+    /// opening to a new tab"). Rendered as a second same-size pane beside
+    /// the dashboard's own board (see `body`'s HStack) and slid into view
+    /// with an offset animation instead of going back out through
+    /// `onOpenCreate`/`onOpenFlow` into FieldDeskView's separate full-
+    /// screen-cover overlays. The dock's own "Design" chip (see `workDock`)
+    /// also routes through this now, same as the sidebar's own "Develop"
+    /// icon - only the long-press Flows rail (already dead/unreachable
+    /// code, nothing sets `rail = .flows` anymore) still points at
+    /// FieldDeskView's older overlays.
     @State private var activeSidebarFlow: SidebarFlow?
 
     private enum SidebarFlow: Equatable {
-        case presentation, gdoc, resume, book, design
+        case presentation, gdoc, resume, develop
     }
 
     // MARK: - Agent takeover (any real ask, not just the email/draft case)
@@ -1906,11 +1907,20 @@ struct DeskGridDashboardView: View {
     /// looks weird right now the settings column").
     private var leftSidebar: some View {
         VStack(spacing: 14) {
-            sidebarIcon("rectangle.on.rectangle", label: "Presentation") { openSidebarFlow(.presentation) }
-            sidebarIcon("doc.text", label: "GDoc") { openSidebarFlow(.gdoc) }
+            // Presentation/GDoc icons removed (2026-08-18, explicit ask:
+            // "remove presentation and google docs from the flows please
+            // we dont need them yet") - "yet" reads as temporary, not a
+            // feature deletion, so `SidebarFlow.presentation`/`.gdoc` and
+            // `flowPane`'s own routing for them are left in place (trivial
+            // to bring back with two lines here) rather than torn out.
             sidebarIcon("person.text.rectangle", label: "Resume") { openSidebarFlow(.resume) }
-            sidebarIcon("book", label: "Book") { openSidebarFlow(.book) }
-            sidebarIcon("square.grid.2x2.fill", label: "Design") { openSidebarFlow(.design) }
+            // Book's own standalone icon is gone (2026-08-18, explicit ask:
+            // "combine workflows and books and design something called
+            // Develop... move books away from the main search bar to what
+            // Develop will have") - Develop's own in-screen toggle is the
+            // one place to reach book-drafting now, not a second sidebar
+            // entry point racing it.
+            sidebarIcon("square.grid.2x2.fill", label: "Develop") { openSidebarFlow(.develop) }
             Spacer(minLength: 0)
             sidebarIcon("gearshape.fill", label: "Settings", identifier: "deskGridSidebarManage", action: onOpenManage)
         }
@@ -1985,10 +1995,8 @@ struct DeskGridDashboardView: View {
             CreateCanvasView(kind: .gdoc, studentName: studentName, onClose: closeSidebarFlow)
         case .resume:
             ResumeAgentView(onClose: closeSidebarFlow, studentName: studentName)
-        case .book:
-            BookWorkflowView(onClose: closeSidebarFlow, studentName: studentName)
-        case .design:
-            DesignStudioView(studentName: studentName, onClose: closeSidebarFlow)
+        case .develop:
+            DevelopStudioView(studentName: studentName, onClose: closeSidebarFlow)
         }
     }
 
@@ -2020,14 +2028,14 @@ struct DeskGridDashboardView: View {
         // anymore. Flag this if that's not what was meant.
         HStack(spacing: 8) {
             dockChip("Archive", system: "archivebox.fill", identifier: "deskGridDock_Archive", action: onOpenArchive)
-            // "Flows" chip removed (2026-08-18, explicit ask: "the flows
-            // should move to setting column... we only go to other
-            // panels... through the setting column") - Presentation/
-            // GDoc/Resume/Book/Design now live as always-visible icons in
-            // `leftSidebar` instead of a toggled popup. +Book kept as its
-            // own quick chip since it was already a direct one-tap
-            // action, not a rail toggle.
-            dockChip("+Book", system: "book.fill", identifier: "deskGridDock_Book") { onOpenFlow("book") }
+            // "+Book" replaced with "Design" (2026-08-18, explicit ask:
+            // "next to Archive, should be Design on the search bar... move
+            // it from the toolbar to the search bar. Remove Book") - both
+            // Book-drafting and the workflow canvas now live behind
+            // Develop's own toggle (`DevelopStudioView`), so this is the
+            // same destination the sidebar's own "Develop" icon opens, not
+            // a second competing entry point into just one half of it.
+            dockChip("Design", system: "square.grid.2x2.fill", identifier: "deskGridDock_Design") { openSidebarFlow(.develop) }
             searchField(placeholder: "Search", identifier: "deskGridDashboardSearch", onSubmit: submitSearch)
         }
         .padding(.horizontal, 16)

@@ -48,6 +48,7 @@
 		96E8B917BB811401BE825DDF /* MicroSimLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DD656E755128E29056BA08 /* MicroSimLoader.swift */; };
 		9A6F2325A1FDC007FA06B7CA /* KnowledgeGraphClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333EDEE01284D66F3CAF76DD /* KnowledgeGraphClient.swift */; };
 		9D00117C89A5E8CB2AA33B3D /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3890F71414E363C12CC19397 /* DashboardView.swift */; };
+		9F93BBC616145E16B7A1E6C3 /* DevelopStudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011EEA07F9F30052D6CF90C6 /* DevelopStudioView.swift */; };
 		A0BOOKAGENTCLIENT01 /* BookAgentClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0BOOKAGENTCLIENT01 /* BookAgentClient.swift */; };
 		A0CREATECANVAS01A2 /* CreateCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CREATECANVAS01A2 /* CreateCanvasView.swift */; };
 		A0DESKCONTENTROW01 /* DeskContentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DESKCONTENTROW01 /* DeskContentRow.swift */; };
@@ -161,6 +162,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		011EEA07F9F30052D6CF90C6 /* DevelopStudioView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DevelopStudioView.swift; sourceTree = "<group>"; };
 		0317BB30BAEC751F016F6F0F /* HomeworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeworkClient.swift; sourceTree = "<group>"; };
 		037C287CDFB7C16477B6DBF0 /* KnowledgeMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnowledgeMapView.swift; sourceTree = "<group>"; };
 		0A74CA882801493092A9127F /* MindCraftNotesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MindCraftNotesApp.swift; sourceTree = "<group>"; };
@@ -481,6 +483,7 @@
 				600BDD909110482BB76AF2B6 /* DesignStudioView.swift */,
 				5A10EB3BDDE04216B5B57403 /* JesseRailView.swift */,
 				C7078B04335739E9939AA984 /* MicroSimView.swift */,
+				011EEA07F9F30052D6CF90C6 /* DevelopStudioView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -794,6 +797,7 @@
 				B751BD1AD01F55EF490ACCD6 /* BookGraphLoader.swift in Sources */,
 				96E8B917BB811401BE825DDF /* MicroSimLoader.swift in Sources */,
 				5A4BBF95456BC56D43B90E85 /* MicroSimView.swift in Sources */,
+				9F93BBC616145E16B7A1E6C3 /* DevelopStudioView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

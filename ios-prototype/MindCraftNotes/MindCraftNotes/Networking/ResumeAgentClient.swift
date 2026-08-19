@@ -72,11 +72,25 @@ enum ResumeAgentClient {
     /// CURSOR_HANDOFF.md Assignment H). Real, honest scope: this drives
     /// name/headline/skills/roles from what the student says, nothing more,
     /// nothing fabricated to look like it does.
-    static func ask(message: String, draft: ResumeAgentDraft) async -> Reply? {
+    /// One real Drive file, already-extracted text - same shape
+    /// `DriveClient.DeskFile` already carries, kept as its own tiny struct
+    /// here instead of importing `DriveClient` into this file's own
+    /// dependency surface for one field mapping.
+    struct DriveSourceFile {
+        let name: String
+        let text: String
+    }
+
+    static func ask(message: String, draft: ResumeAgentDraft, driveFiles: [DriveSourceFile] = []) async -> Reply? {
         var request = URLRequest(url: endpoint)
         request.httpMethod = "POST"
         request.timeoutInterval = 25
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        var sources: [String: Any] = [:]
+        if !driveFiles.isEmpty {
+            sources["driveFiles"] = driveFiles.map { ["name": $0.name, "text": $0.text] }
+        }
 
         let body: [String: Any] = [
             "message": message,
@@ -94,7 +108,7 @@ enum ResumeAgentClient {
                 "linkedinUrl": draft.linkedinUrl,
                 "drive": draft.drive,
             ],
-            "sources": [String: Any](),
+            "sources": sources,
         ]
         request.httpBody = try? JSONSerialization.data(withJSONObject: body)
 

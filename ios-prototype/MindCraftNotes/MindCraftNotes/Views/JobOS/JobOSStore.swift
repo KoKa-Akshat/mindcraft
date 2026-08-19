@@ -516,6 +516,24 @@ final class JobOSStore: ObservableObject {
         flash("Augeo example loaded · Hareth should appear on the job")
     }
 
+    /// Nothing anywhere in the UI previously showed how old
+    /// `state.lastSyncedAt` actually was (confirmed by reading every call
+    /// site - `runDailySyncStub` writes it, nothing reads it back)
+    /// (2026-08-18, explicit ask: "flag whether the stub should at least
+    /// surface staleness"). This is that flag, made real: a plain age
+    /// readout, not a fix for the stub itself staying a stub.
+    var syncStalenessLabel: String {
+        guard let raw = state.lastSyncedAt, let date = ISO8601DateFormatter().date(from: raw) else {
+            return "Never synced"
+        }
+        let days = Calendar.current.dateComponents([.day], from: date, to: Date()).day ?? 0
+        switch days {
+        case ..<1: return "Synced today"
+        case 1: return "Synced 1 day ago"
+        default: return "Synced \(days) days ago"
+        }
+    }
+
     /// Daily Sync stub - agent not mounted yet. Logs note + rebuilds a
     /// lightweight queue from open Apply Now / Apply + Outreach roles.
     func runDailySyncStub(note: String, focus: String, rebuildQueue: Bool) {

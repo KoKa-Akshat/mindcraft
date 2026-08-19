@@ -64,7 +64,6 @@ struct DesignStudioView: View {
                         JesseRailView(studentName: studentName, context: "designStudio")
                     }
                     pin(DesignBoard.dock, scale: scale) { dock }
-                    pin(DesignBoard.addButton, scale: scale) { addButton }
 
                     if let id = selectedId, let box = boxes.first(where: { $0.id == id }) {
                         pin(DesignBoard.inspector, scale: scale) { inspector(box) }
@@ -339,42 +338,48 @@ struct DesignStudioView: View {
 
     // "Reset flow" removed (explicit ask - unnecessary chrome; "Remove box"
     // in the inspector already covers undoing a mistake per-box).
+    /// Real tool row, not a hidden dropdown menu (2026-08-18, explicit
+    /// ask, reference a real product screenshot: "the things on the
+    /// bottom could be so many tools... all the tools will be under the
+    /// images" - the reference's own bottom row is a line of labeled pill
+    /// buttons, not a "+" that opens a menu). Each pill IS the add action
+    /// for that box type - tapping "Ask" drops a new Ask box straight
+    /// onto the canvas, same `addBox(_:)` the old menu called.
     private var dock: some View {
-        HStack(spacing: 14) {
-            Spacer(minLength: 0)
-
-            Text("\(boxes.count) boxes \u{00b7} \(edges.count) connections")
-                .font(.system(size: 11, weight: .bold, design: .rounded))
-                .foregroundColor(Color(dsHex: "143a2e").opacity(0.6))
-
-            Spacer(minLength: 0)
-        }
-        .padding(.horizontal, 18)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(RoundedRectangle(cornerRadius: 20, style: .continuous).fill(Color(dsHex: "fbf8f3")))
-        .overlay(RoundedRectangle(cornerRadius: 20, style: .continuous).strokeBorder(Color(dsHex: "e4dcc8"), lineWidth: 1))
-        .accessibilityIdentifier("designStudioDock")
-    }
-
-    private var addButton: some View {
-        Menu {
+        HStack(spacing: 10) {
             ForEach(DesignBoxType.allCases) { type in
                 Button {
                     addBox(type)
                 } label: {
-                    Label(type.label, systemImage: type.glyph)
+                    HStack(spacing: 6) {
+                        Image(systemName: type.glyph)
+                        Text(type.label)
+                    }
+                    .font(.system(size: 13, weight: .bold, design: .rounded))
+                    .foregroundColor(type.accent)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 10)
+                    .background(Capsule().fill(Color.white))
+                    .overlay(Capsule().strokeBorder(type.accent.opacity(0.25), lineWidth: 1))
                 }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("designStudioAdd_\(type.rawValue)")
             }
-        } label: {
-            Image(systemName: "plus")
-                .font(.system(size: 18, weight: .bold))
-                .foregroundColor(Color(dsHex: "143a2e"))
-                .frame(width: 44, height: 44)
-                .background(Circle().fill(Color.white))
-                .overlay(Circle().strokeBorder(Color(dsHex: "e4dcc8"), lineWidth: 1))
-                .shadow(color: .black.opacity(0.12), radius: 8, y: 4)
+            Spacer(minLength: 0)
+            Text("\(boxes.count) boxes \u{00b7} \(edges.count) connections")
+                .font(.system(size: 11, weight: .bold, design: .rounded))
+                .foregroundColor(Color(dsHex: "143a2e").opacity(0.5))
         }
-        .accessibilityIdentifier("designStudioAdd")
+        .padding(.horizontal, 18)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(RoundedRectangle(cornerRadius: 24, style: .continuous).fill(Color(dsHex: "fbf8f3")))
+        .overlay(RoundedRectangle(cornerRadius: 24, style: .continuous).strokeBorder(Color(dsHex: "e4dcc8"), lineWidth: 1))
+        // NOT a direct .accessibilityIdentifier() on this container - same
+        // clobbering bug already documented/fixed twice elsewhere in this
+        // codebase (FieldDeskView's combinedAskAndDock, DeskGridDashboardView's
+        // uploadContentViewerBody): it stomped every pill button's own
+        // distinct identifier with this one instead of leaving them
+        // individually queryable.
     }
 
     private func addBox(_ type: DesignBoxType) {
@@ -487,10 +492,6 @@ private enum DesignBoard {
     static let canvas = CGRect(x: 40, y: 40, width: 840, height: 656)
     static let jesseRail = CGRect(x: 908, y: 40, width: 260, height: 656)
     static let inspector = CGRect(x: 1196, y: 40, width: 204, height: 656)
-    // Bottom-right corner of canvas, clear of every demoFlow box (all four
-    // sit in x:20-730/y:0-232) - was pinned at (40,40), directly on top of
-    // the first box's own top-left corner. Real overlap, not a style nit.
-    static let addButton = CGRect(x: canvas.maxX - 60, y: canvas.maxY - 60, width: 44, height: 44)
     static let dock = CGRect(x: 96, y: 706, width: 1321, height: 96)
 }
 
