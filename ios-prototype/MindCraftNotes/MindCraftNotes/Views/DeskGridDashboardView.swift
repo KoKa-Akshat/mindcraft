@@ -1167,6 +1167,11 @@ struct DeskGridDashboardView: View {
             let body = cards.map { "\($0.title)\n\($0.body)" }.joined(separator: "\n\n")
             onFileHomeworkToBinder(title.isEmpty ? fileName : title, body)
             homeworkUploads.insert(HomeworkUploadSummary(fileName: fileName, cards: cards), at: 0)
+            // Bridges into JesseCallSession's own "materials or go ahead?"
+            // flow (2026-08-18) - this upload lives in this view's local
+            // @State, not any shared store, so a call mid-question about
+            // materials couldn't otherwise see it landed.
+            jesseCall.latestHomeworkUpload = (fileName: fileName, cardSummaries: cards.map { "\($0.title): \($0.body)" })
         case .keyRejected:
             homeworkError = "That AI key was rejected. Open Settings to update it."
         case .unavailable:

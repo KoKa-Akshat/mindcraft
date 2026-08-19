@@ -156,9 +156,16 @@ final class StudentAIKeyStore: ObservableObject {
     /// honesty rule as `generateStudyPlan`: no live web access, no invented
     /// concept ids outside the known bank, and the chapters are the
     /// model's own knowledge, not a claim of researched material.
-    func generateTableOfContents(topic: String, knownConceptIds: [String]) async -> Result<LessonOutline, SolveError> {
+    /// `referenceMaterial` (2026-08-18, explicit ask: "he has uploaded a
+    /// file, use that as reference") - real content from the student's
+    /// own Homework Help upload (already-summarized cards, not raw OCR
+    /// text), when they explicitly pointed Jesse at it. When present, the
+    /// chapters/definition below are asked to actually reflect that
+    /// material, not just the model's own general knowledge of the topic.
+    func generateTableOfContents(topic: String, knownConceptIds: [String], referenceMaterial: String? = nil) async -> Result<LessonOutline, SolveError> {
+        let referenceBlock = referenceMaterial.map { "\n\nThe student uploaded this material - base the lesson on it, not just your own general knowledge of the topic:\n\($0)" } ?? ""
         let user = """
-        Topic the student wants to learn: \(topic)
+        Topic the student wants to learn: \(topic)\(referenceBlock)
 
         Known concept ids with a REAL, verified practice question bank today: \(knownConceptIds.joined(separator: ", "))
 

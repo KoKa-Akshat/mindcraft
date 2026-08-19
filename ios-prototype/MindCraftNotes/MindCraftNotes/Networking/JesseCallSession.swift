@@ -123,6 +123,23 @@ final class JesseCallSession: NSObject, ObservableObject {
     /// `askJesseWorkDashboard`). Reset in `begin()`, same as the other
     /// per-context state above.
     @Published private(set) var workDashboardLesson: WorkDashboardLesson?
+    /// Set the moment a topic is first recognized, cleared once the
+    /// student answers - the real gap behind a live bug report
+    /// (2026-08-18: "I said 'learn California bar'... the next thing
+    /// would have been: should Jesse ask if you have materials to
+    /// upload, or should I go ahead"). Before this, `askJesseWorkDashboard`
+    /// ran straight from topic -> archive check -> generation on the
+    /// very first utterance, with no chance for the student to attach an
+    /// upload first. Reset in `begin()`.
+    @Published private(set) var pendingLearnTopic: String?
+    /// Homework Help's own uploads live in `DeskGridDashboardView`'s
+    /// local `@State`, not in any shared store - this is the one bridge
+    /// DeskGridDashboardView pushes into whenever a real upload finishes
+    /// (`.onChange(of: homeworkUploads)`, same pattern already used for
+    /// `intelLines`/`binderTitles`), so a call that's mid-"do you have
+    /// materials" can actually see what the student just uploaded instead
+    /// of a second, parallel upload path.
+    @Published var latestHomeworkUpload: (fileName: String, cardSummaries: [String])?
 
     private let recognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US"))
     private let audioEngine = AVAudioEngine()
@@ -197,6 +214,7 @@ final class JesseCallSession: NSObject, ObservableObject {
         }
         if context == "workDashboard" {
             workDashboardLesson = nil
+            pendingLearnTopic = nil
             // Real voice greeting on arrival (2026-08-18, explicit ask:
             // "the first thing you should do is say hi Akshat what can I
             // help you study today - it says nothing, it's waiting for
@@ -471,8 +489,17 @@ final class JesseCallSession: NSObject, ObservableObject {
         // phrasing - anything else on this context (e.g. "what's my next
         // assignment") falls through to the same generic briefing path as
         // before this feature existed, unchanged.
+        // A pending topic (the student was just asked "materials or go
+        // ahead?") takes priority over trying to extract a brand-new
+        // topic from THIS utterance - it's almost certainly the answer to
+        // that question, not a second unrelated learn request.
+        if context == "workDashboard", let pending = pendingLearnTopic {
+            await askJesseWorkDashboardResume(topic: pending, reply: message)
+            isThinking = false
+            return
+        }
         if context == "workDashboard", let topic = Self.extractLearnTopic(from: message) {
-            await askJesseWorkDashboard(topic: topic)
+            await askJesseWorkDashboardClarify(topic: topic)
             isThinking = false
             return
         }
@@ -659,6 +686,38 @@ final class JesseCallSession: NSObject, ObservableObject {
         return nil
     }
 
+    /// First half of the "materials or go ahead?" exchange (2026-08-18,
+    /// explicit live ask) - just asks and parks the topic, doesn't touch
+    /// the archive or generate anything yet. `askJesseWorkDashboard` used
+    /// to run this whole pipeline off the FIRST utterance a topic was
+    /// recognized in, with no chance for the student to attach an upload
+    /// first.
+    private func askJesseWorkDashboardClarify(topic: String) async {
+        pendingLearnTopic = topic
+        await speak("Got it, \(topic). Want to upload any materials first, or should I just go ahead and build the lesson?")
+    }
+
+    /// Second half - interprets the student's answer to the question
+    /// `askJesseWorkDashboardClarify` just asked. Deliberately permissive
+    /// about what counts as "go ahead" (same lightweight keyword-check
+    /// style already used elsewhere in this file, e.g.
+    /// `mentionsDriveImport`) - a reply that matches neither pattern still
+    /// proceeds rather than leaving the conversation stuck waiting
+    /// forever on an ambiguous answer.
+    private func askJesseWorkDashboardResume(topic: String, reply: String) async {
+        pendingLearnTopic = nil
+        let lowered = reply.lowercased()
+        let mentionsUpload = lowered.contains("upload") || lowered.contains("file") || lowered.contains("pdf")
+            || lowered.contains("use that") || lowered.contains("use it") || lowered.contains("reference")
+        let context = mentionsUpload ? latestHomeworkUpload : nil
+        if mentionsUpload, context == nil {
+            await speak("I don't see an upload yet - go ahead and tap Homework Help to add it, then tell me when it's there. Or just say go ahead and I'll build from what's available.")
+            pendingLearnTopic = topic // still waiting - didn't fall through silently
+            return
+        }
+        await askJesseWorkDashboard(topic: topic, materialsContext: context)
+    }
+
     /// "Check the archive for lessons on it, extract things, create a
     /// lesson plan." Real archives get checked, in order, before ever
     /// generating anything:
@@ -683,8 +742,18 @@ final class JesseCallSession: NSObject, ObservableObject {
     ///    lesson, not a fourth competing source.
     ///
     /// Only generation (the final fallback) gets skipped when a topic has
-    /// no real archived material anywhere.
-    private func askJesseWorkDashboard(topic: String) async {
+    /// no real archived material anywhere - unless the student explicitly
+    /// pointed at their own upload (`materialsContext`, non-nil only via
+    /// `askJesseWorkDashboardResume`), in which case that's what they
+    /// asked Jesse to build from, so the archive checks below are skipped
+    /// entirely in favor of generation grounded in their own material
+    /// instead of a generic archive match that might not even be about
+    /// their specific document.
+    private func askJesseWorkDashboard(topic: String, materialsContext: (fileName: String, cardSummaries: [String])? = nil) async {
+        if let materialsContext {
+            await generateFromMaterials(topic: topic, materials: materialsContext)
+            return
+        }
         let loweredTopic = topic.lowercased()
         // Real, matched interactive MicroSims (Dan McCreary's, licensed
         // for commercial use via MindCraft's advisor relationship with
@@ -754,6 +823,38 @@ final class JesseCallSession: NSObject, ObservableObject {
             await speak("That AI key isn't working right now. Check it in Settings?")
         case .failure(.unavailable):
             await speak("I couldn't put a lesson together on that just now - try again in a bit?")
+        }
+    }
+
+    /// Generation grounded in the student's own upload, not the archive
+    /// (2026-08-18, explicit ask - see `askJesseWorkDashboard`'s doc
+    /// comment on `materialsContext`). Real MicroSims are still attached
+    /// if any match the topic - additive to any source, same as the
+    /// archive/generation branches above.
+    private func generateFromMaterials(topic: String, materials: (fileName: String, cardSummaries: [String])) async {
+        let microsims = MicroSimLoader.matching(topic: topic)
+        let microsimNote = microsims.isEmpty ? "" : " I also found \(microsims.count) interactive simulation\(microsims.count == 1 ? "" : "s") you can play with."
+        let known = Array(Set(SampleQuestion.all.map(\.conceptId)))
+        let reference = materials.cardSummaries.joined(separator: "\n")
+        let result = await StudentAIKeyStore.shared.generateTableOfContents(topic: topic, knownConceptIds: known, referenceMaterial: reference)
+        guard isActive else { return }
+        switch result {
+        case .success(let outline):
+            workDashboardLesson = WorkDashboardLesson(
+                topic: topic,
+                source: .generated,
+                chapters: outline.chapters,
+                definition: outline.definition,
+                question: outline.question,
+                microsims: microsims
+            )
+            await speak("Built this from \(materials.fileName): \(outline.chapters.joined(separator: ", ")).\(microsimNote)")
+        case .failure(.noKey):
+            await speak("You'll need to connect an AI key in Settings before I can build a lesson from \(materials.fileName).")
+        case .failure(.rejected):
+            await speak("That AI key isn't working right now. Check it in Settings?")
+        case .failure(.unavailable):
+            await speak("I couldn't put a lesson together from that just now - try again in a bit?")
         }
     }
 
