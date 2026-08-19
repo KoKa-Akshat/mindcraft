@@ -5,6 +5,7 @@ from pydantic import BaseModel, Field
 from datetime import datetime
 import json
 import pathlib
+import threading
 from typing import Literal
 
 from mindcraft_graph.models.concept import Ontology
@@ -238,6 +239,93 @@ print(
     f"[startup] misconception reverse map: {len(misconception_ingredient_reverse_map)} entries"
 )
 
+# ── Live reload of dynamic (book-derived / lesson-derived) concept graphs ──
+#
+# The startup block above only runs once per process. Content that gets
+# generated WHILE the service is running (a Jesse-generated lesson tagged
+# into data/dynamic_graphs/, see loaders/lesson_tagger.py) would otherwise
+# sit invisible to /recommend et al. until the next redeploy. This section
+# makes that pickup callable mid-run via /admin/reload-graphs and
+# /ingest-lesson-graph below, without waiting for a restart.
+#
+# _rebuild_dynamic_ontology_and_index() deliberately duplicates (rather than
+# factors out of) the startup block above: this is Blake's live startup
+# sequence, and reshaping it into a shared helper risks a subtle behavior
+# change to code that already works correctly. It returns everything as
+# LOCAL values — it never mutates global state itself, so a failed rebuild
+# (e.g. merge_ontology's concept-id-collision guard firing) can never leave
+# the live service half-updated. The caller swaps the results into module
+# globals under _reload_lock, atomically, only after a full rebuild
+# succeeds. This is the exact same rebuild a redeploy that adds a book
+# graph already triggers (embeddings + PCA recompute over the new concept
+# set) — reload has the same "PCA axes can shift slightly" characteristic a
+# normal deploy already has today, just made triggerable without one.
+_reload_lock = threading.Lock()
+
+
+def _rebuild_dynamic_ontology_and_index() -> dict:
+    base_ontology, _base_ingredients = (
+        load_complete_ontology(STANDARDIZED_ONTOLOGY_PATH)
+        if STANDARDIZED_ONTOLOGY_PATH.exists()
+        else load_complete_ontology(LEGACY_COMPLETE_ONTOLOGY_PATH)
+    )
+    new_dynamic_graphs = load_dynamic_concept_graphs(DYNAMIC_GRAPHS_DIR)
+    new_ontology = (
+        merge_ontology(base_ontology, new_dynamic_graphs) if new_dynamic_graphs else base_ontology
+    )
+
+    model = embeddings.load_sentence_transformer()
+    new_embs = embeddings.compute_concept_embeddings(new_ontology, model)
+    new_pca = embeddings.compute_pca_axes(new_embs)
+    embeddings.save_concept_embeddings(new_embs, EMBEDDINGS_PATH)
+    embeddings.save_pca_axes(*new_pca, PCA_PATH)
+
+    new_sources = [
+        STANDARDIZED_ONTOLOGY_PATH, LAYER2_PATH, LAYER3_PATH,
+        BANK_INDEX_PATH, BANK_METADATA_PATH,
+        *sorted(DYNAMIC_GRAPHS_DIR.glob("*.json")),
+    ]
+    new_index = classifier_index.build_classification_index(
+        new_ontology,
+        ingredient_ontology,  # dynamic graphs never add ingredients — reuse startup's
+        LAYER2_PATH,
+        LAYER3_PATH,
+        model,
+        source_paths=new_sources,
+        bank_index_path=BANK_INDEX_PATH,
+        bank_metadata_path=BANK_METADATA_PATH,
+    )
+    classifier_index.save_classification_index(new_index, CLASSIFICATION_INDEX_PATH)
+
+    return {
+        "ontology": new_ontology,
+        "dynamic_graphs": new_dynamic_graphs,
+        "concept_embs": new_embs,
+        "pca_components": new_pca[0],
+        "pca_mean": new_pca[1],
+        "pca_variance": new_pca[2],
+        "classification_index": new_index,
+    }
+
+
+def _swap_ontology_globals(result: dict) -> None:
+    """Only call this while holding _reload_lock. ingredient_concept_embs is
+    a separate dict COPY of concept_embs made at startup (see below) — if
+    this doesn't also refresh it, /recommend-ingredients would keep reading
+    the stale pre-reload embeddings forever even though every other endpoint
+    sees the new ontology (the exact kind of split-brain bug this file's own
+    "Greptile catch" comments elsewhere warn about)."""
+    global ontology, concept_embs, pca_components, pca_mean, pca_variance
+    global classification_index, ingredient_concept_embs, _dynamic_graphs
+    ontology = result["ontology"]
+    concept_embs = result["concept_embs"]
+    pca_components = result["pca_components"]
+    pca_mean = result["pca_mean"]
+    pca_variance = result["pca_variance"]
+    classification_index = result["classification_index"]
+    ingredient_concept_embs = dict(concept_embs)
+    _dynamic_graphs = result["dynamic_graphs"]
+
 # Classification embeddings for the ingredient runtime. With the standardized
 # ontology these are exactly the concept embeddings — no synthesized concepts.
 # (A legacy augmentation here injected a phantom "circular_trigonometry" vector
@@ -441,6 +529,19 @@ class RecordWorkEvidenceRequest(BaseModel):
     concept_id: str
     steps: list[WorkEvidenceStep] = Field(default_factory=list)
     outcome: WorkEvidenceOutcome | None = None
+
+
+class IngestLessonGraphRequest(BaseModel):
+    topic: str
+    chapter_titles: list[str]
+
+
+class RecordEngagementRequest(BaseModel):
+    student_id: str
+    subject_id: str
+    concept_id: str
+    event_type: str
+    metadata: dict = Field(default_factory=dict)
 
 
 def _serialize_minimal_dag(dag):
@@ -1346,6 +1447,121 @@ async def record_work_evidence_endpoint(req: RecordWorkEvidenceRequest, auth: Au
         "alignment": alignment,
         "updatedConceptMastery": updated_concepts,
     }
+
+
+@app.post("/admin/reload-graphs")
+async def reload_graphs_endpoint(auth: AuthContext = Depends(require_auth)):
+    """Pick up new/changed files in data/dynamic_graphs/ without a redeploy.
+    Runs the exact rebuild a redeploy already runs (see
+    _rebuild_dynamic_ontology_and_index's docstring above) — just callable
+    mid-process. Service-key only: this mutates process-wide state (every
+    student's ontology), not one student's data, so a per-student Firebase
+    token is the wrong grant to check here."""
+    if not auth.is_service:
+        raise HTTPException(status_code=403, detail="Service-key only")
+
+    with _reload_lock:
+        try:
+            result = _rebuild_dynamic_ontology_and_index()
+        except ValueError as exc:
+            # merge_ontology's concept-id-collision guard, or similar — never
+            # let a bad reload take down what's already serving.
+            raise HTTPException(status_code=422, detail=f"Reload failed: {exc}")
+        _swap_ontology_globals(result)
+
+    print(f"[reload-graphs] ontology now {len(ontology.concepts)} concepts "
+          f"({len(_dynamic_graphs)} dynamic graph file(s))")
+    return {"concepts": len(ontology.concepts), "dynamicGraphs": len(_dynamic_graphs)}
+
+
+@app.post("/ingest-lesson-graph")
+async def ingest_lesson_graph_endpoint(
+    req: IngestLessonGraphRequest, auth: AuthContext = Depends(require_auth)
+):
+    """Turn a Jesse-generated lesson (topic + ordered chapter titles) into a
+    real dynamic concept graph file and make it live immediately — tagging
+    + reload chained into one call so the client only makes one request
+    right after generating a lesson. Service-key only, same reasoning as
+    /admin/reload-graphs: this grows the shared ontology, not one student's
+    data."""
+    if not auth.is_service:
+        raise HTTPException(status_code=403, detail="Service-key only")
+
+    from mindcraft_graph.loaders.lesson_tagger import tag_lesson_to_graph
+    from mindcraft_graph.loaders.dynamic_concept_loader import (
+        load_dynamic_concept_graph,
+        DynamicGraphError,
+    )
+
+    try:
+        graph = tag_lesson_to_graph(req.topic, req.chapter_titles)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+
+    out_path = DYNAMIC_GRAPHS_DIR / f"{graph['subject_id']}.json"
+    tmp_path = out_path.with_suffix(".json.tmp")
+    tmp_path.write_text(json.dumps(graph, indent=2))
+    try:
+        # Re-validate through the SAME loader the live service reads with —
+        # a bad graph must never land in a directory the next reload (or
+        # the next restart) will try to load.
+        load_dynamic_concept_graph(tmp_path)
+    except DynamicGraphError as exc:
+        tmp_path.unlink(missing_ok=True)
+        raise HTTPException(status_code=422, detail=f"Generated graph failed validation: {exc}")
+    tmp_path.replace(out_path)  # atomic on POSIX — no reader ever sees a half-written file
+
+    with _reload_lock:
+        try:
+            result = _rebuild_dynamic_ontology_and_index()
+        except ValueError as exc:
+            raise HTTPException(status_code=422, detail=f"Reload after ingest failed: {exc}")
+        _swap_ontology_globals(result)
+
+    return {
+        "subjectId": graph["subject_id"],
+        "conceptIds": [c["id"] for c in graph["concepts"]],
+        "totalConcepts": len(ontology.concepts),
+    }
+
+
+@app.post("/record-engagement")
+async def record_engagement_endpoint(
+    req: RecordEngagementRequest, auth: AuthContext = Depends(require_auth)
+):
+    """Records that a student ENGAGED with a concept (viewed a generated
+    chapter, revisited one, ...) WITHOUT touching mastery.
+
+    Deliberately separate from /record-outcomes: SessionEvent.outcome is a
+    REQUIRED, bounded graded signal, and engine/features.py's
+    compute_concept_profiles sums total_outcome/total_effort/event_count
+    for every SessionEvent regardless of event_type (only "assessment" gets
+    special-cased, and only for practice_event_count, not for whether it
+    counts toward outcome at all) — there is no value that safely means
+    "ungraded exposure" inside that model. Even outcome=0.0 would silently
+    dilute real graded-practice evidence with content the student merely
+    saw. LearningEvent is the right shape instead: open event_type,
+    nullable outcome, its own Firestore collection (learning_events) that
+    the mastery engine (compute_concept_profiles, edges.py, decay.py) never
+    reads — a study of what content actually reached a student, kept
+    structurally apart from what the deterministic mastery engine
+    computes from. This is what makes the growing content pipeline honest:
+    growth adds provenance and, once graded, real practice evidence — never
+    a shortcut into mastery itself."""
+    authorize_student(auth, req.student_id)
+    from mindcraft_graph.firestore_adapter import save_learning_event
+    from mindcraft_graph.models.learning_world import LearningEvent
+
+    event = LearningEvent(
+        student_id=req.student_id,
+        subject_id=req.subject_id,
+        concept_id=req.concept_id,
+        event_type=req.event_type,
+        source="study_session",
+        metadata=req.metadata,
+    )
+    save_learning_event(event)
+    return {"recorded": True}
 
 
 @app.post("/process-summary")
