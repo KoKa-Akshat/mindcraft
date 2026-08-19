@@ -19,6 +19,19 @@ struct JesseCallTurn: Identifiable, Codable, Equatable {
 /// route content into Binder/Homework Help/Moodle; the table of contents
 /// itself shows up in Intel's own transcript, spoken by Jesse, rather than
 /// needing a second display surface squeezed into an already-compact box.
+/// One real citation for the Study Session's Sources tab (2026-08-19,
+/// Assignment L) - a book/page/URL from a real `ArchiveRagClient.Hit`,
+/// never invented. A plain `[(String, String, String)]` tuple array can't
+/// satisfy `WorkDashboardLesson: Equatable` (tuples aren't nominal types,
+/// so they don't conform to `Equatable` even though `==` works on them
+/// directly) - a real struct sidesteps that.
+struct LessonCitation: Equatable, Identifiable {
+    let bookTitle: String
+    let pageTitle: String
+    let url: String
+    var id: String { url }
+}
+
 struct WorkDashboardLesson: Equatable {
     enum Source: Equatable {
         case archive(bookTitle: String)
@@ -27,12 +40,28 @@ struct WorkDashboardLesson: Equatable {
     let topic: String
     let source: Source
     let chapters: [String]
+    /// Same index as `chapters` - one real paragraph per chapter for the
+    /// Study Session's own per-tab content (2026-08-19). Empty for the
+    /// archive-matched paths (`BookGraphLoader`/`ArchiveRagClient` only
+    /// ever return chapter TITLES, not body text) - `WorkDashboardLesson`
+    /// itself doesn't fake one; `chapterBody(at:)` below falls back to
+    /// `definition` the same way `LessonOutline.chapterBody(at:)` does.
+    let chapterBodies: [String]
     let definition: String
     let question: String?
     /// Real, matched interactive MicroSims (`MicroSimLoader.matching`) -
     /// not fabricated placeholders. Empty for any topic outside the
     /// bundled Calculus set today.
     let microsims: [MicroSimRecord]
+    /// Real archive citations when `source` is `.archive` - empty for
+    /// `.generated` (the Sources tab shows "AI-generated, no source" in
+    /// that case instead of inventing attribution).
+    let citations: [LessonCitation]
+
+    func chapterBody(at index: Int) -> String {
+        if chapterBodies.indices.contains(index), !chapterBodies[index].isEmpty { return chapterBodies[index] }
+        return definition
+    }
 }
 
 /// App-lifetime voice session for Jesse (native `SFSpeechRecognizer` +
@@ -250,6 +279,27 @@ final class JesseCallSession: NSObject, ObservableObject {
         sessionTurnOrigin = turns.count
         status = nil
         startListening()
+    }
+
+    /// `StudySessionView`'s own close button (2026-08-19) - the lesson was
+    /// already filed to Binder/Homework Help the moment it was generated
+    /// (`DeskGridDashboardView.handleNewLesson`, unchanged), so closing
+    /// the tabbed view just needs to dismiss it. `workDashboardLesson` is
+    /// `private(set)` on purpose (every other write to it goes through a
+    /// real archive/generation result) - this is the one deliberate
+    /// external clear.
+    func closeLessonSession() {
+        workDashboardLesson = nil
+        pendingLearnTopic = nil
+    }
+
+    /// Test-only seam for `StudySessionView` (2026-08-19) - real voice
+    /// generation needs a connected AI key and a live network round trip,
+    /// neither available in the UI-testing harness. Only ever called from
+    /// `DeskGridDashboardView`'s own `--ui-testing-*`-gated seed hook, same
+    /// shape as `--ui-testing-content-viewer` elsewhere in this app.
+    func seedWorkDashboardLessonForTesting(_ lesson: WorkDashboardLesson) {
+        workDashboardLesson = lesson
     }
 
     /// Ends the call and returns the final transcript for the caller to
@@ -775,9 +825,11 @@ final class JesseCallSession: NSObject, ObservableObject {
                 topic: topic,
                 source: .archive(bookTitle: match.title),
                 chapters: chapters,
+                chapterBodies: [],
                 definition: "Found in your archive: \(match.title).",
                 question: nil,
-                microsims: microsims
+                microsims: microsims,
+                citations: []
             )
             await speak("Good news - I already have \(match.title) in your archive. Here's the table of contents: \(chapters.joined(separator: ", ")).\(microsimNote)")
             return
@@ -795,9 +847,11 @@ final class JesseCallSession: NSObject, ObservableObject {
                 topic: topic,
                 source: .archive(bookTitle: answer.hits[0].bookTitle),
                 chapters: chapters,
+                chapterBodies: [],
                 definition: answer.reply,
                 question: nil,
-                microsims: microsims
+                microsims: microsims,
+                citations: answer.hits.map { LessonCitation(bookTitle: $0.bookTitle, pageTitle: $0.pageTitle, url: $0.pageUrl) }
             )
             await speak(answer.reply + microsimNote)
             return
@@ -812,9 +866,11 @@ final class JesseCallSession: NSObject, ObservableObject {
                 topic: topic,
                 source: .generated,
                 chapters: outline.chapters,
+                chapterBodies: outline.chapterBodies ?? [],
                 definition: outline.definition,
                 question: outline.question,
-                microsims: microsims
+                microsims: microsims,
+                citations: []
             )
             await speak("Nothing in the archive yet for \(topic), so I put together a fresh outline: \(outline.chapters.joined(separator: ", ")).\(microsimNote)")
         case .failure(.noKey):
@@ -844,9 +900,11 @@ final class JesseCallSession: NSObject, ObservableObject {
                 topic: topic,
                 source: .generated,
                 chapters: outline.chapters,
+                chapterBodies: outline.chapterBodies ?? [],
                 definition: outline.definition,
                 question: outline.question,
-                microsims: microsims
+                microsims: microsims,
+                citations: []
             )
             await speak("Built this from \(materials.fileName): \(outline.chapters.joined(separator: ", ")).\(microsimNote)")
         case .failure(.noKey):

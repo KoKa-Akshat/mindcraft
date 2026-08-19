@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00E78E9826A7228E60B2F09B /* StudySessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0BAFFB8EAB3F099DB44C2C7 /* StudySessionView.swift */; };
 		01D8ED16A0944B308DB5D6C8 /* MindCraftNotesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964D60BF9F534C938B4170EB /* MindCraftNotesUITests.swift */; };
 		0237EE1B70CC4D8DB21A639B /* LaTeXMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20548665090C49E3A52E9BE8 /* LaTeXMath.swift */; };
 		03E3A9AC7EC0438791EED1B2 /* LaTeXDisplayText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F652917CF738425093DEE541 /* LaTeXDisplayText.swift */; };
@@ -287,6 +288,7 @@
 		DA7262B1A341CC17EEC08DFE /* LiveSessionClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveSessionClient.swift; sourceTree = "<group>"; };
 		DECD1EEEF419421EBDCABAD4 /* StickersShelfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickersShelfView.swift; sourceTree = "<group>"; };
 		DFEC353EF8F1EADA0F99E274 /* DiagnosticClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticClient.swift; sourceTree = "<group>"; };
+		E0BAFFB8EAB3F099DB44C2C7 /* StudySessionView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StudySessionView.swift; sourceTree = "<group>"; };
 		E16F5501162A4F865EFC69C0 /* PolynomialExpression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolynomialExpression.swift; sourceTree = "<group>"; };
 		E62ECD0E2F4F5C5176CDD4C3 /* FindTutorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindTutorView.swift; sourceTree = "<group>"; };
 		E8C1A04F2B7D4E91A3C56D80 /* pianoSeed.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = pianoSeed.json; sourceTree = "<group>"; };
@@ -484,6 +486,7 @@
 				5A10EB3BDDE04216B5B57403 /* JesseRailView.swift */,
 				C7078B04335739E9939AA984 /* MicroSimView.swift */,
 				011EEA07F9F30052D6CF90C6 /* DevelopStudioView.swift */,
+				E0BAFFB8EAB3F099DB44C2C7 /* StudySessionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -798,6 +801,7 @@
 				96E8B917BB811401BE825DDF /* MicroSimLoader.swift in Sources */,
 				5A4BBF95456BC56D43B90E85 /* MicroSimView.swift in Sources */,
 				9F93BBC616145E16B7A1E6C3 /* DevelopStudioView.swift in Sources */,
+				00E78E9826A7228E60B2F09B /* StudySessionView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -170,10 +170,11 @@ final class StudentAIKeyStore: ObservableObject {
         Known concept ids with a REAL, verified practice question bank today: \(knownConceptIds.joined(separator: ", "))
 
         Respond with ONLY this JSON shape, no other text:
-        {"definition": "...", "chapters": ["...", "..."], "question": "..." or null, "matchedConceptId": "..." or null}
+        {"definition": "...", "chapters": ["...", "..."], "chapterBodies": ["...", "..."], "question": "..." or null, "matchedConceptId": "..." or null}
 
         - definition: one or two plain sentences stating the core idea, no jargon.
         - chapters: 4 to 6 short sub-topic titles, in the order a student should learn them.
+        - chapterBodies: one real paragraph PER chapter, same order and same length as chapters - this is what the student actually reads for that chapter, not a repeat of definition. Teach the sub-topic, don't just describe it.
         - question: one concrete practice question testing the FIRST chapter, or null if you cannot write one honestly.
         - matchedConceptId: the exact id string from the known list above ONLY if the topic is genuinely that concept - otherwise null. Never invent an id not in that list.
         """
@@ -412,13 +413,31 @@ struct StudyPlan: Decodable, Equatable {
 struct LessonOutline: Decodable, Equatable {
     let definition: String
     let chapters: [String]
+    /// Real per-chapter content, same index as `chapters` (2026-08-19,
+    /// Study Session/Assignment L - see CURSOR_HANDOFF.md). Optional
+    /// because older cached/decoded responses (or a model that ignores
+    /// the field) shouldn't fail to parse - `chapterBody(at:)` below falls
+    /// back to `definition` when this is absent or short, so a tab always
+    /// has SOMETHING real to show, never a blank page.
+    let chapterBodies: [String]?
     let question: String?
     let matchedConceptId: String?
+
+    func chapterBody(at index: Int) -> String {
+        if let body = chapterBodies?[safe: index], !body.isEmpty { return body }
+        return definition
+    }
 
     static func parse(_ raw: String) -> LessonOutline? {
         guard let start = raw.firstIndex(of: "{"), let end = raw.lastIndex(of: "}"), start < end else { return nil }
         let jsonSlice = raw[start...end]
         guard let data = jsonSlice.data(using: .utf8) else { return nil }
         return try? JSONDecoder().decode(LessonOutline.self, from: data)
+    }
+}
+
+private extension Array {
+    subscript(safe index: Int) -> Element? {
+        indices.contains(index) ? self[index] : nil
     }
 }

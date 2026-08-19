@@ -2279,6 +2279,44 @@ final class MindCraftNotesUITests: XCTestCase {
     /// lands on Workflows by default (its own real tool row - Find/Ask/
     /// Make/Output pill buttons, not a hidden "+" menu), and the toggle
     /// switches to Books' real content in the same pane.
+    /// Regression for Study Session (2026-08-19, Assignment L in
+    /// CURSOR_HANDOFF.md - explicit ask, a real product reference image):
+    /// a generated lesson opens as a tabbed overlay - one tab per chapter
+    /// plus a real Sources tab - with the dashboard still visible/mounted
+    /// underneath (not navigated away from), and closing clears it back to
+    /// the normal dashboard. Real voice generation needs a connected AI
+    /// key and a live network round trip, neither available here - seeded
+    /// via `--ui-testing-study-session` (`JesseCallSession.
+    /// seedWorkDashboardLessonForTesting`), same shape as
+    /// `--ui-testing-content-viewer` elsewhere in this file.
+    func testStudySessionShowsChaptersAndSourcesThenCloses() {
+        let app = launchFieldDeskApp(extraArgs: ["--ui-testing-study-session"])
+        XCUIDevice.shared.orientation = .landscapeLeft
+        XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 15))
+
+        XCTAssertTrue(app.descendants(matching: .any)["studySessionRoot"].waitForExistence(timeout: 10), "expected the Study Session overlay to open")
+        XCTAssertTrue(app.buttons["deskGridTile_Homework Help"].exists, "expected the dashboard to stay mounted underneath, not navigated away from")
+        XCTAssertTrue(app.staticTexts["Derivatives"].exists, "expected the real lesson topic as the session title")
+
+        // Long body strings exceed the 128-char limit on the plain string
+        // subscript query - a CONTAINS predicate on a shorter, distinctive
+        // substring sidesteps that instead of asserting on the full text.
+        func bodyContains(_ substring: String) -> XCUIElement {
+            app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", substring)).firstMatch
+        }
+        XCTAssertTrue(bodyContains("shrinking the interval delta-x toward zero").exists, "expected chapter 1's own real body text, not a repeat of the definition")
+
+        app.buttons["studySessionTab_2"].tap()
+        XCTAssertTrue(bodyContains("differentiate the outside first").waitForExistence(timeout: 5), "expected switching tabs to show that chapter's own real content")
+
+        app.buttons["studySessionTab_sources"].tap()
+        XCTAssertTrue(app.descendants(matching: .any)["studySessionSources"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Framing Concepts Through Delta"].exists, "expected a real citation, not a placeholder")
+
+        app.buttons["studySessionClose"].tap()
+        XCTAssertFalse(app.descendants(matching: .any)["studySessionRoot"].waitForExistence(timeout: 3), "expected closing to dismiss the session")
+    }
+
     func testDevelopStudioTogglesWorkflowsAndBooks() {
         let app = launchFieldDeskApp()
         XCUIDevice.shared.orientation = .landscapeLeft

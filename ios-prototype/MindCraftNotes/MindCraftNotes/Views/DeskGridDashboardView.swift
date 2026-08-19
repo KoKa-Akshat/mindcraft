@@ -378,6 +378,28 @@ struct DeskGridDashboardView: View {
                     homeworkUploads = [seed]
                     viewingUpload = seed
                 }
+                if ProcessInfo.processInfo.arguments.contains("--ui-testing-study-session") {
+                    jesseCall.seedWorkDashboardLessonForTesting(
+                        WorkDashboardLesson(
+                            topic: "derivatives",
+                            source: .archive(bookTitle: "Calculus"),
+                            chapters: ["Framing Concepts Through Delta", "The Power Rule", "Chain Rule", "Key Takeaways"],
+                            chapterBodies: [
+                                "A derivative measures how fast a quantity changes - the slope of the tangent line at a single point, found by shrinking the interval delta-x toward zero.",
+                                "For any power of x, bring the exponent down and subtract one from it: the derivative of x^n is n times x^(n-1). This one rule handles most polynomial terms you'll see.",
+                                "When a function is built out of another function, differentiate the outside first, then multiply by the derivative of the inside.",
+                                "Derivatives turn a curve's shape into numbers you can reason about: where it's rising, falling, or momentarily flat.",
+                            ],
+                            definition: "A derivative measures the instantaneous rate of change of a function.",
+                            question: "If f(x) = x^3, what is f'(x)?",
+                            microsims: [],
+                            citations: [
+                                LessonCitation(bookTitle: "Calculus", pageTitle: "Framing Concepts Through Delta", url: "https://dmccreary.github.io/calculus/chapters/02-limits/framing-concepts-through-delta/"),
+                                LessonCitation(bookTitle: "Calculus", pageTitle: "Key Takeaways", url: "https://dmccreary.github.io/calculus/chapters/03-derivatives/key-takeaways/"),
+                            ]
+                        )
+                    )
+                }
             }
 
             Group {
@@ -406,6 +428,25 @@ struct DeskGridDashboardView: View {
             // returning to the dashboard first needs the sidebar visible
             // the whole time, not just on the dashboard's own page).
             leftSidebar
+            // Study Session (2026-08-19, Assignment L in CURSOR_HANDOFF.md) -
+            // top-level overlay, on top of the sidebar too (a true modal),
+            // screen-space like `bottomDock`/`leftSidebar` rather than a
+            // `.fullScreenCover` so the dashboard genuinely stays mounted
+            // underneath. Closing a lesson via `jesseCall.begin()`'s own
+            // reset (a fresh call) or the view's own Close button both
+            // just clear `workDashboardLesson`, which this already
+            // reacts to.
+            if let lesson = jesseCall.workDashboardLesson {
+                // Not re-identified from here - StudySessionView already
+                // self-identifies internally (`studySessionRoot`), and an
+                // outer identifier at the call site would clobber it, the
+                // same documented bug already hit twice elsewhere this
+                // session.
+                StudySessionView(lesson: lesson, onClose: jesseCall.closeLessonSession) { sim in
+                    presentedMicroSim = sim
+                }
+                .transition(.opacity)
+            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .ignoresSafeArea()
