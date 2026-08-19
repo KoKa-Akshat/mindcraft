@@ -1489,6 +1489,23 @@ struct DeskGridDashboardView: View {
                     .font(.system(size: 12, weight: .bold, design: .rounded))
                     .foregroundColor(ink)
             }
+            // "I want to learn about X" lands here once it's done (see
+            // handleNewLesson), but the archive-check + generation round
+            // trip it takes to get there is real network time with no
+            // visible sign of progress anywhere near THIS tile - only in
+            // Intel's own transcript, easy to miss while watching Homework
+            // Help specifically (2026-08-18, explicit live bug report:
+            // "I'm not seeing any indicator of whether anything is
+            // happening... how long to wait, none of that").
+            if jesseCall.isThinking, jesseCall.context == "workDashboard" {
+                HStack(spacing: 6) {
+                    ProgressView().tint(ink)
+                    Text("Jesse is building your lesson\u{2026} can take up to a minute")
+                        .font(.system(size: 11, weight: .semibold, design: .rounded))
+                        .foregroundColor(ink.opacity(0.8))
+                }
+                .accessibilityIdentifier("deskGridHomeworkLessonThinking")
+            }
             if let homeworkError {
                 Text(homeworkError)
                     .font(.system(size: 11, weight: .semibold, design: .rounded))
