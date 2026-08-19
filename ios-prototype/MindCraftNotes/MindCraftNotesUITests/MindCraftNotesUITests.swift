@@ -2329,6 +2329,37 @@ final class MindCraftNotesUITests: XCTestCase {
         XCTAssertFalse(app.descendants(matching: .any)["deskGridArchiveSummaryEmpty"].exists, "expected closing to dismiss the archive browser")
     }
 
+    /// Real regression coverage for two live bug reports (2026-08-19):
+    /// "im not seeing dans books in archuve at all" and "toolbar move to
+    /// the bottom in design and resume too we dont need that vertical
+    /// column there." Confirmed via a real screenshot that "DAN'S ARCHIVE"
+    /// lists real book rows (Calculus, Algebra I, Biology, ...) from the
+    /// real `ArchiveBooksClient` round trip - those rows aren't asserted
+    /// on by identifier here for the same reason `deskGridArchiveBook_*`
+    /// (the bundled-book rows) already couldn't be: they sit inside the
+    /// same ScrollView-inside-the-scaled-artboard position that doesn't
+    /// publish children to the accessibility tree (see
+    /// `testArchiveBrowserOpensWithSearchAndBlankHomeworkHelp`'s doc
+    /// comment for the full explanation). What's checked here is what
+    /// reliably resolves.
+    func testArchiveOpensAndFlowPanesUseBottomDock() {
+        let app = launchFieldDeskApp()
+        XCUIDevice.shared.orientation = .landscapeLeft
+        XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 15))
+
+        app.buttons["deskGridDock_Archive"].tap()
+        XCTAssertTrue(app.buttons["deskGridContentViewerClose"].waitForExistence(timeout: 5), "expected the archive browser to open")
+        app.buttons["deskGridContentViewerClose"].tap()
+
+        // The vertical leftSidebar is gone - Resume/Design/Settings live in
+        // the bottom dock now, including while a flow pane (Resume/Develop)
+        // is open, which is the one place that dock used to be unreachable.
+        app.buttons["deskGridDock_Design"].tap()
+        XCTAssertTrue(app.buttons["deskGridSidebarDock_Resume"].waitForExistence(timeout: 5), "expected the bottom dock's Resume chip while inside a flow pane")
+        XCTAssertTrue(app.buttons["deskGridSidebarDock_Settings"].exists, "expected the bottom dock's Settings chip while inside a flow pane")
+        XCTAssertFalse(app.buttons["deskGridSidebar_Resume"].exists, "expected the old vertical sidebar's Resume icon to be gone")
+    }
+
     func testStudySessionShowsChaptersAndSourcesThenCloses() {
         let app = launchFieldDeskApp(extraArgs: ["--ui-testing-study-session"])
         XCUIDevice.shared.orientation = .landscapeLeft

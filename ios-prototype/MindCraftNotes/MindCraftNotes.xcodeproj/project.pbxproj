@@ -44,6 +44,7 @@
 		7869C262B727FB7D115F4A2F /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B2C0A75B7798044001A892 /* AuthService.swift */; };
 		7B0241FF6DC5A084EEFC9B48 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 4EA3DB63C1CC574240263223 /* FirebaseAuth */; };
 		7CE3B3940E5DECDEA8512DD4 /* MicroSims in Resources */ = {isa = PBXBuildFile; fileRef = 6DB72D8E245D5E205B52EA4E /* MicroSims */; };
+		7E3ECEE138FB623EA7806558 /* ArchiveBooksClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B0DB4BE519576B363713A8 /* ArchiveBooksClient.swift */; };
 		832F52CD564C2C1CA71BB4CC /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2DEFA331CCE58D98C0F61F /* LoginView.swift */; };
 		87C1DC075E078CFE838ACC26 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 6F5EECD612652564C64E12E5 /* FirebaseFirestore */; };
 		8ACCA09803A0C1DF9B8F19BB /* FirestoreStudentStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EAAFE0F66A60907CDB1C332 /* FirestoreStudentStore.swift */; };
@@ -179,6 +180,7 @@
 		26D7B26A0454408F10798AFA /* NotesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesListView.swift; sourceTree = "<group>"; };
 		287998194C3E67F5403DDF82 /* BookGraphs */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; path = BookGraphs; sourceTree = "<group>"; };
 		2EAAFE0F66A60907CDB1C332 /* FirestoreStudentStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreStudentStore.swift; sourceTree = "<group>"; };
+		31B0DB4BE519576B363713A8 /* ArchiveBooksClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ArchiveBooksClient.swift; sourceTree = "<group>"; };
 		333EDEE01284D66F3CAF76DD /* KnowledgeGraphClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnowledgeGraphClient.swift; sourceTree = "<group>"; };
 		3890F71414E363C12CC19397 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		3BB03A317B6A9CB5F0D8C128 /* wizard-doodle-cheer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wizard-doodle-cheer.png"; sourceTree = "<group>"; };
@@ -421,6 +423,7 @@
 				B0BOOKAGENTCLIENT01 /* BookAgentClient.swift */,
 				CABEC5240A99216D0BB8059C /* ResumeAgentClient.swift */,
 				C9E93F7564841F90BA62788E /* LessonGraphTagging.swift */,
+				31B0DB4BE519576B363713A8 /* ArchiveBooksClient.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -818,6 +821,7 @@
 				5A4BBF95456BC56D43B90E85 /* MicroSimView.swift in Sources */,
 				00E78E9826A7228E60B2F09B /* StudySessionView.swift in Sources */,
 				07D81625C54AD426DC078177 /* LessonGraphTagging.swift in Sources */,
+				7E3ECEE138FB623EA7806558 /* ArchiveBooksClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -220,6 +220,14 @@ struct DeskGridDashboardView: View {
     /// open instantly from local data) - drives a per-row spinner so a tap
     /// gives immediate feedback instead of looking unresponsive.
     @State private var archiveOpeningTitle: String?
+    /// Dan McCreary's real archive, browsable by title (2026-08-19, real
+    /// bug fix: "im not seeing dans books in archuve at all" - before this,
+    /// his archive was reachable only through live search, with no list to
+    /// browse the way the app's own bundled books already had one).
+    /// Fetched once when Archive mode opens (see `archiveBrowserBody`'s
+    /// `.task`), not on every re-render.
+    @State private var archiveBooks: [ArchiveBooksClient.Book] = []
+    @State private var archiveBooksLoading = false
 
     /// True whenever Binder should be showing ANY of the merged-space
     /// content modes above rather than its own normal titles/blurb - the
@@ -475,18 +483,6 @@ struct DeskGridDashboardView: View {
                     moodleOverlayLayer
                         .transition(.opacity)
                 }
-                // Screen-space, not part of the scaled artboard (2026-08-18,
-                // explicit ask: "the settings' lower bottom boundary, and
-                // that's where the lower boundary of our toolbar should
-                // also match"). The dock used to live inside `tileBoard`,
-                // sized by the artboard's own `scale` - since that scale is
-                // bounded by width on this device (see the top-align note
-                // above), the dock's bottom edge landed well short of the
-                // sidebar's, which fills the real screen height the same
-                // way `leftSidebar` already does. Same screen-space
-                // bottom-pin pattern here instead of another scale-bound
-                // position.
-                bottomDock
             }
             .frame(width: geo.size.width, height: geo.size.height)
             .contentShape(Rectangle())
@@ -571,15 +567,13 @@ struct DeskGridDashboardView: View {
 
             Group {
                 if let activeSidebarFlow {
-                    // Leading padding, not a change to the flow view
-                    // itself - these views own-center within whatever
-                    // GeometryReader size they're given (same artboard
-                    // pattern as this screen's own board), so narrowing
-                    // their available width here is enough to keep their
-                    // content clear of the sidebar without touching their
-                    // own layout code.
+                    // No more leading padding to clear a vertical sidebar
+                    // (2026-08-19, explicit ask: "toolbar move to the
+                    // bottom in design and resume too we dont need that
+                    // vertical column there") - flow panes now use the
+                    // full width, matching the dashboard's own sidebar-free
+                    // layout from earlier tonight.
                     flowPane(activeSidebarFlow)
-                        .padding(.leading, 90)
                         .id(activeSidebarFlow)
                 } else {
                     Color.clear
@@ -589,23 +583,17 @@ struct DeskGridDashboardView: View {
             }
             .frame(width: geo.size.width * 2, height: geo.size.height, alignment: .leading)
             .offset(x: activeSidebarFlow == nil ? 0 : -geo.size.width)
-            // Only while a flow pane is actually showing now (2026-08-19,
-            // explicit ask: "add the settings and resume to the search bar
-            // dock too... use that space to make the boxes bigger" - Resume
-            // and Settings moved into workDock/flowsDock for the plain
-            // dashboard, see those). Still needed here, not deletable
-            // outright: it's the only way to switch directly between flows
-            // (Resume <-> Develop) or back to the dashboard WHILE INSIDE a
-            // flow pane, since bottomDock itself lives inside the sliding
-            // HStack above and is off-screen the whole time a flow is
-            // active (2026-08-18, explicit ask this solved originally: "if
-            // you press GDocs again... if you say Resume, it goes to
-            // Resume" - switching directly between flows without returning
-            // to the dashboard first). Hiding it on the plain dashboard is
-            // what actually frees the width tileBoard's scale now uses.
-            if activeSidebarFlow != nil {
-                leftSidebar
-            }
+            // Persistent across both the dashboard AND any flow pane
+            // (2026-08-19, explicit ask: "toolbar move to the bottom in
+            // design and resume too we dont need that vertical column
+            // there" - the vertical leftSidebar is gone now, not just
+            // hidden). activeDock itself picks Dashboard/Resume/Design/
+            // Settings (sidebarFlowDock) while a flow is open vs. the
+            // normal workDock/flowsDock otherwise - same bottom-pinned
+            // screen-space position either way, so this needs to sit
+            // outside the sliding HStack above (which is off-screen during
+            // a flow) exactly the way leftSidebar used to.
+            bottomDock
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .ignoresSafeArea()
@@ -2095,8 +2083,33 @@ struct DeskGridDashboardView: View {
                             .accessibilityIdentifier("deskGridArchiveBook_\(book.id)")
                         }
                     }
+                    archiveSection("DAN'S ARCHIVE", ink: ink) {
+                        if archiveBooksLoading {
+                            ProgressView().tint(ink)
+                        } else {
+                            ForEach(archiveBooks) { book in
+                                archiveBookRow(
+                                    title: book.bookTitle,
+                                    subtitle: "Open textbook",
+                                    ink: ink,
+                                    isOpening: archiveOpeningTitle == book.bookTitle
+                                ) { openArchiveBook(title: book.bookTitle) }
+                                .accessibilityIdentifier("deskGridArchiveDanBook_\(book.id)")
+                            }
+                        }
+                    }
                 }
             }
+        }
+        // Fetched once per app session (the archiveBooks.isEmpty guard
+        // skips re-fetching on every later Archive open - this list is
+        // static enough not to need refreshing per-open the way the live
+        // knowledge graph does).
+        .task(id: viewingArchiveBrowser) {
+            guard viewingArchiveBrowser, archiveBooks.isEmpty else { return }
+            archiveBooksLoading = true
+            archiveBooks = await ArchiveBooksClient.list()
+            archiveBooksLoading = false
         }
     }
 
@@ -2527,50 +2540,6 @@ struct DeskGridDashboardView: View {
     /// bottom. Styled as its own rounded "box" with the same dotted
     /// texture as the board (explicit ask: "it should be a box too
     /// looks weird right now the settings column").
-    private var leftSidebar: some View {
-        VStack(spacing: 14) {
-            // Presentation/GDoc icons removed (2026-08-18, explicit ask:
-            // "remove presentation and google docs from the flows please
-            // we dont need them yet") - "yet" reads as temporary, not a
-            // feature deletion, so `SidebarFlow.presentation`/`.gdoc` and
-            // `flowPane`'s own routing for them are left in place (trivial
-            // to bring back with two lines here) rather than torn out.
-            sidebarIcon("person.text.rectangle", label: "Resume") { openSidebarFlow(.resume) }
-            // Book's own standalone icon is gone (2026-08-18, explicit ask:
-            // "combine workflows and books and design something called
-            // Develop... move books away from the main search bar to what
-            // Develop will have") - Develop's own in-screen toggle is the
-            // one place to reach book-drafting now, not a second sidebar
-            // entry point racing it.
-            sidebarIcon("square.grid.2x2.fill", label: "Develop") { openSidebarFlow(.develop) }
-            Spacer(minLength: 0)
-            sidebarIcon("gearshape.fill", label: "Settings", identifier: "deskGridSidebarManage", action: onOpenManage)
-        }
-        .padding(.vertical, 20)
-        .frame(width: 76)
-        .frame(maxHeight: .infinity)
-        .background(
-            ZStack {
-                RoundedRectangle(cornerRadius: 22, style: .continuous)
-                    .fill(Color(gridHex: "141416"))
-                DottedDeskGrid()
-                    .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
-            }
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: 22, style: .continuous)
-                .strokeBorder(Color.white.opacity(0.08), lineWidth: 1)
-        )
-        .padding(.leading, 14)
-        .padding(.vertical, 14)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-        .ignoresSafeArea()
-    }
-
-    /// Screen-space, matching `leftSidebar`'s own bottom inset exactly
-    /// (14pt outer + 20pt inner vertical padding = 34pt off the true
-    /// bottom edge) so the dock's lower boundary lines up with the
-    /// Settings icon's lower boundary (2026-08-18, explicit ask).
     // Tighter footprint (2026-08-19, explicit ask: "reduce the vertical
     // padding between Knowledge Graph, Binder, Archive, Design, and Search
     // Box. There's still so much space") - was height 72 + 34 bottom
@@ -2591,19 +2560,6 @@ struct DeskGridDashboardView: View {
             // search bar a little bit down now").
             .padding(.bottom, 8)
             .ignoresSafeArea()
-    }
-
-    private func sidebarIcon(_ system: String, label: String, identifier: String? = nil, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            Image(systemName: system)
-                .font(.system(size: 17, weight: .semibold))
-                .foregroundColor(.white.opacity(0.85))
-                .frame(width: 44, height: 44)
-                .background(Circle().fill(Color.white.opacity(0.08)))
-        }
-        .buttonStyle(.plain)
-        .accessibilityIdentifier(identifier ?? "deskGridSidebar_\(label)")
-        .accessibilityLabel(label)
     }
 
     private func openSidebarFlow(_ flow: SidebarFlow) {
@@ -2640,10 +2596,47 @@ struct DeskGridDashboardView: View {
 
     @ViewBuilder
     private var activeDock: some View {
-        if rail == .flows {
+        if activeSidebarFlow != nil {
+            sidebarFlowDock
+        } else if rail == .flows {
             flowsDock
         } else {
             workDock
+        }
+    }
+
+    /// Replaces the old vertical `leftSidebar` (2026-08-19, explicit ask:
+    /// "toolbar move to the bottom in design and resume too we dont need
+    /// that vertical column there") - same three destinations
+    /// (Dashboard/Resume/Design/Settings) it always had, just bottom-pinned
+    /// like every other dock variant instead of a left rail. This is what
+    /// makes switching directly between flows (Resume <-> Develop) or back
+    /// to the dashboard still possible while a flow pane is open - the
+    /// same real need `leftSidebar` originally solved (2026-08-18: "if you
+    /// press GDocs again... if you say Resume, it goes to Resume").
+    private var sidebarFlowDock: some View {
+        HStack(spacing: 8) {
+            dockChip("Dashboard", system: "square.grid.2x2.fill", identifier: "deskGridDock_BackToDash", action: closeSidebarFlow)
+            dockChip("Resume", system: "person.text.rectangle", identifier: "deskGridSidebarDock_Resume") { openSidebarFlow(.resume) }
+            dockChip("Design", system: "square.grid.2x2.fill", identifier: "deskGridSidebarDock_Design") { openSidebarFlow(.develop) }
+            dockChip("Settings", system: "gearshape.fill", identifier: "deskGridSidebarDock_Settings", action: onOpenManage)
+            Spacer(minLength: 0)
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 10)
+        .background(
+            Capsule().fill(Color(white: 0.985))
+                .shadow(color: .black.opacity(0.08), radius: 10, y: 4)
+        )
+        // Same clobbering trap as workDock's own toolbar marker below -
+        // .accessibilityElement(children: .contain) here too so each
+        // chip keeps its own identifier instead of all reporting this
+        // container's.
+        .accessibilityElement(children: .contain)
+        .overlay(alignment: .topLeading) {
+            Text(verbatim: "sidebar-flow-toolbar").font(.system(size: 1)).foregroundColor(.clear)
+                .accessibilityIdentifier("deskGridSidebarFlowToolbar")
+                .allowsHitTesting(false)
         }
     }
 
