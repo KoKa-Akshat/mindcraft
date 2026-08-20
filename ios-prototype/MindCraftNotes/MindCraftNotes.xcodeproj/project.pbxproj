@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		00E78E9826A7228E60B2F09B /* StudySessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0BAFFB8EAB3F099DB44C2C7 /* StudySessionView.swift */; };
+		00EA9D2633829A1C6FED07BF /* LanguageChoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94D83CC058F2CC072FB5B5A /* LanguageChoiceView.swift */; };
 		01D8ED16A0944B308DB5D6C8 /* MindCraftNotesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964D60BF9F534C938B4170EB /* MindCraftNotesUITests.swift */; };
 		0237EE1B70CC4D8DB21A639B /* LaTeXMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20548665090C49E3A52E9BE8 /* LaTeXMath.swift */; };
 		03E3A9AC7EC0438791EED1B2 /* LaTeXDisplayText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F652917CF738425093DEE541 /* LaTeXDisplayText.swift */; };
@@ -97,6 +98,7 @@
 		C781B03E36C42C7ED7AE0CBB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4A81130391A74A14FA1DFAEA /* GoogleService-Info.plist */; };
 		C9976561557088A1859FCB58 /* DeskShellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 670F10E849C346E2127D94CF /* DeskShellView.swift */; };
 		C9D282AA1D204B1F981F3677 /* SampleQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBA83ACF9DE4E17BFF71157 /* SampleQuestion.swift */; };
+		CA8F808BC2D5F62B22199C81 /* StudentLanguagePreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953BEECF1C8EFB5F3230D92 /* StudentLanguagePreference.swift */; };
 		CE95BCEDAC5366E8EFEB972E /* ConceptChapterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789E888BA344DB5E76A0F09C /* ConceptChapterView.swift */; };
 		D0BLANKPAGE01A2B3C4D5E6F7 /* BlankDeskPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0BLANKPAGE01A2B3C4D5E6F7 /* BlankDeskPageView.swift */; };
 		D0KOKOROTTS01A2 /* KokoroTTSClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0KOKOROTTS01A2 /* KokoroTTSClient.swift */; };
@@ -197,6 +199,7 @@
 		4D3894FD26F293BA8CCA0712 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		54EE348EA08742A29688BF10 /* FormulaCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormulaCardView.swift; sourceTree = "<group>"; };
 		556F5046AF8C8C22E031B975 /* PracticeSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeSessionView.swift; sourceTree = "<group>"; };
+		5953BEECF1C8EFB5F3230D92 /* StudentLanguagePreference.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StudentLanguagePreference.swift; sourceTree = "<group>"; };
 		5A10EB3BDDE04216B5B57403 /* JesseRailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JesseRailView.swift; sourceTree = "<group>"; };
 		5A9A2FA726DCF7636F59A480 /* SessionNotesClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionNotesClient.swift; sourceTree = "<group>"; };
 		5B50609A6CA341D392B5BC37 /* DrawingStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingStore.swift; sourceTree = "<group>"; };
@@ -243,6 +246,7 @@
 		B79B07C7A6E7F8091B2C3D4E /* DeskInstanceChrome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskInstanceChrome.swift; sourceTree = "<group>"; };
 		B89B08C8A6E7F8091B2C3D4E /* SpeechCaptureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechCaptureController.swift; sourceTree = "<group>"; };
 		B8AC7157E11A0001B2C3D4E5 /* ActInstanceShellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActInstanceShellView.swift; sourceTree = "<group>"; };
+		B94D83CC058F2CC072FB5B5A /* LanguageChoiceView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LanguageChoiceView.swift; sourceTree = "<group>"; };
 		B99B09C9A6E7F8091B2C3D4E /* DeskPanCanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskPanCanvas.swift; sourceTree = "<group>"; };
 		C0BLANKPAGE01A2B3C4D5E6F7 /* BlankDeskPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlankDeskPageView.swift; sourceTree = "<group>"; };
 		C0KOKOROTTS01A2 /* KokoroTTSClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KokoroTTSClient.swift; sourceTree = "<group>"; };
@@ -429,6 +433,7 @@
 				C9E93F7564841F90BA62788E /* LessonGraphTagging.swift */,
 				31B0DB4BE519576B363713A8 /* ArchiveBooksClient.swift */,
 				F76E73D494B2D736553AF91F /* EnglishPracticeClient.swift */,
+				5953BEECF1C8EFB5F3230D92 /* StudentLanguagePreference.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -507,6 +512,7 @@
 				C7078B04335739E9939AA984 /* MicroSimView.swift */,
 				E0BAFFB8EAB3F099DB44C2C7 /* StudySessionView.swift */,
 				D91E4C98C95DD18AB704697D /* EnglishPracticeView.swift */,
+				B94D83CC058F2CC072FB5B5A /* LanguageChoiceView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -830,6 +836,8 @@
 				7E3ECEE138FB623EA7806558 /* ArchiveBooksClient.swift in Sources */,
 				956FFB848B59400D15072E59 /* EnglishPracticeView.swift in Sources */,
 				7E52B937AB2CB5CFF01B1F1D /* EnglishPracticeClient.swift in Sources */,
+				00EA9D2633829A1C6FED07BF /* LanguageChoiceView.swift in Sources */,
+				CA8F808BC2D5F62B22199C81 /* StudentLanguagePreference.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

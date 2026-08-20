@@ -125,18 +125,35 @@ struct AuthGate: View {
     /// Prefer Welcome for every signed-out cold start. Password fallback
     /// still reaches `LoginView` via Welcome's "Use a password instead".
     @State private var showWelcome = true
+    /// Mirrors StudentLanguagePreference.hasChosen as real @State - a bare
+    /// UserDefaults read in `body` wouldn't trigger a re-render when
+    /// LanguageChoiceView's onChosen fires, since SwiftUI has no way to
+    /// observe UserDefaults changes on its own.
+    @State private var languageChosen = StudentLanguagePreference.hasChosen
 
     var body: some View {
         Group {
             if uiTestingForceWelcome {
                 WelcomeView(onSignIn: {})
             } else if authService.currentUser != nil || uiTestingSkipAuth {
-                // Brick 1 (DESK_OS_NATIVE_BRIEF.md): the desk/shell screen
-                // is now the real post-login entry point, with the
-                // 9-round DashboardView reachable as its "ACT Field Book"
-                // module (Brick 2) rather than being the direct
-                // destination itself.
-                DeskShellView()
+                // One-time language picker (2026-08-19, explicit ask:
+                // "accommodate voice in... Spanish... which they choose at
+                // the start after login") - shown exactly once, ahead of
+                // the dashboard, same "gate one layer before the real
+                // destination" shape Welcome already uses ahead of
+                // LoginView. Skipped under UI testing so existing tests
+                // that assume DeskShellView is the first thing shown after
+                // auth don't need updating for an unrelated feature.
+                if !languageChosen && !uiTestingSkipAuth {
+                    LanguageChoiceView(onChosen: { languageChosen = true })
+                } else {
+                    // Brick 1 (DESK_OS_NATIVE_BRIEF.md): the desk/shell screen
+                    // is now the real post-login entry point, with the
+                    // 9-round DashboardView reachable as its "ACT Field Book"
+                    // module (Brick 2) rather than being the direct
+                    // destination itself.
+                    DeskShellView()
+                }
             } else if showWelcome {
                 WelcomeView(onSignIn: { showWelcome = false })
             } else {

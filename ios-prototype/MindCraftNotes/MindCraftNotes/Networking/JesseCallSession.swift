@@ -221,7 +221,15 @@ final class JesseCallSession: NSObject, ObservableObject {
     /// of a second, parallel upload path.
     @Published var latestHomeworkUpload: (fileName: String, cardSummaries: [String])?
 
-    private let recognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US"))
+    /// Locale-aware (2026-08-19, explicit ask: accommodate Spanish, chosen
+    /// once after login - see StudentLanguagePreference). A computed
+    /// property, not a cached `let`, since the student's language choice
+    /// can change between calls (Settings can update it) and
+    /// SFSpeechRecognizer's locale is fixed at init - a fresh instance per
+    /// access is the only way to honor a change without restarting the app.
+    private var recognizer: SFSpeechRecognizer? {
+        SFSpeechRecognizer(locale: Locale(identifier: StudentLanguagePreference.current.recognizerLocaleIdentifier))
+    }
     private let audioEngine = AVAudioEngine()
     private let synthesizer = AVSpeechSynthesizer()
     private var audioPlayer: AVAudioPlayer?
@@ -406,17 +414,18 @@ final class JesseCallSession: NSObject, ObservableObject {
     /// `useKokoro: false` skips straight to the native voice - for the
     /// call-opening greeting specifically (2026-08-18, explicit ask:
     /// "Jesse is mad slow to speak when I start a call"). Kokoro's own
-    /// timeout is 55s (real HF Space cold-start headroom), which is fine
-    /// for content the student is already waiting on after asking a real
-    /// question, but not for the very first thing said on a call, where
-    /// instant beats natural.
+    /// timeout is 6s (cut from 55s, see KokoroTTSClient's own doc comment),
+    /// generous for a warm container, fast to fall back on a cold one.
+    /// Non-English languages also skip Kokoro unconditionally (see
+    /// StudentLanguage.usesKokoro) - it has no Spanish voice wired up.
     private func speak(_ text: String, voice: KokoroVoice = .heart, useKokoro: Bool = true) async {
         guard !isPaused, !isAmbient else { return }
         turns.append(JesseCallTurn(id: UUID().uuidString, speaker: "jesse", text: text, at: Date()))
         configureAudioSession()
 
+        let language = StudentLanguagePreference.current
         let generation = speakGeneration
-        if useKokoro, let wav = await KokoroTTSClient.synthesize(text: text, voice: voice) {
+        if useKokoro, language.usesKokoro, let wav = await KokoroTTSClient.synthesize(text: text, voice: voice) {
             guard generation == speakGeneration, isActive, !isPaused else { return }
             do {
                 let player = try AVAudioPlayer(data: wav)
@@ -432,7 +441,7 @@ final class JesseCallSession: NSObject, ObservableObject {
 
         guard generation == speakGeneration, isActive, !isPaused else { return }
         let utterance = AVSpeechUtterance(string: text)
-        utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
+        utterance.voice = AVSpeechSynthesisVoice(language: language.synthesisLanguageIdentifier)
         utterance.rate = 0.48
         utterance.pitchMultiplier = 1.02
         isSpeaking = true
