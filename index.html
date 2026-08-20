@@ -140,22 +140,13 @@
 
   /* ---------- hero ---------- */
   .hero{
-    --chalk:#143a2e; --chalk-dim:rgba(20,58,46,.72); --chalk-faint:rgba(20,58,46,.5);
-    --edge:rgba(20,58,46,.14); --grid-line:rgba(20,58,46,.09);
     min-height:100svh; display:flex; flex-direction:column; justify-content:center; padding:0; overflow:hidden;
     background:
-      radial-gradient(ellipse 60% 50% at 78% 16%, rgba(36,122,77,.16), transparent 60%),
-      radial-gradient(ellipse 50% 45% at 8% 88%, rgba(196,245,71,.14), transparent 55%),
-      linear-gradient(180deg,#ffffff 0%,#fafaf8 55%,#ffffff 100%);
+      radial-gradient(ellipse 60% 50% at 78% 16%, rgba(36,122,77,.30), transparent 60%),
+      radial-gradient(ellipse 50% 45% at 8% 88%, rgba(196,245,71,.09), transparent 55%),
+      linear-gradient(180deg,#070f0a 0%,#0a1612 55%,#070f0a 100%);
   }
-  .hero::after{
-    content:''; position:absolute; bottom:0; left:0; right:0; height:clamp(50px,7vw,100px); z-index:1; pointer-events:none;
-    background:linear-gradient(to top, #070f0a, transparent);
-  }
-  .hero-tag{background:rgba(20,58,46,.045);}
-  .hero .btn.soft{background:rgba(20,58,46,.045);}
-  .hero .btn.soft:hover{background:rgba(20,58,46,.09);}
-  .hero canvas{position:absolute; inset:0; width:100%; height:100%; opacity:.4; pointer-events:none;}
+  .hero canvas{position:absolute; inset:0; width:100%; height:100%; opacity:.4; pointer-events:none; transition:transform .2s linear;}
   .hero-stage{position:relative; z-index:2; width:100%; max-width:920px; margin:0 auto; padding:clamp(120px,15vh,170px) clamp(20px,4vw,48px) 0; text-align:center;}
   .hero-tag{
     display:inline-flex; align-items:center; gap:9px; margin-bottom:30px;
@@ -165,7 +156,7 @@
   }
   .hero-tag i{font-style:normal; background:var(--lime); color:var(--lime-ink); border-radius:999px; padding:3px 9px; font-size:10px; font-weight:700; letter-spacing:.08em;}
   .hero h1{color:var(--chalk); font-size:clamp(48px,7.6vw,96px); animation:rise .9s .05s var(--ease) both;}
-  .hero h1 em{font-style:normal; color:var(--leaf);}
+  .hero h1 em{font-style:normal; color:var(--lime);}
   .hero .sub{margin-top:14px; font-family:var(--disp); font-size:clamp(19px,2.4vw,27px); font-weight:500; color:var(--chalk-dim); animation:rise .9s .1s var(--ease) both;}
   .hero .lead{
     margin:22px auto 0; max-width:54ch; font-size:clamp(15.5px,1.6vw,18px); line-height:1.6;
@@ -193,28 +184,6 @@
     .ticker > .tick-item:nth-child(n+6){display:none;}
   }
 
-  /* ---------- story beats ---------- */
-  .story{background:var(--field);}
-  .beats{display:grid; gap:clamp(48px,8vh,88px); margin-top:clamp(40px,6vh,64px); max-width:840px;}
-  .beat{display:grid; grid-template-columns:88px 1fr; gap:clamp(18px,3vw,36px); align-items:start;}
-  .beat-mark{
-    font-family:var(--mono); font-weight:600; font-size:12px; letter-spacing:.12em; text-transform:uppercase;
-    color:var(--chalk-faint); padding-top:10px; text-align:right;
-  }
-  .beat.hot .beat-mark{color:var(--stakes-soft);}
-  .beat.lit .beat-mark{color:var(--lime);}
-  .beat h3{font-size:clamp(26px,3.4vw,42px);}
-  .beat h3 em{font-style:normal; color:var(--lime);}
-  .beat.hot h3 .serif{font-weight:500;}
-  .beat p{margin-top:10px; font-size:clamp(14.5px,1.5vw,17.5px); line-height:1.6; color:var(--chalk-dim); max-width:54ch;}
-  .beat .said{
-    margin-top:10px; font-family:var(--serif); font-style:italic; font-size:clamp(17px,2vw,23px); color:var(--chalk);
-    border-left:2px solid var(--stakes); padding-left:16px;
-  }
-  @media (max-width:640px){
-    .beat{grid-template-columns:1fr;}
-    .beat-mark{text-align:left; padding-top:0;}
-  }
 
   /* ---------- credibility strip ---------- */
   .cred{padding:56px 0; border-top:1px solid var(--edge); border-bottom:1px solid var(--edge); background:var(--field-1);}
@@ -284,6 +253,11 @@
   .jesse-words{min-height:3.2em; font-family:var(--serif); font-style:italic; font-weight:500; font-size:clamp(18px,2.2vw,26px); line-height:1.35; color:var(--ink); max-width:30ch;}
   .jesse-words .you{color:rgba(20,58,46,.55);}
   .jesse-hint{font-size:12px; color:rgba(20,58,46,.5);}
+  .jesse-reveal{width:100%; opacity:0; transform:translateY(10px); transition:opacity .5s var(--ease), transform .5s var(--ease);}
+  .jesse-reveal.in{opacity:1; transform:none;}
+  .jesse-reveal-frame{width:100%; border-radius:16px; overflow:hidden; background:#fafafa;}
+  .jesse-reveal-frame iframe{display:block; width:100%; height:min(48vh,320px); border:0;}
+  .jesse-reveal-cap{margin-top:12px; font-size:12px; color:rgba(20,58,46,.5);}
   .proof-shot{margin-top:clamp(28px,4vh,44px); width:100%; max-width:1000px; border-radius:20px; box-shadow:0 30px 80px rgba(20,58,46,.18); display:block;}
   .jesse-points{margin-top:26px; display:grid; gap:14px;}
   .jpoint{display:flex; gap:14px; align-items:baseline;}
@@ -494,7 +468,6 @@
     <span>The Desk</span>
   </a>
   <div class="nav-links">
-    <a href="#story">Story</a>
     <a href="#desk">The Desk</a>
     <a href="#honesty">Our promise</a>
     <a href="#mentors">Mentors</a>
@@ -514,7 +487,7 @@
     <p class="lead">Bring whatever you're stuck on, and someone who has done it before is in the room. <span class="serif">Built by people who still wonder why the moon follows the car.</span></p>
     <div class="hero-actions">
       <a class="btn primary" href="#start">Claim your desk</a>
-      <a class="btn soft" href="#story">See how it works</a>
+      <a class="btn soft" href="#desk">See how it works</a>
     </div>
   </div>
 </section>
@@ -532,46 +505,6 @@
     <div class="tick-item"><span class="q">Why can't you fold a piece of paper eight times?</span><span class="a">exponents</span><span class="dot"></span></div>
   </div>
 </div>
-
-<!-- ================= STORY ================= -->
-<section class="story" id="story">
-  <div class="grid-bg" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="kicker reveal">The night this was built for</div>
-    <h2 class="h2 reveal">You know this hour.</h2>
-    <div class="beats">
-      <div class="beat hot reveal">
-        <div class="beat-mark">2:14 AM</div>
-        <div>
-          <h3><span class="serif">The answer is one paste away.</span></h3>
-          <p>Due at eight, lost in this class for weeks. One tab over, an AI hands you a finished answer in four seconds. Nothing learned, deadline met.</p>
-        </div>
-      </div>
-      <div class="beat hot reveal">
-        <div class="beat-mark">The verdict</div>
-        <div>
-          <h3>You were never bad at this.</h3>
-          <p class="said">&ldquo;Some people are just more verbal.&rdquo;</p>
-          <p>Somebody meant it kindly. You built four years around it. Truth is plainer: you were working alone on something hard, with nobody in the room who understood it.</p>
-        </div>
-      </div>
-      <div class="beat reveal">
-        <div class="beat-mark">The crossing</div>
-        <div>
-          <h3>Then someone walks in.</h3>
-          <p>Same page, same night. Except now a mentor who's done this exact thing already knows where you're stuck, and you get the answer <strong>while</strong> learning it, in words you'll still own on Friday.</p>
-        </div>
-      </div>
-      <div class="beat lit reveal">
-        <div class="beat-mark">The click</div>
-        <div>
-          <h3>There it is. The map just <em>changed.</em></h3>
-          <p>The fog burns off, and your map lights up where it happened so the click never gets lost again.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ================= CREDIBILITY ================= -->
 <section class="cred" aria-label="Who builds MindCraft">
@@ -654,10 +587,14 @@
           <div class="jpoint reveal"><i>next</i><p><strong>Learning to ask back.</strong> We're testing a version that asks you the next question instead of handing over the answer. It ships when it clears the gate.</p></div>
         </div>
       </div>
-      <div class="jesse-demo reveal">
+      <div class="jesse-demo reveal" id="jesseDemo">
         <button class="jesse-disc" type="button" id="jesseDisc" aria-pressed="false">Press</button>
-        <p class="jesse-words" id="jesseWords"><span class="you">A taste of the real thing.</span></p>
+        <p class="jesse-words" id="jesseWords"><span class="you">Tap the disc. Jesse listens.</span></p>
         <p class="jesse-hint" id="jesseHint">A scripted taste. The real Jesse listens, in the app.</p>
+        <div class="jesse-reveal" id="jesseReveal" hidden>
+          <div class="jesse-reveal-frame"><iframe src="sims/lever-force-amplifier.html" title="Lever Force Amplifier, an AI-generated MicroSim" loading="lazy"></iframe></div>
+          <p class="jesse-reveal-cap">Real simulation, not a mockup. Try dragging it.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -977,6 +914,23 @@
     update();
   })();
 
+  // ----- hero star map zooms in as you scroll past it -----
+  (function(){
+    var hero = document.getElementById('top');
+    var canvas = document.getElementById('heroMap');
+    if(!hero || !canvas) return;
+    function update(){
+      var h = document.scrollingElement || document.documentElement;
+      var range = Math.max(hero.offsetHeight, 1);
+      var frac = Math.min(1, Math.max(0, h.scrollTop / range));
+      var scale = 1 + frac * 0.6;
+      canvas.style.transform = 'scale(' + scale.toFixed(3) + ')';
+    }
+    document.addEventListener('scroll', update, {passive:true});
+    window.addEventListener('resize', update);
+    update();
+  })();
+
   // ----- duplicate ticker content for a seamless loop -----
   (function(){
     var t = document.getElementById('ticker');
@@ -1047,10 +1001,12 @@
     var disc = document.getElementById('jesseDisc');
     var words = document.getElementById('jesseWords');
     var hint = document.getElementById('jesseHint');
+    var reveal = document.getElementById('jesseReveal');
     if(!disc || !words) return;
     var script = [
-      {who:'you', text:'“Jesse, why does the current keep pushing my boat off course?”'},
-      {who:'jesse', text:'Because the current is a vector too. Want to see what happens when we add yours and the water’s together?'}
+      {who:'you', text:'“Jesse, help me learn for the ACT.”'},
+      {who:'jesse', text:'Let’s build you a study plan, starting with your weakest concept first.'},
+      {who:'jesse', text:'But there’s a twist: you won’t read it. You’ll drag it.'}
     ];
     var busy = false;
     function typeLine(line, cls, done){
@@ -1060,7 +1016,7 @@
       var iv = setInterval(function(){
         i += 2;
         span.textContent = line.slice(0, i);
-        if(i >= line.length){ clearInterval(iv); if(done) setTimeout(done, 700); }
+        if(i >= line.length){ clearInterval(iv); if(done) setTimeout(done, 650); }
       }, 24);
     }
     disc.addEventListener('click', function(){
@@ -1071,10 +1027,16 @@
       hint.textContent = 'Listening… well, pretending to. The real Jesse listens in the app.';
       typeLine(script[0].text, 'you', function(){
         typeLine(script[1].text, '', function(){
-          disc.classList.remove('is-hot');
-          disc.setAttribute('aria-pressed','false');
-          hint.textContent = 'That’s the shape of it. The real conversation lives in the app.';
-          busy = false;
+          typeLine(script[2].text, '', function(){
+            disc.classList.remove('is-hot');
+            disc.setAttribute('aria-pressed','false');
+            hint.textContent = 'That’s the shape of it. The real conversation lives in the app.';
+            busy = false;
+            if(reveal){
+              reveal.hidden = false;
+              requestAnimationFrame(function(){ reveal.classList.add('in'); });
+            }
+          });
         });
       });
     });
