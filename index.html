@@ -194,7 +194,7 @@
   }
   .desk-card:hover{transform:translateY(-5px); box-shadow:var(--shadow);}
   .desk-card .mock{position:relative; aspect-ratio:16/11; background:var(--cream-2); border-bottom:1px solid var(--edge); overflow:hidden;}
-  .mock-img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 30%;}
+  .mock-img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 45%;}
   .desk-card .cap{padding:20px 22px 24px;}
   .desk-card .cap b{display:block; font-family:var(--mono); font-weight:600; font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--leaf); margin-bottom:8px;}
   .desk-card .cap h3{font-size:clamp(19px,2vw,24px); margin-bottom:8px;}
@@ -350,10 +350,6 @@
 
   /* ---------- vision (dark, Katha register) ---------- */
   .vision{background:#05070a;}
-  .vision-hero{display:grid; grid-template-columns:1.1fr 1fr; gap:clamp(28px,4vw,56px); align-items:center; margin-bottom:clamp(36px,5vh,52px);}
-  .vision-hero-img{width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:24px; border:1px solid var(--edge); box-shadow:0 30px 70px rgba(0,0,0,.55);}
-  .vision-hero-copy .lede{margin-top:14px; max-width:48ch;}
-  @media (max-width:860px){.vision-hero{grid-template-columns:1fr;}}
   .vision-flag{
     display:inline-flex; align-items:center; gap:10px; margin-bottom:22px;
     padding:8px 16px; border-radius:999px; border:1px solid rgba(224,57,74,.35);
@@ -421,6 +417,7 @@
     border:1px solid rgba(196,245,71,.22);
     background:radial-gradient(ellipse 58% 62% at 50% 40%, rgba(196,245,71,.09), transparent 72%), #05070a;
   }
+  .cta-visual-img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.85;}
   .cta-visual canvas{position:absolute; inset:0; width:100%; height:100%;}
   .cta-visual-cap{
     position:absolute; left:22px; right:22px; bottom:22px; z-index:2; max-width:30ch;
@@ -699,8 +696,7 @@
     <div class="sim-showcase reveal">
       <div class="sim-showcase-head">
         <span class="sim-showcase-tag">Real, not a mockup</span>
-        <h3>A student asked for this. The AI built it, our gate checked it, then a student saw it.</h3>
-        <p>Every simulation your kid meets goes through the same gauntlet described above before it's ever shown. This one is a real pass, not a picked-favorite from a big batch, drag the fulcrum and the effort slider below.</p>
+        <h3>Try it. Drag the fulcrum.</h3>
       </div>
       <div class="sim-showcase-frame">
         <iframe src="sims/lever-force-amplifier.html" title="Lever Force Amplifier, an AI-generated MicroSim" loading="lazy"></iframe>
@@ -770,14 +766,9 @@
 <!-- ================= VISION ================= -->
 <section class="vision" id="vision">
   <div class="wrap">
-    <div class="vision-hero">
-      <img class="vision-hero-img reveal" src="img/marketing/vision-world-hero.webp" alt="A single lit path winding through the dark, marking mastered ground behind and the next unlit step ahead." loading="lazy">
-      <div class="vision-hero-copy">
-        <span class="vision-flag reveal">Where this is going &middot; not shipped yet &middot; all of it started</span>
-        <h2 class="h2 reveal">The desk is the seed. <span class="serif">The world is the plan.</span></h2>
-        <p class="lede reveal">One record a student owns, personalized to how they actually learn, built so a kid anywhere in the world can open it. That's the whole bet.</p>
-      </div>
-    </div>
+    <span class="vision-flag reveal">Where this is going &middot; not shipped yet &middot; all of it started</span>
+    <h2 class="h2 reveal">The desk is the seed. <span class="serif">The world is the plan.</span></h2>
+    <p class="lede reveal">One record a student owns, personalized to how they actually learn, built so a kid anywhere in the world can open it. That's the whole bet.</p>
     <div class="vision-cards">
       <div class="vcard reveal">
         <b>Coming &middot; horizon two</b>
@@ -893,6 +884,7 @@
   <div class="wrap">
     <div class="cta-split reveal">
       <aside class="cta-visual" aria-hidden="true">
+        <img class="cta-visual-img" src="img/marketing/cta-map-hero.webp" alt="" loading="lazy">
         <canvas id="ctaMap"></canvas>
         <p class="cta-visual-cap"><b>The map is waiting</b>Fog lifts where you click.</p>
       </aside>
