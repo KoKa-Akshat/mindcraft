@@ -632,6 +632,13 @@ struct DeskGridDashboardView: View {
             guard requested else { return }
             jesseCall.practiceRequested = false
             openSidebarFlow(.englishPractice)
+            // Auto-starts the new screen's call + listening, same two
+            // calls JesseRailView's own jumpOnCall() makes for a manual
+            // tap - a student who just SAID "I want to practice" mid-call
+            // should land already talking, not need a second manual tap
+            // to re-start what feels like the same conversation.
+            jesseCall.begin(context: "englishPractice", studentName: studentName)
+            jesseCall.startListening()
         }
         .fullScreenCover(item: $presentedMicroSim) { sim in
             MicroSimView(sim: sim) { presentedMicroSim = nil }
@@ -2623,6 +2630,21 @@ struct DeskGridDashboardView: View {
     }
 
     private func openSidebarFlow(_ flow: SidebarFlow) {
+        // Real bug, found live (2026-08-19): now that the dashboard
+        // auto-greets on arrival (jesseCall.begin(context: "workDashboard")
+        // fires on .onAppear), `jesseCall.isActive` is true almost as soon
+        // as the app boots. `begin(context:)` guards `!isActive` to avoid
+        // double-starting a call on the SAME screen - but with no explicit
+        // end() here, that same guard silently blocked every OTHER
+        // screen's own call-start too: tapping Practice/Resume/Design's
+        // call button called begin(context: "resume") etc., found isActive
+        // already true from the dashboard, and no-opped - context never
+        // actually changed, so the conversation kept running the
+        // workDashboard system prompt/routing under a screen that looked
+        // like Resume or Practice. Ending the dashboard's call before
+        // switching flows lets the destination's own call button start a
+        // real, correctly-contexted one.
+        jesseCall.end()
         withAnimation(.easeInOut(duration: 0.35)) { activeSidebarFlow = flow }
     }
 

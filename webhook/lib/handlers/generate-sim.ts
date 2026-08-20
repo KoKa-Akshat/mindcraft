@@ -15,14 +15,18 @@
  * call, so the student identity behind the budget check is the verified
  * uid, never a client-supplied id.
  *
- * DELIBERATELY NOT LIVE: the generation service does not exist yet.
+ * LIVE as of 2026-08-19: Blake is looped in, the generation service is
+ * deployed (https://joinmindcraft-mindcraft-content-engine.hf.space,
+ * verified with two real end-to-end generations, both gate-passed), and
+ * CONTENT_ENGINE_URL / CONTENT_ENGINE_SECRET are set in Vercel — do NOT
+ * read this file's history as "still off," check `vercel env ls
+ * production` for the real current state before trusting a comment here.
  * CONTENT_ENGINE_URL / CONTENT_ENGINE_SECRET (same env-var shape as
  * ML_API_URL / ML_SERVICE_SECRET, see jarvisTools.ts / ingest-lesson-graph)
- * have NO default value on purpose — deploying that service is real infra
- * with real ongoing API cost, and the spec's own rule is "loop Blake in
- * before any of this ships." Until both vars are set in Vercel, every call
- * answers an honest 503 "unavailable" and costs nothing. That unset state
- * is the off-switch; do not add a default URL here.
+ * still have NO *default* baked into the code — the off-switch is that an
+ * unset env var answers an honest 503 "unavailable," not a special flag —
+ * so if this service is ever un-deployed or the vars removed, this
+ * handler safely goes quiet again with no code change needed.
  *
  * Two request shapes, one action (generation is genuinely async — 15-60+s
  * per attempt — so the client polls a job rather than blocking):
