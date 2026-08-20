@@ -94,7 +94,7 @@
   .stage-desk::after{bottom:0; background:linear-gradient(to top, #070f0c, transparent);}
   /* desk and jesse are both cream with no color change between them, so no fade belongs at that seam */
   #desk::after, #jesse::before{content:none;}
-  #jesse::after, #proof::before, #proof::after, #brains::before{content:none;}
+  #jesse::after, #brains::before{content:none;}
 
   .btn{
     display:inline-flex; align-items:center; justify-content:center; gap:8px;
@@ -258,7 +258,6 @@
   .jesse-reveal-frame{width:100%; border-radius:16px; overflow:hidden; background:#fafafa;}
   .jesse-reveal-frame iframe{display:block; width:100%; height:min(48vh,320px); border:0;}
   .jesse-reveal-cap{margin-top:12px; font-size:12px; color:rgba(20,58,46,.5);}
-  .proof-shot{margin-top:clamp(28px,4vh,44px); width:100%; max-width:1000px; border-radius:20px; box-shadow:0 30px 80px rgba(20,58,46,.18); display:block;}
   .jesse-points{margin-top:26px; display:grid; gap:14px;}
   .jpoint{display:flex; gap:14px; align-items:baseline;}
   .jpoint i{font-style:normal; font-family:var(--mono); font-weight:600; font-size:11px; color:var(--leaf); flex:none; letter-spacing:.08em;}
@@ -268,22 +267,13 @@
 
   /* ---------- the gate (dark) ---------- */
   .gate-sec{background:var(--field-1); border-top:1px solid var(--edge); border-bottom:1px solid var(--edge);}
-  .gate-flow{display:flex; flex-wrap:wrap; align-items:center; gap:10px 12px; margin-top:clamp(30px,5vh,48px);}
+  .gate-flow{display:flex; flex-wrap:wrap; align-items:center; gap:16px 18px; margin-top:clamp(36px,6vh,60px);}
   .gate-step{
-    padding:13px 20px; border-radius:14px; border:1px solid var(--edge); background:var(--field-2);
-    font-family:var(--mono); font-weight:600; font-size:12.5px; letter-spacing:.05em; color:var(--chalk-dim);
+    padding:clamp(20px,2.6vh,28px) clamp(26px,2.8vw,36px); border-radius:18px; border:1px solid var(--edge); background:var(--field-2);
+    font-family:var(--mono); font-weight:600; font-size:clamp(15px,1.6vw,19px); letter-spacing:.05em; color:var(--chalk-dim);
   }
-  .gate-step.final{background:var(--lime); border-color:var(--lime); color:var(--lime-ink); font-family:var(--disp); font-weight:700; font-size:14px; letter-spacing:-.01em;}
-  .gate-arrow{color:var(--chalk-faint);}
-  .gate-cols{display:grid; grid-template-columns:1fr 1fr; gap:clamp(18px,2.6vw,32px); margin-top:clamp(30px,5vh,48px);}
-  .gate-col{border-radius:20px; background:var(--field-2); padding:clamp(20px,2.6vw,30px);}
-  .gate-col b{display:block; font-family:var(--mono); font-weight:600; font-size:11px; letter-spacing:.15em; text-transform:uppercase; margin-bottom:12px;}
-  .gate-col.no b{color:var(--stakes-soft);}
-  .gate-col.yes{border-color:rgba(196,245,71,.3);}
-  .gate-col.yes b{color:var(--lime);}
-  .gate-col p{font-size:15px; line-height:1.6; color:var(--chalk-dim);}
-  .gate-col p strong{color:var(--chalk); font-weight:600;}
-  @media (max-width:760px){.gate-cols{grid-template-columns:1fr;}}
+  .gate-step.final{background:var(--lime); border-color:var(--lime); color:var(--lime-ink); font-family:var(--disp); font-weight:700; font-size:clamp(17px,1.9vw,22px); letter-spacing:-.01em;}
+  .gate-arrow{color:var(--chalk-faint); font-size:clamp(18px,2vw,24px);}
 
   /* ---------- every brain (cream) ---------- */
   .brains-formats{
@@ -600,23 +590,12 @@
   </div>
 </section>
 
-<!-- ================= REAL APP PROOF ================= -->
-<section class="stage-desk" id="proof" style="--field:#ffffff; --field-1:#ffffff; --field-2:#fafaf8;">
-  <div class="grid-bg" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="kicker reveal">Not a render</div>
-    <h2 class="h2 reveal">This is the actual app.</h2>
-    <p class="lede reveal">No staged demo. This is what opens when a student signs in.</p>
-    <img class="proof-shot reveal" src="img/marketing/app-screenshot-dashboard.webp" alt="The Desk's real Work dashboard on iPad: Homework Help upload, Knowledge Graph, Binder, and Jesse ready to call." loading="lazy">
-  </div>
-</section>
-
 <!-- ================= EVERY BRAIN ================= -->
 <section class="stage-desk" id="brains">
   <div class="grid-bg" aria-hidden="true"></div>
   <div class="wrap">
     <div class="kicker reveal">For the kid the page keeps losing</div>
-    <h2 class="h2 reveal">Not every brain learns from a paragraph.</h2>
+    <h2 class="h2 reveal">Some brains just don't do paragraphs.</h2>
     <p class="lede reveal">The paragraph is one door. Every idea here has more than one.</p>
     <p class="brains-formats reveal"><strong>A simulation</strong> you drag, <strong>a story</strong> with stakes, <strong>a voice</strong> with no page, <strong>a picture</strong> when words get in the way.</p>
     <p class="brains-engine reveal">This isn't a settings toggle. The engine tracks which representation lands for you and leads with it next time.</p>
@@ -649,16 +628,6 @@
       <span class="gate-step">structural rubric</span><span class="gate-arrow">&rarr;</span>
       <span class="gate-step">visual + pedagogical gate</span><span class="gate-arrow">&rarr;</span>
       <span class="gate-step final">a student sees it</span>
-    </div>
-    <div class="gate-cols">
-      <div class="gate-col no reveal">
-        <b>Fail</b>
-        <p>Nothing ships. Your student sees an honest &ldquo;couldn't make a good one yet,&rdquo; never a confident mistake.</p>
-      </div>
-      <div class="gate-col yes reveal">
-        <b>Pass</b>
-        <p>It rendered, held up to the rubric, and actually teaches. Everything AI-made is labeled AI-made.</p>
-      </div>
     </div>
   </div>
 </section>
