@@ -64,6 +64,13 @@
     background:var(--field); color:var(--chalk);
   }
   .stage-desk .kicker::before{background:var(--leaf); box-shadow:none;}
+  .stage-desk::before, .stage-desk::after{
+    content:''; position:absolute; left:0; right:0; height:clamp(40px,6vw,84px); pointer-events:none; z-index:1;
+  }
+  .stage-desk::before{top:0; background:linear-gradient(to bottom, #07090c, transparent);}
+  .stage-desk::after{bottom:0; background:linear-gradient(to top, #07090c, transparent);}
+  /* desk and jesse are both cream with no color change between them, so no fade belongs at that seam */
+  #desk::after, #jesse::before{content:none;}
 
   .btn{
     display:inline-flex; align-items:center; justify-content:center; gap:8px;
@@ -521,7 +528,7 @@
         <div class="beat-mark">2:14 AM</div>
         <div>
           <h3><span class="serif">The answer is one paste away.</span></h3>
-          <p>Due at eight. You've been lost in this class for weeks, and Friday's test is already sitting on your chest. One tab over, an AI will hand you the finished answer in four seconds &mdash; nothing understood, nothing learned, deadline met. Tonight you're tired enough to take that deal.</p>
+          <p>Due at eight, lost in this class for weeks. One tab over, an AI hands you a finished answer in four seconds. Nothing learned, deadline met.</p>
         </div>
       </div>
       <div class="beat hot reveal">
@@ -529,14 +536,14 @@
         <div>
           <h3>You were never bad at this.</h3>
           <p class="said">&ldquo;Some people are just more verbal.&rdquo;</p>
-          <p>Somebody said it once, meaning to be kind, and you built four years around it. The truth is plainer. You were working alone on something hard, and nobody who understood it was in the room.</p>
+          <p>Somebody meant it kindly. You built four years around it. Truth is plainer: you were working alone on something hard, with nobody in the room who understood it.</p>
         </div>
       </div>
       <div class="beat reveal">
         <div class="beat-mark">The crossing</div>
         <div>
           <h3>Then someone walks in.</h3>
-          <p>Same page, same night, except a college mentor who has done this exact thing opens your work already knowing where you're stuck. You still get the answer tonight &mdash; you just get it <strong>while</strong> learning it, with words you'll still own on Friday. Not instead of it.</p>
+          <p>Same page, same night. Except now a mentor who's done this exact thing already knows where you're stuck, and you get the answer <strong>while</strong> learning it, in words you'll still own on Friday.</p>
         </div>
       </div>
       <div class="beat lit reveal">
@@ -562,7 +569,7 @@
         <li>Kenyon College</li>
         <li>United World Colleges</li>
       </ul>
-      <p class="cred-note">Everywhere else, the platform keeps the student's data. Here the record goes back to the student &mdash; yours to export, yours to delete, never for sale.</p>
+      <p class="cred-note">Everywhere else, the platform keeps the student's data. Here the record goes back to the student, yours to export, yours to delete, never for sale.</p>
     </div>
   </div>
 </section>
@@ -572,7 +579,6 @@
   <div class="wrap">
     <div class="kicker reveal">One desk, three surfaces</div>
     <h2 class="h2 reveal">A real desk. It just answers back.</h2>
-    <p class="lede reveal">That night is what the desk is for. It runs on an iPad today, and everything you make stays in one record you own.</p>
     <div class="desk-grid">
       <div class="desk-card reveal">
         <div class="mock" aria-hidden="true">
@@ -670,7 +676,7 @@
   <div class="wrap">
     <div class="kicker reveal">For the kid the page keeps losing</div>
     <h2 class="h2 reveal">Not every brain learns from a paragraph.</h2>
-    <p class="lede reveal">Plenty of kids read a paragraph three times and get soup, then watch the same idea move once and keep it for good. If that's your kid, or you, nothing is broken. The paragraph was just the wrong door, and every idea here has more than one.</p>
+    <p class="lede reveal">The paragraph is one door. Every idea here has more than one.</p>
     <div class="brains-grid">
       <div class="brain-door reveal">
         <svg viewBox="0 0 32 32" fill="none" stroke="#247a4d" stroke-width="2" stroke-linecap="round"><circle cx="16" cy="16" r="11"/><path d="M16 9v7l5 3"/></svg>
@@ -782,7 +788,7 @@
       <div class="vcard reveal">
         <b>Coming &middot; research underway</b>
         <h3>A language for small programmers</h3>
-        <p>A coding language that reads a kid's curiosity as syntax &mdash; where &ldquo;what if the gravity flips?&rdquo; is a valid line of code and the machine takes it seriously. We'll show it when it's real.</p>
+        <p>A coding language that reads a kid's curiosity as syntax, where &ldquo;what if the gravity flips?&rdquo; is a valid line of code and the machine takes it seriously. We'll show it when it's real.</p>
       </div>
     </div>
     <p class="vision-stamps reveal">Forty-nine story worlds are already written and shipping in Solver, from Thales at Giza to Hipparchus counting stars on Rhodes.</p>
