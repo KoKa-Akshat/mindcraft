@@ -191,6 +191,16 @@
   .cred-schools li{font-family:var(--disp); font-weight:600; font-size:clamp(14px,1.6vw,18px); letter-spacing:-.01em; color:var(--chalk-dim);}
   .cred-note{max-width:56ch; font-size:13px; color:var(--chalk-faint); line-height:1.55;}
 
+  /* ---------- why this (parent register) ---------- */
+  .why-reveal{
+    margin-top:clamp(22px,3vh,32px); max-width:62ch; border-left:2px solid var(--lime); padding-left:18px;
+    font-family:var(--serif); font-style:italic; font-size:clamp(19px,2.2vw,26px); line-height:1.42; color:var(--chalk);
+  }
+  .why-not{color:var(--chalk-faint);}
+  .why-proof{display:grid; grid-template-columns:repeat(3,1fr); gap:20px 24px; margin-top:clamp(32px,5vh,48px); padding-top:24px; border-top:1px solid var(--edge); max-width:720px;}
+  .why-outcome{margin-top:clamp(24px,3.5vh,36px); font-family:var(--disp); font-weight:600; font-size:clamp(16px,1.8vw,20px); color:var(--lime); max-width:44ch;}
+  @media (max-width:640px){.why-proof{grid-template-columns:1fr 1fr;}}
+
   /* ---------- the desk (cream, three surfaces) ---------- */
   .desk-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(14px,1.8vw,22px); margin-top:clamp(40px,6vh,60px);}
   @media (max-width:860px){.desk-grid{grid-template-columns:1fr;}}
@@ -571,6 +581,22 @@
       </ul>
       <p class="cred-note">Everywhere else, the platform keeps the student's data. Here the record goes back to the student, yours to export, yours to delete, never for sale.</p>
     </div>
+  </div>
+</section>
+
+<!-- ================= WHY THIS ================= -->
+<section class="why" id="why" style="background:var(--field-1); border-top:1px solid var(--edge); border-bottom:1px solid var(--edge);">
+  <div class="wrap">
+    <div class="kicker reveal">Why this, not another app</div>
+    <h2 class="h2 reveal">You know the flinch.</h2>
+    <p class="lede reveal">A worksheet lands and something in your kid closes. You've tried a tutor, an app, a pep talk. Nothing moved, because nobody ever found the exact place math lost them.</p>
+    <p class="why-reveal reveal"><span class="why-not">Not a homework app. Not a guessing tutor.</span> An engine that finds the exact gap, a story that makes your kid care, and a mentor who already knows the map.</p>
+    <div class="why-proof reveal">
+      <div class="astat"><b>42</b><span>ACT math concepts mapped, gap to gap</span></div>
+      <div class="astat"><b>49</b><span>story worlds already built to teach them</span></div>
+      <div class="astat"><b>85%</b><span>the bar every AI-made simulation clears before your kid sees it</span></div>
+    </div>
+    <p class="why-outcome reveal">The bet isn't more help tonight. It's a kid who needs less of it by spring.</p>
   </div>
 </section>
 
