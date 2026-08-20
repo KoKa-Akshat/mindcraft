@@ -79,7 +79,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const body = (req.body || {}) as { secret?: string; email?: string }
   const expected = (process.env.CONTENT_ENGINE_SECRET || '').trim()
   if (!expected || body.secret !== expected) {
-    return res.status(401).json({ error: 'invalid secret' })
+    return res.status(401).json({
+      error: 'invalid secret',
+      // TEMP DIAGNOSTIC (2026-08-19) - lengths only, never values, to
+      // isolate a real mismatch without printing credential material.
+      // Remove once the reset call succeeds.
+      expectedLen: expected.length,
+      gotLen: (body.secret || '').length,
+    })
   }
 
   const email = String(body.email || '').trim()
