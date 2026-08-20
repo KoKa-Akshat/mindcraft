@@ -13,15 +13,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,500;1,400;1,500;1,600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --field:#07090c; --field-1:#0a0e13; --field-2:#0e141b;
+    --field:#070f0c; --field-1:#0a1612; --field-2:#0e1e18;
     --edge:rgba(245,245,244,.09); --edge-soft:rgba(245,245,244,.05);
     --chalk:#f5f5f4; --chalk-dim:rgba(245,245,244,.68); --chalk-faint:rgba(245,245,244,.42);
     --lime:#c4f547; --lime-ink:#0a1006;
     --stakes:#c1121f; --stakes-soft:#e0394a; --stakes-dim:rgba(224,57,74,.14);
-    --navy:#1d3a8a; --blue:#6c8cff;
+    --gold:#f5d348; --gold-deep:#d3a900;
     --cream:#f7f5f0; --cream-2:#efece3; --paper:#fffdf7;
     --ink:#143a2e; --ink-soft:rgba(20,58,46,.72); --ink-faint:rgba(20,58,46,.48);
-    --leaf:#247a4d;
+    --leaf:#247a4d; --leaf2:#5fb779;
     --shadow:0 30px 90px rgba(0,0,0,.5);
     --ease:cubic-bezier(.16,1,.3,1);
     --sans:"Inter",system-ui,sans-serif;
@@ -38,6 +38,18 @@
   a{color:inherit; text-decoration:none;}
   img{display:block; max-width:100%;}
   button{font-family:inherit;}
+  .grain{
+    position:fixed; inset:0; pointer-events:none; z-index:50; opacity:.05;
+    background-image:radial-gradient(circle at 20% 20%, rgba(95,183,121,.5), transparent 1px),
+      radial-gradient(circle at 80% 70%, rgba(95,183,121,.35), transparent 1px);
+    background-size:4px 4px, 5px 5px;
+  }
+  .progress{
+    position:fixed; top:0; left:0; width:100%; height:3px; z-index:95;
+    background:linear-gradient(90deg, var(--leaf2), var(--gold), var(--leaf));
+    transform:scaleX(0); transform-origin:left center; transition:transform .1s linear;
+  }
+  @media (prefers-reduced-motion:reduce){.progress{transition:none;}}
   .wrap{max-width:1180px; margin:0 auto; padding:0 clamp(20px,4vw,48px);}
   section{position:relative; padding:clamp(84px,10vw,140px) 0;}
   h1,h2,h3{font-family:var(--disp); font-weight:700; letter-spacing:-.03em; line-height:1.05; text-wrap:balance;}
@@ -67,8 +79,8 @@
   .stage-desk::before, .stage-desk::after{
     content:''; position:absolute; left:0; right:0; height:clamp(40px,6vw,84px); pointer-events:none; z-index:1;
   }
-  .stage-desk::before{top:0; background:linear-gradient(to bottom, #07090c, transparent);}
-  .stage-desk::after{bottom:0; background:linear-gradient(to top, #07090c, transparent);}
+  .stage-desk::before{top:0; background:linear-gradient(to bottom, #070f0c, transparent);}
+  .stage-desk::after{bottom:0; background:linear-gradient(to top, #070f0c, transparent);}
   /* desk and jesse are both cream with no color change between them, so no fade belongs at that seam */
   #desk::after, #jesse::before{content:none;}
 
@@ -118,9 +130,9 @@
   .hero{
     min-height:100svh; display:flex; flex-direction:column; justify-content:center; padding:0; overflow:hidden;
     background:
-      radial-gradient(ellipse 60% 50% at 78% 16%, rgba(108,140,255,.13), transparent 60%),
-      radial-gradient(ellipse 50% 45% at 8% 88%, rgba(196,245,71,.06), transparent 55%),
-      linear-gradient(180deg,#05070a 0%,#070a0e 55%,#05070a 100%);
+      radial-gradient(ellipse 60% 50% at 78% 16%, rgba(36,122,77,.30), transparent 60%),
+      radial-gradient(ellipse 50% 45% at 8% 88%, rgba(196,245,71,.09), transparent 55%),
+      linear-gradient(180deg,#070f0a 0%,#0a1612 55%,#070f0a 100%);
   }
   .hero canvas{position:absolute; inset:0; width:100%; height:100%; opacity:.4; pointer-events:none;}
   .hero-stage{position:relative; z-index:2; width:100%; max-width:920px; margin:0 auto; padding:clamp(120px,15vh,170px) clamp(20px,4vw,48px) 0; text-align:center;}
@@ -193,7 +205,7 @@
 
   /* ---------- why this (parent register) ---------- */
   .why-reveal{
-    margin-top:clamp(22px,3vh,32px); max-width:62ch; border-left:2px solid var(--lime); padding-left:18px;
+    margin-top:clamp(22px,3vh,32px); max-width:62ch; border-left:2px solid var(--gold-deep); padding-left:18px;
     font-family:var(--serif); font-style:italic; font-size:clamp(19px,2.2vw,26px); line-height:1.42; color:var(--chalk);
   }
   .why-not{color:var(--chalk-faint);}
@@ -233,7 +245,7 @@
   .mock-choice{height:26px; border-radius:8px; border:1px solid rgba(20,58,46,.16); background:rgba(20,58,46,.03);}
   .mock-choice.pick{background:var(--lime); border-color:var(--lime);}
   /* mock: map */
-  .mock-map{position:absolute; inset:0; background:#0a0e13;}
+  .mock-map{position:absolute; inset:0; background:#0a1612;}
   .mock-map svg{width:100%; height:100%;}
 
   /* ---------- jesse (cream) ---------- */
@@ -366,7 +378,7 @@
   }
 
   /* ---------- vision (dark, Katha register) ---------- */
-  .vision{background:#05070a;}
+  .vision{background:#070f0a;}
   .vision-flag{
     display:inline-flex; align-items:center; gap:10px; margin-bottom:22px;
     padding:8px 16px; border-radius:999px; border:1px solid rgba(224,57,74,.35);
@@ -396,7 +408,7 @@
   .price-card:hover{transform:translateY(-4px);}
   .tier-chip{display:inline-block; margin-bottom:16px; padding:4px 11px; border-radius:999px; font-family:var(--mono); font-size:9.5px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; width:fit-content;}
   .price-card.free .tier-chip{background:var(--lime); color:var(--lime-ink);}
-  .price-card.family .tier-chip{background:rgba(29,58,138,.1); color:var(--navy);}
+  .price-card.family .tier-chip{background:rgba(211,169,0,.12); color:var(--gold-deep);}
   .price-card.inst .tier-chip{background:rgba(20,58,46,.07); color:var(--chalk-faint);}
   .price-card h3{font-size:19px; margin-bottom:4px;}
   .price-card .price{font-family:var(--disp); font-size:clamp(24px,2.6vw,30px); font-weight:700; letter-spacing:-.02em; margin:6px 0 8px; font-variant-numeric:tabular-nums;}
@@ -427,12 +439,12 @@
   details p{padding:0 0 20px; color:var(--chalk-dim); font-size:14px; line-height:1.6; max-width:660px;}
 
   /* ---------- cta ---------- */
-  .cta{padding-bottom:clamp(88px,10vw,148px); background:#05070a;}
+  .cta{padding-bottom:clamp(88px,10vw,148px); background:#070f0a;}
   .cta-split{display:grid; grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr); gap:18px; align-items:stretch;}
   .cta-visual{
     position:relative; min-height:480px; border-radius:28px; overflow:hidden;
     border:1px solid rgba(196,245,71,.22);
-    background:radial-gradient(ellipse 58% 62% at 50% 40%, rgba(196,245,71,.09), transparent 72%), #05070a;
+    background:radial-gradient(ellipse 58% 62% at 50% 40%, rgba(196,245,71,.09), transparent 72%), #070f0a;
   }
   .cta-visual-frame{position:absolute; inset:0; width:100%; height:100%; border:0;}
   .cta-visual-cap{
@@ -483,6 +495,9 @@
   .foot-links a:hover{color:var(--chalk);}
   .foot-quip{margin-top:18px; padding-top:14px; border-top:1px dashed var(--edge); font-size:11.5px; color:rgba(245,245,244,.3);}
 </style>
+
+<div class="grain" aria-hidden="true"></div>
+<div class="progress" id="scrollProgress" aria-hidden="true"></div>
 
 <nav class="nav">
   <a class="brand" href="#top" aria-label="MindCraft home">
@@ -996,6 +1011,21 @@
     els.forEach(function(e){ io.observe(e); });
   })();
 
+  // ----- top scroll-progress bar -----
+  (function(){
+    var bar = document.getElementById('scrollProgress');
+    if(!bar) return;
+    function update(){
+      var h = document.scrollingElement || document.documentElement;
+      var scrolled = h.scrollTop;
+      var max = h.scrollHeight - h.clientHeight;
+      bar.style.transform = 'scaleX(' + (max > 0 ? scrolled / max : 0) + ')';
+    }
+    document.addEventListener('scroll', update, {passive:true});
+    window.addEventListener('resize', update);
+    update();
+  })();
+
   // ----- duplicate ticker content for a seamless loop -----
   (function(){
     var t = document.getElementById('ticker');
@@ -1032,7 +1062,7 @@
         for(var j = i + 1; j < nodes.length; j++){
           var b = nodes[j], dx = a.x - b.x, dy = a.y - b.y, d = dx*dx + dy*dy;
           if(d < 24000){
-            ctx.strokeStyle = 'rgba(108,140,255,' + (0.15 * (1 - d / 24000)).toFixed(3) + ')';
+            ctx.strokeStyle = 'rgba(36,122,77,' + (0.28 * (1 - d / 24000)).toFixed(3) + ')';
             ctx.lineWidth = 1;
             ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
           }
