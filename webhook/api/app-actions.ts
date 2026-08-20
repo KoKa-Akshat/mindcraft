@@ -33,6 +33,7 @@ import ingestLessonGraph from '../lib/handlers/ingest-lesson-graph'
 import generateSim from '../lib/handlers/generate-sim'
 import archiveBooks from '../lib/handlers/archive-books'
 import englishPractice from '../lib/handlers/english-practice'
+import resetStudentData from '../lib/handlers/reset-student-data'
 
 const HANDLERS: Record<string, (req: VercelRequest, res: VercelResponse) => Promise<unknown> | unknown> = {
   'create-classroom': createClassroom,
@@ -60,6 +61,7 @@ const HANDLERS: Record<string, (req: VercelRequest, res: VercelResponse) => Prom
   'generate-sim': generateSim,
   'archive-books': archiveBooks,
   'english-practice': englishPractice,
+  'reset-student-data': resetStudentData,
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
