@@ -228,6 +228,15 @@ struct DeskGridDashboardView: View {
     /// `.task`), not on every re-render.
     @State private var archiveBooks: [ArchiveBooksClient.Book] = []
     @State private var archiveBooksLoading = false
+    /// Real error visibility (2026-08-19, live report: "archive is not
+    /// having all the dan books... it should show all books") - the actual
+    /// bug wasn't the endpoint (verified separately, returns all 18 real
+    /// books) but that `ArchiveBooksClient.list()` swallows every failure
+    /// (`try?`) into a plain empty array, indistinguishable on screen from
+    /// "still loading" or "genuinely empty" - a transient network hiccup on
+    /// a real device silently left the section looking broken/incomplete
+    /// with no way to tell why or retry.
+    @State private var archiveBooksError = false
 
     /// True whenever Binder should be showing ANY of the merged-space
     /// content modes above rather than its own normal titles/blurb - the
@@ -563,6 +572,22 @@ struct DeskGridDashboardView: View {
                         ))
                     }
                 }
+                // Jesse greets the moment the dashboard is on screen
+                // (2026-08-19, explicit ask: "Jesse should say Hi Akshat the
+                // moment you land on dash") - previously this only fired
+                // once the student manually tapped the dashboard's own Jesse
+                // rail to start a call (`JesseRailView(..., context:
+                // "workDashboard")`'s call button -> `begin()`). `begin()`
+                // already no-ops if a call is already active
+                // (`guard !isActive else { return }`), so calling it here is
+                // safe to repeat and won't double-greet on every re-render.
+                // Skipped under any UI test flag - a real spoken greeting is
+                // an unrelated async side effect (network TTS call) that
+                // existing tests don't expect and shouldn't have to account
+                // for.
+                if !ProcessInfo.processInfo.arguments.contains(where: { $0.hasPrefix("--ui-testing") }) {
+                    jesseCall.begin(context: "workDashboard", studentName: studentName)
+                }
             }
 
             Group {
@@ -600,6 +625,14 @@ struct DeskGridDashboardView: View {
         .onChange(of: intelLines) { _, lines in boxBus.intelLines = lines }
         .onChange(of: binderTitles) { _, titles in boxBus.binderTitles = titles }
         .onChange(of: jesseCall.workDashboardLesson) { _, lesson in handleNewLesson(lesson) }
+        // Voice-triggered navigation (2026-08-19, explicit ask: "if i say i
+        // want to practice... take me to the practice screen") -
+        // JesseCallSession only signals, this view owns navigation.
+        .onChange(of: jesseCall.practiceRequested) { _, requested in
+            guard requested else { return }
+            jesseCall.practiceRequested = false
+            openSidebarFlow(.englishPractice)
+        }
         .fullScreenCover(item: $presentedMicroSim) { sim in
             MicroSimView(sim: sim) { presentedMicroSim = nil }
         }
@@ -2086,6 +2119,19 @@ struct DeskGridDashboardView: View {
                     archiveSection("DAN'S ARCHIVE", ink: ink) {
                         if archiveBooksLoading {
                             ProgressView().tint(ink)
+                        } else if archiveBooksError {
+                            Button {
+                                Task { await loadArchiveBooks() }
+                            } label: {
+                                HStack(spacing: 6) {
+                                    Image(systemName: "arrow.clockwise")
+                                    Text("Couldn't load Dan's Archive - tap to retry")
+                                }
+                                .font(.system(size: 13, weight: .semibold, design: .rounded))
+                                .foregroundColor(ink.opacity(0.75))
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityIdentifier("deskGridArchiveDanBooksRetry")
                         } else {
                             ForEach(archiveBooks) { book in
                                 archiveBookRow(
@@ -2104,13 +2150,27 @@ struct DeskGridDashboardView: View {
         // Fetched once per app session (the archiveBooks.isEmpty guard
         // skips re-fetching on every later Archive open - this list is
         // static enough not to need refreshing per-open the way the live
-        // knowledge graph does).
+        // knowledge graph does). Re-fires on a failed attempt too, since
+        // archiveBooks stays empty - closing and reopening Archive retries;
+        // archiveBooksError makes that failure visible instead of a silent
+        // blank section in the meantime.
         .task(id: viewingArchiveBrowser) {
             guard viewingArchiveBrowser, archiveBooks.isEmpty else { return }
-            archiveBooksLoading = true
-            archiveBooks = await ArchiveBooksClient.list()
-            archiveBooksLoading = false
+            await loadArchiveBooks()
         }
+    }
+
+    /// Shared by the initial `.task` fetch and the retry button - a
+    /// `.task(id:)` only re-runs when its id VALUE changes, so a retry tap
+    /// (id stays `viewingArchiveBrowser == true` the whole time) has to
+    /// call this directly rather than relying on the task re-firing.
+    private func loadArchiveBooks() async {
+        archiveBooksLoading = true
+        archiveBooksError = false
+        let result = await ArchiveBooksClient.list()
+        archiveBooks = result
+        archiveBooksError = result.isEmpty
+        archiveBooksLoading = false
     }
 
     @ViewBuilder
@@ -2619,9 +2679,14 @@ struct DeskGridDashboardView: View {
     private var sidebarFlowDock: some View {
         HStack(spacing: 8) {
             dockChip("Dashboard", system: "square.grid.2x2.fill", identifier: "deskGridDock_BackToDash", action: closeSidebarFlow)
-            dockChip("Resume", system: "person.text.rectangle", identifier: "deskGridSidebarDock_Resume") { openSidebarFlow(.resume) }
+            // Order matches every other dock variant (2026-08-19, explicit
+            // ask: "practice archive design resume settings consistently") -
+            // Archive isn't a SidebarFlow (it's its own overlay, not a flow
+            // pane), so it's absent here same as before, just the relative
+            // order of what IS here now matches.
             dockChip("Practice", system: "waveform.and.mic", identifier: "deskGridSidebarDock_Practice") { openSidebarFlow(.englishPractice) }
             dockChip("Design", system: "square.grid.2x2.fill", identifier: "deskGridSidebarDock_Design") { openSidebarFlow(.develop) }
+            dockChip("Resume", system: "person.text.rectangle", identifier: "deskGridSidebarDock_Resume") { openSidebarFlow(.resume) }
             dockChip("Settings", system: "gearshape.fill", identifier: "deskGridSidebarDock_Settings", action: onOpenManage)
             Spacer(minLength: 0)
         }
@@ -2660,17 +2725,12 @@ struct DeskGridDashboardView: View {
         // (including "Study a Book") unreachable from this dock - the
         // screen and its code are untouched, just not linked to from here
         // anymore. Flag this if that's not what was meant.
+        // Order (2026-08-19, explicit ask: "the order should be practice
+        // archive design resume settings consistently") - same order on
+        // every dock variant that carries these chips.
         HStack(spacing: 8) {
-            // Resume + Settings moved here from the left sidebar (2026-08-19,
-            // explicit ask: "add the settings and resume to the search bar
-            // dock too... use that space to make the boxes bigger
-            // horizontally as well as vertically") - the sidebar itself now
-            // only renders while a flow pane is active (see leftSidebar's
-            // own call site), so it no longer reserves width against
-            // tileBoard's scale on the plain dashboard.
-            dockChip("Resume", system: "person.text.rectangle", identifier: "deskGridDock_Resume") { openSidebarFlow(.resume) }
             // English speaking/writing practice (2026-08-19) - a live Jesse
-            // conversation, same dock-chip pattern as Resume right above.
+            // conversation.
             dockChip("Practice", system: "waveform.and.mic", identifier: "deskGridDock_Practice") { openSidebarFlow(.englishPractice) }
             // 2026-08-19, explicit ask: Archive now opens the in-Binder
             // browser (see viewingArchiveBrowser) instead of the old
@@ -2690,6 +2750,14 @@ struct DeskGridDashboardView: View {
             // a `.chapter` box instead of behind a mode switch. Still the
             // same destination the sidebar's own "Develop" icon opens.
             dockChip("Design", system: "square.grid.2x2.fill", identifier: "deskGridDock_Design") { openSidebarFlow(.develop) }
+            // Resume + Settings moved here from the left sidebar (2026-08-19,
+            // explicit ask: "add the settings and resume to the search bar
+            // dock too... use that space to make the boxes bigger
+            // horizontally as well as vertically") - the sidebar itself now
+            // only renders while a flow pane is active (see leftSidebar's
+            // own call site), so it no longer reserves width against
+            // tileBoard's scale on the plain dashboard.
+            dockChip("Resume", system: "person.text.rectangle", identifier: "deskGridDock_Resume") { openSidebarFlow(.resume) }
             dockChip("Settings", system: "gearshape.fill", identifier: "deskGridDock_Settings", action: onOpenManage)
             searchField(placeholder: "Search", identifier: "deskGridDashboardSearch", onSubmit: submitSearch)
         }
@@ -2730,10 +2798,12 @@ struct DeskGridDashboardView: View {
             dockChip("Transcribe", system: "waveform", identifier: "deskGridFlowsTranscribe", action: onTranscribe)
             // Resume + Settings here too (2026-08-19, explicit ask: "add the
             // settings and resume to the search bar dock too across the
-            // flows") - same two chips workDock got, so they're reachable
-            // no matter which dock variant is showing.
-            dockChip("Resume", system: "person.text.rectangle", identifier: "deskGridFlowsResume") { openSidebarFlow(.resume) }
+            // flows") - same chips workDock got, so they're reachable no
+            // matter which dock variant is showing. Practice/Resume/Settings
+            // order matches workDock's own (2026-08-19, "practice archive
+            // design resume settings consistently").
             dockChip("Practice", system: "waveform.and.mic", identifier: "deskGridFlowsPractice") { openSidebarFlow(.englishPractice) }
+            dockChip("Resume", system: "person.text.rectangle", identifier: "deskGridFlowsResume") { openSidebarFlow(.resume) }
             dockChip("Settings", system: "gearshape.fill", identifier: "deskGridFlowsSettings", action: onOpenManage)
             searchField(
                 placeholder: "Search Presentation, Resume, Archive, Book…",

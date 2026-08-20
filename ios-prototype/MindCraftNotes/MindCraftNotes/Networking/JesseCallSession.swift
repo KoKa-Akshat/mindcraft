@@ -188,6 +188,15 @@ final class JesseCallSession: NSObject, ObservableObject {
     /// very first utterance, with no chance for the student to attach an
     /// upload first. Reset in `begin()`.
     @Published private(set) var pendingLearnTopic: String?
+    /// One-shot navigation signal (2026-08-19, explicit ask: "if i say i
+    /// want to practice... take me to the practice screen") - set true when
+    /// the student's workDashboard utterance matches a practice-intent
+    /// phrase (see `isPracticeRequest`), read and reset by
+    /// `DeskGridDashboardView`'s own `.onChange`, same "JesseCallSession
+    /// signals, the view navigates" shape `pendingLearnTopic`/
+    /// `workDashboardLesson` already use - this class owns no navigation
+    /// state itself.
+    @Published var practiceRequested = false
     /// Live gated-generation request state (LIVE_GATED_GENERATION_TEST_SPEC.md,
     /// closed-test only - see `LiveGatedGeneration.isEnabled`'s doc comment
     /// for the gate). Owned here rather than in a view because the request
@@ -604,6 +613,13 @@ final class JesseCallSession: NSObject, ObservableObject {
             isThinking = false
             return
         }
+        if context == "workDashboard", Self.isPracticeRequest(message) {
+            guard isActive else { isThinking = false; return }
+            await speak("On it - opening Practice now.")
+            practiceRequested = true
+            isThinking = false
+            return
+        }
 
         let bus = DeskBoxBus.shared
         if let local = bus.directAnswer(for: message) {
@@ -801,6 +817,20 @@ final class JesseCallSession: NSObject, ObservableObject {
     /// running the real learn flow at all. Fixed to search anywhere in
     /// the message, not just at the start, and widened the phrase list
     /// to cover "please".
+    /// Deliberately narrower than `extractLearnTopic` - a fixed-phrase
+    /// match, not a lead-in-plus-topic extraction, since "practice" has no
+    /// topic to parse out (the Practice screen it opens is a live
+    /// conversation, not something that takes a subject argument today).
+    private static func isPracticeRequest(_ message: String) -> Bool {
+        let lowered = message.lowercased()
+        let phrases = [
+            "i want to practice", "i'd like to practice", "i would like to practice",
+            "let's practice", "lets practice", "help me practice", "can i practice",
+            "take me to practice", "open practice", "go to practice",
+        ]
+        return phrases.contains { lowered.contains($0) }
+    }
+
     private static func extractLearnTopic(from message: String) -> String? {
         let leadIns = [
             "i want to learn about ", "i want to learn ",
