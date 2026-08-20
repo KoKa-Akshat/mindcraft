@@ -194,6 +194,7 @@
   }
   .desk-card:hover{transform:translateY(-5px); box-shadow:var(--shadow);}
   .desk-card .mock{position:relative; aspect-ratio:16/11; background:var(--cream-2); border-bottom:1px solid var(--edge); overflow:hidden;}
+  .mock-img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 30%;}
   .desk-card .cap{padding:20px 22px 24px;}
   .desk-card .cap b{display:block; font-family:var(--mono); font-weight:600; font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--leaf); margin-bottom:8px;}
   .desk-card .cap h3{font-size:clamp(19px,2vw,24px); margin-bottom:8px;}
@@ -327,15 +328,20 @@
   .shelf{position:relative; height:360px;}
   .shelf-book{
     position:absolute; width:172px; aspect-ratio:3/4.2; border-radius:8px; overflow:hidden;
-    border:1px solid var(--edge); box-shadow:0 18px 44px rgba(0,0,0,.5);
+    border:1px solid var(--edge); box-shadow:0 18px 44px rgba(0,0,0,.5); background:var(--cream);
     display:flex; flex-direction:column; justify-content:space-between; padding:16px 14px;
+    transition:transform .3s var(--ease);
   }
-  .shelf-book b{font-family:var(--disp); font-weight:700; font-size:16px; letter-spacing:-.02em; line-height:1.15; color:#fff;}
-  .shelf-book span{font-family:var(--mono); font-size:9.5px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.65);}
-  .sb1{top:6px; left:16%; transform:rotate(-3.5deg); z-index:4; background:linear-gradient(160deg,#1d3a8a,#0e1b42);}
-  .sb2{top:44px; left:46%; transform:rotate(4deg); z-index:3; background:linear-gradient(160deg,#247a4d,#0d2e1d);}
-  .sb3{top:132px; left:6%; transform:rotate(2deg); z-index:2; background:linear-gradient(160deg,#7b5ea7,#2c1f42);}
-  .sb4{top:168px; left:35%; transform:rotate(-2deg); z-index:1; background:linear-gradient(160deg,#a34b12,#3a1a05);}
+  .shelf-book:hover{transform:translateY(-6px) scale(1.02) !important; z-index:9 !important;}
+  .shelf-book img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0;}
+  .shelf-book b{position:relative; z-index:1; font-family:var(--disp); font-weight:700; font-size:16px; letter-spacing:-.02em; line-height:1.15; color:var(--ink);
+    text-shadow:0 1px 0 rgba(247,245,240,.9), 0 0 18px rgba(247,245,240,.9);}
+  .shelf-book span{position:relative; z-index:1; align-self:flex-start; font-family:var(--mono); font-size:9.5px; font-weight:600; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--ink); background:var(--lime); border-radius:999px; padding:4px 9px;}
+  .sb1{top:6px; left:16%; transform:rotate(-3.5deg); z-index:4;}
+  .sb2{top:44px; left:46%; transform:rotate(4deg); z-index:3;}
+  .sb3{top:132px; left:6%; transform:rotate(2deg); z-index:2;}
+  .sb4{top:168px; left:35%; transform:rotate(-2deg); z-index:1;}
   @media (max-width:900px){
     .archive-grid{grid-template-columns:1fr;}
     .shelf{height:300px;}
@@ -344,6 +350,10 @@
 
   /* ---------- vision (dark, Katha register) ---------- */
   .vision{background:#05070a;}
+  .vision-hero{display:grid; grid-template-columns:1.1fr 1fr; gap:clamp(28px,4vw,56px); align-items:center; margin-bottom:clamp(36px,5vh,52px);}
+  .vision-hero-img{width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:24px; border:1px solid var(--edge); box-shadow:0 30px 70px rgba(0,0,0,.55);}
+  .vision-hero-copy .lede{margin-top:14px; max-width:48ch;}
+  @media (max-width:860px){.vision-hero{grid-template-columns:1fr;}}
   .vision-flag{
     display:inline-flex; align-items:center; gap:10px; margin-bottom:22px;
     padding:8px 16px; border-radius:999px; border:1px solid rgba(224,57,74,.35);
@@ -570,16 +580,7 @@
     <div class="desk-grid">
       <div class="desk-card reveal">
         <div class="mock" aria-hidden="true">
-          <div class="mock-notes">
-            <div class="mock-page">
-              <div class="mock-line title"></div>
-              <div class="mock-line w85"></div>
-              <div class="mock-line w60"></div>
-              <div class="mock-line w72"></div>
-              <div class="mock-line w40"></div>
-              <div class="mock-chiprow"><div class="mock-chip lit"></div><div class="mock-chip"></div><div class="mock-chip"></div></div>
-            </div>
-          </div>
+          <img class="mock-img" src="img/marketing/desk-notes-illustration.webp" alt="" loading="lazy">
         </div>
         <div class="cap"><b>Notes</b><h3>The work lives here</h3><p>Notes, binder, email, and calendar on one surface. Drop in a photo of tonight's worksheet.</p></div>
       </div>
@@ -757,10 +758,10 @@
         </div>
       </div>
       <div class="shelf reveal" aria-hidden="true">
-        <div class="shelf-book sb1"><b>Calculus</b><span>interactive &middot; open</span></div>
-        <div class="shelf-book sb2"><b>AI-Assisted Geometry</b><span>173 sims</span></div>
-        <div class="shelf-book sb3"><b>Learning MicroPython</b><span>open &middot; no login</span></div>
-        <div class="shelf-book sb4"><b>Health Education</b><span>389 microsims</span></div>
+        <div class="shelf-book sb1"><img src="img/marketing/book-cover-calculus.webp" alt="" loading="lazy"><b>Calculus</b><span>interactive &middot; open</span></div>
+        <div class="shelf-book sb2"><img src="img/marketing/book-cover-geometry.webp" alt="" loading="lazy"><b>AI-Assisted Geometry</b><span>173 sims</span></div>
+        <div class="shelf-book sb3"><img src="img/marketing/book-cover-micropython.webp" alt="" loading="lazy"><b>Learning MicroPython</b><span>open &middot; no login</span></div>
+        <div class="shelf-book sb4"><img src="img/marketing/book-cover-health.webp" alt="" loading="lazy"><b>Health Education</b><span>389 microsims</span></div>
       </div>
     </div>
   </div>
@@ -769,8 +770,14 @@
 <!-- ================= VISION ================= -->
 <section class="vision" id="vision">
   <div class="wrap">
-    <span class="vision-flag reveal">Where this is going &middot; not shipped yet &middot; all of it started</span>
-    <h2 class="h2 reveal">The desk is the seed. <span class="serif">The world is the plan.</span></h2>
+    <div class="vision-hero">
+      <img class="vision-hero-img reveal" src="img/marketing/vision-world-hero.webp" alt="A single lit path winding through the dark, marking mastered ground behind and the next unlit step ahead." loading="lazy">
+      <div class="vision-hero-copy">
+        <span class="vision-flag reveal">Where this is going &middot; not shipped yet &middot; all of it started</span>
+        <h2 class="h2 reveal">The desk is the seed. <span class="serif">The world is the plan.</span></h2>
+        <p class="lede reveal">One record a student owns, personalized to how they actually learn, built so a kid anywhere in the world can open it. That's the whole bet.</p>
+      </div>
+    </div>
     <div class="vision-cards">
       <div class="vcard reveal">
         <b>Coming &middot; horizon two</b>
