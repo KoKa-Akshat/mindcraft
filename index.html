@@ -140,12 +140,21 @@
 
   /* ---------- hero ---------- */
   .hero{
+    --chalk:#143a2e; --chalk-dim:rgba(20,58,46,.72); --chalk-faint:rgba(20,58,46,.5);
+    --edge:rgba(20,58,46,.14); --grid-line:rgba(20,58,46,.09);
     min-height:100svh; display:flex; flex-direction:column; justify-content:center; padding:0; overflow:hidden;
     background:
-      radial-gradient(ellipse 60% 50% at 78% 16%, rgba(36,122,77,.30), transparent 60%),
-      radial-gradient(ellipse 50% 45% at 8% 88%, rgba(196,245,71,.09), transparent 55%),
-      linear-gradient(180deg,#070f0a 0%,#0a1612 55%,#070f0a 100%);
+      radial-gradient(ellipse 60% 50% at 78% 16%, rgba(36,122,77,.16), transparent 60%),
+      radial-gradient(ellipse 50% 45% at 8% 88%, rgba(196,245,71,.14), transparent 55%),
+      linear-gradient(180deg,#ffffff 0%,#fafaf8 55%,#ffffff 100%);
   }
+  .hero::after{
+    content:''; position:absolute; bottom:0; left:0; right:0; height:clamp(50px,7vw,100px); z-index:1; pointer-events:none;
+    background:linear-gradient(to top, #070f0a, transparent);
+  }
+  .hero-tag{background:rgba(20,58,46,.045);}
+  .hero .btn.soft{background:rgba(20,58,46,.045);}
+  .hero .btn.soft:hover{background:rgba(20,58,46,.09);}
   .hero canvas{position:absolute; inset:0; width:100%; height:100%; opacity:.4; pointer-events:none;}
   .hero-stage{position:relative; z-index:2; width:100%; max-width:920px; margin:0 auto; padding:clamp(120px,15vh,170px) clamp(20px,4vw,48px) 0; text-align:center;}
   .hero-tag{
@@ -155,8 +164,8 @@
     animation:rise .9s var(--ease) both;
   }
   .hero-tag i{font-style:normal; background:var(--lime); color:var(--lime-ink); border-radius:999px; padding:3px 9px; font-size:10px; font-weight:700; letter-spacing:.08em;}
-  .hero h1{font-size:clamp(48px,7.6vw,96px); animation:rise .9s .05s var(--ease) both;}
-  .hero h1 em{font-style:normal; color:var(--lime);}
+  .hero h1{color:var(--chalk); font-size:clamp(48px,7.6vw,96px); animation:rise .9s .05s var(--ease) both;}
+  .hero h1 em{font-style:normal; color:var(--leaf);}
   .hero .sub{margin-top:14px; font-family:var(--disp); font-size:clamp(19px,2.4vw,27px); font-weight:500; color:var(--chalk-dim); animation:rise .9s .1s var(--ease) both;}
   .hero .lead{
     margin:22px auto 0; max-width:54ch; font-size:clamp(15.5px,1.6vw,18px); line-height:1.6;
@@ -215,15 +224,6 @@
   .cred-schools li{font-family:var(--disp); font-weight:600; font-size:clamp(14px,1.6vw,18px); letter-spacing:-.01em; color:var(--chalk-dim);}
   .cred-note{max-width:56ch; font-size:13px; color:var(--chalk-faint); line-height:1.55;}
 
-  /* ---------- why this (parent register) ---------- */
-  .why-reveal{
-    margin-top:clamp(22px,3vh,32px); max-width:62ch; border-left:2px solid var(--gold-deep); padding-left:18px;
-    font-family:var(--serif); font-style:italic; font-size:clamp(19px,2.2vw,26px); line-height:1.42; color:var(--chalk);
-  }
-  .why-not{color:var(--chalk-faint);}
-  .why-proof{display:grid; grid-template-columns:repeat(3,1fr); gap:20px 24px; margin-top:clamp(32px,5vh,48px); padding-top:24px; border-top:1px solid var(--edge); max-width:720px;}
-  .why-outcome{margin-top:clamp(24px,3.5vh,36px); font-family:var(--disp); font-weight:600; font-size:clamp(16px,1.8vw,20px); color:var(--lime); max-width:44ch;}
-  @media (max-width:640px){.why-proof{grid-template-columns:1fr 1fr;}}
 
   /* ---------- the desk (cream, three surfaces) ---------- */
   .desk-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(14px,1.8vw,22px); margin-top:clamp(40px,6vh,60px);}
@@ -336,9 +336,6 @@
 
   /* ---------- mentors (dark) ---------- */
   .mentors{background:var(--field);}
-  .mentor-quote{margin-top:22px; max-width:56ch;}
-  .mentor-quote p{font-family:var(--serif); font-style:italic; font-size:clamp(18px,2vw,23px); line-height:1.45; color:var(--chalk);}
-  .mentor-quote p em{font-style:italic; color:var(--lime);}
   .mentor-cards{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:clamp(34px,5vh,50px);}
   .mcard{border-radius:20px; background:var(--field-2); padding:22px; transition:box-shadow .25s var(--ease), transform .25s var(--ease);}
   .mcard:hover{box-shadow:0 16px 40px rgba(196,245,71,.1); transform:translateY(-3px);}
@@ -384,20 +381,6 @@
     .shelf-book{width:140px;}
   }
 
-  /* ---------- vision (dark, Katha register) ---------- */
-  .vision{background:#070f0a;}
-  .vision-flag{
-    display:inline-flex; align-items:center; gap:10px; margin-bottom:22px;
-    padding:8px 16px; border-radius:999px; border:1px solid rgba(224,57,74,.35);
-    font-family:var(--mono); font-size:10.5px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--stakes-soft);
-  }
-  .vision-cards{display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(14px,1.8vw,22px); margin-top:clamp(36px,5vh,52px);}
-  .vcard{border-radius:22px; background:var(--field-2); padding:clamp(22px,2.8vw,32px); display:flex; flex-direction:column; gap:12px;}
-  .vcard b{font-family:var(--mono); font-weight:600; font-size:10.5px; letter-spacing:.15em; text-transform:uppercase; color:var(--stakes-soft);}
-  .vcard h3{font-family:var(--serif); font-style:italic; font-weight:600; font-size:clamp(21px,2.4vw,28px); line-height:1.2; letter-spacing:0;}
-  .vcard p{font-size:14px; line-height:1.6; color:var(--chalk-dim);}
-  .vision-stamps{margin-top:clamp(26px,4vh,40px); font-family:var(--serif); font-style:italic; font-size:clamp(14px,1.5vw,18px); color:var(--chalk-faint); max-width:70ch;}
-  @media (max-width:860px){.vision-cards{grid-template-columns:1fr;}}
 
   /* ---------- pricing (cream) ---------- */
   .pricing-lede-row{display:grid; grid-template-columns:1.3fr .7fr; gap:clamp(24px,4vw,48px); align-items:start; margin-bottom:16px;}
@@ -608,29 +591,12 @@
   </div>
 </section>
 
-<!-- ================= WHY THIS ================= -->
-<section class="why" id="why" style="background:var(--field-1); border-top:1px solid var(--edge); border-bottom:1px solid var(--edge);">
-  <div class="grid-bg" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="kicker reveal">Why this, not another app</div>
-    <h2 class="h2 reveal">You know the flinch.</h2>
-    <p class="lede reveal">A worksheet lands and something in your kid closes. You've tried a tutor, an app, a pep talk. Nothing moved, because nobody ever found the exact place math lost them.</p>
-    <p class="why-reveal reveal"><span class="why-not">Not a homework app. Not a guessing tutor.</span> An engine that finds the exact gap, a story that makes your kid care, and a mentor who already knows the map.</p>
-    <div class="why-proof reveal">
-      <div class="astat"><b>42</b><span>ACT math concepts mapped, gap to gap</span></div>
-      <div class="astat"><b>49</b><span>story worlds already built to teach them</span></div>
-      <div class="astat"><b>85%</b><span>the bar every AI-made simulation clears before your kid sees it</span></div>
-    </div>
-    <p class="why-outcome reveal">The bet isn't more help tonight. It's a kid who needs less of it by spring.</p>
-  </div>
-</section>
-
 <!-- ================= THE DESK ================= -->
 <section class="stage-desk" id="desk">
   <div class="grid-bg" aria-hidden="true"></div>
   <div class="wrap">
     <div class="kicker reveal">One desk, three surfaces</div>
-    <h2 class="h2 reveal">Not a blank page. It answers back.</h2>
+    <h2 class="h2 reveal">It answers back.</h2>
     <div class="desk-grid">
       <div class="desk-card reveal">
         <div class="mock" aria-hidden="true">
@@ -680,8 +646,8 @@
     <div class="jesse-grid">
       <div>
         <div class="kicker reveal">Jesse &middot; the voice at the desk</div>
-        <h2 class="h2 reveal">Some questions you have to say out loud.</h2>
-        <p class="lede reveal">Tap the disc and talk. Jesse stays on the line while you wander the app, the way a person would.</p>
+        <h2 class="h2 reveal">Tap the disc. Jesse listens.</h2>
+        <p class="lede reveal">Stays on the line while you wander the app, the way a person would.</p>
         <div class="jesse-points">
           <div class="jpoint reveal"><i>real</i><p><strong>Shipped.</strong> A native voice in the iPad app today, not a chat box wearing a headset.</p></div>
           <div class="jpoint reveal"><i>scoped</i><p><strong>Knows the page you're on.</strong> Ask about the problem in front of you.</p></div>
@@ -765,8 +731,7 @@
   <div class="grid-bg" aria-hidden="true"></div>
   <div class="wrap">
     <div class="kicker reveal">Real people, on call</div>
-    <h2 class="h2 reveal">Someone who has done this <span class="serif">walks in.</span></h2>
-    <blockquote class="mentor-quote reveal"><p>MindCraft is not software instead of people. It is software that <em>makes the people better.</em></p></blockquote>
+    <h2 class="h2 reveal">Real students. Real subjects.</h2>
     <div class="mentor-cards">
       <div class="mcard reveal">
         <div class="who"><span class="ava" style="background:#247a4d;">EN</span><div><h4>The engineering sophomore</h4><span class="meta">Math &middot; physics &middot; the click</span></div></div>
@@ -816,34 +781,6 @@
         <a class="shelf-book sb4" href="https://joinmindcraft.com/dans-archive.html"><img src="img/marketing/book-cover-health.webp" alt="" loading="lazy"><b>Health Education</b><span>389 microsims</span></a>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- ================= VISION ================= -->
-<section class="vision" id="vision">
-  <div class="grid-bg" aria-hidden="true"></div>
-  <div class="wrap">
-    <span class="vision-flag reveal">Where this is going &middot; not shipped yet &middot; all of it started</span>
-    <h2 class="h2 reveal">The desk is the seed. <span class="serif">The world is the plan.</span></h2>
-    <p class="lede reveal">One record a student owns, personalized to how they actually learn, built so a kid anywhere in the world can open it. That's the whole bet.</p>
-    <div class="vision-cards">
-      <div class="vcard reveal">
-        <b>Coming &middot; horizon two</b>
-        <h3>A world you walk through</h3>
-        <p>Your map becomes terrain, with mastered concepts as unlocked regions and the tavern where Cardano gambled his rent money as a lit doorway.</p>
-      </div>
-      <div class="vcard reveal">
-        <b>Coming &middot; in closed testing</b>
-        <h3>A book about what you love</h3>
-        <p>Name a passion and the engine drafts a book that teaches through it. Every page clears the same gate first, which is why it isn't live yet.</p>
-      </div>
-      <div class="vcard reveal">
-        <b>Coming &middot; research underway</b>
-        <h3>A language for small programmers</h3>
-        <p>A coding language that reads a kid's curiosity as syntax, where &ldquo;what if the gravity flips?&rdquo; is a valid line of code and the machine takes it seriously. We'll show it when it's real.</p>
-      </div>
-    </div>
-    <p class="vision-stamps reveal">Forty-nine story worlds are already written and shipping in Solver, from Thales at Giza to Hipparchus counting stars on Rhodes.</p>
   </div>
 </section>
 
