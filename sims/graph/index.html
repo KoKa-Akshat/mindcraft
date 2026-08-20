@@ -49,7 +49,7 @@
         }));
         const links = (data.edges || []).map(e => ({ source: e.from, target: e.to }));
         wait.remove();
-        ForceGraph3D()(el)
+        const graph = ForceGraph3D()(el)
           .graphData({ nodes, links })
           .backgroundColor('#080e14')
           .nodeLabel(n => n.name)
@@ -58,6 +58,9 @@
           .linkColor(() => 'rgba(196,245,71,.22)')
           .linkOpacity(0.35)
           .showNavInfo(false);
+        const controls = graph.controls();
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = 0.7;
       })
       .catch(() => { wait.textContent = 'The map will load when the network is ready.'; });
   </script>

@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lever Force Amplifier</title>
-<script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
 <style>
+  * { box-sizing: border-box; }
   body {
     margin: 0;
     display: flex;
@@ -13,226 +14,239 @@
     font-family: Arial, Helvetica, sans-serif;
   }
   #sketch-holder {
+    position: relative;
     margin: 20px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    width: 760px;
+    max-width: calc(100vw - 40px);
+  }
+  canvas { display: block; width: 100%; height: auto; }
+  #fulcrumSlider, #effortSlider {
+    position: absolute; width: 280px;
+  }
+  #effortSlider { width: 220px; }
+  #resetBtn {
+    position: absolute; width: 70px; height: 32px;
+    font-family: inherit; font-size: 14px; cursor: pointer;
+    border: 1px solid #999; border-radius: 4px; background: #fff;
   }
 </style>
 </head>
 <body>
-  <div id="sketch-holder"></div>
+  <div id="sketch-holder">
+    <canvas id="cnv"></canvas>
+    <input type="range" id="fulcrumSlider" min="0.15" max="0.85" step="0.01" value="0.5">
+    <input type="range" id="effortSlider" min="0" max="150" step="1" value="40">
+    <button id="resetBtn">Reset</button>
+  </div>
   <script>
-// Lever Force Amplifier MicroSim
+(function(){
+  const canvasW = 760, canvasH = 570;
+  const leftX = 180, rightX = 580, beamLen = 400;
+  const apexY = 220, baseY = 265;
+  const pxPerM = 100;
+  const loadForce = 50;
+  const maxAngleDeg = 10;
+  const maxNet = 250;
 
-let fulcrumSlider, effortSlider, resetButton;
-let currentAngle = 0;
+  const cnv = document.getElementById('cnv');
+  cnv.width = canvasW; cnv.height = canvasH;
+  const ctx = cnv.getContext('2d');
 
-// Layout / physics constants
-const canvasW = 760, canvasH = 570;
-const leftX = 180, rightX = 580, beamLen = 400;
-const apexY = 220, baseY = 265;
-const pxPerM = 100;       // pixels per meter along beam
-const loadForce = 50;     // fixed load force in Newtons
-const maxAngleDeg = 10;
-const maxNet = 250;
-
-// Computed-each-frame globals
-let f, fulcrumX, effortArmPx, loadArmPx, effortArmM, loadArmM;
-let mechAdv, effortForce, requiredEffort, torqueEffort, torqueLoad, netTorque;
-
-function setup() {
-  let cnv = createCanvas(canvasW, canvasH);
-  cnv.parent('sketch-holder');
-  textFont('Arial');
-
-  fulcrumSlider = createSlider(0.15, 0.85, 0.5, 0.01);
-  fulcrumSlider.position(40, 500);
-  fulcrumSlider.style('width', '280px');
-
-  effortSlider = createSlider(0, 150, 40, 1);
-  effortSlider.position(400, 500);
-  effortSlider.style('width', '220px');
-
-  resetButton = createButton('Reset');
-  resetButton.position(650, 495);
-  resetButton.size(70, 32);
-  resetButton.mousePressed(() => {
-    fulcrumSlider.value(0.5);
-    effortSlider.value(40);
+  const holder = document.getElementById('sketch-holder');
+  const fulcrumSlider = document.getElementById('fulcrumSlider');
+  const effortSlider = document.getElementById('effortSlider');
+  const resetBtn = document.getElementById('resetBtn');
+  fulcrumSlider.style.left = '40px'; fulcrumSlider.style.top = '500px';
+  effortSlider.style.left = '400px'; effortSlider.style.top = '500px';
+  resetBtn.style.left = '650px'; resetBtn.style.top = '495px';
+  resetBtn.addEventListener('click', function(){
+    fulcrumSlider.value = '0.5';
+    effortSlider.value = '40';
   });
-}
 
-function computePhysics() {
-  f = fulcrumSlider.value();
-  fulcrumX = leftX + f * beamLen;
-  effortArmPx = fulcrumX - leftX;
-  loadArmPx = rightX - fulcrumX;
-  effortArmM = effortArmPx / pxPerM;
-  loadArmM = loadArmPx / pxPerM;
-  mechAdv = effortArmM / loadArmM;
-  effortForce = effortSlider.value();
-  requiredEffort = (loadForce * loadArmM) / effortArmM;
-  torqueEffort = effortForce * effortArmM;
-  torqueLoad = loadForce * loadArmM;
-  netTorque = torqueEffort - torqueLoad;
+  let currentAngle = 0;
+  let f, fulcrumX, effortArmPx, loadArmPx, effortArmM, loadArmM;
+  let mechAdv, effortForce, requiredEffort, torqueEffort, torqueLoad, netTorque;
 
-  let thetaTargetDeg = map(
-    constrain(netTorque, -maxNet, maxNet),
-    -maxNet, maxNet,
-    maxAngleDeg, -maxAngleDeg
-  );
-  currentAngle = lerp(currentAngle, radians(thetaTargetDeg), 0.08);
-}
+  function map_(v, s1, e1, s2, e2){ return s2 + (e2 - s2) * ((v - s1) / (e1 - s1)); }
+  function constrain(v, lo, hi){ return Math.max(lo, Math.min(hi, v)); }
+  function lerp(a, b, t){ return a + (b - a) * t; }
+  function radians(d){ return d * Math.PI / 180; }
+  function rgba(r,g,b,a){ return 'rgba(' + r + ',' + g + ',' + b + ',' + (a===undefined?1:a) + ')'; }
 
-function draw() {
-  computePhysics();
-  background(250);
+  function computePhysics(){
+    f = parseFloat(fulcrumSlider.value);
+    fulcrumX = leftX + f * beamLen;
+    effortArmPx = fulcrumX - leftX;
+    loadArmPx = rightX - fulcrumX;
+    effortArmM = effortArmPx / pxPerM;
+    loadArmM = loadArmPx / pxPerM;
+    mechAdv = effortArmM / loadArmM;
+    effortForce = parseFloat(effortSlider.value);
+    requiredEffort = (loadForce * loadArmM) / effortArmM;
+    torqueEffort = effortForce * effortArmM;
+    torqueLoad = loadForce * loadArmM;
+    netTorque = torqueEffort - torqueLoad;
 
-  drawTitle();
-  drawVisualization();
-  drawReadouts();
-  drawStatus();
-  drawControlLabels();
-}
-
-function drawTitle() {
-  noStroke();
-  fill(25);
-  textAlign(CENTER, CENTER);
-  textSize(26);
-  textStyle(BOLD);
-  text('Lever Force Amplifier', canvasW / 2, 26);
-  textStyle(NORMAL);
-  fill(100);
-  textSize(13);
-  text('Adjust the fulcrum position and effort force to see how a lever amplifies force.', canvasW / 2, 46);
-}
-
-function drawVisualization() {
-  // ---- Sub-band A: arm-length reference bar ----
-  const refY = 88;
-  strokeWeight(6);
-  stroke(60, 110, 200);
-  line(leftX, refY, fulcrumX, refY);
-  stroke(230, 120, 40);
-  line(fulcrumX, refY, rightX, refY);
-
-  stroke(0);
-  strokeWeight(2);
-  line(fulcrumX, refY - 6, fulcrumX, refY + 6);
-
-  noStroke();
-  textAlign(CENTER, CENTER);
-  textSize(13);
-  fill(40, 90, 170);
-  text('Effort Arm: ' + effortArmM.toFixed(2) + ' m', (leftX + fulcrumX) / 2, 74);
-  fill(190, 100, 30);
-  text('Load Arm: ' + loadArmM.toFixed(2) + ' m', (fulcrumX + rightX) / 2, 74);
-
-  // ---- Sub-band B: the mechanism ----
-  // ground hatching
-  stroke(140);
-  strokeWeight(1);
-  line(fulcrumX - 45, baseY, fulcrumX + 45, baseY);
-  for (let i = -40; i <= 40; i += 10) {
-    line(fulcrumX + i, baseY, fulcrumX + i - 6, baseY + 8);
+    const thetaTargetDeg = map_(
+      constrain(netTorque, -maxNet, maxNet),
+      -maxNet, maxNet,
+      maxAngleDeg, -maxAngleDeg
+    );
+    currentAngle = lerp(currentAngle, radians(thetaTargetDeg), 0.08);
   }
 
-  // pivot triangle
-  noStroke();
-  fill(120);
-  triangle(fulcrumX - 28, baseY, fulcrumX + 28, baseY, fulcrumX, apexY);
-
-  // rotated beam endpoints
-  const theta = currentAngle;
-  const leftDX = leftX - fulcrumX;
-  const rightDX = rightX - fulcrumX;
-  const leftPt = { x: fulcrumX + leftDX * cos(theta), y: apexY + leftDX * sin(theta) };
-  const rightPt = { x: fulcrumX + rightDX * cos(theta), y: apexY + rightDX * sin(theta) };
-  const pivotPt = { x: fulcrumX, y: apexY };
-
-  strokeWeight(10);
-  stroke(60, 110, 200);
-  line(leftPt.x, leftPt.y, pivotPt.x, pivotPt.y);
-  stroke(230, 120, 40);
-  line(pivotPt.x, pivotPt.y, rightPt.x, rightPt.y);
-
-  noStroke();
-  fill(90);
-  circle(pivotPt.x, pivotPt.y, 14);
-
-  // load box
-  push();
-  rectMode(CENTER);
-  stroke(150, 80, 20);
-  strokeWeight(2);
-  fill(230, 120, 40);
-  rect(rightPt.x, rightPt.y - 25, 32, 32, 4);
-  pop();
-  noStroke();
-  fill(255);
-  textAlign(CENTER, CENTER);
-  textSize(11);
-  text('50N', rightPt.x, rightPt.y - 25);
-
-  // effort force arrow
-  const arrowLen = map(effortForce, 0, 150, 12, 35);
-  const tailY = leftPt.y - arrowLen - 6;
-  stroke(60, 110, 200);
-  strokeWeight(4);
-  line(leftPt.x, tailY, leftPt.x, leftPt.y - 6);
-  noStroke();
-  fill(60, 110, 200);
-  triangle(leftPt.x - 6, leftPt.y - 6, leftPt.x + 6, leftPt.y - 6, leftPt.x, leftPt.y + 2);
-}
-
-function drawReadouts() {
-  noStroke();
-  fill(20);
-  textAlign(LEFT, CENTER);
-  textSize(15);
-  text(
-    'Effort Arm: ' + effortArmM.toFixed(2) + ' m    Load Arm: ' + loadArmM.toFixed(2) +
-    ' m    Mechanical Advantage: ' + mechAdv.toFixed(2) + '×',
-    40, 362
-  );
-  text(
-    'Load Weight: ' + loadForce + ' N (fixed)    Applied Effort Force: ' + effortForce +
-    ' N    Force Needed to Balance: ' + requiredEffort.toFixed(1) + ' N',
-    40, 390
-  );
-}
-
-function drawStatus() {
-  let msg, col;
-  const tol = 3;
-  if (abs(netTorque) < tol) {
-    msg = 'Balanced -- effort torque equals load torque.';
-    col = [70, 150, 70];
-  } else if (netTorque > 0) {
-    msg = 'Load is lifting! Effort torque exceeds load torque.';
-    col = [40, 110, 190];
-  } else {
-    msg = 'Load stays down -- increase effort force or move the fulcrum toward the load.';
-    col = [190, 90, 40];
+  function line(x1,y1,x2,y2){ ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke(); }
+  function triangleFill(x1,y1,x2,y2,x3,y3){
+    ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.lineTo(x3,y3); ctx.closePath(); ctx.fill();
+  }
+  function circleFill(x,y,d){ ctx.beginPath(); ctx.arc(x,y,d/2,0,Math.PI*2); ctx.fill(); }
+  function roundRectCentered(cx,cy,w,h,r){
+    const x = cx - w/2, y = cy - h/2;
+    ctx.beginPath();
+    ctx.moveTo(x+r,y);
+    ctx.arcTo(x+w,y,x+w,y+h,r);
+    ctx.arcTo(x+w,y+h,x,y+h,r);
+    ctx.arcTo(x,y+h,x,y,r);
+    ctx.arcTo(x,y,x+w,y,r);
+    ctx.closePath();
   }
 
-  noStroke();
-  fill(col[0], col[1], col[2], 30);
-  rect(40, 412, 680, 32, 8);
-  fill(col[0], col[1], col[2]);
-  textAlign(CENTER, CENTER);
-  textSize(16);
-  text(msg, canvasW / 2, 428);
-}
+  function drawTitle(){
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillStyle = rgba(25,25,25);
+    ctx.font = 'bold 26px Arial';
+    ctx.fillText('Lever Force Amplifier', canvasW/2, 26);
+    ctx.fillStyle = rgba(100,100,100);
+    ctx.font = '13px Arial';
+    ctx.fillText('Adjust the fulcrum position and effort force to see how a lever amplifies force.', canvasW/2, 46);
+  }
 
-function drawControlLabels() {
-  noStroke();
-  fill(20);
-  textAlign(LEFT, CENTER);
-  textSize(14);
-  text('Fulcrum Position: f = ' + f.toFixed(2), 40, 480);
-  text('Effort Force: ' + effortForce + ' N', 400, 480);
-}
-</script>
+  function drawVisualization(){
+    const refY = 88;
+    ctx.lineWidth = 6;
+    ctx.strokeStyle = rgba(60,110,200);
+    line(leftX, refY, fulcrumX, refY);
+    ctx.strokeStyle = rgba(230,120,40);
+    line(fulcrumX, refY, rightX, refY);
+
+    ctx.strokeStyle = rgba(0,0,0);
+    ctx.lineWidth = 2;
+    line(fulcrumX, refY-6, fulcrumX, refY+6);
+
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.font = '13px Arial';
+    ctx.fillStyle = rgba(40,90,170);
+    ctx.fillText('Effort Arm: ' + effortArmM.toFixed(2) + ' m', (leftX+fulcrumX)/2, 74);
+    ctx.fillStyle = rgba(190,100,30);
+    ctx.fillText('Load Arm: ' + loadArmM.toFixed(2) + ' m', (fulcrumX+rightX)/2, 74);
+
+    ctx.strokeStyle = rgba(140,140,140);
+    ctx.lineWidth = 1;
+    line(fulcrumX-45, baseY, fulcrumX+45, baseY);
+    for (let i=-40; i<=40; i+=10){
+      line(fulcrumX+i, baseY, fulcrumX+i-6, baseY+8);
+    }
+
+    ctx.fillStyle = rgba(120,120,120);
+    triangleFill(fulcrumX-28, baseY, fulcrumX+28, baseY, fulcrumX, apexY);
+
+    const theta = currentAngle;
+    const leftDX = leftX - fulcrumX;
+    const rightDX = rightX - fulcrumX;
+    const leftPt = { x: fulcrumX + leftDX*Math.cos(theta), y: apexY + leftDX*Math.sin(theta) };
+    const rightPt = { x: fulcrumX + rightDX*Math.cos(theta), y: apexY + rightDX*Math.sin(theta) };
+    const pivotPt = { x: fulcrumX, y: apexY };
+
+    ctx.lineWidth = 10;
+    ctx.strokeStyle = rgba(60,110,200);
+    line(leftPt.x, leftPt.y, pivotPt.x, pivotPt.y);
+    ctx.strokeStyle = rgba(230,120,40);
+    line(pivotPt.x, pivotPt.y, rightPt.x, rightPt.y);
+
+    ctx.fillStyle = rgba(90,90,90);
+    circleFill(pivotPt.x, pivotPt.y, 14);
+
+    ctx.strokeStyle = rgba(150,80,20);
+    ctx.lineWidth = 2;
+    ctx.fillStyle = rgba(230,120,40);
+    roundRectCentered(rightPt.x, rightPt.y-25, 32, 32, 4);
+    ctx.fill(); ctx.stroke();
+
+    ctx.fillStyle = rgba(255,255,255);
+    ctx.font = '11px Arial';
+    ctx.fillText('50N', rightPt.x, rightPt.y-25);
+
+    const arrowLen = map_(effortForce, 0, 150, 12, 35);
+    const tailY = leftPt.y - arrowLen - 6;
+    ctx.strokeStyle = rgba(60,110,200);
+    ctx.lineWidth = 4;
+    line(leftPt.x, tailY, leftPt.x, leftPt.y-6);
+    ctx.fillStyle = rgba(60,110,200);
+    triangleFill(leftPt.x-6, leftPt.y-6, leftPt.x+6, leftPt.y-6, leftPt.x, leftPt.y+2);
+  }
+
+  function drawReadouts(){
+    ctx.fillStyle = rgba(20,20,20);
+    ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    ctx.font = '15px Arial';
+    ctx.fillText(
+      'Effort Arm: ' + effortArmM.toFixed(2) + ' m    Load Arm: ' + loadArmM.toFixed(2) +
+      ' m    Mechanical Advantage: ' + mechAdv.toFixed(2) + '×',
+      40, 362
+    );
+    ctx.fillText(
+      'Load Weight: ' + loadForce + ' N (fixed)    Applied Effort Force: ' + effortForce +
+      ' N    Force Needed to Balance: ' + requiredEffort.toFixed(1) + ' N',
+      40, 390
+    );
+  }
+
+  function drawStatus(){
+    let msg, col;
+    const tol = 3;
+    if (Math.abs(netTorque) < tol){
+      msg = 'Balanced -- effort torque equals load torque.';
+      col = [70,150,70];
+    } else if (netTorque > 0){
+      msg = 'Load is lifting! Effort torque exceeds load torque.';
+      col = [40,110,190];
+    } else {
+      msg = 'Load stays down -- increase effort force or move the fulcrum toward the load.';
+      col = [190,90,40];
+    }
+
+    ctx.fillStyle = rgba(col[0],col[1],col[2],30/255);
+    roundRectCentered(40 + 680/2, 412 + 32/2, 680, 32, 8);
+    ctx.fill();
+    ctx.fillStyle = rgba(col[0],col[1],col[2]);
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.font = '16px Arial';
+    ctx.fillText(msg, canvasW/2, 428);
+  }
+
+  function drawControlLabels(){
+    ctx.fillStyle = rgba(20,20,20);
+    ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    ctx.font = '14px Arial';
+    ctx.fillText('Fulcrum Position: f = ' + f.toFixed(2), 40, 480);
+    ctx.fillText('Effort Force: ' + effortForce + ' N', 400, 480);
+  }
+
+  function draw(){
+    computePhysics();
+    ctx.fillStyle = rgba(250,250,250);
+    ctx.fillRect(0, 0, canvasW, canvasH);
+    drawTitle();
+    drawVisualization();
+    drawReadouts();
+    drawStatus();
+    drawControlLabels();
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+})();
+  </script>
 </body>
 </html>

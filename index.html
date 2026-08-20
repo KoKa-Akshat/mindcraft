@@ -83,6 +83,7 @@
   .stage-desk::after{bottom:0; background:linear-gradient(to top, #070f0c, transparent);}
   /* desk and jesse are both cream with no color change between them, so no fade belongs at that seam */
   #desk::after, #jesse::before{content:none;}
+  #jesse::after, #brains::before{content:none;}
 
   .btn{
     display:inline-flex; align-items:center; justify-content:center; gap:8px;
@@ -299,24 +300,17 @@
   @media (max-width:760px){.gate-cols{grid-template-columns:1fr;}}
 
   /* ---------- every brain (cream) ---------- */
-  .brains-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(12px,1.6vw,18px); margin-top:clamp(36px,5vh,52px);}
-  .brain-door{
-    border:1px solid var(--edge); border-radius:20px; background:var(--field-2);
-    padding:clamp(18px,2.2vw,26px); display:flex; flex-direction:column; gap:10px;
-    transition:transform .25s var(--ease), border-color .25s var(--ease);
+  .brains-formats{
+    margin-top:clamp(22px,3.5vh,32px); font-family:var(--disp); font-weight:600;
+    font-size:clamp(16px,1.9vw,21px); line-height:1.5; color:var(--ink); max-width:70ch;
   }
-  .brain-door:hover{transform:translateY(-4px); border-color:rgba(20,58,46,.3);}
-  .brain-door svg{width:32px; height:32px;}
-  .brain-door h3{font-size:clamp(16px,1.8vw,20px);}
-  .brain-door p{font-size:13.5px; line-height:1.5; color:var(--chalk-dim);}
+  .brains-formats strong{color:var(--leaf); font-weight:700;}
   .brains-engine{
     margin-top:clamp(26px,4vh,40px); border-left:3px solid var(--lime); border-radius:0 18px 18px 0;
     background:rgba(196,245,71,.16); padding:clamp(16px,2.4vh,24px) clamp(18px,2.4vw,28px);
     font-size:clamp(15px,1.6vw,18px); line-height:1.6; color:var(--ink); max-width:74ch;
   }
   .brains-note{margin-top:14px; font-size:13.5px; line-height:1.55; color:var(--chalk-faint); max-width:70ch;}
-  @media (max-width:900px){.brains-grid{grid-template-columns:1fr 1fr;}}
-  @media (max-width:520px){.brains-grid{grid-template-columns:1fr;}}
 
   /* ---------- real sim showcase (cream) ---------- */
   .sim-showcase{margin-top:clamp(40px,6vh,64px); border:1px solid var(--edge); border-radius:24px; background:var(--field-2); padding:clamp(20px,3vw,32px);}
@@ -356,11 +350,12 @@
   .archive-actions{display:flex; flex-wrap:wrap; gap:10px; margin-top:26px;}
   .shelf{position:relative; height:360px;}
   .shelf-book{
-    position:absolute; width:172px; aspect-ratio:3/4.2; border-radius:8px; overflow:hidden;
+    position:absolute; width:172px; aspect-ratio:3/4.2; border-radius:8px; overflow:hidden; cursor:pointer;
     border:1px solid var(--edge); box-shadow:0 18px 44px rgba(0,0,0,.5); background:var(--cream);
     display:flex; flex-direction:column; justify-content:space-between; padding:16px 14px;
-    transition:transform .3s var(--ease);
+    transition:transform .3s var(--ease), box-shadow .3s var(--ease);
   }
+  .shelf-book:hover{box-shadow:0 24px 54px rgba(0,0,0,.6);}
   .shelf-book:hover{transform:translateY(-6px) scale(1.02) !important; z-index:9 !important;}
   .shelf-book img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0;}
   .shelf-book b{position:relative; z-index:1; font-family:var(--disp); font-weight:700; font-size:16px; letter-spacing:-.02em; line-height:1.15; color:var(--ink);
@@ -619,7 +614,7 @@
 <section class="stage-desk" id="desk">
   <div class="wrap">
     <div class="kicker reveal">One desk, three surfaces</div>
-    <h2 class="h2 reveal">A real desk. It just answers back.</h2>
+    <h2 class="h2 reveal">Not a blank page. It answers back.</h2>
     <div class="desk-grid">
       <div class="desk-card reveal">
         <div class="mock" aria-hidden="true">
@@ -685,6 +680,29 @@
   </div>
 </section>
 
+<!-- ================= EVERY BRAIN ================= -->
+<section class="stage-desk" id="brains">
+  <div class="wrap">
+    <div class="kicker reveal">For the kid the page keeps losing</div>
+    <h2 class="h2 reveal">Not every brain learns from a paragraph.</h2>
+    <p class="lede reveal">The paragraph is one door. Every idea here has more than one.</p>
+    <p class="brains-formats reveal"><strong>A simulation</strong> you drag, <strong>a story</strong> with stakes, <strong>a voice</strong> with no page, <strong>a picture</strong> when words get in the way.</p>
+    <p class="brains-engine reveal">This isn't a settings toggle. The engine tracks which representation lands for you and leads with it next time.</p>
+    <p class="brains-note reveal">We don't diagnose and we don't treat. We just stopped insisting on the one format that already lost you.</p>
+
+    <div class="sim-showcase reveal">
+      <div class="sim-showcase-head">
+        <span class="sim-showcase-tag">Real, not a mockup</span>
+        <h3>Try it. Drag the fulcrum.</h3>
+      </div>
+      <div class="sim-showcase-frame">
+        <iframe src="sims/lever-force-amplifier.html" title="Lever Force Amplifier, an AI-generated MicroSim" loading="lazy"></iframe>
+      </div>
+      <p class="sim-showcase-foot">AI-generated simulation &middot; passed MindCraft's quality gate before being shown. Same disclosure every student sees.</p>
+    </div>
+  </div>
+</section>
+
 <!-- ================= THE GATE ================= -->
 <section class="gate-sec" id="honesty">
   <div class="wrap">
@@ -708,46 +726,6 @@
         <b>Pass</b>
         <p>It rendered, held up to the rubric, and actually teaches. Everything AI-made is labeled AI-made.</p>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= EVERY BRAIN ================= -->
-<section class="stage-desk" id="brains">
-  <div class="wrap">
-    <div class="kicker reveal">For the kid the page keeps losing</div>
-    <h2 class="h2 reveal">Not every brain learns from a paragraph.</h2>
-    <p class="lede reveal">The paragraph is one door. Every idea here has more than one.</p>
-    <div class="brains-grid">
-      <div class="brain-door reveal">
-        <svg viewBox="0 0 32 32" fill="none" stroke="#247a4d" stroke-width="2" stroke-linecap="round"><circle cx="16" cy="16" r="11"/><path d="M16 9v7l5 3"/></svg>
-        <h3>A simulation</h3><p>Drag the variable and watch the idea move. Sometimes the motion is the whole click.</p>
-      </div>
-      <div class="brain-door reveal">
-        <svg viewBox="0 0 32 32" fill="none" stroke="#247a4d" stroke-width="2" stroke-linecap="round"><path d="M7 5h13a4 4 0 014 4v18H11a4 4 0 01-4-4V5z"/><path d="M11 11h9M11 15h9M11 19h6"/></svg>
-        <h3>A story</h3><p>A person, a place, a problem with stakes. The math surfaces on its own.</p>
-      </div>
-      <div class="brain-door reveal">
-        <svg viewBox="0 0 32 32" fill="none" stroke="#247a4d" stroke-width="2" stroke-linecap="round"><path d="M9 13v6M14 9v14M19 12v8M24 14v4"/></svg>
-        <h3>A voice</h3><p>Say it out loud and hear it back. No page at all, if the page is the problem.</p>
-      </div>
-      <div class="brain-door reveal">
-        <svg viewBox="0 0 32 32" fill="none" stroke="#247a4d" stroke-width="2" stroke-linecap="round"><path d="M6 25l8-12 5 6 7-11"/><path d="M6 6v20h20"/></svg>
-        <h3>A picture</h3><p>Diagram, graph, or number line, for when words get in the way.</p>
-      </div>
-    </div>
-    <p class="brains-engine reveal">This isn't a settings toggle. The engine tracks which representation lands for you and leads with it next time.</p>
-    <p class="brains-note reveal">We don't diagnose and we don't treat. We just stopped insisting on the one format that already lost you.</p>
-
-    <div class="sim-showcase reveal">
-      <div class="sim-showcase-head">
-        <span class="sim-showcase-tag">Real, not a mockup</span>
-        <h3>Try it. Drag the fulcrum.</h3>
-      </div>
-      <div class="sim-showcase-frame">
-        <iframe src="sims/lever-force-amplifier.html" title="Lever Force Amplifier, an AI-generated MicroSim" loading="lazy"></iframe>
-      </div>
-      <p class="sim-showcase-foot">AI-generated simulation &middot; passed MindCraft's quality gate before being shown. Same disclosure every student sees.</p>
     </div>
   </div>
 </section>
@@ -799,11 +777,11 @@
           <a class="btn primary" href="https://joinmindcraft.com/dans-archive.html">Browse the archive</a>
         </div>
       </div>
-      <div class="shelf reveal" aria-hidden="true">
-        <div class="shelf-book sb1"><img src="img/marketing/book-cover-calculus.webp" alt="" loading="lazy"><b>Calculus</b><span>interactive &middot; open</span></div>
-        <div class="shelf-book sb2"><img src="img/marketing/book-cover-geometry.webp" alt="" loading="lazy"><b>AI-Assisted Geometry</b><span>173 sims</span></div>
-        <div class="shelf-book sb3"><img src="img/marketing/book-cover-micropython.webp" alt="" loading="lazy"><b>Learning MicroPython</b><span>open &middot; no login</span></div>
-        <div class="shelf-book sb4"><img src="img/marketing/book-cover-health.webp" alt="" loading="lazy"><b>Health Education</b><span>389 microsims</span></div>
+      <div class="shelf reveal">
+        <a class="shelf-book sb1" href="https://joinmindcraft.com/dans-archive.html"><img src="img/marketing/book-cover-calculus.webp" alt="" loading="lazy"><b>Calculus</b><span>interactive &middot; open</span></a>
+        <a class="shelf-book sb2" href="https://joinmindcraft.com/dans-archive.html"><img src="img/marketing/book-cover-geometry.webp" alt="" loading="lazy"><b>AI-Assisted Geometry</b><span>173 sims</span></a>
+        <a class="shelf-book sb3" href="https://joinmindcraft.com/dans-archive.html"><img src="img/marketing/book-cover-micropython.webp" alt="" loading="lazy"><b>Learning MicroPython</b><span>open &middot; no login</span></a>
+        <a class="shelf-book sb4" href="https://joinmindcraft.com/dans-archive.html"><img src="img/marketing/book-cover-health.webp" alt="" loading="lazy"><b>Health Education</b><span>389 microsims</span></a>
       </div>
     </div>
   </div>
@@ -911,7 +889,7 @@
       </details>
       <details>
         <summary>My kid can't sit through a page of text. Will this work?</summary>
-        <p>That's who we build for first. The same idea comes as a simulation, a story, a voice, or a picture, and the engine learns which door works for your kid.</p>
+        <p>That's who we build for first. Same idea, four doors: simulation, story, voice, picture. The engine learns which one works for your kid.</p>
       </details>
       <details>
         <summary>What can I drop on the desk, and where does it go?</summary>
