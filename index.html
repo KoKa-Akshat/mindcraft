@@ -288,6 +288,16 @@
   @media (max-width:900px){.brains-grid{grid-template-columns:1fr 1fr;}}
   @media (max-width:520px){.brains-grid{grid-template-columns:1fr;}}
 
+  /* ---------- real sim showcase (cream) ---------- */
+  .sim-showcase{margin-top:clamp(40px,6vh,64px); border:1px solid var(--edge); border-radius:24px; background:var(--field-2); padding:clamp(20px,3vw,32px);}
+  .sim-showcase-head{max-width:70ch;}
+  .sim-showcase-tag{display:inline-block; font-size:11.5px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--leaf); background:rgba(36,122,77,.1); border-radius:999px; padding:5px 12px; margin-bottom:10px;}
+  .sim-showcase-head h3{font-size:clamp(18px,2vw,22px); line-height:1.35; margin:0 0 8px;}
+  .sim-showcase-head p{font-size:14px; line-height:1.6; color:var(--chalk-dim); margin:0;}
+  .sim-showcase-frame{margin-top:20px; border:1px solid var(--edge); border-radius:16px; overflow:hidden; background:#fafafa;}
+  .sim-showcase-frame iframe{display:block; width:100%; height:min(70vh,620px); border:0;}
+  .sim-showcase-foot{margin-top:14px; font-size:12.5px; color:var(--chalk-faint);}
+
   /* ---------- mentors (dark) ---------- */
   .mentors{background:var(--field);}
   .mentor-quote{margin-top:22px; max-width:56ch;}
@@ -684,6 +694,18 @@
     </div>
     <p class="brains-engine reveal">This isn't a settings toggle. The engine tracks which representation lands for you and leads with it next time.</p>
     <p class="brains-note reveal">We don't diagnose and we don't treat. We just stopped insisting on the one format that already lost you.</p>
+
+    <div class="sim-showcase reveal">
+      <div class="sim-showcase-head">
+        <span class="sim-showcase-tag">Real, not a mockup</span>
+        <h3>A student asked for this. The AI built it, our gate checked it, then a student saw it.</h3>
+        <p>Every simulation your kid meets goes through the same gauntlet described above before it's ever shown. This one is a real pass, not a picked-favorite from a big batch, drag the fulcrum and the effort slider below.</p>
+      </div>
+      <div class="sim-showcase-frame">
+        <iframe src="sims/lever-force-amplifier.html" title="Lever Force Amplifier, an AI-generated MicroSim" loading="lazy"></iframe>
+      </div>
+      <p class="sim-showcase-foot">AI-generated simulation &middot; passed MindCraft's quality gate before being shown. Same disclosure every student sees.</p>
+    </div>
   </div>
 </section>
 
