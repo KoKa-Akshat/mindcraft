@@ -417,8 +417,7 @@
     border:1px solid rgba(196,245,71,.22);
     background:radial-gradient(ellipse 58% 62% at 50% 40%, rgba(196,245,71,.09), transparent 72%), #05070a;
   }
-  .cta-visual-img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.85;}
-  .cta-visual canvas{position:absolute; inset:0; width:100%; height:100%;}
+  .cta-visual-frame{position:absolute; inset:0; width:100%; height:100%; border:0;}
   .cta-visual-cap{
     position:absolute; left:22px; right:22px; bottom:22px; z-index:2; max-width:30ch;
     font-family:var(--serif); font-style:italic; font-size:clamp(17px,2vw,22px); line-height:1.35; color:#f4f1ea;
@@ -883,10 +882,9 @@
 <section class="cta" id="start">
   <div class="wrap">
     <div class="cta-split reveal">
-      <aside class="cta-visual" aria-hidden="true">
-        <img class="cta-visual-img" src="img/marketing/cta-map-hero.webp" alt="" loading="lazy">
-        <canvas id="ctaMap"></canvas>
-        <p class="cta-visual-cap"><b>The map is waiting</b>Fog lifts where you click.</p>
+      <aside class="cta-visual">
+        <iframe class="cta-visual-frame" src="sims/graph/index.html?embed=1" title="MindCraft's live concept map. Drag to spin, click a node." loading="lazy"></iframe>
+        <p class="cta-visual-cap" aria-hidden="true"><b>The map is waiting</b>Fog lifts where you click.</p>
       </aside>
       <div class="ctaband">
         <h2>Never work <em>alone</em> again.</h2>
@@ -1030,7 +1028,6 @@
     window.addEventListener('resize', function(){ if(raf) cancelAnimationFrame(raf); seed(); draw(); });
   }
   constellation('heroMap', 32000, .15);
-  constellation('ctaMap', 22000, .22);
 
   // ----- Jesse scripted demo (clearly labeled a taste, not the live product) -----
   (function(){

@@ -19,13 +19,16 @@
 </style>
 </head>
 <body>
-  <div class="bar">
+  <div class="bar" id="bar">
     <b>The Desk</b>
     <span>Drag to spin. Click a node.</span>
     <a href="/#story">Back to the story</a>
   </div>
   <div class="wait" id="wait">The map is waking up</div>
   <div id="graph"></div>
+  <script>
+    if (new URLSearchParams(location.search).has('embed')) document.getElementById('bar').remove();
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/3d-force-graph@1.73.3/dist/3d-force-graph.min.js"></script>
   <script>
     const COLORS = {
