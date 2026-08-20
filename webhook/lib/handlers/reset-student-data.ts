@@ -68,8 +68,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method === 'OPTIONS') return res.status(200).end()
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' })
 
+  // Uses CONTENT_ENGINE_SECRET rather than deploy-rules.ts's
+  // last-8-chars-of-ANTHROPIC_API_KEY convention - that pattern needs
+  // extracting/recomputing a fragment of a live production credential to
+  // call it, which is exactly the kind of raw-credential handling worth
+  // avoiding when a simpler option exists. CONTENT_ENGINE_SECRET is
+  // already a dedicated shared secret (generated fresh this session,
+  // known in plaintext, already set in Vercel for a different purpose) -
+  // reusing it here needs no credential extraction at all.
   const body = (req.body || {}) as { secret?: string; email?: string }
-  const expected = (process.env.ANTHROPIC_API_KEY || '').trim().slice(-8)
+  const expected = (process.env.CONTENT_ENGINE_SECRET || '').trim()
   if (!expected || body.secret !== expected) {
     return res.status(401).json({ error: 'invalid secret' })
   }
