@@ -471,7 +471,7 @@ struct DeskGridDashboardView: View {
                 // the board left that margin looking like dead space
                 // (explicit ask: "expand the polka dots to go above and
                 // below too").
-                DottedDeskGrid()
+                BlueprintGrid()
                     .frame(width: geo.size.width, height: geo.size.height)
                 // Top-aligned, not centered (2026-08-18, explicit ask:
                 // "push Homework Help and Intel all the way up... right at
@@ -3206,6 +3206,49 @@ private struct DottedDeskGrid: View {
                     context.fill(dot, with: .color(Color(gridHex: "d7d0c2")))
                 }
             }
+        }
+        .allowsHitTesting(false)
+    }
+}
+
+/// The blueprint/engineering grid (2026-08-20, explicit ask, matches the
+/// same technique just built for joinmindcraft.com: two hairline rulings at
+/// a fixed pitch, faded via a radial mask so it reads strongest near the
+/// top of the board and disappears toward the edges instead of tiling flat
+/// and even like `DottedDeskGrid` did). Forest-green hairlines at low
+/// opacity - the same `143a2e` ink used everywhere else in this board, not
+/// a new color. Reusable: drop `BlueprintGrid()` behind any surface that
+/// wants this look; it doesn't assume anything about what's on top of it.
+private struct BlueprintGrid: View {
+    var lineColor: Color = Color(gridHex: "143a2e").opacity(0.09)
+    var pitch: CGFloat = 44
+
+    var body: some View {
+        GeometryReader { geo in
+            Canvas { context, size in
+                var path = Path()
+                var x: CGFloat = 0
+                while x <= size.width {
+                    path.move(to: CGPoint(x: x, y: 0))
+                    path.addLine(to: CGPoint(x: x, y: size.height))
+                    x += pitch
+                }
+                var y: CGFloat = 0
+                while y <= size.height {
+                    path.move(to: CGPoint(x: 0, y: y))
+                    path.addLine(to: CGPoint(x: size.width, y: y))
+                    y += pitch
+                }
+                context.stroke(path, with: .color(lineColor), lineWidth: 1)
+            }
+            .mask(
+                RadialGradient(
+                    colors: [.black, .black.opacity(0)],
+                    center: UnitPoint(x: 0.5, y: 0.16),
+                    startRadius: 0,
+                    endRadius: max(geo.size.width, geo.size.height) * 0.62
+                )
+            )
         }
         .allowsHitTesting(false)
     }
