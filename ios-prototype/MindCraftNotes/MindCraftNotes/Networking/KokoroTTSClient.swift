@@ -22,10 +22,21 @@ enum KokoroTTSClient {
     static func synthesize(text: String, voice: KokoroVoice = .heart) async -> Data? {
         var request = URLRequest(url: endpoint)
         request.httpMethod = "POST"
-        // A cold container may need ~30s to download the model before it
-        // can generate anything - see the handler's own doc comment. This
-        // is generous on top of that for real network variance.
-        request.timeoutInterval = 55
+        // Was 55s (generous headroom for a ~96MB cold-start model
+        // download, see the handler's own doc comment) - but that meant a
+        // cold container made EVERY reply in a live conversation sit
+        // silent for up to 55s before falling back to the native voice
+        // already built as the fallback path below. Real, live complaint
+        // (2026-08-19): "it takes forever to load and then say what it
+        // wants to say." A warm container generates in low single-digit
+        // seconds; failing fast into the native fallback beats waiting
+        // through a cold download mid-conversation - speed over Kokoro's
+        // nicer voice when the two trade off. A keep-warm cron ping was
+        // considered but not added - Vercel's Hobby plan only supports
+        // daily-granularity crons, nowhere near frequent enough to keep a
+        // function warm, so this timeout fix is the real, working
+        // solution, not a stopgap for a companion fix that doesn't exist.
+        request.timeoutInterval = 6
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = try? JSONSerialization.data(withJSONObject: [
             "text": text,

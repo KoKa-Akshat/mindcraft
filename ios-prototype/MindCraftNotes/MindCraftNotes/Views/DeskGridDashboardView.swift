@@ -1759,6 +1759,35 @@ struct DeskGridDashboardView: View {
                     .font(.system(size: 12, weight: .bold, design: .rounded))
                     .foregroundColor(ink)
             }
+            // Generated books (moved here 2026-08-19, explicit ask: "it
+            // should show calculus in the homework help neatly somewhere
+            // please not in knowledge graph" - was under the Knowledge
+            // Graph tile before, see that tile's own doc comment). A real
+            // Button per book, not a tap gesture, so it correctly
+            // intercepts its own tap instead of bubbling up to the tile's
+            // outer handleTile(.homeworkHelp).
+            if !generatedBooks.isEmpty {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 8) {
+                        ForEach(generatedBooks) { book in
+                            Button {
+                                closeBinderContentViewer()
+                                viewingBook = book
+                            } label: {
+                                Text(book.lesson.topic.capitalized)
+                                    .font(.system(size: 11, weight: .bold, design: .rounded))
+                                    .lineLimit(1)
+                                    .foregroundColor(ink)
+                                    .padding(.horizontal, 10)
+                                    .padding(.vertical, 6)
+                                    .background(RoundedRectangle(cornerRadius: 8, style: .continuous).fill(Color(gridHex: "b19cd9").opacity(0.35)))
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityIdentifier("deskGridGeneratedBook_\(book.id)")
+                        }
+                    }
+                }
+            }
             // "I want to learn about X" lands here once it's done (see
             // handleNewLesson), but the archive-check + generation round
             // trip it takes to get there is real network time with no
@@ -1919,35 +1948,12 @@ struct DeskGridDashboardView: View {
     @ViewBuilder
     private func knowledgeGraphTileBody() -> some View {
         VStack(spacing: 10) {
-            // Generated books (2026-08-19, explicit ask: "the generated
-            // book then appears under Knowledge Graph, with its book name
-            // and a small rectangular button-like strip") - a real Button
-            // per book, not a tap gesture, so it correctly intercepts its
-            // own tap instead of bubbling up to the tile's outer
-            // handleTile(.moodle) (same nesting microsim buttons elsewhere
-            // in this file already rely on).
-            if !generatedBooks.isEmpty {
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 8) {
-                        ForEach(generatedBooks) { book in
-                            Button {
-                                closeBinderContentViewer()
-                                viewingBook = book
-                            } label: {
-                                Text(book.lesson.topic.capitalized)
-                                    .font(.system(size: 11, weight: .bold, design: .rounded))
-                                    .lineLimit(1)
-                                    .foregroundColor(tileInk)
-                                    .padding(.horizontal, 10)
-                                    .padding(.vertical, 6)
-                                    .background(RoundedRectangle(cornerRadius: 8, style: .continuous).fill(Color(gridHex: "b19cd9").opacity(0.35)))
-                            }
-                            .buttonStyle(.plain)
-                            .accessibilityIdentifier("deskGridGeneratedBook_\(book.id)")
-                        }
-                    }
-                }
-            }
+            // Generated-book strip moved to Homework Help (2026-08-19,
+            // explicit ask: "it should show calculus in the homework help
+            // neatly somewhere please not in knowledge graph") - was here
+            // per an earlier same-night ask ("the generated book then
+            // appears under Knowledge Graph"), now reversed. See
+            // homeworkHelpTileBody for the real button strip.
             if knowledgeGraphClient.nodes.isEmpty {
                 Spacer(minLength: 0)
                 if knowledgeGraphClient.isLoading {

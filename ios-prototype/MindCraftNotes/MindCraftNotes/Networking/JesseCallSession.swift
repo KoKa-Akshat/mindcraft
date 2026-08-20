@@ -1134,6 +1134,14 @@ extension JesseCallSession: AVSpeechSynthesizerDelegate {
     nonisolated func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
         Task { @MainActor in
             self.isSpeaking = false
+            // Auto-listen the moment Jesse finishes talking (2026-08-19,
+            // explicit ask: "it should... automatically listen to the
+            // speaker instead of having them press the voice button every
+            // time"). startListening() already no-ops if the call ended or
+            // something else started listening first (guard isActive,
+            // !isPaused, !isListening, !isThinking), so this is safe to
+            // call unconditionally on a normal finish.
+            self.startListening()
         }
     }
 
@@ -1148,6 +1156,7 @@ extension JesseCallSession: AVAudioPlayerDelegate {
     nonisolated func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         Task { @MainActor in
             self.isSpeaking = false
+            self.startListening()
         }
     }
 
