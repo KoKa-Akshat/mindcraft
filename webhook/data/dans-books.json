@@ -1,0 +1,450 @@
+{
+  "source": "Derived from agent_work/product/desk_os/workflows/archive/chunks.json (build_chunks.py, full-site mirror of dmccreary.github.io) - book-list-only projection, real slugs/titles.",
+  "bookCount": 111,
+  "books": [
+    {
+      "bookSlug": "quantum-computing",
+      "bookTitle": "A Skeptic's Guide to Quantum Computing"
+    },
+    {
+      "bookSlug": "geometry-course",
+      "bookTitle": "AI Assisted Geometry"
+    },
+    {
+      "bookSlug": "data-science-course",
+      "bookTitle": "AI Based Data Science with Python"
+    },
+    {
+      "bookSlug": "circuits",
+      "bookTitle": "AI Circuits Course"
+    },
+    {
+      "bookSlug": "ai-persona-testing",
+      "bookTitle": "AI Persona Testing"
+    },
+    {
+      "bookSlug": "ai-racing-league",
+      "bookTitle": "AI Racing League"
+    },
+    {
+      "bookSlug": "ai-strategy-for-education",
+      "bookTitle": "AI Strategy for Education"
+    },
+    {
+      "bookSlug": "asl-book",
+      "bookTitle": "ASL Book"
+    },
+    {
+      "bookSlug": "algebra-1",
+      "bookTitle": "Algebra I"
+    },
+    {
+      "bookSlug": "ancient-history",
+      "bookTitle": "Ancient History"
+    },
+    {
+      "bookSlug": "atam",
+      "bookTitle": "Architecture Tradeoff Analysis Method (ATAM)"
+    },
+    {
+      "bookSlug": "automating-instructional-design",
+      "bookTitle": "Automating Instructional Design"
+    },
+    {
+      "bookSlug": "beginning-electronics",
+      "bookTitle": "Beginning Electronics with AI"
+    },
+    {
+      "bookSlug": "bioinformatics",
+      "bookTitle": "Bioinformatics"
+    },
+    {
+      "bookSlug": "biology",
+      "bookTitle": "Biology: An Interactive Course"
+    },
+    {
+      "bookSlug": "blockchain",
+      "bookTitle": "Blockchain: A Skeptic's Guide to Trust Technologies"
+    },
+    {
+      "bookSlug": "agents-course",
+      "bookTitle": "Building AI Agents with Python"
+    },
+    {
+      "bookSlug": "calculus",
+      "bookTitle": "Calculus"
+    },
+    {
+      "bookSlug": "chemistry",
+      "bookTitle": "Chemistry"
+    },
+    {
+      "bookSlug": "clan-macquarrie",
+      "bookTitle": "Clan MacQuarrie"
+    },
+    {
+      "bookSlug": "claude-skills",
+      "bookTitle": "Claude Skills for Intelligent Textbooks"
+    },
+    {
+      "bookSlug": "clocks-and-watches",
+      "bookTitle": "Clocks and Watches with AI"
+    },
+    {
+      "bookSlug": "computer-science",
+      "bookTitle": "Computer Science with Python"
+    },
+    {
+      "bookSlug": "context-graph",
+      "bookTitle": "Context Graph: How Organizations Use LLMs Cost Effectively"
+    },
+    {
+      "bookSlug": "control-systems",
+      "bookTitle": "Control Systems"
+    },
+    {
+      "bookSlug": "conversational-ai",
+      "bookTitle": "Conversational AI"
+    },
+    {
+      "bookSlug": "cybersecurity",
+      "bookTitle": "Cybersecurity: Foundations, Practice, and Professional Responsibility"
+    },
+    {
+      "bookSlug": "dakota-textbook",
+      "bookTitle": "Dakhotiyapi \u2014 Beginning Dakota Language"
+    },
+    {
+      "bookSlug": "deep-learning-course",
+      "bookTitle": "Deep Learning with AI"
+    },
+    {
+      "bookSlug": "digital-citizenship",
+      "bookTitle": "Digital Citizenship: Building Safe, Kind and Balanced Lives Online"
+    },
+    {
+      "bookSlug": "umn-senior-design",
+      "bookTitle": "Digital Design With Programmable Logic"
+    },
+    {
+      "bookSlug": "digital-electronics",
+      "bookTitle": "Digital Electronics with AI"
+    },
+    {
+      "bookSlug": "Digital-Transformation-with-AI-Spring-2026",
+      "bookTitle": "Digital Transformation 2.0 with Generative AI"
+    },
+    {
+      "bookSlug": "ecology",
+      "bookTitle": "Ecology: Systems Thinking for a Changing Planet"
+    },
+    {
+      "bookSlug": "economics-course",
+      "bookTitle": "Economics Course"
+    },
+    {
+      "bookSlug": "english-language-arts",
+      "bookTitle": "English Language Arts"
+    },
+    {
+      "bookSlug": "ethics-course",
+      "bookTitle": "Ethics in Modern Society"
+    },
+    {
+      "bookSlug": "fluid-power-systems",
+      "bookTitle": "Fluid Power Systems"
+    },
+    {
+      "bookSlug": "food-science",
+      "bookTitle": "Food Science for 9th Grade"
+    },
+    {
+      "bookSlug": "forensic-science",
+      "bookTitle": "Forensic Science"
+    },
+    {
+      "bookSlug": "GED-Science-prep",
+      "bookTitle": "GED Science Prep"
+    },
+    {
+      "bookSlug": "genai-arch-patterns",
+      "bookTitle": "Generative AI Architecture Patterns"
+    },
+    {
+      "bookSlug": "cmm-for-genai",
+      "bookTitle": "Generative AI Strategy"
+    },
+    {
+      "bookSlug": "genetics",
+      "bookTitle": "Genetics: Analysis, Genomics, and Modern Inference"
+    },
+    {
+      "bookSlug": "graph-algorithms",
+      "bookTitle": "Graph Algorithms with AI"
+    },
+    {
+      "bookSlug": "graph-data-modeling-course",
+      "bookTitle": "Graph Data Modeling with AI"
+    },
+    {
+      "bookSlug": "graph-lms",
+      "bookTitle": "Graph Learning Management Systems"
+    },
+    {
+      "bookSlug": "graph-neural-networks-textbook",
+      "bookTitle": "Graph Neural Networks"
+    },
+    {
+      "bookSlug": "graph-rag",
+      "bookTitle": "GraphRAG"
+    },
+    {
+      "bookSlug": "health-education",
+      "bookTitle": "Health Education"
+    },
+    {
+      "bookSlug": "hydroponics",
+      "bookTitle": "Hydroponics: From Mason Jar to Vertical Farm"
+    },
+    {
+      "bookSlug": "it-management-graph",
+      "bookTitle": "IT Management with Graphs"
+    },
+    {
+      "bookSlug": "information-systems",
+      "bookTitle": "Information Systems"
+    },
+    {
+      "bookSlug": "intelligent-textbooks",
+      "bookTitle": "Intelligent Textbooks"
+    },
+    {
+      "bookSlug": "infographics",
+      "bookTitle": "Interactive Infographics with AI"
+    },
+    {
+      "bookSlug": "3d-printing-course",
+      "bookTitle": "Introduction to 3D Printing"
+    },
+    {
+      "bookSlug": "intro-to-graph",
+      "bookTitle": "Introduction to Graph Databases"
+    },
+    {
+      "bookSlug": "i-book-v1",
+      "bookTitle": "Introduction to Microcontrollers with PIC24"
+    },
+    {
+      "bookSlug": "Intelligent_Textbook",
+      "bookTitle": "Introduction to Operating Systems"
+    },
+    {
+      "bookSlug": "intro-to-physics-course",
+      "bookTitle": "Introduction to Physics"
+    },
+    {
+      "bookSlug": "public-health",
+      "bookTitle": "Introduction to Public Health"
+    },
+    {
+      "bookSlug": "inverting-the-impossible",
+      "bookTitle": "Inverting the Impossible"
+    },
+    {
+      "bookSlug": "ir-textbook",
+      "bookTitle": "Investor Relations"
+    },
+    {
+      "bookSlug": "learning-graphs",
+      "bookTitle": "Learning Graphs"
+    },
+    {
+      "bookSlug": "learning-linux",
+      "bookTitle": "Learning Linux"
+    },
+    {
+      "bookSlug": "learning-micropython",
+      "bookTitle": "Learning MicroPython with AI"
+    },
+    {
+      "bookSlug": "learning-python",
+      "bookTitle": "Learning Python"
+    },
+    {
+      "bookSlug": "learning-record-store",
+      "bookTitle": "Learning Record Store"
+    },
+    {
+      "bookSlug": "raspberry-pi-stem",
+      "bookTitle": "Learning STEM with Raspberry Pi Hardware"
+    },
+    {
+      "bookSlug": "learning-sciences",
+      "bookTitle": "Learning Sciences for Intelligent Textbook Design"
+    },
+    {
+      "bookSlug": "linear-algebra",
+      "bookTitle": "Linear Algebra for AI and Machine Learning"
+    },
+    {
+      "bookSlug": "machine-learning-textbook",
+      "bookTitle": "Machine Learning: Algorithms and Applications"
+    },
+    {
+      "bookSlug": "functions",
+      "bookTitle": "Mathematics Functions"
+    },
+    {
+      "bookSlug": "mccreary-heritage",
+      "bookTitle": "McCreary Family Heritage"
+    },
+    {
+      "bookSlug": "search-microsims",
+      "bookTitle": "MicroSim Search"
+    },
+    {
+      "bookSlug": "microsims",
+      "bookTitle": "MicroSims"
+    },
+    {
+      "bookSlug": "ee-microsims",
+      "bookTitle": "MicroSims for Electrical Engineering"
+    },
+    {
+      "bookSlug": "modeling-healthcare-data",
+      "bookTitle": "Modeling Healthcare Data with Graphs"
+    },
+    {
+      "bookSlug": "moss",
+      "bookTitle": "Moss"
+    },
+    {
+      "bookSlug": "moving-rainbow",
+      "bookTitle": "Moving Rainbow"
+    },
+    {
+      "bookSlug": "networking",
+      "bookTitle": "Networking and Communication"
+    },
+    {
+      "bookSlug": "neurodiversity-course",
+      "bookTitle": "Neurodiversity Course"
+    },
+    {
+      "bookSlug": "ojibwe-textbook",
+      "bookTitle": "Ojibwemowin \u2014 Beginning Ojibwe Language"
+    },
+    {
+      "bookSlug": "mini-mba-for-startups",
+      "bookTitle": "Ole Cup Entrepreneurship"
+    },
+    {
+      "bookSlug": "organizational-analytics",
+      "bookTitle": "Organizational Analytics with AI"
+    },
+    {
+      "bookSlug": "personal-finance",
+      "bookTitle": "Personal Finance"
+    },
+    {
+      "bookSlug": "pre-calc",
+      "bookTitle": "Pre-Calculus"
+    },
+    {
+      "bookSlug": "prompt-class",
+      "bookTitle": "Prompt Engineering Class"
+    },
+    {
+      "bookSlug": "psychology",
+      "bookTitle": "Psychology"
+    },
+    {
+      "bookSlug": "reading-for-kindergarten",
+      "bookTitle": "Reading for Kindergarten"
+    },
+    {
+      "bookSlug": "fft-benchmarking",
+      "bookTitle": "Real-Time DSP on a $5 Microcontroller"
+    },
+    {
+      "bookSlug": "robot-day",
+      "bookTitle": "Robot Day"
+    },
+    {
+      "bookSlug": "robot-faces",
+      "bookTitle": "Robot Faces"
+    },
+    {
+      "bookSlug": "stem-classroom-admin",
+      "bookTitle": "STEM Classroom Administration"
+    },
+    {
+      "bookSlug": "stem-robots",
+      "bookTitle": "STEM Robots"
+    },
+    {
+      "bookSlug": "seizure-safe-schools",
+      "bookTitle": "Seizure-Safe Schools"
+    },
+    {
+      "bookSlug": "right-database",
+      "bookTitle": "Selecting the Right Database"
+    },
+    {
+      "bookSlug": "semiconductor-physics-course",
+      "bookTitle": "Semiconductor Physics Course"
+    },
+    {
+      "bookSlug": "signal-processing",
+      "bookTitle": "Signal Processing"
+    },
+    {
+      "bookSlug": "spectrum-analyzer",
+      "bookTitle": "Spectrum Analyzer"
+    },
+    {
+      "bookSlug": "statistics-course",
+      "bookTitle": "Statistics"
+    },
+    {
+      "bookSlug": "systems-thinking",
+      "bookTitle": "Systems Thinking in the Age of AI"
+    },
+    {
+      "bookSlug": "theory-of-knowledge",
+      "bookTitle": "Theory of Knowledge"
+    },
+    {
+      "bookSlug": "token-efficiency",
+      "bookTitle": "Token Efficiency"
+    },
+    {
+      "bookSlug": "tracking-ai-course",
+      "bookTitle": "Tracking AI"
+    },
+    {
+      "bookSlug": "us-history",
+      "bookTitle": "U.S. History"
+    },
+    {
+      "bookSlug": "us-geography",
+      "bookTitle": "US Geography"
+    },
+    {
+      "bookSlug": "us-government",
+      "bookTitle": "US Government"
+    },
+    {
+      "bookSlug": "Dementia",
+      "bookTitle": "Understanding Dementia"
+    },
+    {
+      "bookSlug": "unicorns",
+      "bookTitle": "Unicorns and Other Mythical Beasts"
+    },
+    {
+      "bookSlug": "xapi-course",
+      "bookTitle": "xAPI for Intelligent Textbooks"
+    }
+  ]
+}
