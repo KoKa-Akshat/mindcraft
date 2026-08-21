@@ -69,12 +69,20 @@ enum KokoroTTSClient {
             "voice": voice.rawValue,
         ])
 
-        guard
-            let (data, response) = try? await URLSession.shared.data(for: request),
-            let http = response as? HTTPURLResponse, http.statusCode == 200,
-            !data.isEmpty
-        else { return nil }
-
-        return data
+        do {
+            let (data, response) = try await URLSession.shared.data(for: request)
+            guard let http = response as? HTTPURLResponse, http.statusCode == 200, !data.isEmpty else {
+                let status = (response as? HTTPURLResponse)?.statusCode ?? -1
+                print("[JesseDebug] Kokoro non-200/empty: status=\(status) bytes=\(data.count)")
+                return nil
+            }
+            return data
+        } catch {
+            // TEMP diagnostic (2026-08-21) - tracing a real, reproducing
+            // "voice fell back to the old one" bug report. Remove once
+            // root-caused.
+            print("[JesseDebug] Kokoro request failed: \(error)")
+            return nil
+        }
     }
 }

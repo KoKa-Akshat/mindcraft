@@ -378,8 +378,10 @@ final class JesseCallSession: NSObject, ObservableObject {
             // of guessing at a "personalized" greeting with nothing behind
             // it.
             if let lesson = workDashboardLesson {
+                print("[JesseDebug] begin() GREETING branch: workDashboardLesson.topic=\(lesson.topic)")
                 Task { await speak("Welcome back \(studentName) - want to keep going with \(lesson.topic), or start something new?") }
             } else {
+                print("[JesseDebug] begin() GREETING branch: workDashboardLesson is nil")
                 Task { await speak("Hi \(studentName), what would you like to learn today?") }
             }
         }
@@ -534,6 +536,8 @@ final class JesseCallSession: NSObject, ObservableObject {
     /// override the student's choice for that one line.
     private func speak(_ text: String, voice: KokoroVoice = StudentVoicePreference.current, useKokoro: Bool = true) async {
         guard !isPaused, !isAmbient else { return }
+        // TEMP diagnostic (2026-08-21) - see askJesse's matching print.
+        print("[JesseDebug] speaking=\"\(text)\"")
         turns.append(JesseCallTurn(id: UUID().uuidString, speaker: "jesse", text: text, at: Date()))
         configureAudioSession()
 
@@ -681,6 +685,10 @@ final class JesseCallSession: NSObject, ObservableObject {
 
     private func askJesse(_ message: String) async {
         guard !isAmbient else { return }
+        // TEMP diagnostic (2026-08-21) - tracing a real, reproducing bug
+        // (Jesse referencing an old, unrelated topic instead of a fresh
+        // request) that survived one fix already. Remove once root-caused.
+        print("[JesseDebug] recognized=\"\(message)\" context=\(context ?? "nil") pendingLearnTopic=\(pendingLearnTopic ?? "nil") workDashboardLesson.topic=\(workDashboardLesson?.topic ?? "nil")")
         isThinking = true
 
         // Book (Assignment F) and Learn Studio (Assignment G) each drive
@@ -763,6 +771,7 @@ final class JesseCallSession: NSObject, ObservableObject {
         // an explicit reopen request can never be misread as a brand-new
         // topic to generate.
         if context == "workDashboard", let lesson = workDashboardLesson, Self.isReopenLessonRequest(message) {
+            print("[JesseDebug] REOPEN branch fired - lesson.topic=\(lesson.topic)")
             guard isActive else { isThinking = false; return }
             await speak("Here's what we built on \(lesson.topic) - \(lesson.chapters.joined(separator: ", ")).")
             isThinking = false
@@ -777,6 +786,25 @@ final class JesseCallSession: NSObject, ObservableObject {
             guard isActive else { isThinking = false; return }
             await speak("On it - opening Practice now.")
             practiceRequested = true
+            isThinking = false
+            return
+        }
+        // Last-resort bare-topic fallback (2026-08-21) - even with the
+        // widened lead-in list above, a student answering Jesse's own "what
+        // would you like to learn today?" very naturally just says the
+        // subject with no lead-in verb at all ("corporate law", no "I want
+        // to learn" scaffolding needed since the question already
+        // established the intent) - confirmed via live device console:
+        // ASR heard "Corporate love please corporate law" for exactly this,
+        // matched no lead-in, and fell all the way through to the generic
+        // archive-chat path below, which confidently returned an unrelated
+        // real book. Deliberately narrow to avoid false-triggering on real
+        // conversation ("what's my next assignment", "yes go ahead", "open
+        // the lesson" - that last one is caught by the reopen check above
+        // already): short (<=6 words) AND doesn't open with a question/
+        // command word this heuristic would otherwise misread as a topic.
+        if context == "workDashboard", let topic = Self.extractBareTopicFallback(message) {
+            await askJesseWorkDashboardClarify(topic: topic, grade: Self.extractGrade(from: message))
             isThinking = false
             return
         }
@@ -996,6 +1024,24 @@ final class JesseCallSession: NSObject, ObservableObject {
     /// fixes. Only meaningful when `workDashboardLesson` is already
     /// non-nil (the call site checks that), so this doesn't need to
     /// disambiguate "open" from a genuinely new topic request itself.
+    /// TEMP diagnostic (2026-08-21) - a concise, safe-to-print summary of a
+    /// BookGenerationClient.Verdict. Deliberately doesn't interpolate the
+    /// verdict directly (its .verified case carries a full AssembledBook -
+    /// every chapter/section body/sim HTML - printing that raw would flood
+    /// the console with megabytes of text per call). Remove once root-caused.
+    private static func debugDescribe(_ verdict: BookGenerationClient.Verdict) -> String {
+        switch verdict {
+        case .verified(let book, let cached, let costUsd, let elapsed):
+            return "verified(title=\(book.title), cached=\(cached), costUsd=\(costUsd ?? -1), elapsed=\(elapsed))"
+        case .noGoodResult(let reason):
+            return "noGoodResult(\(reason ?? "nil"))"
+        case .rateLimited(let reason):
+            return "rateLimited(\(reason ?? "nil"))"
+        case .unavailable(let reason):
+            return "unavailable(\(reason ?? "nil"))"
+        }
+    }
+
     private static func isReopenLessonRequest(_ message: String) -> Bool {
         let lowered = message.lowercased()
         let phrases = [
@@ -1081,6 +1127,28 @@ final class JesseCallSession: NSObject, ObservableObject {
             // matching lead-in at all.
             "give me lessons around ", "give me a lesson on ", "give me lessons on ",
             "give me a lesson about ", "give me lessons about ",
+            // Added 2026-08-21 - real root cause of a recurring, reported
+            // "Jesse announces a random unrelated book" bug: "generate me a
+            // lesson on X" / "create me a book on X" are this student's own
+            // consistent, repeated phrasing all night (verbatim from live
+            // reports: "generate me a lesson on chemical compounds",
+            // "create me a book on Corporate Law") and NONE of it matched
+            // any lead-in above - every one of those requests silently fell
+            // through past this function entirely into the generic
+            // ArchiveRagClient conversational fallback below, which does
+            // its OWN loose retrieval over Dan McCreary's real archive and
+            // can return a real, unrelated book with total confidence
+            // ("I opened Calculus at Why Calculus Matters...") for a query
+            // that isn't in that archive at all. Confirmed via a live
+            // device console capture, not inferred.
+            "generate me a lesson on ", "generate a lesson on ",
+            "generate me lessons on ", "generate lessons on ",
+            "generate me a book on ", "generate a book on ",
+            "create me a lesson on ", "create a lesson on ",
+            "create me a book on ", "create a book on ",
+            "build me a lesson on ", "build a lesson on ",
+            "build me a book on ", "build a book on ",
+            "make me a lesson on ", "make a lesson on ",
         ]
         let lowered = message.lowercased()
         for leadIn in leadIns {
@@ -1099,6 +1167,35 @@ final class JesseCallSession: NSObject, ObservableObject {
             if !topic.isEmpty { return topic }
         }
         return nil
+    }
+
+    /// Last-resort companion to `extractLearnTopic` above - see its call
+    /// site's doc comment for why this exists. Deliberately conservative:
+    /// only a short phrase (<=6 words) that doesn't open with a word this
+    /// heuristic would otherwise misread as a question/command/affirmation
+    /// counts as a bare topic name. A message this function accepts but
+    /// that ISN'T really a topic just becomes a slightly odd generation
+    /// request (harmless, self-correcting once Jesse asks a clarifying
+    /// question) - the real risk this guards against is the opposite
+    /// direction: swallowing genuine conversation ("what's my next
+    /// assignment", "yes let's do that") as if it were a topic.
+    private static let _bareTopicStopWords: Set<String> = [
+        "what", "whats", "how", "why", "when", "where", "who", "which",
+        "can", "could", "should", "would", "will", "shall",
+        "is", "are", "was", "were", "do", "does", "did",
+        "yes", "yeah", "yep", "no", "nope", "okay", "ok", "sure",
+        "open", "show", "pull", "continue", "keep", "go", "stop", "wait",
+        "help", "thanks", "thank",
+    ]
+
+    private static func extractBareTopicFallback(_ message: String) -> String? {
+        let (stripped, _) = stripTrailingGrade(message.trimmingCharacters(in: .whitespacesAndNewlines))
+        let words = stripped.split(separator: " ")
+        guard (1...6).contains(words.count) else { return nil }
+        guard let first = words.first?.lowercased().trimmingCharacters(in: .punctuationCharacters),
+              !_bareTopicStopWords.contains(first)
+        else { return nil }
+        return stripped
     }
 
     /// The grade `extractLearnTopic` stripped out of the same utterance,
@@ -1180,6 +1277,7 @@ final class JesseCallSession: NSObject, ObservableObject {
     /// instead of a generic archive match that might not even be about
     /// their specific document.
     private func askJesseWorkDashboard(topic: String, materialsContext: (fileName: String, cardSummaries: [String])? = nil, grade: Int? = nil) async {
+        print("[JesseDebug] askJesseWorkDashboard ENTRY topic=\"\(topic)\"")
         if let materialsContext {
             await generateFromMaterials(topic: topic, materials: materialsContext, grade: grade)
             return
@@ -1194,6 +1292,7 @@ final class JesseCallSession: NSObject, ObservableObject {
         // one tier down, so this doesn't need its own separate matching
         // strategy to reason about.
         if let book = await Self.matchChapterLibraryBook(topic: topic) {
+            print("[JesseDebug] Tier-0 MATCHED book.title=\"\(book.title)\" book.subjectId=\(book.subjectId) for topic=\"\(topic)\"")
             guard isActive else { return }
             openedChapterBook = book
             openedChapterBookGenerationInfo = nil
@@ -1266,6 +1365,7 @@ final class JesseCallSession: NSObject, ObservableObject {
         // ad-hoc decomposed graph). Verified live on the exact topic that
         // produced garbage before this: 3 gate-passed chapters, 2 real
         // embedded sims, ~4 minutes, $3.60.
+        print("[JesseDebug] No Tier-0 match for topic=\"\(topic)\" - falling to Tier-3 BookGenerationClient")
         await speak("Nothing in the archive yet for \(topic) - give me a bit, I'm putting together a real lesson with sims, not just an outline.\(microsimNote)")
         var lastSpokenChaptersReady = 0
         var bookVerdict = await BookGenerationClient.generate(topic: topic) { [weak self] ready, total in
@@ -1273,6 +1373,7 @@ final class JesseCallSession: NSObject, ObservableObject {
             lastSpokenChaptersReady = ready
             Task { await self.speak("Still building - \(ready) of \(total) chapters done.") }
         }
+        print("[JesseDebug] First BookGenerationClient attempt verdict=\(Self.debugDescribe(bookVerdict))")
         if case .unavailable = bookVerdict {
             // One retry before falling back to the old thin path - real
             // live bug, 2026-08-21: asked for "chemical compounds," this
@@ -1293,6 +1394,7 @@ final class JesseCallSession: NSObject, ObservableObject {
                 lastSpokenChaptersReady = ready
                 Task { await self.speak("Still building - \(ready) of \(total) chapters done.") }
             }
+            print("[JesseDebug] Retry BookGenerationClient attempt verdict=\(Self.debugDescribe(bookVerdict))")
         }
         guard isActive else { return }
         switch bookVerdict {
