@@ -2570,22 +2570,37 @@ struct DeskGridDashboardView: View {
     /// (`DeskBoxBus.requestSpace`) - Intel/Moodle/Homework Help each have
     /// their own fixed, generous slot now (Intel doubled in size absorbing
     /// Email/Gcal) and don't compete for room with a neighbor anymore.
+    ///
+    /// Real layout fix, 2026-08-21 live feedback: the previous hungry
+    /// layout gave Binder a side column with Homework Help/Knowledge Graph
+    /// squeezed into tiny boxes beside it - "the binder should occupy the
+    /// full horizontal space of the screen... Homework Help and Knowledge
+    /// Graph shrink into tiny little boxes." Binder now spans the full
+    /// usable width across the TOP; Homework Help and Knowledge Graph sit
+    /// BELOW it side by side, each getting a real half-width strip instead
+    /// of a sliver. Their own tile designs are untouched - only the
+    /// geometry changed, per the explicit "we already decided on the
+    /// design for Knowledge Graph and Homework Help earlier, so let's
+    /// stick to that."
     private func negotiated(_ kind: TileKind, hungry: DeskBoxBus.Box, page5: Bool, base: CGRect) -> CGRect {
         guard hungry == .binder else { return base }
         if page5 {
+            // Usable width bounded by the memo/flows rail reserved at
+            // x:1231 (WorkArtboard.memoRail/flowsRail) - matches this
+            // mode's own existing idle margins (p5Binder starts at x:35).
             switch kind {
-            case .binder: return CGRect(x: 380, y: 54, width: 500, height: 560)
+            case .binder: return CGRect(x: 35, y: 40, width: 1095, height: 340)
+            case .homeworkHelp: return CGRect(x: 35, y: 400, width: 535, height: 220)
+            case .moodle: return CGRect(x: 595, y: 400, width: 535, height: 220)
             case .intel: return CGRect(x: 76, y: 103, width: 280, height: 192)
-            case .moodle: return CGRect(x: 76, y: 323, width: 280, height: 188)
-            case .homeworkHelp: return CGRect(x: 76, y: 54, width: 280, height: 192)
             default: return base
             }
         }
         switch kind {
-        case .binder: return CGRect(x: 430, y: 50, width: 580, height: 600)
+        case .binder: return CGRect(x: 76, y: 50, width: 1288, height: 420)
+        case .homeworkHelp: return CGRect(x: 76, y: 490, width: 634, height: 270)
+        case .moodle: return CGRect(x: 730, y: 490, width: 634, height: 270)
         case .intel: return CGRect(x: 1060, y: 107, width: 330, height: 522)
-        case .moodle: return CGRect(x: 81, y: 378, width: 330, height: 222)
-        case .homeworkHelp: return CGRect(x: 81, y: 118, width: 330, height: 227)
         default: return base
         }
     }

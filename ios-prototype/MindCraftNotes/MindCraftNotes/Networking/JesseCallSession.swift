@@ -200,6 +200,12 @@ final class JesseCallSession: NSObject, ObservableObject {
     /// very first utterance, with no chance for the student to attach an
     /// upload first. Reset in `begin()`.
     @Published private(set) var pendingLearnTopic: String?
+    /// The grade `extractGrade` found in the SAME utterance as
+    /// `pendingLearnTopic`, if any - carried alongside it through the
+    /// "materials or go ahead?" exchange so a grade the student states
+    /// in-the-moment ("I'm in grade 8") survives to the actual generation
+    /// call instead of being discarded once the topic is parked.
+    private var pendingLearnGrade: Int?
     /// One-shot navigation signal (2026-08-19, explicit ask: "if i say i
     /// want to practice... take me to the practice screen") - set true when
     /// the student's workDashboard utterance matches a practice-intent
@@ -319,6 +325,7 @@ final class JesseCallSession: NSObject, ObservableObject {
         if context == "workDashboard" {
             workDashboardLesson = nil
             pendingLearnTopic = nil
+            pendingLearnGrade = nil
             openedChapterBook = nil
             // Real voice greeting on arrival (2026-08-18, explicit ask:
             // "the first thing you should do is say hi Akshat what can I
@@ -367,6 +374,7 @@ final class JesseCallSession: NSObject, ObservableObject {
     func closeLessonSession() {
         workDashboardLesson = nil
         pendingLearnTopic = nil
+        pendingLearnGrade = nil
     }
 
     /// FieldDeskView's dismiss for `openedChapterBook` - same one-deliberate-
@@ -662,7 +670,7 @@ final class JesseCallSession: NSObject, ObservableObject {
         // "materials or go ahead" flow for genuine replies to it.
         if context == "workDashboard", let pending = pendingLearnTopic {
             if let freshTopic = Self.extractLearnTopic(from: message) {
-                await askJesseWorkDashboardClarify(topic: freshTopic)
+                await askJesseWorkDashboardClarify(topic: freshTopic, grade: Self.extractGrade(from: message))
             } else {
                 await askJesseWorkDashboardResume(topic: pending, reply: message)
             }
@@ -670,7 +678,7 @@ final class JesseCallSession: NSObject, ObservableObject {
             return
         }
         if context == "workDashboard", let topic = Self.extractLearnTopic(from: message) {
-            await askJesseWorkDashboardClarify(topic: topic)
+            await askJesseWorkDashboardClarify(topic: topic, grade: Self.extractGrade(from: message))
             isThinking = false
             return
         }
@@ -909,6 +917,34 @@ final class JesseCallSession: NSObject, ObservableObject {
         return try? await BookLibraryClient.getBook(subjectId: match.subjectId)
     }
 
+    /// Strips a trailing self-description clause ("I'm in grade 8", "I am
+    /// grade 8", "grade 8") off a spoken topic and returns the grade it
+    /// found - real bug, live testing 2026-08-21: a student said
+    /// "...photosynthesis, I'm in grade 8" in one breath, and with no
+    /// stripping the ENTIRE trailing clause rode along as literal topic
+    /// text into generation - the model, asked to build a lesson on a
+    /// garbled compound "topic," produced nonsense chapters trying to make
+    /// sense of it. Regex, not a leadIns-style prefix list, because the
+    /// grade clause can appear anywhere near the end of the utterance, not
+    /// just after a fixed lead-in phrase.
+    private static let _gradeClauseRegex = try! NSRegularExpression(
+        pattern: #"[,.]?\s*(?:i(?:'m| am)?\s+)?(?:in\s+)?grade\s+(\d{1,2})\s*\.?\s*$"#,
+        options: [.caseInsensitive]
+    )
+
+    private static func stripTrailingGrade(_ topic: String) -> (topic: String, grade: Int?) {
+        let full = NSRange(topic.startIndex..., in: topic)
+        guard let match = _gradeClauseRegex.firstMatch(in: topic, options: [], range: full),
+              let gradeRange = Range(match.range(at: 1), in: topic),
+              let grade = Int(topic[gradeRange]),
+              let wholeRange = Range(match.range, in: topic)
+        else {
+            return (topic, nil)
+        }
+        let cleaned = topic.replacingCharacters(in: wholeRange, with: "").trimmingCharacters(in: .whitespacesAndNewlines)
+        return (cleaned.isEmpty ? topic : cleaned, grade)
+    }
+
     private static func extractLearnTopic(from message: String) -> String? {
         // Widened 2026-08-21, direct live feedback ("try again on
         // enterprise technology, equity research, finance" got no
@@ -931,14 +967,40 @@ final class JesseCallSession: NSObject, ObservableObject {
             "what about ", "how about ",
             "let's do ", "lets do ", "let's try ", "lets try ",
             "look into ", "can we do ", "switch to ", "go with ", "instead do ",
+            // Added 2026-08-21, direct live feedback - the exact phrasing
+            // used ("give me lessons around photosynthesis") had no
+            // matching lead-in at all.
+            "give me lessons around ", "give me a lesson on ", "give me lessons on ",
+            "give me a lesson about ", "give me lessons about ",
         ]
         let lowered = message.lowercased()
         for leadIn in leadIns {
             guard let range = lowered.range(of: leadIn) else { continue }
-            let topic = String(message[range.upperBound...]).trimmingCharacters(in: .whitespacesAndNewlines)
+            let rawTopic = String(message[range.upperBound...]).trimmingCharacters(in: .whitespacesAndNewlines)
+            // Real bug, live testing 2026-08-21: "...photosynthesis, I'm in
+            // grade 8" spoken as one utterance rode the WHOLE trailing
+            // clause into the topic verbatim, and the model - asked to
+            // build a lesson on a garbled compound "topic" - produced
+            // nonsense chapters trying to make sense of it. Strip it here
+            // so the topic is always clean regardless of which lead-in
+            // matched; extractGrade(from:) below recovers the number
+            // separately for callers that want to use it for real
+            // personalization instead of just discarding it.
+            let topic = stripTrailingGrade(rawTopic).topic
             if !topic.isEmpty { return topic }
         }
         return nil
+    }
+
+    /// The grade `extractLearnTopic` stripped out of the same utterance,
+    /// if it found one - a real, in-the-moment signal from what the
+    /// student just said, not the durable Firestore profile field
+    /// generate-lesson-outline.ts also checks server-side. Deliberately a
+    /// SEPARATE lookup on the raw message rather than baked into
+    /// `extractLearnTopic`'s return value, so every existing caller of
+    /// that function keeps working unchanged.
+    private static func extractGrade(from message: String) -> Int? {
+        stripTrailingGrade(message).grade
     }
 
     /// First half of the "materials or go ahead?" exchange (2026-08-18,
@@ -947,8 +1009,9 @@ final class JesseCallSession: NSObject, ObservableObject {
     /// to run this whole pipeline off the FIRST utterance a topic was
     /// recognized in, with no chance for the student to attach an upload
     /// first.
-    private func askJesseWorkDashboardClarify(topic: String) async {
+    private func askJesseWorkDashboardClarify(topic: String, grade: Int? = nil) async {
         pendingLearnTopic = topic
+        pendingLearnGrade = grade
         await speak("Got it, \(topic). Want to upload any materials first, or should I just go ahead and build the lesson?")
     }
 
@@ -961,6 +1024,8 @@ final class JesseCallSession: NSObject, ObservableObject {
     /// forever on an ambiguous answer.
     private func askJesseWorkDashboardResume(topic: String, reply: String) async {
         pendingLearnTopic = nil
+        let grade = pendingLearnGrade
+        pendingLearnGrade = nil
         let lowered = reply.lowercased()
         let mentionsUpload = lowered.contains("upload") || lowered.contains("file") || lowered.contains("pdf")
             || lowered.contains("use that") || lowered.contains("use it") || lowered.contains("reference")
@@ -968,9 +1033,10 @@ final class JesseCallSession: NSObject, ObservableObject {
         if mentionsUpload, context == nil {
             await speak("I don't see an upload yet - go ahead and tap Homework Help to add it, then tell me when it's there. Or just say go ahead and I'll build from what's available.")
             pendingLearnTopic = topic // still waiting - didn't fall through silently
+            pendingLearnGrade = grade
             return
         }
-        await askJesseWorkDashboard(topic: topic, materialsContext: context)
+        await askJesseWorkDashboard(topic: topic, materialsContext: context, grade: grade)
     }
 
     /// "Check the archive for lessons on it, extract things, create a
@@ -1004,9 +1070,9 @@ final class JesseCallSession: NSObject, ObservableObject {
     /// entirely in favor of generation grounded in their own material
     /// instead of a generic archive match that might not even be about
     /// their specific document.
-    private func askJesseWorkDashboard(topic: String, materialsContext: (fileName: String, cardSummaries: [String])? = nil) async {
+    private func askJesseWorkDashboard(topic: String, materialsContext: (fileName: String, cardSummaries: [String])? = nil, grade: Int? = nil) async {
         if let materialsContext {
-            await generateFromMaterials(topic: topic, materials: materialsContext)
+            await generateFromMaterials(topic: topic, materials: materialsContext, grade: grade)
             return
         }
         // Tier 0 (2026-08-21, real live feedback fix): the gated,
@@ -1087,7 +1153,7 @@ final class JesseCallSession: NSObject, ObservableObject {
         // same budget-capped pattern (generate-sim.ts). StudentAIKeyStore
         // itself is untouched and still real for homework help/study
         // plans, which are genuinely meant to be bring-your-own-key.
-        let result = await LessonOutlineClient.generate(topic: topic, knownConceptIds: known)
+        let result = await LessonOutlineClient.generate(topic: topic, knownConceptIds: known, grade: grade)
         guard isActive else { return }
         switch result {
         case .success(let outline):
@@ -1136,14 +1202,14 @@ final class JesseCallSession: NSObject, ObservableObject {
     /// comment on `materialsContext`). Real MicroSims are still attached
     /// if any match the topic - additive to any source, same as the
     /// archive/generation branches above.
-    private func generateFromMaterials(topic: String, materials: (fileName: String, cardSummaries: [String])) async {
+    private func generateFromMaterials(topic: String, materials: (fileName: String, cardSummaries: [String]), grade: Int? = nil) async {
         let microsims = MicroSimLoader.matching(topic: topic)
         let microsimNote = microsims.isEmpty ? "" : " I also found \(microsims.count) interactive simulation\(microsims.count == 1 ? "" : "s") you can play with."
         let known = Array(Set(SampleQuestion.all.map(\.conceptId)))
         let reference = materials.cardSummaries.joined(separator: "\n")
         // Same server-side, platform-funded switch as askJesseWorkDashboard
         // above - see that call site's doc comment for why.
-        let result = await LessonOutlineClient.generate(topic: topic, knownConceptIds: known, referenceMaterial: reference)
+        let result = await LessonOutlineClient.generate(topic: topic, knownConceptIds: known, referenceMaterial: reference, grade: grade)
         guard isActive else { return }
         switch result {
         case .success(let outline):

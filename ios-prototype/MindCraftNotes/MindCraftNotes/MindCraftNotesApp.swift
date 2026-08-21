@@ -174,6 +174,12 @@ struct AuthGate: View {
     /// the very first thing a signed-in student sees, ahead of even the
     /// language picker.
     @State private var aiDisclosureAgreed = AIDisclosurePreference.hasConsented
+    /// Same shape again, the LAST onboarding gate (2026-08-21, explicit
+    /// ask) - about who the student IS (grade/goals), not a consent or
+    /// device preference, so it comes after those. Closes a real gap:
+    /// Jesse's lesson generation reads a student's `grade` from Firestore
+    /// to adapt vocabulary/rigor, but no onboarding flow ever set it.
+    @State private var gradeGoalsChosen = StudentGradeGoalsPreference.hasChosen
 
     var body: some View {
         Group {
@@ -208,6 +214,10 @@ struct AuthGate: View {
                     // same shape. Gated on usesKokoro so a Spanish student
                     // never sees a picker for voices that don't apply to them.
                     VoiceChoiceView(onChosen: { voiceChosen = true })
+                } else if !gradeGoalsChosen && !uiTestingSkipAuth {
+                    // Last onboarding gate (2026-08-21, explicit ask) - see
+                    // gradeGoalsChosen's own doc comment above.
+                    GradeGoalsChoiceView(onDone: { gradeGoalsChosen = true })
                 } else {
                     // Brick 1 (DESK_OS_NATIVE_BRIEF.md): the desk/shell screen
                     // is now the real post-login entry point, with the

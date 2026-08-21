@@ -25,7 +25,8 @@ enum LessonOutlineClient {
     static func generate(
         topic: String,
         knownConceptIds: [String],
-        referenceMaterial: String? = nil
+        referenceMaterial: String? = nil,
+        grade: Int? = nil
     ) async -> Result<LessonOutline, GenerateError> {
         guard let token = try? await Auth.auth().currentUser?.getIDToken() else {
             return .failure(.notSignedIn)
@@ -37,6 +38,12 @@ enum LessonOutlineClient {
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         var body: [String: Any] = ["topic": topic, "knownConceptIds": knownConceptIds]
         if let referenceMaterial { body["referenceMaterial"] = referenceMaterial }
+        // A real, in-the-moment signal from what the student just said
+        // ("I'm in grade 8") - the webhook treats this as an override on
+        // top of (not instead of) the student's own durable Firestore
+        // profile grade, since it's fresher and more specific to this
+        // exact request.
+        if let grade { body["grade"] = grade }
         request.httpBody = try? JSONSerialization.data(withJSONObject: body)
 
         guard let (data, response) = try? await URLSession.shared.data(for: request),
