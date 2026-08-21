@@ -106,22 +106,35 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const uid = await verifyToken(req)
   if (!uid) return res.status(401).json({ error: 'Sign-in required' })
 
-  const body = (req.body || {}) as { topic?: string; knownConceptIds?: string[]; referenceMaterial?: string }
+  const body = (req.body || {}) as { topic?: string; knownConceptIds?: string[]; referenceMaterial?: string; grade?: number }
   const topic = String(body.topic || '').trim().slice(0, 200)
   if (!topic) return res.status(400).json({ error: 'topic required' })
   const knownConceptIds = Array.isArray(body.knownConceptIds) ? body.knownConceptIds.map(String).slice(0, 200) : []
   const referenceMaterial = typeof body.referenceMaterial === 'string' ? body.referenceMaterial.slice(0, 8000) : undefined
 
-  // Server-side lookup, not client-supplied - see buildUserPrompt's comment.
-  // Fails open (undefined grade, ungraded lesson) rather than blocking the
-  // whole request if the profile read fails for any reason.
-  let grade: number | undefined
-  try {
-    const profileSnap = await db.collection('users').doc(uid).get()
-    const profileGrade = profileSnap.data()?.grade
-    if (typeof profileGrade === 'number') grade = profileGrade
-  } catch (e) {
-    console.error('generate-lesson-outline: failed to read student profile grade', e)
+  // Grade resolution, two sources with different trust models - this is a
+  // personalization signal, not a permission gate, so both are safe to
+  // honor: (1) a request-supplied grade (2026-08-21 addition) is what the
+  // STUDENT THEMSELVES just said in this exact conversation ("I'm in
+  // grade 8") - fresher and more specific than a stored profile, so it
+  // takes priority when present; (2) falls back to the durable
+  // users/{uid} profile field (same one ConceptChapterPage.tsx already
+  // reads for practice-question personalization) for students who didn't
+  // state a grade this time but have one on file. Fails open (undefined
+  // grade, ungraded lesson) rather than blocking the request if the
+  // profile read fails.
+  let grade: number | undefined =
+    typeof body.grade === 'number' && Number.isInteger(body.grade) && body.grade >= 1 && body.grade <= 12
+      ? body.grade
+      : undefined
+  if (grade === undefined) {
+    try {
+      const profileSnap = await db.collection('users').doc(uid).get()
+      const profileGrade = profileSnap.data()?.grade
+      if (typeof profileGrade === 'number') grade = profileGrade
+    } catch (e) {
+      console.error('generate-lesson-outline: failed to read student profile grade', e)
+    }
   }
 
   const platformBudget = await checkPlatformBudget()
