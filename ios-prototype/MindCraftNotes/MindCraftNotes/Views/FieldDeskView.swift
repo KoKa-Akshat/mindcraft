@@ -1308,6 +1308,15 @@ struct FieldDeskView: View {
                     let ctx = jesseCall.context
                     let turns = jesseCall.end()
                     store.fileJesseTranscript(turns, context: ctx, ambient: ambient)
+                    // Session report generation (2026-08-21) - scoped to
+                    // workDashboard specifically, since that's the flow the
+                    // ZPD/sim-telemetry design is about (lessons + sims);
+                    // other call contexts (resume help, English practice,
+                    // free-form kitchen chat) don't have the same
+                    // engagement signal to report on.
+                    if ctx == "workDashboard" {
+                        SessionReportClient.generate(transcript: turns, context: ctx)
+                    }
                     showJesseCallSheet = false
                 }
             )
