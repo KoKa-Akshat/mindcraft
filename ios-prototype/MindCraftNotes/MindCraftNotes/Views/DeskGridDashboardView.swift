@@ -115,6 +115,21 @@ struct DeskGridDashboardView: View {
     var intelLines: [String] = []
     /// Titles from `BinderStore`, not `FieldDeskStore.FiledItem`.
     var binderTitles: [String] = []
+    /// Real `BinderItem`s (type == "book"), carrying the subjectId
+    /// `onOpenBinderChapterBook` needs - `binderTitles` above is plain
+    /// display strings only and can't identify which book was tapped.
+    /// Real bug, live testing 2026-08-21: without this, every row in the
+    /// Binder tile's preview list was non-interactive (plain text, no
+    /// Button), so any tap - including directly on a book's title -
+    /// bubbled up to the tile's own generic `handleTile(.binder)` and
+    /// opened the unrelated `onOpenBinder()` destination instead. Reported
+    /// as "it's not pressable... opens another notepad-like field."
+    var binderChapterBooks: [BinderItem] = []
+    /// Opens a specific tapped chapter book from the Binder tile - wired to
+    /// FieldDeskView's existing `openChapterBookFromBinder`, which already
+    /// does the real fetch + BookReaderView presentation correctly; this
+    /// view doesn't own that presentation layer.
+    var onOpenBinderChapterBook: (_ subjectId: String, _ fallbackTitle: String) -> Void = { _, _ in }
     var onSyncCalendar: () -> Void = {}
     var onOpenLearnStudio: () -> Void = {}
     var onOpenArchive: () -> Void = {}
@@ -402,6 +417,8 @@ struct DeskGridDashboardView: View {
         onMoodleDisconnected: @escaping () -> Void = {},
         intelLines: [String] = [],
         binderTitles: [String] = [],
+        binderChapterBooks: [BinderItem] = [],
+        onOpenBinderChapterBook: @escaping (_ subjectId: String, _ fallbackTitle: String) -> Void = { _, _ in },
         onSyncCalendar: @escaping () -> Void = {},
         onOpenLearnStudio: @escaping () -> Void = {},
         onOpenArchive: @escaping () -> Void = {},
@@ -428,6 +445,8 @@ struct DeskGridDashboardView: View {
         self.onMoodleDisconnected = onMoodleDisconnected
         self.intelLines = intelLines
         self.binderTitles = binderTitles
+        self.binderChapterBooks = binderChapterBooks
+        self.onOpenBinderChapterBook = onOpenBinderChapterBook
         self.onSyncCalendar = onSyncCalendar
         self.onOpenLearnStudio = onOpenLearnStudio
         self.onOpenArchive = onOpenArchive
@@ -723,34 +742,37 @@ struct DeskGridDashboardView: View {
         ZStack(alignment: .topLeading) {
             Color.clear
                 .frame(width: board.width, height: board.height)
-            // Intel's own tile is skipped entirely in content-viewer mode
-            // (see boxRect/searchField) - Binder expands into its space.
+            // Intel/Homework Help/Knowledge Graph are all skipped entirely
+            // in content-viewer mode (see boxRect/searchField) - Binder
+            // expands into the FULL board (2026-08-21 widening, see
+            // `contentViewerBinder`'s own doc comment). Intel's own
+            // exclusion predates this; Homework Help/Moodle's is new here.
             if !binderContentViewerActive {
                 pin(boxRect(.intel), scale: scale) {
                     photoTile(.intel)
                 }
-            }
-            pin(boxRect(.moodle), scale: scale) {
-                photoTile(.moodle)
+                pin(boxRect(.moodle), scale: scale) {
+                    photoTile(.moodle)
+                }
+                pin(boxRect(.homeworkHelp), scale: scale) {
+                    // `.sheet` + a manual UIDocumentPickerViewController, not
+                    // `.fileImporter` - confirmed via a diagnostic UI test that
+                    // the tap/state wiring was already correct (handleTile
+                    // fired, showHomeworkImporter flipped true, both when the
+                    // modifier sat on the screen root and right here on the
+                    // tile) but `.fileImporter`'s own picker never actually
+                    // presented either way. See HomeworkDocumentPicker's doc
+                    // comment.
+                    photoTile(.homeworkHelp)
+                        .sheet(isPresented: $showHomeworkImporter) {
+                            HomeworkDocumentPicker { url in
+                                Task { await handleHomeworkFileUpload(url) }
+                            }
+                        }
+                }
             }
             pin(boxRect(.binder), scale: scale) {
                 photoTile(.binder)
-            }
-            pin(boxRect(.homeworkHelp), scale: scale) {
-                // `.sheet` + a manual UIDocumentPickerViewController, not
-                // `.fileImporter` - confirmed via a diagnostic UI test that
-                // the tap/state wiring was already correct (handleTile
-                // fired, showHomeworkImporter flipped true, both when the
-                // modifier sat on the screen root and right here on the
-                // tile) but `.fileImporter`'s own picker never actually
-                // presented either way. See HomeworkDocumentPicker's doc
-                // comment.
-                photoTile(.homeworkHelp)
-                    .sheet(isPresented: $showHomeworkImporter) {
-                        HomeworkDocumentPicker { url in
-                            Task { await handleHomeworkFileUpload(url) }
-                        }
-                    }
             }
             if expanded {
                 pin(rail == .memo ? WorkArtboard.memoRail : WorkArtboard.flowsRail, scale: scale) {
@@ -2541,16 +2563,41 @@ struct DeskGridDashboardView: View {
         let muted = kind == .binder || kind == .moodle ? Color(gridHex: "8a8478") : Color.white.opacity(0.72)
         let dot = kind == .binder || kind == .moodle ? Color(gridHex: "c4a484").opacity(0.85) : Color.white.opacity(0.75)
         let divider = kind == .binder || kind == .moodle ? Color(gridHex: "d9d2c5").opacity(0.85) : Color.white.opacity(0.28)
-        ForEach(Array(tileLines(kind).prefix(limit).enumerated()), id: \.offset) { _, line in
-            DeskContentRow(
-                title: line,
-                dot: dot,
-                ink: ink,
-                muted: muted,
-                divider: divider,
-                showDivider: true,
-                compact: true
-            )
+        if kind == .binder {
+            // Real Button per book (2026-08-21 fix), not a plain row - see
+            // `binderChapterBooks`' doc comment for the bug this closes.
+            // Same "a nested Button correctly intercepts its own tap
+            // instead of bubbling to the tile's outer handleTile" pattern
+            // already proven for Homework Help's generatedBooks strip.
+            ForEach(Array(binderChapterBooks.prefix(limit))) { item in
+                Button {
+                    onOpenBinderChapterBook(item.body, item.title)
+                } label: {
+                    DeskContentRow(
+                        title: item.title,
+                        dot: dot,
+                        ink: ink,
+                        muted: muted,
+                        divider: divider,
+                        showDivider: true,
+                        compact: true
+                    )
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("deskGridBinderBook_\(item.id)")
+            }
+        } else {
+            ForEach(Array(tileLines(kind).prefix(limit).enumerated()), id: \.offset) { _, line in
+                DeskContentRow(
+                    title: line,
+                    dot: dot,
+                    ink: ink,
+                    muted: muted,
+                    divider: divider,
+                    showDivider: true,
+                    compact: true
+                )
+            }
         }
     }
 
@@ -3171,13 +3218,16 @@ private enum WorkArtboard {
     static let flowsRail = CGRect(x: 1231, y: 54, width: 199, height: 566)
     /// Content-viewer mode (2026-08-18, explicit ask: tap an uploaded
     /// file, Binder "mixes with Intel to get all that space on the
-    /// right"). The union of Binder's and Intel's own p4 footprints -
-    /// Homework Help and Knowledge Graph stay put in the left column.
-    /// Intel's own tile is skipped entirely while this is active - "Intel
-    /// instead moves down to our search bar and instead of the search
-    /// you see the raccoon" is the search field's own leading icon
-    /// swapping to the raccoon (see `searchField`), not a second tile.
-    static let contentViewerBinder = CGRect(x: 490, y: 40, width: 930, height: 768)
+    /// right"). Originally the union of just Binder's and Intel's own p4
+    /// footprints, with Homework Help/Knowledge Graph left in place in the
+    /// left column - widened 2026-08-21 (real live feedback: "it occupies
+    /// maybe half the screen... should occupy 80-90%... everything should
+    /// occupy the whole rectangular space in the homework help knowledge
+    /// graph too") to the FULL board width (Homework Help/Moodle's own
+    /// left edge, x=40, to Intel's own right edge, x=1420) - those two
+    /// tiles are now hidden while this is active, same treatment Intel's
+    /// tile already had (see `tileBoard`).
+    static let contentViewerBinder = CGRect(x: 40, y: 40, width: 1380, height: 768)
 }
 
 /// Gentle, always-on pulse for the Knowledge Graph tile's empty-state seed

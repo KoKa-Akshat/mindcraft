@@ -762,6 +762,10 @@ struct FieldDeskView: View {
                         onMoodleDisconnected: { _ = store.disconnect("moodle") },
                         intelLines: Array(store.intelLines.prefix(8)),
                         binderTitles: Array(binderStore.items.prefix(6).map(\.title)),
+                        binderChapterBooks: Array(binderStore.items.filter { $0.type == "book" }.prefix(6)),
+                        onOpenBinderChapterBook: { subjectId, fallbackTitle in
+                            openChapterBookFromBinder(subjectId: subjectId, fallbackTitle: fallbackTitle)
+                        },
                         onSyncCalendar: { Task { await refreshDeskCalendar() } },
                         onOpenLearnStudio: { showLearnStudio = true },
                         onOpenArchive: { showArchiveWorkflow = true },
