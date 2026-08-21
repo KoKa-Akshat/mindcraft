@@ -38,6 +38,7 @@
     { "source": "/api/gmail-digest", "destination": "/api/app-actions?action=gmail-digest" },
     { "source": "/api/ingest-lesson-graph", "destination": "/api/app-actions?action=ingest-lesson-graph" },
     { "source": "/api/generate-sim", "destination": "/api/app-actions?action=generate-sim" },
+    { "source": "/api/generate-book", "destination": "/api/app-actions?action=generate-book" },
     { "source": "/api/get-book", "destination": "/api/app-actions?action=get-book" },
     { "source": "/api/generate-lesson-outline", "destination": "/api/app-actions?action=generate-lesson-outline" },
     { "source": "/api/reset-student-data", "destination": "/api/app-actions?action=reset-student-data" },

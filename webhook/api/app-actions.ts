@@ -32,6 +32,7 @@ import bookAgent from '../lib/handlers/book-agent'
 import gmailDigest from '../lib/handlers/gmail-digest'
 import ingestLessonGraph from '../lib/handlers/ingest-lesson-graph'
 import generateSim from '../lib/handlers/generate-sim'
+import generateBook from '../lib/handlers/generate-book'
 import getBook from '../lib/handlers/get-book'
 import generateLessonOutline from '../lib/handlers/generate-lesson-outline'
 import archiveBooks from '../lib/handlers/archive-books'
@@ -63,6 +64,7 @@ const HANDLERS: Record<string, (req: VercelRequest, res: VercelResponse) => Prom
   'gmail-digest': gmailDigest,
   'ingest-lesson-graph': ingestLessonGraph,
   'generate-sim': generateSim,
+  'generate-book': generateBook,
   'get-book': getBook,
   'generate-lesson-outline': generateLessonOutline,
   'archive-books': archiveBooks,
