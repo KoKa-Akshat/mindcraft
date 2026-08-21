@@ -149,6 +149,25 @@ struct BookReaderView: View {
                 .foregroundColor(ink.opacity(0.5))
             }
 
+            // Real bug, live testing 2026-08-21 (same night as the fix
+            // above, on a real Stoicism book): that fix's "summary is the
+            // whole caption, the sim is the teaching surface" reasoning
+            // silently assumed every page GETS a sim. Abstract concepts
+            // (real example: "The Rational Order: Logos and Nature") are
+            // correctly judged not sim-worthy at generation time - but with
+            // no sim AND no body, those pages had nothing but a two-
+            // sentence summary. Direct report: "the first few pages are
+            // empty... don't just leave it empty." Full body text (already
+            // generated, already gated - never hidden text, unlike the
+            // rejected disclosure approach) fills that gap on exactly the
+            // pages that need it; sim pages are completely unchanged.
+            if section.simHtml == nil, !section.body.isEmpty {
+                Text(section.body)
+                    .font(.system(size: 15, design: .rounded))
+                    .foregroundColor(ink.opacity(0.9))
+                    .lineSpacing(5)
+            }
+
             // The real, playable sim - the centerpiece of the page, not an
             // afterthought link. Direct feedback, 2026-08-21: a
             // "Read the full explanation" disclosure hiding the paragraph
