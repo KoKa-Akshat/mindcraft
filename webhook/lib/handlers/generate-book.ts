@@ -48,6 +48,11 @@ import { verifyToken } from '../verifyToken'
 import { db } from '../firebase'
 import { slugifyTopic } from '../generatedSimContract'
 import { checkAndRecordAttempt, checkPlatformBudget, recordActualSpend } from '../generationBudget'
+import {
+  buildBookTrainingEvents,
+  captureSimTrainingEvents,
+  ServiceJobPayloadPR1,
+} from '../simTrainingEvents'
 
 const CONTENT_ENGINE_BASE = process.env.CONTENT_ENGINE_URL ?? ''
 const CONTENT_ENGINE_SECRET = process.env.CONTENT_ENGINE_SECRET ?? ''
@@ -182,10 +187,28 @@ async function handlePoll(rawJobId: string, res: VercelResponse) {
     })
 
     if (status === 'passed') {
-      const book = raw.result
-      if (!book || !Array.isArray((book as { chapters?: unknown[] }).chapters)) {
+      if (!raw.result || !Array.isArray((raw.result as { chapters?: unknown[] }).chapters)) {
         return res.status(502).json({ status: 'error', detail: 'service reported passed without a renderable book' })
       }
+      // PR1: the engine now ships training-capture data ALONGSIDE the book
+      // inside result (generated_sims/failed_sims/prompt_template_version).
+      // Strip those keys off before persisting or responding, so the
+      // assembled_books doc and the client-visible book stay byte-identical
+      // to pre-PR1 — students must see zero change from this capture.
+      const {
+        generated_sims: _generatedSims,
+        failed_sims: _failedSims,
+        prompt_template_version: _promptTemplateVersion,
+        ...book
+      } = raw.result
+      // One sim_training_events doc per sim ATTEMPT (passed and failed),
+      // keyed {jobId}_{conceptSlug} — repeat polls rewrite the same docs.
+      // Fire-and-forget, same discipline as recordActualSpend above: a
+      // capture failure is logged, never surfaced to the student. No uid
+      // is ever passed in — hard privacy rule of this collection.
+      captureSimTrainingEvents(db, buildBookTrainingEvents(raw as ServiceJobPayloadPR1, jobId)).catch((e) => {
+        console.error('generate-book: failed to record sim training events', e)
+      })
       // Real bug caught before deploy: this must slug the ORIGINAL
       // requested topic (echoed back as raw.topic, same field _run_job's
       // own poll payload already includes), NOT the book's own re-titled

@@ -47,6 +47,11 @@ import {
   slugifyTopic,
 } from '../generatedSimContract'
 import { checkAndRecordAttempt, checkPlatformBudget, recordActualSpend } from '../generationBudget'
+import {
+  buildStandaloneTrainingEvent,
+  captureSimTrainingEvents,
+  ServiceJobPayloadPR1,
+} from '../simTrainingEvents'
 
 const CONTENT_ENGINE_BASE = process.env.CONTENT_ENGINE_URL ?? ''
 const CONTENT_ENGINE_SECRET = process.env.CONTENT_ENGINE_SECRET ?? ''
@@ -199,6 +204,21 @@ async function handlePoll(rawJobId: string, res: VercelResponse) {
     recordActualSpend(normalized.costUsd).catch((e) => {
       console.error('generate-sim: failed to record platform spend', e)
     })
+    // PR1 training capture: passed AND gate-failed verdicts each become one
+    // durable sim_training_events doc keyed by jobId (repeat polls rewrite
+    // the same doc — idempotent by construction). Built from the RAW
+    // payload, not `normalized`: the training doc needs fields the
+    // client-facing shape deliberately drops (lesson_plan, references,
+    // separate js, fail_stage). Fire-and-forget on error, same discipline
+    // as recordActualSpend above — capture must never fail or delay the
+    // student's response. NEVER pass uid into this call: the collection is
+    // provenance about content, with a hard no-student-identifiers rule.
+    const trainingEvent = buildStandaloneTrainingEvent(raw as ServiceJobPayloadPR1, jobId)
+    if (trainingEvent) {
+      captureSimTrainingEvents(db, [trainingEvent]).catch((e) => {
+        console.error('generate-sim: failed to record sim training event', e)
+      })
+    }
     if (normalized.status === 'passed') {
       // Persist BEFORE responding so a client that crashes right after
       // seeing "passed" still leaves the library populated for reuse.

@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "scripts": {
     "bake-themed-stems": "ts-node --transpile-only scripts/bake-themed-stems.ts",
-    "sync-assembled-books": "ts-node --transpile-only scripts/sync-assembled-books.ts"
+    "sync-assembled-books": "ts-node --transpile-only scripts/sync-assembled-books.ts",
+    "backfill-sim-training-events": "ts-node --transpile-only scripts/backfill-sim-training-events.ts",
+    "test-sim-training-events": "ts-node --transpile-only scripts/test-sim-training-events.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.85.0",
