@@ -3,12 +3,6 @@ import UniformTypeIdentifiers
 import PhotosUI
 import PDFKit
 
-private enum ShrineBeatPhase: Equatable {
-    case idle
-    case captions
-    case starting
-}
-
 /// Real iOS 26 Liquid Glass for nav/control chrome (dock, floating chips,
 /// pills) - never on card/content bodies, which stay opaque paper. Matches
 /// Apple's own glass-vs-content split: glass is for the floating control
@@ -56,24 +50,33 @@ struct FieldDeskView: View {
     @State private var showBinderPanel = false
     /// Classic work desk (original cream cards on dark desk) vs Jesse kitchen.
     @State private var workMode = false
-    /// Native Projects menu (Binder / Intel / … + Go Back) — not the vending cat screen.
-    @State private var showProjectsPanel = false
-    /// Fixed-tile dashboard grid (`DeskGridDashboardView`) - PDF-referenced
-    /// layout, distinct from the free-drag desk cards below.
-    @State private var showDeskGridDashboard = false
+    /// Overlays that render as full-screen (or dashboard-popup) siblings in
+    /// `body`'s top-level ZStack: ActFieldBook, GmailBox, ApplyToday,
+    /// WorkflowLibrary, DeskGridDashboard (`DeskGridDashboardView` - the
+    /// fixed-tile dashboard grid, PDF-referenced layout, distinct from the
+    /// free-drag desk cards below), CreateCanvas (Presentation / GDoc, PDF
+    /// pages 1-3), BinderOverlay, CalendarOverlay, IntelOverlay,
+    /// StandaloneDesk (deskweb, entered via the polka vending screen),
+    /// CreateStudio (desk-os/studio, entered via polka from Create). Was 11
+    /// separate `@State private var showX: Bool` flags; consolidated into
+    /// one Set so a missing chrome-block guard is a compile error (see
+    /// `FieldDeskOverlay.blocksChrome`) instead of a silent touch-swallowing
+    /// bug (this file's single most recurring failure — see
+    /// `deskOverlayChromeBlocked` below).
+    ///
+    /// NOT a mutually-exclusive "one overlay at a time" state machine:
+    /// `.deskGridDashboard` (zIndex 88) deliberately stays in this set while
+    /// `.calendarOverlay`/`.intelOverlay`/`.binderOverlay`/`.gmailBox`/
+    /// `.createCanvas` (zIndex 89) are ALSO in it — Calendar/Intel/Binder
+    /// tapped from the Work dashboard render as popups layered ON TOP of the
+    /// dashboard by design (dashboard stays mounted underneath so Done/close
+    /// lands back on it, not on Jesse's Kitchen - previously a dead tap for
+    /// Intel, and previously "closing the app" for Calendar). Standalone
+    /// Desk / Create Studio don't block chrome the same way the others do
+    /// (see `FieldDeskOverlay.blocksChrome` / `floatDockBlocked`).
+    @State private var openOverlays: Set<FieldDeskOverlay> = []
     @State private var dashboardStartRail: DeskGridDashboardView.Rail = .none
-    /// Native Create · Presentation / GDoc canvas (PDF pages 1–3).
-    @State private var showCreateCanvas = false
     @State private var createCanvasKind: CreateCanvasKind = .presentation
-    /// Projects screen — Malevolent Shrine project card; tap → work area.
-    @State private var showProjectsScreen = false
-    /// Shrine → Gen-Z captions → workspace starting → work desk.
-    @State private var shrineBeatPhase: ShrineBeatPhase = .idle
-    @State private var shrineCaption = ""
-    /// Standalone Desk (deskweb) — entered via the polka vending screen.
-    @State private var showStandaloneDesk = false
-    /// Spatial Create studio (desk-os/studio) — entered via polka from Create.
-    @State private var showCreateStudio = false
     /// 0 = clear, 1 = solid white polka sheet covering the screen.
     @State private var polkaProgress: CGFloat = 0
     /// Widgets placed on the work desk via `+`.
@@ -81,41 +84,23 @@ struct FieldDeskView: View {
     /// Kitchen audio is off until the top-right volume control is tapped.
     @State private var kitchenSoundOn = false
     @State private var kitchenWebReady = true
-    @State private var showManage = false
     /// Bars start hidden — swipe down for top, swipe up for bottom.
     @State private var showTopChrome = false
     @State private var showBottomChrome = false
     @State private var chromeHideToken = UUID()
     @State private var showFindTutor = false
-    @State private var showWorkflowLibrary = false
     @State private var showResumeAgent = false
     @State private var showArchiveWorkflow = false
     @State private var showBookWorkflow = false
     @State private var showDesignStudio = false
-    @State private var showApplyToday = false
     @State private var showSchedulingWorkflows = false
     @State private var schedulingWorkflowsMinimized = false
-    @State private var showGmailBox = false
     @State private var gmailStartReconnect = false
     @State private var gmailOpenTopReply = false
-    @State private var showActFieldBook = false
     /// "Transcribe" from the Flows dock — ambient room recording via
     /// `JesseCallSession.beginAmbientTranscription()`, not a two-way call.
     /// Same sheet + pill as a Jesse call; `isAmbient` suppresses replies.
     @State private var showJesseCallSheet = false
-    /// Calendar tapped from the Work dashboard - overlays on top of it
-    /// (dashboard stays mounted, same treatment as showActFieldBook above)
-    /// instead of tearing the dashboard down and falling through to the
-    /// old free-drag desk, which is what "closing the app" from Calendar
-    /// actually was: the dashboard vanished with nothing re-shown on top.
-    @State private var showCalendarOverlay = false
-    /// Intel tapped from the Work dashboard - same overlay-on-top treatment
-    /// as Calendar/Binder/Gmail above. Was previously a dead tap on the
-    /// dashboard (handleTile's Intel case fell into `default: break`).
-    @State private var showIntelOverlay = false
-    /// Binder tapped from the Work dashboard — Memo / Doc / BYOB popup
-    /// (not an immediate jump to ACT Field Book).
-    @State private var showBinderOverlay = false
     /// BYOB "Cook a Field Book" from the Binder popup.
     @State private var showByobStudio = false
     /// Learn Studio — the five-pane concept-study screen, reachable from the
@@ -127,7 +112,6 @@ struct FieldDeskView: View {
     /// -> `study_concept` action) - threaded into `DashboardView` so it
     /// opens straight to that concept's chapter instead of just the roadmap.
     @State private var pendingStudyConceptId: String?
-    @State private var showDocCook = false
     @StateObject private var workflowMarket = WorkflowMarketStore()
     @State private var showImporter = false
     @State private var photoItem: PhotosPickerItem?
@@ -195,7 +179,7 @@ struct FieldDeskView: View {
         self.onLaunchInstance = onLaunchInstance
         _showActStage = State(initialValue: initialActStage)
         _actStageMaximized = State(initialValue: true)
-        _showDeskGridDashboard = State(initialValue: initialShowDashboard)
+        _openOverlays = State(initialValue: initialShowDashboard ? [.deskGridDashboard] : [])
     }
 
     private enum RailTool: String, Identifiable {
@@ -209,6 +193,27 @@ struct FieldDeskView: View {
 
     private enum PlaceableWidget: String, Hashable, CaseIterable {
         case binder, calendar, memo, connect, gmail, intel, notes, gdoc, slides
+    }
+
+    private enum FieldDeskOverlay: Hashable, CaseIterable {
+        case actFieldBook, gmailBox, applyToday, workflowLibrary, deskGridDashboard, createCanvas, binderOverlay, calendarOverlay, intelOverlay
+        case standaloneDesk, createStudio
+
+        /// Blocks top chrome + the background pan/zoom touch catcher (see
+        /// deskOverlayChromeBlocked). Exhaustive switch — the compiler now
+        /// forces a decision for every new case added to this enum, which is
+        /// the actual structural fix: the old bug was a NEW overlay flag never
+        /// getting added to a separate, hand-maintained OR-expression far away
+        /// in the file. That can't happen anymore; it's a compile error instead
+        /// of a silent runtime touch-swallowing bug.
+        var blocksChrome: Bool {
+            switch self {
+            case .actFieldBook, .gmailBox, .applyToday, .workflowLibrary, .deskGridDashboard, .createCanvas, .binderOverlay, .calendarOverlay, .intelOverlay:
+                return true
+            case .standaloneDesk, .createStudio:
+                return false
+            }
+        }
     }
 
     /// Until tools are linked, Connect stays on-canvas. After that, place via `+`.
@@ -265,8 +270,8 @@ struct FieldDeskView: View {
         showBinderPanel = false
         binderOpen = true
         showBlankPage = false
-        showGmailBox = false
-        showActFieldBook = false
+        _ = openOverlays.remove(.gmailBox)
+        _ = openOverlays.remove(.actFieldBook)
         showActStage = false
         actStageMaximized = false
         focusedCard = nil
@@ -279,16 +284,15 @@ struct FieldDeskView: View {
     /// Back to Jesse’s — empty kitchen, no floating cards.
     private func clearDeskCards(flashMessage: String? = nil) {
         workMode = false
-        showProjectsPanel = false
         showBinderPanel = false
         showIntelPanel = false
         showConnectPanel = false
         showBlankPage = false
-        showGmailBox = false
-        showApplyToday = false
+        _ = openOverlays.remove(.gmailBox)
+        _ = openOverlays.remove(.applyToday)
         showSchedulingWorkflows = false
         schedulingWorkflowsMinimized = false
-        showActFieldBook = false
+        _ = openOverlays.remove(.actFieldBook)
         showActStage = false
         actStageMaximized = false
         focusedCard = nil
@@ -351,8 +355,8 @@ struct FieldDeskView: View {
     /// partial state that only happens to render.
     private func restoreDeskLayout() {
         // .calendar excluded: the free-drag Calendar card is retired in
-        // favor of showCalendarOverlay (dashboard tap only, never
-        // persisted). A stale .calendar entry from before that change
+        // favor of the `.calendarOverlay` entry in `openOverlays` (dashboard
+        // tap only, never persisted). A stale .calendar entry from before that change
         // reproduced a real launch-time crash via this exact auto-restore
         // path - dropping it here means old devices self-heal instead of
         // crashing on every subsequent launch.
@@ -390,45 +394,41 @@ struct FieldDeskView: View {
     }
 
     /// ⚠️ GUARDRAIL - read before adding a new full-screen overlay to
-    /// `body`'s top-level ZStack (an `if show___ { ... .zIndex(N) }` block
-    /// like ActFieldBook/GmailBox/ApplyToday/etc. below): add its flag HERE
-    /// too, or it silently inherits two real, already-hit bugs instead of
-    /// working correctly:
+    /// `body`'s top-level ZStack (an `if openOverlays.contains(.___) { ...
+    /// .zIndex(N) }` block like ActFieldBook/GmailBox/ApplyToday/etc.
+    /// below): add the new case to `FieldDeskOverlay` (declared above, next
+    /// to `PlaceableWidget`) and give `FieldDeskOverlay.blocksChrome` an
+    /// explicit `true`/`false` for it. `blocksChrome`'s switch is
+    /// exhaustive, so the compiler now forces that decision the moment the
+    /// case is added — skipping it is a build error, not a silent runtime
+    /// bug. Before `openOverlays`/`FieldDeskOverlay` existed, this guard was
+    /// a hand-maintained OR-expression of ~11 separate `show___` booleans far
+    /// away in the file, and a new overlay flag that never got added to it
+    /// silently inherited two real, already-hit bugs instead of working
+    /// correctly:
     ///   1. Top chrome (logo/mode-toggle/sign-out) won't hide behind it.
     ///   2. WORSE - `deskBackgroundPanZoomLayer`'s full-screen touch catcher
     ///      (`fieldDeskPanZoomCatcher`, a raw UIKit `PassThroughOverlay`)
     ///      stays active underneath your new overlay and silently eats
     ///      every touch meant for it, even though it paints correctly on
     ///      top. This exact bug independently hit the Add panel, the
-    ///      Binder card, and the ACT Field Book popup this session (three
-    ///      separate "button exists in the tree, isHittable: false"
-    ///      failures, three separate diagnoses) before this property was
-    ///      wired in as the ONE shared guard for both consumers - see the
-    ///      `panZoomCatcherBlocked` line in `body` and `floatDockBlocked`
-    ///      right below. Both read THIS property; a new overlay flag added
-    ///      only to its own `if` block and nowhere else WILL reproduce that
-    ///      failure again.
+    ///      Binder card, the ACT Field Book popup, and (twice more, same
+    ///      night) the Calendar/Intel overlays before this became a
+    ///      compiler-enforced exhaustive switch instead of an easy-to-forget
+    ///      list - see the `panZoomCatcherBlocked` line in `body` and
+    ///      `floatDockBlocked` right below. Both read THIS property.
     private var deskOverlayChromeBlocked: Bool {
-        showActFieldBook
-            || showGmailBox
-            || showApplyToday
-            || (showSchedulingWorkflows && !schedulingWorkflowsMinimized)
+        openOverlays.contains(where: \.blocksChrome)
             || (showActStage && actStageMaximized)
-            || showManage
-            || showProjectsPanel
-            || showProjectsScreen
-            || showWorkflowLibrary
-            || showDeskGridDashboard
-            || showCreateCanvas
-            || showBinderOverlay
+            || (showSchedulingWorkflows && !schedulingWorkflowsMinimized)
     }
 
     /// Jesse kitchen Ask/dock only — Work/Create own their own prompt bars.
     /// Also feeds `panZoomCatcherBlocked` in `body` - see the guardrail
     /// comment on `deskOverlayChromeBlocked` above before adding a new
-    /// overlay case to either this or that property.
+    /// overlay case to `FieldDeskOverlay`.
     private var floatDockBlocked: Bool {
-        deskOverlayChromeBlocked || showStandaloneDesk || showCreateStudio
+        deskOverlayChromeBlocked || openOverlays.contains(.standaloneDesk) || openOverlays.contains(.createStudio)
     }
 
     private enum ModeToggleKind {
@@ -438,8 +438,8 @@ struct FieldDeskView: View {
     }
 
     private var modeToggleKind: ModeToggleKind {
-        if showStandaloneDesk { return .jessesCreate }
-        if showCreateStudio { return .jessesWork }
+        if openOverlays.contains(.standaloneDesk) { return .jessesCreate }
+        if openOverlays.contains(.createStudio) { return .jessesWork }
         return .createWork
     }
 
@@ -558,9 +558,10 @@ struct FieldDeskView: View {
                 // (already the "something big is covering the screen"
                 // signal used to hide the dock) rather than hand-maintaining
                 // a second, easy-to-forget copy of the same list. Found via
-                // a second real instance of this bug class: showActFieldBook
-                // wasn't in the original ad-hoc guard, so the ACT Field Book
-                // popup's own Contents roadmap was silently unhittable
+                // a second real instance of this bug class: the ACT Field Book
+                // overlay (its own separate `show`-prefixed flag before the
+                // `openOverlays`/`FieldDeskOverlay` migration) wasn't in the
+                // original ad-hoc guard, so its own Contents roadmap was silently unhittable
                 // underneath this catcher (confirmed via a full
                 // accessibility-tree dump - the button existed with the
                 // right identifier, just never received touches).
@@ -585,18 +586,18 @@ struct FieldDeskView: View {
                 }
 
                 // ACT Field Book (dash + notes) as an in-desk popup — not a new tab.
-                if showActFieldBook {
+                if openOverlays.contains(.actFieldBook) {
                     AnyView(
                         ActInstanceShellView(onMinimize: {
                             withAnimation(.easeInOut(duration: 0.2)) {
-                                showActFieldBook = false
+                                _ = openOverlays.remove(.actFieldBook)
                                 // Dashboard was kept alive underneath (see onOpenBinder
                                 // below) - minimizing just reveals it directly, no
                                 // need to also surface the free-drag Binder card. Only
                                 // fall back to that when Field Book was opened from a
                                 // non-dashboard path (binderBody, AI study_concept
                                 // action), where the dashboard was never showing.
-                                if !showDeskGridDashboard {
+                                if !openOverlays.contains(.deskGridDashboard) {
                                     showBinderPanel = true
                                     binderOpen = true
                                 }
@@ -616,7 +617,7 @@ struct FieldDeskView: View {
 
                 // Gcal box as an in-desk popup over the dashboard, same
                 // shape as ACT Field Book above — not the free-drag desk card.
-                if showCalendarOverlay {
+                if openOverlays.contains(.calendarOverlay) {
                     AnyView(
                         calendarOverlayLayer
                             .transition(.opacity)
@@ -627,7 +628,7 @@ struct FieldDeskView: View {
 
                 // Intel box as an in-desk popup over the dashboard, same
                 // shape as Gcal/Binder above.
-                if showIntelOverlay {
+                if openOverlays.contains(.intelOverlay) {
                     AnyView(
                         intelOverlayLayer
                             .transition(.opacity)
@@ -636,7 +637,7 @@ struct FieldDeskView: View {
                     )
                 }
 
-                if showBinderOverlay {
+                if openOverlays.contains(.binderOverlay) {
                     // No wrapper .accessibilityIdentifier here — that clobbers
                     // Memo/Doc/BYOB section ids (same family as workDock).
                     // binderOverlayLayer carries fieldDeskBinderOverlay on a marker.
@@ -647,20 +648,20 @@ struct FieldDeskView: View {
                     )
                 }
 
-                if showDeskGridDashboard {
+                if openOverlays.contains(.deskGridDashboard) {
                     AnyView(
                     DeskGridDashboardView(
                         initialRail: dashboardStartRail,
                         initialMemoText: store.memoText,
                         onOpenBinder: {
                             withAnimation(.easeInOut(duration: 0.2)) {
-                                showBinderOverlay = true
+                                _ = openOverlays.insert(.binderOverlay)
                             }
                         },
-                        onClose: { showDeskGridDashboard = false },
+                        onClose: { openOverlays.remove(.deskGridDashboard) },
                         onOpenCalendar: {
                             withAnimation(.easeInOut(duration: 0.2)) {
-                                showCalendarOverlay = true
+                                _ = openOverlays.insert(.calendarOverlay)
                             }
                             Task { await refreshDeskCalendar() }
                         },
@@ -672,12 +673,12 @@ struct FieldDeskView: View {
                             // its margins. Closing the dashboard first left
                             // Jesse's Kitchen visible around the box instead.
                             withAnimation(.easeInOut(duration: 0.2)) {
-                                showGmailBox = true
+                                _ = openOverlays.insert(.gmailBox)
                             }
                         },
                         onOpenIntel: {
                             withAnimation(.easeInOut(duration: 0.2)) {
-                                showIntelOverlay = true
+                                _ = openOverlays.insert(.intelOverlay)
                             }
                         },
                         onFileHomeworkToBinder: { title, body in
@@ -690,7 +691,7 @@ struct FieldDeskView: View {
                         onOpenCreate: { kind in
                             createCanvasKind = kind
                             withAnimation(.easeInOut(duration: 0.28)) {
-                                showCreateCanvas = true
+                                _ = openOverlays.insert(.createCanvas)
                             }
                         },
                         onOpenFlow: { id in
@@ -698,9 +699,10 @@ struct FieldDeskView: View {
                             // Archive/Book present as .fullScreenCover (always
                             // covers everything regardless), Apply Today layers
                             // above via zIndex(90). Closing the dashboard first
-                            // meant Done/close revealed whatever showDeskGrid-
-                            // Dashboard=false falls back to - Jesse's Kitchen -
-                            // instead of the dashboard you actually came from.
+                            // meant Done/close revealed whatever removing
+                            // `.deskGridDashboard` from `openOverlays` falls
+                            // back to - Jesse's Kitchen - instead of the
+                            // dashboard you actually came from.
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                                 switch id {
                                 case "resume": showResumeAgent = true
@@ -769,9 +771,9 @@ struct FieldDeskView: View {
                     )
                 }
 
-                if showApplyToday {
+                if openOverlays.contains(.applyToday) {
                     AnyView(
-                        JobOSShellView(onClose: { showApplyToday = false })
+                        JobOSShellView(onClose: { openOverlays.remove(.applyToday) })
                             .transition(.opacity)
                             // Above Work/Create web surfaces so workflows use the big area.
                             .zIndex(90)
@@ -793,7 +795,7 @@ struct FieldDeskView: View {
                                     showSchedulingWorkflows = false
                                     schedulingWorkflowsMinimized = false
                                 },
-                                onOpenApplyToday: { showApplyToday = true }
+                                onOpenApplyToday: { openOverlays.insert(.applyToday) }
                             )
                             // Corner-only minimize, same treatment as ACT stage's
                             // - collapses to a reconnectable chip on the desk
@@ -818,11 +820,11 @@ struct FieldDeskView: View {
                     )
                 }
 
-                if showGmailBox {
+                if openOverlays.contains(.gmailBox) {
                     AnyView(
                         GmailWorkflowBoxView(
                             onClose: {
-                                showGmailBox = false
+                                _ = openOverlays.remove(.gmailBox)
                                 gmailStartReconnect = false
                                 gmailOpenTopReply = false
                             },
@@ -863,34 +865,8 @@ struct FieldDeskView: View {
                     )
                 }
 
-                if showProjectsPanel {
-                    AnyView(
-                        ZStack {
-                            Color.black.opacity(0.55)
-                                .ignoresSafeArea()
-                                .onTapGesture { closeProjectsPanel() }
-                            projectsToolsPanel
-                                .frame(maxWidth: min(520, viewport.width - 48))
-                                .padding(20)
-                        }
-                        .zIndex(70)
-                        .transition(.opacity)
-                        .accessibilityIdentifier("fieldDeskProjectsPanel")
-                    )
-                }
-
-                // Projects screen — the Malevolent Shrine project, neatly on
-                // a white void. Tapping the shrine enters the work area.
-                if showProjectsScreen {
-                    AnyView(
-                        projectsScreen
-                            .zIndex(83)
-                            .transition(.opacity)
-                    )
-                }
-
                 // Standalone Desk — full separation from the kitchen.
-                if showStandaloneDesk {
+                if openOverlays.contains(.standaloneDesk) {
                     AnyView(
                         StandaloneDeskView(
                             onBackToKitchen: { closeStandaloneDesk() },
@@ -902,7 +878,7 @@ struct FieldDeskView: View {
                                 }
                             },
                             onWorkflows: {
-                                showWorkflowLibrary = true
+                                _ = openOverlays.insert(.workflowLibrary)
                             },
                             onSound: { on in
                                 kitchenSoundOn = on
@@ -913,7 +889,7 @@ struct FieldDeskView: View {
                 }
 
                 // Spatial Create — same polka doorway, cream orbital board.
-                if showCreateStudio {
+                if openOverlays.contains(.createStudio) {
                     AnyView(
                         CreateStudioView(onClose: { closeCreateStudio() })
                             .zIndex(86)
@@ -921,20 +897,20 @@ struct FieldDeskView: View {
                     )
                 }
 
-                if showCreateCanvas {
+                if openOverlays.contains(.createCanvas) {
                     AnyView(
                         CreateCanvasView(
                             kind: createCanvasKind,
                             studentName: deskChromeName ?? "there",
                             // Explicit re-assert, not just relying on
-                            // showDeskGridDashboard having stayed true the whole
-                            // time Create Canvas was open - Done was landing back
+                            // `.deskGridDashboard` having stayed in `openOverlays`
+                            // the whole time Create Canvas was open - Done was landing back
                             // on Create Canvas instead of the dashboard without
                             // this (confirmed via UI test + screen recording).
                             onClose: {
                                 withAnimation(.easeInOut(duration: 0.28)) {
-                                    showCreateCanvas = false
-                                    showDeskGridDashboard = true
+                                    _ = openOverlays.remove(.createCanvas)
+                                    _ = openOverlays.insert(.deskGridDashboard)
                                 }
                             }
                         )
@@ -956,15 +932,20 @@ struct FieldDeskView: View {
                     )
                 }
 
-                // ⚠️ Adding another full-screen `if show___ { ... .zIndex(N) }`
-                // overlay below this point (or anywhere above)? Add its flag
-                // to `deskOverlayChromeBlocked` (and `floatDockBlocked` if it
-                // should also suppress the bottom dock) a few dozen lines up
-                // in this file - see the guardrail comment there. Skipping
-                // this is silent: the overlay still paints correctly on top,
-                // it just won't receive touches, because the pan/zoom
-                // catcher a few blocks above (`panZoomCatcherBlocked`) will
-                // keep claiming the full screen underneath it.
+                // ⚠️ Adding another full-screen `if openOverlays.contains(.___)
+                // { ... .zIndex(N) }` overlay below this point (or anywhere
+                // above)? Add the case to `FieldDeskOverlay` and give
+                // `FieldDeskOverlay.blocksChrome` an explicit true/false for
+                // it (and make sure `floatDockBlocked` also covers it if it
+                // should suppress the bottom dock) - see the guardrail
+                // comment on `deskOverlayChromeBlocked` a few dozen lines up.
+                // `blocksChrome`'s switch is exhaustive, so forgetting this
+                // for a brand-new case is now a compile error rather than a
+                // silent bug - but it's still worth remembering why: the
+                // overlay would otherwise paint correctly on top and simply
+                // not receive touches, because the pan/zoom catcher a few
+                // blocks above (`panZoomCatcherBlocked`) would keep claiming
+                // the full screen underneath it.
 
                 if showAddPanel {
                     // Needs an explicit zIndex above the Jesse Kitchen WebView
@@ -1090,8 +1071,8 @@ struct FieldDeskView: View {
             // vanished entirely on those two screens and needed a swipe to
             // appear on Jesse's. Anchoring it to this always-visible header
             // instead gives it one consistent home across all three screens.
-            // `|| showDeskGridDashboard` extends this same persistent chrome
-            // onto the Work dashboard too - previously deskOverlayChromeBlocked
+            // `.deskGridDashboard` having `blocksChrome == true` extends this
+            // same persistent chrome onto the Work dashboard too - previously deskOverlayChromeBlocked
             // hid it there entirely, so the dashboard had no logo/call/sign-out
             // at all (Done was the dashboard's only way to interact with chrome).
             .overlay(alignment: .topLeading) {
@@ -1103,7 +1084,7 @@ struct FieldDeskView: View {
                 // other panels, making them hard to press). Every other
                 // screen (Jesse's Kitchen, Create Studio) keeps it -
                 // Manage has no other entry point there.
-                if !deskOverlayChromeBlocked && !showDeskGridDashboard {
+                if !deskOverlayChromeBlocked && !openOverlays.contains(.deskGridDashboard) {
                     HStack(spacing: 10) {
                         Button {
                             openManageFromChrome()
@@ -1137,7 +1118,7 @@ struct FieldDeskView: View {
             // so it isn't duplicated between the persistent chrome and
             // Manage anymore.
             .overlay(alignment: .topTrailing) {
-                if (!deskOverlayChromeBlocked || showDeskGridDashboard) && !showDeskGridDashboard {
+                if (!deskOverlayChromeBlocked || openOverlays.contains(.deskGridDashboard)) && !openOverlays.contains(.deskGridDashboard) {
                     HStack(spacing: 10) {
                         modeToggleBar
                     }
@@ -1225,31 +1206,40 @@ struct FieldDeskView: View {
                     }
             }
         }
-        .fullScreenCover(isPresented: $showWorkflowLibrary) {
+        .fullScreenCover(isPresented: Binding(
+            get: { openOverlays.contains(.workflowLibrary) },
+            set: { isOpen in
+                if isOpen {
+                    _ = openOverlays.insert(.workflowLibrary)
+                } else {
+                    _ = openOverlays.remove(.workflowLibrary)
+                }
+            }
+        )) {
             WorkflowLibraryView(
                 market: workflowMarket,
                 onOpenResumeBuilder: {
-                    showWorkflowLibrary = false
+                    _ = openOverlays.remove(.workflowLibrary)
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                         showResumeAgent = true
                     }
                 },
                 onOpenArchive: {
-                    showWorkflowLibrary = false
+                    _ = openOverlays.remove(.workflowLibrary)
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                         showArchiveWorkflow = true
                     }
                 },
                 onOpenBook: {
-                    showWorkflowLibrary = false
+                    _ = openOverlays.remove(.workflowLibrary)
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                         showBookWorkflow = true
                     }
                 },
                 onOpenApplyToday: {
-                    showWorkflowLibrary = false
+                    _ = openOverlays.remove(.workflowLibrary)
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                        showApplyToday = true
+                        _ = openOverlays.insert(.applyToday)
                     }
                 }
             )
@@ -1276,11 +1266,6 @@ struct FieldDeskView: View {
                 }
             )
         }
-        .sheet(isPresented: $showManage) {
-            AccountManageView()
-                .environmentObject(studentStore)
-                .environmentObject(authService)
-        }
         .sheet(isPresented: $showJesseCallSheet) {
             JesseCallSheetView(
                 call: jesseCall,
@@ -1293,9 +1278,6 @@ struct FieldDeskView: View {
                     showJesseCallSheet = false
                 }
             )
-        }
-        .fullScreenCover(isPresented: $showDocCook) {
-            TestInstanceView()
         }
         .fullScreenCover(isPresented: $showByobStudio) {
             CreateInstanceStudioView(binderStore: binderStore) { _ in }
@@ -1355,7 +1337,7 @@ struct FieldDeskView: View {
 
     /// The only real exit from the ACT stage back to the standalone work
     /// desk (see `fieldDeskActStageBackToWork`) — mirrors the same
-    /// close-current → brief delay → reopen `showStandaloneDesk` sequence
+    /// close-current → brief delay → reopen `.standaloneDesk` sequence
     /// `switchCreateToWork()` uses elsewhere in this file, rather than
     /// inventing a parallel transition.
     private func closeActStageBackToWork() {
@@ -1603,97 +1585,6 @@ struct FieldDeskView: View {
         .position(x: x + boxW / 2, y: y + boxH / 2)
     }
 
-    /// Projects screen: The Malevolent Shrine → Gen-Z lines → workspace starting → desk.
-    private var projectsScreen: some View {
-        ZStack(alignment: .topLeading) {
-            MalevolentShrineStage(
-                showTitle: true,
-                title: "The Malevolent Shrine",
-                subtitle: shrineCaption,
-                onShrineTap: shrineBeatPhase == .idle ? { startShrineEntranceBeat() } : nil,
-                centerOnly: true
-            )
-
-            if shrineBeatPhase == .idle {
-                Button {
-                    closeProjectsScreen()
-                } label: {
-                    HStack(spacing: 7) {
-                        Image(systemName: "chevron.left")
-                            .font(.system(size: 12, weight: .heavy))
-                        Text("Jesse's")
-                            .font(.system(size: 13, weight: .heavy, design: .rounded))
-                    }
-                    .foregroundColor(Color(fdHex: "143a2e"))
-                    .padding(.horizontal, 14)
-                    .padding(.vertical, 9)
-                    .background(
-                        Capsule()
-                            .fill(Color.white.opacity(0.95))
-                            .shadow(color: .black.opacity(0.14), radius: 10, y: 4)
-                    )
-                    .overlay(Capsule().strokeBorder(Color(fdHex: "143a2e").opacity(0.14), lineWidth: 1))
-                }
-                .buttonStyle(.plain)
-                .padding(.top, 14)
-                .padding(.leading, 16)
-                .accessibilityIdentifier("fieldDeskProjectsBack")
-            }
-        }
-        .accessibilityIdentifier("fieldDeskProjectsScreen")
-    }
-
-    private static let shrineBeatLines = [
-        "Where legends get made",
-        "Main character energy only",
-        "Build loud. Stay curious.",
-    ]
-
-    private func startShrineEntranceBeat() {
-        guard showProjectsScreen, shrineBeatPhase == .idle else { return }
-        shrineBeatPhase = .captions
-        var delay: TimeInterval = 0
-        for (index, line) in Self.shrineBeatLines.enumerated() {
-            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-                guard showProjectsScreen else { return }
-                withAnimation(.easeInOut(duration: 0.35)) {
-                    shrineCaption = line
-                }
-            }
-            delay += 1.15
-            if index == Self.shrineBeatLines.count - 1 {
-                DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-                    guard showProjectsScreen else { return }
-                    shrineBeatPhase = .starting
-                    withAnimation(.easeInOut(duration: 0.35)) {
-                        shrineCaption = "Your workspace is starting..."
-                    }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.35) {
-                        enterWorkAreaFromProjects()
-                    }
-                }
-            }
-        }
-    }
-
-    private func enterWorkAreaFromProjects() {
-        guard showProjectsScreen else { return }
-        withAnimation(.easeInOut(duration: 0.28)) {
-            showProjectsScreen = false
-            shrineBeatPhase = .idle
-            shrineCaption = ""
-        }
-        // Skip polka on Projects → desk; shrine beat already did the doorway.
-        openWorkCanvas()
-    }
-
-    private func closeProjectsScreen() {
-        shrineBeatPhase = .idle
-        shrineCaption = ""
-        withAnimation(.easeInOut(duration: 0.25)) { showProjectsScreen = false }
-        JesseKitchenBackgroundView.exitProjectsCamera()
-    }
-
     private var modeToggleBar: some View {
         HStack(spacing: 0) {
             switch modeToggleKind {
@@ -1746,9 +1637,9 @@ struct FieldDeskView: View {
     }
 
     private func openManageFromChrome() {
-        if showStandaloneDesk {
+        if openOverlays.contains(.standaloneDesk) {
             openManageHubFromDesk()
-        } else if showCreateStudio {
+        } else if openOverlays.contains(.createStudio) {
             closeCreateStudio()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
                 NotificationCenter.default.post(name: .mcOpenHubFromDesk, object: nil)
@@ -1766,30 +1657,30 @@ struct FieldDeskView: View {
     /// one merged dock. Not `StandaloneDeskView` / deskweb Field Binder.
     private func openWorkCanvas(rail: DeskGridDashboardView.Rail = .none) {
         dashboardStartRail = rail
-        showStandaloneDesk = false
-        showCreateStudio = false
-        showCreateCanvas = false
-        showDeskGridDashboard = true
+        _ = openOverlays.remove(.standaloneDesk)
+        _ = openOverlays.remove(.createStudio)
+        _ = openOverlays.remove(.createCanvas)
+        _ = openOverlays.insert(.deskGridDashboard)
     }
 
     /// PDF Create canvas (pages 1–3): slide or GDoc, Jesse rail, Ask dock.
     private func openCreateCanvas() {
         createCanvasKind = .presentation
-        showStandaloneDesk = false
-        showCreateStudio = false
+        _ = openOverlays.remove(.standaloneDesk)
+        _ = openOverlays.remove(.createStudio)
         // Dashboard stays mounted (not torn down) - same shape as Binder/
         // Calendar/Gmail. In practice this pill is hidden whenever the
         // dashboard shows (deskOverlayChromeBlocked), but leaving this true
         // matched the old tear-down-first pattern that read as "opening in
         // a disconnected new space" everywhere else it was fixed tonight.
         withAnimation(.easeInOut(duration: 0.28)) {
-            showCreateCanvas = true
+            _ = openOverlays.insert(.createCanvas)
         }
     }
 
     private func switchDeskToCreate() {
-        guard showStandaloneDesk else { return }
-        showStandaloneDesk = false
+        guard openOverlays.contains(.standaloneDesk) else { return }
+        _ = openOverlays.remove(.standaloneDesk)
         JesseKitchenBackgroundView.exitProjectsCamera()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             openCreateStudio()
@@ -1797,7 +1688,7 @@ struct FieldDeskView: View {
     }
 
     private func switchCreateToWork() {
-        guard showCreateStudio else { return }
+        guard openOverlays.contains(.createStudio) else { return }
         closeCreateStudio()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
             openWorkCanvas()
@@ -1815,10 +1706,10 @@ struct FieldDeskView: View {
 
     /// Polka dots bloom over the kitchen; the Desk waits underneath.
     private func openStandaloneDesk() {
-        guard !showStandaloneDesk, !showCreateStudio else { return }
+        guard !openOverlays.contains(.standaloneDesk), !openOverlays.contains(.createStudio) else { return }
         withAnimation(.easeInOut(duration: 0.85)) { polkaProgress = 1 }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
-            showStandaloneDesk = true
+            _ = openOverlays.insert(.standaloneDesk)
             withAnimation(.easeInOut(duration: 0.55)) { polkaProgress = 0 }
         }
     }
@@ -1826,7 +1717,7 @@ struct FieldDeskView: View {
     private func closeStandaloneDesk() {
         withAnimation(.easeInOut(duration: 0.6)) { polkaProgress = 1 }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.65) {
-            showStandaloneDesk = false
+            _ = openOverlays.remove(.standaloneDesk)
             // Kitchen camera settles front-facing behind the sheet.
             JesseKitchenBackgroundView.exitProjectsCamera()
             withAnimation(.easeInOut(duration: 0.6)) { polkaProgress = 0 }
@@ -1835,15 +1726,15 @@ struct FieldDeskView: View {
 
     /// Open spatial Create board (desk-os/studio · spatial2) over Jesse's.
     private func openCreateStudio() {
-        guard !showCreateStudio, !showStandaloneDesk, !showProjectsScreen else { return }
+        guard !openOverlays.contains(.createStudio), !openOverlays.contains(.standaloneDesk) else { return }
         withAnimation(.easeInOut(duration: 0.28)) {
-            showCreateStudio = true
+            _ = openOverlays.insert(.createStudio)
         }
     }
 
     private func closeCreateStudio() {
         withAnimation(.easeInOut(duration: 0.28)) {
-            showCreateStudio = false
+            _ = openOverlays.remove(.createStudio)
         }
     }
 
@@ -1874,7 +1765,7 @@ struct FieldDeskView: View {
         case .gmail:
             placeWidget(.gmail)
         case .dashboard:
-            showDeskGridDashboard = true
+            _ = openOverlays.insert(.deskGridDashboard)
         }
     }
 
@@ -2400,7 +2291,7 @@ struct FieldDeskView: View {
             // Mail → movable Gmail box. Lime only while that box is open.
             Button {
                 gmailOpenTopReply = false
-                showGmailBox = true
+                _ = openOverlays.insert(.gmailBox)
             } label: {
                 Image(systemName: "envelope")
                     .font(.system(size: 14, weight: .semibold))
@@ -2408,7 +2299,7 @@ struct FieldDeskView: View {
                     .frame(width: 40, height: 40)
                     .background(
                         RoundedRectangle(cornerRadius: 12)
-                            .fill(showGmailBox ? Color(fdHex: "c4f547") : Color.white)
+                            .fill(openOverlays.contains(.gmailBox) ? Color(fdHex: "c4f547") : Color.white)
                     )
             }
             .buttonStyle(.plain)
@@ -2433,7 +2324,7 @@ struct FieldDeskView: View {
             .accessibilityLabel("Workflows")
             .simultaneousGesture(
                 LongPressGesture(minimumDuration: 0.55).onEnded { _ in
-                    showWorkflowLibrary = true
+                    _ = openOverlays.insert(.workflowLibrary)
                 }
             )
 
@@ -2765,11 +2656,10 @@ struct FieldDeskView: View {
                 // ACT → in-desk Field Book popup with notes (not Doc→Cook, not a new tab).
                 Button {
                     showBlankPage = false
-                    showGmailBox = false
-                    showApplyToday = false
-                    showDocCook = false
+                    _ = openOverlays.remove(.gmailBox)
+                    _ = openOverlays.remove(.applyToday)
                     withAnimation(.easeInOut(duration: 0.2)) {
-                        showActFieldBook = true
+                        _ = openOverlays.insert(.actFieldBook)
                     }
                 } label: {
                     VStack(alignment: .leading, spacing: 10) {
@@ -2956,7 +2846,7 @@ struct FieldDeskView: View {
             Spacer(minLength: 0)
             Button {
                 gmailOpenTopReply = false
-                showGmailBox = true
+                _ = openOverlays.insert(.gmailBox)
                 focusedCard = .gmail
             } label: {
                 Text(store.isConnected("gmail") ? "Open Gmail" : "Connect Gmail")
@@ -2999,7 +2889,7 @@ struct FieldDeskView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
     }
 
-    /// Gcal box for `showCalendarOverlay` — a centered card over the
+    /// Gcal box for `.calendarOverlay` (in `openOverlays`) — a centered card over the
     /// dashboard (same "box on screen" shape as `calendarBody`'s content,
     /// dimmer scrim + its own minimize instead of the free-drag card frame).
     private var calendarOverlayLayer: some View {
@@ -3052,11 +2942,11 @@ struct FieldDeskView: View {
 
     private func closeCalendarOverlay() {
         withAnimation(.easeInOut(duration: 0.2)) {
-            showCalendarOverlay = false
+            _ = openOverlays.remove(.calendarOverlay)
         }
     }
 
-    /// Intel box for `showIntelOverlay` - same "centered card over the
+    /// Intel box for `.intelOverlay` (in `openOverlays`) - same "centered card over the
     /// dashboard" shape as `calendarOverlayLayer`, reusing the existing
     /// `intelBody` content (recent intel lines) instead of the old
     /// free-drag desk card.
@@ -3097,7 +2987,7 @@ struct FieldDeskView: View {
 
     private func closeIntelOverlay() {
         withAnimation(.easeInOut(duration: 0.2)) {
-            showIntelOverlay = false
+            _ = openOverlays.remove(.intelOverlay)
         }
     }
 
@@ -3223,14 +3113,14 @@ struct FieldDeskView: View {
 
     private func closeBinderOverlay() {
         withAnimation(.easeInOut(duration: 0.2)) {
-            showBinderOverlay = false
+            _ = openOverlays.remove(.binderOverlay)
         }
     }
 
     private func openActFieldBookFromBinder() {
         withAnimation(.easeInOut(duration: 0.2)) {
-            showBinderOverlay = false
-            showActFieldBook = true
+            _ = openOverlays.remove(.binderOverlay)
+            _ = openOverlays.insert(.actFieldBook)
         }
     }
 
@@ -3403,7 +3293,7 @@ struct FieldDeskView: View {
                 Button {
                     activeGuideId = nil
                     gmailStartReconnect = true
-                    showGmailBox = true
+                    _ = openOverlays.insert(.gmailBox)
                 } label: { guidePrimary("Connect Gmail + Calendar") }
                 .buttonStyle(.plain)
                 .accessibilityIdentifier("fieldDeskConnectOpenGmail")
@@ -3415,7 +3305,7 @@ struct FieldDeskView: View {
                         flash("Calendar refreshed")
                     } else {
                         gmailStartReconnect = true
-                        showGmailBox = true
+                        _ = openOverlays.insert(.gmailBox)
                     }
                 } label: {
                     guidePrimary(
@@ -3505,108 +3395,6 @@ struct FieldDeskView: View {
             )
     }
 
-    private func closeProjectsPanel() {
-        withAnimation(.easeInOut(duration: 0.2)) {
-            showProjectsPanel = false
-        }
-        JesseKitchenBackgroundView.exitProjectsCamera()
-    }
-
-    private func openProjectTool(_ action: KitchenDeskAction) {
-        closeProjectsPanel()
-        // Slight delay so the panel dismisses before the work desk mounts.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
-            handleKitchenAction(action)
-        }
-    }
-
-    /// Projects panel — Binder / Intel / Transcribe / Doc / Memo / Gmail / Gcal + Go Back.
-    private var projectsToolsPanel: some View {
-        let tools: [(KitchenDeskAction, String, String)] = [
-            (.binder, "books.vertical.fill", "Binder"),
-            (.intel, "sparkles", "Intel"),
-            (.notes, "waveform", "Transcribe"),
-            (.doc, "doc.text.fill", "Doc"),
-            (.memo, "note.text", "Memo"),
-            (.gmail, "envelope.fill", "Gmail"),
-            (.calendar, "calendar", "Gcal"),
-        ]
-
-        return VStack(alignment: .leading, spacing: 18) {
-            HStack {
-                Text("Desk tools")
-                    .font(.system(size: 22, weight: .bold, design: .rounded))
-                    .foregroundColor(Color(fdHex: "1c1a17"))
-                Spacer()
-            }
-
-            LazyVGrid(
-                columns: [
-                    GridItem(.flexible(), spacing: 14),
-                    GridItem(.flexible(), spacing: 14),
-                    GridItem(.flexible(), spacing: 14),
-                    GridItem(.flexible(), spacing: 14),
-                ],
-                spacing: 14
-            ) {
-                ForEach(tools, id: \.2) { tool in
-                    Button {
-                        openProjectTool(tool.0)
-                    } label: {
-                        VStack(spacing: 10) {
-                            Image(systemName: tool.1)
-                                .font(.system(size: 28, weight: .semibold))
-                                .foregroundColor(Color(fdHex: "0c1207"))
-                                .frame(width: 56, height: 56)
-                                .background(Circle().fill(Color(fdHex: "c4f547")))
-                            Text(tool.2)
-                                .font(.system(size: 13, weight: .bold, design: .rounded))
-                                .foregroundColor(Color(fdHex: "1c1a17"))
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 16)
-                        .background(
-                            RoundedRectangle(cornerRadius: 16, style: .continuous)
-                                .fill(Color(fdHex: "f4efe2"))
-                        )
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 16, style: .continuous)
-                                .strokeBorder(Color.black.opacity(0.06), lineWidth: 1)
-                        )
-                    }
-                    .buttonStyle(.plain)
-                    .accessibilityIdentifier("fieldDeskProject_\(tool.2)")
-                }
-            }
-
-            Button {
-                closeProjectsPanel()
-            } label: {
-                HStack(spacing: 10) {
-                    Image(systemName: "arrow.uturn.backward")
-                        .font(.system(size: 15, weight: .bold))
-                    Text("Go Back")
-                        .font(.system(size: 16, weight: .bold, design: .rounded))
-                }
-                .foregroundColor(Color(fdHex: "f4efe2"))
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 14)
-                .background(
-                    RoundedRectangle(cornerRadius: 14, style: .continuous)
-                        .fill(Color(fdHex: "1f2a22"))
-                )
-            }
-            .buttonStyle(.plain)
-            .accessibilityIdentifier("fieldDeskProjectsGoBack")
-        }
-        .padding(22)
-        .background(
-            RoundedRectangle(cornerRadius: 22, style: .continuous)
-                .fill(Color(fdHex: "fbf8f3"))
-                .shadow(color: .black.opacity(0.45), radius: 28, y: 14)
-        )
-    }
-
     private var addPanel: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 14) {
@@ -3639,7 +3427,7 @@ struct FieldDeskView: View {
                 ) {
                     showAddPanel = false
                     dashboardStartRail = .flows
-                    showDeskGridDashboard = true
+                    _ = openOverlays.insert(.deskGridDashboard)
                 }
                 .accessibilityIdentifier("fieldDeskAddFlows")
 
@@ -3723,7 +3511,7 @@ struct FieldDeskView: View {
                     showAddPanel = false
                     createCanvasKind = .presentation
                     withAnimation(.easeInOut(duration: 0.28)) {
-                        showCreateCanvas = true
+                        _ = openOverlays.insert(.createCanvas)
                     }
                 }
                 .accessibilityIdentifier("fieldDeskAddPresentation")
@@ -3756,7 +3544,7 @@ struct FieldDeskView: View {
                 ) {
                     showAddPanel = false
                     dashboardStartRail = .none
-                    showDeskGridDashboard = true
+                    _ = openOverlays.insert(.deskGridDashboard)
                 }
                 .accessibilityIdentifier("fieldDeskAddDashboard")
 
@@ -4009,7 +3797,7 @@ struct FieldDeskView: View {
                 DeskAskClient.CalendarEvent(day: $0.day, title: $0.title)
             },
             connected: connected,
-            openSurface: showGmailBox ? "gmail" : (showApplyToday ? "applyToday" : (showSchedulingWorkflows ? "schedulingWorkflows" : "desk"))
+            openSurface: openOverlays.contains(.gmailBox) ? "gmail" : (openOverlays.contains(.applyToday) ? "applyToday" : (showSchedulingWorkflows ? "schedulingWorkflows" : "desk"))
         )
 
         Task { @MainActor in
@@ -4028,12 +3816,12 @@ struct FieldDeskView: View {
             switch action.type {
             case "open_gmail":
                 gmailOpenTopReply = false
-                showGmailBox = true
+                _ = openOverlays.insert(.gmailBox)
             case "open_gmail_top_reply":
                 gmailOpenTopReply = true
-                showGmailBox = true
+                _ = openOverlays.insert(.gmailBox)
             case "open_apply":
-                showApplyToday = true
+                _ = openOverlays.insert(.applyToday)
             case "open_connect":
                 focusedCard = .connect
                 if let first = FieldDeskStore.connectors.first(where: { !store.isConnected($0.id) }) {
@@ -4051,11 +3839,10 @@ struct FieldDeskView: View {
                 if let conceptId = action.payload?.trimmingCharacters(in: .whitespacesAndNewlines), !conceptId.isEmpty {
                     pendingStudyConceptId = conceptId
                     showBlankPage = false
-                    showGmailBox = false
-                    showApplyToday = false
-                    showDocCook = false
+                    _ = openOverlays.remove(.gmailBox)
+                    _ = openOverlays.remove(.applyToday)
                     withAnimation(.easeInOut(duration: 0.2)) {
-                        showActFieldBook = true
+                        _ = openOverlays.insert(.actFieldBook)
                     }
                 }
             default:
@@ -4094,7 +3881,7 @@ struct FieldDeskView: View {
         // this only bypasses Google Sign-In.
         if args.contains("--ui-testing-gmail-digest") {
             GmailClient.shared.seedForTesting(messages: GmailClient.testingInbox)
-            showGmailBox = true
+            _ = openOverlays.insert(.gmailBox)
         }
     }
 }

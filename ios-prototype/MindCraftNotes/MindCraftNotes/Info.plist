@@ -19,6 +19,8 @@
 	<string>The Desk reads your Calendar to show this week's events on the Calendar card.</string>
 	<key>NSCalendarsUsageDescription</key>
 	<string>The Desk reads your Calendar to show this week's events on the Calendar card.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>MindCraft uses your location to help you find tutors near you.</string>
 	<key>UIAppFonts</key>
 	<array/>
 	<key>LSApplicationQueriesSchemes</key>

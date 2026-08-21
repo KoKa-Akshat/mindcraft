@@ -45,21 +45,12 @@ struct DeskShellView: View {
     // navigating away from that screen never ends an in-progress call.
     @StateObject private var jesseCall = JesseCallSession()
     @State private var showJesseCallSheet = false
-    /// "Your workspace is starting up" boot slide - explicitly removed per
-    /// product direction (login should land directly on the workspace, no
-    /// intermediate loading screen). FieldDeskView already boots straight
-    /// to the Work dashboard on its own, so there's nothing left for the
-    /// slide to bridge to.
-    @State private var showBoot = false
     @State private var showWorkDesk = true
-    @State private var kitchenReady = false
     @State private var showActFieldBook = false
     /// Item-based Field Desk presentation so `opensAct` is not stale-captured
     /// by `fullScreenCover(isPresented:)` (SwiftUI evaluates the content
     /// closure against the prior render's state).
     @State private var fieldDeskRoute: FieldDeskRoute?
-    @State private var showTestInstance = false
-    @State private var showCheckIn = false
     /// Swaps the "Tutors nearby" slot to Friends content in place - was a
     /// separate fullScreenCover (FriendsView), which pushed to a whole new
     /// screen instead of updating the hub itself.
@@ -90,8 +81,7 @@ struct DeskShellView: View {
 
     var body: some View {
         ZStack {
-            // Mount Jesse under the boot so it can load while the slide runs.
-            if showWorkDesk || showBoot {
+            if showWorkDesk {
                 FieldDeskView(
                     initialActStage: false,
                     // Land straight on the Work dashboard after login,
@@ -102,7 +92,6 @@ struct DeskShellView: View {
                         switch inst {
                         case .custom:
                             showWorkDesk = false
-                            showBoot = false
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
                                 launchBoundInstance(inst)
                             }
@@ -114,22 +103,6 @@ struct DeskShellView: View {
                 .environmentObject(studentStore)
                 .environmentObject(authService)
                 .environmentObject(jesseCall)
-                // Keep fully opaque under the boot — near-zero opacity makes WKWebView flash white.
-                .allowsHitTesting(!showBoot)
-            }
-
-            if showBoot {
-                DeskBootView(
-                    kitchenReady: kitchenReady,
-                    onComplete: {
-                        withAnimation(.easeInOut(duration: 0.45)) {
-                            showBoot = false
-                            showWorkDesk = true
-                        }
-                    }
-                )
-                .transition(.opacity)
-                .zIndex(20)
             }
 
             // Sibling of FieldDeskView, not nested inside it - see
@@ -157,10 +130,6 @@ struct DeskShellView: View {
             )
         }
         .background(Color(shellHex: "0f1f18").ignoresSafeArea())
-        .animation(.easeInOut(duration: 0.45), value: showBoot)
-        .onReceive(NotificationCenter.default.publisher(for: .mcKitchenReady)) { _ in
-            kitchenReady = true
-        }
         .onReceive(NotificationCenter.default.publisher(for: .mcOpenHubFromDesk)) { _ in
             // If Field Desk is up as a cover, dismiss it first — presenting
             // two covers from the same host silently fails.
@@ -179,22 +148,10 @@ struct DeskShellView: View {
             // both was a duplicate control for the same action.
             hub
             // Attached HERE, not on the outer body - whatever sets
-            // showCheckIn needs to live inside this fullScreenCover's own
+            // showManage needs to live inside this fullScreenCover's own
             // content. SwiftUI silently no-ops a .sheet() declared on an
             // ancestor OUTSIDE the currently-presented fullScreenCover's
-            // own hosted hierarchy: showCheckIn correctly flipped true
-            // (confirmed no crash), but no sheet ever appeared - the real
-            // bug behind MasteryCheckInSheet being unreachable. showCheckIn
-            // itself is currently unreachable from anywhere in the UI
-            // (its one trigger, callButton, was removed - see the note
-            // near hubSignOutFooter/orbRow), so this .sheet() is presently
-            // dead code too, kept only because the pipeline it feeds is
-            // real and this may get re-wired to something else.
-            .sheet(isPresented: $showCheckIn) {
-                MasteryCheckInSheet(store: goalStore) { message in
-                    flashHub(message)
-                }
-            }
+            // own hosted hierarchy.
             .sheet(isPresented: $showManage) {
                 AccountManageView()
                     .environmentObject(authService)
@@ -234,10 +191,6 @@ struct DeskShellView: View {
             .environmentObject(studentStore)
             .environmentObject(authService)
             .interactiveDismissDisabled(true)
-        }
-        .fullScreenCover(isPresented: $showTestInstance) {
-            // Round 25: document→cook learning instance (McCreary stack showcase).
-            TestInstanceView()
         }
         .fullScreenCover(isPresented: $showFindTutor) {
             NavigationStack {
@@ -531,11 +484,13 @@ struct DeskShellView: View {
     /// every other call surface uses), with the same transcript sheet.
     // callButton removed - Call is gone from this page entirely (the
     // persistent chrome/JesseCallPill already reach Jesse from anywhere).
-    // It previously replaced showCheckIn (the mastery check-in form) here;
-    // that form and the affective-state pipeline it fed (webhook ->
-    // affective_state Firestore doc -> /recommend's stress softening)
-    // still exist untouched, just unreachable from this page now, same as
-    // before this button existed - flagged, not silently dropped.
+    // It previously replaced showCheckIn (the mastery check-in form,
+    // MasteryCheckInSheet) here; with that trigger gone the form was fully
+    // unreachable, so both showCheckIn and MasteryCheckInSheet have since
+    // been removed as dead code. The affective-state pipeline it fed
+    // (webhook -> affective_state Firestore doc -> /recommend's stress
+    // softening) is untouched by that removal - it's driven from elsewhere
+    // (the web app's own check-in surface), not from this native form.
 
     /// `.hub-orb-row` - the rotating wireframe cube (web: a 3D CSS cube,
     /// 6 faces + 3 cross planes, `rotateX(-18deg)` + a 16s full Y turn)
@@ -581,7 +536,12 @@ struct DeskShellView: View {
         case .actFieldBook:
             showActFieldBook = true
         case .testCook:
-            showTestInstance = true
+            // Unreachable: both call sites that invoke launchBoundInstance
+            // explicitly `break` on `.testCook` before ever reaching here
+            // (see the `onLaunchInstance` closures above). Kept as a no-op
+            // case, not removed outright, so this switch stays exhaustive
+            // over `DeskBoundInstance` without a `default:`.
+            break
         case .custom(let id, _, _):
             openCustomId = id
         }
@@ -1527,282 +1487,6 @@ private struct MasteryCubeView: View {
             context.fill(path, with: .color(plane.fill))
             context.stroke(path, with: .color(plane.stroke), lineWidth: plane.lineWidth)
         }
-    }
-}
-
-// MARK: - Mastery check-in sheet (port of hubCall.js's panel)
-
-/// `js/hubCall.js`'s check-in dialog as a native sheet - on iPad a sheet
-/// presents as a centered card, the same centered-modal-over-dim-veil
-/// shape `.hub-call-panel` has on web. Colors are the web panel's literal
-/// values (white card, `#3d6b4f` kicker/slider accent, `#1f2a22` save
-/// pill) - the panel is a light surface on web and stays one here,
-/// explicit hex so OS dark mode can't invert it. Student branch only: the
-/// web's tutor variant keys off web-side onboarding role state that has
-/// no native equivalent.
-private struct MasteryCheckInSheet: View {
-    @ObservedObject var store: DeskGoalStore
-    let onSaved: (String) -> Void
-    @Environment(\.dismiss) private var dismiss
-    @State private var note = ""
-    /// Web slider default: `value="40"`.
-    @State private var pct: Double = 40
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            HStack {
-                Text("MASTERY CHECK-IN")
-                    .font(.system(size: 12, weight: .bold))
-                    .tracking(0.9)
-                    .foregroundColor(Color(shellHex: "3d6b4f"))
-                Spacer()
-                Button { dismiss() } label: {
-                    Text("\u{2212}")
-                        .font(.system(size: 16, weight: .semibold))
-                        .foregroundColor(Color(shellHex: "333333"))
-                        .frame(width: 28, height: 28)
-                        .background(RoundedRectangle(cornerRadius: 8, style: .continuous).fill(Color(shellHex: "f1f1f3")))
-                }
-                .buttonStyle(.plain)
-                .accessibilityIdentifier("deskCallClose")
-            }
-
-            Text("How solid is \(store.focusedInstance.name) toward your goal?")
-                .font(.system(size: 14))
-                .foregroundColor(Color(shellHex: "444444"))
-
-            ZStack(alignment: .topLeading) {
-                if note.isEmpty {
-                    Text("A few sentences \u{00B7} what feels shaky, what clicked\u{2026}")
-                        .font(.system(size: 14))
-                        .foregroundColor(Color(shellHex: "444444").opacity(0.45))
-                        .padding(.top, 14)
-                        .padding(.leading, 11)
-                }
-                TextEditor(text: $note)
-                    .font(.system(size: 14))
-                    .foregroundColor(Color(shellHex: "1a1a1a"))
-                    .scrollContentBackground(.hidden)
-                    .padding(6)
-                    .frame(minHeight: 84, maxHeight: 120)
-                    .onChange(of: note) { _, newValue in
-                        // Web textarea `maxlength="220"`.
-                        if newValue.count > 220 { note = String(newValue.prefix(220)) }
-                    }
-                    .accessibilityIdentifier("deskCallNote")
-            }
-            .background(
-                RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .fill(Color.white)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12, style: .continuous)
-                            .stroke(Color(shellHex: "e4e4e7"), lineWidth: 1)
-                    )
-            )
-
-            VStack(alignment: .leading, spacing: 8) {
-                Text("Honest estimate")
-                    .font(.system(size: 12, weight: .semibold))
-                    .foregroundColor(Color(shellHex: "555555"))
-                HStack(spacing: 12) {
-                    Slider(value: $pct, in: 0...100, step: 1)
-                        .tint(Color(shellHex: "3d6b4f"))
-                        .accessibilityIdentifier("deskCallSlider")
-                    Text("\(Int(pct))%")
-                        .font(.system(size: 14, weight: .bold))
-                        .monospacedDigit()
-                        .foregroundColor(Color(shellHex: "1f2a22"))
-                        .frame(minWidth: 44, alignment: .trailing)
-                }
-            }
-
-            HStack(spacing: 8) {
-                Spacer()
-                Button { dismiss() } label: {
-                    Text("Not now")
-                        .font(.system(size: 13, weight: .semibold))
-                        .foregroundColor(Color(shellHex: "555555"))
-                        .padding(.horizontal, 14)
-                        .padding(.vertical, 10)
-                        .background(Capsule().stroke(Color(shellHex: "e4e4e7"), lineWidth: 1))
-                }
-                .buttonStyle(.plain)
-                .accessibilityIdentifier("deskCallNotNow")
-                Button {
-                    let message = store.saveCheckIn(
-                        pct: Int(pct),
-                        note: note.trimmingCharacters(in: .whitespacesAndNewlines)
-                    )
-                    dismiss()
-                    onSaved(message)
-                } label: {
-                    Text("Save check-in")
-                        .font(.system(size: 13, weight: .semibold))
-                        .foregroundColor(.white)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 10)
-                        .background(Capsule().fill(Color(shellHex: "1f2a22")))
-                }
-                .buttonStyle(.plain)
-                .accessibilityIdentifier("deskCallSave")
-            }
-            .padding(.top, 4)
-        }
-        .padding(18)
-        .frame(maxWidth: 420)
-        .presentationBackground(Color.white)
-    }
-}
-
-/// Classic dark boot — slow tips until Jesse’s kitchen is ready.
-private struct DeskBootView: View {
-    var kitchenReady: Bool
-    let onComplete: () -> Void
-
-    @State private var reveal = false
-    @State private var tipIndex = 0
-    @State private var pulse = false
-    @State private var finished = false
-    @State private var appearedAt = Date()
-    @State private var glyphPhase = false
-
-    private let askTips = [
-        "Ask: build my resume from this week's wins",
-        "Ask: wire Binder notes into a practice set",
-        "Ask: turn Gmail dues into a study plan",
-        "Ask: draft my Macalester apply packet",
-        "Ask: connect Intel + Calendar and find my free block",
-        "Ask: spin a study playlist from tonight's worksheet",
-        "Ask: make a 3-slide pitch from my project notes",
-        "Ask: what should I lock in before Friday?",
-    ]
-
-    private let deskGlyphs: [(system: String, tint: Color)] = [
-        ("books.vertical.fill", Color(shellHex: "c4f547")),
-        ("sparkles", Color(shellHex: "c4f547")),
-        ("waveform", Color(shellHex: "9ad4ff")),
-        ("doc.text.fill", ShellColor.ink),
-        ("note.text", Color(shellHex: "f0c674")),
-        ("envelope.fill", Color(shellHex: "ff8a80")),
-        ("calendar", Color(shellHex: "80cbc4")),
-    ]
-
-    var body: some View {
-        ZStack {
-            ShellBackground()
-
-            VStack(spacing: 0) {
-                Spacer(minLength: 72)
-
-                Text("Your workspace is starting up")
-                    .font(.system(size: 28, weight: .bold, design: .rounded))
-                    .foregroundColor(ShellColor.ink)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, 28)
-
-                HStack(spacing: 8) {
-                    ForEach(0..<3, id: \.self) { i in
-                        Circle()
-                            .fill(ShellColor.brandGreen.opacity(pulse || i == tipIndex % 3 ? 1 : 0.35))
-                            .frame(width: 8, height: 8)
-                    }
-                }
-                .padding(.top, 14)
-
-                Spacer().frame(height: 28)
-
-                // Ask + logos in one tight card.
-                VStack(spacing: 18) {
-                    Text(askTips[tipIndex % askTips.count])
-                        .font(.system(size: 17, weight: .semibold, design: .rounded))
-                        .foregroundColor(ShellColor.ink.opacity(0.85))
-                        .multilineTextAlignment(.center)
-                        .frame(maxWidth: .infinity)
-                        .id(tipIndex)
-                        .transition(.opacity)
-
-                    HStack(spacing: 10) {
-                        ForEach(Array(deskGlyphs.enumerated()), id: \.offset) { index, glyph in
-                            Image(systemName: glyph.system)
-                                .font(.system(size: 20, weight: .semibold))
-                                .foregroundColor(glyph.tint)
-                                .frame(width: 42, height: 42)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                        .fill(Color(shellHex: "0c1a14").opacity(0.85))
-                                )
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                        .strokeBorder(ShellColor.ink.opacity(0.10), lineWidth: 1)
-                                )
-                                .offset(y: glyphPhase && index % 2 == 0 ? -3 : (glyphPhase ? 2 : 0))
-                                .animation(
-                                    .easeInOut(duration: 1.8).repeatForever(autoreverses: true).delay(Double(index) * 0.1),
-                                    value: glyphPhase
-                                )
-                        }
-                    }
-                }
-                .padding(.horizontal, 22)
-                .padding(.vertical, 22)
-                .frame(maxWidth: 560)
-                .background(
-                    RoundedRectangle(cornerRadius: 22, style: .continuous)
-                        .fill(ShellColor.cardFill)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 22, style: .continuous)
-                                .strokeBorder(ShellColor.ink.opacity(0.10), lineWidth: 1)
-                        )
-                )
-                .padding(.horizontal, 28)
-
-                Spacer(minLength: 72)
-            }
-            .opacity(reveal ? 1 : 0)
-            .offset(y: reveal ? 0 : 10)
-        }
-        .onAppear {
-            appearedAt = Date()
-            withAnimation(.easeOut(duration: 0.7)) { reveal = true }
-            withAnimation(.easeInOut(duration: 0.9).repeatForever(autoreverses: true)) {
-                pulse = true
-            }
-            glyphPhase = true
-            Timer.scheduledTimer(withTimeInterval: 2.4, repeats: true) { timer in
-                if finished {
-                    timer.invalidate()
-                    return
-                }
-                withAnimation(.easeInOut(duration: 0.55)) {
-                    tipIndex += 1
-                }
-            }
-        }
-        .onChange(of: kitchenReady) { _, ready in
-            guard ready else { return }
-            tryFinishBoot()
-        }
-        .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 6.5) {
-                tryFinishBoot()
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 14) {
-                finishBoot()
-            }
-        }
-    }
-
-    private func tryFinishBoot() {
-        let elapsed = Date().timeIntervalSince(appearedAt)
-        // Wait until kitchen is ready AND we've shown the slide long enough.
-        guard kitchenReady, elapsed >= 6.0 else { return }
-        finishBoot()
-    }
-
-    private func finishBoot() {
-        guard !finished else { return }
-        finished = true
-        onComplete()
     }
 }
 

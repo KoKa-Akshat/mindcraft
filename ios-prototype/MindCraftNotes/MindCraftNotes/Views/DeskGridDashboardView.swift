@@ -151,6 +151,13 @@ struct DeskGridDashboardView: View {
 
     // MARK: - Homework Help (the tile itself is the upload target now)
     @State private var showHomeworkImporter = false
+    /// Chapter Library sheet (2026-08-20) — assembled, gated chapter
+    /// content from mindcraft-content-engine's book_assembler, fetched live
+    /// via BookLibraryClient. A plain `.sheet`, not another FieldDeskView-
+    /// style ZStack overlay — sidesteps that system's documented touch-
+    /// swallowing bug class entirely (see CLAUDE.md's FieldDeskView
+    /// section) by using UIKit's own presentation controller instead.
+    @State private var showBookLibrary = false
     @State private var homeworkUploading = false
     @State private var homeworkError: String?
     @State private var homeworkUploads: [HomeworkUploadSummary] = []
@@ -645,6 +652,9 @@ struct DeskGridDashboardView: View {
         }
         .fullScreenCover(item: $presentedGeneratedSim) { sim in
             GeneratedSimView(sim: sim) { presentedGeneratedSim = nil }
+        }
+        .sheet(isPresented: $showBookLibrary) {
+            BookLibraryView()
         }
         // No Exit control here anymore - moved into the Manage page
         // (logo tap) so the dashboard itself stays clean. onClose is still
@@ -2778,6 +2788,11 @@ struct DeskGridDashboardView: View {
             // a `.chapter` box instead of behind a mode switch. Still the
             // same destination the sidebar's own "Develop" icon opens.
             dockChip("Design", system: "square.grid.2x2.fill", identifier: "deskGridDock_Design") { openSidebarFlow(.develop) }
+            // Chapter Library (2026-08-20) — assembled, gated teaching
+            // prose, distinct from Archive (Dan McCreary's book excerpts)
+            // and from Design's own Book-drafting box: this is finished,
+            // gate-passed, dependency-ordered content a student reads.
+            dockChip("Library", system: "books.vertical.fill", identifier: "deskGridDock_Library") { showBookLibrary = true }
             // Resume + Settings moved here from the left sidebar (2026-08-19,
             // explicit ask: "add the settings and resume to the search bar
             // dock too... use that space to make the boxes bigger

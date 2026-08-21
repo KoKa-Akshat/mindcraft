@@ -302,7 +302,7 @@ final class JesseCallSession: NSObject, ObservableObject {
         }
         if context == "englishPractice" {
             englishPracticeState = nil
-            Task { await speak("Hi, I'm Jesse. Let's practice your English together - what are you hoping to get better at, and is there a deadline you're working toward?", useKokoro: false) }
+            Task { await speak("Hi, I'm Jesse. Let's practice your English together - what are you hoping to get better at, and is there a deadline you're working toward?") }
         }
         if context == "workDashboard" {
             workDashboardLesson = nil
@@ -313,7 +313,7 @@ final class JesseCallSession: NSObject, ObservableObject {
             // my input"). A narrow, context-gated `speak()` call before
             // any listening starts - not a generalized entry point (see
             // CURSOR_HANDOFF.md Assignment J's own note on this).
-            Task { await speak("Hi \(studentName), what would you like to learn today?", useKokoro: false) }
+            Task { await speak("Hi \(studentName), what would you like to learn today?") }
         }
         if context == "jobOS" {
             // resumeDraft is NOT reset here, unlike "resume" above - Job
@@ -326,7 +326,7 @@ final class JesseCallSession: NSObject, ObservableObject {
             let opening = (resumeDraft?.name.isEmpty ?? true)
                 ? "Hi, I'm Jesse. Let's build your Job OS profile - what's your name, and what kind of roles are you targeting?"
                 : "Welcome back, let's keep building your Job OS profile. What would you like to add?"
-            Task { await speak(opening, useKokoro: false) }
+            Task { await speak(opening) }
         }
         status = nil
     }
@@ -407,16 +407,20 @@ final class JesseCallSession: NSObject, ObservableObject {
     // MARK: - Speaking
 
     /// Real Kokoro speech first; native `AVSpeechSynthesizer` only if the
-    /// network call fails (offline, cold container timeout) - so the call
-    /// keeps talking either way, just less naturally on the fallback path.
+    /// network call fails (offline, real server error) - so the call keeps
+    /// talking either way, just less naturally on the fallback path.
     /// `speakGeneration` guards against a slow Kokoro response landing
     /// after the student has since paused or ended the call.
-    /// `useKokoro: false` skips straight to the native voice - for the
-    /// call-opening greeting specifically (2026-08-18, explicit ask:
-    /// "Jesse is mad slow to speak when I start a call"). Kokoro's own
-    /// timeout is 6s (cut from 55s, see KokoroTTSClient's own doc comment),
-    /// generous for a warm container, fast to fall back on a cold one.
-    /// Non-English languages also skip Kokoro unconditionally (see
+    /// `useKokoro: false` no longer has any call site (2026-08-20) - every
+    /// opening greeting used to force it because Kokoro was self-hosted on
+    /// Vercel serverless and paid a cold-start cost on literally every
+    /// call open (2026-08-18 complaint: "Jesse is mad slow to speak when I
+    /// start a call"). That's fixed at the hosting layer now (Fly.io,
+    /// always-on, see ../../JESSE_VOICE_TTS_SPEC.md) rather than by
+    /// special-casing away the good voice on a student's first impression
+    /// - the parameter stays (still useful for the transcription-only
+    /// path/tests) but nothing needs it to open a call anymore.
+    /// Non-English languages still skip Kokoro unconditionally (see
     /// StudentLanguage.usesKokoro) - it has no Spanish voice wired up.
     /// `voice` defaults to whatever the student picked in VoiceChoiceView
     /// (2026-08-20) - was hardcoded `.heart` before, which meant `.bella`

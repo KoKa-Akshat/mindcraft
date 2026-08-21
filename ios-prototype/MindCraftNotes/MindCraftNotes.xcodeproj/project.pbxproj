@@ -20,6 +20,8 @@
 		0FB945513AC3BD9B9D898CF2 /* SVGImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A270692D86516903DC8773D /* SVGImageView.swift */; };
 		105C091D2824B49561936062 /* actToc.json in Resources */ = {isa = PBXBuildFile; fileRef = C804A39BF276CEEBF088A65C /* actToc.json */; };
 		11DF2394C1B5D24E677DC1E1 /* TutorDirectoryClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD38C7392605523E1A10E7F6 /* TutorDirectoryClient.swift */; };
+		12A0285334FBDE9318D382A1 /* WorkflowLibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EDEF1961163C2AEBD1E2E94 /* WorkflowLibraryView.swift */; };
+		161627EE34E1A219049B3840 /* AIDisclosureConsentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF19C3A4E53DF0667A8C72A1 /* AIDisclosureConsentView.swift */; };
 		1F9E043A15C0940CA4A9CDB5 /* PolynomialExpression.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16F5501162A4F865EFC69C0 /* PolynomialExpression.swift */; };
 		20FE9273DBB5C8611FB6D861 /* RouteClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FECBAC947388E48E0524B2D /* RouteClient.swift */; };
 		2ED5A15418DF8B11D28A484D /* KnowledgeMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037C287CDFB7C16477B6DBF0 /* KnowledgeMapView.swift */; };
@@ -39,6 +41,7 @@
 		662A4D2F92F6C3FAE0B08896 /* HomeworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0317BB30BAEC751F016F6F0F /* HomeworkClient.swift */; };
 		6A51541E9F79B94FEA0F207C /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5428A47D8655E6D13382E35 /* GraphView.swift */; };
 		6CB3A318117BA59DFBAFB2B7 /* StoryArtLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A80100A96CF6F45F4C8C55A /* StoryArtLoader.swift */; };
+		6F44EC6CA38B2CD4ADBE901B /* AssembledBookModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8BF726CB03DB544A85969E /* AssembledBookModels.swift */; };
 		6F7FC9EB90394695AA3FFF61 /* StickersShelfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DECD1EEEF419421EBDCABAD4 /* StickersShelfView.swift */; };
 		700E2339472ADB98B635D5AD /* conceptGraph.json in Resources */ = {isa = PBXBuildFile; fileRef = 9C5A189A567C149C7E1D34F1 /* conceptGraph.json */; };
 		763A49F23F7D4F1AB3188ECC /* MindCraftNotesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A74CA882801493092A9127F /* MindCraftNotesApp.swift */; };
@@ -60,7 +63,6 @@
 		A0DESKGRID001A2E /* DeskGridDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DESKGRID001A2E /* DeskGridDashboardView.swift */; };
 		A19B01C1A6E7F8091B2C3D4E /* AgentMailClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19B01C1A6E7F8091B2C3D4E /* AgentMailClient.swift */; };
 		A1B2C3D4E5F60718293A4B5C /* desk in Resources */ = {isa = PBXBuildFile; fileRef = B2C3D4E5F60718293A4B5C6D /* desk */; };
-		A29B02C2A6E7F8091B2C3D4E /* AgentMailInboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29B02C2A6E7F8091B2C3D4E /* AgentMailInboxView.swift */; };
 		A311D97B749C8B429FB7A34B /* LiveSessionClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7262B1A341CC17EEC08DFE /* LiveSessionClient.swift */; };
 		A39B03C3A6E7F8091B2C3D4E /* AccountManageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39B03C3A6E7F8091B2C3D4E /* AccountManageView.swift */; };
 		A3E01DEA9E457CF7B43D8FEB /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 716E4F08BB6B9FFFBB68959F /* FirebaseCore */; };
@@ -69,17 +71,15 @@
 		A49BCREATESTUDIO01A2B3 /* CreateStudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49BCREATESTUDIO01A2B3 /* CreateStudioView.swift */; };
 		A49BDESKBOARD01A2B3 /* DeskBoardCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49BDESKBOARD01A2B3 /* DeskBoardCards.swift */; };
 		A49BRESUMEAGENT01A2 /* ResumeAgentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49BRESUMEAGENT01A2 /* ResumeAgentView.swift */; };
-		A49BSHRINE01A2B3C4D5 /* MalevolentShrineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49BSHRINE01A2B3C4D5 /* MalevolentShrineView.swift */; };
-		A59B05C5A6E7F8091B2C3D4E /* TestInstanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59B05C5A6E7F8091B2C3D4E /* TestInstanceView.swift */; };
 		A5D03DAF65CF41F7A92AAD08 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906A283899CF496999C6ED72 /* CanvasView.swift */; };
 		A606F052EBFC4394BA07E3DB /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8533094AB64B10828A047B /* PersistenceController.swift */; };
-		A69B06C6A6E7F8091B2C3D4E /* testInstanceSeed.json in Resources */ = {isa = PBXBuildFile; fileRef = B69B06C6A6E7F8091B2C3D4E /* testInstanceSeed.json */; };
 		A79B07C7A6E7F8091B2C3D4E /* DeskInstanceChrome.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79B07C7A6E7F8091B2C3D4E /* DeskInstanceChrome.swift */; };
+		A82E2E6B82DAEF21034CDDD7 /* AIDisclosurePreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409ACCE0A60FA38F61914FF4 /* AIDisclosurePreference.swift */; };
 		A89B08C8A6E7F8091B2C3D4E /* SpeechCaptureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89B08C8A6E7F8091B2C3D4E /* SpeechCaptureController.swift */; };
 		A8AC7157E11A0001B2C3D4E5 /* ActInstanceShellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8AC7157E11A0001B2C3D4E5 /* ActInstanceShellView.swift */; };
 		A8BFBB951F764F03AE79B888 /* DrawingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B50609A6CA341D392B5BC37 /* DrawingStore.swift */; };
-		A99B09C9A6E7F8091B2C3D4E /* DeskPanCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99B09C9A6E7F8091B2C3D4E /* DeskPanCanvas.swift */; };
 		B0C259017B6359197378F0FD /* LearnStudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1858B772F353A476A8023F /* LearnStudioView.swift */; };
+		B1E290A74840F0C7F051444F /* BookLibraryClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E5B069E034C555E1E6D013 /* BookLibraryClient.swift */; };
 		B2C50496636E2ED7186E0232 /* DiagnosticGateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9818B2D6693B4381129CB08 /* DiagnosticGateView.swift */; };
 		B2C588BED4E177EC84C2B5D1 /* QuestionBankLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DAA6B2A396F72A1E1B6C97 /* QuestionBankLoader.swift */; };
 		B3D89B38899B7A196FE908B0 /* ContentsRoadmapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CA309BCDE2728C6DFBAC50 /* ContentsRoadmapView.swift */; };
@@ -88,12 +88,12 @@
 		B751BD1AD01F55EF490ACCD6 /* BookGraphLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F4F26B5DCFBFFB6D561D2 /* BookGraphLoader.swift */; };
 		B791829F16C3DA51F9F0B4AC /* DashboardModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F3BB8E68F90068711F0AD0 /* DashboardModels.swift */; };
 		B8A5F9AE5D7DF0DF5E25686E /* generatedDiagrams in Resources */ = {isa = PBXBuildFile; fileRef = 42CA396ADD5F655BFD64F7BE /* generatedDiagrams */; };
-		B8C4D20E5F607192B3C4D5E6 /* PianoFieldBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B3C19D4E5F6081A2B3C4D5 /* PianoFieldBookView.swift */; };
 		B99809ABB94C82E8507779D1 /* FindTutorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62ECD0E2F4F5C5176CDD4C3 /* FindTutorView.swift */; };
 		BA7B5C7EB4044BF6AFCD4340 /* StickerCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9668CDF69E284D128DF3FCBB /* StickerCatalog.swift */; };
 		BB68152F46D5AE90ED29E360 /* SessionNotesClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9A2FA726DCF7636F59A480 /* SessionNotesClient.swift */; };
 		BD71B02DB217E387F7D829E1 /* ConceptContentLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB82C0A2726F21F1D51FB529 /* ConceptContentLoader.swift */; };
 		C395E316CD6E4A6BAB5701D4 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F360A2512BB14A758E7A8BD5 /* WelcomeView.swift */; };
+		C62AEE4FDE0A34307B617ABF /* MicroSimWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D1AC5B94B02D1FE5999919 /* MicroSimWebView.swift */; };
 		C6D853AD3DD7E07164282908 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 7314E3633FB32FCF9B9FB4EB /* GoogleSignIn */; };
 		C781B03E36C42C7ED7AE0CBB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4A81130391A74A14FA1DFAEA /* GoogleService-Info.plist */; };
 		C9976561557088A1859FCB58 /* DeskShellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 670F10E849C346E2127D94CF /* DeskShellView.swift */; };
@@ -102,17 +102,18 @@
 		CE95BCEDAC5366E8EFEB972E /* ConceptChapterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789E888BA344DB5E76A0F09C /* ConceptChapterView.swift */; };
 		D0BLANKPAGE01A2B3C4D5E6F7 /* BlankDeskPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0BLANKPAGE01A2B3C4D5E6F7 /* BlankDeskPageView.swift */; };
 		D0KOKOROTTS01A2 /* KokoroTTSClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0KOKOROTTS01A2 /* KokoroTTSClient.swift */; };
-		D1MACAPPLY01A2B3C4D5E6F7 /* MacalesterApplyWorkflowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1MACAPPLY01A2B3C4D5E6F7 /* MacalesterApplyWorkflowView.swift */; };
 		D2JESSEKITCH01A2B3C4D5E6 /* JesseKitchenBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2JESSEKITCH01A2B3C4D5E6 /* JesseKitchenBackgroundView.swift */; };
 		D2KITSCHEME01A2B3C4D5E6 /* KitchenSchemeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2KITSCHEME01A2B3C4D5E6 /* KitchenSchemeHandler.swift */; };
 		D2MACSEED01A2B3C4D5E6F7 /* macalesterApplySeed.json in Resources */ = {isa = PBXBuildFile; fileRef = C2MACSEED01A2B3C4D5E6F7 /* macalesterApplySeed.json */; };
 		D2PASSTHRU01A2B3C4D5E6F7 /* PassThroughOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2PASSTHRU01A2B3C4D5E6F7 /* PassThroughOverlay.swift */; };
+		D357ECDB5A2B2602382BA711 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 22371FF1AEBA65A728D803D6 /* PrivacyInfo.xcprivacy */; };
 		D3666FF9C139BB65FFB380A2 /* questionBank.json in Resources */ = {isa = PBXBuildFile; fileRef = A05918461089BFC725BB84F8 /* questionBank.json */; };
 		D3JOBOSMODEL01A2B3C4 /* JobOSModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3JOBOSMODEL01A2B3C4 /* JobOSModels.swift */; };
 		D3STANDDESK01A2B3C4D5E6 /* StandaloneDeskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3STANDDESK01A2B3C4D5E6 /* StandaloneDeskView.swift */; };
 		D4JOBOSSTORE01A2B3C4 /* JobOSStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4JOBOSSTORE01A2B3C4 /* JobOSStore.swift */; };
 		D5JOBOSSHELL01A2B3C4 /* JobOSShellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5JOBOSSHELL01A2B3C4 /* JobOSShellView.swift */; };
 		D61E1093C9F9476A8193B4BD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473BF2A15353473E8B559067 /* ContentView.swift */; };
+		D6445C3050D9E6C0F508F19F /* BookLibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39DE01C8FD336E3156E19A53 /* BookLibraryView.swift */; };
 		D6DRIVECLIENT01A2B3C4 /* DriveClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DRIVECLIENT01A2B3C4 /* DriveClient.swift */; };
 		D6GMAILCLIENT01A2B3C4 /* GmailClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6GMAILCLIENT01A2B3C4 /* GmailClient.swift */; };
 		D6GMAILDIGESTCL01A2B3 /* GmailDigestClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6GMAILDIGESTCL01A2B3 /* GmailDigestClient.swift */; };
@@ -139,7 +140,6 @@
 		D9FRIENDSTORE01A2B3 /* FriendsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FRIENDSTORE01A2B3 /* FriendsStore.swift */; };
 		D9FRIENDSVIEW01A2B3 /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FRIENDSVIEW01A2B3 /* FriendsView.swift */; };
 		D9JESSEOVERLAY01A2 /* JesseCallOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9JESSEOVERLAY01A2 /* JesseCallOverlay.swift */; };
-		D9OPENARCHIVE01A2B3C4 /* OpenLearningArchiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9OPENARCHIVE01A2B3C4 /* OpenLearningArchiveView.swift */; };
 		D9QCALINVITE01A2B3C4 /* QCalInvite.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9QCALINVITE01A2B3C4 /* QCalInvite.swift */; };
 		D9SCHEDWORKF01A2B3C4 /* SchedulingWorkflowsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9SCHEDWORKF01A2B3C4 /* SchedulingWorkflowsView.swift */; };
 		D9SIMPAGE0RES01A2B3 /* simulation in Resources */ = {isa = PBXBuildFile; fileRef = C9SIMPAGE0REF01A2B3 /* simulation */; };
@@ -179,19 +179,24 @@
 		0A74CA882801493092A9127F /* MindCraftNotesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MindCraftNotesApp.swift; sourceTree = "<group>"; };
 		12E044A4E94D7F34216D068C /* FirebaseBootstrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseBootstrap.swift; sourceTree = "<group>"; };
 		14B2C0A75B7798044001A892 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		19D1AC5B94B02D1FE5999919 /* MicroSimWebView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MicroSimWebView.swift; sourceTree = "<group>"; };
 		1A2DEFA331CCE58D98C0F61F /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		1DF7DBC6BF7548ED8B257865 /* stickers */ = {isa = PBXFileReference; lastKnownFileType = folder; path = stickers; sourceTree = "<group>"; };
 		20548665090C49E3A52E9BE8 /* LaTeXMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaTeXMath.swift; sourceTree = "<group>"; };
+		22371FF1AEBA65A728D803D6 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		23DD656E755128E29056BA08 /* MicroSimLoader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MicroSimLoader.swift; sourceTree = "<group>"; };
 		26D7B26A0454408F10798AFA /* NotesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesListView.swift; sourceTree = "<group>"; };
 		287998194C3E67F5403DDF82 /* BookGraphs */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; path = BookGraphs; sourceTree = "<group>"; };
 		2EAAFE0F66A60907CDB1C332 /* FirestoreStudentStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreStudentStore.swift; sourceTree = "<group>"; };
 		31B0DB4BE519576B363713A8 /* ArchiveBooksClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ArchiveBooksClient.swift; sourceTree = "<group>"; };
 		333EDEE01284D66F3CAF76DD /* KnowledgeGraphClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnowledgeGraphClient.swift; sourceTree = "<group>"; };
+		35E5B069E034C555E1E6D013 /* BookLibraryClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BookLibraryClient.swift; sourceTree = "<group>"; };
 		3890F71414E363C12CC19397 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		39DE01C8FD336E3156E19A53 /* BookLibraryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BookLibraryView.swift; sourceTree = "<group>"; };
 		3BB03A317B6A9CB5F0D8C128 /* wizard-doodle-cheer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wizard-doodle-cheer.png"; sourceTree = "<group>"; };
 		3F11364E2053080C0A10CBB1 /* conceptStories.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = conceptStories.json; sourceTree = "<group>"; };
 		3F7A7972B0C44CE194A6D634 /* QuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionView.swift; sourceTree = "<group>"; };
+		409ACCE0A60FA38F61914FF4 /* AIDisclosurePreference.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AIDisclosurePreference.swift; sourceTree = "<group>"; };
 		41C2976A1A6B79B5F322FD0B /* VoiceChoiceView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VoiceChoiceView.swift; sourceTree = "<group>"; };
 		42CA396ADD5F655BFD64F7BE /* generatedDiagrams */ = {isa = PBXFileReference; lastKnownFileType = folder; path = generatedDiagrams; sourceTree = "<group>"; };
 		45CA309BCDE2728C6DFBAC50 /* ContentsRoadmapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentsRoadmapView.swift; sourceTree = "<group>"; };
@@ -206,6 +211,7 @@
 		5A10EB3BDDE04216B5B57403 /* JesseRailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JesseRailView.swift; sourceTree = "<group>"; };
 		5A9A2FA726DCF7636F59A480 /* SessionNotesClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionNotesClient.swift; sourceTree = "<group>"; };
 		5B50609A6CA341D392B5BC37 /* DrawingStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingStore.swift; sourceTree = "<group>"; };
+		5EDEF1961163C2AEBD1E2E94 /* WorkflowLibraryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WorkflowLibraryView.swift; sourceTree = "<group>"; };
 		600BDD909110482BB76AF2B6 /* DesignStudioView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DesignStudioView.swift; sourceTree = "<group>"; };
 		670F10E849C346E2127D94CF /* DeskShellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskShellView.swift; sourceTree = "<group>"; };
 		6A270692D86516903DC8773D /* SVGImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGImageView.swift; sourceTree = "<group>"; };
@@ -229,31 +235,25 @@
 		9F8533094AB64B10828A047B /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		9FAB6A727D2FD6844F72EAF7 /* ConceptGraphLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConceptGraphLoader.swift; sourceTree = "<group>"; };
 		A05918461089BFC725BB84F8 /* questionBank.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = questionBank.json; sourceTree = "<group>"; };
-		A7B3C19D4E5F6081A2B3C4D5 /* PianoFieldBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PianoFieldBookView.swift; sourceTree = "<group>"; };
+		AD8BF726CB03DB544A85969E /* AssembledBookModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AssembledBookModels.swift; sourceTree = "<group>"; };
 		B0BOOKAGENTCLIENT01 /* BookAgentClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookAgentClient.swift; sourceTree = "<group>"; };
 		B0CREATECANVAS01A2 /* CreateCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCanvasView.swift; sourceTree = "<group>"; };
 		B0DESKCONTENTROW01 /* DeskContentRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskContentRow.swift; sourceTree = "<group>"; };
 		B0DESKGRID001A2E /* DeskGridDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskGridDashboardView.swift; sourceTree = "<group>"; };
 		B19B01C1A6E7F8091B2C3D4E /* AgentMailClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentMailClient.swift; sourceTree = "<group>"; };
-		B29B02C2A6E7F8091B2C3D4E /* AgentMailInboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentMailInboxView.swift; sourceTree = "<group>"; };
 		B2C3D4E5F60718293A4B5C6D /* desk */ = {isa = PBXFileReference; lastKnownFileType = folder; path = desk; sourceTree = "<group>"; };
 		B39B03C3A6E7F8091B2C3D4E /* AccountManageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManageView.swift; sourceTree = "<group>"; };
 		B49B04C4A6E7F8091B2C3D4E /* CreateInstanceStudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateInstanceStudioView.swift; sourceTree = "<group>"; };
 		B49BCREATESTUDIO01A2B3 /* CreateStudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateStudioView.swift; sourceTree = "<group>"; };
 		B49BDESKBOARD01A2B3 /* DeskBoardCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskBoardCards.swift; sourceTree = "<group>"; };
 		B49BRESUMEAGENT01A2 /* ResumeAgentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeAgentView.swift; sourceTree = "<group>"; };
-		B49BSHRINE01A2B3C4D5 /* MalevolentShrineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalevolentShrineView.swift; sourceTree = "<group>"; };
 		B5428A47D8655E6D13382E35 /* GraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
-		B59B05C5A6E7F8091B2C3D4E /* TestInstanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestInstanceView.swift; sourceTree = "<group>"; };
-		B69B06C6A6E7F8091B2C3D4E /* testInstanceSeed.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = testInstanceSeed.json; sourceTree = "<group>"; };
 		B79B07C7A6E7F8091B2C3D4E /* DeskInstanceChrome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskInstanceChrome.swift; sourceTree = "<group>"; };
 		B89B08C8A6E7F8091B2C3D4E /* SpeechCaptureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechCaptureController.swift; sourceTree = "<group>"; };
 		B8AC7157E11A0001B2C3D4E5 /* ActInstanceShellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActInstanceShellView.swift; sourceTree = "<group>"; };
 		B94D83CC058F2CC072FB5B5A /* LanguageChoiceView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LanguageChoiceView.swift; sourceTree = "<group>"; };
-		B99B09C9A6E7F8091B2C3D4E /* DeskPanCanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskPanCanvas.swift; sourceTree = "<group>"; };
 		C0BLANKPAGE01A2B3C4D5E6F7 /* BlankDeskPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlankDeskPageView.swift; sourceTree = "<group>"; };
 		C0KOKOROTTS01A2 /* KokoroTTSClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KokoroTTSClient.swift; sourceTree = "<group>"; };
-		C1MACAPPLY01A2B3C4D5E6F7 /* MacalesterApplyWorkflowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacalesterApplyWorkflowView.swift; sourceTree = "<group>"; };
 		C2JESSEKITCH01A2B3C4D5E6 /* JesseKitchenBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JesseKitchenBackgroundView.swift; sourceTree = "<group>"; };
 		C2KITSCHEME01A2B3C4D5E6 /* KitchenSchemeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitchenSchemeHandler.swift; sourceTree = "<group>"; };
 		C2MACSEED01A2B3C4D5E6F7 /* macalesterApplySeed.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = macalesterApplySeed.json; sourceTree = "<group>"; };
@@ -290,7 +290,6 @@
 		C9FRIENDSTORE01A2B3 /* FriendsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsStore.swift; sourceTree = "<group>"; };
 		C9FRIENDSVIEW01A2B3 /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
 		C9JESSEOVERLAY01A2 /* JesseCallOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JesseCallOverlay.swift; sourceTree = "<group>"; };
-		C9OPENARCHIVE01A2B3C4 /* OpenLearningArchiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenLearningArchiveView.swift; sourceTree = "<group>"; };
 		C9QCALINVITE01A2B3C4 /* QCalInvite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QCalInvite.swift; sourceTree = "<group>"; };
 		C9SCHEDWORKF01A2B3C4 /* SchedulingWorkflowsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchedulingWorkflowsView.swift; sourceTree = "<group>"; };
 		C9SIMPAGE0REF01A2B3 /* simulation */ = {isa = PBXFileReference; lastKnownFileType = folder; name = simulation; path = ../../agent_work/product/desk_os/studio/simulation; sourceTree = SOURCE_ROOT; };
@@ -314,6 +313,7 @@
 		E8C1A04F2B7D4E91A3C56D80 /* pianoSeed.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = pianoSeed.json; sourceTree = "<group>"; };
 		EB82C0A2726F21F1D51FB529 /* ConceptContentLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConceptContentLoader.swift; sourceTree = "<group>"; };
 		EBF705318293A4C5D6E7F809 /* FieldDeskStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldDeskStore.swift; sourceTree = "<group>"; };
+		EF19C3A4E53DF0667A8C72A1 /* AIDisclosureConsentView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AIDisclosureConsentView.swift; sourceTree = "<group>"; };
 		F360A2512BB14A758E7A8BD5 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		F36436A531016328ECDE0C4D /* conceptIcons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = conceptIcons; sourceTree = "<group>"; };
 		F40D4AFB86406A11C68AD78B /* StudentVoicePreference.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StudentVoicePreference.swift; sourceTree = "<group>"; };
@@ -370,6 +370,7 @@
 				D72A5BC65A2BF357B121A531 /* ChatHistoryImportParser.swift */,
 				705F4F26B5DCFBFFB6D561D2 /* BookGraphLoader.swift */,
 				23DD656E755128E29056BA08 /* MicroSimLoader.swift */,
+				AD8BF726CB03DB544A85969E /* AssembledBookModels.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -396,6 +397,7 @@
 				CC0E5B2941DB4BA29EDF0047 /* Persistence */,
 				8C462CB4424809F19EE5E26D /* Networking */,
 				CA5A54D600251645F06C0493 /* Resources */,
+				22371FF1AEBA65A728D803D6 /* PrivacyInfo.xcprivacy */,
 			);
 			path = MindCraftNotes;
 			sourceTree = "<group>";
@@ -439,6 +441,8 @@
 				F76E73D494B2D736553AF91F /* EnglishPracticeClient.swift */,
 				5953BEECF1C8EFB5F3230D92 /* StudentLanguagePreference.swift */,
 				F40D4AFB86406A11C68AD78B /* StudentVoicePreference.swift */,
+				35E5B069E034C555E1E6D013 /* BookLibraryClient.swift */,
+				409ACCE0A60FA38F61914FF4 /* AIDisclosurePreference.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -474,7 +478,6 @@
 				54EE348EA08742A29688BF10 /* FormulaCardView.swift */,
 				D85B66E366E7264EAE7C1DED /* WeeklyReviewWalkthroughView.swift */,
 				670F10E849C346E2127D94CF /* DeskShellView.swift */,
-				A7B3C19D4E5F6081A2B3C4D5 /* PianoFieldBookView.swift */,
 				C9D5E31F607182A3B4C5D6E7 /* FieldDeskView.swift */,
 				C9DESKRECORDSH01A2 /* DeskRecordSheet.swift */,
 				C0BLANKPAGE01A2B3C4D5E6F7 /* BlankDeskPageView.swift */,
@@ -482,11 +485,9 @@
 				C2PASSTHRU01A2B3C4D5E6F7 /* PassThroughOverlay.swift */,
 				C2KITSCHEME01A2B3C4D5E6 /* KitchenSchemeHandler.swift */,
 				C3STANDDESK01A2B3C4D5E6 /* StandaloneDeskView.swift */,
-				C1MACAPPLY01A2B3C4D5E6F7 /* MacalesterApplyWorkflowView.swift */,
 				E1JOBOSGROUP01A2B3C4 /* JobOS */,
 				D0E6F420718293B4C5D6E7F8 /* ActFieldChrome.swift */,
 				EBF705318293A4C5D6E7F809 /* FieldDeskStore.swift */,
-				B29B02C2A6E7F8091B2C3D4E /* AgentMailInboxView.swift */,
 				C7GMAILBOXVW01A2B3C4 /* GmailWorkflowBoxView.swift */,
 				C8DESKCALLOAD01A2B3 /* DeskCalendarLoader.swift */,
 				B39B03C3A6E7F8091B2C3D4E /* AccountManageView.swift */,
@@ -494,17 +495,13 @@
 				B49BCREATESTUDIO01A2B3 /* CreateStudioView.swift */,
 				B49BRESUMEAGENT01A2 /* ResumeAgentView.swift */,
 				B49BDESKBOARD01A2B3 /* DeskBoardCards.swift */,
-				B49BSHRINE01A2B3C4D5 /* MalevolentShrineView.swift */,
-				B59B05C5A6E7F8091B2C3D4E /* TestInstanceView.swift */,
 				B79B07C7A6E7F8091B2C3D4E /* DeskInstanceChrome.swift */,
 				B8AC7157E11A0001B2C3D4E5 /* ActInstanceShellView.swift */,
 				B0DESKGRID001A2E /* DeskGridDashboardView.swift */,
 				B0DESKCONTENTROW01 /* DeskContentRow.swift */,
 				B0CREATECANVAS01A2 /* CreateCanvasView.swift */,
 				B89B08C8A6E7F8091B2C3D4E /* SpeechCaptureController.swift */,
-				B99B09C9A6E7F8091B2C3D4E /* DeskPanCanvas.swift */,
 				C9SCHEDWORKF01A2B3C4 /* SchedulingWorkflowsView.swift */,
-				C9OPENARCHIVE01A2B3C4 /* OpenLearningArchiveView.swift */,
 				C9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift */,
 				C9JESSEOVERLAY01A2 /* JesseCallOverlay.swift */,
 				C9BOOKWORKF01A2B3C4 /* BookWorkflowView.swift */,
@@ -519,6 +516,10 @@
 				D91E4C98C95DD18AB704697D /* EnglishPracticeView.swift */,
 				B94D83CC058F2CC072FB5B5A /* LanguageChoiceView.swift */,
 				41C2976A1A6B79B5F322FD0B /* VoiceChoiceView.swift */,
+				39DE01C8FD336E3156E19A53 /* BookLibraryView.swift */,
+				5EDEF1961163C2AEBD1E2E94 /* WorkflowLibraryView.swift */,
+				19D1AC5B94B02D1FE5999919 /* MicroSimWebView.swift */,
+				EF19C3A4E53DF0667A8C72A1 /* AIDisclosureConsentView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -530,7 +531,6 @@
 				C804A39BF276CEEBF088A65C /* actToc.json */,
 				A05918461089BFC725BB84F8 /* questionBank.json */,
 				E8C1A04F2B7D4E91A3C56D80 /* pianoSeed.json */,
-				B69B06C6A6E7F8091B2C3D4E /* testInstanceSeed.json */,
 				C2MACSEED01A2B3C4D5E6F7 /* macalesterApplySeed.json */,
 				3F11364E2053080C0A10CBB1 /* conceptStories.json */,
 				CC3901FD3CB48D913D28033E /* conceptContent.json */,
@@ -686,7 +686,6 @@
 				105C091D2824B49561936062 /* actToc.json in Resources */,
 				D3666FF9C139BB65FFB380A2 /* questionBank.json in Resources */,
 				F9D2B15E3C8E5F02B4D67E91 /* pianoSeed.json in Resources */,
-				A69B06C6A6E7F8091B2C3D4E /* testInstanceSeed.json in Resources */,
 				D2MACSEED01A2B3C4D5E6F7 /* macalesterApplySeed.json in Resources */,
 				52C78F8B73F5660C828E4BD5 /* conceptStories.json in Resources */,
 				E58FA0E3DF3B8556BD025DCB /* conceptContent.json in Resources */,
@@ -703,6 +702,7 @@
 				044BEB21A5E2D8744455C7F2 /* wizard-doodle-cheer.png in Resources */,
 				FBF76380BE333E28BDF3F277 /* BookGraphs in Resources */,
 				7CE3B3940E5DECDEA8512DD4 /* MicroSims in Resources */,
+				D357ECDB5A2B2602382BA711 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -779,10 +779,8 @@
 				51634C64A486CFCB3A5F4829 /* FormulaCardView.swift in Sources */,
 				FBE308BC7B92F7029BDDC696 /* WeeklyReviewWalkthroughView.swift in Sources */,
 				C9976561557088A1859FCB58 /* DeskShellView.swift in Sources */,
-				B8C4D20E5F607192B3C4D5E6 /* PianoFieldBookView.swift in Sources */,
 				DAE6F420718293B4C5D6E7F8 /* FieldDeskView.swift in Sources */,
 				D9SCHEDWORKF01A2B3C4 /* SchedulingWorkflowsView.swift in Sources */,
-				D9OPENARCHIVE01A2B3C4 /* OpenLearningArchiveView.swift in Sources */,
 				D9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift in Sources */,
 				D9BOOKWORKF01A2B3C4 /* BookWorkflowView.swift in Sources */,
 				D9FRIENDSTORE01A2B3 /* FriendsStore.swift in Sources */,
@@ -793,7 +791,6 @@
 				D2PASSTHRU01A2B3C4D5E6F7 /* PassThroughOverlay.swift in Sources */,
 				D2KITSCHEME01A2B3C4D5E6 /* KitchenSchemeHandler.swift in Sources */,
 				D3STANDDESK01A2B3C4D5E6 /* StandaloneDeskView.swift in Sources */,
-				D1MACAPPLY01A2B3C4D5E6F7 /* MacalesterApplyWorkflowView.swift in Sources */,
 				D5JOBOSSHELL01A2B3C4 /* JobOSShellView.swift in Sources */,
 				D4JOBOSSTORE01A2B3C4 /* JobOSStore.swift in Sources */,
 				D3JOBOSMODEL01A2B3C4 /* JobOSModels.swift in Sources */,
@@ -809,7 +806,6 @@
 				D9DESKASKCLIENT01A2 /* DeskAskClient.swift in Sources */,
 				D9BOOTMOTIV01A2B3C4 /* BootMotivationClient.swift in Sources */,
 				D9DESKRECORDSH01A2 /* DeskRecordSheet.swift in Sources */,
-				A29B02C2A6E7F8091B2C3D4E /* AgentMailInboxView.swift in Sources */,
 				D7GMAILBOXVW01A2B3C4 /* GmailWorkflowBoxView.swift in Sources */,
 				D8DESKCALLOAD01A2B3 /* DeskCalendarLoader.swift in Sources */,
 				A39B03C3A6E7F8091B2C3D4E /* AccountManageView.swift in Sources */,
@@ -817,15 +813,12 @@
 				A49BCREATESTUDIO01A2B3 /* CreateStudioView.swift in Sources */,
 				A49BRESUMEAGENT01A2 /* ResumeAgentView.swift in Sources */,
 				A49BDESKBOARD01A2B3 /* DeskBoardCards.swift in Sources */,
-				A49BSHRINE01A2B3C4D5 /* MalevolentShrineView.swift in Sources */,
-				A59B05C5A6E7F8091B2C3D4E /* TestInstanceView.swift in Sources */,
 				A79B07C7A6E7F8091B2C3D4E /* DeskInstanceChrome.swift in Sources */,
 				A8AC7157E11A0001B2C3D4E5 /* ActInstanceShellView.swift in Sources */,
 				A0DESKGRID001A2E /* DeskGridDashboardView.swift in Sources */,
 				A0DESKCONTENTROW01 /* DeskContentRow.swift in Sources */,
 				A0CREATECANVAS01A2 /* CreateCanvasView.swift in Sources */,
 				A89B08C8A6E7F8091B2C3D4E /* SpeechCaptureController.swift in Sources */,
-				A99B09C9A6E7F8091B2C3D4E /* DeskPanCanvas.swift in Sources */,
 				B0C259017B6359197378F0FD /* LearnStudioView.swift in Sources */,
 				DDE6FE79749CA9A22EBDA201 /* DesignStudioView.swift in Sources */,
 				D9CONTGRAPH01A2B3C4 /* ContentGraphStore.swift in Sources */,
@@ -846,6 +839,13 @@
 				CA8F808BC2D5F62B22199C81 /* StudentLanguagePreference.swift in Sources */,
 				F7C601A584A1A75BCD2F1F5E /* VoiceChoiceView.swift in Sources */,
 				FEA79F612CC2F3E338AF593C /* StudentVoicePreference.swift in Sources */,
+				6F44EC6CA38B2CD4ADBE901B /* AssembledBookModels.swift in Sources */,
+				B1E290A74840F0C7F051444F /* BookLibraryClient.swift in Sources */,
+				D6445C3050D9E6C0F508F19F /* BookLibraryView.swift in Sources */,
+				12A0285334FBDE9318D382A1 /* WorkflowLibraryView.swift in Sources */,
+				C62AEE4FDE0A34307B617ABF /* MicroSimWebView.swift in Sources */,
+				A82E2E6B82DAEF21034CDDD7 /* AIDisclosurePreference.swift in Sources */,
+				161627EE34E1A219049B3840 /* AIDisclosureConsentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -993,7 +993,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.66;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mindcraft.notes.prototype.akshat;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mindcraft.notes-prototype";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1093,7 +1093,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.66;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mindcraft.notes.prototype.akshat;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mindcraft.notes-prototype";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;

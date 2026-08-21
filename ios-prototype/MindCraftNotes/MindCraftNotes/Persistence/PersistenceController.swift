@@ -27,12 +27,22 @@ struct PersistenceController {
             container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
         }
 
-        container.loadPersistentStores { _, error in
-            if let error = error as NSError? {
-                // A loud crash here is correct for a prototype: silently
-                // continuing with no working store would hide data loss
-                // instead of surfacing it immediately during development.
-                fatalError("Core Data failed to load persistent store: \(error), \(error.userInfo)")
+        container.loadPersistentStores { [container] _, error in
+            guard let error = error as NSError? else { return }
+            // A disk-full or corrupted on-disk store must not be an
+            // unrecoverable launch crash for a shipping app - log loudly,
+            // then fall back to an in-memory store so the app still opens.
+            // A student losing local drawing history on a rare
+            // corrupt-store event is far better than the app being
+            // permanently unable to launch on that device.
+            print("PersistenceController: Core Data failed to load persistent store, falling back to in-memory store: \(error), \(error.userInfo)")
+            let fallbackDescription = NSPersistentStoreDescription()
+            fallbackDescription.url = URL(fileURLWithPath: "/dev/null")
+            container.persistentStoreDescriptions = [fallbackDescription]
+            container.loadPersistentStores { _, fallbackError in
+                if let fallbackError = fallbackError as NSError? {
+                    print("PersistenceController: in-memory fallback store also failed to load: \(fallbackError), \(fallbackError.userInfo)")
+                }
             }
         }
 

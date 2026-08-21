@@ -102,12 +102,31 @@ enum MicroSimLoader {
     /// `BookGraphLoader`-driven matching in `askJesseWorkDashboard`
     /// already uses. Caps at 3 - a lesson doesn't need every matching sim,
     /// just enough to be genuinely useful.
+    ///
+    /// Ranked by specificity, not just "first 3 alphabetically" (real bug,
+    /// found via live testing 2026-08-21: asking about ANY broad subject
+    /// like "Calculus" returned the identical 3 sims every time, regardless
+    /// of which specific concept was actually asked about - `all` is sorted
+    /// alphabetically by title and the old code took a blind `.prefix(3)`
+    /// of the filtered set, which just re-produces that same ordering). A
+    /// title match is the strongest, most specific signal a sim is
+    /// actually about what was asked (a subject/concept tag match can be
+    /// shared by dozens of sims in one broad set); ties within a tier fall
+    /// back to title order for determinism, not randomness.
     static func matching(topic: String, limit: Int = 3) -> [MicroSimRecord] {
         let lowered = topic.lowercased()
-        return Array(all.filter { sim in
-            sim.subjects.contains { $0.lowercased().contains(lowered) || lowered.contains($0.lowercased()) }
-                || sim.concepts.contains { $0.lowercased().contains(lowered) || lowered.contains($0.lowercased()) }
-                || sim.title.lowercased().contains(lowered)
-        }.prefix(limit))
+        func matchStrength(_ sim: MicroSimRecord) -> Int {
+            if sim.title.lowercased().contains(lowered) { return 2 }
+            let conceptHit = sim.concepts.contains { $0.lowercased().contains(lowered) || lowered.contains($0.lowercased()) }
+            let subjectHit = sim.subjects.contains { $0.lowercased().contains(lowered) || lowered.contains($0.lowercased()) }
+            if conceptHit { return 1 }
+            if subjectHit { return 0 }
+            return -1
+        }
+        let ranked = all
+            .map { ($0, matchStrength($0)) }
+            .filter { $0.1 >= 0 }
+            .sorted { $0.1 != $1.1 ? $0.1 > $1.1 : $0.0.title < $1.0.title }
+        return Array(ranked.prefix(limit).map(\.0))
     }
 }

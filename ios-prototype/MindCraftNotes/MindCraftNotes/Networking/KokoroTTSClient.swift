@@ -39,29 +39,30 @@ enum KokoroVoice: String, CaseIterable, Identifiable {
 }
 
 enum KokoroTTSClient {
-    private static let endpoint = URL(string: "https://mindcraft-webhook.vercel.app/api/tts")!
+    // Moved off Vercel serverless onto an always-on Fly.io machine
+    // (2026-08-20, see ../../JESSE_VOICE_TTS_SPEC.md) - same kokoro-js
+    // logic, same three voices, same request/response contract
+    // (webhook/fly-tts/server.js), just never cold. Real measured warm
+    // latency after deploy: 3.3s round-trip for one line, confirmed via a
+    // live curl test, not assumed - see the spec's "Open questions"
+    // section, now answered.
+    private static let endpoint = URL(string: "https://mindcraft-tts.fly.dev/")!
 
-    /// Returns WAV audio data, or nil on any failure (network, cold-start
-    /// timeout, server error) so the caller can fall back to native
-    /// AVSpeechSynthesizer rather than the call going silent.
+    /// Returns WAV audio data, or nil on any failure (network, server
+    /// error) so the caller can fall back to native AVSpeechSynthesizer
+    /// rather than the call going silent.
     static func synthesize(text: String, voice: KokoroVoice = .heart) async -> Data? {
         var request = URLRequest(url: endpoint)
         request.httpMethod = "POST"
-        // Was 55s (generous headroom for a ~96MB cold-start model
-        // download, see the handler's own doc comment) - but that meant a
-        // cold container made EVERY reply in a live conversation sit
-        // silent for up to 55s before falling back to the native voice
-        // already built as the fallback path below. Real, live complaint
-        // (2026-08-19): "it takes forever to load and then say what it
-        // wants to say." A warm container generates in low single-digit
-        // seconds; failing fast into the native fallback beats waiting
-        // through a cold download mid-conversation - speed over Kokoro's
-        // nicer voice when the two trade off. A keep-warm cron ping was
-        // considered but not added - Vercel's Hobby plan only supports
-        // daily-granularity crons, nowhere near frequent enough to keep a
-        // function warm, so this timeout fix is the real, working
-        // solution, not a stopgap for a companion fix that doesn't exist.
-        request.timeoutInterval = 6
+        // Was 6s, deliberately tight to fail fast out of a COLD Vercel
+        // container into the native fallback (see git history / the spec
+        // for that era's reasoning). That tradeoff doesn't apply anymore -
+        // the Fly.io host never cold-starts (min_machines_running: 1), so
+        // there's no cold path to race against. 12s gives real network
+        // variance (observed warm: ~3.3s) headroom without the old
+        // rushed-fallback behavior, while still bailing to native well
+        // before a student would call the app "frozen."
+        request.timeoutInterval = 12
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = try? JSONSerialization.data(withJSONObject: [
             "text": text,

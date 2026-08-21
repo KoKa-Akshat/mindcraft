@@ -65,6 +65,10 @@ struct MindCraftNotesApp: App {
                         // deterministically for on-device verification without
                         // a real Firebase account.
                         .environment(\.uiTestingForceVoiceChoice, ProcessInfo.processInfo.arguments.contains("--ui-testing-force-voice-choice"))
+                        // Same need, same shape, one gate earlier still
+                        // (2026-08-21): AIDisclosureConsentView also needs a
+                        // real signed-in session to reach normally.
+                        .environment(\.uiTestingForceAIDisclosure, ProcessInfo.processInfo.arguments.contains("--ui-testing-force-ai-disclosure"))
                 }
             }
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
@@ -101,6 +105,10 @@ private struct UITestingForceVoiceChoiceKey: EnvironmentKey {
     static let defaultValue = false
 }
 
+private struct UITestingForceAIDisclosureKey: EnvironmentKey {
+    static let defaultValue = false
+}
+
 extension EnvironmentValues {
     /// Test-only. See the launch-argument doc comment above.
     var uiTestingSkipAuth: Bool {
@@ -119,6 +127,12 @@ extension EnvironmentValues {
         get { self[UITestingForceVoiceChoiceKey.self] }
         set { self[UITestingForceVoiceChoiceKey.self] = newValue }
     }
+
+    /// Test-only. See the launch-argument doc comment above.
+    var uiTestingForceAIDisclosure: Bool {
+        get { self[UITestingForceAIDisclosureKey.self] }
+        set { self[UITestingForceAIDisclosureKey.self] = newValue }
+    }
 }
 
 /// Thin root view (build plan §3): observes AuthService and switches between
@@ -131,6 +145,7 @@ struct AuthGate: View {
     @Environment(\.uiTestingSkipAuth) private var uiTestingSkipAuth
     @Environment(\.uiTestingForceWelcome) private var uiTestingForceWelcome
     @Environment(\.uiTestingForceVoiceChoice) private var uiTestingForceVoiceChoice
+    @Environment(\.uiTestingForceAIDisclosure) private var uiTestingForceAIDisclosure
     // New pre-login "Welcome to MindCraft" screen (round 5, Akshat's own
     // wireframe): shown once per cold launch, ahead of LoginView, so a
     // brand-new student sees the world before being asked to sign in - same
@@ -153,6 +168,12 @@ struct AuthGate: View {
     /// student has nothing to pick between, since none of the three
     /// Kokoro voices apply to them (see StudentLanguage.usesKokoro).
     @State private var voiceChosen = StudentVoicePreference.hasChosen
+    /// Same shape again, one gate BEFORE language choice this time
+    /// (2026-08-21) - App Store Guideline 5.1.2(i) requires disclosure and
+    /// consent before any AI feature could possibly run, so this has to be
+    /// the very first thing a signed-in student sees, ahead of even the
+    /// language picker.
+    @State private var aiDisclosureAgreed = AIDisclosurePreference.hasConsented
 
     var body: some View {
         Group {
@@ -160,7 +181,17 @@ struct AuthGate: View {
                 WelcomeView(onSignIn: {})
             } else if uiTestingForceVoiceChoice {
                 VoiceChoiceView(onChosen: {})
+            } else if uiTestingForceAIDisclosure {
+                AIDisclosureConsentView(onAgreed: {})
             } else if authService.currentUser != nil || uiTestingSkipAuth {
+                // AI-processing disclosure + consent (2026-08-21, App Store
+                // Guideline 5.1.2(i)) - the first gate, ahead of language
+                // choice, since consent has to happen before any AI
+                // feature is reachable at all, not just before Jesse
+                // specifically.
+                if !aiDisclosureAgreed && !uiTestingSkipAuth {
+                    AIDisclosureConsentView(onAgreed: { aiDisclosureAgreed = true })
+                } else if !languageChosen && !uiTestingSkipAuth {
                 // One-time language picker (2026-08-19, explicit ask:
                 // "accommodate voice in... Spanish... which they choose at
                 // the start after login") - shown exactly once, ahead of
@@ -169,7 +200,6 @@ struct AuthGate: View {
                 // LoginView. Skipped under UI testing so existing tests
                 // that assume DeskShellView is the first thing shown after
                 // auth don't need updating for an unrelated feature.
-                if !languageChosen && !uiTestingSkipAuth {
                     LanguageChoiceView(onChosen: { languageChosen = true })
                 } else if !voiceChosen && !uiTestingSkipAuth && StudentLanguagePreference.current.usesKokoro {
                     // One-time voice picker (2026-08-20, explicit ask: "so
