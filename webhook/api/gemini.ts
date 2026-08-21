@@ -16,6 +16,7 @@ import Anthropic from '@anthropic-ai/sdk'
 import Stripe from 'stripe'
 import { db } from '../lib/firebase'
 import { randomUUID } from 'crypto'
+import { setCorsAllowlist } from '../lib/cors'
 
 const ALLOWED_ORIGIN = 'https://mindcraft-93858.web.app'
 const APP_BASE       = 'https://mindcraft-93858.web.app'
@@ -175,9 +176,15 @@ If evidence is sparse, wrap as: {"gaps":[...],"diagnosisConfidence":"low"}`
 // ── Main handler ──────────────────────────────────────────────────────────────
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  res.setHeader('Access-Control-Allow-Origin',  ALLOWED_ORIGIN)
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS')
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, stripe-signature')
+  // No real allowlist here — ALLOWED_ORIGIN is always set regardless of the
+  // request's actual origin. Modeled as an empty allowlist that always
+  // falls through to the fixed origin, so this still shares setCorsAllowlist
+  // rather than hand-rolling its own header logic.
+  setCorsAllowlist(req, res, {
+    allowedOrigins: [],
+    fallbackOrigin: ALLOWED_ORIGIN,
+    headers: 'Content-Type, Authorization, stripe-signature',
+  })
   if (req.method === 'OPTIONS') return res.status(200).end()
   if (req.method !== 'POST')   return res.status(405).json({ error: 'Method not allowed' })
 

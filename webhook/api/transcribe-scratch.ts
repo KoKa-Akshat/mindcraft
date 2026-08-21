@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { GoogleGenAI } from '@google/genai'
 import { setCors } from '../lib/cors'
-import { auth } from '../lib/firebase'
+import { verifyToken } from '../lib/verifyToken'
 
 const MAX_IMAGE_BASE64_BYTES = 1.5 * 1024 * 1024
 const MAX_LINES = 20
@@ -130,14 +130,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method === 'OPTIONS') return res.status(200).send('')
   if (req.method !== 'POST') return res.status(405).send('Method Not Allowed')
 
-  const header = req.headers.authorization
-  if (!header?.startsWith('Bearer ')) return res.status(401).json({ error: 'Unauthorized' })
-
-  try {
-    await auth.verifyIdToken(header.slice(7))
-  } catch {
-    return res.status(401).json({ error: 'Unauthorized' })
-  }
+  const uid = await verifyToken(req)
+  if (!uid) return res.status(401).json({ error: 'Unauthorized' })
 
   try {
     const rawLines: unknown[] = Array.isArray(req.body?.lines) ? req.body.lines : []

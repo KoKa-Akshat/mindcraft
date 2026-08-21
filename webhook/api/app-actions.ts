@@ -12,6 +12,7 @@ import createClassroom from '../lib/handlers/create-classroom'
 import joinClassroom from '../lib/handlers/join-classroom'
 import linkChild from '../lib/handlers/link-child'
 import grantAdmin from '../lib/handlers/grant-admin'
+import claimInvitedRole from '../lib/handlers/claim-invited-role'
 import deleteSession from '../lib/handlers/delete-session'
 import publishSummary from '../lib/handlers/publish-summary'
 import registerCalendly from '../lib/handlers/register-calendly'
@@ -31,6 +32,7 @@ import bookAgent from '../lib/handlers/book-agent'
 import gmailDigest from '../lib/handlers/gmail-digest'
 import ingestLessonGraph from '../lib/handlers/ingest-lesson-graph'
 import generateSim from '../lib/handlers/generate-sim'
+import getBook from '../lib/handlers/get-book'
 import archiveBooks from '../lib/handlers/archive-books'
 import englishPractice from '../lib/handlers/english-practice'
 import resetStudentData from '../lib/handlers/reset-student-data'
@@ -40,6 +42,7 @@ const HANDLERS: Record<string, (req: VercelRequest, res: VercelResponse) => Prom
   'join-classroom': joinClassroom,
   'link-child': linkChild,
   'grant-admin': grantAdmin,
+  'claim-invited-role': claimInvitedRole,
   'delete-session': deleteSession,
   'publish-summary': publishSummary,
   'register-calendly': registerCalendly,
@@ -59,6 +62,7 @@ const HANDLERS: Record<string, (req: VercelRequest, res: VercelResponse) => Prom
   'gmail-digest': gmailDigest,
   'ingest-lesson-graph': ingestLessonGraph,
   'generate-sim': generateSim,
+  'get-book': getBook,
   'archive-books': archiveBooks,
   'english-practice': englishPractice,
   'reset-student-data': resetStudentData,

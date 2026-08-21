@@ -9,8 +9,8 @@
  * No Firestore write unless a verified uid is present (not in v1).
  */
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import Anthropic from '@anthropic-ai/sdk'
 import { setCors } from '../cors'
+import { callAnthropic, callGroq, parseModelJson, sanitizeText } from '../llmChat'
 
 const ANTHROPIC_MODEL = 'claude-sonnet-4-20250514'
 const GROQ_MODEL = 'llama-3.3-70b-versatile'
@@ -118,15 +118,6 @@ function mergeDraft(base: ResumeDraft, next: Partial<ResumeDraft> | null | undef
 
 function draftReady(d: ResumeDraft): boolean {
   return Boolean(d.name) && (d.roles.length > 0 || d.skills.length >= 2)
-}
-
-function sanitizeReply(text: string): string {
-  return text
-    .replace(/—/g, '-')
-    .replace(/[!]{1,}/g, '.')
-    .replace(/\s+/g, ' ')
-    .trim()
-    .slice(0, 420)
 }
 
 function heuristicExtract(message: string, sources: ResumeAgentBody['sources'], prior: ResumeDraft): ResumeDraft {
@@ -241,71 +232,12 @@ Rules:
 Return ONLY JSON:
 {"reply":"...","draft":{"name":"","headline":"","school":"","email":"","location":"","skills":[],"roles":[{"title":"","org":"","when":"","bullets":[]}],"education":[],"projects":[],"files":[],"linkedinUrl":"","drive":false},"readyToApply":false,"suggestedRoles":[{"company":"","role":"","why":"","query":""}],"action":""}`
 
-function parseModelJson(raw: string): {
+interface ParsedResumeReply {
   reply?: string
   draft?: Partial<ResumeDraft>
   readyToApply?: boolean
   suggestedRoles?: SuggestedRole[]
   action?: string
-} | null {
-  const trimmed = raw.trim()
-  const start = trimmed.indexOf('{')
-  const end = trimmed.lastIndexOf('}')
-  if (start < 0 || end <= start) return null
-  try {
-    return JSON.parse(trimmed.slice(start, end + 1))
-  } catch {
-    return null
-  }
-}
-
-async function callAnthropic(user: string): Promise<string | null> {
-  if (!process.env.ANTHROPIC_API_KEY) return null
-  try {
-    const client = new Anthropic()
-    const response = await client.messages.create({
-      model: ANTHROPIC_MODEL,
-      max_tokens: 1400,
-      system: SYSTEM,
-      messages: [{ role: 'user', content: user }],
-    })
-    return response.content
-      .filter((b) => b.type === 'text')
-      .map((b) => (b as Anthropic.Messages.TextBlock).text)
-      .join('')
-      .trim()
-  } catch {
-    return null
-  }
-}
-
-async function callGroq(user: string): Promise<string | null> {
-  const apiKey = process.env.GROQ_API_KEY
-  if (!apiKey) return null
-  try {
-    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: GROQ_MODEL,
-        temperature: 0.3,
-        max_tokens: 1400,
-        response_format: { type: 'json_object' },
-        messages: [
-          { role: 'system', content: SYSTEM },
-          { role: 'user', content: user },
-        ],
-      }),
-    })
-    if (!res.ok) return null
-    const data = (await res.json()) as { choices?: Array<{ message?: { content?: string } }> }
-    return data.choices?.[0]?.message?.content ?? null
-  } catch {
-    return null
-  }
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -338,8 +270,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     },
   })
 
-  const raw = (await callAnthropic(user)) || (await callGroq(user))
-  const parsed = raw ? parseModelJson(raw) : null
+  const raw =
+    (await callAnthropic(user, { model: ANTHROPIC_MODEL, maxTokens: 1400, system: SYSTEM })) ||
+    (await callGroq(user, { model: GROQ_MODEL, maxTokens: 1400, temperature: 0.3, system: SYSTEM }))
+  const parsed = raw ? parseModelJson<ParsedResumeReply>(raw) : null
   const fallback = !parsed
 
   const extracted = heuristicExtract(message, { ...sources, linkedinText, resumeText, driveFiles }, prior)
@@ -349,7 +283,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (sources.linkedinUrl) draft.linkedinUrl = clip(sources.linkedinUrl, 200)
 
   const heuristic = heuristicReply(draft, message)
-  const reply = sanitizeReply(parsed?.reply || heuristic.reply) || heuristic.reply
+  const reply = sanitizeText(parsed?.reply || heuristic.reply) || heuristic.reply
   const suggestedRoles = (parsed?.suggestedRoles || []).length
     ? parsed!.suggestedRoles!.slice(0, 3)
     : heuristic.suggestedRoles

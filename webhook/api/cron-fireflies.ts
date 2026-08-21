@@ -17,9 +17,18 @@
 
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { db } from '../lib/firebase'
+import {
+  buildRecentTranscriptsQuery,
+  fetchFirefliesGraphQL,
+  transcriptFullText,
+  matchSession,
+  storeOrphanTranscript,
+  attachTranscriptToSession,
+  type FirefliesTranscript,
+} from '../lib/firefliesMatch'
 
-const FIREFLIES_API = 'https://api.fireflies.ai/graphql'
 const FIREFLIES_KEY = process.env.FIREFLIES_API_KEY!
+const RECENT_TRANSCRIPTS_LIMIT = 10
 
 export default async function handler(_req: VercelRequest, res: VercelResponse) {
   // Daily safety net for marketing follow-ups (Hobby Vercel can't cron */20).
@@ -44,24 +53,9 @@ export default async function handler(_req: VercelRequest, res: VercelResponse) 
   }
 
   try {
-    // Fetch the 10 most recent transcripts from Fireflies
-    const ffRes = await fetch(FIREFLIES_API, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${FIREFLIES_KEY}` },
-      body: JSON.stringify({
-        query: `
-          query {
-            transcripts(limit: 10) {
-              id title date duration video_url
-              summary { overview action_items keywords }
-              sentences { index speaker_name text start_time end_time }
-            }
-          }
-        `,
-      }),
-    })
-    const ffData = await ffRes.json()
-    const transcripts: any[] = ffData?.data?.transcripts ?? []
+    // Fetch the N most recent transcripts from Fireflies
+    const ffData = await fetchFirefliesGraphQL(FIREFLIES_KEY, buildRecentTranscriptsQuery(RECENT_TRANSCRIPTS_LIMIT))
+    const transcripts: FirefliesTranscript[] = ffData?.data?.transcripts ?? []
 
     const results: string[] = []
 
@@ -77,67 +71,38 @@ export default async function handler(_req: VercelRequest, res: VercelResponse) 
       }
 
       // Build plain-text transcript for AI summary
-      const fullText = transcript.sentences?.length
-        ? transcript.sentences.map((s: any) => `[${s.speaker_name}]: ${s.text}`).join('\n')
-        : transcript.summary?.overview ?? ''
+      const fullText = transcriptFullText(transcript)
 
       // ── Match to a session (same 3-strategy logic as live webhook) ────────────
-      let sessionDoc: FirebaseFirestore.DocumentSnapshot | null = null
-
-      const byId = await db.collection('sessions')
-        .where('firefliesMeetingId', '==', meetingId).limit(1).get()
-      if (!byId.empty) sessionDoc = byId.docs[0]
-
-      if (!sessionDoc && transcript.video_url) {
-        const byUrl = await db.collection('sessions')
-          .where('meetingUrl', '==', transcript.video_url).limit(1).get()
-        if (!byUrl.empty) sessionDoc = byUrl.docs[0]
-      }
+      // Unlike the live webhook, a missing date SKIPS the time-window
+      // strategy entirely here rather than falling back to Date.now() —
+      // a polling pass shouldn't guess a recency window for an undated
+      // transcript the way a just-fired webhook reasonably can.
+      const meetingDate = transcript.date ? new Date(transcript.date).getTime() : null
+      const sessionDoc = await matchSession(meetingId, transcript.video_url, meetingDate)
 
       if (!sessionDoc) {
-        const meetingDate = transcript.date ? new Date(transcript.date).getTime() : null
-        if (meetingDate) {
-          const TWO_HOURS = 2 * 60 * 60 * 1000
-          const nearby = await db.collection('sessions')
-            .where('scheduledAt', '>=', meetingDate - TWO_HOURS)
-            .where('scheduledAt', '<=', meetingDate + TWO_HOURS)
-            .limit(5).get()
-
-          if (!nearby.empty) {
-            sessionDoc = nearby.docs.sort(
-              (a, b) => Math.abs(a.data().scheduledAt - meetingDate) - Math.abs(b.data().scheduledAt - meetingDate)
-            )[0]
-          }
-        }
-      }
-
-      if (!sessionDoc) {
-        // Store orphan so nothing is silently lost
-        await db.collection('transcripts').doc(meetingId).set({
+        // Store orphan so nothing is silently lost. merge:true (unlike the
+        // live webhook's plain set) since this runs every 15 minutes and
+        // may re-encounter the same still-unmatched transcript.
+        await storeOrphanTranscript({
           meetingId,
-          title:         transcript.title,
-          date:          transcript.date,
+          title: transcript.title,
+          date: transcript.date,
           fullText,
-          summary:       transcript.summary ?? null,
-          sentences:     transcript.sentences ?? [],
-          linkedSession: null,
-          createdAt:     new Date().toISOString(),
+          summary: transcript.summary,
+          sentences: transcript.sentences,
         }, { merge: true })
         results.push(`${meetingId}: stored as orphan`)
         continue
       }
 
-      await sessionDoc.ref.update({
-        transcript: {
-          meetingId,
-          fullText,
-          summary:     transcript.summary ?? null,
-          sentences:   transcript.sentences ?? [],
-          duration:    transcript.duration,
-          processedAt: new Date().toISOString(),
-        },
-        status:        'completed',
-        summaryStatus: 'pending',
+      await attachTranscriptToSession(sessionDoc, {
+        meetingId,
+        fullText,
+        summary: transcript.summary,
+        sentences: transcript.sentences,
+        duration: transcript.duration,
       })
 
       results.push(`${meetingId}: linked to ${sessionDoc.id}`)

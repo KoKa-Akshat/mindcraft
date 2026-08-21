@@ -21,8 +21,8 @@
  * handler introduces).
  */
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import Anthropic from '@anthropic-ai/sdk'
 import { setCors } from '../cors'
+import { callAnthropic, callGroq, parseModelJson, sanitizeText } from '../llmChat'
 
 const ANTHROPIC_MODEL = 'claude-sonnet-4-20250514'
 // NOT 'llama-3.3-70b-versatile' - that's what every other handler in this
@@ -56,15 +56,6 @@ interface PracticeGoal {
 
 function clip(s: unknown, n: number): string {
   return String(s || '').split(String.fromCharCode(0)).join('').slice(0, n)
-}
-
-function sanitizeReply(text: string): string {
-  return text
-    .replace(/—/g, '-')
-    .replace(/[!]{1,}/g, '.')
-    .replace(/\s+/g, ' ')
-    .trim()
-    .slice(0, 420)
 }
 
 function heuristicReply(message: string): string {
@@ -111,74 +102,15 @@ Return ONLY JSON:
 {"reply":"...","goal":"(the student's practice goal, or empty string if still unknown)","deadline":"(their stated deadline, or empty string if none given)"}`
 }
 
-function parseModelJson(raw: string): { reply?: string; goal?: string; deadline?: string } | null {
-  const trimmed = raw.trim()
-  const start = trimmed.indexOf('{')
-  const end = trimmed.lastIndexOf('}')
-  if (start < 0 || end <= start) return null
-  try {
-    return JSON.parse(trimmed.slice(start, end + 1))
-  } catch {
-    return null
-  }
-}
-
-async function callAnthropic(user: string, system: string): Promise<string | null> {
-  if (!process.env.ANTHROPIC_API_KEY) return null
-  try {
-    const client = new Anthropic()
-    const response = await client.messages.create({
-      model: ANTHROPIC_MODEL,
-      max_tokens: 400,
-      system,
-      messages: [{ role: 'user', content: user }],
-    })
-    return response.content
-      .filter((b) => b.type === 'text')
-      .map((b) => (b as Anthropic.Messages.TextBlock).text)
-      .join('')
-      .trim()
-  } catch {
-    return null
-  }
-}
-
-async function callGroq(user: string, system: string): Promise<string | null> {
-  const apiKey = process.env.GROQ_API_KEY
-  if (!apiKey) return null
-  try {
-    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: GROQ_MODEL,
-        temperature: 0.4,
-        // 400 was confirmed too low: this is a reasoning model that
-        // spends real tokens on an internal reasoning trace BEFORE the
-        // JSON output, and exhausted the whole budget mid-reasoning on a
-        // real call (400 -> json_validate_failed, "max completion tokens
-        // reached before generating a valid document") - same failure
-        // shape as ApiGenerator's max_tokens history in
-        // mindcraft-content-engine/simulation_generator.py. 1500 verified
-        // sufficient on a real multi-turn call.
-        max_tokens: 1500,
-        response_format: { type: 'json_object' },
-        messages: [
-          { role: 'system', content: system },
-          { role: 'user', content: user },
-        ],
-      }),
-    })
-    if (!res.ok) return null
-    const data = (await res.json()) as { choices?: Array<{ message?: { content?: string } }> }
-    return data.choices?.[0]?.message?.content ?? null
-  } catch {
-    return null
-  }
-}
+// 1500 (not 400) for the Groq call specifically: this is a reasoning model
+// that spends real tokens on an internal reasoning trace BEFORE the JSON
+// output, and 400 was confirmed too low, exhausting the whole budget
+// mid-reasoning on a real call (400 -> json_validate_failed, "max
+// completion tokens reached before generating a valid document") - same
+// failure shape as ApiGenerator's max_tokens history in
+// mindcraft-content-engine/simulation_generator.py. 1500 verified
+// sufficient on a real multi-turn call.
+const GROQ_MAX_TOKENS = 1500
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   setCors(res)
@@ -201,9 +133,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const system = buildSystem(priorGoal)
   const user = JSON.stringify({ message, recentTurns })
 
-  const raw = (await callAnthropic(user, system)) || (await callGroq(user, system))
-  const parsed = raw ? parseModelJson(raw) : null
-  const reply = sanitizeReply(parsed?.reply || heuristicReply(message)) || heuristicReply(message)
+  const raw =
+    (await callAnthropic(user, { model: ANTHROPIC_MODEL, maxTokens: 400, system })) ||
+    (await callGroq(user, { model: GROQ_MODEL, maxTokens: GROQ_MAX_TOKENS, temperature: 0.4, system }))
+  const parsed = raw ? parseModelJson<{ reply?: string; goal?: string; deadline?: string }>(raw) : null
+  const reply = sanitizeText(parsed?.reply || heuristicReply(message)) || heuristicReply(message)
 
   // Never let a model response blank out a goal we already knew - only
   // adopt a NEW non-empty value it extracted, same "additive, never

@@ -20,7 +20,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { GoogleGenAI } from '@google/genai'
 import { setCors } from '../cors'
-import { auth } from '../firebase'
+import { verifyToken } from '../verifyToken'
 
 const MAX_IMAGE_BASE64_BYTES = 1.5 * 1024 * 1024
 const MAX_PAGES_PER_CALL = 4
@@ -168,13 +168,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method === 'OPTIONS') return res.status(200).end()
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' })
 
-  const header = req.headers.authorization
-  if (!header?.startsWith('Bearer ')) return res.status(401).json({ error: 'Unauthorized' })
-  try {
-    await auth.verifyIdToken(header.slice(7))
-  } catch {
-    return res.status(401).json({ error: 'Unauthorized' })
-  }
+  const uid = await verifyToken(req)
+  if (!uid) return res.status(401).json({ error: 'Unauthorized' })
 
   try {
     const rawPages: unknown[] = Array.isArray(req.body?.pages) ? req.body.pages : []

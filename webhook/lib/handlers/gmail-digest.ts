@@ -15,8 +15,8 @@
  * Routed through app-actions (Hobby function cap).
  */
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import Anthropic from '@anthropic-ai/sdk'
 import { setCors } from '../cors'
+import { callAnthropic, callGroq, parseModelJson, sanitizeText } from '../llmChat'
 
 const ANTHROPIC_MODEL = 'claude-sonnet-4-20250514'
 const GROQ_MODEL = 'llama-3.3-70b-versatile'
@@ -48,15 +48,6 @@ interface GmailDigestBody {
 
 function clip(s: unknown, n: number): string {
   return String(s ?? '')
-    .replace(/\s+/g, ' ')
-    .trim()
-    .slice(0, n)
-}
-
-function sanitizeText(text: string, n: number): string {
-  return text
-    .replace(/—/g, '-')
-    .replace(/[!]{1,}/g, '.')
     .replace(/\s+/g, ' ')
     .trim()
     .slice(0, n)
@@ -104,67 +95,6 @@ Rules:
 Return ONLY JSON:
 {"headline":"...","actionItems":[{"from":"","subject":"","why":""}],"fyi":[{"from":"","subject":"","why":""}]}`
 
-function parseModelJson(raw: string): unknown {
-  const trimmed = raw.trim()
-  const start = trimmed.indexOf('{')
-  const end = trimmed.lastIndexOf('}')
-  if (start < 0 || end <= start) return null
-  try {
-    return JSON.parse(trimmed.slice(start, end + 1))
-  } catch {
-    return null
-  }
-}
-
-async function callAnthropic(user: string): Promise<string | null> {
-  if (!process.env.ANTHROPIC_API_KEY) return null
-  try {
-    const client = new Anthropic()
-    const response = await client.messages.create({
-      model: ANTHROPIC_MODEL,
-      max_tokens: 1200,
-      system: SYSTEM,
-      messages: [{ role: 'user', content: user }],
-    })
-    return response.content
-      .filter((b) => b.type === 'text')
-      .map((b) => (b as Anthropic.Messages.TextBlock).text)
-      .join('')
-      .trim()
-  } catch {
-    return null
-  }
-}
-
-async function callGroq(user: string): Promise<string | null> {
-  const apiKey = process.env.GROQ_API_KEY
-  if (!apiKey) return null
-  try {
-    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: GROQ_MODEL,
-        temperature: 0.3,
-        max_tokens: 1200,
-        response_format: { type: 'json_object' },
-        messages: [
-          { role: 'system', content: SYSTEM },
-          { role: 'user', content: user },
-        ],
-      }),
-    })
-    if (!res.ok) return null
-    const data = (await res.json()) as { choices?: Array<{ message?: { content?: string } }> }
-    return data.choices?.[0]?.message?.content ?? null
-  } catch {
-    return null
-  }
-}
-
 /** No LLM reachable - honest fallback, not a fake summary: everything goes to fyi. */
 function heuristicDigest(messages: DigestMessageIn[]): GmailDigest {
   return {
@@ -186,7 +116,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (!messages.length) return res.status(400).json({ error: 'No messages' })
 
   const user = JSON.stringify({ messages })
-  const raw = (await callAnthropic(user)) || (await callGroq(user))
+  const raw =
+    (await callAnthropic(user, { model: ANTHROPIC_MODEL, maxTokens: 1200, system: SYSTEM })) ||
+    (await callGroq(user, { model: GROQ_MODEL, maxTokens: 1200, temperature: 0.3, system: SYSTEM }))
   const parsed = raw ? normalizeDigest(parseModelJson(raw)) : null
   const fallback = !parsed
   const digest = parsed ?? heuristicDigest(messages)

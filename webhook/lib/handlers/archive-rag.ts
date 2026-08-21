@@ -9,8 +9,8 @@
  * so the proto still works if this function has not redeployed yet.
  */
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import Anthropic from '@anthropic-ai/sdk'
 import { setCors } from '../cors'
+import { callAnthropic, callGroq, parseModelJson, sanitizeText } from '../llmChat'
 import corpus from '../../data/dans-archive-chunks.json'
 
 const ANTHROPIC_MODEL = 'claude-sonnet-4-20250514'
@@ -132,15 +132,6 @@ function heuristicReply(query: string, hits: Hit[]): string {
   return `I opened ${top.bookTitle} at ${top.pageTitle}. ${top.quote.slice(0, 180)}`
 }
 
-function sanitizeReply(text: string): string {
-  return text
-    .replace(/—/g, '-')
-    .replace(/[!]{1,}/g, '.')
-    .replace(/\s+/g, ' ')
-    .trim()
-    .slice(0, 420)
-}
-
 const SYSTEM = `You are Jesse, the archive agent on The Desk by MindCraft.
 You help a student find an exact page in Dan McCreary's open intelligent textbooks.
 Friendly, certain, short. Like a calm older sibling on a call. Not peppy.
@@ -160,65 +151,9 @@ Rules:
 Return ONLY JSON:
 {"reply":"...","hitUrls":["https://..."]}`
 
-function parseModelJson(raw: string): { reply?: string; hitUrls?: string[] } | null {
-  const trimmed = raw.trim()
-  const start = trimmed.indexOf('{')
-  const end = trimmed.lastIndexOf('}')
-  if (start < 0 || end <= start) return null
-  try {
-    return JSON.parse(trimmed.slice(start, end + 1))
-  } catch {
-    return null
-  }
-}
-
-async function callAnthropic(user: string): Promise<string | null> {
-  if (!process.env.ANTHROPIC_API_KEY) return null
-  try {
-    const client = new Anthropic()
-    const response = await client.messages.create({
-      model: ANTHROPIC_MODEL,
-      max_tokens: 500,
-      system: SYSTEM,
-      messages: [{ role: 'user', content: user }],
-    })
-    return response.content
-      .filter((b) => b.type === 'text')
-      .map((b) => (b as Anthropic.Messages.TextBlock).text)
-      .join('')
-      .trim()
-  } catch {
-    return null
-  }
-}
-
-async function callGroq(user: string): Promise<string | null> {
-  const apiKey = process.env.GROQ_API_KEY
-  if (!apiKey) return null
-  try {
-    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: GROQ_MODEL,
-        temperature: 0.2,
-        max_tokens: 500,
-        response_format: { type: 'json_object' },
-        messages: [
-          { role: 'system', content: SYSTEM },
-          { role: 'user', content: user },
-        ],
-      }),
-    })
-    if (!res.ok) return null
-    const data = (await res.json()) as { choices?: Array<{ message?: { content?: string } }> }
-    return data.choices?.[0]?.message?.content ?? null
-  } catch {
-    return null
-  }
+interface ParsedArchiveReply {
+  reply?: string
+  hitUrls?: string[]
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -250,9 +185,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     })),
   })
 
-  const raw = (await callAnthropic(user)) || (await callGroq(user))
-  const parsed = raw ? parseModelJson(raw) : null
-  const reply = sanitizeReply(parsed?.reply || heuristicReply(message, hits)) || heuristicReply(message, hits)
+  const raw =
+    (await callAnthropic(user, { model: ANTHROPIC_MODEL, maxTokens: 500, system: SYSTEM })) ||
+    (await callGroq(user, { model: GROQ_MODEL, maxTokens: 500, temperature: 0.2, system: SYSTEM }))
+  const parsed = raw ? parseModelJson<ParsedArchiveReply>(raw) : null
+  const reply = sanitizeText(parsed?.reply || heuristicReply(message, hits)) || heuristicReply(message, hits)
 
   return res.status(200).json({
     reply,

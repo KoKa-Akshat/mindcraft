@@ -1,7 +1,8 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { FieldValue } from 'firebase-admin/firestore'
-import { db, auth } from '../firebase'
+import { db } from '../firebase'
 import { setCors } from '../cors'
+import { verifyTokenFull } from '../verifyToken'
 
 const PARENT_EMAIL_MESSAGE =
   'Ask your child to add your email as their parent email in MindCraft, then try again.'
@@ -15,11 +16,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method === 'OPTIONS') return res.status(200).send('')
   if (req.method !== 'POST') return res.status(405).send('Method Not Allowed')
 
-  const header = req.headers.authorization
-  if (!header?.startsWith('Bearer ')) return res.status(401).json({ error: 'Unauthorized' })
+  const token = await verifyTokenFull(req)
+  if (!token) return res.status(401).json({ error: 'Unauthorized' })
 
   try {
-    const token = await auth.verifyIdToken(header.slice(7))
     const callerEmail = cleanEmail(token.email)
     if (!token.email_verified || !callerEmail) {
       return res.status(403).json({ error: 'Please verify your email first.' })

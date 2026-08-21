@@ -26,6 +26,7 @@
 
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { db } from '../lib/firebase'
+import { setCorsAllowlist } from '../lib/cors'
 import {
   cacheDocId,
   composeStoryModuleItems,
@@ -45,13 +46,11 @@ const ALLOWED_ORIGINS = new Set([
 export type { StoryModuleItem }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  const origin = String(req.headers.origin ?? '')
-  res.setHeader(
-    'Access-Control-Allow-Origin',
-    ALLOWED_ORIGINS.has(origin) ? origin : 'https://mindcraft-93858.web.app',
-  )
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS')
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
+  setCorsAllowlist(req, res, {
+    allowedOrigins: ALLOWED_ORIGINS,
+    fallbackOrigin: 'https://mindcraft-93858.web.app',
+    headers: 'Content-Type',
+  })
   if (req.method === 'OPTIONS') return res.status(200).end()
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' })
 
