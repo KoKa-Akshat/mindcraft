@@ -176,9 +176,21 @@ final class JesseCallSession: NSObject, ObservableObject {
     /// Work Dashboard's "I want to learn X" flow (2026-08-18) - set only
     /// while `context == "workDashboard"`, after a real archive check
     /// (`BookGraphLoader`) or generation call (see
-    /// `askJesseWorkDashboard`). Reset in `begin()`, same as the other
-    /// per-context state above.
-    @Published private(set) var workDashboardLesson: WorkDashboardLesson?
+    /// `askJesseWorkDashboard`).
+    ///
+    /// Real fix, 2026-08-21, direct live feedback: this used to be wiped
+    /// to nil unconditionally every time `begin(context: "workDashboard")`
+    /// ran (a plain in-memory `@Published` var, no persistence at all) -
+    /// "when I told it to open the lesson it built, it said it couldn't
+    /// do it." There was nothing left TO open the moment the student
+    /// navigated away and came back - not a bug in recognizing the
+    /// request, a bug in there being no lesson left to find. Now persists
+    /// the same `didSet`-triggers-save shape `turns` already uses just
+    /// below, restored on `begin()` instead of discarded - see
+    /// `loadPersistedLesson`/`savePersistedLesson`.
+    @Published private(set) var workDashboardLesson: WorkDashboardLesson? = JesseCallSession.loadPersistedLesson() {
+        didSet { Self.savePersistedLesson(workDashboardLesson) }
+    }
     /// A real, gated, topologically-ordered Chapter Library book Jesse
     /// found for the student's spoken topic (2026-08-21) - checked FIRST
     /// in `askJesseWorkDashboard`, ahead of the older bundled-books/
@@ -323,7 +335,15 @@ final class JesseCallSession: NSObject, ObservableObject {
             Task { await speak("Hi, I'm Jesse. Let's practice your English together - what are you hoping to get better at, and is there a deadline you're working toward?") }
         }
         if context == "workDashboard" {
-            workDashboardLesson = nil
+            // `workDashboardLesson` is deliberately NOT reset here anymore
+            // (2026-08-21, direct live feedback: "when I told it to open
+            // the lesson it built, it said it couldn't do it" - there was
+            // nothing left to open because this line wiped it every single
+            // time the student came back). It now persists across
+            // sessions (see the property's own doc comment + `didSet`) and
+            // survives re-entry on purpose, same "don't blank real
+            // progress" reasoning `jobOS` right below already uses for
+            // `resumeDraft`.
             pendingLearnTopic = nil
             pendingLearnGrade = nil
             openedChapterBook = nil
@@ -333,7 +353,20 @@ final class JesseCallSession: NSObject, ObservableObject {
             // my input"). A narrow, context-gated `speak()` call before
             // any listening starts - not a generalized entry point (see
             // CURSOR_HANDOFF.md Assignment J's own note on this).
-            Task { await speak("Hi \(studentName), what would you like to learn today?") }
+            //
+            // Context-aware as of 2026-08-21, same live feedback: a
+            // student who was mid-lesson two minutes ago heard the exact
+            // same cold-open line as a first-ever visit - "Say something
+            // like, Welcome back! Would you like to pick up learning
+            // something, or something new?" A restored/still-in-memory
+            // lesson is real, available evidence of what to say instead
+            // of guessing at a "personalized" greeting with nothing behind
+            // it.
+            if let lesson = workDashboardLesson {
+                Task { await speak("Welcome back \(studentName) - want to keep going with \(lesson.topic), or start something new?") }
+            } else {
+                Task { await speak("Hi \(studentName), what would you like to learn today?") }
+            }
         }
         if context == "jobOS" {
             // resumeDraft is NOT reset here, unlike "resume" above - Job
@@ -677,6 +710,21 @@ final class JesseCallSession: NSObject, ObservableObject {
             isThinking = false
             return
         }
+        // Real bug, direct live feedback 2026-08-21: "open the lesson it
+        // built" matched no recognized intent at all, so it fell all the
+        // way through to `extractLearnTopic`, which - finding no lead-in
+        // either - fell through further to generic conversation, which
+        // (before `workDashboardLesson` persisted, see that property's own
+        // doc comment) had nothing real to work with and failed outright:
+        // "it said it couldn't do it." Checked BEFORE extractLearnTopic so
+        // an explicit reopen request can never be misread as a brand-new
+        // topic to generate.
+        if context == "workDashboard", let lesson = workDashboardLesson, Self.isReopenLessonRequest(message) {
+            guard isActive else { isThinking = false; return }
+            await speak("Here's what we built on \(lesson.topic) - \(lesson.chapters.joined(separator: ", ")).")
+            isThinking = false
+            return
+        }
         if context == "workDashboard", let topic = Self.extractLearnTopic(from: message) {
             await askJesseWorkDashboardClarify(topic: topic, grade: Self.extractGrade(from: message))
             isThinking = false
@@ -896,6 +944,24 @@ final class JesseCallSession: NSObject, ObservableObject {
             "i want to practice", "i'd like to practice", "i would like to practice",
             "let's practice", "lets practice", "help me practice", "can i practice",
             "take me to practice", "open practice", "go to practice",
+        ]
+        return phrases.contains { lowered.contains($0) }
+    }
+
+    /// Real bug, direct live feedback 2026-08-21: "open the lesson it
+    /// built" - see this function's call site for the full failure it
+    /// fixes. Only meaningful when `workDashboardLesson` is already
+    /// non-nil (the call site checks that), so this doesn't need to
+    /// disambiguate "open" from a genuinely new topic request itself.
+    private static func isReopenLessonRequest(_ message: String) -> Bool {
+        let lowered = message.lowercased()
+        let phrases = [
+            "open the lesson", "open that lesson", "open my lesson",
+            "show me the lesson", "show the lesson", "show me what we built",
+            "show me what you built", "open what we built", "open it up",
+            "open it", "pull it up", "pull up the lesson",
+            "reopen the lesson", "go back to the lesson", "back to the lesson",
+            "continue the lesson", "keep going with", "keep going on",
         ]
         return phrases.contains { lowered.contains($0) }
     }
@@ -1328,6 +1394,75 @@ final class JesseCallSession: NSObject, ObservableObject {
         let capped = turns.count > maxStoredTurns ? Array(turns.suffix(maxStoredTurns)) : turns
         guard let data = try? JSONEncoder().encode(capped) else { return }
         UserDefaults.standard.set(data, forKey: turnsKey)
+    }
+
+    // `WorkDashboardLesson` itself stays Equatable-only (not Codable) - it
+    // isn't retrofitted here because `microsims: [MicroSimRecord]` carries
+    // full extracted sim file contents (`files: [String: String]`, real
+    // HTML/JS bodies) that would bloat UserDefaults for no reason; they're
+    // cheaply re-derived from `topic` via `MicroSimLoader.matching` on
+    // restore instead of persisted. `PersistedLesson` is the thin, real
+    // Codable mirror of everything that actually needs to survive.
+    private struct PersistedLesson: Codable {
+        let topic: String
+        let sourceIsArchive: Bool
+        let sourceBookTitle: String?
+        let chapters: [String]
+        let chapterBodies: [String]
+        let definition: String
+        let question: String?
+        let citationBookTitles: [String]
+        let citationPageTitles: [String]
+        let citationURLs: [String]
+
+        init(_ lesson: WorkDashboardLesson) {
+            topic = lesson.topic
+            switch lesson.source {
+            case .archive(let bookTitle): sourceIsArchive = true; sourceBookTitle = bookTitle
+            case .generated: sourceIsArchive = false; sourceBookTitle = nil
+            }
+            chapters = lesson.chapters
+            chapterBodies = lesson.chapterBodies
+            definition = lesson.definition
+            question = lesson.question
+            citationBookTitles = lesson.citations.map(\.bookTitle)
+            citationPageTitles = lesson.citations.map(\.pageTitle)
+            citationURLs = lesson.citations.map(\.url)
+        }
+
+        func restored() -> WorkDashboardLesson {
+            let citations = zip(zip(citationBookTitles, citationPageTitles), citationURLs).map {
+                LessonCitation(bookTitle: $0.0, pageTitle: $0.1, url: $1)
+            }
+            return WorkDashboardLesson(
+                topic: topic,
+                source: sourceIsArchive ? .archive(bookTitle: sourceBookTitle ?? "") : .generated,
+                chapters: chapters,
+                chapterBodies: chapterBodies,
+                definition: definition,
+                question: question,
+                microsims: MicroSimLoader.matching(topic: topic),
+                citations: citations
+            )
+        }
+    }
+
+    private static let persistedLessonKey = "jesseCall.workDashboardLesson"
+
+    private static func loadPersistedLesson() -> WorkDashboardLesson? {
+        guard let data = UserDefaults.standard.data(forKey: persistedLessonKey),
+              let decoded = try? JSONDecoder().decode(PersistedLesson.self, from: data)
+        else { return nil }
+        return decoded.restored()
+    }
+
+    private static func savePersistedLesson(_ lesson: WorkDashboardLesson?) {
+        guard let lesson else {
+            UserDefaults.standard.removeObject(forKey: persistedLessonKey)
+            return
+        }
+        guard let data = try? JSONEncoder().encode(PersistedLesson(lesson)) else { return }
+        UserDefaults.standard.set(data, forKey: persistedLessonKey)
     }
 }
 
