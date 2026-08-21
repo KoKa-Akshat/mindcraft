@@ -432,6 +432,33 @@ final class JesseCallSession: NSObject, ObservableObject {
         openedChapterBookGenerationInfo = nil
     }
 
+    /// Real bug, live testing 2026-08-21: the Chapter Library (Tier 0) and
+    /// on-demand generation (Tier 3) paths only ever set `openedChapterBook`
+    /// - `workDashboardLesson` (what the reopen check at `isReopenLessonRequest`
+    /// and the call-start "welcome back" greeting both actually read) was
+    /// left completely untouched by either path. Concretely: a student asks
+    /// for a brand-new topic, it succeeds via one of these newer tiers, and
+    /// `workDashboardLesson` keeps pointing at whatever was built (or
+    /// persisted from a PRIOR session - see that property's own doc
+    /// comment) before this request - the exact shape of "Jesse announces
+    /// old, unrelated content instead of what I just asked for." Keeping
+    /// both pieces of state in sync here, at the one real source (a
+    /// just-resolved `AssembledBook`), fixes it at the root rather than
+    /// patching each read site.
+    private func syncWorkDashboardLesson(from book: AssembledBook, source: WorkDashboardLesson.Source) {
+        let sections = book.chapters.flatMap(\.sections)
+        workDashboardLesson = WorkDashboardLesson(
+            topic: book.title,
+            source: source,
+            chapters: sections.map(\.title),
+            chapterBodies: sections.map { $0.summary.isEmpty ? $0.body : $0.summary },
+            definition: book.title,
+            question: nil,
+            microsims: [],
+            citations: []
+        )
+    }
+
     /// Test-only seam for `StudySessionView` (2026-08-19) - real voice
     /// generation needs a connected AI key and a live network round trip,
     /// neither available in the UI-testing harness. Only ever called from
@@ -1170,6 +1197,7 @@ final class JesseCallSession: NSObject, ObservableObject {
             guard isActive else { return }
             openedChapterBook = book
             openedChapterBookGenerationInfo = nil
+            syncWorkDashboardLesson(from: book, source: .archive(bookTitle: book.title))
             let sectionTitles = book.chapters.flatMap(\.sections).map(\.title)
             await speak("Found it in the library - \(book.title), \(book.coverageLabel): \(sectionTitles.joined(separator: ", ")).")
             return
@@ -1253,6 +1281,7 @@ final class JesseCallSession: NSObject, ObservableObject {
             // student just now, so a "generated in 3m42s, $3.60" badge would
             // be a real lie, not a rounding error.
             openedChapterBookGenerationInfo = cached ? nil : ChapterBookGenerationInfo(costUsd: costUsd, elapsedSeconds: elapsedSeconds)
+            syncWorkDashboardLesson(from: book, source: .generated)
             let sectionTitles = book.chapters.flatMap(\.sections).map(\.title)
             Task { await LessonGraphIngestClient.ingest(topic: topic, chapterTitles: sectionTitles) }
             await speak("Done - \(book.title): \(sectionTitles.joined(separator: ", ")).")
