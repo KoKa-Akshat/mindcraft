@@ -69,16 +69,13 @@ struct JesseRailView: View {
                 }
             }
 
-            Text("Hi \(studentName), Jesse here.")
-                .font(.system(size: compact ? 13 : 15, weight: .semibold, design: .rounded))
-                .foregroundColor(Color(jrHex: "143a2e"))
-                .padding(compact ? 8 : 12)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .background(
-                    RoundedRectangle(cornerRadius: 14, style: .continuous)
-                        .fill(Color(jrHex: "eef1ec"))
-                )
-
+            // The static "Hi {name}, Jesse here." greeting box was removed
+            // (2026-08-21, explicit ask: "move the call button up... remove
+            // [the greeting] so we have more space") - it was redundant with
+            // the avatar + waveform + "On the line"/"Just now" status right
+            // above, which already says Jesse is present. The call button
+            // now sits directly under the header instead of a full box-height
+            // below it.
             HStack(spacing: 10) {
                 Button(action: jesseCall.isActive ? endCall : jumpOnCall) {
                     HStack {
@@ -124,13 +121,31 @@ struct JesseRailView: View {
                 ScrollViewReader { scrollProxy in
                     ScrollView {
                         VStack(alignment: .leading, spacing: 10) {
+                            // Most-recent-turn highlight (2026-08-21, explicit
+                            // ask: "shows the most recent text highlighted") -
+                            // only when nothing newer (a live in-progress
+                            // transcript line) is about to render below it.
+                            let mostRecentId = (jesseCall.isListening && !jesseCall.liveTranscript.isEmpty)
+                                ? nil : jesseCall.turns.last?.id
                             ForEach(jesseCall.turns) { turn in
                                 transcriptLine(turn.speaker == "jesse" ? "Jesse" : studentName, turn.text)
                                     .id(turn.id)
+                                    .padding(.horizontal, turn.id == mostRecentId ? 8 : 0)
+                                    .padding(.vertical, turn.id == mostRecentId ? 5 : 0)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                            .fill(turn.id == mostRecentId ? Color(jrHex: "c4f547").opacity(0.35) : Color.clear)
+                                    )
                             }
                             if jesseCall.isListening, !jesseCall.liveTranscript.isEmpty {
                                 transcriptLine(studentName, jesseCall.liveTranscript)
                                     .opacity(0.55)
+                                    .padding(.horizontal, 8)
+                                    .padding(.vertical, 5)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                            .fill(Color(jrHex: "c4f547").opacity(0.35))
+                                    )
                                     .id("liveTranscript")
                             }
                             ForEach(Array(instructionLog.enumerated()), id: \.offset) { offset, line in
@@ -154,8 +169,11 @@ struct JesseRailView: View {
                     .onChange(of: instructionLog.count) { _, _ in scrollToBottom(scrollProxy) }
                     .onChange(of: jesseCall.isThinking) { _, _ in scrollToBottom(scrollProxy) }
                 }
-                .frame(maxHeight: compact ? 90 : 240)
-                .padding(compact ? 6 : 10)
+                // Taller now that the removed greeting box freed real
+                // vertical space (2026-08-21, explicit ask: "use most of the
+                // margins and reduce the padding").
+                .frame(maxHeight: compact ? 110 : 280)
+                .padding(compact ? 5 : 8)
                 .background(
                     RoundedRectangle(cornerRadius: 14, style: .continuous)
                         .fill(Color(jrHex: "f3f1ec"))
@@ -178,7 +196,7 @@ struct JesseRailView: View {
 
             Spacer(minLength: 0)
         }
-        .padding(compact ? 10 : 18)
+        .padding(compact ? 8 : 14)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(
             RoundedRectangle(cornerRadius: 18, style: .continuous)

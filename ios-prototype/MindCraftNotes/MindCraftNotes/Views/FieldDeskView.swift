@@ -1324,6 +1324,9 @@ struct FieldDeskView: View {
                     showJesseCallSheet = false
                 }
             )
+            // Explicit small-drawer size (2026-08-21 design pass) - see
+            // DeskShellView's matching call site for the same reasoning.
+            .presentationDetents([.medium])
         }
         .fullScreenCover(isPresented: $showByobStudio) {
             CreateInstanceStudioView(binderStore: binderStore) { _ in }

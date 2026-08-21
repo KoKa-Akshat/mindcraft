@@ -3218,16 +3218,17 @@ private enum WorkArtboard {
     static let flowsRail = CGRect(x: 1231, y: 54, width: 199, height: 566)
     /// Content-viewer mode (2026-08-18, explicit ask: tap an uploaded
     /// file, Binder "mixes with Intel to get all that space on the
-    /// right"). Originally the union of just Binder's and Intel's own p4
-    /// footprints, with Homework Help/Knowledge Graph left in place in the
-    /// left column - widened 2026-08-21 (real live feedback: "it occupies
-    /// maybe half the screen... should occupy 80-90%... everything should
-    /// occupy the whole rectangular space in the homework help knowledge
-    /// graph too") to the FULL board width (Homework Help/Moodle's own
-    /// left edge, x=40, to Intel's own right edge, x=1420) - those two
-    /// tiles are now hidden while this is active, same treatment Intel's
-    /// tile already had (see `tileBoard`).
-    static let contentViewerBinder = CGRect(x: 40, y: 40, width: 1380, height: 768)
+    /// right"). Went through two real widenings the same night: first to
+    /// the Binder+Intel union (~65% width, read as "occupies maybe half
+    /// the screen"), then briefly to the FULL board width (~96%, a real
+    /// overshoot of the user's own "80-90%" ask). Settled here (2026-08-21
+    /// design-system pass) at 82% of the 1440pt board - the upper end of
+    /// the design system's own 70-82% spec, chosen deliberately over the
+    /// live-overshot 96% now that a more considered number exists -
+    /// width 1181 (1440 * 0.82), horizontally centered (x=130, leaving
+    /// Homework Help/Moodle hidden the same way Intel's tile already was
+    /// while this is active, see `tileBoard`).
+    static let contentViewerBinder = CGRect(x: 130, y: 40, width: 1181, height: 768)
 }
 
 /// Gentle, always-on pulse for the Knowledge Graph tile's empty-state seed

@@ -128,6 +128,10 @@ struct DeskShellView: View {
                     showJesseCallSheet = false
                 }
             )
+            // Explicit small-drawer size (2026-08-21 design pass) - "Jesse
+            // never steals canvas" per the design system; a bare .sheet()
+            // defaults to a large, near-full presentation.
+            .presentationDetents([.medium])
         }
         .background(Color(shellHex: "0f1f18").ignoresSafeArea())
         .onReceive(NotificationCenter.default.publisher(for: .mcOpenHubFromDesk)) { _ in
