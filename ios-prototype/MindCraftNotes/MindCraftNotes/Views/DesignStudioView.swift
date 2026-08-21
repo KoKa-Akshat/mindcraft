@@ -38,6 +38,14 @@ struct DesignStudioView: View {
     @State private var chapterFlowBox: DesignBox?
     /// `.simulation` box currently open in the Blockly workspace shell.
     @State private var simulationBox: DesignBox?
+    /// Non-nil while an AI sim generation request is in flight for this
+    /// box id - `generate-sim`'s real pipeline (fit-check -> generate ->
+    /// rubric -> vision gate) is a genuine 15-60+ second job, not
+    /// something to fire-and-forget without a visible loading state.
+    @State private var generatingSimBoxId: String?
+    /// Set only on a real, terminal failure (no good result / rate
+    /// limited / service unavailable) - cleared on the next attempt.
+    @State private var simGenerationError: String?
 
     private enum PublishState: Equatable {
         case idle, publishing, done(String), failed(String)
@@ -631,6 +639,66 @@ struct DesignStudioView: View {
 
     private func simulationInspector(_ box: DesignBox) -> some View {
         VStack(alignment: .leading, spacing: 10) {
+            inspectorLabel("PROMPT (AI-GENERATED SIM)")
+            TextEditor(text: bindingForBox(box.id, get: \.simPrompt, set: { $0.simPrompt = $1 }))
+                .font(.system(size: 12.5, weight: .medium, design: .rounded))
+                .foregroundColor(Color(dsHex: "143a2e"))
+                .scrollContentBackground(.hidden)
+                .frame(height: 70)
+                .padding(6)
+                .background(fieldBackground)
+                .accessibilityIdentifier("designStudioSimPrompt")
+
+            if let chapterTitle = graph.upstreamChapterTitle(for: box.id) {
+                Text("Grounded in the connected chapter \u{201c}\(chapterTitle)\u{201d}.")
+                    .font(.system(size: 10.5, weight: .semibold, design: .rounded))
+                    .foregroundColor(Color(dsHex: "5b3e8f"))
+            }
+
+            Button {
+                generateSim(for: box)
+            } label: {
+                HStack(spacing: 6) {
+                    if generatingSimBoxId == box.id {
+                        ProgressView().tint(.white).scaleEffect(0.8)
+                    } else {
+                        Image(systemName: "sparkles")
+                    }
+                    Text(generatingSimBoxId == box.id
+                         ? "Generating\u{2026} (up to a minute)"
+                         : (box.generatedSimHTML.isEmpty ? "Generate with AI" : "Regenerate"))
+                }
+                .font(.system(size: 13, weight: .bold, design: .rounded))
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 11)
+                .background(Capsule().fill(Color.black))
+            }
+            .buttonStyle(.plain)
+            .disabled(generatingSimBoxId != nil || box.simPrompt.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+            .accessibilityIdentifier("designStudioGenerateSim")
+
+            if let error = simGenerationError, generatingSimBoxId == nil {
+                Text(error)
+                    .font(.system(size: 11, weight: .medium, design: .rounded))
+                    .foregroundColor(Color(dsHex: "b0473f"))
+            }
+
+            if !box.generatedSimHTML.isEmpty {
+                VStack(alignment: .leading, spacing: 6) {
+                    Text(box.generatedSimTitle.isEmpty ? "Generated sim" : box.generatedSimTitle)
+                        .font(.system(size: 12, weight: .bold, design: .rounded))
+                        .foregroundColor(Color(dsHex: "143a2e"))
+                    InlineSimWebView(html: box.generatedSimHTML)
+                        .frame(height: 180)
+                        .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                        .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(Color(dsHex: "143a2e").opacity(0.1)))
+                }
+                .accessibilityIdentifier("designStudioGeneratedSimPreview")
+            }
+
+            Divider().padding(.vertical, 2)
+
             inspectorLabel("REFERENCE URL (OPTIONAL)")
             TextField("https://\u{2026}", text: bindingForBox(box.id, get: \.referenceURL, set: { $0.referenceURL = $1 }))
                 .font(.system(size: 12.5, weight: .medium, design: .rounded))
@@ -647,7 +715,7 @@ struct DesignStudioView: View {
             } label: {
                 HStack(spacing: 6) {
                     Image(systemName: "square.on.square.squareshape.controlhandles")
-                    Text(box.workspaceState.isEmpty ? "Build the blocks" : "Open block workspace")
+                    Text(box.workspaceState.isEmpty ? "Build the blocks yourself" : "Open block workspace")
                 }
                 .font(.system(size: 13, weight: .bold, design: .rounded))
                 .foregroundColor(.white)
@@ -659,10 +727,50 @@ struct DesignStudioView: View {
             .accessibilityIdentifier("designStudioOpenWorkspace")
 
             Text(box.workspaceState.isEmpty
-                 ? "Opens a Blockly block editor - what you build saves back into this box."
+                 ? "Or draw it yourself in a Blockly block editor - what you build saves back into this box."
                  : "Workspace saved \u{00b7} it reloads exactly where you left it.")
                 .font(.system(size: 11, weight: .medium, design: .rounded))
                 .foregroundColor(Color(dsHex: "143a2e").opacity(0.5))
+        }
+    }
+
+    /// Calls the SAME real, budget-capped, gate-passed generation pipeline
+    /// Jesse's voice flow already uses (`GeneratedSimClient` ->
+    /// `/api/generate-sim`) - no new backend, no new quality bar, a
+    /// simulation box just becomes a second way to reach the one real
+    /// generation path. See `ContentGraphStore.upstreamChapterTitle` for
+    /// why grounding is title-level, not full chapter text.
+    private func generateSim(for box: DesignBox) {
+        let prompt = box.simPrompt.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !prompt.isEmpty else { return }
+        let topic: String
+        if let chapterTitle = graph.upstreamChapterTitle(for: box.id) {
+            topic = "In the context of \u{201c}\(chapterTitle)\u{201d}: \(prompt)"
+        } else {
+            topic = prompt
+        }
+        generatingSimBoxId = box.id
+        simGenerationError = nil
+        Task {
+            let verdict = await GeneratedSimClient.requestSim(topic: topic)
+            await MainActor.run {
+                generatingSimBoxId = nil
+                switch verdict {
+                case .verified(let result, _):
+                    graph.updateBox(box.id) {
+                        $0.generatedSimHTML = result.html
+                        $0.generatedSimTitle = result.title
+                    }
+                case .noGoodResult(let reason, let suggestedRetryTopic):
+                    var message = reason ?? "Couldn't make a good sim for that prompt."
+                    if let suggestedRetryTopic { message += " Try: \u{201c}\(suggestedRetryTopic)\u{201d}" }
+                    simGenerationError = message
+                case .rateLimited(let reason):
+                    simGenerationError = reason ?? "Sim generation is rate-limited right now - try again shortly."
+                case .unavailable(let reason):
+                    simGenerationError = reason ?? "Sim generation isn't available right now."
+                }
+            }
         }
     }
 

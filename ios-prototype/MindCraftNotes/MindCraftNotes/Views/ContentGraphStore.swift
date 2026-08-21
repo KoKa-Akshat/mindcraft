@@ -56,6 +56,26 @@ struct DesignBox: Identifiable, Codable, Equatable {
     var workspaceState: String
     /// `.simulation` - an optional reference URL the sim is based on.
     var referenceURL: String
+    /// `.simulation` - the AI-generation prompt (2026-08-21 addition,
+    /// alongside the pre-existing Blockly path, not a replacement for it -
+    /// both are real, working ways to fill a simulation box). What the
+    /// student typed asking for a sim; combined with any connected
+    /// upstream `.chapter` box's body as context before calling
+    /// `GeneratedSimClient`, same "ground the request in real material
+    /// when it's available" instinct `LessonOutlineClient`'s
+    /// `referenceMaterial` param already uses server-side.
+    var simPrompt: String
+    /// `.simulation` - the self-contained, gate-passed HTML from a
+    /// successful AI generation (`GeneratedSimResult.html` - already the
+    /// same shape `InlineSimWebView` renders, no new rendering path
+    /// needed). Empty until a generation succeeds.
+    var generatedSimHTML: String
+    /// `.simulation` - the title/description that came back with
+    /// `generatedSimHTML`, kept alongside it purely for display (the
+    /// on-canvas card and the inspector preview both want a human label,
+    /// and re-deriving it from the prompt text would drift from what was
+    /// actually generated).
+    var generatedSimTitle: String
     /// `.checkpoint` - the question the student poses at this point.
     var checkpointQuestion: String
     /// `.checkpoint` - the expected-answer shape ("a number in cm",
@@ -73,6 +93,9 @@ struct DesignBox: Identifiable, Codable, Equatable {
         chapterBody: String = "",
         workspaceState: String = "",
         referenceURL: String = "",
+        simPrompt: String = "",
+        generatedSimHTML: String = "",
+        generatedSimTitle: String = "",
         checkpointQuestion: String = "",
         checkpointAnswer: String = ""
     ) {
@@ -84,6 +107,9 @@ struct DesignBox: Identifiable, Codable, Equatable {
         self.chapterBody = chapterBody
         self.workspaceState = workspaceState
         self.referenceURL = referenceURL
+        self.simPrompt = simPrompt
+        self.generatedSimHTML = generatedSimHTML
+        self.generatedSimTitle = generatedSimTitle
         self.checkpointQuestion = checkpointQuestion
         self.checkpointAnswer = checkpointAnswer
     }
@@ -91,6 +117,7 @@ struct DesignBox: Identifiable, Codable, Equatable {
     enum CodingKeys: String, CodingKey {
         case id, type, title, subtitle, position
         case chapterBody, workspaceState, referenceURL
+        case simPrompt, generatedSimHTML, generatedSimTitle
         case checkpointQuestion, checkpointAnswer
     }
 
@@ -107,6 +134,9 @@ struct DesignBox: Identifiable, Codable, Equatable {
         chapterBody = try c.decodeIfPresent(String.self, forKey: .chapterBody) ?? ""
         workspaceState = try c.decodeIfPresent(String.self, forKey: .workspaceState) ?? ""
         referenceURL = try c.decodeIfPresent(String.self, forKey: .referenceURL) ?? ""
+        simPrompt = try c.decodeIfPresent(String.self, forKey: .simPrompt) ?? ""
+        generatedSimHTML = try c.decodeIfPresent(String.self, forKey: .generatedSimHTML) ?? ""
+        generatedSimTitle = try c.decodeIfPresent(String.self, forKey: .generatedSimTitle) ?? ""
         checkpointQuestion = try c.decodeIfPresent(String.self, forKey: .checkpointQuestion) ?? ""
         checkpointAnswer = try c.decodeIfPresent(String.self, forKey: .checkpointAnswer) ?? ""
     }
@@ -129,6 +159,7 @@ struct DesignBox: Identifiable, Codable, Equatable {
             let words = chapterBody.split(whereSeparator: \.isWhitespace).count
             return words == 0 ? "Not written yet" : "\(words) word\(words == 1 ? "" : "s")"
         case .simulation:
+            if !generatedSimHTML.isEmpty { return "AI sim ready" }
             return workspaceState.isEmpty ? "Workspace empty" : "Workspace saved"
         case .checkpoint:
             return checkpointQuestion.isEmpty ? "No question yet" : "Question set"
@@ -282,6 +313,32 @@ final class ContentGraphStore: ObservableObject {
         edges.filter { $0.to == boxId }
     }
 
+    /// The title of any directly-connected upstream `.chapter` box - real
+    /// grounding for a `.simulation` box's AI generation call, and the
+    /// "connect it to another box" mechanic actually doing something (a
+    /// sim wired to a chapter gets generated in that chapter's context,
+    /// not a bare prompt in isolation).
+    ///
+    /// HONEST LIMIT: title only, not the chapter's full body.
+    /// `GeneratedSimClient.requestSim(topic:)` caches results keyed by a
+    /// slug of `topic` (`generate-sim.ts`'s whole "reuse before
+    /// regenerate" design) - folding a full chapter body into that string
+    /// would either produce an unstable, garbage-long cache key or
+    /// silently defeat the cache for every call. Threading real grounding
+    /// text through to the generation backend properly (the
+    /// `prose_brief`/`referenceMaterial` shape `LessonOutlineClient`
+    /// already uses server-side) needs a webhook contract change this
+    /// pass doesn't make - title-level context is what's honestly
+    /// available today without touching that contract.
+    func upstreamChapterTitle(for simulationBoxId: String) -> String? {
+        for edge in edgesInto(simulationBoxId) {
+            guard let source = box(edge.from), source.type == .chapter else { continue }
+            let trimmed = source.title.trimmingCharacters(in: .whitespacesAndNewlines)
+            if !trimmed.isEmpty { return trimmed }
+        }
+        return nil
+    }
+
     // MARK: Title
 
     func setTitle(_ next: String) {
@@ -386,7 +443,25 @@ final class ContentGraphStore: ObservableObject {
                 var lines: [String] = []
                 if !box.subtitle.isEmpty { lines.append(box.subtitle) }
                 if !box.referenceURL.isEmpty { lines.append("Reference: \(box.referenceURL)") }
-                lines.append("_Built as a block workspace in Design Studio - open the canvas to run it._")
+                // HONEST LIMIT, stated rather than hidden (same convention
+                // as the .branch flatten note below): a generated sim's
+                // HTML is real and playable INSIDE Design Studio
+                // (InlineSimWebView, same rendering path BookReaderView
+                // uses), but the published Binder book body is a flat
+                // markdown string rendered by StudySessionView as plain
+                // Text, not HTML - embedding the sim's markup there would
+                // just show broken raw tags, not a working sim. Until the
+                // Binder reader gains a structured "embedded sim" surface
+                // (StudySessionView already has one for voice-flow
+                // generated sims - GENERATED SIM section - this box's
+                // result isn't wired into it yet), publish can only name
+                // what exists, not embed it.
+                if !box.generatedSimHTML.isEmpty {
+                    let label = box.generatedSimTitle.isEmpty ? heading : box.generatedSimTitle
+                    lines.append("_AI-generated simulation ready: \u{201c}\(label)\u{201d} - open this box in Design Studio to run it. (Published books can't embed it yet - open the draft canvas instead.)_")
+                } else {
+                    lines.append("_Built as a block workspace in Design Studio - open the canvas to run it._")
+                }
                 sections.append(BookSection(
                     id: box.id, type: .simulation, title: "Simulation · \(heading)",
                     body: lines.joined(separator: "\n\n"),
