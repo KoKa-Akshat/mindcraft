@@ -180,6 +180,37 @@ def append_attempt_observations(student_id: str, observations: list[dict], now: 
     return len(observations)
 
 
+def _fetch_attempt_observation_rows(student_id: str, limit: int, direction) -> list[dict]:
+    """Shared Firestore query + row-shaping for the two attempt-observation
+    loaders below. Both read the same collection into the same plain-dict
+    shape (the harness's replay source, not SessionEvents — these are never
+    folded into mastery) — only the sort direction, limit, and what the
+    caller does with the rows afterward (dedupe vs. not) differ."""
+    docs = (
+        db.collection("attempt_observations")
+        .where("studentId", "==", student_id)
+        .order_by("timestamp", direction=direction)
+        .limit(limit)
+        .stream()
+    )
+    out = []
+    for doc in docs:
+        d = doc.to_dict()
+        out.append({
+            "student_id": student_id,
+            "concept_id": d.get("conceptId"),
+            "format_id": d.get("formatId"),
+            "level": int(d.get("level", 1)),
+            "correct": float(d.get("correct", 0.0)),
+            "question_id": d.get("questionId"),
+            "selected_choice_index": d.get("selectedChoiceIndex"),
+            "misconception_id": d.get("misconceptionId"),
+            "error_type": d.get("errorType"),
+            "timestamp": _to_naive(d.get("timestamp", datetime.now())),
+        })
+    return out
+
+
 def load_attempt_observations(
     student_id: str, limit: int = 2000, dedupe: bool = True
 ) -> list[dict]:
@@ -189,28 +220,7 @@ def load_attempt_observations(
     these are never folded into mastery.
     """
     try:
-        docs = (
-            db.collection("attempt_observations")
-            .where("studentId", "==", student_id)
-            .order_by("timestamp", direction=firestore.Query.ASCENDING)
-            .limit(limit)
-            .stream()
-        )
-        out = []
-        for doc in docs:
-            d = doc.to_dict()
-            out.append({
-                "student_id": student_id,
-                "concept_id": d.get("conceptId"),
-                "format_id": d.get("formatId"),
-                "level": int(d.get("level", 1)),
-                "correct": float(d.get("correct", 0.0)),
-                "question_id": d.get("questionId"),
-                "selected_choice_index": d.get("selectedChoiceIndex"),
-                "misconception_id": d.get("misconceptionId"),
-                "error_type": d.get("errorType"),
-                "timestamp": _to_naive(d.get("timestamp", datetime.now())),
-            })
+        out = _fetch_attempt_observation_rows(student_id, limit, firestore.Query.ASCENDING)
         if not dedupe:
             return out
 
@@ -241,29 +251,7 @@ def load_attempt_observations(
 def load_recent_attempt_observations(student_id: str, limit: int = 200) -> list[dict]:
     """Read recent per-question observations with outcome-stream fields."""
     try:
-        docs = (
-            db.collection("attempt_observations")
-            .where("studentId", "==", student_id)
-            .order_by("timestamp", direction=firestore.Query.DESCENDING)
-            .limit(limit)
-            .stream()
-        )
-        out = []
-        for doc in docs:
-            d = doc.to_dict()
-            out.append({
-                "student_id": student_id,
-                "concept_id": d.get("conceptId"),
-                "format_id": d.get("formatId"),
-                "level": int(d.get("level", 1)),
-                "correct": float(d.get("correct", 0.0)),
-                "question_id": d.get("questionId"),
-                "selected_choice_index": d.get("selectedChoiceIndex"),
-                "misconception_id": d.get("misconceptionId"),
-                "error_type": d.get("errorType"),
-                "timestamp": _to_naive(d.get("timestamp", datetime.now())),
-            })
-        return out
+        return _fetch_attempt_observation_rows(student_id, limit, firestore.Query.DESCENDING)
     except Exception:
         logger.exception(
             "Failed to load recent attempt observations for student %s", student_id

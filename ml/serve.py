@@ -630,6 +630,66 @@ def _prior_for_card(target_type: str, target_id: str) -> float | None:
     return bridge_prior_confidence(bridge) if bridge is not None else None
 
 
+def _load_and_rebuild_student_graph(
+    student_id: str,
+    *,
+    events_loader=None,
+    apply_decay: bool = True,
+    format_events: list | None = None,
+    require_events: bool = False,
+    now: datetime | None = None,
+):
+    """Load a student's events and rebuild their personal graph — the
+    load -> rebuild -> (usually) decay sequence most student-graph endpoints
+    below repeat. Consolidates the genuinely-identical call sites; the knobs
+    below cover real differences confirmed by reading each caller (not
+    assumed) rather than forcing a false consolidation:
+
+    - `events_loader` — defaults to `load_student_events`. Pass
+      `load_student_events_with_learning` for endpoints that also want
+      diagnostic learning_events folded into the same event stream
+      (/knowledge-graph).
+    - `apply_decay=False` — for endpoints that persist the freshly rebuilt
+      graph WITHOUT decaying it. That's the pre-existing behavior at
+      /submit-answer, /record-work-evidence, and /student-profile, not an
+      oversight introduced here.
+    - `format_events` — if given, folds format-node evidence into mastery
+      (engine.update.fold_format_events) before decay, for the two endpoints
+      that also fold per-representation mastery (/recommend,
+      /record-outcomes).
+    - `require_events=True` — raise the same 404 /student-profile already
+      raised for a student with no events, instead of silently building an
+      empty graph.
+    - `now` — pass the caller's own `datetime.now()` when it already computed
+      one for other purposes in the same request (several callers do, and
+      reuse it for event timestamps elsewhere in the handler); otherwise a
+      fresh one is created here and returned for reuse.
+
+    Returns `(graph, events, now)`.
+    """
+    from mindcraft_graph.firestore_adapter import load_student_events
+
+    loader = events_loader or load_student_events
+    events = loader(student_id)
+    if require_events and not events:
+        raise HTTPException(status_code=404, detail="No data for this student")
+
+    graph = create_personal_graph(student_id, ontology)
+    if events:
+        graph = update_personal_graph(graph, events, ontology)
+
+    if format_events is not None:
+        from mindcraft_graph.engine.update import fold_format_events
+        graph.state = fold_format_events(graph.state, format_events)
+
+    now = now or datetime.now()
+    if apply_decay:
+        graph.state = decay_student_state(graph.state, now)
+        graph.edges = decay_all_edges(graph.edges, now)
+
+    return graph, events, now
+
+
 # ── Endpoints ──
 
 @app.post("/check-work")
@@ -651,31 +711,16 @@ async def check_work_endpoint(req: CheckWorkRequest, auth: AuthContext = Depends
 async def recommend_endpoint(req: RecommendRequest, auth: AuthContext = Depends(require_auth)):
     authorize_student(auth, req.student_id)
     from mindcraft_graph.firestore_adapter import (
-        load_student_events, save_personal_graph, save_recommendation_result,
+        save_personal_graph, save_recommendation_result,
         append_displacement_snapshot, load_ingredient_state, load_format_events,
         load_affective_state,
     )
-    from mindcraft_graph.engine.update import fold_format_events
-
-    # Load student data
-    events = load_student_events(req.student_id)
-    if not events:
-        # New student — return the full prerequisite chain
-        events = []
-
-    # Build or update personal graph
-    graph = create_personal_graph(req.student_id, ontology)
-    if events:
-        graph = update_personal_graph(graph, events, ontology)
-
-    # Fold format nodes into mastery_by_concept (separate from the concept path)
-    # so format-gap detection can see per-vessel mastery.
-    graph.state = fold_format_events(graph.state, load_format_events(req.student_id))
-
-    # Apply decay
-    now = datetime.now()
-    graph.state = decay_student_state(graph.state, now)
-    graph.edges = decay_all_edges(graph.edges, now)
+    # Load student data, rebuild the personal graph, fold format-node evidence
+    # into mastery_by_concept (separate from the concept path, so format-gap
+    # detection can see per-vessel mastery), and apply decay.
+    graph, events, now = _load_and_rebuild_student_graph(
+        req.student_id, format_events=load_format_events(req.student_id),
+    )
 
     # Build goal — exam mode defaults to act_relevance.tested when targets omitted.
     resolved_targets = _resolve_recommend_targets(req)
@@ -797,16 +842,10 @@ async def prep_diagnose_endpoint(req: PrepDiagnoseRequest, auth: AuthContext = D
     so it drops in when the LLM diagnose is unavailable (Anthropic credits) or the
     input is purely structured (exam type + deadline)."""
     authorize_student(auth, req.student_id)
-    from mindcraft_graph.firestore_adapter import load_student_events
     from mindcraft_graph.planning.pathfinder import find_path
 
     now = datetime.now()
-    events = load_student_events(req.student_id)
-    graph = create_personal_graph(req.student_id, ontology)
-    if events:
-        graph = update_personal_graph(graph, events, ontology)
-    graph.state = decay_student_state(graph.state, now)
-    graph.edges = decay_all_edges(graph.edges, now)
+    graph, events, now = _load_and_rebuild_student_graph(req.student_id, now=now)
 
     profiles = compute_concept_profiles(events)
     strength_vec = compute_student_embedding_from_profiles(profiles, concept_embs)
@@ -881,7 +920,6 @@ async def seed_assessment_endpoint(req: SeedAssessmentRequest, auth: AuthContext
     student gets personalized recommendations before their first session."""
     authorize_student(auth, req.student_id)
     from mindcraft_graph.firestore_adapter import (
-        load_student_events,
         replace_interactions_by_source,
         save_personal_graph,
     )
@@ -915,12 +953,7 @@ async def seed_assessment_endpoint(req: SeedAssessmentRequest, auth: AuthContext
     replace_interactions_by_source(req.student_id, events, source="onboarding_assessment")
 
     # Rebuild + persist the personal graph from all events (seed + any real ones).
-    all_events = load_student_events(req.student_id)
-    graph = create_personal_graph(req.student_id, ontology)
-    if all_events:
-        graph = update_personal_graph(graph, all_events, ontology)
-    graph.state = decay_student_state(graph.state, now)
-    graph.edges = decay_all_edges(graph.edges, now)
+    graph, _all_events, now = _load_and_rebuild_student_graph(req.student_id, now=now)
     save_personal_graph(req.student_id, graph)
 
     return {
@@ -950,11 +983,9 @@ async def record_outcomes_endpoint(req: RecordOutcomesRequest, auth: AuthContext
         append_attempt_observations,
         load_attempt_observations,
         load_format_events,
-        load_student_events,
         save_personal_graph,
     )
     from mindcraft_graph.models.events import SessionEvent
-    from mindcraft_graph.engine.update import fold_format_events
     from mindcraft_graph.config import (
         FORMAT_IDS,
         INGREDIENT_AGGREGATE_EXPOSURE_WEIGHT,
@@ -1124,6 +1155,11 @@ async def record_outcomes_endpoint(req: RecordOutcomesRequest, auth: AuthContext
                 outcome=outcome_from(aggregate_to_concept_mastery(
                     ing_state, concept_id, ingredient_graph
                 )),
+                # 0.6 matches the "high effort = confirmed weakness" negative
+                # branch used elsewhere in this file (lines ~1034, ~1380,
+                # ASSESSMENT_OUTCOME_MAP) — kept in sync with the twin
+                # ingredient_aggregate block in /record-work-evidence below,
+                # which had drifted to 0.5.
                 effort=0.6,
                 duration_minutes=0.0,
                 timestamp=now,
@@ -1142,14 +1178,10 @@ async def record_outcomes_endpoint(req: RecordOutcomesRequest, auth: AuthContext
                 source="ingredient_aggregate",
             )
 
-    all_events = load_student_events(req.student_id)
-    graph = create_personal_graph(req.student_id, ontology)
-    if all_events:
-        graph = update_personal_graph(graph, all_events, ontology)
     # Fold format nodes into mastery_by_concept (separate from the concept path).
-    graph.state = fold_format_events(graph.state, load_format_events(req.student_id))
-    graph.state = decay_student_state(graph.state, now)
-    graph.edges = decay_all_edges(graph.edges, now)
+    graph, _all_events, now = _load_and_rebuild_student_graph(
+        req.student_id, format_events=load_format_events(req.student_id), now=now,
+    )
     save_personal_graph(req.student_id, graph)
 
     return {
@@ -1214,7 +1246,6 @@ async def submit_answer_endpoint(req: SubmitIngredientAnswerRequest, auth: AuthC
     from mindcraft_graph.firestore_adapter import (
         append_interactions,
         load_ingredient_state,
-        load_student_events,
         save_ingredient_state,
         save_personal_graph,
     )
@@ -1266,10 +1297,9 @@ async def submit_answer_endpoint(req: SubmitIngredientAnswerRequest, auth: AuthC
     if card_events:
         append_interactions(req.student_id, card_events, source="card")
 
-    events = load_student_events(req.student_id)
-    graph = create_personal_graph(req.student_id, ontology)
-    if events:
-        graph = update_personal_graph(graph, events, ontology)
+    graph, _events, now = _load_and_rebuild_student_graph(
+        req.student_id, apply_decay=False, now=now,
+    )
     save_personal_graph(req.student_id, graph)
 
     updated_concepts = {
@@ -1295,7 +1325,6 @@ async def record_work_evidence_endpoint(req: RecordWorkEvidenceRequest, auth: Au
         append_attempt_fusion,
         append_interactions,
         load_ingredient_state,
-        load_student_events,
         save_ingredient_state,
         save_personal_graph,
     )
@@ -1412,7 +1441,13 @@ async def record_work_evidence_endpoint(req: RecordWorkEvidenceRequest, auth: Au
             outcome=outcome_from(aggregate_to_concept_mastery(
                 student_state, concept_id, ingredient_graph
             )),
-            effort=0.5,
+            # Was 0.5 here vs 0.6 on the twin ingredient_aggregate block in
+            # /record-outcomes (both added in the same commit — a copy/paste
+            # drift, not a deliberate divergence). Unified on 0.6, the value
+            # this file already uses for "high effort = confirmed weakness"
+            # negative-leaning derived evidence (see lines ~1034, ~1380,
+            # ASSESSMENT_OUTCOME_MAP).
+            effort=0.6,
             duration_minutes=0.0,
             timestamp=now,
             exposure_weight=INGREDIENT_AGGREGATE_EXPOSURE_WEIGHT,
@@ -1425,10 +1460,9 @@ async def record_work_evidence_endpoint(req: RecordWorkEvidenceRequest, auth: Au
             req.student_id, aggregate_events, source="ingredient_aggregate"
         )
 
-    all_events = load_student_events(req.student_id)
-    graph = create_personal_graph(req.student_id, ontology)
-    if all_events:
-        graph = update_personal_graph(graph, all_events, ontology)
+    graph, _all_events, now = _load_and_rebuild_student_graph(
+        req.student_id, apply_decay=False, now=now,
+    )
 
     updated_concepts = {
         concept_id: graph.state.mastery_by_concept[concept_id].mastery
@@ -1626,14 +1660,10 @@ async def process_summary_endpoint(req: SummaryRequest, auth: AuthContext = Depe
 @app.get("/student-profile/{student_id}")
 async def student_profile_endpoint(student_id: str, auth: AuthContext = Depends(require_auth)):
     authorize_student(auth, student_id)
-    from mindcraft_graph.firestore_adapter import load_student_events
 
-    events = load_student_events(student_id)
-    if not events:
-        raise HTTPException(status_code=404, detail="No data for this student")
-
-    graph = create_personal_graph(student_id, ontology)
-    graph = update_personal_graph(graph, events, ontology)
+    graph, events, _now = _load_and_rebuild_student_graph(
+        student_id, apply_decay=False, require_events=True,
+    )
 
     profiles = compute_concept_profiles(events)
     strength_vec = compute_student_embedding_from_profiles(profiles, concept_embs)
@@ -1754,13 +1784,11 @@ async def knowledge_graph_endpoint(student_id: str, auth: AuthContext = Depends(
     """
     authorize_student(auth, student_id)
     from mindcraft_graph.firestore_adapter import load_student_events_with_learning
-    
-    events = load_student_events_with_learning(student_id)
-    
-    graph = create_personal_graph(student_id, ontology)
-    if events:
-        graph = update_personal_graph(graph, events, ontology)
-    
+
+    graph, events, _now = _load_and_rebuild_student_graph(
+        student_id, events_loader=load_student_events_with_learning, apply_decay=False,
+    )
+
     profiles = compute_concept_profiles(events)
     
     mastery_vec = compute_student_embedding_from_mastery(
