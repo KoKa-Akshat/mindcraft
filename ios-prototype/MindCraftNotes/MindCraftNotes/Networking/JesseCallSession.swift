@@ -179,6 +179,18 @@ final class JesseCallSession: NSObject, ObservableObject {
     /// `askJesseWorkDashboard`). Reset in `begin()`, same as the other
     /// per-context state above.
     @Published private(set) var workDashboardLesson: WorkDashboardLesson?
+    /// A real, gated, topologically-ordered Chapter Library book Jesse
+    /// found for the student's spoken topic (2026-08-21) - checked FIRST
+    /// in `askJesseWorkDashboard`, ahead of the older bundled-books/
+    /// archive-RAG/raw-generation chain. Direct live feedback drove this:
+    /// asking Jesse by voice never touched the new gated pipeline at all
+    /// before this, so a subject that genuinely had real content (Circuits)
+    /// was invisible to voice, and the only way to reach it was a separate
+    /// Library page the same feedback also said shouldn't exist as its own
+    /// destination. FieldDeskView observes this and presents
+    /// BookReaderView; set to nil to dismiss, same shape as
+    /// `workDashboardLesson`/`pendingLearnTopic` above.
+    @Published private(set) var openedChapterBook: AssembledBook?
     /// Set the moment a topic is first recognized, cleared once the
     /// student answers - the real gap behind a live bug report
     /// (2026-08-18: "I said 'learn California bar'... the next thing
@@ -307,6 +319,7 @@ final class JesseCallSession: NSObject, ObservableObject {
         if context == "workDashboard" {
             workDashboardLesson = nil
             pendingLearnTopic = nil
+            openedChapterBook = nil
             // Real voice greeting on arrival (2026-08-18, explicit ask:
             // "the first thing you should do is say hi Akshat what can I
             // help you study today - it says nothing, it's waiting for
@@ -354,6 +367,12 @@ final class JesseCallSession: NSObject, ObservableObject {
     func closeLessonSession() {
         workDashboardLesson = nil
         pendingLearnTopic = nil
+    }
+
+    /// FieldDeskView's dismiss for `openedChapterBook` - same one-deliberate-
+    /// external-clear shape as `closeLessonSession()` above.
+    func closeChapterBook() {
+        openedChapterBook = nil
     }
 
     /// Test-only seam for `StudySessionView` (2026-08-19) - real voice
@@ -623,8 +642,30 @@ final class JesseCallSession: NSObject, ObservableObject {
         // ahead?") takes priority over trying to extract a brand-new
         // topic from THIS utterance - it's almost certainly the answer to
         // that question, not a second unrelated learn request.
+        //
+        // BUT: only when the new utterance doesn't itself look like a
+        // fresh "I want to learn X" request. Real bug, found via live
+        // testing 2026-08-21: `pendingLearnTopic` only clears when a NEW
+        // call begins or `closeLessonSession()` fires - it does NOT clear
+        // just because the student never actually answered "materials or
+        // go ahead?" and moved on within the same still-active call/
+        // session. A student who asked about Calculus, got asked that
+        // question, then later in the SAME session said "I want to learn
+        // Circuits" had "Circuits" silently swallowed as if it were the
+        // answer to the stale Calculus question - `askJesseWorkDashboard`
+        // ran with `topic: "Calculus"` (the stale pending value), not
+        // Circuits, and the reply text was only ever checked for
+        // upload-related keywords, never for a brand-new topic. Checking
+        // extractLearnTopic on the new message FIRST, and only falling
+        // through to the stale-pending path when it does NOT look like a
+        // fresh topic request, fixes this without weakening the original
+        // "materials or go ahead" flow for genuine replies to it.
         if context == "workDashboard", let pending = pendingLearnTopic {
-            await askJesseWorkDashboardResume(topic: pending, reply: message)
+            if let freshTopic = Self.extractLearnTopic(from: message) {
+                await askJesseWorkDashboardClarify(topic: freshTopic)
+            } else {
+                await askJesseWorkDashboardResume(topic: pending, reply: message)
+            }
             isThinking = false
             return
         }
@@ -851,7 +892,34 @@ final class JesseCallSession: NSObject, ObservableObject {
         return phrases.contains { lowered.contains($0) }
     }
 
+    /// Real Chapter Library lookup (2026-08-21) - the Tier 0 check in
+    /// `askJesseWorkDashboard`. Loose substring match against real
+    /// synced book titles, same style `BookGraphLoader` matching already
+    /// uses one tier down - deliberately not a fourth different matching
+    /// strategy to reason about. Returns nil (not an error) on any
+    /// network failure or empty catalog, same "fall through to the next
+    /// real tier" shape every other source in this chain already has.
+    private static func matchChapterLibraryBook(topic: String) async -> AssembledBook? {
+        let loweredTopic = topic.lowercased()
+        guard let summaries = try? await BookLibraryClient.listBooks(),
+              let match = summaries.first(where: { summary in
+                  summary.title.lowercased().contains(loweredTopic) || loweredTopic.contains(summary.title.lowercased())
+              })
+        else { return nil }
+        return try? await BookLibraryClient.getBook(subjectId: match.subjectId)
+    }
+
     private static func extractLearnTopic(from message: String) -> String? {
+        // Widened 2026-08-21, direct live feedback ("try again on
+        // enterprise technology, equity research, finance" got no
+        // recognized lead-in, fell all the way through to the generic
+        // archive-chat path instead of running the real learn flow, which
+        // read as Jesse ignoring the request and defaulting to whatever
+        // topic was last on screen). This function only ever runs already
+        // scoped to `context == "workDashboard"` - a student actively in
+        // a lesson-building conversation - so a broader match here is a
+        // real, contained improvement, not a global "guess the intent of
+        // any sentence" risk the way it would be if this ran everywhere.
         let leadIns = [
             "i want to learn about ", "i want to learn ",
             "i want to study ", "help me learn ", "help me study ",
@@ -859,6 +927,10 @@ final class JesseCallSession: NSObject, ObservableObject {
             "teach me about ", "teach me ",
             "i'd like to learn ", "i would like to learn ",
             "let's learn ", "lets learn ",
+            "try again on ", "try again with ", "try ",
+            "what about ", "how about ",
+            "let's do ", "lets do ", "let's try ", "lets try ",
+            "look into ", "can we do ", "switch to ", "go with ", "instead do ",
         ]
         let lowered = message.lowercased()
         for leadIn in leadIns {
@@ -937,6 +1009,22 @@ final class JesseCallSession: NSObject, ObservableObject {
             await generateFromMaterials(topic: topic, materials: materialsContext)
             return
         }
+        // Tier 0 (2026-08-21, real live feedback fix): the gated,
+        // topologically-ordered Chapter Library pipeline, checked BEFORE
+        // any of the three older tiers below. This is the actual fix for
+        // "why does asking Jesse never find the real content" - the three
+        // tiers below predate this pipeline entirely and never checked it.
+        // A student's spoken topic is matched against real book titles the
+        // same loose-substring way BookGraphLoader matching already works
+        // one tier down, so this doesn't need its own separate matching
+        // strategy to reason about.
+        if let book = await Self.matchChapterLibraryBook(topic: topic) {
+            guard isActive else { return }
+            openedChapterBook = book
+            let sectionTitles = book.chapters.flatMap(\.sections).map(\.title)
+            await speak("Found it in the library - \(book.title), \(book.coverageLabel): \(sectionTitles.joined(separator: ", ")).")
+            return
+        }
         let loweredTopic = topic.lowercased()
         // Real, matched interactive MicroSims (Dan McCreary's, licensed
         // for commercial use via MindCraft's advisor relationship with
@@ -991,7 +1079,15 @@ final class JesseCallSession: NSObject, ObservableObject {
         }
 
         let known = Array(Set(SampleQuestion.all.map(\.conceptId)))
-        let result = await StudentAIKeyStore.shared.generateTableOfContents(topic: topic, knownConceptIds: known)
+        // Server-side, platform-funded generation (2026-08-21) - was
+        // StudentAIKeyStore (a personal bring-your-own-key call), real
+        // fix for direct live feedback: this core "build me a lesson"
+        // flow shouldn't need a student's own API key at all when the
+        // platform already pays for generation elsewhere with the exact
+        // same budget-capped pattern (generate-sim.ts). StudentAIKeyStore
+        // itself is untouched and still real for homework help/study
+        // plans, which are genuinely meant to be bring-your-own-key.
+        let result = await LessonOutlineClient.generate(topic: topic, knownConceptIds: known)
         guard isActive else { return }
         switch result {
         case .success(let outline):
@@ -1012,11 +1108,25 @@ final class JesseCallSession: NSObject, ObservableObject {
             // surface here; generation already succeeded.
             Task { await LessonGraphIngestClient.ingest(topic: topic, chapterTitles: outline.chapters) }
             await speak("Nothing in the archive yet for \(topic), so I put together a fresh outline: \(outline.chapters.joined(separator: ", ")).\(microsimNote)")
-        case .failure(.noKey):
-            await speak("You'll need to connect an AI key in Settings before I can put a lesson together on \(topic).")
-        case .failure(.rejected):
-            await speak("That AI key isn't working right now. Check it in Settings?")
-        case .failure(.unavailable):
+        case .failure(.notSignedIn):
+            // Real bug, found via live testing 2026-08-21: this branch
+            // never touched `workDashboardLesson`, so a failed generation
+            // silently left whatever the LAST successful lesson was on
+            // screen (e.g. Calculus from earlier testing) while Jesse
+            // spoke an error nobody necessarily caught mid-conversation -
+            // read as "it keeps defaulting to calculus" when it was
+            // actually just never being replaced. Clearing it here (and
+            // in the two cases below, and in generateFromMaterials's
+            // matching switch) makes a failure look like a failure -
+            // whatever view reads a nil workDashboardLesson already has
+            // its own real "nothing yet" state, not a screen bug to fix.
+            workDashboardLesson = nil
+            await speak("You'll need to be signed in before I can put a lesson together on \(topic).")
+        case .failure(.rateLimited(let reason)):
+            workDashboardLesson = nil
+            await speak("I've hit today's generation limit - \(reason)")
+        case .failure(.failed):
+            workDashboardLesson = nil
             await speak("I couldn't put a lesson together on that just now - try again in a bit?")
         }
     }
@@ -1031,7 +1141,9 @@ final class JesseCallSession: NSObject, ObservableObject {
         let microsimNote = microsims.isEmpty ? "" : " I also found \(microsims.count) interactive simulation\(microsims.count == 1 ? "" : "s") you can play with."
         let known = Array(Set(SampleQuestion.all.map(\.conceptId)))
         let reference = materials.cardSummaries.joined(separator: "\n")
-        let result = await StudentAIKeyStore.shared.generateTableOfContents(topic: topic, knownConceptIds: known, referenceMaterial: reference)
+        // Same server-side, platform-funded switch as askJesseWorkDashboard
+        // above - see that call site's doc comment for why.
+        let result = await LessonOutlineClient.generate(topic: topic, knownConceptIds: known, referenceMaterial: reference)
         guard isActive else { return }
         switch result {
         case .success(let outline):
@@ -1048,11 +1160,14 @@ final class JesseCallSession: NSObject, ObservableObject {
             // Same fire-and-forget tagging as the archive-generation path above.
             Task { await LessonGraphIngestClient.ingest(topic: topic, chapterTitles: outline.chapters) }
             await speak("Built this from \(materials.fileName): \(outline.chapters.joined(separator: ", ")).\(microsimNote)")
-        case .failure(.noKey):
-            await speak("You'll need to connect an AI key in Settings before I can build a lesson from \(materials.fileName).")
-        case .failure(.rejected):
-            await speak("That AI key isn't working right now. Check it in Settings?")
-        case .failure(.unavailable):
+        case .failure(.notSignedIn):
+            workDashboardLesson = nil
+            await speak("You'll need to be signed in before I can build a lesson from \(materials.fileName).")
+        case .failure(.rateLimited(let reason)):
+            workDashboardLesson = nil
+            await speak("I've hit today's generation limit - \(reason)")
+        case .failure(.failed):
+            workDashboardLesson = nil
             await speak("I couldn't put a lesson together from that just now - try again in a bit?")
         }
     }

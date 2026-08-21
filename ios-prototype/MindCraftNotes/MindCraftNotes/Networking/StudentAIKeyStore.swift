@@ -213,13 +213,21 @@ final class StudentAIKeyStore: ObservableObject {
     }
 
     private func complete(system: String, user: String) async -> Result<String, SolveError> {
-        guard let creds = readCredentials() else { return .failure(.noKey) }
-        switch creds.provider {
-        case .groq:
-            return await groqChat(key: creds.key, system: system, user: user)
-        case .anthropic:
-            return await anthropicMessage(key: creds.key, system: system, user: user)
+        let creds = readAllCredentials()
+        guard !creds.isEmpty else { return .failure(.noKey) }
+        var lastFailure: SolveError = .noKey
+        for cred in creds {
+            let result: Result<String, SolveError>
+            switch cred.provider {
+            case .groq:
+                result = await groqChat(key: cred.key, system: system, user: user)
+            case .anthropic:
+                result = await anthropicMessage(key: cred.key, system: system, user: user)
+            }
+            if case .success = result { return result }
+            if case .failure(let err) = result { lastFailure = err }
         }
+        return .failure(lastFailure)
     }
 
     private func groqChat(key: String, system: String, user: String) async -> Result<String, SolveError> {
@@ -315,26 +323,36 @@ final class StudentAIKeyStore: ObservableObject {
         }
     }
 
-    private func readCredentials() -> (provider: Provider, key: String)? {
+    /// Every stored credential, not just one - real bug, found via direct
+    /// live feedback 2026-08-21 ("I put both API keys... and it defaulted
+    /// back to calculus"): both `readCredentials`'s old single-item query
+    /// AND `refreshPresence` used `kSecMatchLimitOne` with no account
+    /// filter, so with both a Groq and an Anthropic key saved, whichever
+    /// one the Keychain happened to surface first was the ONLY one ever
+    /// tried - a student adding a fresh key specifically to fix a rejected
+    /// one had no guarantee the new key was even the one read back. `complete()`
+    /// below now tries every stored credential in turn.
+    private func readAllCredentials() -> [(provider: Provider, key: String)] {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: service,
-            kSecMatchLimit as String: kSecMatchLimitOne,
+            kSecMatchLimit as String: kSecMatchLimitAll,
             kSecReturnAttributes as String: true,
             kSecReturnData as String: true,
         ]
         var out: AnyObject?
         let status = SecItemCopyMatching(query as CFDictionary, &out)
-        guard status == errSecSuccess,
-              let attrs = out as? [String: Any],
-              let account = attrs[kSecAttrAccount as String] as? String,
-              let provider = Provider(rawValue: account),
-              let data = attrs[kSecValueData as String] as? Data,
-              let key = String(data: data, encoding: .utf8)?
-                .trimmingCharacters(in: .whitespacesAndNewlines),
-              !key.isEmpty
-        else { return nil }
-        return (provider, key)
+        guard status == errSecSuccess, let items = out as? [[String: Any]] else { return [] }
+        return items.compactMap { attrs in
+            guard let account = attrs[kSecAttrAccount as String] as? String,
+                  let provider = Provider(rawValue: account),
+                  let data = attrs[kSecValueData as String] as? Data,
+                  let key = String(data: data, encoding: .utf8)?
+                    .trimmingCharacters(in: .whitespacesAndNewlines),
+                  !key.isEmpty
+            else { return nil }
+            return (provider, key)
+        }
     }
 
     private func deleteItem() {

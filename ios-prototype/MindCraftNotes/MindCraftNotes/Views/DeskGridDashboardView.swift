@@ -92,6 +92,11 @@ struct DeskGridDashboardView: View {
     var onOpenCalendar: () -> Void = {}
     var onOpenGmail: () -> Void = {}
     var onOpenIntel: () -> Void = {}
+    /// Same shape as onFileHomeworkToBinder below - real side effect
+    /// (BinderStore.addChapterBook) owned by FieldDeskView, since this
+    /// view doesn't hold the real BinderStore instance. Threaded through
+    /// to BookLibraryView's own callback of the same shape.
+    var onFileChapterBook: (_ title: String, _ subjectId: String) -> Void = { _, _ in }
     /// Homework Help files directly to Binder now - the tile itself is the
     /// upload target, no separate screen (explicit ask, 2026-08-18). Real
     /// side effect (BinderStore.addDoc + an Intel line), owned by
@@ -371,6 +376,7 @@ struct DeskGridDashboardView: View {
         onOpenCalendar: @escaping () -> Void = {},
         onOpenGmail: @escaping () -> Void = {},
         onOpenIntel: @escaping () -> Void = {},
+        onFileChapterBook: @escaping (_ title: String, _ subjectId: String) -> Void = { _, _ in },
         onFileHomeworkToBinder: @escaping (_ title: String, _ body: String) -> Void = { _, _ in },
         onOpenCreate: @escaping (CreateCanvasKind) -> Void = { _ in },
         onOpenFlow: @escaping (String) -> Void = { _ in },
@@ -396,6 +402,7 @@ struct DeskGridDashboardView: View {
         self.onOpenCalendar = onOpenCalendar
         self.onOpenGmail = onOpenGmail
         self.onOpenIntel = onOpenIntel
+        self.onFileChapterBook = onFileChapterBook
         self.onFileHomeworkToBinder = onFileHomeworkToBinder
         self.onOpenCreate = onOpenCreate
         self.onOpenFlow = onOpenFlow
@@ -654,7 +661,7 @@ struct DeskGridDashboardView: View {
             GeneratedSimView(sim: sim) { presentedGeneratedSim = nil }
         }
         .sheet(isPresented: $showBookLibrary) {
-            BookLibraryView()
+            BookLibraryView(onFileChapterBook: onFileChapterBook)
         }
         // No Exit control here anymore - moved into the Manage page
         // (logo tap) so the dashboard itself stays clean. onClose is still

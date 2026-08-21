@@ -92,6 +92,12 @@ struct FieldDeskView: View {
     @State private var showResumeAgent = false
     @State private var showArchiveWorkflow = false
     @State private var showBookWorkflow = false
+    /// Reopening a Chapter Library book filed in the Binder (2026-08-21) -
+    /// `.fullScreenCover(item:)`, not another ZStack overlay flag, same
+    /// reasoning as BookLibraryView's own `.sheet` (UIKit's own
+    /// presentation layer, sidesteps the touch-guard system entirely
+    /// rather than needing a new FieldDeskOverlay case).
+    @State private var openBinderBook: AssembledBook?
     @State private var showDesignStudio = false
     @State private var showSchedulingWorkflows = false
     @State private var schedulingWorkflowsMinimized = false
@@ -681,6 +687,9 @@ struct FieldDeskView: View {
                                 _ = openOverlays.insert(.intelOverlay)
                             }
                         },
+                        onFileChapterBook: { title, subjectId in
+                            binderStore.addChapterBook(title: title, subjectId: subjectId)
+                        },
                         onFileHomeworkToBinder: { title, body in
                             binderStore.addDoc(title: title, body: body, source: "homework_help")
                             let line = "Homework · \(title)"
@@ -1265,6 +1274,22 @@ struct FieldDeskView: View {
                     flash("Filed to your Binder")
                 }
             )
+        }
+        .fullScreenCover(item: $openBinderBook) { book in
+            BookReaderView(book: book, onClose: { openBinderBook = nil })
+        }
+        // Jesse found a real Chapter Library book by voice (2026-08-21) -
+        // files it to the Binder (same durable-pointer shape as opening
+        // one from the Library catalog) and hands presentation off to the
+        // SAME `openBinderBook` cover already wired above, rather than a
+        // second, parallel presentation path. jesseCall's own copy is
+        // cleared immediately after the handoff - FieldDeskView owns
+        // presentation state from this point on, not JesseCallSession.
+        .onChange(of: jesseCall.openedChapterBook) { _, book in
+            guard let book else { return }
+            binderStore.addChapterBook(title: book.title, subjectId: book.subjectId)
+            openBinderBook = book
+            jesseCall.closeChapterBook()
         }
         .sheet(isPresented: $showJesseCallSheet) {
             JesseCallSheetView(
@@ -3075,22 +3100,23 @@ struct FieldDeskView: View {
                     .foregroundColor(Color(fdHex: "8a8478"))
             } else {
                 ForEach(items.prefix(8)) { item in
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(item.title.isEmpty ? "Untitled" : item.title)
-                            .font(.system(size: 13, weight: .semibold, design: .rounded))
-                            .foregroundColor(Color(fdHex: "1c1a17"))
-                            .lineLimit(1)
-                        if !item.body.isEmpty {
-                            Text(item.body)
-                                .font(.system(size: 11, weight: .medium, design: .rounded))
-                                .foregroundColor(Color(fdHex: "8a8478"))
-                                .lineLimit(2)
+                    // Chapter Library books are the one item type here with
+                    // somewhere real to go on tap (2026-08-21, direct live
+                    // feedback: "just put it in the binder... that's how the
+                    // flow should be" - this is the actual reopen path).
+                    // `body` holds the subject id for this specific
+                    // source/type combination (see BinderStore.addChapterBook)
+                    // - every other book/doc/memo item keeps its current,
+                    // unchanged, non-interactive row rendering.
+                    if item.type == "book", item.source == "chapter_library" {
+                        Button {
+                            openChapterBookFromBinder(subjectId: item.body, fallbackTitle: item.title)
+                        } label: {
+                            binderItemRow(item)
                         }
-                    }
-                    .padding(.vertical, 4)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .overlay(alignment: .bottom) {
-                        Rectangle().fill(Color(fdHex: "e4dcc8")).frame(height: 1)
+                        .buttonStyle(.plain)
+                    } else {
+                        binderItemRow(item)
                     }
                 }
             }
@@ -3107,6 +3133,42 @@ struct FieldDeskView: View {
                 }
                 .buttonStyle(.plain)
                 .accessibilityIdentifier("fieldDeskBinderBYOB")
+            }
+        }
+    }
+
+    private func binderItemRow(_ item: BinderItem) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(item.title.isEmpty ? "Untitled" : item.title)
+                .font(.system(size: 13, weight: .semibold, design: .rounded))
+                .foregroundColor(Color(fdHex: "1c1a17"))
+                .lineLimit(1)
+            if !item.body.isEmpty {
+                Text(item.body)
+                    .font(.system(size: 11, weight: .medium, design: .rounded))
+                    .foregroundColor(Color(fdHex: "8a8478"))
+                    .lineLimit(2)
+            }
+        }
+        .padding(.vertical, 4)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .overlay(alignment: .bottom) {
+            Rectangle().fill(Color(fdHex: "e4dcc8")).frame(height: 1)
+        }
+    }
+
+    /// Reopens a chapter book filed via BinderStore.addChapterBook - always
+    /// re-fetches the real content live (BookLibraryClient) rather than
+    /// trusting anything cached locally, same "Binder holds a pointer, not
+    /// a copy" reasoning addChapterBook's own doc comment explains, so a
+    /// subject that's gained more gated sections since it was filed shows
+    /// the current state, not a stale snapshot from when it was added.
+    private func openChapterBookFromBinder(subjectId: String, fallbackTitle: String) {
+        Task {
+            do {
+                openBinderBook = try await BookLibraryClient.getBook(subjectId: subjectId)
+            } catch {
+                flash("Couldn't reopen \(fallbackTitle) right now")
             }
         }
     }

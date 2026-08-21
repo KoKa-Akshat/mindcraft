@@ -126,6 +126,21 @@ final class BinderStore: ObservableObject {
         create(type: "book", title: title, body: body, source: "jesse_book_agent", storageRefs: [])
     }
 
+    /// A gated, topologically-ordered chapter book from Chapter Library
+    /// (mindcraft-content-engine's book_assembler, see get-book.ts) - real
+    /// fix, 2026-08-21, for direct live feedback ("this should be stored
+    /// in the binder as its own book... just put it in the binder"): the
+    /// original design opened a standalone reading sheet with no durable
+    /// Binder presence at all. `body` stores the subject id, not chapter
+    /// content - BookReaderView always re-fetches the real content live via
+    /// BookLibraryClient, so this row is a durable pointer/bookmark, not a
+    /// stale copy that could drift from the source of truth as more
+    /// sections get gated later.
+    @discardableResult
+    func addChapterBook(title: String, subjectId: String) -> String {
+        create(type: "book", title: title, body: subjectId, source: "chapter_library", storageRefs: [])
+    }
+
     /// Uploads each local file to Storage at `binder/{studentId}/{itemId}/{filename}`,
     /// then writes the `binder_items` doc with `type: "byob"`,
     /// `source: "upload"`. A single file failing to upload doesn't drop the

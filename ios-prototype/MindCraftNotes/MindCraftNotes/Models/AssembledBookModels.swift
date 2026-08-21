@@ -21,6 +21,11 @@ struct AssembledBookSection: Decodable, Identifiable, Hashable {
     let simScreenshot: String?
     let simBridge: String?
     let simFilesDir: String?
+    /// The sim's actual runnable HTML, inlined by book_assembler.py
+    /// (2026-08-21 fix) so `InlineSimWebView` can render it directly - real
+    /// gap this closes: `simFilesDir` alone is a local content-engine repo
+    /// path, never a URL this app could ever reach.
+    let simHtml: String?
     let discussionTitle: String?
     let qualityScore: Double?
 
@@ -36,6 +41,7 @@ struct AssembledBookSection: Decodable, Identifiable, Hashable {
         case simScreenshot = "sim_screenshot"
         case simBridge = "sim_bridge"
         case simFilesDir = "sim_files_dir"
+        case simHtml = "sim_html"
         case discussionTitle = "discussion_title"
         case qualityScore = "quality_score"
     }

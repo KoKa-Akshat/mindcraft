@@ -33,6 +33,7 @@ import gmailDigest from '../lib/handlers/gmail-digest'
 import ingestLessonGraph from '../lib/handlers/ingest-lesson-graph'
 import generateSim from '../lib/handlers/generate-sim'
 import getBook from '../lib/handlers/get-book'
+import generateLessonOutline from '../lib/handlers/generate-lesson-outline'
 import archiveBooks from '../lib/handlers/archive-books'
 import englishPractice from '../lib/handlers/english-practice'
 import resetStudentData from '../lib/handlers/reset-student-data'
@@ -63,6 +64,7 @@ const HANDLERS: Record<string, (req: VercelRequest, res: VercelResponse) => Prom
   'ingest-lesson-graph': ingestLessonGraph,
   'generate-sim': generateSim,
   'get-book': getBook,
+  'generate-lesson-outline': generateLessonOutline,
   'archive-books': archiveBooks,
   'english-practice': englishPractice,
   'reset-student-data': resetStudentData,
