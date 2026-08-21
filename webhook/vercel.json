@@ -41,6 +41,7 @@
     { "source": "/api/generate-book", "destination": "/api/app-actions?action=generate-book" },
     { "source": "/api/log-sim-interaction", "destination": "/api/app-actions?action=log-sim-interaction" },
     { "source": "/api/generate-session-report", "destination": "/api/app-actions?action=generate-session-report" },
+    { "source": "/api/get-session-reports", "destination": "/api/app-actions?action=get-session-reports" },
     { "source": "/api/get-book", "destination": "/api/app-actions?action=get-book" },
     { "source": "/api/generate-lesson-outline", "destination": "/api/app-actions?action=generate-lesson-outline" },
     { "source": "/api/reset-student-data", "destination": "/api/app-actions?action=reset-student-data" },

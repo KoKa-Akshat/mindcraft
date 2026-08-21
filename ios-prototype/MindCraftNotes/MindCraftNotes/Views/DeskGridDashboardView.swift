@@ -175,6 +175,7 @@ struct DeskGridDashboardView: View {
     /// swallowing bug class entirely (see CLAUDE.md's FieldDeskView
     /// section) by using UIKit's own presentation controller instead.
     @State private var showBookLibrary = false
+    @State private var showSessionReports = false
     @State private var homeworkUploading = false
     @State private var homeworkError: String?
     @State private var homeworkUploads: [HomeworkUploadSummary] = []
@@ -679,6 +680,9 @@ struct DeskGridDashboardView: View {
         }
         .sheet(isPresented: $showBookLibrary) {
             BookLibraryView(onFileChapterBook: onFileChapterBook)
+        }
+        .fullScreenCover(isPresented: $showSessionReports) {
+            SessionReportsView(onClose: { showSessionReports = false })
         }
         // No Exit control here anymore - moved into the Manage page
         // (logo tap) so the dashboard itself stays clean. onClose is still
@@ -2848,6 +2852,12 @@ struct DeskGridDashboardView: View {
             // and from Design's own Book-drafting box: this is finished,
             // gate-passed, dependency-ordered content a student reads.
             dockChip("Library", system: "books.vertical.fill", identifier: "deskGridDock_Library") { showBookLibrary = true }
+            // Session Reports (2026-08-21) - the first real display surface
+            // for the ZPD/sim-telemetry pipeline shipped tonight
+            // (SimInteractionClient -> generate-session-report.ts ->
+            // Firestore); reports were being written with nowhere to read
+            // them back until this.
+            dockChip("Reports", system: "doc.text.magnifyingglass", identifier: "deskGridDock_Reports") { showSessionReports = true }
             // Resume + Settings moved here from the left sidebar (2026-08-19,
             // explicit ask: "add the settings and resume to the search bar
             // dock too... use that space to make the boxes bigger
