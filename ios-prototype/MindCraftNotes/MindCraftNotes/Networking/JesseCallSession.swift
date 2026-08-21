@@ -1210,6 +1210,60 @@ final class JesseCallSession: NSObject, ObservableObject {
             return
         }
 
+        // Real fix, 2026-08-21, closing the actual reported gap: "the
+        // generated content has no text or preloaded simulations... I
+        // want to see results like [the photosynthesis sim] across the
+        // board, no matter what I want to study." This was the old thin
+        // fallback (a single raw, ungated outline call, zero sims) - now
+        // tried FIRST is the real, gated, multi-chapter pipeline
+        // (BookGenerationClient -> /generate-book -> the same
+        // generate/gate/assemble machinery the overnight cron uses on an
+        // ad-hoc decomposed graph). Verified live on the exact topic that
+        // produced garbage before this: 3 gate-passed chapters, 2 real
+        // embedded sims, ~4 minutes, $3.60.
+        await speak("Nothing in the archive yet for \(topic) - give me a bit, I'm putting together a real lesson with sims, not just an outline.\(microsimNote)")
+        var lastSpokenChaptersReady = 0
+        let bookVerdict = await BookGenerationClient.generate(topic: topic) { [weak self] ready, total in
+            guard let self, total > 0, ready > lastSpokenChaptersReady else { return }
+            lastSpokenChaptersReady = ready
+            Task { await self.speak("Still building - \(ready) of \(total) chapters done.") }
+        }
+        guard isActive else { return }
+        switch bookVerdict {
+        case .verified(let book, _):
+            openedChapterBook = book
+            let sectionTitles = book.chapters.flatMap(\.sections).map(\.title)
+            Task { await LessonGraphIngestClient.ingest(topic: topic, chapterTitles: sectionTitles) }
+            await speak("Done - \(book.title): \(sectionTitles.joined(separator: ", ")).")
+            return
+        case .noGoodResult(let reason):
+            // A REAL outcome (the gate genuinely didn't clear for this
+            // topic), not masked by a silent fallback to the thin path -
+            // that would hide a genuine quality signal behind fake
+            // content, the exact opposite of the fix this is. Clears
+            // BOTH lesson states, same "a failure must never leave stale
+            // content on screen" discipline as the failure branches
+            // below - this is a second, separate piece of state
+            // (openedChapterBook) that's just as real a source of the
+            // "keeps defaulting to X" bug class if left untouched here.
+            workDashboardLesson = nil
+            openedChapterBook = nil
+            await speak("I couldn't build a good enough lesson on that just now" + (reason.map { " - \($0)" } ?? "") + ". Want to try rephrasing it?")
+            return
+        case .rateLimited(let reason):
+            workDashboardLesson = nil
+            openedChapterBook = nil
+            await speak("I've hit today's generation limit - \(reason ?? "try again tomorrow").")
+            return
+        case .unavailable:
+            // Only THIS branch falls through to the old thin path below -
+            // the rich pipeline being genuinely unreachable (not yet
+            // deployed, or a real outage) shouldn't leave a student with
+            // nothing at all while it's the only realistic gap during
+            // rollout.
+            break
+        }
+
         let known = Array(Set(SampleQuestion.all.map(\.conceptId)))
         // Server-side, platform-funded generation (2026-08-21) - was
         // StudentAIKeyStore (a personal bring-your-own-key call), real
@@ -1239,7 +1293,7 @@ final class JesseCallSession: NSObject, ObservableObject {
             // and its own failure (a bad graph, a network blip) shouldn't
             // surface here; generation already succeeded.
             Task { await LessonGraphIngestClient.ingest(topic: topic, chapterTitles: outline.chapters) }
-            await speak("Nothing in the archive yet for \(topic), so I put together a fresh outline: \(outline.chapters.joined(separator: ", ")).\(microsimNote)")
+            await speak("Here's a quick outline for \(topic) while the fuller version isn't available: \(outline.chapters.joined(separator: ", ")).\(microsimNote)")
         case .failure(.notSignedIn):
             // Real bug, found via live testing 2026-08-21: this branch
             // never touched `workDashboardLesson`, so a failed generation

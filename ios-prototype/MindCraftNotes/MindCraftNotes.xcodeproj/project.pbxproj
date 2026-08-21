@@ -81,6 +81,7 @@
 		A89B08C8A6E7F8091B2C3D4E /* SpeechCaptureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89B08C8A6E7F8091B2C3D4E /* SpeechCaptureController.swift */; };
 		A8AC7157E11A0001B2C3D4E5 /* ActInstanceShellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8AC7157E11A0001B2C3D4E5 /* ActInstanceShellView.swift */; };
 		A8BFBB951F764F03AE79B888 /* DrawingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B50609A6CA341D392B5BC37 /* DrawingStore.swift */; };
+		B0BED2EADB29CE9B5BD2B91E /* BookGenerationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A8CAFEF98DAA076ECF6DB6 /* BookGenerationClient.swift */; };
 		B0C259017B6359197378F0FD /* LearnStudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1858B772F353A476A8023F /* LearnStudioView.swift */; };
 		B1E290A74840F0C7F051444F /* BookLibraryClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E5B069E034C555E1E6D013 /* BookLibraryClient.swift */; };
 		B2C50496636E2ED7186E0232 /* DiagnosticGateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9818B2D6693B4381129CB08 /* DiagnosticGateView.swift */; };
@@ -306,6 +307,7 @@
 		CD38C7392605523E1A10E7F6 /* TutorDirectoryClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorDirectoryClient.swift; sourceTree = "<group>"; };
 		CF2846DA5EC14603B4929385 /* ConceptStoryLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConceptStoryLoader.swift; sourceTree = "<group>"; };
 		D0E6F420718293B4C5D6E7F8 /* ActFieldChrome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActFieldChrome.swift; sourceTree = "<group>"; };
+		D1A8CAFEF98DAA076ECF6DB6 /* BookGenerationClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BookGenerationClient.swift; sourceTree = "<group>"; };
 		D72A5BC65A2BF357B121A531 /* ChatHistoryImportParser.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ChatHistoryImportParser.swift; sourceTree = "<group>"; };
 		D85B66E366E7264EAE7C1DED /* WeeklyReviewWalkthroughView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyReviewWalkthroughView.swift; sourceTree = "<group>"; };
 		D85EC6FCFFB7752E3F55BC22 /* PlottablePointsExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlottablePointsExtractor.swift; sourceTree = "<group>"; };
@@ -450,6 +452,7 @@
 				35E5B069E034C555E1E6D013 /* BookLibraryClient.swift */,
 				409ACCE0A60FA38F61914FF4 /* AIDisclosurePreference.swift */,
 				7165E2C9039350FB17CF3523 /* LessonOutlineClient.swift */,
+				D1A8CAFEF98DAA076ECF6DB6 /* BookGenerationClient.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -858,6 +861,7 @@
 				1CEC205FE1924F4188EB6879 /* BookReaderView.swift in Sources */,
 				0FB05A0199091F251B933970 /* LessonOutlineClient.swift in Sources */,
 				10430F72EBFAF47F1E324788 /* GradeGoalsChoiceView.swift in Sources */,
+				B0BED2EADB29CE9B5BD2B91E /* BookGenerationClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
