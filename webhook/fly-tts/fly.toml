@@ -22,6 +22,13 @@ primary_region = 'ord'
     method = 'GET'
     path = '/health'
 
+# Bumped 1gb -> 2gb, 2026-08-21: a real OOM kill happened tonight
+# (exit_code=137, oom_killed=true) under live Kokoro TTS load - 1gb wasn't
+# enough headroom for the model + concurrent request buffers. Confirmed
+# live: after the kill, the health check sat critical and a real synth
+# request took 27.6s (client-side timeout is 12s, see KokoroTTSClient.swift
+# - anything past that silently falls back to the native/robotic voice,
+# which is the exact "voice reverted to the old one" bug this fixes).
 [[vm]]
   size = 'shared-cpu-1x'
-  memory = '1gb'
+  memory = '2gb'
