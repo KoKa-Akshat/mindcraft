@@ -24,6 +24,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node'
 import Anthropic from '@anthropic-ai/sdk'
 import { setCors } from '../cors'
 import { verifyToken } from '../verifyToken'
+import { db } from '../firebase'
 import { checkAndRecordAttempt, checkPlatformBudget, recordActualSpend } from '../generationBudget'
 
 const client = new Anthropic()
@@ -45,11 +46,25 @@ interface LessonOutline {
   matchedConceptId: string | null
 }
 
-function buildUserPrompt(topic: string, knownConceptIds: string[], referenceMaterial?: string): string {
+function buildUserPrompt(topic: string, knownConceptIds: string[], referenceMaterial?: string, grade?: number): string {
   const referenceBlock = referenceMaterial
     ? `\n\nThe student uploaded this material - base the lesson on it, not just your own general knowledge of the topic:\n${referenceMaterial}`
     : ''
-  return `Topic the student wants to learn: ${topic}${referenceBlock}
+  // Real fix, 2026-08-21: this endpoint previously had zero grade/age
+  // signal at all - "calculus" for a grade 8 student and a grade 12
+  // student produced the identical lesson. `grade` is looked up
+  // server-side from the verified student's own users/{uid} doc (same
+  // field + collection app/src/pages/ConceptChapterPage.tsx already reads
+  // for practice-question personalization) - never client-supplied, so a
+  // request can't spoof a grade to get easier/harder content than the
+  // student's real profile. Genuinely optional: many students (all iOS
+  // students today - no onboarding flow sets this yet) have no grade on
+  // file, and the lesson is still exactly as good without one, just not
+  // grade-adapted.
+  const gradeBlock = typeof grade === 'number'
+    ? `\n\nThe student is in grade ${grade}. Pitch the definition, vocabulary, and chapter depth at that level - the same topic name can mean a very different scope and rigor across grades (e.g. "calculus" at grade 8 is usually an enrichment preview of the core idea, at grade 12 it's the full formal treatment). Do not mention their grade explicitly in the lesson.`
+    : ''
+  return `Topic the student wants to learn: ${topic}${referenceBlock}${gradeBlock}
 
 Known concept ids with a REAL, verified practice question bank today: ${knownConceptIds.join(', ')}
 
@@ -97,6 +112,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const knownConceptIds = Array.isArray(body.knownConceptIds) ? body.knownConceptIds.map(String).slice(0, 200) : []
   const referenceMaterial = typeof body.referenceMaterial === 'string' ? body.referenceMaterial.slice(0, 8000) : undefined
 
+  // Server-side lookup, not client-supplied - see buildUserPrompt's comment.
+  // Fails open (undefined grade, ungraded lesson) rather than blocking the
+  // whole request if the profile read fails for any reason.
+  let grade: number | undefined
+  try {
+    const profileSnap = await db.collection('users').doc(uid).get()
+    const profileGrade = profileSnap.data()?.grade
+    if (typeof profileGrade === 'number') grade = profileGrade
+  } catch (e) {
+    console.error('generate-lesson-outline: failed to read student profile grade', e)
+  }
+
   const platformBudget = await checkPlatformBudget()
   if (!platformBudget.allowed) {
     return res.status(429).json({
@@ -117,7 +144,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       model: MODEL,
       max_tokens: 1500,
       system: SYSTEM_PROMPT,
-      messages: [{ role: 'user', content: buildUserPrompt(topic, knownConceptIds, referenceMaterial) }],
+      messages: [{ role: 'user', content: buildUserPrompt(topic, knownConceptIds, referenceMaterial, grade) }],
     })
 
     const costUsd =
