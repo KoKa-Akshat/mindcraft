@@ -13,7 +13,7 @@ import CallButton from '../components/CallButton'
 import { ConceptPathIcon } from '../components/ConceptPathIcon'
 import { ScientificCalcPanel, ScientificCalcToggle } from '../components/ScientificCalculator'
 import { useStudentData } from '../hooks/useStudentData'
-import HomeworkCards, { type HomeworkSession, type HomeworkCard, type OutcomeRecord } from '../components/HomeworkCards'
+import SolverPanel from '../components/SolverPanel'
 import {
   type Question,
   type FormatId,
@@ -32,7 +32,7 @@ import { getConceptContent } from '../lib/conceptContent'
 import { mlIdToLabel, toOntologyId } from '../lib/conceptMap'
 import { type BridgeRecommendation, allowedLevels, getRecommendedLevel as levelFromConfidence } from '../lib/bridgePractice'
 import { getExamConceptIds } from '../lib/examCurricula'
-import { seedAssessment, recordOutcomes, getIngredientCards, agentCheckIn, fetchExamConceptIds, type IngredientRecommendResult, type OutcomeInput } from '../lib/mlApi'
+import { seedAssessment, recordOutcomes, agentCheckIn, fetchExamConceptIds, type OutcomeInput } from '../lib/mlApi'
 import { fetchNextConcept, fetchNextNewConcept, fetchPracticeHubRecommendations } from '../lib/recommendNextConcept'
 import { invalidateKnowledgeGraph } from '../lib/graphCache'
 import { markDiagnosticComplete, markWeeklyPaperComplete, savePracticeDraftRemote, loadPracticeDraftsRemote, loadDiagnostic, getUserRole } from '../lib/practiceState'
@@ -40,7 +40,6 @@ import { buildNoContentMessage } from '../lib/ontologyBankCoverage'
 import { pathMasteredStorageKey, notifyPracticePathUpdated } from '../lib/practicePathQueue'
 import { loadDashboardPersonalization, toggleBookmark } from '../lib/dashboardPersonalization'
 import { recordWrongAnswer, resolveWrongAnswerNote } from '../lib/wrongAnswerNotes'
-import { solveWithGemini, clueWithGemini } from '../lib/geminiHomework'
 import { fetchStoryModule, type StoryModule, type StoryModuleContext } from '../lib/storyModule'
 import { resolveQuestionStem } from '../lib/questionStem'
 import { resolveStudyPathConfig, DEFAULT_STUDY_PATH, loadStudentPathContext, type StudyPathConfig } from '../lib/studyPathConfig'
@@ -61,7 +60,7 @@ import GraphBox from '../components/GraphBox'
 import WizardMascot from '../components/canvas/WizardMascot'
 import { GRAPHABLE_CONCEPT_IDS } from '../lib/graphableConcepts'
 import { extractPlottablePoints, extractGraphableExpression } from '../lib/plottablePoints'
-import { sanitizeAnswer, sanitizeProblemText, safeSvgHtml, MAX_ANSWER_CHARS, MAX_PROBLEM_CHARS } from '../lib/inputGuards'
+import { sanitizeAnswer, safeSvgHtml, MAX_ANSWER_CHARS } from '../lib/inputGuards'
 import conceptStoriesData from '../data/conceptStories.json'
 import s from './Practice.module.css'
 
@@ -82,7 +81,6 @@ function coachLineForWrong(q: Question): string {
   return 'That one’s out. Pick again — what is the question really asking?'
 }
 
-const HOMEWORK_API = import.meta.env.VITE_HOMEWORK_API_URL ?? 'http://localhost:8001'
 const SLACK_INVITE = 'https://join.slack.com/t/mindcraftnetwork/shared_invite/zt-3vnl9tmvm-sTq8wFPky0LcOGWcK_COHg'
 const SESSION_LENGTH = 10   // Bloom's mastery: min 10 trials for 80% threshold
 const MAX_SESSION    = 14   // hard cap when re-queuing wrong answers
@@ -105,7 +103,6 @@ type PracticePhase =
   /** Weekly Review play-through: a per-slot story/context beat, shown before
    *  that slot's `explore` formula card. See startWeeklyWalkthrough(). */
   | 'weekly-story'
-type SolverPhase   = 'input' | 'loading' | 'cards' | 'done'
 type Mode          = 'practice' | 'solver'
 type Confidence    = 'easy' | 'kinda' | 'hard'
 // A resumable mission is one of three kinds; each persists in its own slot so a
@@ -318,69 +315,12 @@ function conceptsFromIds(ids: string[]) {
   })
 }
 
-// Map concept_chip string from homework cards → practice concept id
-function chipToConceptId(chip: string): string | null {
-  const normalized = chip.toLowerCase().replace(/[\s-]+/g, '_')
-  const direct = PRACTICE_CONCEPTS.find(c => c.id === normalized)
-  if (direct) return direct.id
-  const partial = PRACTICE_CONCEPTS.find(c =>
-    normalized.includes(c.id.slice(0, 6)) || c.id.includes(normalized.slice(0, 6))
-  )
-  return partial?.id ?? null
-}
-
-// Fallback: render the deterministic ingredient-pipeline cards in the homework UI
-// when the LLM solver is unavailable. concept_chip carries the ontology id so the
-// outcome buttons still feed the student graph.
-function ingredientResultToSession(
-  ing: IngredientRecommendResult,
-  problemText: string,
-): HomeworkSession {
-  const concept = ing.problemFeatures.primary_concept
-  const cards: HomeworkCard[] = ing.cards.map((c, i) => ({
-    step_number: i + 1,
-    total_steps: ing.cards.length,
-    type: 'reframe',
-    concept_chip: concept,
-    content: c.prompt ? `${c.body}\n\n${c.prompt}` : c.body,
-    visual_type: 'none',
-    visual_data: '',
-    is_visual_step: false,
-  }))
-  return {
-    session_id: `ingredient-${Date.now()}`,
-    problem_summary: problemText,
-    target_concept: mlIdToLabel(concept),
-    path_framing: ing.compositionPrompt || 'Work through these building blocks in order.',
-    cards,
-    paths_explored: 1,
-  }
-}
-
-function PixelCraft({ size = 'sm', className = '' }: { size?: 'sm' | 'lg' | 'md'; className?: string }) {
-  return (
-    <div className={`${s.pixelCraft} ${s[`pixelCraft${size.toUpperCase()}`]} ${className}`} aria-label="Craft mascot" role="img">
-      <span className={s.pixelEarLeft} />
-      <span className={s.pixelEarRight} />
-      <span className={s.pixelHead}>
-        <span className={s.pixelMaskLeft} />
-        <span className={s.pixelMaskRight} />
-        <span className={s.pixelEyeLeft} />
-        <span className={s.pixelEyeRight} />
-        <span className={s.pixelNose} />
-      </span>
-      <span className={s.pixelHeart} />
-    </div>
-  )
-}
-
 export default function Practice() {
   const user     = useUser()
   const navigate = useNavigate()
   const location = useLocation()
   const [searchParams, setSearchParams] = useSearchParams()
   const { streak, practiceCount, tutorId } = useStudentData(user)
-  const fileRef  = useRef<HTMLInputElement>(null)
   const answerInputRef = useRef<HTMLInputElement>(null)
   const draftHydratedRef = useRef(false)
   const skipDiagnosticRestoreRef = useRef(
@@ -482,14 +422,14 @@ export default function Practice() {
   // Pending session params while the check-in screen is shown
   const checkinPendingRef = useRef<{ conceptId: string; lv: 1|2|3; bridge?: BridgeRecommendation } | null>(null)
 
-  // ── Solver state ──────────────────────────────────────────────────────────
-  const [sPhase,     setSPhase]     = useState<SolverPhase>('input')
-  const [problem,    setProblem]    = useState('')
-  const [solverFile, setSolverFile] = useState<File | null>(null)
-  const [session,    setSession]    = useState<HomeworkSession | null>(null)
-  const [sResults,   setSResults]   = useState<OutcomeRecord[]>([])
-  const [error,      setError]      = useState('')
-  const [slowLoad,   setSlowLoad]   = useState(false)
+  // ── Solver handoff state ──────────────────────────────────────────────────
+  // The solver's own internal state (sPhase, problem, session, …) now lives in
+  // <SolverPanel>. This is just the one piece of cross-mode handoff data this
+  // component still needs to originate: a pre-filled problem (dashboard
+  // quick-box, or a stuck practice question's walkthrough link) that should
+  // auto-submit as soon as the panel mounts. See the `state?.problemText`
+  // branch below.
+  const [solverInitialProblemText, setSolverInitialProblemText] = useState<string | undefined>(undefined)
 
   // Mirror question progress into refs so the async story-module callback can
   // decide whether the current question is safe to reskin.
@@ -886,8 +826,7 @@ export default function Practice() {
     } | null
     if (state?.problemText) {
       setMode('solver')
-      setProblem(state.problemText)
-      submitProblem(state.problemText)
+      setSolverInitialProblemText(state.problemText)
       window.history.replaceState({}, '')
     } else if (state?.questionId) {
       const q = getQuestionById(state.questionId)
@@ -925,14 +864,12 @@ export default function Practice() {
       window.history.replaceState({}, '')
     } else if (state?.homeworkHelp) {
       setMode('solver')
-      setSPhase('input')
       window.history.replaceState({}, '')
     } else if (state?.examHelp) {
       beginGapScan()
       window.history.replaceState({}, '')
     } else if (searchParams.get('homeworkHelp') === '1') {
       setMode('solver')
-      setSPhase('input')
       setSearchParams({}, { replace: true })
     } else if (searchParams.get('learnNext') === '1') {
       setSearchParams({}, { replace: true })
@@ -1653,57 +1590,6 @@ export default function Practice() {
     navigate('/dashboard', { replace: true })
   }
 
-  // ── Solver helpers ────────────────────────────────────────────────────────
-
-  async function submitProblem(rawProblemText: string, file?: File | null) {
-    const problemText = sanitizeProblemText(rawProblemText)
-    if (!problemText.trim() && !file) return
-    setSPhase('loading')
-    setError('')
-    setSession(null)
-    setSlowLoad(false)
-
-    try {
-      let data: HomeworkSession
-
-      if (file) {
-        const slowTimer = setTimeout(() => setSlowLoad(true), 7000)
-        const form = new FormData()
-        form.append('student_id', user.uid)
-        form.append('problem_text', problemText)
-        form.append('subject', 'algebra')
-        form.append('file', file)
-        const res = await fetch(`${HOMEWORK_API}/submit-with-file`, { method: 'POST', body: form })
-        clearTimeout(slowTimer)
-        if (!res.ok) {
-          const body = await res.json().catch(() => ({}))
-          throw new Error((body as { detail?: string }).detail ?? `Server error ${res.status}`)
-        }
-        data = await res.json()
-      } else {
-        data = await solveWithGemini(problemText, exam || 'General')
-      }
-
-      setSession(data)
-      setSPhase('cards')
-    } catch (err: unknown) {
-      // LLM solver failed (e.g. Anthropic credits exhausted) — fall back to the
-      // deterministic ingredient pipeline when we have problem text to classify.
-      if (problemText.trim()) {
-        const ing = await getIngredientCards(user.uid, problemText, 4)
-        if (ing && ing.cards.length > 0) {
-          setSession(ingredientResultToSession(ing, problemText))
-          setSlowLoad(false)
-          setSPhase('cards')
-          return
-        }
-      }
-      setSlowLoad(false)
-      setError(err instanceof Error ? err.message : 'Something went wrong.')
-      setSPhase('input')
-    }
-  }
-
   // ── Derived ───────────────────────────────────────────────────────────────
 
   const currentQ    = questions[qIndex]
@@ -1782,12 +1668,6 @@ export default function Practice() {
     : 0
 
   const remainingConcepts = exploreConcepts
-
-  // Concepts from homework that the student struggled with (outcome === 0)
-  const weakHomeworkConcepts: Array<{ label: string; conceptId: string | null }> =
-    sResults
-      .filter(r => r.outcome === 0)
-      .map(r => ({ label: r.concept_chip, conceptId: chipToConceptId(r.concept_chip) }))
 
   // ── Render ────────────────────────────────────────────────────────────────
 
@@ -2925,176 +2805,17 @@ export default function Practice() {
 
         {/* ═══════ SOLVER MODE ═══════ */}
         {mode === 'solver' && (
-          <>
-            <div className={s.solverHeader}>
-              <div className={s.solverHeaderLeft}>
-                <h1 className={s.solverPageTitle}>Solver</h1>
-                <p className={s.solverPageSub}>Paste or upload a stuck problem for step-by-step hints</p>
-              </div>
-            </div>
-            <div className={s.solverWrap}>
-            {sPhase === 'input' && (
-              <div className={s.solverPanel}>
-                <div className={s.solverCopy}>
-                  <span className={s.solverEyebrow}>Homework Help</span>
-                  <h2 className={s.solverTitle}>Turn a stuck problem into visual intuition.</h2>
-                  <p className={s.solverSub}>
-                    Paste the problem or upload a photo. Craft builds Socratic hint cards, concept tags, and a visual step when the math needs a graph.
-                  </p>
-                  <div className={s.solverFeatureGrid}>
-                    <span>Step-by-step hints</span>
-                    <span>Concept map logging</span>
-                    <span>Manim or SVG visuals</span>
-                  </div>
-                </div>
-
-                <div className={s.solverInputCard}>
-                  {solverFile ? (
-                    <div className={s.fileStrip}>
-                      <span>{solverFile.type === 'application/pdf' ? '📄' : '🖼️'} {solverFile.name}</span>
-                      <button onClick={() => setSolverFile(null)}>✕</button>
-                    </div>
-                  ) : (
-                    <button className={s.uploadBtn} onClick={() => fileRef.current?.click()}>
-                      ⬆ Upload image or PDF
-                      <input
-                        ref={fileRef}
-                        type="file"
-                        accept="image/*,.pdf"
-                        style={{ display: 'none' }}
-                        onChange={e => { const f = e.target.files?.[0]; if (f) setSolverFile(f) }}
-                      />
-                    </button>
-                  )}
-                  <textarea
-                    className={s.solverTextarea}
-                    placeholder="Paste your problem here... e.g. Solve x² - 5x + 6 = 0"
-                    value={problem}
-                    onChange={e => setProblem(sanitizeProblemText(e.target.value))}
-                    maxLength={MAX_PROBLEM_CHARS}
-                    rows={5}
-                    onKeyDown={e => { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) submitProblem(problem, solverFile) }}
-                  />
-                  <button
-                    className={s.solverBtn}
-                    onClick={() => submitProblem(problem, solverFile)}
-                    disabled={!problem.trim() && !solverFile}
-                  >
-                    Build my hint path →
-                  </button>
-                  {error && (
-                    <div className={s.errorMsg}>
-                      {error}
-                      <button onClick={() => setError('')}>✕</button>
-                    </div>
-                  )}
-                  <div className={s.solverMiniVisual} aria-hidden>
-                    <span />
-                    <svg viewBox="0 0 260 120" fill="none">
-                      <path d="M18 92 H242 M36 104 V18" stroke="rgba(255,255,255,.22)" strokeWidth="2" />
-                      <path d="M38 88 C82 74 95 28 130 34 C166 40 171 89 222 28" stroke="#C4F547" strokeWidth="4" strokeLinecap="round" />
-                      <circle cx="130" cy="34" r="5" fill="#4ECDC4" />
-                      <circle cx="222" cy="28" r="5" fill="#FF6B6B" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {sPhase === 'loading' && (
-              <div className={s.solverLoading}>
-                <PixelCraft size="md" className={s.solverMascot} />
-                <p className={s.solverLoadingText}>Analyzing your problem…</p>
-                <div className={s.buildingDots}>
-                  <span /><span /><span />
-                </div>
-                {slowLoad && <p className={s.slowMsg}>First load can take 30–60 s — Cloud Run warming up. Hang tight!</p>}
-              </div>
-            )}
-
-            {sPhase === 'cards' && session && (
-              <HomeworkCards
-                session={session}
-                studentId={user.uid}
-                apiBase={HOMEWORK_API}
-                fetchClue={(content, concept, num) => clueWithGemini(content, concept, num, exam || 'General')}
-                onComplete={r => {
-                  setSResults(r); setSPhase('done')
-                  // Feed homework outcomes into the student graph (concept_chip
-                  // -> concept id; outcome 1 = solved). Unknown ids skip server-side.
-                  const outs = r.map(rec => ({
-                    // chipToConceptId handles LLM label chips; the ?? passes through
-                    // ontology ids from the ingredient fallback. Backend skips invalid.
-                    conceptId: toOntologyId(chipToConceptId(rec.concept_chip) ?? rec.concept_chip),
-                    succeeded: rec.outcome === 1,
-                  }))
-                  void recordOutcomes(user.uid, outs)
-                  invalidateKnowledgeGraph(user.uid)
-                }}
-                onNewProblem={() => { setProblem(''); setSession(null); setSPhase('input') }}
-              />
-            )}
-
-            {sPhase === 'done' && (
-              <div className={s.completeWrap}>
-                <div className={s.completeStars}>✦</div>
-                <h2 className={s.completeTitle}>Session complete</h2>
-                <p style={{ color: 'var(--text-2)', fontSize: 14 }}>
-                  {sResults.filter(r => r.outcome === 1).length} of {sResults.length} concepts solid
-                </p>
-
-                {/* ── Homework → practice bridge ── */}
-                {weakHomeworkConcepts.length > 0 && (
-                  <div className={s.weakConceptsBlock}>
-                    <div className={s.weakConceptsTitle}>
-                      🎯 Concepts to practice from this problem:
-                    </div>
-                    <div className={s.weakConceptsList}>
-                      {weakHomeworkConcepts.map((wc, i) => (
-                        <div key={i} className={s.weakConceptRow}>
-                          <span className={s.weakConceptChip}>{wc.label}</span>
-                          {wc.conceptId ? (
-                            <button
-                              className={s.weakPracticeBtn}
-                              onClick={() => {
-                                setMode('practice')
-                                setExam(exam || 'General')
-                                setPPhase('level')
-                                setConcept(wc.conceptId!)
-                              }}
-                            >
-                              Practice →
-                            </button>
-                          ) : (
-                            <button
-                              className={s.weakPracticeBtn}
-                              onClick={() => setMode('practice')}
-                            >
-                              Browse topics →
-                            </button>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                    <p className={s.weakConceptsHint}>
-                      These concepts came up in your problem and need more work.
-                      Practice them now to lock in the understanding.
-                    </p>
-                  </div>
-                )}
-
-                <div className={s.completeActions}>
-                  <button className={s.btnSecondary} onClick={() => { setProblem(''); setSPhase('input') }}>
-                    Try another problem
-                  </button>
-                  <button className={s.btnPrimary} onClick={() => navigate('/knowledge-graph')}>
-                    View Knowledge Graph →
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
-          </>
+          <SolverPanel
+            exam={exam}
+            initialProblemText={solverInitialProblemText}
+            onBackToPractice={() => setMode('practice')}
+            onPracticeConcept={conceptId => {
+              setMode('practice')
+              setExam(exam || 'General')
+              setPPhase('level')
+              setConcept(conceptId)
+            }}
+          />
         )}
 
       </main>

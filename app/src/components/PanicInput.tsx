@@ -6,7 +6,7 @@
 
 import { useState, useRef, useCallback } from 'react'
 import type { DiagnoseResult } from '../pages/Prep'
-import { ML_BASE, mlAuthHeaders } from '../lib/mlApi'
+import { ML_BASE, WEBHOOK_BASE, mlAuthHeaders } from '../lib/mlApi'
 import s from './PanicInput.module.css'
 
 type ExamPill = 'SAT_MATH' | 'ACT_MATH' | 'IB_MATH_AA' | 'IB_MATH_AI' | 'AP_CALC_AB'
@@ -26,16 +26,19 @@ const TIME_OPTIONS: { value: TimeHorizon; label: string; sublabel: string }[] = 
   { value: 30, label: '2+ weeks', sublabel: 'Building from scratch' },
 ]
 
-const API_BASE = import.meta.env.VITE_WEBHOOK_URL ?? 'https://mindcraft-webhook.vercel.app'
-
 interface Props {
   diagnosing: boolean
   onDiagnosing: () => void
   onDiagnosed:  (r: DiagnoseResult) => void
+  /** Called when BOTH the LLM diagnose call and its ML-pathfinder fallback
+   * fail — without this, the parent's `diagnosing` flag (which this
+   * component doesn't own) never unwinds, so the submit button stays
+   * disabled and the spinner shows forever until a hard refresh. */
+  onError?:     () => void
   studentId?:   string
 }
 
-export default function PanicInput({ diagnosing, onDiagnosing, onDiagnosed, studentId }: Props) {
+export default function PanicInput({ diagnosing, onDiagnosing, onDiagnosed, onError, studentId }: Props) {
   const [text,        setText]        = useState('')
   const [examType,    setExamType]    = useState<ExamPill | null>(null)
   const [timeHorizon, setTimeHorizon] = useState<TimeHorizon>(7)
@@ -80,7 +83,7 @@ export default function PanicInput({ diagnosing, onDiagnosing, onDiagnosed, stud
         }
       }
 
-      const res = await fetch(`${API_BASE}/api/gemini`, {
+      const res = await fetch(`${WEBHOOK_BASE}/api/gemini`, {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({ action: 'diagnose', ...body }),
@@ -110,6 +113,7 @@ export default function PanicInput({ diagnosing, onDiagnosing, onDiagnosed, stud
         onDiagnosed(await r.json() as DiagnoseResult)
       } catch {
         setError(llmErr instanceof Error ? llmErr.message : 'Something went wrong — try again.')
+        onError?.()
       }
     }
   }

@@ -12,8 +12,9 @@
  */
 
 import type { Question } from './questionBank'
+import { WEBHOOK_BASE } from './mlApi'
 
-const ENDPOINT = 'https://mindcraft-webhook.vercel.app/api/generate-questions'
+const ENDPOINT = `${WEBHOOK_BASE}/api/generate-questions`
 const SESSION_PREFIX = 'qgen_v2_'
 const DYNAMIC_QGEN_ENABLED = import.meta.env.VITE_ENABLE_DYNAMIC_QGEN === 'true'
 

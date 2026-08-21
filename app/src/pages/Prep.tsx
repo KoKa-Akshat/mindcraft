@@ -194,6 +194,7 @@ export default function Prep() {
         diagnosing={stage === 'diagnosing'}
         onDiagnosing={() => setStage('diagnosing')}
         onDiagnosed={onDiagnosed}
+        onError={() => setStage('input')}
         studentId={user?.uid}
       />
     )

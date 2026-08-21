@@ -11,9 +11,10 @@ import { db } from '../firebase'
 import { useUser } from '../App'
 import Sidebar from '../components/Sidebar'
 import { useNavigate } from 'react-router-dom'
+import { WEBHOOK_BASE } from '../lib/mlApi'
 import s from './OrganizeNotes.module.css'
 
-const GENERATE_URL = 'https://mindcraft-webhook.vercel.app/api/generate-summary'
+const GENERATE_URL = `${WEBHOOK_BASE}/api/generate-summary`
 
 interface SummaryCard {
   title:    string

@@ -9,8 +9,9 @@
 import type { Question } from './questionBank'
 import { questionFormat } from './questionBank'
 import { enrichQuestionsWithStories, selectStoryForConcept } from './storySelection'
+import { WEBHOOK_BASE } from './mlApi'
 
-const ENDPOINT = 'https://mindcraft-webhook.vercel.app/api/story-module'
+const ENDPOINT = `${WEBHOOK_BASE}/api/story-module`
 const SESSION_PREFIX = 'storymod_v3_'
 const TIMEOUT_MS = 25_000
 

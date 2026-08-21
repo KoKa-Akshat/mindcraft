@@ -29,6 +29,7 @@ import type { LatLng } from '../lib/geo'
 import { setTutorViewAsStudentId, TUTOR_EXIT_STUDENT_MSG } from '../lib/tutorViewAs'
 import s from './TutorDashboard.module.css'
 import { MARKETING_BASE } from '../lib/siteUrls'
+import { WEBHOOK_BASE } from '../lib/mlApi'
 
 type DashPanel = 'home' | 'student' | 'profile' | 'notes' | 'admin'
 const CALENDLY_GUIDE = '/guides/calendly-setup.html'
@@ -410,7 +411,7 @@ export default function TutorDashboard() {
     setConnectingCalendly(true)
     try {
       const token = await user.getIdToken()
-      const res = await fetch('https://mindcraft-webhook.vercel.app/api/register-calendly', {
+      const res = await fetch(`${WEBHOOK_BASE}/api/register-calendly`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({ tutorId: user.uid, calendlyToken: calendlyToken.trim() }),
@@ -599,7 +600,7 @@ export default function TutorDashboard() {
     if (!window.confirm('Delete this session?')) return
     try {
       const token = await user.getIdToken()
-      const res = await fetch('https://mindcraft-webhook.vercel.app/api/delete-session', {
+      const res = await fetch(`${WEBHOOK_BASE}/api/delete-session`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({ sessionId: id }),

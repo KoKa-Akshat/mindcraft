@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import type { Gap, ExamType } from '../pages/Prep'
 import MathText from './MathText'
 import { safeSvgHtml } from '../lib/inputGuards'
+import { WEBHOOK_BASE } from '../lib/mlApi'
 import s from './PracticeCards.module.css'
 
 // ── Types ──────────────────────────────────────────────────────────────────────
@@ -38,7 +39,6 @@ interface Props {
 }
 
 const IDLE_MS = 45_000
-const API_BASE     = import.meta.env.VITE_WEBHOOK_URL ?? 'https://mindcraft-webhook.vercel.app'
 
 const EXAM_TAG: Record<ExamType, 'ACT' | 'SAT' | 'IB' | 'AP'> = {
   SAT_MATH:   'SAT',
@@ -86,7 +86,7 @@ export default function PracticeCards({
       setLoading(true)
       setLoadError('')
       try {
-        const res = await fetch(`${API_BASE}/api/generate-questions`, {
+        const res = await fetch(`${WEBHOOK_BASE}/api/generate-questions`, {
           method:  'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

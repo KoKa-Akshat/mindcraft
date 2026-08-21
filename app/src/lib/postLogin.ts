@@ -11,6 +11,7 @@ import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 import { isDiagnosticComplete } from './practiceState'
 import { lookupAllowlistRole, type AllowlistRole } from './loginAllowlist'
+import { WEBHOOK_BASE } from './mlApi'
 import {
   clearStudentDiagnosticState,
   isDevBypassEmail,
@@ -73,6 +74,29 @@ async function ensureRoleDoc(
   }, { merge: true })
 }
 
+/** Same job as ensureRoleDoc, but for 'tutor'/'parent' — firebase/firestore.rules
+ * only permits role to be absent or 'student' on a Firestore CREATE, so a
+ * direct client setDoc for those two roles is rejected by the rules (which
+ * are correctly doing their job). Routes through claim-invited-role.ts
+ * instead, which does the same write server-side via the Admin SDK after
+ * re-confirming the caller's email is genuinely in login_allowlist — the
+ * endpoint can't grant a role nobody pre-approved, it just moves an
+ * already-approved write out of the unprivileged client context. */
+async function claimInvitedRole(role: 'tutor' | 'parent'): Promise<void> {
+  const idToken = await auth.currentUser?.getIdToken()
+  if (!idToken) throw new Error('auth/missing-user')
+  const res = await fetch(`${WEBHOOK_BASE}/api/claim-invited-role`, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${idToken}` },
+  })
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}))
+    throw new Error(body.error || `claim-invited-role failed (${res.status})`)
+  }
+  void role // role is already re-derived server-side from login_allowlist; the
+  // param here only picks which branch called this, not what gets written.
+}
+
 /** Thrown by resolvePostLoginPath when a brand-new email has no admin-added
  * login_allowlist entry. Login.tsx matches this via friendlyError(). */
 export class NotAllowlistedError extends Error {
@@ -118,9 +142,13 @@ export async function resolvePostLoginPath(uid: string, opts: PostLoginOpts): Pr
       await signOut(auth)
       throw new NotAllowlistedError()
     }
+    if (allowedRole === 'tutor' || allowedRole === 'parent') {
+      // Rules block a client-created 'tutor'/'parent' role doc (see
+      // claimInvitedRole's doc comment) — must go through the webhook.
+      await claimInvitedRole(allowedRole)
+      return allowedRole === 'tutor' ? '/tutor' : '/parent'
+    }
     await ensureRoleDoc(email, currentUser?.displayName, uid, allowedRole)
-    if (allowedRole === 'tutor') return '/tutor'
-    if (allowedRole === 'parent') return '/parent'
   }
 
   // Dev accounts skip the diagnostic gate entirely.

@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { mlAuthHeaders } from '../lib/mlApi'
+import { ML_BASE, mlAuthHeaders } from '../lib/mlApi'
 import s from './ConstellationCard.module.css'
 
-const ML_API_URL      = import.meta.env.VITE_ML_API_URL ?? ''
 const FETCH_TIMEOUT   = 8_000
 
 const SVG_W = 700
@@ -55,12 +54,12 @@ export default function ConstellationCard({ userId }: { userId: string }) {
   const [hovered,  setHovered]  = useState<string | null>(null)
 
   function load() {
-    if (!userId || !ML_API_URL) { setLoading(false); return }
+    if (!userId || !ML_BASE) { setLoading(false); return }
     setLoading(true); setTimedOut(false)
     const ctrl  = new AbortController()
     const timer = setTimeout(() => { ctrl.abort(); setTimedOut(true); setLoading(false) }, FETCH_TIMEOUT)
     mlAuthHeaders()
-      .then(headers => fetch(`${ML_API_URL}/knowledge-graph/${userId}`, { signal: ctrl.signal, headers }))
+      .then(headers => fetch(`${ML_BASE}/knowledge-graph/${userId}`, { signal: ctrl.signal, headers }))
       .then(r  => r.ok ? r.json() : null)
       .then(d  => { clearTimeout(timer); setData(d); setLoading(false) })
       .catch(e => { clearTimeout(timer); if (e.name !== 'AbortError') setLoading(false) })

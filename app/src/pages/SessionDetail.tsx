@@ -21,10 +21,11 @@ import QuestionWorkView from '../components/QuestionWorkView'
 import { useToast } from '../hooks/useToast'
 import { fmtDateTime } from '../utils/format'
 import type { StudentWorkEntry } from '../types'
+import { WEBHOOK_BASE } from '../lib/mlApi'
 import s from './SessionDetail.module.css'
 
-const GENERATE_URL = 'https://mindcraft-webhook.vercel.app/api/generate-summary'
-const PUBLISH_URL  = 'https://mindcraft-webhook.vercel.app/api/publish-summary'
+const GENERATE_URL = `${WEBHOOK_BASE}/api/generate-summary`
+const PUBLISH_URL  = `${WEBHOOK_BASE}/api/publish-summary`
 const DELETE_URL   = 'https://mindcraft-webhook.vercel.app/api/delete-session'
 
 // Shape of the AI-generated summary card
@@ -169,7 +170,7 @@ export default function SessionDetail() {
     setDeleting(true)
     try {
       const token = await user.getIdToken()
-      const res = await fetch('https://mindcraft-webhook.vercel.app/api/delete-session', {
+      const res = await fetch(DELETE_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({ sessionId: id }),

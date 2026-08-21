@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import type { Gap } from '../pages/Prep'
+import { WEBHOOK_BASE } from '../lib/mlApi'
 import s from './ReadinessScore.module.css'
-
-const API_BASE = import.meta.env.VITE_WEBHOOK_URL ?? 'https://mindcraft-webhook.vercel.app'
 
 const EXAM_LABEL: Record<string, string> = {
   SAT_MATH:   'SAT Math',
@@ -59,7 +58,7 @@ export default function ReadinessScore({ gaps, initialGaps, practiceResults, exa
   useEffect(() => {
     async function fetchCopy() {
       try {
-        const res = await fetch(`${API_BASE}/api/gemini`, {
+        const res = await fetch(`${WEBHOOK_BASE}/api/gemini`, {
           method:  'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
