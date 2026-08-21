@@ -133,6 +133,18 @@ struct DeskGridDashboardView: View {
     @ObservedObject private var boxBus = DeskBoxBus.shared
     @ObservedObject private var aiKeys = StudentAIKeyStore.shared
     @EnvironmentObject private var jesseCall: JesseCallSession
+    /// Real `/recommend` (mode: exam) weakness signal - same source
+    /// ArchiveWorkflowView's own `weakness` already reads
+    /// (RouteClient.fetchExamProfile()). Real fix, 2026-08-21, direct
+    /// live question: "Does it know me over time?" - checked the actual
+    /// code and found `studentWeakness` was hardcoded nil on every call
+    /// site that reaches the Work Dashboard flow, even though this exact
+    /// real mastery signal was already one screen away the whole time.
+    /// Threaded into Jesse as soft context only (same discipline
+    /// ArchiveWorkflowView's own comment states) - the deterministic
+    /// mastery engine stays the source of truth for WHAT is weak, Jesse
+    /// decides in language whether it's worth mentioning at all.
+    @State private var studentWeakness: (id: String, label: String)?
     @State private var showMoodleSheet = false
     /// Real, live per-student mastery graph (`GET /knowledge-graph/{uid}`,
     /// the same backend `KnowledgeMapView` already uses) - powers the
@@ -511,6 +523,7 @@ struct DeskGridDashboardView: View {
             .contentShape(Rectangle())
             .gesture(spaceGesture)
             .task { await syncConnectedBoxes() }
+            .task { await loadWeakness() }
             .onAppear {
                 // Real STT/vision-OCR can't be driven by an automated test
                 // (no simulator camera/mic), so this seeds an already-
@@ -600,7 +613,11 @@ struct DeskGridDashboardView: View {
                 // existing tests don't expect and shouldn't have to account
                 // for.
                 if !ProcessInfo.processInfo.arguments.contains(where: { $0.hasPrefix("--ui-testing") }) {
-                    jesseCall.begin(context: "workDashboard", studentName: studentName)
+                    jesseCall.begin(
+                        context: "workDashboard",
+                        studentWeakness: studentWeakness.map { (conceptId: $0.id, label: $0.label) },
+                        studentName: studentName
+                    )
                 }
             }
 
@@ -2603,6 +2620,22 @@ struct DeskGridDashboardView: View {
         case .intel: return CGRect(x: 1060, y: 107, width: 330, height: 522)
         default: return base
         }
+    }
+
+    /// Byte-identical to ArchiveWorkflowView's own `loadWeakness()` - same
+    /// real signal, same "soft context, never blocking" doctrine. Doesn't
+    /// delay `jesseCall.begin()` firing above; a student with no evidence
+    /// yet (or a slow/failed fetch) simply gets today's greeting with no
+    /// weakness context, same accepted behavior ArchiveWorkflowView
+    /// already has for the same reason.
+    private func loadWeakness() async {
+        guard let profile = await RouteClient.fetchExamProfile(),
+              let worst = profile.topWeaknesses.min(by: { $0.strength < $1.strength })
+        else { return }
+        let displays = TocDataLoader.loadConceptDisplays()
+        let label = displays[worst.conceptId]?.label
+            ?? worst.conceptId.replacingOccurrences(of: "_", with: " ").capitalized
+        studentWeakness = (id: worst.conceptId, label: label)
     }
 
     private func syncConnectedBoxes() async {

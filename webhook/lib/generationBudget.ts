@@ -52,6 +52,20 @@ export const PLATFORM_MONTHLY_BUDGET_USD = 10
  * day. */
 export const PLACEHOLDER_DAILY_ATTEMPT_CAP = 3
 
+/** Real founder/dev test account(s), exempt from the per-student daily
+ * cap only — the platform-wide monthly ceiling (PLATFORM_MONTHLY_BUDGET_USD)
+ * still applies to this uid like everyone else, so this can't turn into an
+ * unbounded spend, just an unlimited number of ATTEMPTS within that same
+ * real dollar cap. 2026-08-21, explicit ask: "platform says tonight's
+ * credits used 3/3 generations... remove that for just this account...
+ * akshatkoirala@gmail.com" — looked up the real uid via
+ * `auth.getUserByEmail`, not hardcoding the email itself (Firebase Auth
+ * uids are stable identity; an email could be changed on the account and
+ * silently stop matching). */
+const UNLIMITED_ATTEMPT_UIDS = new Set<string>([
+  'Qy0eQMvKNkTnxdrIjQhQ6aQLEXr2', // akshatkoirala@gmail.com
+])
+
 export interface BudgetVerdict {
   allowed: boolean
   attemptsToday: number
@@ -91,11 +105,14 @@ export async function checkAndRecordAttempt(uid: string): Promise<BudgetVerdict>
     const snap = await tx.get(ref)
     const data = snap.exists ? (snap.data() as { dayKey?: string; attempts?: number }) : {}
     const attempts = data.dayKey === day ? data.attempts ?? 0 : 0
-    if (attempts >= PLACEHOLDER_DAILY_ATTEMPT_CAP) {
+    const unlimited = UNLIMITED_ATTEMPT_UIDS.has(uid)
+    if (!unlimited && attempts >= PLACEHOLDER_DAILY_ATTEMPT_CAP) {
       return { allowed: false, attemptsToday: attempts, cap: PLACEHOLDER_DAILY_ATTEMPT_CAP }
     }
+    // Still tracked (for real visibility into real usage) even when
+    // exempt from the cap - only the comparison above is skipped.
     tx.set(ref, { dayKey: day, attempts: attempts + 1, updatedAt: new Date().toISOString() })
-    return { allowed: true, attemptsToday: attempts + 1, cap: PLACEHOLDER_DAILY_ATTEMPT_CAP }
+    return { allowed: true, attemptsToday: attempts + 1, cap: unlimited ? Infinity : PLACEHOLDER_DAILY_ATTEMPT_CAP }
   })
 }
 

@@ -241,5 +241,24 @@ struct AuthGate: View {
                 showWelcome = true
             }
         }
+        // Real fix, 2026-08-21, explicit ask: "pre-load the voice for the
+        // voice menu portion so there's no lag after login." Fires the
+        // instant a student is authenticated - well before they've even
+        // reached AIDisclosureConsentView/LanguageChoiceView/
+        // VoiceChoiceView, all of which come first in the gate sequence
+        // above - so this genuinely has a head start rather than starting
+        // right when the voice picker appears. Fly.io's own machine stays
+        // warm now (min_machines_running: 1, fixed earlier tonight), but a
+        // real network round-trip plus the model's first real inference of
+        // a session still has SOME latency; discarding the audio (never
+        // played, never touched by the caller) means this costs one small
+        // real synthesis call, not a request a student is waiting on.
+        // `.task(id:)` re-fires once per distinct sign-in, matching the
+        // same "fires exactly once per session, auto-cancels on a stale
+        // id" shape StudySessionView's own `.task(id: activeTab)` uses.
+        .task(id: authService.currentUser?.uid) {
+            guard authService.currentUser != nil, StudentLanguagePreference.current.usesKokoro else { return }
+            _ = await KokoroTTSClient.synthesize(text: "Hi", voice: StudentVoicePreference.current)
+        }
     }
 }
