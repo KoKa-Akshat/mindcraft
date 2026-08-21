@@ -7,10 +7,35 @@ import Foundation
 /// read-aloud), `.michael` (calm male guide) - the server enforces this too,
 /// but keeping it an enum here means a typo can't silently fall through to
 /// some other Kokoro voice never actually chosen for this product.
-enum KokoroVoice: String {
+enum KokoroVoice: String, CaseIterable, Identifiable {
     case heart = "af_heart"
     case bella = "af_bella"
     case michael = "am_michael"
+
+    var id: String { rawValue }
+
+    /// Student-facing name for `VoiceChoiceView` - the raw Kokoro tags
+    /// (`af_heart`, `am_michael`) are an internal grading/gender-code
+    /// convention, not something to show a student picking a voice.
+    var displayName: String {
+        switch self {
+        case .heart: return "Warm"
+        case .bella: return "Bright"
+        case .michael: return "Calm"
+        }
+    }
+
+    var blurb: String {
+        switch self {
+        case .heart: return "Steady and warm. The default."
+        case .bella: return "A bit brighter, more energy."
+        case .michael: return "A calm, even-paced male guide."
+        }
+    }
+
+    /// Fixed line every voice previews with in `VoiceChoiceView`, so the
+    /// only variable a student is judging is the voice itself.
+    static let previewLine = "Hi, I'm Jesse. I'll sound like this when we talk."
 }
 
 enum KokoroTTSClient {

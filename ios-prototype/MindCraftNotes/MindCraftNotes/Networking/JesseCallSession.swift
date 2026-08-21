@@ -418,7 +418,14 @@ final class JesseCallSession: NSObject, ObservableObject {
     /// generous for a warm container, fast to fall back on a cold one.
     /// Non-English languages also skip Kokoro unconditionally (see
     /// StudentLanguage.usesKokoro) - it has no Spanish voice wired up.
-    private func speak(_ text: String, voice: KokoroVoice = .heart, useKokoro: Bool = true) async {
+    /// `voice` defaults to whatever the student picked in VoiceChoiceView
+    /// (2026-08-20) - was hardcoded `.heart` before, which meant `.bella`
+    /// and `.michael` were fully built and server-validated but unreachable
+    /// from any real call site. No call site below passes its own `voice:`,
+    /// so this one default is the whole fix; don't add a hardcoded voice
+    /// back at a call site without a real reason, that would silently
+    /// override the student's choice for that one line.
+    private func speak(_ text: String, voice: KokoroVoice = StudentVoicePreference.current, useKokoro: Bool = true) async {
         guard !isPaused, !isAmbient else { return }
         turns.append(JesseCallTurn(id: UUID().uuidString, speaker: "jesse", text: text, at: Date()))
         configureAudioSession()

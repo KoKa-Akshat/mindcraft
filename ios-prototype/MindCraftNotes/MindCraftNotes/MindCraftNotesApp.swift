@@ -58,6 +58,13 @@ struct MindCraftNotesApp: App {
                         // `--ui-testing-skip-auth` - a normal launch is
                         // unaffected unless a test explicitly passes it.
                         .environment(\.uiTestingForceWelcome, ProcessInfo.processInfo.arguments.contains("--ui-testing-force-welcome"))
+                        // Same need, same shape, one screen later (2026-08-20):
+                        // VoiceChoiceView needs a real signed-in session to
+                        // reach normally, same problem uiTestingForceWelcome
+                        // solved for Welcome. Forces the voice-choice branch
+                        // deterministically for on-device verification without
+                        // a real Firebase account.
+                        .environment(\.uiTestingForceVoiceChoice, ProcessInfo.processInfo.arguments.contains("--ui-testing-force-voice-choice"))
                 }
             }
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
@@ -90,6 +97,10 @@ private struct UITestingForceWelcomeKey: EnvironmentKey {
     static let defaultValue = false
 }
 
+private struct UITestingForceVoiceChoiceKey: EnvironmentKey {
+    static let defaultValue = false
+}
+
 extension EnvironmentValues {
     /// Test-only. See the launch-argument doc comment above.
     var uiTestingSkipAuth: Bool {
@@ -102,6 +113,12 @@ extension EnvironmentValues {
         get { self[UITestingForceWelcomeKey.self] }
         set { self[UITestingForceWelcomeKey.self] = newValue }
     }
+
+    /// Test-only. See the launch-argument doc comment above.
+    var uiTestingForceVoiceChoice: Bool {
+        get { self[UITestingForceVoiceChoiceKey.self] }
+        set { self[UITestingForceVoiceChoiceKey.self] = newValue }
+    }
 }
 
 /// Thin root view (build plan §3): observes AuthService and switches between
@@ -113,6 +130,7 @@ struct AuthGate: View {
     @StateObject private var authService = AuthService()
     @Environment(\.uiTestingSkipAuth) private var uiTestingSkipAuth
     @Environment(\.uiTestingForceWelcome) private var uiTestingForceWelcome
+    @Environment(\.uiTestingForceVoiceChoice) private var uiTestingForceVoiceChoice
     // New pre-login "Welcome to MindCraft" screen (round 5, Akshat's own
     // wireframe): shown once per cold launch, ahead of LoginView, so a
     // brand-new student sees the world before being asked to sign in - same
@@ -130,11 +148,18 @@ struct AuthGate: View {
     /// LanguageChoiceView's onChosen fires, since SwiftUI has no way to
     /// observe UserDefaults changes on its own.
     @State private var languageChosen = StudentLanguagePreference.hasChosen
+    /// Same shape as `languageChosen`, one gate later. Only relevant when
+    /// the chosen language actually uses Kokoro (English) - a Spanish
+    /// student has nothing to pick between, since none of the three
+    /// Kokoro voices apply to them (see StudentLanguage.usesKokoro).
+    @State private var voiceChosen = StudentVoicePreference.hasChosen
 
     var body: some View {
         Group {
             if uiTestingForceWelcome {
                 WelcomeView(onSignIn: {})
+            } else if uiTestingForceVoiceChoice {
+                VoiceChoiceView(onChosen: {})
             } else if authService.currentUser != nil || uiTestingSkipAuth {
                 // One-time language picker (2026-08-19, explicit ask:
                 // "accommodate voice in... Spanish... which they choose at
@@ -146,6 +171,13 @@ struct AuthGate: View {
                 // auth don't need updating for an unrelated feature.
                 if !languageChosen && !uiTestingSkipAuth {
                     LanguageChoiceView(onChosen: { languageChosen = true })
+                } else if !voiceChosen && !uiTestingSkipAuth && StudentLanguagePreference.current.usesKokoro {
+                    // One-time voice picker (2026-08-20, explicit ask: "so
+                    // people can pick one voice after log in and it's
+                    // seamless from here") - one gate after language choice,
+                    // same shape. Gated on usesKokoro so a Spanish student
+                    // never sees a picker for voices that don't apply to them.
+                    VoiceChoiceView(onChosen: { voiceChosen = true })
                 } else {
                     // Brick 1 (DESK_OS_NATIVE_BRIEF.md): the desk/shell screen
                     // is now the real post-login entry point, with the
