@@ -1268,10 +1268,31 @@ final class JesseCallSession: NSObject, ObservableObject {
         // embedded sims, ~4 minutes, $3.60.
         await speak("Nothing in the archive yet for \(topic) - give me a bit, I'm putting together a real lesson with sims, not just an outline.\(microsimNote)")
         var lastSpokenChaptersReady = 0
-        let bookVerdict = await BookGenerationClient.generate(topic: topic) { [weak self] ready, total in
+        var bookVerdict = await BookGenerationClient.generate(topic: topic) { [weak self] ready, total in
             guard let self, total > 0, ready > lastSpokenChaptersReady else { return }
             lastSpokenChaptersReady = ready
             Task { await self.speak("Still building - \(ready) of \(total) chapters done.") }
+        }
+        if case .unavailable = bookVerdict {
+            // One retry before falling back to the old thin path - real
+            // live bug, 2026-08-21: asked for "chemical compounds," this
+            // exact branch fired, and the student got the old sim-less
+            // "About Chemical Compounds" outline this whole pipeline was
+            // built to replace. `.unavailable` fires on ANY connection
+            // hiccup (one bad network moment, a cold start) with no retry
+            // today, so a single transient blip silently downgrades the
+            // WHOLE experience - content-engine was confirmed healthy
+            // moments after this report, consistent with exactly that. A
+            // second attempt is cheap insurance against the common case;
+            // the old path stays as the real last resort for a genuine
+            // sustained outage.
+            guard isActive else { return }
+            lastSpokenChaptersReady = 0
+            bookVerdict = await BookGenerationClient.generate(topic: topic) { [weak self] ready, total in
+                guard let self, total > 0, ready > lastSpokenChaptersReady else { return }
+                lastSpokenChaptersReady = ready
+                Task { await self.speak("Still building - \(ready) of \(total) chapters done.") }
+            }
         }
         guard isActive else { return }
         switch bookVerdict {
