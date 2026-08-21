@@ -21,6 +21,7 @@
 		0FB945513AC3BD9B9D898CF2 /* SVGImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A270692D86516903DC8773D /* SVGImageView.swift */; };
 		10430F72EBFAF47F1E324788 /* GradeGoalsChoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A2F149B2547D95A37A346EC /* GradeGoalsChoiceView.swift */; };
 		105C091D2824B49561936062 /* actToc.json in Resources */ = {isa = PBXBuildFile; fileRef = C804A39BF276CEEBF088A65C /* actToc.json */; };
+		11015DAFEE4F3C4D60548B06 /* SimInteractionClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08F08A326DE65F30DABF0F0 /* SimInteractionClient.swift */; };
 		11DF2394C1B5D24E677DC1E1 /* TutorDirectoryClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD38C7392605523E1A10E7F6 /* TutorDirectoryClient.swift */; };
 		12A0285334FBDE9318D382A1 /* WorkflowLibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EDEF1961163C2AEBD1E2E94 /* WorkflowLibraryView.swift */; };
 		161627EE34E1A219049B3840 /* AIDisclosureConsentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF19C3A4E53DF0667A8C72A1 /* AIDisclosureConsentView.swift */; };
@@ -241,6 +242,7 @@
 		9F8533094AB64B10828A047B /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		9FAB6A727D2FD6844F72EAF7 /* ConceptGraphLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConceptGraphLoader.swift; sourceTree = "<group>"; };
 		A05918461089BFC725BB84F8 /* questionBank.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = questionBank.json; sourceTree = "<group>"; };
+		A08F08A326DE65F30DABF0F0 /* SimInteractionClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SimInteractionClient.swift; sourceTree = "<group>"; };
 		AD8BF726CB03DB544A85969E /* AssembledBookModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AssembledBookModels.swift; sourceTree = "<group>"; };
 		B0BOOKAGENTCLIENT01 /* BookAgentClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookAgentClient.swift; sourceTree = "<group>"; };
 		B0CREATECANVAS01A2 /* CreateCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCanvasView.swift; sourceTree = "<group>"; };
@@ -453,6 +455,7 @@
 				409ACCE0A60FA38F61914FF4 /* AIDisclosurePreference.swift */,
 				7165E2C9039350FB17CF3523 /* LessonOutlineClient.swift */,
 				D1A8CAFEF98DAA076ECF6DB6 /* BookGenerationClient.swift */,
+				A08F08A326DE65F30DABF0F0 /* SimInteractionClient.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -862,6 +865,7 @@
 				0FB05A0199091F251B933970 /* LessonOutlineClient.swift in Sources */,
 				10430F72EBFAF47F1E324788 /* GradeGoalsChoiceView.swift in Sources */,
 				B0BED2EADB29CE9B5BD2B91E /* BookGenerationClient.swift in Sources */,
+				11015DAFEE4F3C4D60548B06 /* SimInteractionClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -33,6 +33,16 @@ struct BookReaderView: View {
 
     @State private var pageIndex = 0
 
+    // Real sim engagement telemetry (2026-08-21) - dwell time + touch count
+    // per page, keyed by page index since a section's real identity
+    // (conceptId) is looked up from `pages[index]` at flush time. Tracked
+    // per-page rather than a single running total because a student can
+    // page back and forth - `dwellMsByPage` accumulates ACROSS every visit
+    // to that page, not just the most recent one.
+    @State private var pageEnteredAt = Date()
+    @State private var dwellMsByPage: [Int: Int] = [:]
+    @State private var touchCountByPage: [Int: Int] = [:]
+
     private let ink = Color(gridHex: "143a2e")
     private let cream = Color(gridHex: "fff8e9")
     private let lime = Color(gridHex: "c4f547")
@@ -47,7 +57,7 @@ struct BookReaderView: View {
                 TabView(selection: $pageIndex) {
                     ForEach(Array(pages.enumerated()), id: \.offset) { index, section in
                         ScrollView {
-                            pageContent(section)
+                            pageContent(section, pageIndex: index)
                                 .padding(20)
                         }
                         .tag(index)
@@ -66,14 +76,51 @@ struct BookReaderView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Close", action: onClose)
+                    Button("Close", action: closeAndFlushTelemetry)
                 }
             }
         }
+        .onAppear { pageEnteredAt = Date() }
+        .onChange(of: pageIndex) { oldValue, _ in
+            recordDwell(forPage: oldValue)
+            pageEnteredAt = Date()
+        }
+    }
+
+    private func recordDwell(forPage index: Int) {
+        let elapsedMs = Int(Date().timeIntervalSince(pageEnteredAt) * 1000)
+        guard elapsedMs > 0 else { return }
+        dwellMsByPage[index, default: 0] += elapsedMs
+    }
+
+    /// Flushes real, on-device engagement signal before dismissing - the
+    /// Close button is the only real dismissal path (`.fullScreenCover`
+    /// doesn't support swipe-to-dismiss), so wrapping it here is sufficient
+    /// rather than needing a separate `.onDisappear` at the view root (which
+    /// SwiftUI can also fire on unrelated re-renders, not just real closes).
+    /// Only pages that actually showed a sim are worth logging - dwell time
+    /// on text-only pages isn't sim telemetry.
+    private func closeAndFlushTelemetry() {
+        recordDwell(forPage: pageIndex)
+        let records: [SimInteractionRecord] = pages.enumerated().compactMap { index, section in
+            guard section.simHtml != nil else { return nil }
+            let dwellMs = dwellMsByPage[index] ?? 0
+            let touches = touchCountByPage[index] ?? 0
+            guard dwellMs > 0 || touches > 0 else { return nil }
+            return SimInteractionRecord(
+                subjectId: book.subjectId,
+                conceptId: section.conceptId,
+                simTitle: section.simTitle,
+                dwellMs: dwellMs,
+                touchCount: touches
+            )
+        }
+        SimInteractionClient.log(records)
+        onClose()
     }
 
     @ViewBuilder
-    private func pageContent(_ section: AssembledBookSection) -> some View {
+    private func pageContent(_ section: AssembledBookSection, pageIndex index: Int) -> some View {
         VStack(alignment: .leading, spacing: 18) {
             Text(section.title)
                 .font(.system(size: 24, weight: .bold, design: .rounded))
@@ -125,8 +172,10 @@ struct BookReaderView: View {
                     // on a wide iPad one, rather than cropping or
                     // stretching either way.
                     GeometryReader { geo in
-                        InlineSimWebView(html: html)
-                            .frame(width: geo.size.width, height: geo.size.width * (650.0 / 800.0))
+                        InlineSimWebView(html: html, onInteraction: {
+                            touchCountByPage[index, default: 0] += 1
+                        })
+                        .frame(width: geo.size.width, height: geo.size.width * (650.0 / 800.0))
                     }
                     .aspectRatio(800.0 / 650.0, contentMode: .fit)
                     .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))

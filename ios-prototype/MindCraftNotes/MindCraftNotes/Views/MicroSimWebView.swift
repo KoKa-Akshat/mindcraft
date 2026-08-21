@@ -36,6 +36,18 @@ struct MicroSimWebView: UIViewRepresentable {
 /// on its internal scrollView by default, but it's off here until turned on.
 struct InlineSimWebView: UIViewRepresentable {
     let html: String
+    /// Fires once per real touch-down/drag-start the student makes on the
+    /// sim canvas - deliberately sim-agnostic (2026-08-21, sim telemetry):
+    /// sims come from three different sources (McCreary's archive, our own
+    /// API generator, the cron pipeline) with no shared internal JS
+    /// contract to hook a postMessage bridge into, so counting at the
+    /// gesture level here is the only signal that works uniformly across
+    /// all of them without needing any sim's own code to cooperate. Counts
+    /// interaction EPISODES (`.began`/`.recognized`), not raw movement -
+    /// a pan's `.changed` state fires many times per drag and would just
+    /// inflate the count without adding real signal.
+    var onInteraction: (() -> Void)? = nil
+
     func makeUIView(context: Context) -> WKWebView {
         let config = WKWebViewConfiguration()
         config.allowsInlineMediaPlayback = true
@@ -45,7 +57,38 @@ struct InlineSimWebView: UIViewRepresentable {
         view.scrollView.minimumZoomScale = 0.5
         view.scrollView.maximumZoomScale = 3.0
         view.loadHTMLString(html, baseURL: nil)
+
+        if onInteraction != nil {
+            let tap = UITapGestureRecognizer(target: context.coordinator, action: #selector(Coordinator.touched(_:)))
+            tap.cancelsTouchesInView = false
+            tap.delaysTouchesBegan = false
+            tap.delegate = context.coordinator
+            view.addGestureRecognizer(tap)
+            let pan = UIPanGestureRecognizer(target: context.coordinator, action: #selector(Coordinator.touched(_:)))
+            pan.cancelsTouchesInView = false
+            pan.delaysTouchesBegan = false
+            pan.delegate = context.coordinator
+            view.addGestureRecognizer(pan)
+        }
         return view
     }
     func updateUIView(_ uiView: WKWebView, context: Context) {}
+    func makeCoordinator() -> Coordinator { Coordinator(onInteraction: onInteraction) }
+
+    final class Coordinator: NSObject, UIGestureRecognizerDelegate {
+        let onInteraction: (() -> Void)?
+        init(onInteraction: (() -> Void)?) { self.onInteraction = onInteraction }
+
+        @objc func touched(_ recognizer: UIGestureRecognizer) {
+            guard recognizer.state == .began || recognizer.state == .recognized else { return }
+            onInteraction?()
+        }
+
+        // Never blocks the sim's own touch handling or WKWebView's internal
+        // pinch/scroll recognizers - this view only ever OBSERVES touches,
+        // it must never compete with the sim being actually interactive.
+        func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+            true
+        }
+    }
 }
