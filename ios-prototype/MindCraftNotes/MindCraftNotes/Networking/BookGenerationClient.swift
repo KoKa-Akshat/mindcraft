@@ -38,7 +38,11 @@ enum BookGenerationClient {
     private static let maxWaitSeconds: TimeInterval = 480
 
     enum Verdict: Equatable {
-        case verified(AssembledBook, cached: Bool)
+        /// `costUsd` is nil on a cache hit (the webhook only computes/sends
+        /// it on a real terminal job, see generate-book.ts) - the caller
+        /// should treat `cached: true` as the authority for "don't show a
+        /// generation-stats badge," not merely `costUsd == nil`.
+        case verified(AssembledBook, cached: Bool, costUsd: Double?, elapsedSeconds: Double)
         case noGoodResult(reason: String?)
         case rateLimited(reason: String?)
         case unavailable(String?)
@@ -52,13 +56,18 @@ enum BookGenerationClient {
         let reason: String?
         let chaptersReady: Int?
         let totalChapters: Int?
+        let costUsd: Double?
     }
 
     /// Starts a job and polls it to a terminal state. `onProgress` fires
     /// on every "running" poll with real chapter counts, so a caller can
     /// pace spoken filler instead of one static line during a genuinely
-    /// multi-minute wait.
+    /// multi-minute wait. Elapsed time is measured client-side (start of
+    /// this call to the terminal response) rather than trusting server
+    /// clocks to agree - it's also the more honest number for a student:
+    /// how long THEY actually waited, not how long the job queue took.
     static func generate(topic: String, onProgress: @escaping (_ chaptersReady: Int, _ totalChapters: Int) -> Void = { _, _ in }) async -> Verdict {
+        let start = Date()
         guard let envelope = await post(["topic": topic]) else {
             return .unavailable("Couldn't reach the generation service.")
         }
@@ -67,12 +76,12 @@ enum BookGenerationClient {
             guard let book = envelope.book else {
                 return .unavailable("The service reported success without a usable book.")
             }
-            return .verified(book, cached: envelope.cached ?? false)
+            return .verified(book, cached: envelope.cached ?? false, costUsd: envelope.costUsd, elapsedSeconds: Date().timeIntervalSince(start))
         case "running":
             guard let jobId = envelope.jobId else {
                 return .unavailable("The service accepted the job but returned no job id.")
             }
-            return await poll(jobId: jobId, onProgress: onProgress)
+            return await poll(jobId: jobId, start: start, onProgress: onProgress)
         case "rate_limited":
             return .rateLimited(reason: envelope.reason)
         default:
@@ -80,7 +89,7 @@ enum BookGenerationClient {
         }
     }
 
-    private static func poll(jobId: String, onProgress: @escaping (Int, Int) -> Void) async -> Verdict {
+    private static func poll(jobId: String, start: Date, onProgress: @escaping (Int, Int) -> Void) async -> Verdict {
         let deadline = Date().addingTimeInterval(maxWaitSeconds)
         while Date() < deadline {
             guard (try? await Task.sleep(nanoseconds: pollIntervalSeconds * 1_000_000_000)) != nil else {
@@ -97,7 +106,7 @@ enum BookGenerationClient {
                 guard let book = envelope.book else {
                     return .unavailable("The service reported success without a usable book.")
                 }
-                return .verified(book, cached: envelope.cached ?? false)
+                return .verified(book, cached: envelope.cached ?? false, costUsd: envelope.costUsd, elapsedSeconds: Date().timeIntervalSince(start))
             case "no_good_result":
                 return .noGoodResult(reason: envelope.reason)
             default:

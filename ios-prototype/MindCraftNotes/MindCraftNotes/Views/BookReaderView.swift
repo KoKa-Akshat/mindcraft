@@ -22,6 +22,13 @@ import SwiftUI
 /// relative to a directory that doesn't exist on the client at all).
 struct BookReaderView: View {
     let book: AssembledBook
+    /// Real cost/time for a FRESHLY generated book, nil for anything opened
+    /// from the Chapter Library or Binder (a pre-existing book, cached or
+    /// pre-built) - see `ChapterBookGenerationInfo`'s own doc comment for
+    /// why cached books deliberately never carry this. 2026-08-21, direct
+    /// ask: "show the time required to generate it and then the credits
+    /// required to generate it... after the chapter was generated."
+    var generationInfo: ChapterBookGenerationInfo? = nil
     var onClose: () -> Void
 
     @State private var pageIndex = 0
@@ -49,6 +56,9 @@ struct BookReaderView: View {
                 .tabViewStyle(.page(indexDisplayMode: .always))
                 .indexViewStyle(.page(backgroundDisplayMode: .always))
 
+                if let generationInfo {
+                    generationBadge(generationInfo)
+                }
                 pagerControls
             }
             .background(cream.ignoresSafeArea())
@@ -137,6 +147,34 @@ struct BookReaderView: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    @ViewBuilder
+    private func generationBadge(_ info: ChapterBookGenerationInfo) -> some View {
+        HStack(spacing: 6) {
+            Image(systemName: "sparkles")
+            Text(generationSummary(info))
+        }
+        .font(.system(size: 11, weight: .semibold, design: .rounded))
+        .foregroundColor(ink.opacity(0.5))
+        .padding(.horizontal, 20)
+        .padding(.vertical, 6)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Color.white)
+        .overlay(alignment: .top) { Rectangle().fill(ink.opacity(0.06)).frame(height: 1) }
+    }
+
+    private func generationSummary(_ info: ChapterBookGenerationInfo) -> String {
+        let totalSeconds = max(0, Int(info.elapsedSeconds.rounded()))
+        let timeLabel = totalSeconds >= 60 ? "\(totalSeconds / 60)m \(totalSeconds % 60)s" : "\(totalSeconds)s"
+        guard let costUsd = info.costUsd, costUsd > 0 else {
+            return "Freshly generated for you in \(timeLabel)"
+        }
+        // Placeholder conversion (10 credits = $1) pending a real credits
+        // pricing decision - the point right now is showing real cost at
+        // all, not the exact exchange rate.
+        let credits = max(1, Int((costUsd * 10).rounded()))
+        return "Freshly generated for you in \(timeLabel) · $\(String(format: "%.2f", costUsd)) (~\(credits) credits)"
     }
 
     private var pagerControls: some View {

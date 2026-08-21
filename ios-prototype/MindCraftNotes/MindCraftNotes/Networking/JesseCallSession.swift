@@ -32,6 +32,13 @@ struct LessonCitation: Equatable, Identifiable {
     var id: String { url }
 }
 
+/// Real generation stats for a chapter book, only ever populated for a
+/// freshly-run `/generate-book` job — see `openedChapterBookGenerationInfo`.
+struct ChapterBookGenerationInfo: Equatable {
+    let costUsd: Double?
+    let elapsedSeconds: Double
+}
+
 struct WorkDashboardLesson: Equatable {
     enum Source: Equatable {
         case archive(bookTitle: String)
@@ -203,6 +210,13 @@ final class JesseCallSession: NSObject, ObservableObject {
     /// BookReaderView; set to nil to dismiss, same shape as
     /// `workDashboardLesson`/`pendingLearnTopic` above.
     @Published private(set) var openedChapterBook: AssembledBook?
+    /// Real cost/time for a FRESH `/generate-book` run, nil for a Tier-0
+    /// Chapter Library hit or an `on_demand` cache hit — showing "generated
+    /// in 3m42s, $3.60" on a book that was actually served instantly from
+    /// Firestore would be a real lie to the student, not a rounding error.
+    /// 2026-08-21: "show the time required to generate it and then the
+    /// credits required to generate it... after the chapter was generated."
+    @Published private(set) var openedChapterBookGenerationInfo: ChapterBookGenerationInfo?
     /// Set the moment a topic is first recognized, cleared once the
     /// student answers - the real gap behind a live bug report
     /// (2026-08-18: "I said 'learn California bar'... the next thing
@@ -347,6 +361,7 @@ final class JesseCallSession: NSObject, ObservableObject {
             pendingLearnTopic = nil
             pendingLearnGrade = nil
             openedChapterBook = nil
+            openedChapterBookGenerationInfo = nil
             // Real voice greeting on arrival (2026-08-18, explicit ask:
             // "the first thing you should do is say hi Akshat what can I
             // help you study today - it says nothing, it's waiting for
@@ -414,6 +429,7 @@ final class JesseCallSession: NSObject, ObservableObject {
     /// external-clear shape as `closeLessonSession()` above.
     func closeChapterBook() {
         openedChapterBook = nil
+        openedChapterBookGenerationInfo = nil
     }
 
     /// Test-only seam for `StudySessionView` (2026-08-19) - real voice
@@ -1153,6 +1169,7 @@ final class JesseCallSession: NSObject, ObservableObject {
         if let book = await Self.matchChapterLibraryBook(topic: topic) {
             guard isActive else { return }
             openedChapterBook = book
+            openedChapterBookGenerationInfo = nil
             let sectionTitles = book.chapters.flatMap(\.sections).map(\.title)
             await speak("Found it in the library - \(book.title), \(book.coverageLabel): \(sectionTitles.joined(separator: ", ")).")
             return
@@ -1230,8 +1247,12 @@ final class JesseCallSession: NSObject, ObservableObject {
         }
         guard isActive else { return }
         switch bookVerdict {
-        case .verified(let book, _):
+        case .verified(let book, let cached, let costUsd, let elapsedSeconds):
             openedChapterBook = book
+            // nil for a cache hit - nothing was actually generated for THIS
+            // student just now, so a "generated in 3m42s, $3.60" badge would
+            // be a real lie, not a rounding error.
+            openedChapterBookGenerationInfo = cached ? nil : ChapterBookGenerationInfo(costUsd: costUsd, elapsedSeconds: elapsedSeconds)
             let sectionTitles = book.chapters.flatMap(\.sections).map(\.title)
             Task { await LessonGraphIngestClient.ingest(topic: topic, chapterTitles: sectionTitles) }
             await speak("Done - \(book.title): \(sectionTitles.joined(separator: ", ")).")
@@ -1248,11 +1269,13 @@ final class JesseCallSession: NSObject, ObservableObject {
             // "keeps defaulting to X" bug class if left untouched here.
             workDashboardLesson = nil
             openedChapterBook = nil
+            openedChapterBookGenerationInfo = nil
             await speak("I couldn't build a good enough lesson on that just now" + (reason.map { " - \($0)" } ?? "") + ". Want to try rephrasing it?")
             return
         case .rateLimited(let reason):
             workDashboardLesson = nil
             openedChapterBook = nil
+            openedChapterBookGenerationInfo = nil
             await speak("I've hit today's generation limit - \(reason ?? "try again tomorrow").")
             return
         case .unavailable:

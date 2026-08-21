@@ -205,7 +205,7 @@ async function handlePoll(rawJobId: string, res: VercelResponse) {
       } catch (e) {
         return res.status(502).json({ status: 'error', detail: `Book passed the gate but could not be stored: ${String(e)}` })
       }
-      return res.status(200).json({ status: 'passed', cached: false, book })
+      return res.status(200).json({ status: 'passed', cached: false, book, costUsd })
     }
     if (status === 'no_good_result') {
       return res.status(200).json({ status: 'no_good_result', reason: raw.reason ?? '' })

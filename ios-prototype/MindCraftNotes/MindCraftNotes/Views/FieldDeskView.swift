@@ -98,6 +98,10 @@ struct FieldDeskView: View {
     /// presentation layer, sidesteps the touch-guard system entirely
     /// rather than needing a new FieldDeskOverlay case).
     @State private var openBinderBook: AssembledBook?
+    /// Captured from `jesseCall.openedChapterBookGenerationInfo` at handoff
+    /// time (below) - `jesseCall.closeChapterBook()` nils the source right
+    /// after, so this view needs its own copy to hand to BookReaderView.
+    @State private var openBinderBookGenerationInfo: ChapterBookGenerationInfo?
     @State private var showDesignStudio = false
     @State private var showSchedulingWorkflows = false
     @State private var schedulingWorkflowsMinimized = false
@@ -1276,7 +1280,10 @@ struct FieldDeskView: View {
             )
         }
         .fullScreenCover(item: $openBinderBook) { book in
-            BookReaderView(book: book, onClose: { openBinderBook = nil })
+            BookReaderView(book: book, generationInfo: openBinderBookGenerationInfo, onClose: {
+                openBinderBook = nil
+                openBinderBookGenerationInfo = nil
+            })
         }
         // Jesse found a real Chapter Library book by voice (2026-08-21) -
         // files it to the Binder (same durable-pointer shape as opening
@@ -1289,6 +1296,7 @@ struct FieldDeskView: View {
             guard let book else { return }
             binderStore.addChapterBook(title: book.title, subjectId: book.subjectId)
             openBinderBook = book
+            openBinderBookGenerationInfo = jesseCall.openedChapterBookGenerationInfo
             jesseCall.closeChapterBook()
         }
         .sheet(isPresented: $showJesseCallSheet) {
@@ -3167,6 +3175,10 @@ struct FieldDeskView: View {
         Task {
             do {
                 openBinderBook = try await BookLibraryClient.getBook(subjectId: subjectId)
+                // A refetch of something already filed, not a fresh
+                // generation - never show stale stats from whatever book
+                // was open before this one.
+                openBinderBookGenerationInfo = nil
             } catch {
                 flash("Couldn't reopen \(fallbackTitle) right now")
             }
