@@ -33,6 +33,15 @@ service cloud.firestore {
       match /friends/{friendId} {
         allow read, write: if request.auth != null && request.auth.uid == userId;
       }
+
+      // Job OS board (JobOSStore, native app Resume feature) — synced
+      // 2026-08-22, previously local-only (UserDefaults). Single doc
+      // (`state`) holding the whole board; same owner-only shape as
+      // friends above, since this is the student's own private tracker,
+      // not shared data.
+      match /jobOS/{docId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
     }
 
     // Invite-only sign-in gate (see app/src/lib/loginAllowlist.ts + postLogin.ts).

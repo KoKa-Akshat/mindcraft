@@ -41,6 +41,8 @@ import resetStudentData from '../lib/handlers/reset-student-data'
 import logSimInteraction from '../lib/handlers/log-sim-interaction'
 import generateSessionReport from '../lib/handlers/generate-session-report'
 import getSessionReports from '../lib/handlers/get-session-reports'
+import discoverInternships from '../lib/handlers/discover-internships'
+import reconcileApplications from '../lib/handlers/reconcile-applications'
 
 const HANDLERS: Record<string, (req: VercelRequest, res: VercelResponse) => Promise<unknown> | unknown> = {
   'create-classroom': createClassroom,
@@ -76,6 +78,8 @@ const HANDLERS: Record<string, (req: VercelRequest, res: VercelResponse) => Prom
   'log-sim-interaction': logSimInteraction,
   'generate-session-report': generateSessionReport,
   'get-session-reports': getSessionReports,
+  'discover-internships': discoverInternships,
+  'reconcile-applications': reconcileApplications,
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {

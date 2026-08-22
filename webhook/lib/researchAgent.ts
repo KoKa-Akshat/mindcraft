@@ -1,15 +1,6 @@
 import { createHash } from 'node:crypto'
 import { db } from './firebase'
-
-type SourceKind = 'google' | 'reddit' | 'quora' | 'forum'
-
-interface SearchResult {
-  title: string
-  url: string
-  displayLink: string
-  snippet: string
-  kind: SourceKind
-}
+import { googleSearch, type SearchResult, type SourceKind } from './googleSearch'
 
 interface ResearchInsight {
   painPoints: string[]
@@ -36,10 +27,7 @@ interface ResearchBatch {
   insights: ResearchInsight
 }
 
-const GOOGLE_SEARCH_API = 'https://www.googleapis.com/customsearch/v1'
 const GEMINI_API = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent'
-const GOOGLE_API_KEY = process.env.GOOGLE_SEARCH_API_KEY ?? ''
-const GOOGLE_CX = process.env.GOOGLE_SEARCH_ENGINE_ID ?? ''
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY ?? ''
 
 const RESEARCH_QUERIES = [
@@ -53,56 +41,8 @@ const RESEARCH_QUERIES = [
   'site:quora.com SAT math students struggle with algebra',
 ]
 
-const SOURCE_KIND_BY_QUERY: { pattern: RegExp; kind: SourceKind }[] = [
-  { pattern: /site:reddit\.com/i, kind: 'reddit' },
-  { pattern: /site:quora\.com/i, kind: 'quora' },
-  { pattern: /forum|discussion|students/i, kind: 'forum' },
-]
-
-function sourceKindFor(query: string, url: string): SourceKind {
-  if (/reddit\.com/i.test(url)) return 'reddit'
-  if (/quora\.com/i.test(url)) return 'quora'
-  return SOURCE_KIND_BY_QUERY.find(rule => rule.pattern.test(query))?.kind ?? 'google'
-}
-
 function stableId(value: string): string {
   return createHash('sha256').update(value).digest('hex').slice(0, 24)
-}
-
-function safePreview(snippet: string): string {
-  return snippet.replace(/\s+/g, ' ').trim().slice(0, 260)
-}
-
-async function googleSearch(query: string): Promise<SearchResult[]> {
-  if (!GOOGLE_API_KEY || !GOOGLE_CX) {
-    throw new Error('GOOGLE_SEARCH_API_KEY and GOOGLE_SEARCH_ENGINE_ID must be configured.')
-  }
-
-  const url = new URL(GOOGLE_SEARCH_API)
-  url.searchParams.set('key', GOOGLE_API_KEY)
-  url.searchParams.set('cx', GOOGLE_CX)
-  url.searchParams.set('q', query)
-  url.searchParams.set('num', '5')
-  url.searchParams.set('safe', 'active')
-
-  const response = await fetch(url)
-  if (!response.ok) {
-    throw new Error(`Google Search failed: ${response.status}`)
-  }
-
-  const data = await response.json() as {
-    items?: { title?: string; link?: string; displayLink?: string; snippet?: string }[]
-  }
-
-  return (data.items ?? [])
-    .filter(item => item.link && item.title)
-    .map(item => ({
-      title: item.title ?? '',
-      url: item.link ?? '',
-      displayLink: item.displayLink ?? new URL(item.link ?? 'https://example.com').hostname,
-      snippet: safePreview(item.snippet ?? ''),
-      kind: sourceKindFor(query, item.link ?? ''),
-    }))
 }
 
 async function summarizeSignals(query: string, sources: SearchResult[]): Promise<ResearchInsight> {
