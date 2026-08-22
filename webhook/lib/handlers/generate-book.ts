@@ -192,12 +192,17 @@ async function handlePoll(rawJobId: string, res: VercelResponse) {
       }
       // PR1: the engine now ships training-capture data ALONGSIDE the book
       // inside result (generated_sims/failed_sims/prompt_template_version).
-      // Strip those keys off before persisting or responding, so the
+      // 2026-08-22: generated_discussions/failed_discussions joined the
+      // same ride-along shape when discussion generation was wired in
+      // (mindcraft-content-engine's serve.py `_maybe_generate_discussion`)
+      // — same discipline, strip before persisting or responding so the
       // assembled_books doc and the client-visible book stay byte-identical
       // to pre-PR1 — students must see zero change from this capture.
       const {
         generated_sims: _generatedSims,
         failed_sims: _failedSims,
+        generated_discussions: _generatedDiscussions,
+        failed_discussions: _failedDiscussions,
         prompt_template_version: _promptTemplateVersion,
         ...book
       } = raw.result
