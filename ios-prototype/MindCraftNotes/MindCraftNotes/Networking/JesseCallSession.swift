@@ -753,7 +753,16 @@ final class JesseCallSession: NSObject, ObservableObject {
         // fresh topic request, fixes this without weakening the original
         // "materials or go ahead" flow for genuine replies to it.
         if context == "workDashboard", let pending = pendingLearnTopic {
-            if let freshTopic = Self.extractLearnTopic(from: message) {
+            // Real live bug, 2026-08-21: the bare "try " lead-in (below,
+            // shared with fresh-topic requests like "try circuits") matches
+            // ANYWHERE in a sentence, not just as a prefix - "I uploaded.
+            // Try again." contains "try " mid-sentence, so extractLearnTopic
+            // returned the garbage "topic" "again." instead of falling
+            // through to treat this as a reply to the pending topic. Junk
+            // extractions (too short, or a known non-topic continuation
+            // word) are treated the same as "no fresh topic found."
+            let freshTopic = Self.extractLearnTopic(from: message).flatMap { Self.isPlausibleTopic($0) ? $0 : nil }
+            if let freshTopic {
                 await askJesseWorkDashboardClarify(topic: freshTopic, grade: Self.extractGrade(from: message))
             } else {
                 await askJesseWorkDashboardResume(topic: pending, reply: message)
@@ -1169,6 +1178,19 @@ final class JesseCallSession: NSObject, ObservableObject {
         return nil
     }
 
+    /// Guards `extractLearnTopic`'s output where a bare, substring-anywhere
+    /// lead-in (`"try "`) can extract a junk continuation word instead of a
+    /// real topic - e.g. "I uploaded. Try again." matches "try " mid-
+    /// sentence and would otherwise extract "again." 2026-08-21 real bug.
+    private static let _junkTopicContinuations: Set<String> = [
+        "again", "it", "that", "this", "now", "please", "again please",
+    ]
+
+    private static func isPlausibleTopic(_ topic: String) -> Bool {
+        let cleaned = topic.lowercased().trimmingCharacters(in: .punctuationCharacters)
+        return cleaned.count >= 3 && !_junkTopicContinuations.contains(cleaned)
+    }
+
     /// Last-resort companion to `extractLearnTopic` above - see its call
     /// site's doc comment for why this exists. Deliberately conservative:
     /// only a short phrase (<=6 words) that doesn't open with a word this
@@ -1229,7 +1251,6 @@ final class JesseCallSession: NSObject, ObservableObject {
     /// proceeds rather than leaving the conversation stuck waiting
     /// forever on an ambiguous answer.
     private func askJesseWorkDashboardResume(topic: String, reply: String) async {
-        pendingLearnTopic = nil
         let grade = pendingLearnGrade
         pendingLearnGrade = nil
         let lowered = reply.lowercased()
@@ -1242,6 +1263,19 @@ final class JesseCallSession: NSObject, ObservableObject {
             pendingLearnGrade = grade
             return
         }
+        // Real live bug, 2026-08-21: this used to clear pendingLearnTopic
+        // unconditionally BEFORE even knowing whether generation would
+        // succeed. On a real failure (noGoodResult/rateLimited/thin-path
+        // failure), the topic was gone - a plain "try again" with no topic
+        // restated had nothing to reattach to, so it either got misread as
+        // a brand-new topic by the bare-topic fallback (re-triggering
+        // "materials or go ahead?" forever) or fell through to the generic
+        // archive chat (a real, unrelated book - "I opened Calculus at...").
+        // Kept set through the attempt instead; askJesseWorkDashboard's own
+        // real success branches clear it, every failure branch leaves it
+        // alone on purpose so the NEXT reply-shaped utterance re-enters
+        // right here, with the SAME upload-aware logic above.
+        pendingLearnTopic = topic
         await askJesseWorkDashboard(topic: topic, materialsContext: context, grade: grade)
     }
 
@@ -1294,6 +1328,7 @@ final class JesseCallSession: NSObject, ObservableObject {
         if let book = await Self.matchChapterLibraryBook(topic: topic) {
             print("[JesseDebug] Tier-0 MATCHED book.title=\"\(book.title)\" book.subjectId=\(book.subjectId) for topic=\"\(topic)\"")
             guard isActive else { return }
+            pendingLearnTopic = nil
             openedChapterBook = book
             openedChapterBookGenerationInfo = nil
             syncWorkDashboardLesson(from: book, source: .archive(bookTitle: book.title))
@@ -1318,6 +1353,7 @@ final class JesseCallSession: NSObject, ObservableObject {
         }) {
             let chapters = Array(match.concepts.prefix(6).map(\.label))
             guard isActive else { return }
+            pendingLearnTopic = nil
             workDashboardLesson = WorkDashboardLesson(
                 topic: topic,
                 source: .archive(bookTitle: match.title),
@@ -1335,6 +1371,7 @@ final class JesseCallSession: NSObject, ObservableObject {
         if let answer = await ArchiveRagClient.askDetailed(message: "Give me a short table of contents for \(topic)", studentWeakness: studentWeakness),
            !answer.hits.isEmpty {
             guard isActive else { return }
+            pendingLearnTopic = nil
             var seenTitles = Set<String>()
             let chapters = answer.hits.compactMap { hit -> String? in
                 guard seenTitles.insert(hit.pageTitle).inserted else { return nil }
@@ -1399,6 +1436,7 @@ final class JesseCallSession: NSObject, ObservableObject {
         guard isActive else { return }
         switch bookVerdict {
         case .verified(let book, let cached, let costUsd, let elapsedSeconds):
+            pendingLearnTopic = nil
             openedChapterBook = book
             // nil for a cache hit - nothing was actually generated for THIS
             // student just now, so a "generated in 3m42s, $3.60" badge would
@@ -1452,6 +1490,7 @@ final class JesseCallSession: NSObject, ObservableObject {
         guard isActive else { return }
         switch result {
         case .success(let outline):
+            pendingLearnTopic = nil
             workDashboardLesson = WorkDashboardLesson(
                 topic: topic,
                 source: .generated,
@@ -1508,6 +1547,7 @@ final class JesseCallSession: NSObject, ObservableObject {
         guard isActive else { return }
         switch result {
         case .success(let outline):
+            pendingLearnTopic = nil
             workDashboardLesson = WorkDashboardLesson(
                 topic: topic,
                 source: .generated,
