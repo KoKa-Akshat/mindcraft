@@ -288,6 +288,26 @@ struct DeskGridDashboardView: View {
     @State private var archiveSimsLoaded = false
     @State private var presentedArchiveSim: ArchiveSimEntry?
     @State private var showArchiveGenerateSim = false
+    /// Jesse's rail, dock-only now (2026-08-22, Binder-to-88%-at-landing
+    /// pass + explicit ask: no idle Jesse presence on landing, appears on
+    /// tap). Real fix to a mistake made earlier the same pass: the dock
+    /// chip that replaced the old always-visible Intel tile was first
+    /// wired to `onOpenIntel` (a separate, unrelated overlay) - the tile
+    /// being removed was actually Jesse's own chat/call rail
+    /// (`JesseRailView`, `tileBody`'s `.intel` branch), not Gmail/Calendar.
+    @State private var showJesseRail = false
+    /// Topic-tile grid on Binder's landing "page" (2026-08-22, reference
+    /// images: real books with real progress bars, Chapter Library only -
+    /// confirmed over mixing in Simulations/Dan's Archive, since those
+    /// don't carry a comparable progress number). Loaded once per session,
+    /// same one-shot convention `archiveBooks` already uses.
+    @State private var libraryBooks: [AssembledBookSummary] = []
+    @State private var libraryBooksLoaded = false
+    /// "+ New" create-a-book flow (2026-08-22, reference images' top-right
+    /// "New" tab). `CreateBookView` is a real, standalone view with no
+    /// `JesseCallSession` reference at all - see its own doc comment for
+    /// why (the explicit "it does not speak" ask).
+    @State private var showCreateBook = false
 
     /// True whenever Binder should be showing ANY of the merged-space
     /// content modes above rather than its own normal titles/blurb - the
@@ -711,6 +731,19 @@ struct DeskGridDashboardView: View {
         .sheet(isPresented: $showBookLibrary) {
             BookLibraryView(onFileChapterBook: onFileChapterBook)
         }
+        .sheet(isPresented: $showJesseRail) {
+            JesseRailView(studentName: studentName, context: "workDashboard", headerTrailing: AnyView(jesseBoxIconRow))
+                .presentationDetents([.medium])
+        }
+        .fullScreenCover(isPresented: $showCreateBook) {
+            CreateBookView(
+                onClose: { showCreateBook = false },
+                onFiled: { subjectId, title in
+                    onFileChapterBook(title, subjectId)
+                    Task { libraryBooks = (try? await BookLibraryClient.listBooks()) ?? libraryBooks }
+                }
+            )
+        }
         .fullScreenCover(isPresented: $showSessionReports) {
             SessionReportsView(onClose: { showSessionReports = false })
         }
@@ -753,12 +786,17 @@ struct DeskGridDashboardView: View {
         ZStack(alignment: .topLeading) {
             Color.clear
                 .frame(width: board.width, height: board.height)
-            // Intel/Homework Help/Knowledge Graph are all skipped entirely
-            // in content-viewer mode (see boxRect/searchField) - Binder
-            // expands into the FULL board (2026-08-21 widening, see
-            // `contentViewerBinder`'s own doc comment). Intel's own
-            // exclusion predates this; Homework Help/Moodle's is new here.
-            if !binderContentViewerActive {
+            // Intel/Homework Help/Knowledge Graph are folded away entirely
+            // on a plain landing (2026-08-22, explicit ask + reference
+            // images: Binder alone fills ~88% of the board the moment you
+            // land - "the display itself is horror" with four competing
+            // tiles). Knowledge Graph now blends into Binder itself (see
+            // its embedded preview below), Intel moved to a dock chip
+            // (`deskGridDock_Intel`), Homework Help keeps its existing dock
+            // chip as its only entry point. These three still render in
+            // the `expanded` (Memo/Flows rail open) mode below, unchanged -
+            // that's a separate interaction this pass doesn't touch.
+            if !binderContentViewerActive && expanded {
                 pin(boxRect(.intel), scale: scale) {
                     photoTile(.intel)
                 }
@@ -1582,6 +1620,50 @@ struct DeskGridDashboardView: View {
             )
     }
 
+    /// Leather-notebook chrome for Binder's landing page (2026-08-22,
+    /// reference images: dark green cover, cream pages, gold binder rings
+    /// down the seam). Deliberately separate from `tileInnerCard` above -
+    /// that helper is shared by every tile that still uses the plain white-
+    /// card look; only Binder's own landing state gets this treatment.
+    /// Reuses the app's existing dark green brand tone (the same
+    /// rgb(20,58,46) already used for Jesse's icon plate/call buttons
+    /// throughout this file) rather than introducing a new color.
+    @ViewBuilder
+    private func binderBookFrame<Content: View>(@ViewBuilder _ content: () -> Content) -> some View {
+        let cover = Color(red: 20 / 255, green: 58 / 255, blue: 46 / 255)
+        ZStack {
+            RoundedRectangle(cornerRadius: 24, style: .continuous)
+                .fill(cover)
+                .shadow(color: .black.opacity(0.22), radius: 16, y: 8)
+            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                .fill(Color(gridHex: "faf6ea"))
+                .padding(9)
+            content()
+                .padding(.horizontal, 24)
+                .padding(.vertical, 16)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    /// Gold binder-ring column - a real HStack sibling between the graph
+    /// preview and the topic grid in `binderLandingBody` (not an absolutely-
+    /// positioned overlay, which would drift out of alignment the moment
+    /// either column's width changes). Matches the reference's open-book
+    /// binding down the center seam.
+    private var binderRingSpine: some View {
+        let gold = Color(red: 0.72, green: 0.58, blue: 0.28)
+        return VStack(spacing: 22) {
+            ForEach(0..<7, id: \.self) { _ in
+                Circle()
+                    .fill(LinearGradient(colors: [gold.opacity(0.9), gold.opacity(0.6)], startPoint: .topLeading, endPoint: .bottomTrailing))
+                    .frame(width: 14, height: 14)
+                    .overlay(Circle().strokeBorder(Color.white.opacity(0.35), lineWidth: 1))
+                    .shadow(color: .black.opacity(0.25), radius: 2, y: 1)
+            }
+        }
+        .frame(maxHeight: .infinity)
+    }
+
     @ViewBuilder
     private func tileBody(_ kind: TileKind, phase: MascotPhase) -> some View {
         // Homework Help now sits in the same near-white card as Binder/
@@ -1638,6 +1720,13 @@ struct DeskGridDashboardView: View {
             tileInnerCard { homeworkHelpTileBody(ink: ink) }
         } else if kind == .moodle {
             tileInnerCard { knowledgeGraphTileBody() }
+        } else if kind == .binder {
+            // Binder's own landing "page" (2026-08-22, reference images) -
+            // takes over Binder's default body instead of the old plain
+            // memo/doc list or "Empty until Jesse files something here"
+            // blurb, which sit behind the content-viewer branches above
+            // and are now unreachable on a plain landing.
+            binderBookFrame { binderLandingBody(ink: ink) }
         } else if tileShowsContent(kind) {
             tileInnerCard {
                 VStack(alignment: .leading, spacing: 0) {
@@ -2052,6 +2141,114 @@ struct DeskGridDashboardView: View {
                 KnowledgeGraphCanvas(nodes: knowledgeGraphClient.nodes, edges: knowledgeGraphClient.edges)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .accessibilityIdentifier("deskGridKnowledgeGraphCanvas")
+            }
+        }
+    }
+
+    /// Binder's landing "page" (2026-08-22, reference images): a small
+    /// Knowledge Map preview on the left ("blended inside the binder
+    /// itself in that little space... click on it, it expands to occupy
+    /// the whole binder"), real topic tiles pulled from the Chapter
+    /// Library on the right. Tapping the graph preview reuses the exact
+    /// same action `handleTile(.moodle)` already performs - relocated,
+    /// not rebuilt.
+    @ViewBuilder
+    private func binderLandingBody(ink: Color) -> some View {
+        HStack(alignment: .top, spacing: 18) {
+            Button {
+                closeBinderContentViewer()
+                viewingKnowledgeGraphInBinder = true
+                Task { await knowledgeGraphClient.load() }
+            } label: {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Knowledge Map")
+                        .font(.mcContent(size: 17, weight: .semibold))
+                        .foregroundColor(ink)
+                    knowledgeGraphTileBody()
+                }
+                .padding(10)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                .background(RoundedRectangle(cornerRadius: 14, style: .continuous).fill(Color.white))
+            }
+            .buttonStyle(.plain)
+            .frame(width: 260)
+            .accessibilityIdentifier("deskGridBinderGraphPreview")
+
+            binderRingSpine
+
+            topicTileGrid(ink: ink)
+        }
+        .task {
+            // Plain .task, not .task(id:) - keying it to libraryBooksLoaded
+            // and then setting that same flag true INSIDE this task self-
+            // cancels the in-flight fetch the instant the id changes
+            // (confirmed live: the grid silently came back empty). Refresh
+            // after creating a new book is instead a direct, explicit
+            // re-fetch in `onFiled` below, not this task re-running.
+            guard !libraryBooksLoaded else { return }
+            libraryBooksLoaded = true
+            libraryBooks = (try? await BookLibraryClient.listBooks()) ?? []
+        }
+    }
+
+    /// Real Chapter Library books as tappable tiles, matching the
+    /// reference's 2x3 grid with a real progress bar per book
+    /// (`AssembledBookSummary.coverageLabel`'s underlying numbers). One
+    /// fixed "Open Archive" tile maps to the existing Archive dock action
+    /// rather than mixing in a second content source (confirmed: Chapter
+    /// Library only).
+    @ViewBuilder
+    private func topicTileGrid(ink: Color) -> some View {
+        ScrollView {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 150), spacing: 10)], spacing: 10) {
+                ForEach(libraryBooks) { book in
+                    Button {
+                        onOpenBinderChapterBook(book.subjectId, book.title)
+                    } label: {
+                        VStack(alignment: .leading, spacing: 6) {
+                            Image(systemName: "book.closed.fill")
+                                .font(.system(size: 16))
+                                .foregroundColor(ink.opacity(0.55))
+                            Text(book.title)
+                                .font(.system(size: 13, weight: .bold, design: .rounded))
+                                .foregroundColor(ink)
+                                .lineLimit(2)
+                                .multilineTextAlignment(.leading)
+                            Spacer(minLength: 0)
+                            ProgressView(value: Double(book.coveredConcepts), total: Double(max(book.totalConcepts, 1)))
+                                .tint(Color(red: 196 / 255, green: 245 / 255, blue: 71 / 255))
+                            Text(book.coverageLabel)
+                                .font(.system(size: 10, weight: .medium, design: .rounded))
+                                .foregroundColor(ink.opacity(0.55))
+                        }
+                        .padding(10)
+                        .frame(height: 110, alignment: .topLeading)
+                        .frame(maxWidth: .infinity)
+                        .background(RoundedRectangle(cornerRadius: 12, style: .continuous).fill(Color.white))
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityIdentifier("deskGridTopicTile_\(book.subjectId)")
+                }
+                Button {
+                    closeBinderContentViewer()
+                    viewingArchiveBrowser = true
+                } label: {
+                    VStack(alignment: .leading, spacing: 6) {
+                        Image(systemName: "archivebox.fill")
+                            .font(.system(size: 16))
+                            .foregroundColor(ink.opacity(0.55))
+                        Text("Open Archive")
+                            .font(.system(size: 13, weight: .bold, design: .rounded))
+                            .foregroundColor(ink)
+                        Spacer(minLength: 0)
+                    }
+                    .padding(10)
+                    .frame(height: 110, alignment: .topLeading)
+                    .frame(maxWidth: .infinity)
+                    .background(RoundedRectangle(cornerRadius: 12, style: .continuous).fill(Color.white))
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("deskGridTopicTile_openArchive")
             }
         }
     }
@@ -2740,7 +2937,7 @@ struct DeskGridDashboardView: View {
         switch kind {
         case .intel: base = expanded ? WorkArtboard.p5Intel : WorkArtboard.p4Intel
         case .moodle: base = expanded ? WorkArtboard.p5Moodle : WorkArtboard.p4Moodle
-        case .binder: base = expanded ? WorkArtboard.p5Binder : WorkArtboard.p4Binder
+        case .binder: base = expanded ? WorkArtboard.p5Binder : WorkArtboard.landingBinder
         case .homeworkHelp: base = expanded ? WorkArtboard.p5HomeworkHelp : WorkArtboard.p4HomeworkHelp
         case .memo: return WorkArtboard.memoRail
         }
@@ -2999,6 +3196,13 @@ struct DeskGridDashboardView: View {
                 closeBinderContentViewer()
                 viewingArchiveBrowser = true
             }
+            // Jesse's rail moved here from the old "Intel" landing tile
+            // (2026-08-22, Binder-to-88%-at-landing pass) - that tile was
+            // actually JesseRailView (chat/call card), not Gmail/Calendar;
+            // renamed the chip to match what it really opens. Dock-only,
+            // appears on tap, matching the explicit ask: Jesse stays quiet
+            // and out of the way on landing instead of always on screen.
+            dockChip("Jesse", system: "sparkles", identifier: "deskGridDock_Jesse") { showJesseRail = true }
             // "+Book" replaced with "Design" (2026-08-18, explicit ask:
             // "next to Archive, should be Design on the search bar... move
             // it from the toolbar to the search bar. Remove Book"). The
@@ -3028,6 +3232,10 @@ struct DeskGridDashboardView: View {
             // tileBoard's scale on the plain dashboard.
             dockChip("Resume", system: "person.text.rectangle", identifier: "deskGridDock_Resume") { openSidebarFlow(.resume) }
             dockChip("Settings", system: "gearshape.fill", identifier: "deskGridDock_Settings", action: onOpenManage)
+            // "+ New" (2026-08-22, reference images' top-right New tab) -
+            // additive, alongside the existing dock rather than replacing
+            // it (confirmed) - opens the real Create-a-book flow.
+            dockChip("New", system: "plus.circle.fill", identifier: "deskGridDock_New") { showCreateBook = true }
             searchField(placeholder: "Search", identifier: "deskGridDashboardSearch", onSubmit: submitSearch)
         }
         .padding(.horizontal, 16)
@@ -3343,6 +3551,14 @@ private enum WorkArtboard {
     /// Homework Help/Moodle hidden the same way Intel's tile already was
     /// while this is active, see `tileBoard`).
     static let contentViewerBinder = CGRect(x: 130, y: 40, width: 1181, height: 768)
+    /// Landing state (2026-08-22, explicit ask + reference images):
+    /// Binder alone at ~88% of the 1440pt board the moment you land on the
+    /// dashboard, not one of four competing tiles. Width 1267 (1440 * 0.88),
+    /// horizontally centered (x=87), same height/bottom-edge convention as
+    /// `contentViewerBinder` above (y:40, height:768, bottom edge at 808 -
+    /// 2pt shy of the board's true 810 edge, matching the established
+    /// "eighth pass" spacing this file already settled on).
+    static let landingBinder = CGRect(x: 87, y: 40, width: 1267, height: 768)
 }
 
 /// Gentle, always-on pulse for the Knowledge Graph tile's empty-state seed

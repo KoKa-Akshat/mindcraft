@@ -106,6 +106,7 @@
 		B0BED2EADB29CE9B5BD2B91E /* BookGenerationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A8CAFEF98DAA076ECF6DB6 /* BookGenerationClient.swift */; };
 		B0C259017B6359197378F0FD /* LearnStudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1858B772F353A476A8023F /* LearnStudioView.swift */; };
 		B1E290A74840F0C7F051444F /* BookLibraryClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E5B069E034C555E1E6D013 /* BookLibraryClient.swift */; };
+		27D52955B93FE8EBF48AE218 /* CreateBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132484A12A692612CD7EA8C2 /* CreateBookView.swift */; };
 		80C0B86F5BBA0C7F3E50E016 /* ArchiveSimsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2A97481B4E52F644921AE9 /* ArchiveSimsLoader.swift */; };
 		B2C50496636E2ED7186E0232 /* DiagnosticGateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9818B2D6693B4381129CB08 /* DiagnosticGateView.swift */; };
 		B2C588BED4E177EC84C2B5D1 /* QuestionBankLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DAA6B2A396F72A1E1B6C97 /* QuestionBankLoader.swift */; };
@@ -335,6 +336,7 @@
 		C8DESKCALLOAD01A2B3 /* DeskCalendarLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskCalendarLoader.swift; sourceTree = "<group>"; };
 		C9818B2D6693B4381129CB08 /* DiagnosticGateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticGateView.swift; sourceTree = "<group>"; };
 		C9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveWorkflowView.swift; sourceTree = "<group>"; };
+		132484A12A692612CD7EA8C2 /* CreateBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateBookView.swift; sourceTree = "<group>"; };
 		C9BOOKWORKF01A2B3C4 /* BookWorkflowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookWorkflowView.swift; sourceTree = "<group>"; };
 		C9BOOTMOTIV01A2B3C4 /* BootMotivationClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BootMotivationClient.swift; sourceTree = "<group>"; };
 		C9CONTGRAPH01A2B3C4 /* ContentGraphStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentGraphStore.swift; sourceTree = "<group>"; };
@@ -572,6 +574,7 @@
 				B89B08C8A6E7F8091B2C3D4E /* SpeechCaptureController.swift */,
 				C9SCHEDWORKF01A2B3C4 /* SchedulingWorkflowsView.swift */,
 				C9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift */,
+				132484A12A692612CD7EA8C2 /* CreateBookView.swift */,
 				C9JESSEOVERLAY01A2 /* JesseCallOverlay.swift */,
 				C9BOOKWORKF01A2B3C4 /* BookWorkflowView.swift */,
 				C9FRIENDSVIEW01A2B3 /* FriendsView.swift */,
@@ -896,6 +899,7 @@
 				DAE6F420718293B4C5D6E7F8 /* FieldDeskView.swift in Sources */,
 				D9SCHEDWORKF01A2B3C4 /* SchedulingWorkflowsView.swift in Sources */,
 				D9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift in Sources */,
+				27D52955B93FE8EBF48AE218 /* CreateBookView.swift in Sources */,
 				D9BOOKWORKF01A2B3C4 /* BookWorkflowView.swift in Sources */,
 				D9FRIENDSTORE01A2B3 /* FriendsStore.swift in Sources */,
 				D9QCALINVITE01A2B3C4 /* QCalInvite.swift in Sources */,
