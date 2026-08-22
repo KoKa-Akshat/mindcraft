@@ -254,7 +254,7 @@ struct StudySessionView: View {
     private var contentsOverview: some View {
         VStack(alignment: .leading, spacing: 18) {
             Text(lesson.definition)
-                .font(.system(size: 15, weight: .medium, design: .rounded))
+                .font(.mcContent(size: 15, weight: .medium))
                 .foregroundColor(.white.opacity(0.85))
                 .fixedSize(horizontal: false, vertical: true)
 
@@ -330,7 +330,7 @@ struct StudySessionView: View {
         VStack(alignment: .leading, spacing: 14) {
             backToContentsButton
             Text(lesson.chapterBody(at: index))
-                .font(.system(size: 16, weight: .medium, design: .rounded))
+                .font(.mcContent(size: 16, weight: .medium))
                 .foregroundColor(.white.opacity(0.9))
                 .fixedSize(horizontal: false, vertical: true)
                 .accessibilityIdentifier("studySessionChapterBody_\(index)")

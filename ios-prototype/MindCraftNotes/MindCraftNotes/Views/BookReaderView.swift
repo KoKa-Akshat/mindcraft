@@ -130,7 +130,7 @@ struct BookReaderView: View {
             // is the direct fix for "too many words, no structure."
             if !section.summary.isEmpty {
                 Text(section.summary)
-                    .font(.system(size: 16, design: .rounded))
+                    .font(.mcContent(size: 16, weight: .medium))
                     .foregroundColor(ink.opacity(0.85))
                     .lineSpacing(3)
             }
@@ -163,7 +163,7 @@ struct BookReaderView: View {
             // pages that need it; sim pages are completely unchanged.
             if section.simHtml == nil, !section.body.isEmpty {
                 Text(section.body)
-                    .font(.system(size: 15, design: .rounded))
+                    .font(.mcContent(size: 15))
                     .foregroundColor(ink.opacity(0.9))
                     .lineSpacing(5)
             }

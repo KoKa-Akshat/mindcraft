@@ -22,7 +22,29 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>MindCraft uses your location to help you find tutors near you.</string>
 	<key>UIAppFonts</key>
-	<array/>
+	<array>
+		<string>Newsreader-Regular.ttf</string>
+		<string>Newsreader-Medium.ttf</string>
+		<string>Newsreader-SemiBold.ttf</string>
+		<string>Newsreader-Bold.ttf</string>
+		<string>Newsreader-Italic.ttf</string>
+		<string>Newsreader-MediumItalic.ttf</string>
+		<string>Newsreader-SemiBoldItalic.ttf</string>
+		<string>Newsreader-BoldItalic.ttf</string>
+		<string>SourceSerif4-Regular.ttf</string>
+		<string>SourceSerif4-Medium.ttf</string>
+		<string>SourceSerif4-SemiBold.ttf</string>
+		<string>SourceSerif4-Bold.ttf</string>
+		<string>SourceSerif4-Italic.ttf</string>
+		<string>InstrumentSans-Regular.ttf</string>
+		<string>InstrumentSans-Medium.ttf</string>
+		<string>InstrumentSans-SemiBold.ttf</string>
+		<string>InstrumentSans-Bold.ttf</string>
+		<string>Inter-Regular.ttf</string>
+		<string>Inter-Medium.ttf</string>
+		<string>Inter-SemiBold.ttf</string>
+		<string>Inter-Bold.ttf</string>
+	</array>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>googlegmail</string>

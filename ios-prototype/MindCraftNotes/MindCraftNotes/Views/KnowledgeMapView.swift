@@ -8,9 +8,10 @@ import SwiftUI
 /// positions (`x`/`y`. NOT a synthetic layout), real ontology edges with
 /// Beta-Binomial weights, real student mastery/strength embedding points,
 /// real PCA axis labels. Ports: the `statusKind`/`KIND_COLOR`/`KIND_LABEL`
-/// 4-state palette (distinct from the Home tab's `STATUS_COLOR` - this
-/// screen intentionally uses the Map's own real colors, e.g. `#00875a`
-/// stable-green), the `isMajorEdge` filter (prerequisite edges >0.25 weight,
+/// 4-state palette (distinct from the Home tab's `STATUS_COLOR`; the actual
+/// hex values were repainted 2026-08-21 onto this app's own light lavender
+/// palette - see `MapColor`'s doc comment near the bottom of this file for
+/// why), the `isMajorEdge` filter (prerequisite edges >0.25 weight,
 /// any edge >0.45 - trims the "hairball" of prior-only edges), the icon +
 /// status-ring + mastery-arc node treatment, the student position diamonds,
 /// the legend + coverage bar, status/level filter chips, and the tap →
@@ -74,10 +75,10 @@ struct KnowledgeMapView: View {
 
     private func kindColor(_ kind: MapStatusKind) -> Color {
         switch kind {
-        case .stable: return Color(mapHex: "00875a")
-        case .progress: return Color(mapHex: "4361ee")
-        case .needs: return Color(mapHex: "d63e3e")
-        case .unknown: return Color(mapHex: "9aabb6")
+        case .stable: return MapColor.mastered
+        case .progress: return MapColor.learning
+        case .needs: return MapColor.gap
+        case .unknown: return MapColor.lavenderSoft
         }
     }
 
@@ -110,6 +111,36 @@ struct KnowledgeMapView: View {
     /// version explicitly filters out.
     private func isMajorEdge(_ edge: KnowledgeGraphEdge) -> Bool {
         edge.relation == "prerequisite" ? edge.weight > 0.25 : edge.weight > 0.45
+    }
+
+    // MARK: "Beautiful connections" (real Bezier curves, not straight lines)
+
+    /// Deterministic per-edge curve direction - hashed from the edge's own
+    /// endpoints so a given connection always bows the same way across
+    /// redraws/pan/zoom, rather than picking a random direction each frame
+    /// (which would read as flickering, not "alive").
+    private func edgeCurveSign(_ edge: KnowledgeGraphEdge) -> CGFloat {
+        var hasher = Hasher()
+        hasher.combine(edge.from)
+        hasher.combine(edge.to)
+        return hasher.finalize() % 2 == 0 ? 1 : -1
+    }
+
+    /// A quadratic Bezier through a real midpoint offset - the concrete
+    /// "smooth, considered edge curves" ask, versus a ruler-straight line.
+    /// Bulge scales with (and is capped relative to) the segment's own
+    /// length so short and long connections both read as gentle arcs rather
+    /// than long ones flattening out or short ones over-bowing.
+    private func curvedEdgePath(from a: CGPoint, to b: CGPoint, sign: CGFloat) -> Path {
+        let dx = b.x - a.x, dy = b.y - a.y
+        let length = max((dx * dx + dy * dy).squareRoot(), 0.001)
+        let bulge = min(length * 0.14, 26) * sign
+        let mid = CGPoint(x: (a.x + b.x) / 2, y: (a.y + b.y) / 2)
+        let control = CGPoint(x: mid.x + (-dy / length) * bulge, y: mid.y + (dx / length) * bulge)
+        var path = Path()
+        path.move(to: a)
+        path.addQuadCurve(to: b, control: control)
+        return path
     }
 
     // MARK: Zone of proximal development (real, not cosmetic)
@@ -241,6 +272,11 @@ struct KnowledgeMapView: View {
                             RoundedRectangle(cornerRadius: 20, style: .continuous)
                                 .strokeBorder(MapColor.ink.opacity(0.08), lineWidth: 1)
                         )
+                        // Real, considered card styling (the light-lavender
+                        // ask) instead of the old glassmorphism treatment -
+                        // same soft-shadow-on-paper language as
+                        // `DeskGridDashboardView.tileInnerCard`.
+                        .shadow(color: .black.opacity(0.06), radius: 12, y: 6)
                     zoomControls.padding(10)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -289,31 +325,46 @@ struct KnowledgeMapView: View {
 
             ZStack {
                 Canvas { context, _ in
+                    // "Beautiful connections": a lavender-family curved
+                    // Bezier per edge (not the old ink-gray straight line),
+                    // weight-modulated opacity/width so real Beta-Binomial
+                    // edge strength stays legible, and a soft glow pass
+                    // under any edge touching the selected node.
                     for edge in edges where isMajorEdge(edge) {
                         guard
                             let a = bundle.positions[edge.from],
                             let b = bundle.positions[edge.to]
                         else { continue }
-                        var path = Path()
-                        path.move(to: transformed(screenPoint(a)))
-                        path.addLine(to: transformed(screenPoint(b)))
+                        let pa = transformed(screenPoint(a))
+                        let pb = transformed(screenPoint(b))
+                        let path = curvedEdgePath(from: pa, to: pb, sign: edgeCurveSign(edge))
                         let lit = selectedId != nil && (edge.from == selectedId || edge.to == selectedId)
+                        let weight = CGFloat(min(max(edge.weight, 0), 1))
+                        if lit {
+                            context.drawLayer { glow in
+                                glow.addFilter(.blur(radius: 3))
+                                glow.stroke(path, with: .color(MapColor.violetDeep.opacity(0.35)), lineWidth: 4)
+                            }
+                        }
                         context.stroke(
                             path,
-                            with: .color(lit ? MapColor.ink.opacity(0.45) : MapColor.ink.opacity(0.1)),
-                            lineWidth: lit ? 1.6 : 1
+                            with: .color(MapColor.violetDeep.opacity(lit ? 0.6 : 0.14 + weight * 0.2)),
+                            lineWidth: (lit ? 1.8 : 1) + weight * 1.6
                         )
                     }
 
                     // Student mastery/strength embedding points - real PCA
                     // projections of "where you've been studying" vs "where
                     // you perform best" (ml/serve.py student_points), a
-                    // dashed line between them shows the displacement.
+                    // gently bowed connector between them shows the
+                    // displacement - curved like every other connection on
+                    // this map now, and lavender-family instead of the old
+                    // stray hardcoded `Color.purple`.
                     if let m = bundle.studentMastery, let st = bundle.studentStrength {
-                        var line = Path()
-                        line.move(to: transformed(screenPoint(m)))
-                        line.addLine(to: transformed(screenPoint(st)))
-                        context.stroke(line, with: .color(.purple.opacity(0.5)), style: StrokeStyle(lineWidth: 1.5, dash: [4, 3]))
+                        let pm = transformed(screenPoint(m))
+                        let pst = transformed(screenPoint(st))
+                        let line = curvedEdgePath(from: pm, to: pst, sign: 1)
+                        context.stroke(line, with: .color(MapColor.violetDeep.opacity(0.55)), style: StrokeStyle(lineWidth: 1.5, dash: [4, 3]))
                     }
 
                     // "See path" reveal trail - the real answer to "which
@@ -331,8 +382,9 @@ struct KnowledgeMapView: View {
                                 let a = bundle.positions[steps[i].conceptId],
                                 let b = bundle.positions[steps[i + 1].conceptId]
                             else { continue }
-                            trail.move(to: transformed(screenPoint(a)))
-                            trail.addLine(to: transformed(screenPoint(b)))
+                            let pa = transformed(screenPoint(a))
+                            let pb = transformed(screenPoint(b))
+                            trail.addPath(curvedEdgePath(from: pa, to: pb, sign: 1))
                             any = true
                         }
                         if any {
@@ -346,11 +398,11 @@ struct KnowledgeMapView: View {
                 }
 
                 if let m = layout.studentMastery {
-                    diamondMarker(filled: true, color: Color(mapHex: "4361ee"), label: studentPoints?.mastery.label ?? "")
+                    diamondMarker(filled: true, color: MapColor.ink, label: studentPoints?.mastery.label ?? "")
                         .position(transformed(screenPoint(m)))
                 }
                 if let st = layout.studentStrength {
-                    diamondMarker(filled: false, color: .purple, label: studentPoints?.strength.label ?? "")
+                    diamondMarker(filled: false, color: MapColor.lavender, label: studentPoints?.strength.label ?? "")
                         .position(transformed(screenPoint(st)))
                 }
 
@@ -404,7 +456,13 @@ struct KnowledgeMapView: View {
         let accent: Color = kind == .unknown
             ? (zone == .ready ? MapColor.zpdReady : MapColor.zpdLocked)
             : kindColor(kind)
-        let radius: CGFloat = isSelected ? (hasData ? 15 : 12.5) : (hasData ? 11 : 9.5)
+        let baseRadius: CGFloat = isSelected ? (hasData ? 15 : 12.5) : (hasData ? 11 : 9.5)
+        // "Node size should encode something real" - real engagement
+        // (eventCount), continuously, layered on top of the existing
+        // hasData/isSelected step so more-practiced nodes read as very
+        // slightly larger/closer, not just an on/off switch.
+        let engagement = min(1, Double(node.eventCount ?? 0) / 8)
+        let radius: CGFloat = baseRadius + CGFloat(engagement) * 2.2
         let mastery = min(1, max(0, node.mastery ?? 0))
         let dimmed = !visibleNodeIds.contains(node.id)
         let showLabel = isSelected || (node.eventCount ?? 0) > 3
@@ -469,6 +527,26 @@ struct KnowledgeMapView: View {
                     .frame(width: radius * 2, height: radius * 2)
                     .clipShape(Circle())
 
+                    // "3D if possible": SwiftUI has no lightweight scene
+                    // graph suited to an interactive 2D node map, so
+                    // RealityKit/SceneKit would be real overkill here. The
+                    // achievable, real move is a depth CUE instead of
+                    // literal geometry - a soft highlight suggesting a lit
+                    // sphere sitting on the canvas rather than a flat
+                    // painted circle. Plain normal-blend white-to-clear
+                    // radial gradient, clipped to the same circle - no blend
+                    // mode, so it can't bleed into the canvas layers below.
+                    Circle()
+                        .fill(
+                            RadialGradient(
+                                colors: [Color.white.opacity(0.5), Color.white.opacity(0)],
+                                center: UnitPoint(x: 0.32, y: 0.26), startRadius: 0, endRadius: radius * 1.3
+                            )
+                        )
+                        .frame(width: radius * 2, height: radius * 2)
+                        .clipShape(Circle())
+                        .allowsHitTesting(false)
+
                     // Status ring - the icon art is the same parchment badge
                     // regardless of progress, so this ring is what actually
                     // carries the got-it/working-on-it/needs-love signal.
@@ -495,6 +573,16 @@ struct KnowledgeMapView: View {
                 // rendered content, not its frame).
                 .frame(minWidth: 44, minHeight: 44)
                 .contentShape(Circle())
+                // More depth: shadow scales with the same real engagement
+                // signal driving radius above, so more-practiced (bigger)
+                // nodes read as genuinely closer to the viewer. The
+                // `.rotation3DEffect` tilt-on-selection is the one place a
+                // literal (if very cheap, SwiftUI-native) 3D technique earns
+                // its place here - a coin-like lift toward the viewer, not a
+                // gimmick, and it costs nothing like a real 3D scene would.
+                .shadow(color: MapColor.ink.opacity(0.16 + engagement * 0.14), radius: 3 + CGFloat(engagement) * 3, x: 0, y: 2 + CGFloat(engagement) * 2)
+                .rotation3DEffect(.degrees(isSelected ? 12 : 0), axis: (x: 1, y: 0.35, z: 0), perspective: 0.4)
+                .animation(.spring(response: 0.35, dampingFraction: 0.72), value: isSelected)
             }
             .buttonStyle(.plain)
             .opacity(baseOpacity)
@@ -526,6 +614,7 @@ struct KnowledgeMapView: View {
                 .fill(filled ? color : Color.clear)
                 .overlay(DiamondShape().stroke(color, lineWidth: filled ? 1.2 : 2))
                 .frame(width: 18, height: 18)
+                .shadow(color: color.opacity(0.35), radius: 3, y: 2)
         )
     }
 
@@ -544,8 +633,9 @@ struct KnowledgeMapView: View {
         .foregroundColor(MapColor.ink)
         .buttonStyle(.plain)
         .padding(8)
-        .background(.white.opacity(0.85))
+        .background(MapColor.cardPaper.opacity(0.92))
         .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+        .shadow(color: .black.opacity(0.08), radius: 6, y: 3)
     }
 
     // MARK: Filter chips (ported filterRow)
@@ -622,7 +712,7 @@ struct KnowledgeMapView: View {
                     GeometryReader { g in
                         ZStack(alignment: .leading) {
                             Capsule().fill(MapColor.ink.opacity(0.08))
-                            Capsule().fill(Color(mapHex: "00875a")).frame(width: g.size.width * CGFloat(coveragePct) / 100)
+                            Capsule().fill(MapColor.mastered).frame(width: g.size.width * CGFloat(coveragePct) / 100)
                         }
                     }
                     .frame(width: 70, height: 5)
@@ -708,7 +798,7 @@ struct KnowledgeMapView: View {
                 .buttonStyle(.bordered)
             }
             .padding(14)
-            .glassCard(accent: kindColor(kind))
+            .mapCard(accent: kindColor(kind))
         )
     }
 
@@ -741,7 +831,12 @@ struct KnowledgeMapView: View {
                             Text("\(i + 1)")
                                 .font(.system(size: 11, weight: .heavy, design: .rounded))
                                 .frame(width: 20, height: 20)
-                                .background(step.isTarget ? MapColor.ink : MapColor.ink.opacity(0.3))
+                                // Two solid fills, not an opacity wash - a
+                                // low-alpha `ink` over a light paper card
+                                // would leave the white numeral unreadable
+                                // (that trick only worked on the old dark
+                                // theme, where `ink` was near-white).
+                                .background(step.isTarget ? MapColor.ink : MapColor.violetDeep)
                                 .foregroundColor(.white)
                                 .clipShape(Circle())
                             VStack(alignment: .leading, spacing: 1) {
@@ -771,7 +866,7 @@ struct KnowledgeMapView: View {
             }
         }
         .padding(14)
-        .glassCard(accent: MapColor.zpdReady)
+        .mapCard(accent: MapColor.zpdReady)
     }
 
     private func loadRoute(for id: String) async {
@@ -825,53 +920,81 @@ private struct DiamondShape: Shape {
     }
 }
 
-// Phase 5 (2026-08-06): the Map tab ports `ConstellationGpsExplorer.tsx`,
-// which imports BOTH `ConstellationGpsLab.module.css` (its own near-black/
-// lime "constellation" theme - #050505 canvas, #e8eaed text, confirmed via
-// the live file, NOT the Dashboard's cream/dark-green chalkboard tokens)
-// AND `DashboardPanels.module.css` (whose `--ink-*`/`--paper-*` vars cascade
-// from the Dashboard's `.canvasStage`) for shared panel chrome. This 4-token
-// Swift model can't represent both exactly; picked the constellation-specific
-// values since they're what the map canvas itself (the dominant visual) uses.
-// File-scoped (not shared) to avoid a redeclaration conflict, same pattern
-// already established across these files.
+// Light-lavender redesign (2026-08-21). Historical note, kept for context -
+// this view ports `ConstellationGpsExplorer.tsx`, which imported BOTH
+// `ConstellationGpsLab.module.css` (its own near-black/lime "constellation"
+// theme - #050505 canvas, #e8eaed text) AND `DashboardPanels.module.css`
+// (cream/dark-green chalkboard tokens) for shared panel chrome - the web
+// original was already two clashing token sets, and the ported Swift 4-token
+// model picked the constellation-specific (dark) values since the canvas is
+// the dominant visual.
+//
+// That dark/glassmorphism direction is retired as of tonight. Diagnosed
+// alongside a real, live complaint ("looks like horror"): a stray hardcoded
+// `Color.purple` edge, `#00875a`/`#4361ee`/`#d63e3e`/`#9aabb6` web status
+// colors that matched nothing else in this app, `.ultraThinMaterial`
+// glassmorphism, and zero visual transition into the bright
+// `Color(white: 0.985)` card this view actually renders inside from
+// `DeskGridDashboardView` (`viewingKnowledgeGraphInBinder`). Two competing
+// directions were on the table (a dark cinematic "Deep Field" treatment vs.
+// this light Binder-embedded one) - explicit, final call after seeing both:
+// "definitely a light lavender map with beautiful dots and beautiful
+// connections. Make it look even 3D if possible."
+//
+// Rebuilt on tokens this app already uses for real elsewhere (confirmed hex
+// values from `DeskGridDashboardView`'s `tileInnerCard`/`KnowledgeGraphCanvas`,
+// not invented from scratch): warm cream canvas, lavender as the primary
+// conceptual/edge color family, and the SAME mastered/learning/gap status
+// colors `KnowledgeGraphCanvas` already uses - so the small in-tile preview
+// and this full interactive map finally agree with each other. File-scoped
+// (not shared) to avoid a redeclaration conflict, same pattern already
+// established across these files.
 private enum MapColor {
-    static let ink = Color(mapHex: "e8eaed")
-    static let inkSoft = Color(mapHex: "e8eaed").opacity(0.72)
-    static let cardPaper = Color(mapHex: "162d22")
-    static let canvasBg = Color(mapHex: "050505")
-    // ZPD-ready invitation glow (warm gold - "come here next") and the
-    // muted charcoal a genuinely locked node recedes into, both new for
-    // the ready/locked split above.
-    static let zpdReady = Color(mapHex: "ffb84d")
-    static let zpdLocked = Color(mapHex: "3a4048")
+    static let ink = Color(mapHex: "143a2e")
+    // Dark-on-light needs a higher opacity floor than the old theme's
+    // light-on-near-black did to stay legible at the same relative
+    // "soft" call sites throughout this file (chained `.opacity(_:)`
+    // multiplies) - raised from that theme's 0.72 accordingly.
+    static let inkSoft = ink.opacity(0.85)
+    static let canvasBg = Color(mapHex: "fff8e9")
+    static let cardPaper = Color(white: 0.985)
+    // Lavender family - the map's real primary conceptual color per the
+    // product ask, not an invented accent.
+    static let lavender = Color(mapHex: "b19cd9")
+    static let lavenderSoft = Color(mapHex: "b7aed6")
+    static let violetDeep = Color(mapHex: "5b3e8f")
+    // Status colors - identical hex values to `KnowledgeGraphCanvas`'s
+    // already-approved mastered/in_progress/struggling palette, reused
+    // rather than reinvented.
+    static let mastered = Color(mapHex: "3fae5a")
+    static let learning = Color(mapHex: "d9a441")
+    static let gap = Color(mapHex: "c1121f")
+    // ZPD-ready invitation glow: the app's own lime "go" accent (`c4f547`,
+    // the same color real CTA capsules use throughout `DeskGridDashboardView`),
+    // and the muted taupe (`8a8478`, also already real in this app) a
+    // genuinely locked node recedes into.
+    static let zpdReady = Color(mapHex: "c4f547")
+    static let zpdLocked = Color(mapHex: "8a8478")
 }
 
 private extension View {
-    /// Frosted glass card: a tinted dark fill under `.ultraThinMaterial`,
-    /// a soft gradient glow border in the given accent, and a matching
-    /// tinted shadow for real depth - replaces the map panels' old flat
-    /// `cardPaper` fill with the Luma-esque glass treatment.
-    func glassCard(accent: Color) -> some View {
+    /// Warm paper card: the same near-white fill + soft shadow
+    /// `DeskGridDashboardView.tileInnerCard` uses everywhere else in this
+    /// app, with a thin accent-tinted border for per-panel identity -
+    /// replaces the old dark `.ultraThinMaterial` glassmorphism treatment
+    /// entirely (removed, not merely retinted, per the redesign above).
+    func mapCard(accent: Color) -> some View {
         self
             .background(
-                ZStack {
-                    MapColor.cardPaper.opacity(0.62)
-                    Rectangle().fill(.ultraThinMaterial)
-                }
+                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                    .fill(MapColor.cardPaper)
+                    .shadow(color: .black.opacity(0.08), radius: 10, y: 5)
             )
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
             .overlay(
                 RoundedRectangle(cornerRadius: 16, style: .continuous)
-                    .strokeBorder(
-                        LinearGradient(
-                            colors: [accent.opacity(0.6), accent.opacity(0.1)],
-                            startPoint: .topLeading, endPoint: .bottomTrailing
-                        ),
-                        lineWidth: 1
-                    )
+                    .strokeBorder(accent.opacity(0.35), lineWidth: 1.2)
             )
-            .shadow(color: accent.opacity(0.28), radius: 20, x: 0, y: 10)
     }
 }
 

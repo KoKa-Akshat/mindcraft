@@ -60,7 +60,7 @@ struct JesseRailView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     JesseMiniWaveform(active: jesseCall.isSpeaking || jesseCall.isListening)
                     Text(jesseCall.isActive ? "On the line" : "Just now")
-                        .font(.system(size: 11, weight: .semibold, design: .rounded))
+                        .font(.mcChrome(size: 11, weight: .semibold))
                         .foregroundColor(Color(jrHex: "143a2e").opacity(0.45))
                 }
                 Spacer(minLength: 0)
@@ -84,7 +84,7 @@ struct JesseRailView: View {
                         Spacer(minLength: 0)
                         if !jesseCall.isActive, !compact { Image(systemName: "arrow.right") }
                     }
-                    .font(.system(size: compact ? 12 : 14, weight: .bold, design: .rounded))
+                    .font(.mcChrome(size: compact ? 12 : 14, weight: .bold))
                     .foregroundColor(.white)
                     .padding(.horizontal, compact ? 12 : 16)
                     .padding(.vertical, compact ? 9 : 14)
@@ -154,7 +154,7 @@ struct JesseRailView: View {
                             }
                             if jesseCall.isThinking {
                                 Text("Jesse is working")
-                                    .font(.system(size: 12, weight: .semibold, design: .rounded))
+                                    .font(.mcChrome(size: 12, weight: .semibold))
                                     .foregroundColor(Color(jrHex: "247a4d"))
                                     .id("thinking")
                             }
@@ -183,14 +183,14 @@ struct JesseRailView: View {
 
             if !compact {
                 Text("or continue in chat")
-                    .font(.system(size: 12, weight: .medium, design: .rounded))
+                    .font(.mcChrome(size: 12, weight: .medium))
                     .foregroundColor(Color(jrHex: "143a2e").opacity(0.4))
                     .frame(maxWidth: .infinity)
             }
 
             if let status = jesseCall.status {
                 Text(status)
-                    .font(.system(size: 11, weight: .medium, design: .rounded))
+                    .font(.mcChrome(size: 11, weight: .medium))
                     .foregroundColor(Color(jrHex: "b0473f"))
             }
 
@@ -243,11 +243,11 @@ struct JesseRailView: View {
     private func transcriptLine(_ who: String, _ text: String) -> some View {
         VStack(alignment: .leading, spacing: 2) {
             Text(who.uppercased())
-                .font(.system(size: 9, weight: .heavy, design: .rounded))
+                .font(.mcChrome(size: 9, weight: .heavy))
                 .tracking(0.6)
                 .foregroundColor(Color(jrHex: "143a2e").opacity(0.4))
             Text(text)
-                .font(.system(size: 13, weight: .medium, design: .rounded))
+                .font(.mcChrome(size: 13, weight: .medium))
                 .foregroundColor(Color(jrHex: "143a2e"))
         }
     }

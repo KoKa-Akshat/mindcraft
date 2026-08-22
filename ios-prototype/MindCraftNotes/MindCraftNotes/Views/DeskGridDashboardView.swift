@@ -1707,7 +1707,7 @@ struct DeskGridDashboardView: View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
                 Text(upload.fileName)
-                    .font(.system(size: 18, weight: .heavy, design: .rounded))
+                    .font(.mcChrome(size: 18, weight: .heavy))
                     .foregroundColor(ink)
                 Spacer(minLength: 0)
                 Button {
@@ -1728,7 +1728,7 @@ struct DeskGridDashboardView: View {
                                 withAnimation(.easeInOut(duration: 0.2)) { viewingUpload = other }
                             } label: {
                                 Text(other.fileName)
-                                    .font(.system(size: 11, weight: .bold, design: .rounded))
+                                    .font(.mcChrome(size: 11, weight: .bold))
                                     .lineLimit(1)
                                     .foregroundColor(other.id == upload.id ? .white : ink)
                                     .padding(.horizontal, 10)
@@ -1747,10 +1747,10 @@ struct DeskGridDashboardView: View {
                     ForEach(upload.cards, id: \.title) { card in
                         VStack(alignment: .leading, spacing: 4) {
                             Text(card.title)
-                                .font(.system(size: 13, weight: .heavy, design: .rounded))
+                                .font(.mcChrome(size: 13, weight: .heavy))
                                 .foregroundColor(Color(gridHex: "247a4d"))
                             Text(card.body)
-                                .font(.system(size: 14, weight: .medium, design: .rounded))
+                                .font(.mcChrome(size: 14, weight: .medium))
                                 .foregroundColor(ink.opacity(0.9))
                                 .fixedSize(horizontal: false, vertical: true)
                         }
@@ -1758,7 +1758,7 @@ struct DeskGridDashboardView: View {
                     if !upload.microsims.isEmpty {
                         VStack(alignment: .leading, spacing: 8) {
                             Text("INTERACTIVE SIMULATIONS")
-                                .font(.system(size: 10, weight: .heavy, design: .rounded))
+                                .font(.mcChrome(size: 10, weight: .heavy))
                                 .tracking(0.4)
                                 .foregroundColor(ink.opacity(0.5))
                             ForEach(upload.microsims) { sim in
@@ -1767,7 +1767,7 @@ struct DeskGridDashboardView: View {
                                         Image(systemName: "play.circle.fill")
                                         Text(sim.title)
                                     }
-                                    .font(.system(size: 13, weight: .bold, design: .rounded))
+                                    .font(.mcChrome(size: 13, weight: .bold))
                                     .foregroundColor(Color(gridHex: "5b3e8f"))
                                 }
                                 .buttonStyle(.plain)
