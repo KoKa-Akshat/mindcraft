@@ -278,6 +278,17 @@ struct DeskGridDashboardView: View {
     /// with no way to tell why or retry.
     @State private var archiveBooksError = false
 
+    /// "Simulations first" toggle — explicit live ask, 2026-08-22: "all the
+    /// simulations we have should also be shown on the archive... the
+    /// simulations first... then there's a little toggle at the top which
+    /// changes it to book view." `.simulations` is the default per that ask.
+    @State private var archiveViewMode: ArchiveViewMode = .simulations
+    @State private var archiveSims: [ArchiveSimEntry] = []
+    @State private var archiveSimsLoading = false
+    @State private var archiveSimsLoaded = false
+    @State private var presentedArchiveSim: ArchiveSimEntry?
+    @State private var showArchiveGenerateSim = false
+
     /// True whenever Binder should be showing ANY of the merged-space
     /// content modes above rather than its own normal titles/blurb - the
     /// single condition every layout/visibility check below reads instead
@@ -2131,6 +2142,12 @@ struct DeskGridDashboardView: View {
     /// that book's real content the same way the rest of tonight's work
     /// already does (`viewingBook`), and sets `archiveSummaryLesson` so
     /// Homework Help shows its real "what you'll learn" alongside it.
+    private enum ArchiveViewMode: String, CaseIterable, Identifiable {
+        case simulations = "Simulations"
+        case books = "Books"
+        var id: String { rawValue }
+    }
+
     @ViewBuilder
     private func archiveBrowserBody(ink: Color) -> some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -2150,70 +2167,80 @@ struct DeskGridDashboardView: View {
                 .accessibilityIdentifier("deskGridContentViewerClose")
             }
 
-            HStack(spacing: 8) {
-                Image(systemName: "magnifyingglass")
-                    .foregroundColor(ink.opacity(0.4))
-                TextField("Search Dan's archive\u{2026}", text: $archiveSearchQuery, onCommit: runArchiveSearch)
-                    .font(.system(size: 14, weight: .medium, design: .rounded))
-                    .foregroundColor(ink)
-                    .accessibilityIdentifier("deskGridArchiveSearchField")
-                if archiveSearchLoading {
-                    ProgressView().tint(ink)
-                }
+            Picker("", selection: $archiveViewMode) {
+                ForEach(ArchiveViewMode.allCases) { Text($0.rawValue).tag($0) }
             }
-            .padding(10)
-            .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(Color(gridHex: "f3f1ec")))
+            .pickerStyle(.segmented)
+            .accessibilityIdentifier("deskGridArchiveModePicker")
 
-            ScrollView {
-                VStack(alignment: .leading, spacing: 14) {
-                    if !archiveSearchResults.isEmpty {
-                        archiveSection("SEARCH RESULTS", ink: ink) {
-                            ForEach(archiveSearchResults, id: \.pageUrl) { hit in
-                                archiveBookRow(
-                                    title: hit.bookTitle,
-                                    subtitle: hit.pageTitle,
-                                    ink: ink,
-                                    isOpening: archiveOpeningTitle == hit.bookTitle
-                                ) { openArchiveBook(title: hit.bookTitle) }
-                            }
-                        }
+            if archiveViewMode == .simulations {
+                archiveSimulationsSection(ink: ink)
+            } else {
+                HStack(spacing: 8) {
+                    Image(systemName: "magnifyingglass")
+                        .foregroundColor(ink.opacity(0.4))
+                    TextField("Search Dan's archive\u{2026}", text: $archiveSearchQuery, onCommit: runArchiveSearch)
+                        .font(.system(size: 14, weight: .medium, design: .rounded))
+                        .foregroundColor(ink)
+                        .accessibilityIdentifier("deskGridArchiveSearchField")
+                    if archiveSearchLoading {
+                        ProgressView().tint(ink)
                     }
-                    archiveSection("YOUR BOOKS", ink: ink) {
-                        ForEach(BookGraphLoader.all) { book in
-                            archiveBookRow(
-                                title: book.title,
-                                subtitle: "\(book.concepts.count) concepts",
-                                ink: ink,
-                                isOpening: false
-                            ) { openBundledBook(book) }
-                            .accessibilityIdentifier("deskGridArchiveBook_\(book.id)")
-                        }
-                    }
-                    archiveSection("DAN'S ARCHIVE", ink: ink) {
-                        if archiveBooksLoading {
-                            ProgressView().tint(ink)
-                        } else if archiveBooksError {
-                            Button {
-                                Task { await loadArchiveBooks() }
-                            } label: {
-                                HStack(spacing: 6) {
-                                    Image(systemName: "arrow.clockwise")
-                                    Text("Couldn't load Dan's Archive - tap to retry")
+                }
+                .padding(10)
+                .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(Color(gridHex: "f3f1ec")))
+
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 14) {
+                        if !archiveSearchResults.isEmpty {
+                            archiveSection("SEARCH RESULTS", ink: ink) {
+                                ForEach(archiveSearchResults, id: \.pageUrl) { hit in
+                                    archiveBookRow(
+                                        title: hit.bookTitle,
+                                        subtitle: hit.pageTitle,
+                                        ink: ink,
+                                        isOpening: archiveOpeningTitle == hit.bookTitle
+                                    ) { openArchiveBook(title: hit.bookTitle) }
                                 }
-                                .font(.system(size: 13, weight: .semibold, design: .rounded))
-                                .foregroundColor(ink.opacity(0.75))
                             }
-                            .buttonStyle(.plain)
-                            .accessibilityIdentifier("deskGridArchiveDanBooksRetry")
-                        } else {
-                            ForEach(archiveBooks) { book in
+                        }
+                        archiveSection("YOUR BOOKS", ink: ink) {
+                            ForEach(BookGraphLoader.all) { book in
                                 archiveBookRow(
-                                    title: book.bookTitle,
-                                    subtitle: "Open textbook",
+                                    title: book.title,
+                                    subtitle: "\(book.concepts.count) concepts",
                                     ink: ink,
-                                    isOpening: archiveOpeningTitle == book.bookTitle
-                                ) { openArchiveBook(title: book.bookTitle) }
-                                .accessibilityIdentifier("deskGridArchiveDanBook_\(book.id)")
+                                    isOpening: false
+                                ) { openBundledBook(book) }
+                                .accessibilityIdentifier("deskGridArchiveBook_\(book.id)")
+                            }
+                        }
+                        archiveSection("DAN'S ARCHIVE", ink: ink) {
+                            if archiveBooksLoading {
+                                ProgressView().tint(ink)
+                            } else if archiveBooksError {
+                                Button {
+                                    Task { await loadArchiveBooks() }
+                                } label: {
+                                    HStack(spacing: 6) {
+                                        Image(systemName: "arrow.clockwise")
+                                        Text("Couldn't load Dan's Archive - tap to retry")
+                                    }
+                                    .font(.system(size: 13, weight: .semibold, design: .rounded))
+                                    .foregroundColor(ink.opacity(0.75))
+                                }
+                                .buttonStyle(.plain)
+                                .accessibilityIdentifier("deskGridArchiveDanBooksRetry")
+                            } else {
+                                ForEach(archiveBooks) { book in
+                                    archiveBookRow(
+                                        title: book.bookTitle,
+                                        subtitle: "Open textbook",
+                                        ink: ink,
+                                        isOpening: archiveOpeningTitle == book.bookTitle
+                                    ) { openArchiveBook(title: book.bookTitle) }
+                                    .accessibilityIdentifier("deskGridArchiveDanBook_\(book.id)")
+                                }
                             }
                         }
                     }
@@ -2230,6 +2257,93 @@ struct DeskGridDashboardView: View {
         .task(id: viewingArchiveBrowser) {
             guard viewingArchiveBrowser, archiveBooks.isEmpty else { return }
             await loadArchiveBooks()
+        }
+        .task(id: archiveViewMode) {
+            guard archiveViewMode == .simulations, !archiveSimsLoaded else { return }
+            archiveSimsLoading = true
+            archiveSims = await ArchiveSimsLoader.loadAll()
+            archiveSimsLoaded = true
+            archiveSimsLoading = false
+        }
+        .sheet(item: $presentedArchiveSim) { sim in
+            ArchiveChapterSimView(
+                sim: sim,
+                onUseInClass: { onFileChapterBook(sim.bookTitle, sim.bookSubjectId) },
+                onClose: { presentedArchiveSim = nil }
+            )
+        }
+        .sheet(isPresented: $showArchiveGenerateSim) {
+            ArchiveGenerateSimSheet(onGenerated: { book in
+                let newOnes = book.chapters.flatMap(\.sections)
+                    .filter { $0.simHtml != nil }
+                    .map { ArchiveSimEntry(id: "\(book.subjectId)_\($0.conceptId)", bookSubjectId: book.subjectId, bookTitle: book.title, section: $0) }
+                let existingIds = Set(archiveSims.map(\.id))
+                archiveSims.append(contentsOf: newOnes.filter { !existingIds.contains($0.id) })
+            })
+        }
+    }
+
+    /// "Simulations first" default view of Archive — real, gated sims
+    /// flattened across every synced Chapter Library book. See
+    /// `archiveViewMode`'s doc comment for the live ask this answers.
+    @ViewBuilder
+    private func archiveSimulationsSection(ink: Color) -> some View {
+        if archiveSimsLoading {
+            ProgressView("Loading the simulation library\u{2026}").tint(ink)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+        } else if archiveSims.isEmpty {
+            VStack(spacing: 10) {
+                Text("No simulations synced yet.")
+                    .font(.system(size: 13, weight: .medium, design: .rounded))
+                    .foregroundColor(ink.opacity(0.6))
+                Button("Write the first one") { showArchiveGenerateSim = true }
+                    .font(.system(size: 13, weight: .heavy, design: .rounded))
+                    .accessibilityIdentifier("deskGridArchiveSimGenerate")
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        } else {
+            ScrollView {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 150), spacing: 10)], spacing: 10) {
+                    Button { showArchiveGenerateSim = true } label: {
+                        VStack(spacing: 6) {
+                            Image(systemName: "plus.circle.fill").font(.system(size: 20))
+                            Text("Write one").font(.system(size: 12, weight: .heavy, design: .rounded))
+                        }
+                        .foregroundColor(ink.opacity(0.6))
+                        .frame(height: 92, alignment: .center)
+                        .frame(maxWidth: .infinity)
+                        .background(RoundedRectangle(cornerRadius: 12, style: .continuous).strokeBorder(ink.opacity(0.2), style: StrokeStyle(lineWidth: 1, dash: [4, 4])))
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityIdentifier("deskGridArchiveSimGenerate")
+
+                    ForEach(archiveSims) { sim in
+                        Button { presentedArchiveSim = sim } label: {
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(sim.section.simTitle ?? sim.section.title)
+                                    .font(.system(size: 12, weight: .bold, design: .rounded))
+                                    .foregroundColor(ink)
+                                    .lineLimit(2)
+                                    .multilineTextAlignment(.leading)
+                                Text(sim.bookTitle)
+                                    .font(.system(size: 10, weight: .medium, design: .rounded))
+                                    .foregroundColor(ink.opacity(0.55))
+                                    .lineLimit(1)
+                                Spacer(minLength: 0)
+                                Label("Try it", systemImage: "play.fill")
+                                    .font(.system(size: 10, weight: .heavy, design: .rounded))
+                                    .foregroundColor(ink.opacity(0.8))
+                            }
+                            .padding(10)
+                            .frame(height: 92, alignment: .topLeading)
+                            .frame(maxWidth: .infinity)
+                            .background(RoundedRectangle(cornerRadius: 12, style: .continuous).fill(Color.white))
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityIdentifier("deskGridArchiveSim_\(sim.id)")
+                    }
+                }
+            }
         }
     }
 
@@ -3553,5 +3667,56 @@ private struct MoodleBoxSheet: View {
                 .padding(12)
                 .background(RoundedRectangle(cornerRadius: 12).fill(Color.white))
         }
+    }
+}
+
+/// Full-screen player for one sim opened from the Work dashboard's Archive
+/// "Simulations" tab — same chrome/disclosure convention as
+/// `GeneratedSimView`/`MicroSimView`. "Use in class" files the sim's whole
+/// book into the Binder via `onFileChapterBook` (Binder has no
+/// standalone-simulation item today, only a book pointer — see
+/// `ArchiveSimsLoader`'s doc comment).
+private struct ArchiveChapterSimView: View {
+    let sim: ArchiveSimEntry
+    var onUseInClass: () -> Void
+    var onClose: () -> Void
+    @State private var addedToBinder = false
+
+    var body: some View {
+        VStack(spacing: 0) {
+            HStack {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(sim.section.simTitle ?? sim.section.title)
+                        .font(.system(size: 16, weight: .bold, design: .rounded))
+                    Text(sim.bookTitle)
+                        .font(.system(size: 11, weight: .semibold, design: .rounded))
+                        .foregroundColor(.secondary)
+                }
+                Spacer(minLength: 0)
+                Button(addedToBinder ? "Added to Binder" : "Use in class") {
+                    onUseInClass()
+                    addedToBinder = true
+                }
+                .disabled(addedToBinder)
+                .font(.system(size: 13, weight: .heavy, design: .rounded))
+                .accessibilityIdentifier("deskGridArchiveSimUseInClass")
+                Button(action: onClose) {
+                    Image(systemName: "xmark.circle.fill")
+                        .font(.system(size: 22))
+                        .foregroundColor(.secondary)
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("deskGridArchiveSimClose")
+            }
+            .padding(14)
+            if let html = sim.section.simHtml {
+                InlineSimWebView(html: html)
+            } else {
+                Text("This simulation isn't available right now.")
+                    .foregroundColor(.secondary)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
+        }
+        .background(Color.white)
     }
 }

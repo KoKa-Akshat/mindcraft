@@ -106,6 +106,7 @@
 		B0BED2EADB29CE9B5BD2B91E /* BookGenerationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A8CAFEF98DAA076ECF6DB6 /* BookGenerationClient.swift */; };
 		B0C259017B6359197378F0FD /* LearnStudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1858B772F353A476A8023F /* LearnStudioView.swift */; };
 		B1E290A74840F0C7F051444F /* BookLibraryClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E5B069E034C555E1E6D013 /* BookLibraryClient.swift */; };
+		80C0B86F5BBA0C7F3E50E016 /* ArchiveSimsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2A97481B4E52F644921AE9 /* ArchiveSimsLoader.swift */; };
 		B2C50496636E2ED7186E0232 /* DiagnosticGateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9818B2D6693B4381129CB08 /* DiagnosticGateView.swift */; };
 		B2C588BED4E177EC84C2B5D1 /* QuestionBankLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DAA6B2A396F72A1E1B6C97 /* QuestionBankLoader.swift */; };
 		B3D89B38899B7A196FE908B0 /* ContentsRoadmapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CA309BCDE2728C6DFBAC50 /* ContentsRoadmapView.swift */; };
@@ -225,6 +226,7 @@
 		31B0DB4BE519576B363713A8 /* ArchiveBooksClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ArchiveBooksClient.swift; sourceTree = "<group>"; };
 		333EDEE01284D66F3CAF76DD /* KnowledgeGraphClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnowledgeGraphClient.swift; sourceTree = "<group>"; };
 		35E5B069E034C555E1E6D013 /* BookLibraryClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BookLibraryClient.swift; sourceTree = "<group>"; };
+		5E2A97481B4E52F644921AE9 /* ArchiveSimsLoader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ArchiveSimsLoader.swift; sourceTree = "<group>"; };
 		37A1FAD01B67C2F6AF235A10 /* SessionReportsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SessionReportsView.swift; sourceTree = "<group>"; };
 		3890F71414E363C12CC19397 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		39DE01C8FD336E3156E19A53 /* BookLibraryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BookLibraryView.swift; sourceTree = "<group>"; };
@@ -503,6 +505,7 @@
 				5953BEECF1C8EFB5F3230D92 /* StudentLanguagePreference.swift */,
 				F40D4AFB86406A11C68AD78B /* StudentVoicePreference.swift */,
 				35E5B069E034C555E1E6D013 /* BookLibraryClient.swift */,
+				5E2A97481B4E52F644921AE9 /* ArchiveSimsLoader.swift */,
 				409ACCE0A60FA38F61914FF4 /* AIDisclosurePreference.swift */,
 				7165E2C9039350FB17CF3523 /* LessonOutlineClient.swift */,
 				D1A8CAFEF98DAA076ECF6DB6 /* BookGenerationClient.swift */,
@@ -952,6 +955,7 @@
 				FEA79F612CC2F3E338AF593C /* StudentVoicePreference.swift in Sources */,
 				6F44EC6CA38B2CD4ADBE901B /* AssembledBookModels.swift in Sources */,
 				B1E290A74840F0C7F051444F /* BookLibraryClient.swift in Sources */,
+				80C0B86F5BBA0C7F3E50E016 /* ArchiveSimsLoader.swift in Sources */,
 				D6445C3050D9E6C0F508F19F /* BookLibraryView.swift in Sources */,
 				12A0285334FBDE9318D382A1 /* WorkflowLibraryView.swift in Sources */,
 				C62AEE4FDE0A34307B617ABF /* MicroSimWebView.swift in Sources */,

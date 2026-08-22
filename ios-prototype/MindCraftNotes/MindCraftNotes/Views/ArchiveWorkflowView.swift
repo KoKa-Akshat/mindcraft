@@ -31,12 +31,22 @@ struct ArchiveWorkflowView: View {
     /// entry point inside Binder's popup, and relocating it wasn't a clear
     /// win worth the risk of breaking that existing path; flagging this
     /// scoping call rather than silently doing it or silently skipping it.
+    ///
+    /// `.simulations` added 2026-08-22 per explicit live ask: "all the
+    /// simulations we have should also be shown on the archive... the
+    /// simulations first... then there's a little toggle at the top which
+    /// changes it to book view." Real, gated sims already exist per-concept
+    /// on every Chapter Library book (`AssembledBookSection.simHtml`,
+    /// `BookLibraryClient`) — this just surfaces them directly instead of
+    /// requiring a teacher to open a whole book to find one. Listed FIRST
+    /// (and set as the default tab below) to match "simulations first."
     private enum ArchiveTab: String, CaseIterable, Identifiable {
+        case simulations = "Simulations"
         case dan = "Dan's Archive"
         case books = "Book Library"
         var id: String { rawValue }
     }
-    @State private var tab: ArchiveTab = .dan
+    @State private var tab: ArchiveTab = .simulations
 
     var body: some View {
         // No wrapper .accessibilityIdentifier on the outer ZStack: applying
@@ -48,6 +58,8 @@ struct ArchiveWorkflowView: View {
         ZStack(alignment: .top) {
             Color(red: 244 / 255, green: 239 / 255, blue: 230 / 255).ignoresSafeArea()
             switch tab {
+            case .simulations:
+                ArchiveSimulationsBrowseView()
             case .dan:
                 ArchiveWorkflowWebView(weakness: weakness)
                     .ignoresSafeArea()
@@ -59,7 +71,7 @@ struct ArchiveWorkflowView: View {
                     ForEach(ArchiveTab.allCases) { Text($0.rawValue).tag($0) }
                 }
                 .pickerStyle(.segmented)
-                .frame(width: 320)
+                .frame(width: 420)
                 .padding(.top, 12)
                 .accessibilityIdentifier("archiveTabPicker")
                 Spacer()
@@ -132,6 +144,240 @@ struct ArchiveWorkflowView: View {
         let label = displays[worst.conceptId]?.label
             ?? worst.conceptId.replacingOccurrences(of: "_", with: " ").capitalized
         weakness = (id: worst.conceptId, label: label)
+    }
+}
+
+/// "Simulations first" browse view — explicit live ask, 2026-08-22: "all
+/// the simulations we have should also be shown on the archive... the
+/// simulations first, where teachers can write simulations and pull one to
+/// use for their classes." Flattens every `AssembledBookSection` with a
+/// real `simHtml` across every synced Chapter Library book
+/// (`BookLibraryClient`) into one grid, instead of requiring a teacher to
+/// open a whole book to find a sim inside it.
+///
+/// Honest scope note: "pull one to use for their classes" reuses the real,
+/// existing Binder mechanism (`BinderStore.addChapterBook`) — Binder has no
+/// concept of a standalone, single-simulation item today, only a book
+/// pointer, so "using" a sim files its WHOLE book into the Binder (the sim
+/// itself is one page inside it). Building true per-simulation Binder items
+/// would need a new item type and Firestore rule/shape change; not done
+/// here without that being a deliberate call, not a silent gap. Similarly,
+/// "teachers can write simulations" routes to the same real, on-demand,
+/// gated generation pipeline Jesse's Tier-3 fallback already uses
+/// (`BookGenerationClient`) rather than a from-scratch authoring tool —
+/// teachers describe a topic in plain language, the same real pipeline
+/// (fit check -> generate -> render -> gate) builds it.
+private struct ArchiveSimulationsBrowseView: View {
+    @StateObject private var binder = BinderStore()
+    @State private var sims: [ArchiveSimEntry] = []
+    @State private var isLoading = true
+    @State private var loadError: String?
+    @State private var selectedSim: ArchiveSimEntry?
+    @State private var showGenerateSheet = false
+
+    var body: some View {
+        NavigationStack {
+            Group {
+                if isLoading {
+                    ProgressView("Loading the simulation library\u{2026}")
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else if sims.isEmpty {
+                    VStack(spacing: 8) {
+                        Text(loadError ?? "No simulations synced yet.")
+                            .font(.system(size: 14, weight: .medium, design: .rounded))
+                            .foregroundColor(.secondary)
+                        Button("Write the first one") { showGenerateSheet = true }
+                            .buttonStyle(.borderedProminent)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else {
+                    ScrollView {
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 220), spacing: 14)], spacing: 14) {
+                            ForEach(sims) { sim in
+                                Button { selectedSim = sim } label: {
+                                    VStack(alignment: .leading, spacing: 6) {
+                                        Text(sim.section.simTitle ?? sim.section.title)
+                                            .font(.system(size: 14, weight: .bold, design: .rounded))
+                                            .foregroundColor(.primary)
+                                            .lineLimit(2)
+                                            .multilineTextAlignment(.leading)
+                                        Text(sim.bookTitle)
+                                            .font(.system(size: 11, weight: .medium, design: .rounded))
+                                            .foregroundColor(.secondary)
+                                            .lineLimit(1)
+                                        Spacer(minLength: 0)
+                                        Label("Try it", systemImage: "play.fill")
+                                            .font(.system(size: 11, weight: .heavy, design: .rounded))
+                                            .foregroundColor(Color(red: 20 / 255, green: 58 / 255, blue: 46 / 255))
+                                    }
+                                    .padding(12)
+                                    .frame(height: 110, alignment: .topLeading)
+                                    .frame(maxWidth: .infinity)
+                                    .background(RoundedRectangle(cornerRadius: 14, style: .continuous).fill(Color.white))
+                                    .overlay(RoundedRectangle(cornerRadius: 14, style: .continuous).stroke(Color.black.opacity(0.06)))
+                                }
+                                .buttonStyle(.plain)
+                                .accessibilityIdentifier("archiveSim_\(sim.id)")
+                            }
+                        }
+                        .padding(16)
+                    }
+                }
+            }
+            .navigationTitle("Simulations")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button { showGenerateSheet = true } label: {
+                        Label("Write one", systemImage: "plus.circle.fill")
+                    }
+                    .accessibilityIdentifier("archiveSimGenerate")
+                }
+            }
+        }
+        .task { await load() }
+        .sheet(item: $selectedSim) { sim in
+            ArchiveSimPlayerSheet(sim: sim, binder: binder)
+        }
+        .sheet(isPresented: $showGenerateSheet) {
+            ArchiveGenerateSimSheet(onGenerated: mergeInSims)
+        }
+        .accessibilityIdentifier("archiveSimulationsBrowse")
+    }
+
+    private func load() async {
+        isLoading = true
+        loadError = nil
+        let loaded = await ArchiveSimsLoader.loadAll()
+        if loaded.isEmpty { loadError = "Couldn't reach the library right now." }
+        sims = loaded
+        isLoading = false
+    }
+
+    private func mergeInSims(from book: AssembledBook) {
+        let newOnes = book.chapters.flatMap(\.sections)
+            .filter { $0.simHtml != nil }
+            .map { ArchiveSimEntry(id: "\(book.subjectId)_\($0.conceptId)", bookSubjectId: book.subjectId, bookTitle: book.title, section: $0) }
+        let existingIds = Set(sims.map(\.id))
+        sims.append(contentsOf: newOnes.filter { !existingIds.contains($0.id) })
+        sims.sort { $0.bookTitle == $1.bookTitle ? $0.section.title < $1.section.title : $0.bookTitle < $1.bookTitle }
+    }
+}
+
+/// Full-screen player for one sim, opened from `ArchiveSimulationsBrowseView`.
+private struct ArchiveSimPlayerSheet: View {
+    let sim: ArchiveSimEntry
+    @ObservedObject var binder: BinderStore
+    @Environment(\.dismiss) private var dismiss
+    @State private var addedToBinder = false
+
+    var body: some View {
+        NavigationStack {
+            Group {
+                if let html = sim.section.simHtml {
+                    InlineSimWebView(html: html)
+                } else {
+                    Text("This simulation isn't available right now.")
+                        .foregroundColor(.secondary)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
+            }
+            .navigationTitle(sim.section.simTitle ?? sim.section.title)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Done") { dismiss() }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    // Files the sim's whole book into the Binder - see this
+                    // view's parent doc comment for why that's the real
+                    // granularity Binder supports today, not just this page.
+                    Button(addedToBinder ? "Added to Binder" : "Use in class") {
+                        binder.addChapterBook(title: sim.bookTitle, subjectId: sim.bookSubjectId)
+                        addedToBinder = true
+                    }
+                    .disabled(addedToBinder)
+                    .accessibilityIdentifier("archiveSimUseInClass")
+                }
+            }
+        }
+    }
+}
+
+/// "Teachers can write simulations" — routes to the real, gated, on-demand
+/// generation pipeline (`BookGenerationClient`) rather than a bespoke
+/// authoring UI. Real latency (up to several minutes) and real cost per
+/// attempt, same honesty this app already surfaces elsewhere for
+/// generation waits.
+struct ArchiveGenerateSimSheet: View {
+    var onGenerated: (AssembledBook) -> Void
+    @Environment(\.dismiss) private var dismiss
+    @State private var topic = ""
+    @State private var isGenerating = false
+    @State private var chaptersReady = 0
+    @State private var totalChapters = 0
+    @State private var errorMessage: String?
+
+    var body: some View {
+        NavigationStack {
+            VStack(alignment: .leading, spacing: 16) {
+                Text("Describe what you want to teach")
+                    .font(.system(size: 15, weight: .bold, design: .rounded))
+                Text("Jesse builds a real, gated lesson with simulations \u{2014} usually a few minutes, and it costs real money to generate, so make it count.")
+                    .font(.system(size: 12, design: .rounded))
+                    .foregroundColor(.secondary)
+                TextField("e.g. \u{201c}Newton's laws for 9th grade\u{201d}", text: $topic)
+                    .textFieldStyle(.roundedBorder)
+                    .disabled(isGenerating)
+                if isGenerating {
+                    HStack(spacing: 8) {
+                        ProgressView()
+                        Text(totalChapters > 0 ? "\(chaptersReady) of \(totalChapters) chapters ready\u{2026}" : "Starting\u{2026}")
+                            .font(.system(size: 12, weight: .medium, design: .rounded))
+                            .foregroundColor(.secondary)
+                    }
+                }
+                if let errorMessage {
+                    Text(errorMessage)
+                        .font(.system(size: 12, design: .rounded))
+                        .foregroundColor(.red)
+                }
+                Spacer()
+                Button(isGenerating ? "Building\u{2026}" : "Generate") { Task { await generate() } }
+                    .buttonStyle(.borderedProminent)
+                    .disabled(topic.trimmingCharacters(in: .whitespaces).isEmpty || isGenerating)
+                    .frame(maxWidth: .infinity)
+            }
+            .padding(20)
+            .navigationTitle("Write a new simulation")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Cancel") { dismiss() }.disabled(isGenerating)
+                }
+            }
+        }
+    }
+
+    private func generate() async {
+        isGenerating = true
+        errorMessage = nil
+        let verdict = await BookGenerationClient.generate(topic: topic) { ready, total in
+            chaptersReady = ready
+            totalChapters = total
+        }
+        isGenerating = false
+        switch verdict {
+        case .verified(let book, _, _, _):
+            onGenerated(book)
+            dismiss()
+        case .noGoodResult(let reason):
+            errorMessage = reason ?? "Couldn't build a good lesson from that topic \u{2014} try rephrasing it."
+        case .rateLimited(let reason):
+            errorMessage = reason ?? "Generation is rate-limited right now \u{2014} try again shortly."
+        case .unavailable(let reason):
+            errorMessage = reason ?? "Couldn't reach the generation service."
+        }
     }
 }
 
