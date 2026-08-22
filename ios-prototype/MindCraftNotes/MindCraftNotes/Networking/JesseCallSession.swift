@@ -146,6 +146,16 @@ final class JesseCallSession: NSObject, ObservableObject {
     /// say "Jesse - still on the line" without caring about the call's
     /// internal state machine.
     @Published private(set) var context: String?
+    /// Real, bounded Socratic back-and-forth (2026-08-22, explicit ask:
+    /// "only have the agent talk to the student when there are simulations
+    /// or microsims where you have to have a back-and-forth... like a
+    /// discussion... 'what's your summary of all this' then 'why do you
+    /// think' until they polish it"). Set only while `context ==
+    /// "discussion"` (`beginDiscussion`) - prepended to the student's
+    /// message in `askJesse`'s shared archive-chat fallback instead of the
+    /// normal `bus.briefing()`, since this needs the section's own
+    /// content/instructions, not the Work dashboard's box briefing.
+    private var discussionSeed: String?
     /// Book's live draft (Assignment F, 2026-08-18) - set only while
     /// `context == "book"`, updated from the real `/api/book-agent` round
     /// trip on every turn (see `askJesseBook`) so `BookWorkflowView` can
@@ -362,27 +372,23 @@ final class JesseCallSession: NSObject, ObservableObject {
             pendingLearnGrade = nil
             openedChapterBook = nil
             openedChapterBookGenerationInfo = nil
-            // Real voice greeting on arrival (2026-08-18, explicit ask:
-            // "the first thing you should do is say hi Akshat what can I
-            // help you study today - it says nothing, it's waiting for
-            // my input"). A narrow, context-gated `speak()` call before
-            // any listening starts - not a generalized entry point (see
-            // CURSOR_HANDOFF.md Assignment J's own note on this).
-            //
-            // Context-aware as of 2026-08-21, same live feedback: a
-            // student who was mid-lesson two minutes ago heard the exact
-            // same cold-open line as a first-ever visit - "Say something
-            // like, Welcome back! Would you like to pick up learning
-            // something, or something new?" A restored/still-in-memory
-            // lesson is real, available evidence of what to say instead
-            // of guessing at a "personalized" greeting with nothing behind
-            // it.
+            // Short spoken greeting only, then text (2026-08-22, explicit
+            // ask: "Jesse says Heyy! and then everything else is just
+            // writing. no conversations please, it delays learning - just
+            // show the texts and then listen to what they have to say").
+            // Replaces the old long spoken open question (2026-08-18's
+            // "say hi Akshat what can I help you study today" ask) - that
+            // greeting was real and worth keeping SOMETHING spoken for,
+            // but forcing an immediate spoken reply to an open question is
+            // exactly the "conversation that delays learning" being asked
+            // to remove here. The context (welcome-back vs. fresh) still
+            // gets said - as text, not a question, via `postText`.
+            print("[JesseDebug] begin() GREETING branch: workDashboardLesson=\(workDashboardLesson?.topic ?? "nil")")
+            Task { await speak("Heyy!") }
             if let lesson = workDashboardLesson {
-                print("[JesseDebug] begin() GREETING branch: workDashboardLesson.topic=\(lesson.topic)")
-                Task { await speak("Welcome back \(studentName) - want to keep going with \(lesson.topic), or start something new?") }
+                postText("Pick up where you left off with \(lesson.topic), or start something new.")
             } else {
-                print("[JesseDebug] begin() GREETING branch: workDashboardLesson is nil")
-                Task { await speak("Hi \(studentName), what would you like to learn today?") }
+                postText("What would you like to learn today, \(studentName)?")
             }
         }
         if context == "jobOS" {
@@ -399,6 +405,25 @@ final class JesseCallSession: NSObject, ObservableObject {
             Task { await speak(opening) }
         }
         status = nil
+    }
+
+    /// Real, bounded Socratic discussion (2026-08-22) - opened from a
+    /// specific book section's "Talk it through with Jesse" prompt
+    /// (`BookReaderView`), not the generic `begin()` above: the opening
+    /// question and every follow-up need to be grounded in THIS section's
+    /// content, which `begin()`'s fixed per-context greetings have no room
+    /// for. `seed` is a real instruction (ask for a summary, probe with a
+    /// "why" follow-up, wrap up once it holds up) - prepended to the
+    /// student's replies in `askJesse`'s shared fallback via
+    /// `discussionSeed`, not a new dedicated backend endpoint.
+    func beginDiscussion(seed: String, opening: String) {
+        guard !isActive else { return }
+        context = "discussion"
+        discussionSeed = seed
+        isAmbient = false
+        isActive = true
+        sessionTurnOrigin = turns.count
+        Task { await speak(opening) }
     }
 
     /// Room recording: same STT + transcript box as a call, but Jesse
@@ -564,6 +589,17 @@ final class JesseCallSession: NSObject, ObservableObject {
         utterance.pitchMultiplier = 1.02
         isSpeaking = true
         synthesizer.speak(utterance)
+    }
+
+    /// Text-only counterpart to `speak(_:)` above - same transcript-append
+    /// line (`:541`), no TTS/audio at all. Real fix, 2026-08-22, explicit
+    /// ask: "no conversations please, it delays learning - just show the
+    /// texts." Every `workDashboard`-context reply after the one short
+    /// opening greeting uses this instead of `speak()` now, so a student
+    /// still sees everything Jesse says in the transcript, it just doesn't
+    /// interrupt with spoken narration during multi-step work.
+    private func postText(_ text: String) {
+        turns.append(JesseCallTurn(id: UUID().uuidString, speaker: "jesse", text: text, at: Date()))
     }
 
     // MARK: - Listening
@@ -782,7 +818,7 @@ final class JesseCallSession: NSObject, ObservableObject {
         if context == "workDashboard", let lesson = workDashboardLesson, Self.isReopenLessonRequest(message) {
             print("[JesseDebug] REOPEN branch fired - lesson.topic=\(lesson.topic)")
             guard isActive else { isThinking = false; return }
-            await speak("Here's what we built on \(lesson.topic) - \(lesson.chapters.joined(separator: ", ")).")
+            postText("Here's what we built on \(lesson.topic) - \(lesson.chapters.joined(separator: ", ")).")
             isThinking = false
             return
         }
@@ -793,7 +829,7 @@ final class JesseCallSession: NSObject, ObservableObject {
         }
         if context == "workDashboard", Self.isPracticeRequest(message) {
             guard isActive else { isThinking = false; return }
-            await speak("On it - opening Practice now.")
+            postText("On it - opening Practice now.")
             practiceRequested = true
             isThinking = false
             return
@@ -819,22 +855,35 @@ final class JesseCallSession: NSObject, ObservableObject {
         }
 
         let bus = DeskBoxBus.shared
+        // Shared fallback - reachable from workDashboard AND other contexts
+        // (archive, designStudio) that fall through every context-specific
+        // branch above without matching. Only workDashboard goes quiet
+        // (postText) here; other contexts keep the real spoken reply -
+        // this path is their only reply mechanism, unlike workDashboard's
+        // dedicated askJesseWorkDashboard cluster below.
         if let local = bus.directAnswer(for: message) {
             guard isActive else { isThinking = false; return }
-            await speak(local)
+            if context == "workDashboard" { postText(local) } else { await speak(local) }
             isThinking = false
             return
         }
-        let briefing = bus.briefing()
-        let composed = briefing.isEmpty
-            ? message
-            : briefing + "\n\nStudent said: " + message
+        // Discussion mode (`beginDiscussion`) grounds every reply in the
+        // section's own seed instruction instead of the Work dashboard's
+        // box briefing, which has nothing to do with book content.
+        let composed: String
+        if context == "discussion", let seed = discussionSeed {
+            composed = seed + "\n\nStudent said: " + message
+        } else {
+            let briefing = bus.briefing()
+            composed = briefing.isEmpty ? message : briefing + "\n\nStudent said: " + message
+        }
         let reply = await ArchiveRagClient.ask(message: composed, studentWeakness: studentWeakness)
         // isThinking stays true through speech generation too (Kokoro's own
         // network round-trip) rather than adding a separate UI state - the
         // call pill already reads "Jesse is thinking..." either way.
         guard isActive else { isThinking = false; return } // call may have ended while awaiting
-        await speak(reply ?? "I didn't quite catch that. Try again?")
+        let fallbackReply = reply ?? "I didn't quite catch that. Try again?"
+        if context == "workDashboard" { postText(fallbackReply) } else { await speak(fallbackReply) }
         isThinking = false
     }
 
@@ -1240,7 +1289,7 @@ final class JesseCallSession: NSObject, ObservableObject {
     private func askJesseWorkDashboardClarify(topic: String, grade: Int? = nil) async {
         pendingLearnTopic = topic
         pendingLearnGrade = grade
-        await speak("Got it, \(topic). Want to upload any materials first, or should I just go ahead and build the lesson?")
+        postText("Got it, \(topic). Want to upload any materials first, or should I just go ahead and build the lesson?")
     }
 
     /// Second half - interprets the student's answer to the question
@@ -1258,7 +1307,7 @@ final class JesseCallSession: NSObject, ObservableObject {
             || lowered.contains("use that") || lowered.contains("use it") || lowered.contains("reference")
         let context = mentionsUpload ? latestHomeworkUpload : nil
         if mentionsUpload, context == nil {
-            await speak("I don't see an upload yet - go ahead and tap Homework Help to add it, then tell me when it's there. Or just say go ahead and I'll build from what's available.")
+            postText("I don't see an upload yet - go ahead and tap Homework Help to add it, then tell me when it's there. Or just say go ahead and I'll build from what's available.")
             pendingLearnTopic = topic // still waiting - didn't fall through silently
             pendingLearnGrade = grade
             return
@@ -1333,7 +1382,7 @@ final class JesseCallSession: NSObject, ObservableObject {
             openedChapterBookGenerationInfo = nil
             syncWorkDashboardLesson(from: book, source: .archive(bookTitle: book.title))
             let sectionTitles = book.chapters.flatMap(\.sections).map(\.title)
-            await speak("Found it in the library - \(book.title), \(book.coverageLabel): \(sectionTitles.joined(separator: ", ")).")
+            postText("Found it in the library - \(book.title), \(book.coverageLabel): \(sectionTitles.joined(separator: ", ")).")
             return
         }
         let loweredTopic = topic.lowercased()
@@ -1364,7 +1413,7 @@ final class JesseCallSession: NSObject, ObservableObject {
                 microsims: microsims,
                 citations: []
             )
-            await speak("Good news - I already have \(match.title) in your archive. Here's the table of contents: \(chapters.joined(separator: ", ")).\(microsimNote)")
+            postText("Good news - I already have \(match.title) in your archive. Here's the table of contents: \(chapters.joined(separator: ", ")).\(microsimNote)")
             return
         }
 
@@ -1387,7 +1436,7 @@ final class JesseCallSession: NSObject, ObservableObject {
                 microsims: microsims,
                 citations: answer.hits.map { LessonCitation(bookTitle: $0.bookTitle, pageTitle: $0.pageTitle, url: $0.pageUrl) }
             )
-            await speak(answer.reply + microsimNote)
+            postText(answer.reply + microsimNote)
             return
         }
 
@@ -1403,7 +1452,7 @@ final class JesseCallSession: NSObject, ObservableObject {
         // produced garbage before this: 3 gate-passed chapters, 2 real
         // embedded sims, ~4 minutes, $3.60.
         print("[JesseDebug] No Tier-0 match for topic=\"\(topic)\" - falling to Tier-3 BookGenerationClient")
-        await speak("Nothing in the archive yet for \(topic) - give me a bit, I'm putting together a real lesson with sims, not just an outline.\(microsimNote)")
+        postText("Nothing in the archive yet for \(topic) - give me a bit, I'm putting together a real lesson with sims, not just an outline.\(microsimNote)")
         var lastSpokenChaptersReady = 0
         var bookVerdict = await BookGenerationClient.generate(topic: topic) { [weak self] ready, total in
             guard let self, total > 0, ready > lastSpokenChaptersReady else { return }
@@ -1445,7 +1494,7 @@ final class JesseCallSession: NSObject, ObservableObject {
             syncWorkDashboardLesson(from: book, source: .generated)
             let sectionTitles = book.chapters.flatMap(\.sections).map(\.title)
             Task { await LessonGraphIngestClient.ingest(topic: topic, chapterTitles: sectionTitles) }
-            await speak("Done - \(book.title): \(sectionTitles.joined(separator: ", ")).")
+            postText("Done - \(book.title): \(sectionTitles.joined(separator: ", ")).")
             return
         case .noGoodResult(let reason):
             // A REAL outcome (the gate genuinely didn't clear for this
@@ -1460,13 +1509,13 @@ final class JesseCallSession: NSObject, ObservableObject {
             workDashboardLesson = nil
             openedChapterBook = nil
             openedChapterBookGenerationInfo = nil
-            await speak("I couldn't build a good enough lesson on that just now" + (reason.map { " - \($0)" } ?? "") + ". Want to try rephrasing it?")
+            postText("I couldn't build a good enough lesson on that just now" + (reason.map { " - \($0)" } ?? "") + ". Want to try rephrasing it?")
             return
         case .rateLimited(let reason):
             workDashboardLesson = nil
             openedChapterBook = nil
             openedChapterBookGenerationInfo = nil
-            await speak("I've hit today's generation limit - \(reason ?? "try again tomorrow").")
+            postText("I've hit today's generation limit - \(reason ?? "try again tomorrow").")
             return
         case .unavailable:
             // Only THIS branch falls through to the old thin path below -
@@ -1507,7 +1556,7 @@ final class JesseCallSession: NSObject, ObservableObject {
             // and its own failure (a bad graph, a network blip) shouldn't
             // surface here; generation already succeeded.
             Task { await LessonGraphIngestClient.ingest(topic: topic, chapterTitles: outline.chapters) }
-            await speak("Here's a quick outline for \(topic) while the fuller version isn't available: \(outline.chapters.joined(separator: ", ")).\(microsimNote)")
+            postText("Here's a quick outline for \(topic) while the fuller version isn't available: \(outline.chapters.joined(separator: ", ")).\(microsimNote)")
         case .failure(.notSignedIn):
             // Real bug, found via live testing 2026-08-21: this branch
             // never touched `workDashboardLesson`, so a failed generation
@@ -1521,13 +1570,13 @@ final class JesseCallSession: NSObject, ObservableObject {
             // whatever view reads a nil workDashboardLesson already has
             // its own real "nothing yet" state, not a screen bug to fix.
             workDashboardLesson = nil
-            await speak("You'll need to be signed in before I can put a lesson together on \(topic).")
+            postText("You'll need to be signed in before I can put a lesson together on \(topic).")
         case .failure(.rateLimited(let reason)):
             workDashboardLesson = nil
-            await speak("I've hit today's generation limit - \(reason)")
+            postText("I've hit today's generation limit - \(reason)")
         case .failure(.failed):
             workDashboardLesson = nil
-            await speak("I couldn't put a lesson together on that just now - try again in a bit?")
+            postText("I couldn't put a lesson together on that just now - try again in a bit?")
         }
     }
 
@@ -1560,16 +1609,16 @@ final class JesseCallSession: NSObject, ObservableObject {
             )
             // Same fire-and-forget tagging as the archive-generation path above.
             Task { await LessonGraphIngestClient.ingest(topic: topic, chapterTitles: outline.chapters) }
-            await speak("Built this from \(materials.fileName): \(outline.chapters.joined(separator: ", ")).\(microsimNote)")
+            postText("Built this from \(materials.fileName): \(outline.chapters.joined(separator: ", ")).\(microsimNote)")
         case .failure(.notSignedIn):
             workDashboardLesson = nil
-            await speak("You'll need to be signed in before I can build a lesson from \(materials.fileName).")
+            postText("You'll need to be signed in before I can build a lesson from \(materials.fileName).")
         case .failure(.rateLimited(let reason)):
             workDashboardLesson = nil
-            await speak("I've hit today's generation limit - \(reason)")
+            postText("I've hit today's generation limit - \(reason)")
         case .failure(.failed):
             workDashboardLesson = nil
-            await speak("I couldn't put a lesson together from that just now - try again in a bit?")
+            postText("I couldn't put a lesson together from that just now - try again in a bit?")
         }
     }
 

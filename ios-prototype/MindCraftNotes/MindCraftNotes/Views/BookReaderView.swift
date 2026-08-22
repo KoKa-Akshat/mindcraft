@@ -31,6 +31,11 @@ struct BookReaderView: View {
     var generationInfo: ChapterBookGenerationInfo? = nil
     var onClose: () -> Void
 
+    // Real discussion mode (2026-08-22) - same environment injection
+    // pattern already used by StudySessionView/JesseRailView, not a new
+    // dependency shape.
+    @EnvironmentObject private var jesseCall: JesseCallSession
+
     @State private var pageIndex = 0
 
     // Real sim engagement telemetry (2026-08-21) - dwell time + touch count
@@ -206,12 +211,29 @@ struct BookReaderView: View {
             }
 
             if let discussionTitle = section.discussionTitle {
-                HStack(spacing: 6) {
-                    Image(systemName: "bubble.left.and.bubble.right.fill")
-                    Text("Talk it through with Jesse: \(discussionTitle)")
+                // Real, bounded back-and-forth (2026-08-22) - was inert
+                // decorative text with nothing behind it (no Button, no
+                // gesture, no JesseCallSession reference anywhere in this
+                // file). This is the one place in the app real spoken
+                // back-and-forth is wanted: "only have the agent talk to
+                // the student when there are simulations... like a
+                // discussion... what's your summary, then why do you
+                // think, until they polish it."
+                Button {
+                    let seed = """
+                    You are Jesse, a patient tutor having a short spoken discussion with a student about "\(discussionTitle)" (from the section "\(section.title)": \(section.summary)). Ask them to summarize it in their own words, then ask ONE real follow-up "why" question grounded in their actual answer. Once their answer holds up, tell them they've got it and wrap up warmly - don't drag it out past that. Keep every reply to 1-2 short spoken sentences.
+                    """
+                    jesseCall.beginDiscussion(seed: seed, opening: "So, what's your take on \(discussionTitle)? Walk me through it.")
+                } label: {
+                    HStack(spacing: 6) {
+                        Image(systemName: "bubble.left.and.bubble.right.fill")
+                        Text("Talk it through with Jesse: \(discussionTitle)")
+                    }
+                    .font(.system(size: 13, weight: .semibold, design: .rounded))
+                    .foregroundColor(ink.opacity(0.6))
                 }
-                .font(.system(size: 13, weight: .semibold, design: .rounded))
-                .foregroundColor(ink.opacity(0.6))
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("bookReaderDiscussion")
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
