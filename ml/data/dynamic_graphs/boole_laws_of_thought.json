@@ -1,0 +1,296 @@
+{
+  "subject_id": "boole_laws_of_thought",
+  "title": "An Investigation of the Laws of Thought: Mathematical Logic, Probabilities, and the Philosophy of Reasoning",
+  "version": "0.1.0",
+  "created": "2026-08-23",
+  "groups": {
+    "expansion-methods": {
+      "classifier_name": "expansion-methods",
+      "color": "SteelBlue"
+    },
+    "secondary-logic": {
+      "classifier_name": "secondary-logic",
+      "color": "SteelBlue"
+    },
+    "foundations": {
+      "classifier_name": "foundations",
+      "color": "SteelBlue"
+    },
+    "equation-solving": {
+      "classifier_name": "equation-solving",
+      "color": "SteelBlue"
+    },
+    "algebra-of-logic": {
+      "classifier_name": "algebra-of-logic",
+      "color": "SteelBlue"
+    },
+    "statistical-limits": {
+      "classifier_name": "statistical-limits",
+      "color": "SteelBlue"
+    },
+    "philosophical-analysis": {
+      "classifier_name": "philosophical-analysis",
+      "color": "SteelBlue"
+    },
+    "probability-theory": {
+      "classifier_name": "probability-theory",
+      "color": "SteelBlue"
+    },
+    "epistemology": {
+      "classifier_name": "epistemology",
+      "color": "SteelBlue"
+    },
+    "inference-theory": {
+      "classifier_name": "inference-theory",
+      "color": "SteelBlue"
+    },
+    "applied-probability": {
+      "classifier_name": "applied-probability",
+      "color": "SteelBlue"
+    },
+    "synthesis": {
+      "classifier_name": "synthesis",
+      "color": "SteelBlue"
+    }
+  },
+  "concepts": [
+    {
+      "id": "boole_laws_of_thought::symbolic-language-calculus",
+      "label": "Symbolic Language of a Calculus",
+      "subject_id": "boole_laws_of_thought",
+      "dependencies": [],
+      "taxonomy_id": "foundations",
+      "level": "foundational"
+    },
+    {
+      "id": "boole_laws_of_thought::laws-mental-operations",
+      "label": "Fundamental Laws of Mental Operations",
+      "subject_id": "boole_laws_of_thought",
+      "dependencies": [
+        "boole_laws_of_thought::symbolic-language-calculus"
+      ],
+      "taxonomy_id": "foundations",
+      "level": "foundational"
+    },
+    {
+      "id": "boole_laws_of_thought::universe-and-nothing",
+      "label": "Interpretation of 0 and 1 as Universe and Nothing",
+      "subject_id": "boole_laws_of_thought",
+      "dependencies": [
+        "boole_laws_of_thought::symbolic-language-calculus"
+      ],
+      "taxonomy_id": "foundations",
+      "level": "foundational"
+    },
+    {
+      "id": "boole_laws_of_thought::index-law",
+      "label": "The Index Law (x^2 = x)",
+      "subject_id": "boole_laws_of_thought",
+      "dependencies": [
+        "boole_laws_of_thought::laws-mental-operations"
+      ],
+      "taxonomy_id": "algebra-of-logic",
+      "level": "core"
+    },
+    {
+      "id": "boole_laws_of_thought::non-arithmetic-algebra",
+      "label": "Non-Arithmetic Operations of Logic",
+      "subject_id": "boole_laws_of_thought",
+      "dependencies": [
+        "boole_laws_of_thought::index-law"
+      ],
+      "taxonomy_id": "algebra-of-logic",
+      "level": "core"
+    },
+    {
+      "id": "boole_laws_of_thought::symbolic-translation",
+      "label": "Natural Language to Algebraic Translation",
+      "subject_id": "boole_laws_of_thought",
+      "dependencies": [
+        "boole_laws_of_thought::universe-and-nothing",
+        "boole_laws_of_thought::non-arithmetic-algebra"
+      ],
+      "taxonomy_id": "algebra-of-logic",
+      "level": "core"
+    },
+    {
+      "id": "boole_laws_of_thought::expansion-formula",
+      "label": "Boole's Expansion Formula for Logical Functions",
+      "subject_id": "boole_laws_of_thought",
+      "dependencies": [
+        "boole_laws_of_thought::non-arithmetic-algebra"
+      ],
+      "taxonomy_id": "expansion-methods",
+      "level": "core"
+    },
+    {
+      "id": "boole_laws_of_thought::development-interpretation",
+      "label": "Development and Interpretation of Logical Functions",
+      "subject_id": "boole_laws_of_thought",
+      "dependencies": [
+        "boole_laws_of_thought::expansion-formula"
+      ],
+      "taxonomy_id": "expansion-methods",
+      "level": "core"
+    },
+    {
+      "id": "boole_laws_of_thought::variable-elimination",
+      "label": "Elimination of Variables in Logical Equations",
+      "subject_id": "boole_laws_of_thought",
+      "dependencies": [
+        "boole_laws_of_thought::development-interpretation"
+      ],
+      "taxonomy_id": "equation-solving",
+      "level": "core"
+    },
+    {
+      "id": "boole_laws_of_thought::system-reduction",
+      "label": "Reduction of Systems of Logical Equations",
+      "subject_id": "boole_laws_of_thought",
+      "dependencies": [
+        "boole_laws_of_thought::variable-elimination"
+      ],
+      "taxonomy_id": "equation-solving",
+      "level": "core"
+    },
+    {
+      "id": "boole_laws_of_thought::aristotelian-comparison",
+      "label": "Comparison with Aristotelian Syllogisms",
+      "subject_id": "boole_laws_of_thought",
+      "dependencies": [
+        "boole_laws_of_thought::symbolic-translation",
+        "boole_laws_of_thought::system-reduction"
+      ],
+      "taxonomy_id": "inference-theory",
+      "level": "advanced"
+    },
+    {
+      "id": "boole_laws_of_thought::secondary-propositions",
+      "label": "Symbolic Logic of Secondary (Propositional) Propositions",
+      "subject_id": "boole_laws_of_thought",
+      "dependencies": [
+        "boole_laws_of_thought::symbolic-translation"
+      ],
+      "taxonomy_id": "secondary-logic",
+      "level": "advanced"
+    },
+    {
+      "id": "boole_laws_of_thought::time-duration-analogy",
+      "label": "Time Duration Analogy for Secondary Propositions",
+      "subject_id": "boole_laws_of_thought",
+      "dependencies": [
+        "boole_laws_of_thought::secondary-propositions"
+      ],
+      "taxonomy_id": "secondary-logic",
+      "level": "advanced"
+    },
+    {
+      "id": "boole_laws_of_thought::philosophical-application",
+      "label": "Symbolic Analysis of Philosophical Treatises",
+      "subject_id": "boole_laws_of_thought",
+      "dependencies": [
+        "boole_laws_of_thought::system-reduction",
+        "boole_laws_of_thought::secondary-propositions"
+      ],
+      "taxonomy_id": "philosophical-analysis",
+      "level": "advanced"
+    },
+    {
+      "id": "boole_laws_of_thought::probability-derivation",
+      "label": "Derivation of Probability Theory from Logic",
+      "subject_id": "boole_laws_of_thought",
+      "dependencies": [
+        "boole_laws_of_thought::universe-and-nothing",
+        "boole_laws_of_thought::non-arithmetic-algebra"
+      ],
+      "taxonomy_id": "probability-theory",
+      "level": "core"
+    },
+    {
+      "id": "boole_laws_of_thought::compound-event-probability",
+      "label": "Calculation of Absolute and Conditional Probabilities",
+      "subject_id": "boole_laws_of_thought",
+      "dependencies": [
+        "boole_laws_of_thought::probability-derivation"
+      ],
+      "taxonomy_id": "probability-theory",
+      "level": "core"
+    },
+    {
+      "id": "boole_laws_of_thought::data-consistency-limits",
+      "label": "Major and Minor Limits of Probabilities and Data Consistency",
+      "subject_id": "boole_laws_of_thought",
+      "dependencies": [
+        "boole_laws_of_thought::compound-event-probability"
+      ],
+      "taxonomy_id": "statistical-limits",
+      "level": "advanced"
+    },
+    {
+      "id": "boole_laws_of_thought::causation-analysis",
+      "label": "Analysis of Causation and Statistical Independence",
+      "subject_id": "boole_laws_of_thought",
+      "dependencies": [
+        "boole_laws_of_thought::compound-event-probability"
+      ],
+      "taxonomy_id": "statistical-limits",
+      "level": "advanced"
+    },
+    {
+      "id": "boole_laws_of_thought::testimony-judicial-probabilities",
+      "label": "Evaluation of Testimony and Judicial Probabilities",
+      "subject_id": "boole_laws_of_thought",
+      "dependencies": [
+        "boole_laws_of_thought::data-consistency-limits",
+        "boole_laws_of_thought::causation-analysis"
+      ],
+      "taxonomy_id": "applied-probability",
+      "level": "advanced"
+    },
+    {
+      "id": "boole_laws_of_thought::probabilistic-models-critique",
+      "label": "Critique of Laplace's and Poisson's Hypotheses",
+      "subject_id": "boole_laws_of_thought",
+      "dependencies": [
+        "boole_laws_of_thought::data-consistency-limits",
+        "boole_laws_of_thought::philosophical-application"
+      ],
+      "taxonomy_id": "epistemology",
+      "level": "core"
+    },
+    {
+      "id": "boole_laws_of_thought::laws-of-thought-assessment",
+      "label": "Assessment of Mathematical Laws vs. Human Intellect",
+      "subject_id": "boole_laws_of_thought",
+      "dependencies": [
+        "boole_laws_of_thought::philosophical-application",
+        "boole_laws_of_thought::probabilistic-models-critique"
+      ],
+      "taxonomy_id": "epistemology",
+      "level": "core"
+    },
+    {
+      "id": "boole_laws_of_thought::complex-public-statistics-design",
+      "label": "Design of Solutions for Public Statistics and Legal Decision-Making",
+      "subject_id": "boole_laws_of_thought",
+      "dependencies": [
+        "boole_laws_of_thought::testimony-judicial-probabilities",
+        "boole_laws_of_thought::system-reduction"
+      ],
+      "taxonomy_id": "synthesis",
+      "level": "core"
+    },
+    {
+      "id": "boole_laws_of_thought::interdependent-causes-model",
+      "label": "Comprehensive Logical and Probabilistic Model of Interdependent Causes",
+      "subject_id": "boole_laws_of_thought",
+      "dependencies": [
+        "boole_laws_of_thought::causation-analysis",
+        "boole_laws_of_thought::system-reduction",
+        "boole_laws_of_thought::secondary-propositions"
+      ],
+      "taxonomy_id": "synthesis",
+      "level": "core"
+    }
+  ]
+}

@@ -1,0 +1,314 @@
+{
+  "subject_id": "lavoisier_elements_of_chemistry",
+  "title": "Elements of Chemistry: The New Chemical Nomenclature and Foundations of Modern Analytical Chemistry",
+  "version": "0.1.0",
+  "created": "2026-08-23",
+  "groups": {
+    "Philosophy of Chemistry": {
+      "classifier_name": "Philosophy of Chemistry",
+      "color": "SteelBlue"
+    },
+    "States of Matter": {
+      "classifier_name": "States of Matter",
+      "color": "SteelBlue"
+    },
+    "Experimental Methodology": {
+      "classifier_name": "Experimental Methodology",
+      "color": "SteelBlue"
+    },
+    "Taxonomy and Nomenclature": {
+      "classifier_name": "Taxonomy and Nomenclature",
+      "color": "SteelBlue"
+    },
+    "Fundamental Compounds": {
+      "classifier_name": "Fundamental Compounds",
+      "color": "SteelBlue"
+    },
+    "Organic Chemistry": {
+      "classifier_name": "Organic Chemistry",
+      "color": "SteelBlue"
+    },
+    "Combustion and Calcination": {
+      "classifier_name": "Combustion and Calcination",
+      "color": "SteelBlue"
+    }
+  },
+  "concepts": [
+    {
+      "id": "lavoisier_elements_of_chemistry::critique-greek-elements",
+      "label": "Critique of the Four Elements Theory",
+      "subject_id": "lavoisier_elements_of_chemistry",
+      "dependencies": [],
+      "taxonomy_id": "Philosophy of Chemistry",
+      "level": "foundational"
+    },
+    {
+      "id": "lavoisier_elements_of_chemistry::lavoisier-element-definition",
+      "label": "Empirical Definition of a Chemical Element",
+      "subject_id": "lavoisier_elements_of_chemistry",
+      "dependencies": [
+        "lavoisier_elements_of_chemistry::critique-greek-elements"
+      ],
+      "taxonomy_id": "Philosophy of Chemistry",
+      "level": "foundational"
+    },
+    {
+      "id": "lavoisier_elements_of_chemistry::phlogiston-theory-critique",
+      "label": "Critique of the Phlogiston Hypothesis",
+      "subject_id": "lavoisier_elements_of_chemistry",
+      "dependencies": [
+        "lavoisier_elements_of_chemistry::critique-greek-elements"
+      ],
+      "taxonomy_id": "Combustion and Calcination",
+      "level": "foundational"
+    },
+    {
+      "id": "lavoisier_elements_of_chemistry::simple-substances-five",
+      "label": "The Five Simple Substances of Lavoisier",
+      "subject_id": "lavoisier_elements_of_chemistry",
+      "dependencies": [
+        "lavoisier_elements_of_chemistry::lavoisier-element-definition"
+      ],
+      "taxonomy_id": "Taxonomy and Nomenclature",
+      "level": "foundational"
+    },
+    {
+      "id": "lavoisier_elements_of_chemistry::theory-of-caloric",
+      "label": "The Theory of Caloric, Light, and States of Matter",
+      "subject_id": "lavoisier_elements_of_chemistry",
+      "dependencies": [
+        "lavoisier_elements_of_chemistry::lavoisier-element-definition"
+      ],
+      "taxonomy_id": "States of Matter",
+      "level": "foundational"
+    },
+    {
+      "id": "lavoisier_elements_of_chemistry::pneumatic-apparatus",
+      "label": "Advanced Chemical Apparatus and Pneumatic Operations",
+      "subject_id": "lavoisier_elements_of_chemistry",
+      "dependencies": [
+        "lavoisier_elements_of_chemistry::theory-of-caloric"
+      ],
+      "taxonomy_id": "Experimental Methodology",
+      "level": "foundational"
+    },
+    {
+      "id": "lavoisier_elements_of_chemistry::gas-volume-corrections",
+      "label": "Corrections for Gas Volume Measurements",
+      "subject_id": "lavoisier_elements_of_chemistry",
+      "dependencies": [
+        "lavoisier_elements_of_chemistry::pneumatic-apparatus",
+        "lavoisier_elements_of_chemistry::theory-of-caloric"
+      ],
+      "taxonomy_id": "Experimental Methodology",
+      "level": "core"
+    },
+    {
+      "id": "lavoisier_elements_of_chemistry::ice-calorimeter-operation",
+      "label": "Operation of the Gazometer and Ice Calorimeter",
+      "subject_id": "lavoisier_elements_of_chemistry",
+      "dependencies": [
+        "lavoisier_elements_of_chemistry::pneumatic-apparatus",
+        "lavoisier_elements_of_chemistry::theory-of-caloric"
+      ],
+      "taxonomy_id": "Experimental Methodology",
+      "level": "core"
+    },
+    {
+      "id": "lavoisier_elements_of_chemistry::caloric-quantification-judgment",
+      "label": "Reliability of Ice Calorimeters vs. Thermometer Readings",
+      "subject_id": "lavoisier_elements_of_chemistry",
+      "dependencies": [
+        "lavoisier_elements_of_chemistry::ice-calorimeter-operation",
+        "lavoisier_elements_of_chemistry::theory-of-caloric"
+      ],
+      "taxonomy_id": "Experimental Methodology",
+      "level": "advanced"
+    },
+    {
+      "id": "lavoisier_elements_of_chemistry::oxygen-role-combustion",
+      "label": "Role of Oxygen in Combustion and Calcination",
+      "subject_id": "lavoisier_elements_of_chemistry",
+      "dependencies": [
+        "lavoisier_elements_of_chemistry::phlogiston-theory-critique",
+        "lavoisier_elements_of_chemistry::simple-substances-five"
+      ],
+      "taxonomy_id": "Combustion and Calcination",
+      "level": "core"
+    },
+    {
+      "id": "lavoisier_elements_of_chemistry::oxygen-acid-formation",
+      "label": "Role of Oxygen in Acid Formation",
+      "subject_id": "lavoisier_elements_of_chemistry",
+      "dependencies": [
+        "lavoisier_elements_of_chemistry::oxygen-role-combustion"
+      ],
+      "taxonomy_id": "Combustion and Calcination",
+      "level": "core"
+    },
+    {
+      "id": "lavoisier_elements_of_chemistry::decomposition-synthesis-water",
+      "label": "Decomposition and Synthesis of Water",
+      "subject_id": "lavoisier_elements_of_chemistry",
+      "dependencies": [
+        "lavoisier_elements_of_chemistry::oxygen-role-combustion",
+        "lavoisier_elements_of_chemistry::simple-substances-five"
+      ],
+      "taxonomy_id": "Fundamental Compounds",
+      "level": "core"
+    },
+    {
+      "id": "lavoisier_elements_of_chemistry::water-compound-evidence",
+      "label": "Experimental Evidence of Water as a Compound",
+      "subject_id": "lavoisier_elements_of_chemistry",
+      "dependencies": [
+        "lavoisier_elements_of_chemistry::decomposition-synthesis-water",
+        "lavoisier_elements_of_chemistry::lavoisier-element-definition"
+      ],
+      "taxonomy_id": "Fundamental Compounds",
+      "level": "advanced"
+    },
+    {
+      "id": "lavoisier_elements_of_chemistry::metallic-dissolution-apparatus",
+      "label": "Laboratory Apparatus for Metallic Dissolution and Gas Isolation",
+      "subject_id": "lavoisier_elements_of_chemistry",
+      "dependencies": [
+        "lavoisier_elements_of_chemistry::pneumatic-apparatus",
+        "lavoisier_elements_of_chemistry::oxygen-role-combustion"
+      ],
+      "taxonomy_id": "Experimental Methodology",
+      "level": "core"
+    },
+    {
+      "id": "lavoisier_elements_of_chemistry::metal-oxidation-behaviors",
+      "label": "Metal Behaviors with Oxygen and Acids",
+      "subject_id": "lavoisier_elements_of_chemistry",
+      "dependencies": [
+        "lavoisier_elements_of_chemistry::metallic-dissolution-apparatus",
+        "lavoisier_elements_of_chemistry::oxygen-role-combustion"
+      ],
+      "taxonomy_id": "Combustion and Calcination",
+      "level": "core"
+    },
+    {
+      "id": "lavoisier_elements_of_chemistry::nomenclature-rules",
+      "label": "Rules of the New Chemical Nomenclature",
+      "subject_id": "lavoisier_elements_of_chemistry",
+      "dependencies": [
+        "lavoisier_elements_of_chemistry::simple-substances-five"
+      ],
+      "taxonomy_id": "Taxonomy and Nomenclature",
+      "level": "core"
+    },
+    {
+      "id": "lavoisier_elements_of_chemistry::nomenclature-suffixes",
+      "label": "Systematic Suffixes (-at and -ite) for Higher and Lower Oxygenation",
+      "subject_id": "lavoisier_elements_of_chemistry",
+      "dependencies": [
+        "lavoisier_elements_of_chemistry::nomenclature-rules",
+        "lavoisier_elements_of_chemistry::oxygen-acid-formation"
+      ],
+      "taxonomy_id": "Taxonomy and Nomenclature",
+      "level": "core"
+    },
+    {
+      "id": "lavoisier_elements_of_chemistry::systematic-nomenclature-assessment",
+      "label": "Effectiveness of Systematic Nomenclature over Archaic Names",
+      "subject_id": "lavoisier_elements_of_chemistry",
+      "dependencies": [
+        "lavoisier_elements_of_chemistry::nomenclature-rules",
+        "lavoisier_elements_of_chemistry::nomenclature-suffixes"
+      ],
+      "taxonomy_id": "Taxonomy and Nomenclature",
+      "level": "advanced"
+    },
+    {
+      "id": "lavoisier_elements_of_chemistry::acids-bases-tables",
+      "label": "Systematic Tables of Acids, Bases, and Neutral Salts",
+      "subject_id": "lavoisier_elements_of_chemistry",
+      "dependencies": [
+        "lavoisier_elements_of_chemistry::nomenclature-suffixes",
+        "lavoisier_elements_of_chemistry::oxygen-acid-formation"
+      ],
+      "taxonomy_id": "Taxonomy and Nomenclature",
+      "level": "core"
+    },
+    {
+      "id": "lavoisier_elements_of_chemistry::neutral-salts-formation",
+      "label": "Formation of Neutral Salts",
+      "subject_id": "lavoisier_elements_of_chemistry",
+      "dependencies": [
+        "lavoisier_elements_of_chemistry::acids-bases-tables"
+      ],
+      "taxonomy_id": "Taxonomy and Nomenclature",
+      "level": "core"
+    },
+    {
+      "id": "lavoisier_elements_of_chemistry::organic-substances-decomposition",
+      "label": "Decomposition and Synthesis of Organic Substances",
+      "subject_id": "lavoisier_elements_of_chemistry",
+      "dependencies": [
+        "lavoisier_elements_of_chemistry::decomposition-synthesis-water",
+        "lavoisier_elements_of_chemistry::simple-substances-five"
+      ],
+      "taxonomy_id": "Organic Chemistry",
+      "level": "core"
+    },
+    {
+      "id": "lavoisier_elements_of_chemistry::gas-metal-appendix-tables",
+      "label": "Specific Gravities and Weights of Common Gases and Metals",
+      "subject_id": "lavoisier_elements_of_chemistry",
+      "dependencies": [
+        "lavoisier_elements_of_chemistry::gas-volume-corrections",
+        "lavoisier_elements_of_chemistry::metal-oxidation-behaviors"
+      ],
+      "taxonomy_id": "Experimental Methodology",
+      "level": "core"
+    },
+    {
+      "id": "lavoisier_elements_of_chemistry::vegetable-animal-radicals",
+      "label": "Structural Differences Between Vegetable and Animal Acid Radicals",
+      "subject_id": "lavoisier_elements_of_chemistry",
+      "dependencies": [
+        "lavoisier_elements_of_chemistry::organic-substances-decomposition",
+        "lavoisier_elements_of_chemistry::nomenclature-suffixes"
+      ],
+      "taxonomy_id": "Organic Chemistry",
+      "level": "advanced"
+    },
+    {
+      "id": "lavoisier_elements_of_chemistry::fermentation-mass-balance",
+      "label": "Mass Balance Principles in Fermentation",
+      "subject_id": "lavoisier_elements_of_chemistry",
+      "dependencies": [
+        "lavoisier_elements_of_chemistry::organic-substances-decomposition",
+        "lavoisier_elements_of_chemistry::decomposition-synthesis-water"
+      ],
+      "taxonomy_id": "Organic Chemistry",
+      "level": "core"
+    },
+    {
+      "id": "lavoisier_elements_of_chemistry::organic-substance-analysis",
+      "label": "Analytical Protocol for Unknown Organic Substances",
+      "subject_id": "lavoisier_elements_of_chemistry",
+      "dependencies": [
+        "lavoisier_elements_of_chemistry::organic-substances-decomposition",
+        "lavoisier_elements_of_chemistry::gas-volume-corrections",
+        "lavoisier_elements_of_chemistry::ice-calorimeter-operation"
+      ],
+      "taxonomy_id": "Organic Chemistry",
+      "level": "core"
+    },
+    {
+      "id": "lavoisier_elements_of_chemistry::expanded-salts-matrix",
+      "label": "Expanded Matrix of Potential Neutral Salts with Organic Acids",
+      "subject_id": "lavoisier_elements_of_chemistry",
+      "dependencies": [
+        "lavoisier_elements_of_chemistry::neutral-salts-formation",
+        "lavoisier_elements_of_chemistry::vegetable-animal-radicals"
+      ],
+      "taxonomy_id": "Taxonomy and Nomenclature",
+      "level": "core"
+    }
+  ]
+}

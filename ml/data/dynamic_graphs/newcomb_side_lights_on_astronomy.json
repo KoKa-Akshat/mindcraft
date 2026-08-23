@@ -1,0 +1,300 @@
+{
+  "subject_id": "newcomb_side_lights_on_astronomy",
+  "title": "Side-Lights on Astronomy: Stellar Systems, Scientific Methods, and Cosmic Evolution",
+  "version": "0.1.0",
+  "created": "2026-08-23",
+  "groups": {
+    "cosmology": {
+      "classifier_name": "cosmology",
+      "color": "SteelBlue"
+    },
+    "astrophysics": {
+      "classifier_name": "astrophysics",
+      "color": "SteelBlue"
+    },
+    "engineering": {
+      "classifier_name": "engineering",
+      "color": "SteelBlue"
+    },
+    "physics": {
+      "classifier_name": "physics",
+      "color": "SteelBlue"
+    },
+    "mathematics": {
+      "classifier_name": "mathematics",
+      "color": "SteelBlue"
+    },
+    "instrumentation": {
+      "classifier_name": "instrumentation",
+      "color": "SteelBlue"
+    },
+    "scientific-method": {
+      "classifier_name": "scientific-method",
+      "color": "SteelBlue"
+    },
+    "history-of-science": {
+      "classifier_name": "history-of-science",
+      "color": "SteelBlue"
+    },
+    "synthesis": {
+      "classifier_name": "synthesis",
+      "color": "SteelBlue"
+    },
+    "planetary-science": {
+      "classifier_name": "planetary-science",
+      "color": "SteelBlue"
+    },
+    "astronomy": {
+      "classifier_name": "astronomy",
+      "color": "SteelBlue"
+    }
+  },
+  "concepts": [
+    {
+      "id": "newcomb_side_lights_on_astronomy::milky-way-structure",
+      "label": "Structure of the Milky Way and Stellar System",
+      "subject_id": "newcomb_side_lights_on_astronomy",
+      "dependencies": [],
+      "taxonomy_id": "astronomy",
+      "level": "foundational"
+    },
+    {
+      "id": "newcomb_side_lights_on_astronomy::telescope-optics-and-glass",
+      "label": "Telescope Optics and Historical Optical Glass",
+      "subject_id": "newcomb_side_lights_on_astronomy",
+      "dependencies": [],
+      "taxonomy_id": "instrumentation",
+      "level": "foundational"
+    },
+    {
+      "id": "newcomb_side_lights_on_astronomy::positional-astronomy-basics",
+      "label": "Positional Astronomy, Zenith, and Transits",
+      "subject_id": "newcomb_side_lights_on_astronomy",
+      "dependencies": [],
+      "taxonomy_id": "astronomy",
+      "level": "foundational"
+    },
+    {
+      "id": "newcomb_side_lights_on_astronomy::classical-orbital-mechanics",
+      "label": "Classical Orbital Mechanics and Kepler's Third Law",
+      "subject_id": "newcomb_side_lights_on_astronomy",
+      "dependencies": [],
+      "taxonomy_id": "physics",
+      "level": "foundational"
+    },
+    {
+      "id": "newcomb_side_lights_on_astronomy::astronomical-ephemerides",
+      "label": "Astronomical Ephemerides, Nautical Almanacs, and Timekeeping",
+      "subject_id": "newcomb_side_lights_on_astronomy",
+      "dependencies": [
+        "newcomb_side_lights_on_astronomy::positional-astronomy-basics"
+      ],
+      "taxonomy_id": "astronomy",
+      "level": "foundational"
+    },
+    {
+      "id": "newcomb_side_lights_on_astronomy::bessel-struve-parallax",
+      "label": "Bessel, Struve, and Argelander Stellar Parallax and Catalogues",
+      "subject_id": "newcomb_side_lights_on_astronomy",
+      "dependencies": [
+        "newcomb_side_lights_on_astronomy::milky-way-structure",
+        "newcomb_side_lights_on_astronomy::positional-astronomy-basics"
+      ],
+      "taxonomy_id": "astronomy",
+      "level": "core"
+    },
+    {
+      "id": "newcomb_side_lights_on_astronomy::gravitational-mass-calculation",
+      "label": "Gravitational Mass Calculation for Planets and Stars",
+      "subject_id": "newcomb_side_lights_on_astronomy",
+      "dependencies": [
+        "newcomb_side_lights_on_astronomy::classical-orbital-mechanics",
+        "newcomb_side_lights_on_astronomy::positional-astronomy-basics"
+      ],
+      "taxonomy_id": "physics",
+      "level": "core"
+    },
+    {
+      "id": "newcomb_side_lights_on_astronomy::gravitational-contraction-heat",
+      "label": "Gravitational Contraction and Solar Heat Maintenance",
+      "subject_id": "newcomb_side_lights_on_astronomy",
+      "dependencies": [
+        "newcomb_side_lights_on_astronomy::classical-orbital-mechanics"
+      ],
+      "taxonomy_id": "astrophysics",
+      "level": "core"
+    },
+    {
+      "id": "newcomb_side_lights_on_astronomy::sunspot-cycle-and-magnetism",
+      "label": "11-Year Sunspot Cycle and Solar-Terrestrial Magnetic Interactions",
+      "subject_id": "newcomb_side_lights_on_astronomy",
+      "dependencies": [],
+      "taxonomy_id": "astrophysics",
+      "level": "core"
+    },
+    {
+      "id": "newcomb_side_lights_on_astronomy::historical-planetary-models",
+      "label": "Historical Planetary Models from Ptolemy to Copernican Heliocentrism",
+      "subject_id": "newcomb_side_lights_on_astronomy",
+      "dependencies": [
+        "newcomb_side_lights_on_astronomy::classical-orbital-mechanics"
+      ],
+      "taxonomy_id": "history-of-science",
+      "level": "core"
+    },
+    {
+      "id": "newcomb_side_lights_on_astronomy::spectroscopic-stellar-physics",
+      "label": "Spectroscopic Analysis and the New Stellar Physics",
+      "subject_id": "newcomb_side_lights_on_astronomy",
+      "dependencies": [
+        "newcomb_side_lights_on_astronomy::telescope-optics-and-glass"
+      ],
+      "taxonomy_id": "astrophysics",
+      "level": "core"
+    },
+    {
+      "id": "newcomb_side_lights_on_astronomy::statistical-proper-motion",
+      "label": "Statistical Proper Motion and Average Stellar Distance Estimation",
+      "subject_id": "newcomb_side_lights_on_astronomy",
+      "dependencies": [
+        "newcomb_side_lights_on_astronomy::bessel-struve-parallax"
+      ],
+      "taxonomy_id": "astronomy",
+      "level": "core"
+    },
+    {
+      "id": "newcomb_side_lights_on_astronomy::martian-canals-habitability",
+      "label": "Martian Canals and Extraterrestrial Habitability Arguments",
+      "subject_id": "newcomb_side_lights_on_astronomy",
+      "dependencies": [
+        "newcomb_side_lights_on_astronomy::historical-planetary-models",
+        "newcomb_side_lights_on_astronomy::spectroscopic-stellar-physics"
+      ],
+      "taxonomy_id": "planetary-science",
+      "level": "core"
+    },
+    {
+      "id": "newcomb_side_lights_on_astronomy::fluid-mechanics-scaling-laws",
+      "label": "Square-Cube Law and Fluid Mechanics Scaling of Flight",
+      "subject_id": "newcomb_side_lights_on_astronomy",
+      "dependencies": [],
+      "taxonomy_id": "physics",
+      "level": "core"
+    },
+    {
+      "id": "newcomb_side_lights_on_astronomy::pure-vs-utilitarian-science",
+      "label": "Pure Science Versus Utilitarian Industrial Invention",
+      "subject_id": "newcomb_side_lights_on_astronomy",
+      "dependencies": [],
+      "taxonomy_id": "history-of-science",
+      "level": "foundational"
+    },
+    {
+      "id": "newcomb_side_lights_on_astronomy::scientific-research-organization",
+      "label": "Scientific Research Organization and University Roles",
+      "subject_id": "newcomb_side_lights_on_astronomy",
+      "dependencies": [
+        "newcomb_side_lights_on_astronomy::pure-vs-utilitarian-science"
+      ],
+      "taxonomy_id": "history-of-science",
+      "level": "core"
+    },
+    {
+      "id": "newcomb_side_lights_on_astronomy::non-euclidean-geometry-space",
+      "label": "Non-Euclidean Geometry, the Fourth Dimension, and Spatial Analogies",
+      "subject_id": "newcomb_side_lights_on_astronomy",
+      "dependencies": [],
+      "taxonomy_id": "mathematics",
+      "level": "advanced"
+    },
+    {
+      "id": "newcomb_side_lights_on_astronomy::weather-modification-critique",
+      "label": "Critique of Historical Weather Modification and Rain-Making",
+      "subject_id": "newcomb_side_lights_on_astronomy",
+      "dependencies": [
+        "newcomb_side_lights_on_astronomy::gravitational-contraction-heat",
+        "newcomb_side_lights_on_astronomy::sunspot-cycle-and-magnetism"
+      ],
+      "taxonomy_id": "scientific-method",
+      "level": "advanced"
+    },
+    {
+      "id": "newcomb_side_lights_on_astronomy::olbers-paradox-cosmology",
+      "label": "Olbers' Paradox, Kantian Antinomies, and Finite Versus Infinite Space",
+      "subject_id": "newcomb_side_lights_on_astronomy",
+      "dependencies": [
+        "newcomb_side_lights_on_astronomy::milky-way-structure",
+        "newcomb_side_lights_on_astronomy::non-euclidean-geometry-space"
+      ],
+      "taxonomy_id": "cosmology",
+      "level": "advanced"
+    },
+    {
+      "id": "newcomb_side_lights_on_astronomy::international-astronomical-cooperation",
+      "label": "International Cooperation and Centralized Ephemerides Organization",
+      "subject_id": "newcomb_side_lights_on_astronomy",
+      "dependencies": [
+        "newcomb_side_lights_on_astronomy::astronomical-ephemerides",
+        "newcomb_side_lights_on_astronomy::scientific-research-organization"
+      ],
+      "taxonomy_id": "astronomy",
+      "level": "advanced"
+    },
+    {
+      "id": "newcomb_side_lights_on_astronomy::stellar-parallax-observation-protocol",
+      "label": "Stellar Parallax and Proper-Motion Observation Protocol Design",
+      "subject_id": "newcomb_side_lights_on_astronomy",
+      "dependencies": [
+        "newcomb_side_lights_on_astronomy::bessel-struve-parallax",
+        "newcomb_side_lights_on_astronomy::statistical-proper-motion"
+      ],
+      "taxonomy_id": "astronomy",
+      "level": "advanced"
+    },
+    {
+      "id": "newcomb_side_lights_on_astronomy::nautical-ephemerides-standardization",
+      "label": "Standardization of International Nautical Ephemerides and Time Signals",
+      "subject_id": "newcomb_side_lights_on_astronomy",
+      "dependencies": [
+        "newcomb_side_lights_on_astronomy::astronomical-ephemerides",
+        "newcomb_side_lights_on_astronomy::international-astronomical-cooperation"
+      ],
+      "taxonomy_id": "astronomy",
+      "level": "advanced"
+    },
+    {
+      "id": "newcomb_side_lights_on_astronomy::aerospace-flight-engineering",
+      "label": "Heavier-Than-Air Machines and Dirigible Airships Engineering",
+      "subject_id": "newcomb_side_lights_on_astronomy",
+      "dependencies": [
+        "newcomb_side_lights_on_astronomy::fluid-mechanics-scaling-laws",
+        "newcomb_side_lights_on_astronomy::pure-vs-utilitarian-science"
+      ],
+      "taxonomy_id": "engineering",
+      "level": "advanced"
+    },
+    {
+      "id": "newcomb_side_lights_on_astronomy::sociotechnical-research-framework",
+      "label": "Capstone Research Framework on Pure Versus Applied Scientific Impact",
+      "subject_id": "newcomb_side_lights_on_astronomy",
+      "dependencies": [
+        "newcomb_side_lights_on_astronomy::scientific-research-organization",
+        "newcomb_side_lights_on_astronomy::pure-vs-utilitarian-science"
+      ],
+      "taxonomy_id": "synthesis",
+      "level": "cross_cutting"
+    },
+    {
+      "id": "newcomb_side_lights_on_astronomy::cosmic-evolution-philosophy",
+      "label": "Philosophical Synthesis of Stellar Systems, Scientific Methods, and Cosmic Evolution",
+      "subject_id": "newcomb_side_lights_on_astronomy",
+      "dependencies": [
+        "newcomb_side_lights_on_astronomy::gravitational-contraction-heat",
+        "newcomb_side_lights_on_astronomy::olbers-paradox-cosmology",
+        "newcomb_side_lights_on_astronomy::spectroscopic-stellar-physics"
+      ],
+      "taxonomy_id": "synthesis",
+      "level": "cross_cutting"
+    }
+  ]
+}

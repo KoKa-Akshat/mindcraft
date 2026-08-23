@@ -1,0 +1,307 @@
+{
+  "subject_id": "james_principles_of_psychology_v1",
+  "title": "Principles of Psychology",
+  "version": "0.1.0",
+  "created": "2026-08-23",
+  "groups": {
+    "memory_and_self": {
+      "classifier_name": "memory_and_self",
+      "color": "SteelBlue"
+    },
+    "theoretical_foundations": {
+      "classifier_name": "theoretical_foundations",
+      "color": "SteelBlue"
+    },
+    "scope_and_biology": {
+      "classifier_name": "scope_and_biology",
+      "color": "SteelBlue"
+    },
+    "neurophysiology": {
+      "classifier_name": "neurophysiology",
+      "color": "SteelBlue"
+    },
+    "consciousness_and_attention": {
+      "classifier_name": "consciousness_and_attention",
+      "color": "SteelBlue"
+    },
+    "synthesis_and_application": {
+      "classifier_name": "synthesis_and_application",
+      "color": "SteelBlue"
+    },
+    "psychophysics": {
+      "classifier_name": "psychophysics",
+      "color": "SteelBlue"
+    }
+  },
+  "concepts": [
+    {
+      "id": "james_principles_of_psychology_v1::cerebralist-viewpoint",
+      "label": "The Cerebralist Viewpoint and Scope of Psychology",
+      "subject_id": "james_principles_of_psychology_v1",
+      "dependencies": [],
+      "taxonomy_id": "scope_and_biology",
+      "level": "foundational"
+    },
+    {
+      "id": "james_principles_of_psychology_v1::cerebral-localization",
+      "label": "Cerebral Localization and Motor Zones",
+      "subject_id": "james_principles_of_psychology_v1",
+      "dependencies": [
+        "james_principles_of_psychology_v1::cerebralist-viewpoint"
+      ],
+      "taxonomy_id": "scope_and_biology",
+      "level": "foundational"
+    },
+    {
+      "id": "james_principles_of_psychology_v1::aphasia-mechanisms",
+      "label": "Broca's Area, Wernicke's Area, and Aphasia",
+      "subject_id": "james_principles_of_psychology_v1",
+      "dependencies": [
+        "james_principles_of_psychology_v1::cerebral-localization"
+      ],
+      "taxonomy_id": "scope_and_biology",
+      "level": "core"
+    },
+    {
+      "id": "james_principles_of_psychology_v1::neural-plasticity",
+      "label": "Neural Plasticity and Physiological Mechanisms of Repetition",
+      "subject_id": "james_principles_of_psychology_v1",
+      "dependencies": [
+        "james_principles_of_psychology_v1::cerebralist-viewpoint"
+      ],
+      "taxonomy_id": "neurophysiology",
+      "level": "foundational"
+    },
+    {
+      "id": "james_principles_of_psychology_v1::stimulus-summation",
+      "label": "Physiological Mechanism of Stimulus Summation and Neural Discharge",
+      "subject_id": "james_principles_of_psychology_v1",
+      "dependencies": [
+        "james_principles_of_psychology_v1::neural-plasticity",
+        "james_principles_of_psychology_v1::cerebral-localization"
+      ],
+      "taxonomy_id": "neurophysiology",
+      "level": "core"
+    },
+    {
+      "id": "james_principles_of_psychology_v1::habit-formation",
+      "label": "Habit Formation and Bain's Maxims of Moral Action",
+      "subject_id": "james_principles_of_psychology_v1",
+      "dependencies": [
+        "james_principles_of_psychology_v1::neural-plasticity",
+        "james_principles_of_psychology_v1::stimulus-summation"
+      ],
+      "taxonomy_id": "neurophysiology",
+      "level": "core"
+    },
+    {
+      "id": "james_principles_of_psychology_v1::faculty-psychology-critique",
+      "label": "Critique of Traditional Faculty Psychology",
+      "subject_id": "james_principles_of_psychology_v1",
+      "dependencies": [
+        "james_principles_of_psychology_v1::cerebral-localization",
+        "james_principles_of_psychology_v1::neural-plasticity"
+      ],
+      "taxonomy_id": "theoretical_foundations",
+      "level": "advanced"
+    },
+    {
+      "id": "james_principles_of_psychology_v1::associationist-theory",
+      "label": "Associationist Theory vs. Spiritualistic Theory of Mental Life",
+      "subject_id": "james_principles_of_psychology_v1",
+      "dependencies": [
+        "james_principles_of_psychology_v1::cerebralist-viewpoint"
+      ],
+      "taxonomy_id": "theoretical_foundations",
+      "level": "core"
+    },
+    {
+      "id": "james_principles_of_psychology_v1::mind-stuff-theory",
+      "label": "Refutation of Mind-Stuff Theory and Self-Compounding Feelings",
+      "subject_id": "james_principles_of_psychology_v1",
+      "dependencies": [
+        "james_principles_of_psychology_v1::associationist-theory"
+      ],
+      "taxonomy_id": "theoretical_foundations",
+      "level": "advanced"
+    },
+    {
+      "id": "james_principles_of_psychology_v1::stream-of-thought",
+      "label": "The Stream of Thought and Substantive vs. Transitive States",
+      "subject_id": "james_principles_of_psychology_v1",
+      "dependencies": [
+        "james_principles_of_psychology_v1::associationist-theory"
+      ],
+      "taxonomy_id": "consciousness_and_attention",
+      "level": "core"
+    },
+    {
+      "id": "james_principles_of_psychology_v1::unconscious-mental-states",
+      "label": "Refutation of Unconscious Mental States",
+      "subject_id": "james_principles_of_psychology_v1",
+      "dependencies": [
+        "james_principles_of_psychology_v1::stream-of-thought"
+      ],
+      "taxonomy_id": "consciousness_and_attention",
+      "level": "advanced"
+    },
+    {
+      "id": "james_principles_of_psychology_v1::introspection-limitations",
+      "label": "Methodological Limitations of Introspection in Transitive States",
+      "subject_id": "james_principles_of_psychology_v1",
+      "dependencies": [
+        "james_principles_of_psychology_v1::stream-of-thought"
+      ],
+      "taxonomy_id": "consciousness_and_attention",
+      "level": "advanced"
+    },
+    {
+      "id": "james_principles_of_psychology_v1::attention-dynamics",
+      "label": "Attention, Voluntary Effort, and Dynamics of Selection",
+      "subject_id": "james_principles_of_psychology_v1",
+      "dependencies": [
+        "james_principles_of_psychology_v1::stream-of-thought",
+        "james_principles_of_psychology_v1::stimulus-summation"
+      ],
+      "taxonomy_id": "consciousness_and_attention",
+      "level": "core"
+    },
+    {
+      "id": "james_principles_of_psychology_v1::wandering-attention",
+      "label": "Dynamics of Wandering Attention and Curiosity",
+      "subject_id": "james_principles_of_psychology_v1",
+      "dependencies": [
+        "james_principles_of_psychology_v1::attention-dynamics"
+      ],
+      "taxonomy_id": "consciousness_and_attention",
+      "level": "advanced"
+    },
+    {
+      "id": "james_principles_of_psychology_v1::psychophysical-measurement",
+      "label": "Psychophysical Measurement Laws and Thresholds",
+      "subject_id": "james_principles_of_psychology_v1",
+      "dependencies": [
+        "james_principles_of_psychology_v1::cerebralist-viewpoint"
+      ],
+      "taxonomy_id": "psychophysics",
+      "level": "core"
+    },
+    {
+      "id": "james_principles_of_psychology_v1::reaction-time-paradigms",
+      "label": "Reaction-Time Paradigms and Discrimination-Time",
+      "subject_id": "james_principles_of_psychology_v1",
+      "dependencies": [
+        "james_principles_of_psychology_v1::psychophysical-measurement"
+      ],
+      "taxonomy_id": "psychophysics",
+      "level": "core"
+    },
+    {
+      "id": "james_principles_of_psychology_v1::discrimination-comparison",
+      "label": "Discrimination, Comparison, and Apperception",
+      "subject_id": "james_principles_of_psychology_v1",
+      "dependencies": [
+        "james_principles_of_psychology_v1::psychophysical-measurement",
+        "james_principles_of_psychology_v1::reaction-time-paradigms"
+      ],
+      "taxonomy_id": "psychophysics",
+      "level": "core"
+    },
+    {
+      "id": "james_principles_of_psychology_v1::association-of-ideas",
+      "label": "Association of Ideas and Memory Mechanics",
+      "subject_id": "james_principles_of_psychology_v1",
+      "dependencies": [
+        "james_principles_of_psychology_v1::associationist-theory"
+      ],
+      "taxonomy_id": "memory_and_self",
+      "level": "core"
+    },
+    {
+      "id": "james_principles_of_psychology_v1::forgetting-curves",
+      "label": "Ebbinghaus's Forgetting Curves and Logarithmic Decay",
+      "subject_id": "james_principles_of_psychology_v1",
+      "dependencies": [
+        "james_principles_of_psychology_v1::association-of-ideas"
+      ],
+      "taxonomy_id": "memory_and_self",
+      "level": "core"
+    },
+    {
+      "id": "james_principles_of_psychology_v1::mnemonic-techniques",
+      "label": "Holistic Learning Methods and Mnemonic Techniques",
+      "subject_id": "james_principles_of_psychology_v1",
+      "dependencies": [
+        "james_principles_of_psychology_v1::forgetting-curves"
+      ],
+      "taxonomy_id": "memory_and_self",
+      "level": "core"
+    },
+    {
+      "id": "james_principles_of_psychology_v1::personal-identity",
+      "label": "Personal Identity, Aggregate View, and Transcendental Ego",
+      "subject_id": "james_principles_of_psychology_v1",
+      "dependencies": [
+        "james_principles_of_psychology_v1::association-of-ideas",
+        "james_principles_of_psychology_v1::stream-of-thought"
+      ],
+      "taxonomy_id": "memory_and_self",
+      "level": "advanced"
+    },
+    {
+      "id": "james_principles_of_psychology_v1::self-esteem-formula",
+      "label": "Formula for Self-Esteem and Vulnerability to Disappointment",
+      "subject_id": "james_principles_of_psychology_v1",
+      "dependencies": [
+        "james_principles_of_psychology_v1::personal-identity",
+        "james_principles_of_psychology_v1::association-of-ideas"
+      ],
+      "taxonomy_id": "memory_and_self",
+      "level": "core"
+    },
+    {
+      "id": "james_principles_of_psychology_v1::applied-habit-routine",
+      "label": "Applied Habit-Building Routine and Initiation Rules",
+      "subject_id": "james_principles_of_psychology_v1",
+      "dependencies": [
+        "james_principles_of_psychology_v1::habit-formation"
+      ],
+      "taxonomy_id": "synthesis_and_application",
+      "level": "core"
+    },
+    {
+      "id": "james_principles_of_psychology_v1::experimental-discrimination",
+      "label": "Experimental Protocol for Discrimination and Apperception",
+      "subject_id": "james_principles_of_psychology_v1",
+      "dependencies": [
+        "james_principles_of_psychology_v1::reaction-time-paradigms",
+        "james_principles_of_psychology_v1::attention-dynamics"
+      ],
+      "taxonomy_id": "synthesis_and_application",
+      "level": "core"
+    },
+    {
+      "id": "james_principles_of_psychology_v1::pedagogical-framework",
+      "label": "Pedagogical Framework for Curriculum Design and Attention",
+      "subject_id": "james_principles_of_psychology_v1",
+      "dependencies": [
+        "james_principles_of_psychology_v1::wandering-attention",
+        "james_principles_of_psychology_v1::mnemonic-techniques"
+      ],
+      "taxonomy_id": "synthesis_and_application",
+      "level": "cross_cutting"
+    },
+    {
+      "id": "james_principles_of_psychology_v1::theoretical-synthesis",
+      "label": "Comprehensive Critique of Faculty Psychology and Mental Life",
+      "subject_id": "james_principles_of_psychology_v1",
+      "dependencies": [
+        "james_principles_of_psychology_v1::faculty-psychology-critique",
+        "james_principles_of_psychology_v1::mind-stuff-theory",
+        "james_principles_of_psychology_v1::unconscious-mental-states"
+      ],
+      "taxonomy_id": "synthesis_and_application",
+      "level": "cross_cutting"
+    }
+  ]
+}

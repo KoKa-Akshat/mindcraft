@@ -1,0 +1,266 @@
+{
+  "subject_id": "ricardo_principles_political_economy_taxation",
+  "title": "Principles of Political Economy and Taxation",
+  "version": "0.1.0",
+  "created": "2026-08-23",
+  "groups": {
+    "Taxation": {
+      "classifier_name": "Taxation",
+      "color": "SteelBlue"
+    },
+    "Price Mechanics": {
+      "classifier_name": "Price Mechanics",
+      "color": "SteelBlue"
+    },
+    "International Trade": {
+      "classifier_name": "International Trade",
+      "color": "SteelBlue"
+    },
+    "Distribution Theory": {
+      "classifier_name": "Distribution Theory",
+      "color": "SteelBlue"
+    },
+    "Synthesis & Policy": {
+      "classifier_name": "Synthesis & Policy",
+      "color": "SteelBlue"
+    },
+    "Value Theory": {
+      "classifier_name": "Value Theory",
+      "color": "SteelBlue"
+    },
+    "Macro-Dynamics": {
+      "classifier_name": "Macro-Dynamics",
+      "color": "SteelBlue"
+    },
+    "Capital Classification": {
+      "classifier_name": "Capital Classification",
+      "color": "SteelBlue"
+    }
+  },
+  "concepts": [
+    {
+      "id": "ricardo_principles_political_economy_taxation::labor-theory-of-value",
+      "label": "Labor Theory of Value",
+      "subject_id": "ricardo_principles_political_economy_taxation",
+      "dependencies": [],
+      "taxonomy_id": "Value Theory",
+      "level": "foundational"
+    },
+    {
+      "id": "ricardo_principles_political_economy_taxation::scarcity-vs-industrial-value",
+      "label": "Scarcity Value vs. Industrial Value",
+      "subject_id": "ricardo_principles_political_economy_taxation",
+      "dependencies": [
+        "ricardo_principles_political_economy_taxation::labor-theory-of-value"
+      ],
+      "taxonomy_id": "Value Theory",
+      "level": "foundational"
+    },
+    {
+      "id": "ricardo_principles_political_economy_taxation::fixed-circulating-capital",
+      "label": "Fixed and Circulating Capital",
+      "subject_id": "ricardo_principles_political_economy_taxation",
+      "dependencies": [],
+      "taxonomy_id": "Capital Classification",
+      "level": "foundational"
+    },
+    {
+      "id": "ricardo_principles_political_economy_taxation::natural-market-prices",
+      "label": "Natural and Market Prices",
+      "subject_id": "ricardo_principles_political_economy_taxation",
+      "dependencies": [
+        "ricardo_principles_political_economy_taxation::labor-theory-of-value"
+      ],
+      "taxonomy_id": "Price Mechanics",
+      "level": "core"
+    },
+    {
+      "id": "ricardo_principles_political_economy_taxation::wages-capital-durability-prices",
+      "label": "Effects of Wages and Capital Durability on Prices",
+      "subject_id": "ricardo_principles_political_economy_taxation",
+      "dependencies": [
+        "ricardo_principles_political_economy_taxation::fixed-circulating-capital",
+        "ricardo_principles_political_economy_taxation::natural-market-prices"
+      ],
+      "taxonomy_id": "Price Mechanics",
+      "level": "core"
+    },
+    {
+      "id": "ricardo_principles_political_economy_taxation::theory-of-rent",
+      "label": "Theory of Rent and Differential Fertility",
+      "subject_id": "ricardo_principles_political_economy_taxation",
+      "dependencies": [
+        "ricardo_principles_political_economy_taxation::labor-theory-of-value"
+      ],
+      "taxonomy_id": "Distribution Theory",
+      "level": "core"
+    },
+    {
+      "id": "ricardo_principles_political_economy_taxation::diminishing-returns-agriculture",
+      "label": "Diminishing Returns in Agriculture",
+      "subject_id": "ricardo_principles_political_economy_taxation",
+      "dependencies": [
+        "ricardo_principles_political_economy_taxation::theory-of-rent"
+      ],
+      "taxonomy_id": "Distribution Theory",
+      "level": "core"
+    },
+    {
+      "id": "ricardo_principles_political_economy_taxation::class-distribution-produce",
+      "label": "Distribution of Produce Among Classes",
+      "subject_id": "ricardo_principles_political_economy_taxation",
+      "dependencies": [
+        "ricardo_principles_political_economy_taxation::theory-of-rent",
+        "ricardo_principles_political_economy_taxation::wages-capital-durability-prices"
+      ],
+      "taxonomy_id": "Distribution Theory",
+      "level": "core"
+    },
+    {
+      "id": "ricardo_principles_political_economy_taxation::inverse-wages-profits",
+      "label": "Inverse Relationship Between Wages and Profits",
+      "subject_id": "ricardo_principles_political_economy_taxation",
+      "dependencies": [
+        "ricardo_principles_political_economy_taxation::class-distribution-produce"
+      ],
+      "taxonomy_id": "Distribution Theory",
+      "level": "core"
+    },
+    {
+      "id": "ricardo_principles_political_economy_taxation::value-vs-riches",
+      "label": "Value Versus Riches and Wealth Measures",
+      "subject_id": "ricardo_principles_political_economy_taxation",
+      "dependencies": [
+        "ricardo_principles_political_economy_taxation::labor-theory-of-value",
+        "ricardo_principles_political_economy_taxation::scarcity-vs-industrial-value"
+      ],
+      "taxonomy_id": "Value Theory",
+      "level": "advanced"
+    },
+    {
+      "id": "ricardo_principles_political_economy_taxation::smith-value-critique",
+      "label": "Critique of Adam Smith's Variable Measure of Value",
+      "subject_id": "ricardo_principles_political_economy_taxation",
+      "dependencies": [
+        "ricardo_principles_political_economy_taxation::value-vs-riches",
+        "ricardo_principles_political_economy_taxation::natural-market-prices"
+      ],
+      "taxonomy_id": "Value Theory",
+      "level": "advanced"
+    },
+    {
+      "id": "ricardo_principles_political_economy_taxation::taxation-principles",
+      "label": "Smith's Maxims of Taxation",
+      "subject_id": "ricardo_principles_political_economy_taxation",
+      "dependencies": [],
+      "taxonomy_id": "Taxation",
+      "level": "core"
+    },
+    {
+      "id": "ricardo_principles_political_economy_taxation::tax-incidence-analysis",
+      "label": "Incidence of Taxation on Rent, Wages, and Profits",
+      "subject_id": "ricardo_principles_political_economy_taxation",
+      "dependencies": [
+        "ricardo_principles_political_economy_taxation::taxation-principles",
+        "ricardo_principles_political_economy_taxation::class-distribution-produce",
+        "ricardo_principles_political_economy_taxation::theory-of-rent"
+      ],
+      "taxonomy_id": "Taxation",
+      "level": "advanced"
+    },
+    {
+      "id": "ricardo_principles_political_economy_taxation::raw-produce-tax-critique",
+      "label": "Critique of Raw Produce and Land Taxes",
+      "subject_id": "ricardo_principles_political_economy_taxation",
+      "dependencies": [
+        "ricardo_principles_political_economy_taxation::tax-incidence-analysis",
+        "ricardo_principles_political_economy_taxation::diminishing-returns-agriculture"
+      ],
+      "taxonomy_id": "Taxation",
+      "level": "advanced"
+    },
+    {
+      "id": "ricardo_principles_political_economy_taxation::comparative-advantage",
+      "label": "Foreign Trade and Comparative Advantage",
+      "subject_id": "ricardo_principles_political_economy_taxation",
+      "dependencies": [],
+      "taxonomy_id": "International Trade",
+      "level": "core"
+    },
+    {
+      "id": "ricardo_principles_political_economy_taxation::international-capital-flows",
+      "label": "International Capital and Bullion Flows",
+      "subject_id": "ricardo_principles_political_economy_taxation",
+      "dependencies": [
+        "ricardo_principles_political_economy_taxation::comparative-advantage"
+      ],
+      "taxonomy_id": "International Trade",
+      "level": "advanced"
+    },
+    {
+      "id": "ricardo_principles_political_economy_taxation::foreign-exchange-currency",
+      "label": "Foreign Exchange and Paper Currency Regulation",
+      "subject_id": "ricardo_principles_political_economy_taxation",
+      "dependencies": [
+        "ricardo_principles_political_economy_taxation::international-capital-flows"
+      ],
+      "taxonomy_id": "International Trade",
+      "level": "advanced"
+    },
+    {
+      "id": "ricardo_principles_political_economy_taxation::say-law-markets",
+      "label": "Say's Law of Markets and General Gluts",
+      "subject_id": "ricardo_principles_political_economy_taxation",
+      "dependencies": [
+        "ricardo_principles_political_economy_taxation::inverse-wages-profits",
+        "ricardo_principles_political_economy_taxation::international-capital-flows"
+      ],
+      "taxonomy_id": "Macro-Dynamics",
+      "level": "advanced"
+    },
+    {
+      "id": "ricardo_principles_political_economy_taxation::population-dynamics",
+      "label": "Population Dynamics and Poor Laws",
+      "subject_id": "ricardo_principles_political_economy_taxation",
+      "dependencies": [
+        "ricardo_principles_political_economy_taxation::class-distribution-produce"
+      ],
+      "taxonomy_id": "Macro-Dynamics",
+      "level": "core"
+    },
+    {
+      "id": "ricardo_principles_political_economy_taxation::capital-accumulation-stationary-state",
+      "label": "Capital Accumulation and the Stationary State",
+      "subject_id": "ricardo_principles_political_economy_taxation",
+      "dependencies": [
+        "ricardo_principles_political_economy_taxation::diminishing-returns-agriculture",
+        "ricardo_principles_political_economy_taxation::inverse-wages-profits",
+        "ricardo_principles_political_economy_taxation::population-dynamics"
+      ],
+      "taxonomy_id": "Macro-Dynamics",
+      "level": "advanced"
+    },
+    {
+      "id": "ricardo_principles_political_economy_taxation::fiscal-policy-reform-design",
+      "label": "Fiscal Policy Reform and Tax Neutrality",
+      "subject_id": "ricardo_principles_political_economy_taxation",
+      "dependencies": [
+        "ricardo_principles_political_economy_taxation::raw-produce-tax-critique",
+        "ricardo_principles_political_economy_taxation::taxation-principles"
+      ],
+      "taxonomy_id": "Synthesis & Policy",
+      "level": "cross_cutting"
+    },
+    {
+      "id": "ricardo_principles_political_economy_taxation::stationary-state-model",
+      "label": "Comparative Economic Model of the Stationary State",
+      "subject_id": "ricardo_principles_political_economy_taxation",
+      "dependencies": [
+        "ricardo_principles_political_economy_taxation::capital-accumulation-stationary-state",
+        "ricardo_principles_political_economy_taxation::say-law-markets"
+      ],
+      "taxonomy_id": "Synthesis & Policy",
+      "level": "cross_cutting"
+    }
+  ]
+}

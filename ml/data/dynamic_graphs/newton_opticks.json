@@ -1,0 +1,311 @@
+{
+  "subject_id": "newton_opticks",
+  "title": "Opticks: A Treatise of the Reflections, Refractions, Inflections, and Colours of Light",
+  "version": "0.1.0",
+  "created": "2026-08-23",
+  "groups": {
+    "color-theory": {
+      "classifier_name": "color-theory",
+      "color": "SteelBlue"
+    },
+    "natural-philosophy": {
+      "classifier_name": "natural-philosophy",
+      "color": "SteelBlue"
+    },
+    "experimental-methodology": {
+      "classifier_name": "experimental-methodology",
+      "color": "SteelBlue"
+    },
+    "prismatic-phenomena": {
+      "classifier_name": "prismatic-phenomena",
+      "color": "SteelBlue"
+    },
+    "diffraction": {
+      "classifier_name": "diffraction",
+      "color": "SteelBlue"
+    },
+    "polarization": {
+      "classifier_name": "polarization",
+      "color": "SteelBlue"
+    },
+    "particle-mechanics": {
+      "classifier_name": "particle-mechanics",
+      "color": "SteelBlue"
+    },
+    "wave-interference": {
+      "classifier_name": "wave-interference",
+      "color": "SteelBlue"
+    },
+    "telescopic-optics": {
+      "classifier_name": "telescopic-optics",
+      "color": "SteelBlue"
+    },
+    "geometrical-optics": {
+      "classifier_name": "geometrical-optics",
+      "color": "SteelBlue"
+    }
+  },
+  "concepts": [
+    {
+      "id": "newton_opticks::snells-law",
+      "label": "Snell's Law and Refraction Index",
+      "subject_id": "newton_opticks",
+      "dependencies": [],
+      "taxonomy_id": "geometrical-optics",
+      "level": "foundational"
+    },
+    {
+      "id": "newton_opticks::prismatic-dispersion",
+      "label": "Prismatic Decomposition of Sunlight",
+      "subject_id": "newton_opticks",
+      "dependencies": [
+        "newton_opticks::snells-law"
+      ],
+      "taxonomy_id": "prismatic-phenomena",
+      "level": "core"
+    },
+    {
+      "id": "newton_opticks::oblong-spectrum",
+      "label": "Oblong Spectrum Geometry and Refraction",
+      "subject_id": "newton_opticks",
+      "dependencies": [
+        "newton_opticks::prismatic-dispersion"
+      ],
+      "taxonomy_id": "prismatic-phenomena",
+      "level": "core"
+    },
+    {
+      "id": "newton_opticks::refrangibility-ranking",
+      "label": "Refrangibility Ranking of Primary Colors",
+      "subject_id": "newton_opticks",
+      "dependencies": [
+        "newton_opticks::prismatic-dispersion"
+      ],
+      "taxonomy_id": "prismatic-phenomena",
+      "level": "foundational"
+    },
+    {
+      "id": "newton_opticks::homogeneal-light",
+      "label": "Homogeneal vs. Heterogeneal Light",
+      "subject_id": "newton_opticks",
+      "dependencies": [
+        "newton_opticks::refrangibility-ranking"
+      ],
+      "taxonomy_id": "color-theory",
+      "level": "core"
+    },
+    {
+      "id": "newton_opticks::immutability-colors",
+      "label": "Immutability of Primary Colors",
+      "subject_id": "newton_opticks",
+      "dependencies": [
+        "newton_opticks::homogeneal-light"
+      ],
+      "taxonomy_id": "color-theory",
+      "level": "core"
+    },
+    {
+      "id": "newton_opticks::musical-color-intervals",
+      "label": "Musical Chord Proportions in Color Circles",
+      "subject_id": "newton_opticks",
+      "dependencies": [
+        "newton_opticks::immutability-colors"
+      ],
+      "taxonomy_id": "color-theory",
+      "level": "advanced"
+    },
+    {
+      "id": "newton_opticks::lens-differential-refrangibility",
+      "label": "Lens Focal Dispersion via Differential Refrangibility",
+      "subject_id": "newton_opticks",
+      "dependencies": [
+        "newton_opticks::refrangibility-ranking"
+      ],
+      "taxonomy_id": "telescopic-optics",
+      "level": "advanced"
+    },
+    {
+      "id": "newton_opticks::spherical-aberration",
+      "label": "Spherical Aberration in Lenses",
+      "subject_id": "newton_opticks",
+      "dependencies": [
+        "newton_opticks::snells-law"
+      ],
+      "taxonomy_id": "telescopic-optics",
+      "level": "core"
+    },
+    {
+      "id": "newton_opticks::aberration-comparison",
+      "label": "Comparing Spherical vs. Refrangibility Errors",
+      "subject_id": "newton_opticks",
+      "dependencies": [
+        "newton_opticks::lens-differential-refrangibility",
+        "newton_opticks::spherical-aberration"
+      ],
+      "taxonomy_id": "telescopic-optics",
+      "level": "advanced"
+    },
+    {
+      "id": "newton_opticks::reflecting-telescope-design",
+      "label": "Concave Speculum Reflecting Telescope Design",
+      "subject_id": "newton_opticks",
+      "dependencies": [
+        "newton_opticks::spherical-aberration"
+      ],
+      "taxonomy_id": "telescopic-optics",
+      "level": "core"
+    },
+    {
+      "id": "newton_opticks::double-prism-protocol",
+      "label": "Double-Prism Separation and Recombination Protocol",
+      "subject_id": "newton_opticks",
+      "dependencies": [
+        "newton_opticks::immutability-colors"
+      ],
+      "taxonomy_id": "experimental-methodology",
+      "level": "advanced"
+    },
+    {
+      "id": "newton_opticks::thin-film-interference",
+      "label": "Thin-Film Interference and Newton's Rings",
+      "subject_id": "newton_opticks",
+      "dependencies": [
+        "newton_opticks::snells-law"
+      ],
+      "taxonomy_id": "wave-interference",
+      "level": "core"
+    },
+    {
+      "id": "newton_opticks::fits-reflection-transmission",
+      "label": "Fits of Easy Reflexion and Transmission",
+      "subject_id": "newton_opticks",
+      "dependencies": [
+        "newton_opticks::thin-film-interference"
+      ],
+      "taxonomy_id": "wave-interference",
+      "level": "core"
+    },
+    {
+      "id": "newton_opticks::thin-film-thickness-calc",
+      "label": "Thin-Film Thickness and Color Selection",
+      "subject_id": "newton_opticks",
+      "dependencies": [
+        "newton_opticks::fits-reflection-transmission",
+        "newton_opticks::homogeneal-light"
+      ],
+      "taxonomy_id": "wave-interference",
+      "level": "advanced"
+    },
+    {
+      "id": "newton_opticks::thin-plate-interference-protocol",
+      "label": "Thin-Plate Interference Protocol Across Incidence Angles",
+      "subject_id": "newton_opticks",
+      "dependencies": [
+        "newton_opticks::thin-film-thickness-calc"
+      ],
+      "taxonomy_id": "experimental-methodology",
+      "level": "core"
+    },
+    {
+      "id": "newton_opticks::diffraction-edges",
+      "label": "Diffraction (Inflection) Near Body Edges",
+      "subject_id": "newton_opticks",
+      "dependencies": [
+        "newton_opticks::snells-law"
+      ],
+      "taxonomy_id": "diffraction",
+      "level": "core"
+    },
+    {
+      "id": "newton_opticks::double-refraction-spar",
+      "label": "Double Refraction in Iceland Spar",
+      "subject_id": "newton_opticks",
+      "dependencies": [
+        "newton_opticks::snells-law"
+      ],
+      "taxonomy_id": "polarization",
+      "level": "advanced"
+    },
+    {
+      "id": "newton_opticks::four-sided-light-rays",
+      "label": "Four-Sided Nature and Polar Polarity of Light Rays",
+      "subject_id": "newton_opticks",
+      "dependencies": [
+        "newton_opticks::double-refraction-spar"
+      ],
+      "taxonomy_id": "polarization",
+      "level": "advanced"
+    },
+    {
+      "id": "newton_opticks::physical-rays-vs-sensorium",
+      "label": "Physical Rays, Objects, and Sensorium Sensations",
+      "subject_id": "newton_opticks",
+      "dependencies": [
+        "newton_opticks::immutability-colors"
+      ],
+      "taxonomy_id": "natural-philosophy",
+      "level": "cross_cutting"
+    },
+    {
+      "id": "newton_opticks::analysis-and-synthesis",
+      "label": "Method of Analysis and Synthesis in Natural Philosophy",
+      "subject_id": "newton_opticks",
+      "dependencies": [
+        "newton_opticks::immutability-colors"
+      ],
+      "taxonomy_id": "natural-philosophy",
+      "level": "cross_cutting"
+    },
+    {
+      "id": "newton_opticks::newtonian-corpuscles",
+      "label": "Corpuscles, Attractive Forces, and Chemical Affinity",
+      "subject_id": "newton_opticks",
+      "dependencies": [
+        "newton_opticks::analysis-and-synthesis"
+      ],
+      "taxonomy_id": "particle-mechanics",
+      "level": "core"
+    },
+    {
+      "id": "newton_opticks::capillary-cohesion-action",
+      "label": "Capillary Action and Cohesion of Hard Bodies",
+      "subject_id": "newton_opticks",
+      "dependencies": [
+        "newton_opticks::newtonian-corpuscles"
+      ],
+      "taxonomy_id": "particle-mechanics",
+      "level": "advanced"
+    },
+    {
+      "id": "newton_opticks::ethereal-medium-hypothesis",
+      "label": "Ethereal Medium Hypothesis for Heat, Light, and Gravity",
+      "subject_id": "newton_opticks",
+      "dependencies": [
+        "newton_opticks::newtonian-corpuscles"
+      ],
+      "taxonomy_id": "natural-philosophy",
+      "level": "advanced"
+    },
+    {
+      "id": "newton_opticks::critique-occult-qualities",
+      "label": "Critique of Aristotelian Occult Qualities",
+      "subject_id": "newton_opticks",
+      "dependencies": [
+        "newton_opticks::analysis-and-synthesis"
+      ],
+      "taxonomy_id": "natural-philosophy",
+      "level": "foundational"
+    },
+    {
+      "id": "newton_opticks::competing-theories-evaluation",
+      "label": "Evaluation of Corpuscular vs. Wave Pressure Hypotheses",
+      "subject_id": "newton_opticks",
+      "dependencies": [
+        "newton_opticks::ethereal-medium-hypothesis",
+        "newton_opticks::newtonian-corpuscles"
+      ],
+      "taxonomy_id": "natural-philosophy",
+      "level": "core"
+    }
+  ]
+}

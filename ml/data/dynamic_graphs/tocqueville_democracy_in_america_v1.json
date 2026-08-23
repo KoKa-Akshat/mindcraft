@@ -1,0 +1,281 @@
+{
+  "subject_id": "tocqueville_democracy_in_america_v1",
+  "title": "Democracy in America: Political Institutions, Social Conditions, and Public Life",
+  "version": "0.1.0",
+  "created": "2026-08-23",
+  "groups": {
+    "Social Theory": {
+      "classifier_name": "Social Theory",
+      "color": "SteelBlue"
+    },
+    "Constitutional Framework": {
+      "classifier_name": "Constitutional Framework",
+      "color": "SteelBlue"
+    },
+    "American History": {
+      "classifier_name": "American History",
+      "color": "SteelBlue"
+    },
+    "Applied Political Science": {
+      "classifier_name": "Applied Political Science",
+      "color": "SteelBlue"
+    },
+    "Global Geopolitics": {
+      "classifier_name": "Global Geopolitics",
+      "color": "SteelBlue"
+    },
+    "Political Theory": {
+      "classifier_name": "Political Theory",
+      "color": "SteelBlue"
+    },
+    "Local Government": {
+      "classifier_name": "Local Government",
+      "color": "SteelBlue"
+    },
+    "Civil Society": {
+      "classifier_name": "Civil Society",
+      "color": "SteelBlue"
+    }
+  },
+  "concepts": [
+    {
+      "id": "tocqueville_democracy_in_america_v1::equality-of-conditions",
+      "label": "Equality of Conditions and Social Equality",
+      "subject_id": "tocqueville_democracy_in_america_v1",
+      "dependencies": [],
+      "taxonomy_id": "Social Theory",
+      "level": "foundational"
+    },
+    {
+      "id": "tocqueville_democracy_in_america_v1::popular-sovereignty",
+      "label": "Popular Sovereignty and the Democratic Principle",
+      "subject_id": "tocqueville_democracy_in_america_v1",
+      "dependencies": [
+        "tocqueville_democracy_in_america_v1::equality-of-conditions"
+      ],
+      "taxonomy_id": "Political Theory",
+      "level": "foundational"
+    },
+    {
+      "id": "tocqueville_democracy_in_america_v1::new-england-townships",
+      "label": "New England Municipal Institutions and Townships",
+      "subject_id": "tocqueville_democracy_in_america_v1",
+      "dependencies": [
+        "tocqueville_democracy_in_america_v1::popular-sovereignty"
+      ],
+      "taxonomy_id": "Local Government",
+      "level": "foundational"
+    },
+    {
+      "id": "tocqueville_democracy_in_america_v1::federalism-structure",
+      "label": "American Federalism and State-Federal Division",
+      "subject_id": "tocqueville_democracy_in_america_v1",
+      "dependencies": [
+        "tocqueville_democracy_in_america_v1::popular-sovereignty"
+      ],
+      "taxonomy_id": "Constitutional Framework",
+      "level": "foundational"
+    },
+    {
+      "id": "tocqueville_democracy_in_america_v1::judicial-branch",
+      "label": "Constitutional Architecture of the Executive and Judiciary",
+      "subject_id": "tocqueville_democracy_in_america_v1",
+      "dependencies": [
+        "tocqueville_democracy_in_america_v1::federalism-structure"
+      ],
+      "taxonomy_id": "Constitutional Framework",
+      "level": "foundational"
+    },
+    {
+      "id": "tocqueville_democracy_in_america_v1::legislative-bicameralism",
+      "label": "Bicameralism: Senate and House of Representatives",
+      "subject_id": "tocqueville_democracy_in_america_v1",
+      "dependencies": [
+        "tocqueville_democracy_in_america_v1::federalism-structure"
+      ],
+      "taxonomy_id": "Constitutional Framework",
+      "level": "core"
+    },
+    {
+      "id": "tocqueville_democracy_in_america_v1::patriotism-forms",
+      "label": "Patriotism of Instinct vs. Reflection",
+      "subject_id": "tocqueville_democracy_in_america_v1",
+      "dependencies": [
+        "tocqueville_democracy_in_america_v1::equality-of-conditions"
+      ],
+      "taxonomy_id": "Social Theory",
+      "level": "foundational"
+    },
+    {
+      "id": "tocqueville_democracy_in_america_v1::majority-tyranny",
+      "label": "Tyranny of the Majority and Limits of Freedom",
+      "subject_id": "tocqueville_democracy_in_america_v1",
+      "dependencies": [
+        "tocqueville_democracy_in_america_v1::popular-sovereignty",
+        "tocqueville_democracy_in_america_v1::equality-of-conditions"
+      ],
+      "taxonomy_id": "Political Theory",
+      "level": "core"
+    },
+    {
+      "id": "tocqueville_democracy_in_america_v1::political-associations",
+      "label": "Political Associations, Public Opinion, and the Press",
+      "subject_id": "tocqueville_democracy_in_america_v1",
+      "dependencies": [
+        "tocqueville_democracy_in_america_v1::majority-tyranny",
+        "tocqueville_democracy_in_america_v1::patriotism-forms"
+      ],
+      "taxonomy_id": "Civil Society",
+      "level": "core"
+    },
+    {
+      "id": "tocqueville_democracy_in_america_v1::legal-profession",
+      "label": "The Legal Profession as an Aristocratic Counterpoise",
+      "subject_id": "tocqueville_democracy_in_america_v1",
+      "dependencies": [
+        "tocqueville_democracy_in_america_v1::judicial-branch",
+        "tocqueville_democracy_in_america_v1::majority-tyranny"
+      ],
+      "taxonomy_id": "Civil Society",
+      "level": "core"
+    },
+    {
+      "id": "tocqueville_democracy_in_america_v1::mediocrity-instability",
+      "label": "Democratic Paradox of Mediocre Officers and Instability",
+      "subject_id": "tocqueville_democracy_in_america_v1",
+      "dependencies": [
+        "tocqueville_democracy_in_america_v1::legislative-bicameralism",
+        "tocqueville_democracy_in_america_v1::majority-tyranny"
+      ],
+      "taxonomy_id": "Political Theory",
+      "level": "core"
+    },
+    {
+      "id": "tocqueville_democracy_in_america_v1::judicial-review",
+      "label": "Judicial Review and Private Lawsuits",
+      "subject_id": "tocqueville_democracy_in_america_v1",
+      "dependencies": [
+        "tocqueville_democracy_in_america_v1::judicial-branch"
+      ],
+      "taxonomy_id": "Constitutional Framework",
+      "level": "core"
+    },
+    {
+      "id": "tocqueville_democracy_in_america_v1::native-american-displacement",
+      "label": "Historical Displacement of Native American Populations",
+      "subject_id": "tocqueville_democracy_in_america_v1",
+      "dependencies": [
+        "tocqueville_democracy_in_america_v1::federalism-structure",
+        "tocqueville_democracy_in_america_v1::equality-of-conditions"
+      ],
+      "taxonomy_id": "American History",
+      "level": "core"
+    },
+    {
+      "id": "tocqueville_democracy_in_america_v1::slave-labor-economics",
+      "label": "Economics of Slave Labor and North-South Sectionalism",
+      "subject_id": "tocqueville_democracy_in_america_v1",
+      "dependencies": [
+        "tocqueville_democracy_in_america_v1::equality-of-conditions",
+        "tocqueville_democracy_in_america_v1::federalism-structure"
+      ],
+      "taxonomy_id": "American History",
+      "level": "core"
+    },
+    {
+      "id": "tocqueville_democracy_in_america_v1::free-vs-slave-labor",
+      "label": "Comparative Economics of Free Labor and Slave Labor",
+      "subject_id": "tocqueville_democracy_in_america_v1",
+      "dependencies": [
+        "tocqueville_democracy_in_america_v1::slave-labor-economics"
+      ],
+      "taxonomy_id": "American History",
+      "level": "advanced"
+    },
+    {
+      "id": "tocqueville_democracy_in_america_v1::indian-removal-morality",
+      "label": "Moral and Legal Implications of Indian Removal",
+      "subject_id": "tocqueville_democracy_in_america_v1",
+      "dependencies": [
+        "tocqueville_democracy_in_america_v1::native-american-displacement",
+        "tocqueville_democracy_in_america_v1::judicial-review"
+      ],
+      "taxonomy_id": "American History",
+      "level": "advanced"
+    },
+    {
+      "id": "tocqueville_democracy_in_america_v1::federalism-sectional-crisis",
+      "label": "Federalism in Balancing Autonomy and National Unity",
+      "subject_id": "tocqueville_democracy_in_america_v1",
+      "dependencies": [
+        "tocqueville_democracy_in_america_v1::federalism-structure",
+        "tocqueville_democracy_in_america_v1::slave-labor-economics"
+      ],
+      "taxonomy_id": "Constitutional Framework",
+      "level": "advanced"
+    },
+    {
+      "id": "tocqueville_democracy_in_america_v1::anglo-russian-power",
+      "label": "Anglo-American Expansion and Comparative Analysis with Russia",
+      "subject_id": "tocqueville_democracy_in_america_v1",
+      "dependencies": [
+        "tocqueville_democracy_in_america_v1::free-vs-slave-labor",
+        "tocqueville_democracy_in_america_v1::anglo-american-geography"
+      ],
+      "taxonomy_id": "Global Geopolitics",
+      "level": "advanced"
+    },
+    {
+      "id": "tocqueville_democracy_in_america_v1::anglo-american-geography",
+      "label": "Geographical Boundaries and River Systems of North America",
+      "subject_id": "tocqueville_democracy_in_america_v1",
+      "dependencies": [],
+      "taxonomy_id": "American History",
+      "level": "foundational"
+    },
+    {
+      "id": "tocqueville_democracy_in_america_v1::decentralized-governance-eval",
+      "label": "Evaluation of Decentralized Municipal vs. Centralized State Control",
+      "subject_id": "tocqueville_democracy_in_america_v1",
+      "dependencies": [
+        "tocqueville_democracy_in_america_v1::new-england-townships",
+        "tocqueville_democracy_in_america_v1::federalism-structure"
+      ],
+      "taxonomy_id": "Local Government",
+      "level": "advanced"
+    },
+    {
+      "id": "tocqueville_democracy_in_america_v1::majority-tyranny-analysis",
+      "label": "Contemporary Analysis of Majority Tyranny and Free Speech",
+      "subject_id": "tocqueville_democracy_in_america_v1",
+      "dependencies": [
+        "tocqueville_democracy_in_america_v1::majority-tyranny",
+        "tocqueville_democracy_in_america_v1::political-associations"
+      ],
+      "taxonomy_id": "Applied Political Science",
+      "level": "cross_cutting"
+    },
+    {
+      "id": "tocqueville_democracy_in_america_v1::civic-education-curriculum",
+      "label": "Curriculum Design Based on Participatory Democracy",
+      "subject_id": "tocqueville_democracy_in_america_v1",
+      "dependencies": [
+        "tocqueville_democracy_in_america_v1::new-england-townships",
+        "tocqueville_democracy_in_america_v1::political-associations"
+      ],
+      "taxonomy_id": "Applied Political Science",
+      "level": "cross_cutting"
+    },
+    {
+      "id": "tocqueville_democracy_in_america_v1::comparative-liberty-report",
+      "label": "Comparative Political Analysis Report on Liberty and Majority Rule",
+      "subject_id": "tocqueville_democracy_in_america_v1",
+      "dependencies": [
+        "tocqueville_democracy_in_america_v1::majority-tyranny-analysis",
+        "tocqueville_democracy_in_america_v1::anglo-russian-power"
+      ],
+      "taxonomy_id": "Applied Political Science",
+      "level": "cross_cutting"
+    }
+  ]
+}

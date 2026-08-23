@@ -1,0 +1,276 @@
+{
+  "subject_id": "babbage_passages_life_philosopher",
+  "title": "Passages from the Life of a Philosopher: Calculating Machines, Applied Science, and Victorian Innovation",
+  "version": "0.1.0",
+  "created": "2026-08-23",
+  "groups": {
+    "applied-science": {
+      "classifier_name": "applied-science",
+      "color": "SteelBlue"
+    },
+    "economics": {
+      "classifier_name": "economics",
+      "color": "SteelBlue"
+    },
+    "engineering": {
+      "classifier_name": "engineering",
+      "color": "SteelBlue"
+    },
+    "mathematics": {
+      "classifier_name": "mathematics",
+      "color": "SteelBlue"
+    },
+    "earth-science": {
+      "classifier_name": "earth-science",
+      "color": "SteelBlue"
+    },
+    "history-of-science": {
+      "classifier_name": "history-of-science",
+      "color": "SteelBlue"
+    },
+    "philosophy-of-science": {
+      "classifier_name": "philosophy-of-science",
+      "color": "SteelBlue"
+    },
+    "computing": {
+      "classifier_name": "computing",
+      "color": "SteelBlue"
+    }
+  },
+  "concepts": [
+    {
+      "id": "babbage_passages_life_philosopher::analytical-society",
+      "label": "Formation and Reform Goals of the Analytical Society",
+      "subject_id": "babbage_passages_life_philosopher",
+      "dependencies": [],
+      "taxonomy_id": "mathematics",
+      "level": "foundational"
+    },
+    {
+      "id": "babbage_passages_life_philosopher::cambridge-mathematical-notation",
+      "label": "Institutional Resistance and Continental Notation in Britain",
+      "subject_id": "babbage_passages_life_philosopher",
+      "dependencies": [
+        "babbage_passages_life_philosopher::analytical-society"
+      ],
+      "taxonomy_id": "mathematics",
+      "level": "foundational"
+    },
+    {
+      "id": "babbage_passages_life_philosopher::method-of-differences",
+      "label": "Mathematical Foundations of the Method of Differences",
+      "subject_id": "babbage_passages_life_philosopher",
+      "dependencies": [],
+      "taxonomy_id": "computing",
+      "level": "foundational"
+    },
+    {
+      "id": "babbage_passages_life_philosopher::difference-engine-design",
+      "label": "Mechanical Components and Design of the Difference Engine",
+      "subject_id": "babbage_passages_life_philosopher",
+      "dependencies": [
+        "babbage_passages_life_philosopher::method-of-differences"
+      ],
+      "taxonomy_id": "computing",
+      "level": "core"
+    },
+    {
+      "id": "babbage_passages_life_philosopher::anticipatory-carriage",
+      "label": "The Anticipatory Carriage Mechanism",
+      "subject_id": "babbage_passages_life_philosopher",
+      "dependencies": [
+        "babbage_passages_life_philosopher::difference-engine-design"
+      ],
+      "taxonomy_id": "computing",
+      "level": "advanced"
+    },
+    {
+      "id": "babbage_passages_life_philosopher::government-patronage",
+      "label": "Government Patronage and Institutional Relations with the Royal Society",
+      "subject_id": "babbage_passages_life_philosopher",
+      "dependencies": [],
+      "taxonomy_id": "history-of-science",
+      "level": "core"
+    },
+    {
+      "id": "babbage_passages_life_philosopher::project-abandonment",
+      "label": "Systemic Failures and Project Management in the Abandonment of the Difference Engine",
+      "subject_id": "babbage_passages_life_philosopher",
+      "dependencies": [
+        "babbage_passages_life_philosopher::difference-engine-design",
+        "babbage_passages_life_philosopher::government-patronage"
+      ],
+      "taxonomy_id": "history-of-science",
+      "level": "advanced"
+    },
+    {
+      "id": "babbage_passages_life_philosopher::jacquard-card-principle",
+      "label": "The Jacquard Loom and Punched Card Control",
+      "subject_id": "babbage_passages_life_philosopher",
+      "dependencies": [],
+      "taxonomy_id": "computing",
+      "level": "core"
+    },
+    {
+      "id": "babbage_passages_life_philosopher::analytical-engine-architecture",
+      "label": "Architecture and Operations of the Analytical Engine",
+      "subject_id": "babbage_passages_life_philosopher",
+      "dependencies": [
+        "babbage_passages_life_philosopher::difference-engine-design",
+        "babbage_passages_life_philosopher::jacquard-card-principle"
+      ],
+      "taxonomy_id": "computing",
+      "level": "advanced"
+    },
+    {
+      "id": "babbage_passages_life_philosopher::mechanical-notation",
+      "label": "Babbage's System of Mechanical Notation and Diagramming",
+      "subject_id": "babbage_passages_life_philosopher",
+      "dependencies": [
+        "babbage_passages_life_philosopher::difference-engine-design"
+      ],
+      "taxonomy_id": "engineering",
+      "level": "core"
+    },
+    {
+      "id": "babbage_passages_life_philosopher::mechanical-conversion",
+      "label": "Transforming Physical Machine Defects into Operational Advantages",
+      "subject_id": "babbage_passages_life_philosopher",
+      "dependencies": [
+        "babbage_passages_life_philosopher::mechanical-notation"
+      ],
+      "taxonomy_id": "engineering",
+      "level": "advanced"
+    },
+    {
+      "id": "babbage_passages_life_philosopher::industrial-division-of-labor",
+      "label": "Industrial Economics and the Division of Labor",
+      "subject_id": "babbage_passages_life_philosopher",
+      "dependencies": [],
+      "taxonomy_id": "economics",
+      "level": "foundational"
+    },
+    {
+      "id": "babbage_passages_life_philosopher::cost-of-verification",
+      "label": "Economic Principles of Manufacturing Costs and Verification",
+      "subject_id": "babbage_passages_life_philosopher",
+      "dependencies": [
+        "babbage_passages_life_philosopher::industrial-division-of-labor"
+      ],
+      "taxonomy_id": "economics",
+      "level": "core"
+    },
+    {
+      "id": "babbage_passages_life_philosopher::cryptography-and-ciphers",
+      "label": "Cryptography and Frequency Analysis of Substitution Ciphers",
+      "subject_id": "babbage_passages_life_philosopher",
+      "dependencies": [],
+      "taxonomy_id": "applied-science",
+      "level": "foundational"
+    },
+    {
+      "id": "babbage_passages_life_philosopher::street-noise-statistics",
+      "label": "Statistical Analysis of Urban Noise Nuisances and Street Music",
+      "subject_id": "babbage_passages_life_philosopher",
+      "dependencies": [
+        "babbage_passages_life_philosopher::cryptography-and-ciphers"
+      ],
+      "taxonomy_id": "applied-science",
+      "level": "core"
+    },
+    {
+      "id": "babbage_passages_life_philosopher::noise-ordinance-policy",
+      "label": "Municipal Ordinances and Enforcement Mechanisms for Urban Noise",
+      "subject_id": "babbage_passages_life_philosopher",
+      "dependencies": [
+        "babbage_passages_life_philosopher::street-noise-statistics",
+        "babbage_passages_life_philosopher::cost-of-verification"
+      ],
+      "taxonomy_id": "applied-science",
+      "level": "advanced"
+    },
+    {
+      "id": "babbage_passages_life_philosopher::scientific-diplomacy",
+      "label": "Victorian Scientific Diplomacy and International Congresses",
+      "subject_id": "babbage_passages_life_philosopher",
+      "dependencies": [
+        "babbage_passages_life_philosopher::government-patronage"
+      ],
+      "taxonomy_id": "history-of-science",
+      "level": "core"
+    },
+    {
+      "id": "babbage_passages_life_philosopher::geological-theories",
+      "label": "Geological Theories and Deep Time",
+      "subject_id": "babbage_passages_life_philosopher",
+      "dependencies": [],
+      "taxonomy_id": "earth-science",
+      "level": "foundational"
+    },
+    {
+      "id": "babbage_passages_life_philosopher::diving-bells-submarines",
+      "label": "Diving Bells and Submarine Navigation Engineering",
+      "subject_id": "babbage_passages_life_philosopher",
+      "dependencies": [
+        "babbage_passages_life_philosopher::geological-theories",
+        "babbage_passages_life_philosopher::mechanical-notation"
+      ],
+      "taxonomy_id": "engineering",
+      "level": "core"
+    },
+    {
+      "id": "babbage_passages_life_philosopher::railroad-safety-devices",
+      "label": "Railroad Safety Devices and Speed-Recording Instrumentation",
+      "subject_id": "babbage_passages_life_philosopher",
+      "dependencies": [
+        "babbage_passages_life_philosopher::mechanical-notation",
+        "babbage_passages_life_philosopher::industrial-division-of-labor"
+      ],
+      "taxonomy_id": "engineering",
+      "level": "core"
+    },
+    {
+      "id": "babbage_passages_life_philosopher::railway-safety-evaluation",
+      "label": "Evaluation of 19th-Century Railway Safety Practices and Proposed Solutions",
+      "subject_id": "babbage_passages_life_philosopher",
+      "dependencies": [
+        "babbage_passages_life_philosopher::railroad-safety-devices"
+      ],
+      "taxonomy_id": "engineering",
+      "level": "advanced"
+    },
+    {
+      "id": "babbage_passages_life_philosopher::human-testimony-miracles",
+      "label": "Human Testimony, Miracles, and the Laws of Nature",
+      "subject_id": "babbage_passages_life_philosopher",
+      "dependencies": [
+        "babbage_passages_life_philosopher::scientific-diplomacy"
+      ],
+      "taxonomy_id": "philosophy-of-science",
+      "level": "advanced"
+    },
+    {
+      "id": "babbage_passages_life_philosopher::automated-calculating-blueprint",
+      "label": "Conceptual Blueprint for Automated Mechanical Calculating Devices",
+      "subject_id": "babbage_passages_life_philosopher",
+      "dependencies": [
+        "babbage_passages_life_philosopher::analytical-engine-architecture",
+        "babbage_passages_life_philosopher::mechanical-notation"
+      ],
+      "taxonomy_id": "computing",
+      "level": "advanced"
+    },
+    {
+      "id": "babbage_passages_life_philosopher::science-funding-evaluation",
+      "label": "Evaluation of Government Funding for Non-Commercial Scientific Inventions",
+      "subject_id": "babbage_passages_life_philosopher",
+      "dependencies": [
+        "babbage_passages_life_philosopher::project-abandonment",
+        "babbage_passages_life_philosopher::scientific-diplomacy",
+        "babbage_passages_life_philosopher::railway-safety-evaluation"
+      ],
+      "taxonomy_id": "history-of-science",
+      "level": "cross_cutting"
+    }
+  ]
+}

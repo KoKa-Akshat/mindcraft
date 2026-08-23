@@ -1,0 +1,294 @@
+{
+  "subject_id": "bateson_mendel_principles_of_heredity",
+  "title": "Principles of Heredity: Mendelian Genetics and the Laws of Inheritance",
+  "version": "0.1.0",
+  "created": "2026-08-23",
+  "groups": {
+    "Mendelian Terminology": {
+      "classifier_name": "Mendelian Terminology",
+      "color": "SteelBlue"
+    },
+    "Comparative Hybridization": {
+      "classifier_name": "Comparative Hybridization",
+      "color": "SteelBlue"
+    },
+    "Historical Debates": {
+      "classifier_name": "Historical Debates",
+      "color": "SteelBlue"
+    },
+    "Mendelian Foundations": {
+      "classifier_name": "Mendelian Foundations",
+      "color": "SteelBlue"
+    },
+    "Historical Context": {
+      "classifier_name": "Historical Context",
+      "color": "SteelBlue"
+    },
+    "Complex Variation": {
+      "classifier_name": "Complex Variation",
+      "color": "SteelBlue"
+    },
+    "Non-Mendelian Phenomena": {
+      "classifier_name": "Non-Mendelian Phenomena",
+      "color": "SteelBlue"
+    },
+    "Applied Breeding": {
+      "classifier_name": "Applied Breeding",
+      "color": "SteelBlue"
+    },
+    "Variation Analysis": {
+      "classifier_name": "Variation Analysis",
+      "color": "SteelBlue"
+    },
+    "Multi-Character Inheritance": {
+      "classifier_name": "Multi-Character Inheritance",
+      "color": "SteelBlue"
+    },
+    "Mendelian Principles": {
+      "classifier_name": "Mendelian Principles",
+      "color": "SteelBlue"
+    }
+  },
+  "concepts": [
+    {
+      "id": "bateson_mendel_principles_of_heredity::pisum-sativum-characters",
+      "label": "Gregor Mendel's Seven Differentiating Characters in Pisum sativum",
+      "subject_id": "bateson_mendel_principles_of_heredity",
+      "dependencies": [],
+      "taxonomy_id": "Mendelian Foundations",
+      "level": "foundational"
+    },
+    {
+      "id": "bateson_mendel_principles_of_heredity::experimental-methodology",
+      "label": "Mendel's Experimental Design: Constant Characters and Controlled Pollination",
+      "subject_id": "bateson_mendel_principles_of_heredity",
+      "dependencies": [
+        "bateson_mendel_principles_of_heredity::pisum-sativum-characters"
+      ],
+      "taxonomy_id": "Mendelian Foundations",
+      "level": "foundational"
+    },
+    {
+      "id": "bateson_mendel_principles_of_heredity::dominance-and-recessiveness",
+      "label": "Dominance, Recessiveness, Homozygosity, and Heterozygosity",
+      "subject_id": "bateson_mendel_principles_of_heredity",
+      "dependencies": [
+        "bateson_mendel_principles_of_heredity::pisum-sativum-characters"
+      ],
+      "taxonomy_id": "Mendelian Principles",
+      "level": "foundational"
+    },
+    {
+      "id": "bateson_mendel_principles_of_heredity::gametes-and-zygotes",
+      "label": "Basic Hereditary Terminology: Allelomorphs, Gametes, and Zygotes",
+      "subject_id": "bateson_mendel_principles_of_heredity",
+      "dependencies": [
+        "bateson_mendel_principles_of_heredity::pisum-sativum-characters"
+      ],
+      "taxonomy_id": "Mendelian Terminology",
+      "level": "foundational"
+    },
+    {
+      "id": "bateson_mendel_principles_of_heredity::purity-of-germ-cells",
+      "label": "The Purity of Germ-Cells and Segregation in F1 and F2 Generations",
+      "subject_id": "bateson_mendel_principles_of_heredity",
+      "dependencies": [
+        "bateson_mendel_principles_of_heredity::dominance-and-recessiveness",
+        "bateson_mendel_principles_of_heredity::gametes-and-zygotes"
+      ],
+      "taxonomy_id": "Mendelian Principles",
+      "level": "core"
+    },
+    {
+      "id": "bateson_mendel_principles_of_heredity::monohybrid-ratios",
+      "label": "Numerical Proportions in F1 and F2 Generations (1:2:1 and 75%:25%)",
+      "subject_id": "bateson_mendel_principles_of_heredity",
+      "dependencies": [
+        "bateson_mendel_principles_of_heredity::purity-of-germ-cells"
+      ],
+      "taxonomy_id": "Mendelian Principles",
+      "level": "core"
+    },
+    {
+      "id": "bateson_mendel_principles_of_heredity::independent-assortment",
+      "label": "Independent Assortment and Combination Series for Multiple Characters",
+      "subject_id": "bateson_mendel_principles_of_heredity",
+      "dependencies": [
+        "bateson_mendel_principles_of_heredity::purity-of-germ-cells"
+      ],
+      "taxonomy_id": "Multi-Character Inheritance",
+      "level": "core"
+    },
+    {
+      "id": "bateson_mendel_principles_of_heredity::combinatorial-formulas",
+      "label": "Mathematical Formulas for Multi-Character Crosses (3^n, 4^n, 2^n)",
+      "subject_id": "bateson_mendel_principles_of_heredity",
+      "dependencies": [
+        "bateson_mendel_principles_of_heredity::independent-assortment"
+      ],
+      "taxonomy_id": "Multi-Character Inheritance",
+      "level": "core"
+    },
+    {
+      "id": "bateson_mendel_principles_of_heredity::multi-character-prediction",
+      "label": "Predicting Phenotypic and Genotypic Ratios in Multi-Character Crosses",
+      "subject_id": "bateson_mendel_principles_of_heredity",
+      "dependencies": [
+        "bateson_mendel_principles_of_heredity::combinatorial-formulas"
+      ],
+      "taxonomy_id": "Multi-Character Inheritance",
+      "level": "core"
+    },
+    {
+      "id": "bateson_mendel_principles_of_heredity::analytical-synthetical-variations",
+      "label": "Analytical and Synthetical Variations in Plant and Animal Characters",
+      "subject_id": "bateson_mendel_principles_of_heredity",
+      "dependencies": [
+        "bateson_mendel_principles_of_heredity::independent-assortment"
+      ],
+      "taxonomy_id": "Variation Analysis",
+      "level": "core"
+    },
+    {
+      "id": "bateson_mendel_principles_of_heredity::compound-allelomorphs",
+      "label": "Compound Allelomorphs and Heterozygous Mule Forms",
+      "subject_id": "bateson_mendel_principles_of_heredity",
+      "dependencies": [
+        "bateson_mendel_principles_of_heredity::analytical-synthetical-variations"
+      ],
+      "taxonomy_id": "Complex Variation",
+      "level": "advanced"
+    },
+    {
+      "id": "bateson_mendel_principles_of_heredity::false-hybrids-mosaics",
+      "label": "Non-Mendelian Phenomena: False Hybrids, Mosaics, and Unstable Forms",
+      "subject_id": "bateson_mendel_principles_of_heredity",
+      "dependencies": [
+        "bateson_mendel_principles_of_heredity::dominance-and-recessiveness"
+      ],
+      "taxonomy_id": "Non-Mendelian Phenomena",
+      "level": "advanced"
+    },
+    {
+      "id": "bateson_mendel_principles_of_heredity::maternal-seed-coat-effects",
+      "label": "Maternal Seed-Coat Effects and Xenia",
+      "subject_id": "bateson_mendel_principles_of_heredity",
+      "dependencies": [
+        "bateson_mendel_principles_of_heredity::purity-of-germ-cells"
+      ],
+      "taxonomy_id": "Non-Mendelian Phenomena",
+      "level": "advanced"
+    },
+    {
+      "id": "bateson_mendel_principles_of_heredity::hieracium-hybrids",
+      "label": "Hereditary Behaviors in Hieracium Hybridization Experiments",
+      "subject_id": "bateson_mendel_principles_of_heredity",
+      "dependencies": [
+        "bateson_mendel_principles_of_heredity::purity-of-germ-cells",
+        "bateson_mendel_principles_of_heredity::false-hybrids-mosaics"
+      ],
+      "taxonomy_id": "Comparative Hybridization",
+      "level": "advanced"
+    },
+    {
+      "id": "bateson_mendel_principles_of_heredity::weldon-criticisms",
+      "label": "Professor Weldon's Criticisms of Dominance and Experimental Design",
+      "subject_id": "bateson_mendel_principles_of_heredity",
+      "dependencies": [
+        "bateson_mendel_principles_of_heredity::dominance-and-recessiveness",
+        "bateson_mendel_principles_of_heredity::false-hybrids-mosaics"
+      ],
+      "taxonomy_id": "Historical Debates",
+      "level": "advanced"
+    },
+    {
+      "id": "bateson_mendel_principles_of_heredity::law-of-ancestral-heredity",
+      "label": "Galton-Pearson's Law of Ancestral Heredity",
+      "subject_id": "bateson_mendel_principles_of_heredity",
+      "dependencies": [
+        "bateson_mendel_principles_of_heredity::weldon-criticisms"
+      ],
+      "taxonomy_id": "Historical Debates",
+      "level": "advanced"
+    },
+    {
+      "id": "bateson_mendel_principles_of_heredity::ancestral-vs-mendelian",
+      "label": "Comparison and Conflict Between Ancestral Heredity and Mendelian Principles",
+      "subject_id": "bateson_mendel_principles_of_heredity",
+      "dependencies": [
+        "bateson_mendel_principles_of_heredity::law-of-ancestral-heredity",
+        "bateson_mendel_principles_of_heredity::purity-of-germ-cells"
+      ],
+      "taxonomy_id": "Historical Debates",
+      "level": "advanced"
+    },
+    {
+      "id": "bateson_mendel_principles_of_heredity::validity-of-ancestral-theory",
+      "label": "Evaluating Weldon's Appeal to Ancestry Versus Mendelian Particulate Theory",
+      "subject_id": "bateson_mendel_principles_of_heredity",
+      "dependencies": [
+        "bateson_mendel_principles_of_heredity::ancestral-vs-mendelian",
+        "bateson_mendel_principles_of_heredity::hieracium-hybrids"
+      ],
+      "taxonomy_id": "Historical Debates",
+      "level": "advanced"
+    },
+    {
+      "id": "bateson_mendel_principles_of_heredity::limitations-of-dominance",
+      "label": "Judging the Limitations of Universal Dominance via Exceptional Cases",
+      "subject_id": "bateson_mendel_principles_of_heredity",
+      "dependencies": [
+        "bateson_mendel_principles_of_heredity::false-hybrids-mosaics",
+        "bateson_mendel_principles_of_heredity::compound-allelomorphs"
+      ],
+      "taxonomy_id": "Complex Variation",
+      "level": "advanced"
+    },
+    {
+      "id": "bateson_mendel_principles_of_heredity::crop-roguing-selection",
+      "label": "Human Selection, Roguing, and Management of Unstable Crop Varieties",
+      "subject_id": "bateson_mendel_principles_of_heredity",
+      "dependencies": [
+        "bateson_mendel_principles_of_heredity::limitations-of-dominance",
+        "bateson_mendel_principles_of_heredity::maternal-seed-coat-effects"
+      ],
+      "taxonomy_id": "Applied Breeding",
+      "level": "advanced"
+    },
+    {
+      "id": "bateson_mendel_principles_of_heredity::rediscovery-of-mendel",
+      "label": "The Rediscovery of Mendel's Work by de Vries, Correns, and Tschermak",
+      "subject_id": "bateson_mendel_principles_of_heredity",
+      "dependencies": [
+        "bateson_mendel_principles_of_heredity::purity-of-germ-cells",
+        "bateson_mendel_principles_of_heredity::ancestral-vs-mendelian"
+      ],
+      "taxonomy_id": "Historical Context",
+      "level": "core"
+    },
+    {
+      "id": "bateson_mendel_principles_of_heredity::experimental-design-application",
+      "label": "Designing Original Plant Hybridization Experiments",
+      "subject_id": "bateson_mendel_principles_of_heredity",
+      "dependencies": [
+        "bateson_mendel_principles_of_heredity::experimental-methodology",
+        "bateson_mendel_principles_of_heredity::purity-of-germ-cells",
+        "bateson_mendel_principles_of_heredity::independent-assortment"
+      ],
+      "taxonomy_id": "Applied Breeding",
+      "level": "advanced"
+    },
+    {
+      "id": "bateson_mendel_principles_of_heredity::comprehensive-breeding-program",
+      "label": "Formulating Agricultural Breeding Programs for Novel Compound Allelomorphs",
+      "subject_id": "bateson_mendel_principles_of_heredity",
+      "dependencies": [
+        "bateson_mendel_principles_of_heredity::compound-allelomorphs",
+        "bateson_mendel_principles_of_heredity::multi-character-prediction",
+        "bateson_mendel_principles_of_heredity::crop-roguing-selection"
+      ],
+      "taxonomy_id": "Applied Breeding",
+      "level": "advanced"
+    }
+  ]
+}
