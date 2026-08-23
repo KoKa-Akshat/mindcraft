@@ -133,7 +133,7 @@ struct AccountManageView: View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Use your own AI key")
                 .font(.system(size: 15, weight: .semibold, design: .rounded))
-            Text("Homework help uses MindCraft's engine when this is empty. Paste a free Groq key (Anthropic works too) to keep solving on your own quota. The key stays on this device's Keychain - it is never uploaded to MindCraft.")
+            Text("Homework help uses MindCraft's engine when this is empty. Paste a free Gemini or Groq key (Anthropic works too) to keep solving on your own quota. The key stays on this device's Keychain - it is never uploaded to MindCraft.")
                 .font(.system(size: 13, weight: .medium, design: .rounded))
                 .foregroundColor(.secondary)
 

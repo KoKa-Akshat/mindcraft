@@ -69,6 +69,12 @@ struct MindCraftNotesApp: App {
                         // (2026-08-21): AIDisclosureConsentView also needs a
                         // real signed-in session to reach normally.
                         .environment(\.uiTestingForceAIDisclosure, ProcessInfo.processInfo.arguments.contains("--ui-testing-force-ai-disclosure"))
+                        // Same need, same shape (2026-08-23): the Gemini
+                        // key onboarding is the last gate and needs a real
+                        // signed-in session (plus no saved key) to reach
+                        // normally. Forces that branch deterministically
+                        // for on-device/simulator verification.
+                        .environment(\.uiTestingForceGeminiOnboarding, ProcessInfo.processInfo.arguments.contains("--ui-testing-force-gemini-onboarding"))
                 }
             }
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
@@ -109,6 +115,10 @@ private struct UITestingForceAIDisclosureKey: EnvironmentKey {
     static let defaultValue = false
 }
 
+private struct UITestingForceGeminiOnboardingKey: EnvironmentKey {
+    static let defaultValue = false
+}
+
 extension EnvironmentValues {
     /// Test-only. See the launch-argument doc comment above.
     var uiTestingSkipAuth: Bool {
@@ -133,6 +143,12 @@ extension EnvironmentValues {
         get { self[UITestingForceAIDisclosureKey.self] }
         set { self[UITestingForceAIDisclosureKey.self] = newValue }
     }
+
+    /// Test-only. See the launch-argument doc comment above.
+    var uiTestingForceGeminiOnboarding: Bool {
+        get { self[UITestingForceGeminiOnboardingKey.self] }
+        set { self[UITestingForceGeminiOnboardingKey.self] = newValue }
+    }
 }
 
 /// Thin root view (build plan §3): observes AuthService and switches between
@@ -146,6 +162,7 @@ struct AuthGate: View {
     @Environment(\.uiTestingForceWelcome) private var uiTestingForceWelcome
     @Environment(\.uiTestingForceVoiceChoice) private var uiTestingForceVoiceChoice
     @Environment(\.uiTestingForceAIDisclosure) private var uiTestingForceAIDisclosure
+    @Environment(\.uiTestingForceGeminiOnboarding) private var uiTestingForceGeminiOnboarding
     // New pre-login "Welcome to MindCraft" screen (round 5, Akshat's own
     // wireframe): shown once per cold launch, ahead of LoginView, so a
     // brand-new student sees the world before being asked to sign in - same
@@ -180,6 +197,14 @@ struct AuthGate: View {
     /// Jesse's lesson generation reads a student's `grade` from Firestore
     /// to adapt vocabulary/rigor, but no onboarding flow ever set it.
     @State private var gradeGoalsChosen = StudentGradeGoalsPreference.hasChosen
+    /// Same shape again, the new FINAL gate (2026-08-23) - the guided
+    /// "get your free student Gemini key" flow. Doubly gated below: a
+    /// student who already saved ANY BYOK key (Groq/Anthropic/Gemini) is
+    /// never shown it, and finishing OR skipping marks it seen, so it
+    /// can't trap anyone. Existing key-less students see it exactly once
+    /// (skippable in one tap); the boot sequence past this gate is
+    /// untouched.
+    @State private var geminiOnboardingSeen = GeminiOnboardingPreference.hasSeen
 
     var body: some View {
         Group {
@@ -189,6 +214,8 @@ struct AuthGate: View {
                 VoiceChoiceView(onChosen: {})
             } else if uiTestingForceAIDisclosure {
                 AIDisclosureConsentView(onAgreed: {})
+            } else if uiTestingForceGeminiOnboarding {
+                GeminiOnboardingView(onDone: {})
             } else if authService.currentUser != nil || uiTestingSkipAuth {
                 // AI-processing disclosure + consent (2026-08-21, App Store
                 // Guideline 5.1.2(i)) - the first gate, ahead of language
@@ -215,9 +242,18 @@ struct AuthGate: View {
                     // never sees a picker for voices that don't apply to them.
                     VoiceChoiceView(onChosen: { voiceChosen = true })
                 } else if !gradeGoalsChosen && !uiTestingSkipAuth {
-                    // Last onboarding gate (2026-08-21, explicit ask) - see
+                    // Onboarding gate (2026-08-21, explicit ask) - see
                     // gradeGoalsChosen's own doc comment above.
                     GradeGoalsChoiceView(onDone: { gradeGoalsChosen = true })
+                } else if !geminiOnboardingSeen && !uiTestingSkipAuth
+                            && !StudentAIKeyStore.shared.hasKey {
+                    // New final gate (2026-08-23): guided free-student-
+                    // Gemini-key setup. The hasKey check means a student
+                    // with any existing BYOK key (Groq/Anthropic/Gemini)
+                    // boots exactly as before this feature existed; a
+                    // key-less student sees it once and can skip in one
+                    // tap. Skipped under UI testing like every other gate.
+                    GeminiOnboardingView(onDone: { geminiOnboardingSeen = true })
                 } else {
                     // Brick 1 (DESK_OS_NATIVE_BRIEF.md): the desk/shell screen
                     // is now the real post-login entry point, with the
