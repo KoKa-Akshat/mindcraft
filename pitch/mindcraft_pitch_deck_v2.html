@@ -1,0 +1,652 @@
+<!-- MindCraft investor pitch deck v2 · built 2026-08-19
+     Present in a browser (arrow keys / scroll) or print to PDF (landscape, no margins).
+     Grounded in BRAND_BOOK.md v2.1, WORLD_VISION.md, PITCH_SCRIPT.md, and the live repo.
+     Content honesty rules: no invented traction, no unverified numbers, roadmap labeled as roadmap. -->
+<title>MindCraft Pitch Deck</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,500;1,400;1,500;1,600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --field:#080e14; --field-2:#0c141d;
+    --cream:#f7f5f0; --cream-2:#efece3; --paper:#fffdf7;
+    --ink:#143a2e; --ink-soft:rgba(20,58,46,.72); --ink-faint:rgba(20,58,46,.48);
+    --chalk:#f5f5f4; --chalk-dim:rgba(245,245,244,.7); --chalk-faint:rgba(245,245,244,.44);
+    --lime:#c4f547; --lime-ink:#0a1006;
+    --stakes:#c1121f; --stakes-soft:#e0394a;
+    --navy:#1d3a8a; --navy-soft:#6c8cff;
+    --edge-d:rgba(245,245,244,.1); --edge-c:rgba(20,58,46,.14);
+    --sans:"Inter",system-ui,sans-serif;
+    --disp:"Space Grotesk","Inter",sans-serif;
+    --serif:"Source Serif 4",Georgia,serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-snap-type:y mandatory;}
+  body{
+    font-family:var(--sans); background:var(--field); color:var(--chalk);
+    -webkit-font-smoothing:antialiased; -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  .slide{
+    position:relative; width:100%; min-height:100svh; scroll-snap-align:start;
+    display:flex; flex-direction:column; overflow:hidden;
+    padding:clamp(28px,5vh,56px) clamp(28px,5.5vw,84px);
+  }
+  .slide.dark{background:var(--field); color:var(--chalk);}
+  .slide.cream{background:var(--cream); color:var(--ink);}
+
+  /* chrome shared by every slide */
+  .chrome{display:flex; align-items:baseline; justify-content:space-between; gap:16px;}
+  .wordmark{font-family:var(--disp); font-weight:700; font-size:17px; letter-spacing:-.02em;}
+  .wordmark i{font-style:normal; color:var(--lime);}
+  .cream .wordmark i{color:#247a4d;}
+  .pageno{font-family:var(--mono); font-weight:600; font-size:12px; letter-spacing:.08em; color:var(--chalk-faint);}
+  .cream .pageno{color:var(--ink-faint);}
+  .stage{flex:1; display:flex; flex-direction:column; justify-content:center; min-height:0;}
+  .kicker{
+    display:flex; align-items:center; gap:10px; margin-bottom:clamp(14px,2.4vh,26px);
+    font-family:var(--mono); font-weight:600; font-size:clamp(11px,1.15vw,13px);
+    letter-spacing:.16em; text-transform:uppercase; color:var(--chalk-faint);
+  }
+  .kicker::before{content:""; width:8px; height:8px; border-radius:50%; background:var(--lime); box-shadow:0 0 14px rgba(196,245,71,.7); flex:none;}
+  .cream .kicker{color:var(--ink-faint);}
+  .cream .kicker::before{background:#247a4d; box-shadow:none;}
+  .kicker.hot::before{background:var(--stakes-soft); box-shadow:0 0 14px rgba(224,57,74,.6);}
+
+  h1,h2{font-family:var(--disp); font-weight:700; letter-spacing:-.03em; line-height:1.03; text-wrap:balance;}
+  .h-giant{font-size:clamp(52px,8.2vw,118px);}
+  .h-big{font-size:clamp(38px,5.4vw,74px);}
+  .h-mid{font-size:clamp(30px,4vw,54px); max-width:20ch;}
+  .serif{font-family:var(--serif); font-style:italic; font-weight:500; letter-spacing:0;}
+  .lede{margin-top:clamp(14px,2.4vh,24px); font-size:clamp(15px,1.55vw,20px); line-height:1.6; color:var(--chalk-dim); max-width:58ch;}
+  .cream .lede{color:var(--ink-soft);}
+  .lede strong{color:var(--chalk); font-weight:600;}
+  .cream .lede strong{color:var(--ink);}
+  .mark{color:var(--lime);}
+  .cream .mark{color:#247a4d;}
+
+  .footline{display:flex; align-items:baseline; justify-content:space-between; gap:14px; font-family:var(--mono); font-weight:500; font-size:11.5px; letter-spacing:.06em; color:var(--chalk-faint);}
+  .cream .footline{color:var(--ink-faint);}
+
+  /* ---- slide 1 · title ---- */
+  #s1 canvas{position:absolute; inset:0; width:100%; height:100%; opacity:.5; pointer-events:none;}
+  #s1 .stage{position:relative; z-index:2;}
+  .title-tag{
+    display:inline-flex; width:fit-content; align-items:center; gap:10px; margin-bottom:clamp(20px,3.5vh,36px);
+    padding:9px 18px 9px 12px; border:1px solid var(--edge-d); border-radius:999px;
+    font-family:var(--mono); font-weight:600; font-size:clamp(10px,1.1vw,12.5px); letter-spacing:.14em; text-transform:uppercase; color:var(--chalk-dim);
+  }
+  .title-tag i{font-style:normal; background:var(--lime); color:var(--lime-ink); border-radius:999px; padding:3px 10px; letter-spacing:.1em;}
+  .title-serif{margin-top:clamp(10px,2vh,20px); font-size:clamp(24px,3.4vw,44px); color:var(--chalk-dim);}
+  .title-founders{margin-top:clamp(26px,5vh,52px); display:flex; flex-wrap:wrap; gap:12px clamp(24px,4vw,56px); font-size:clamp(13px,1.4vw,16px); color:var(--chalk-dim);}
+  .title-founders b{display:block; font-family:var(--disp); font-weight:600; font-size:clamp(15px,1.7vw,20px); color:var(--chalk); letter-spacing:-.01em;}
+  .title-founders span{font-size:12.5px; color:var(--chalk-faint);}
+
+  /* ---- slide 2 · problem ---- */
+  .clock{font-family:var(--mono); font-weight:600; font-size:clamp(13px,1.5vw,17px); letter-spacing:.2em; color:var(--stakes-soft); margin-bottom:14px;}
+  .chips{display:flex; flex-wrap:wrap; gap:12px; margin-top:clamp(24px,4.5vh,44px);}
+  .chip{
+    padding:12px 20px; border-radius:999px; border:1px solid var(--edge-d);
+    font-family:var(--disp); font-weight:600; font-size:clamp(13px,1.4vw,17px); color:var(--chalk-dim);
+  }
+  .chip.hot{background:var(--stakes); border-color:var(--stakes); color:#fff;}
+
+  /* ---- slide 3 · verdict ---- */
+  .verdict-quote{
+    border-left:3px solid var(--stakes); padding-left:clamp(18px,2.5vw,32px);
+    font-size:clamp(34px,5vw,66px); line-height:1.15; color:var(--chalk); max-width:22ch;
+  }
+  .verdict-turn{margin-top:clamp(26px,5vh,48px); font-family:var(--disp); font-weight:700; letter-spacing:-.02em; font-size:clamp(24px,3.2vw,42px); line-height:1.15; color:var(--lime); max-width:24ch;}
+  .verdict-note{margin-top:12px; font-size:clamp(14px,1.5vw,18px); color:var(--chalk-dim);}
+
+  /* ---- slide 4 · ladder ---- */
+  .ladder{margin-top:clamp(22px,4vh,40px); border-top:1px solid var(--edge-c);}
+  .ladder-row{display:grid; grid-template-columns:minmax(140px,220px) 1fr; gap:10px clamp(16px,3vw,44px); padding:clamp(11px,1.9vh,18px) 0; border-bottom:1px solid var(--edge-c); align-items:baseline;}
+  .ladder-row b{font-family:var(--mono); font-weight:600; font-size:clamp(10.5px,1.1vw,12.5px); letter-spacing:.13em; text-transform:uppercase; color:var(--ink-faint);}
+  .ladder-row p{font-family:var(--disp); font-weight:600; letter-spacing:-.015em; font-size:clamp(16px,2vw,25px); color:var(--ink); line-height:1.25;}
+  .ladder-row.horizon b{color:#247a4d;}
+  .ladder-row.horizon p::after{content:""; display:inline-block; width:9px; height:9px; margin-left:12px; border-radius:50%; background:var(--lime); box-shadow:0 0 0 4px rgba(196,245,71,.25);}
+
+  /* ---- slide 5 · product ---- */
+  .product-shot-row{display:grid; grid-template-columns:1.3fr 1fr; gap:clamp(20px,3vw,40px); align-items:center; margin-top:clamp(18px,3.2vh,32px);}
+  .product-shot{width:100%; max-height:clamp(220px,32vh,320px); object-fit:cover; object-position:top; display:block; border-radius:16px; box-shadow:0 24px 60px rgba(20,58,46,.16);}
+  .product-shot-cap{display:grid; gap:clamp(10px,1.6vh,16px);}
+  .product-shot-cap p{font-size:clamp(12.5px,1.3vw,15px); line-height:1.5; color:var(--ink-soft);}
+  .product-shot-cap p b{color:var(--ink); font-family:var(--disp); font-weight:700; letter-spacing:-.01em;}
+  .statrow{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(12px,2vw,28px);
+    margin-top:clamp(20px,3.6vh,38px); padding-top:clamp(14px,2.4vh,24px); border-top:1px solid var(--edge-c);
+  }
+  .stat b{display:block; font-family:var(--disp); font-weight:700; font-size:clamp(26px,3.4vw,46px); letter-spacing:-.03em; color:var(--ink); font-variant-numeric:tabular-nums;}
+  .stat span{display:block; margin-top:6px; font-size:clamp(11px,1.15vw,13.5px); line-height:1.4; color:var(--ink-soft);}
+  .fineprint{margin-top:clamp(12px,2vh,20px); font-family:var(--mono); font-weight:500; font-size:clamp(10px,1.05vw,12px); letter-spacing:.04em; color:var(--ink-faint);}
+
+  /* ---- slide 6 · jesse ---- */
+  .jesse-grid{display:grid; grid-template-columns:1.15fr .85fr; gap:clamp(24px,4vw,64px); align-items:center; margin-top:clamp(18px,3vh,30px);}
+  .ship-tag{display:inline-block; width:fit-content; font-family:var(--mono); font-weight:600; font-size:10.5px; letter-spacing:.15em; text-transform:uppercase; padding:5px 12px; border-radius:999px; margin-bottom:12px;}
+  .ship-tag.live{background:rgba(36,122,77,.12); color:#247a4d;}
+  .ship-tag.test{background:rgba(211,169,0,.14); color:#8a6d00;}
+  .jesse-block + .jesse-block{margin-top:clamp(18px,3.2vh,32px); padding-top:clamp(16px,2.8vh,28px); border-top:1px solid var(--edge-c);}
+  .jesse-block h3{font-family:var(--disp); font-weight:700; font-size:clamp(19px,2.3vw,29px); letter-spacing:-.02em; color:var(--ink); margin-bottom:8px;}
+  .jesse-block p{font-size:clamp(13px,1.4vw,16.5px); line-height:1.55; color:var(--ink-soft); max-width:52ch;}
+  .jesse-visual{display:flex; flex-direction:column; align-items:center; gap:16px;}
+  .disc{
+    width:clamp(120px,15vw,190px); aspect-ratio:1; border-radius:50%;
+    background:var(--lime); color:var(--lime-ink); display:grid; place-items:center;
+    font-family:var(--disp); font-weight:700; font-size:clamp(13px,1.4vw,17px); letter-spacing:.1em; text-transform:uppercase;
+    box-shadow:0 0 0 18px rgba(196,245,71,.14), 0 0 0 40px rgba(196,245,71,.05), 0 24px 60px rgba(20,58,46,.18);
+    animation:discPulse 2.6s ease-in-out infinite;
+  }
+  @keyframes discPulse{
+    0%,100%{box-shadow:0 0 0 18px rgba(196,245,71,.14), 0 0 0 40px rgba(196,245,71,.05), 0 24px 60px rgba(20,58,46,.18);}
+    50%{box-shadow:0 0 0 26px rgba(196,245,71,.1), 0 0 0 54px rgba(196,245,71,.04), 0 24px 60px rgba(20,58,46,.18);}
+  }
+  .jesse-visual .serif{font-size:clamp(15px,1.6vw,20px); color:var(--ink-soft); text-align:center; max-width:26ch;}
+
+  /* ---- slide 7 · the gate ---- */
+  .gatechain{display:flex; flex-wrap:wrap; align-items:center; gap:10px clamp(8px,1vw,14px); margin-top:clamp(22px,4vh,40px);}
+  .gate{
+    padding:clamp(10px,1.5vh,15px) clamp(13px,1.6vw,22px); border-radius:14px;
+    border:1px solid var(--edge-d); background:var(--field-2);
+    font-family:var(--mono); font-weight:600; font-size:clamp(11px,1.15vw,14px); letter-spacing:.05em; color:var(--chalk-dim); white-space:nowrap;
+  }
+  .gate.final{background:var(--lime); border-color:var(--lime); color:var(--lime-ink); font-family:var(--disp); font-weight:700; letter-spacing:-.01em; font-size:clamp(13px,1.35vw,17px);}
+  .gate-arrow{color:var(--chalk-faint); font-size:clamp(13px,1.4vw,18px); flex:none;}
+  .honesty{
+    margin-top:clamp(22px,4vh,42px); max-width:72ch;
+    border:1px solid rgba(196,245,71,.28); border-radius:20px; background:rgba(196,245,71,.05);
+    padding:clamp(16px,2.4vh,26px) clamp(18px,2.4vw,30px);
+  }
+  .honesty b{display:block; font-family:var(--mono); font-weight:600; font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--lime); margin-bottom:10px;}
+  .honesty p{font-size:clamp(13.5px,1.45vw,17.5px); line-height:1.6; color:var(--chalk-dim);}
+  .honesty p strong{color:var(--chalk); font-weight:600;}
+
+  /* ---- slide 8 · learners ---- */
+  .doors{display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(10px,1.4vw,18px); margin-top:clamp(20px,3.6vh,36px);}
+  .door{
+    border:1px solid var(--edge-c); border-radius:18px; background:var(--paper);
+    padding:clamp(14px,2vw,24px); display:flex; flex-direction:column; gap:8px;
+  }
+  .door svg{width:30px; height:30px; flex:none;}
+  .door h3{font-family:var(--disp); font-weight:700; font-size:clamp(14.5px,1.6vw,20px); letter-spacing:-.015em; color:var(--ink);}
+  .door p{font-size:clamp(11.5px,1.2vw,14px); line-height:1.45; color:var(--ink-soft);}
+  .engine-line{
+    margin-top:clamp(18px,3.2vh,32px); padding:clamp(13px,2vh,20px) clamp(16px,2vw,26px);
+    border-left:3px solid var(--lime); background:rgba(196,245,71,.12); border-radius:0 16px 16px 0;
+    font-size:clamp(13.5px,1.5vw,18px); line-height:1.55; color:var(--ink); max-width:70ch;
+  }
+  .care-note{margin-top:12px; font-size:clamp(11.5px,1.2vw,14px); color:var(--ink-faint); max-width:66ch; line-height:1.5;}
+
+  /* ---- slide 9 · market ---- */
+  .campus-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(12px,1.6vw,20px); margin-top:clamp(20px,3.6vh,34px);}
+  .campus{border:1px solid var(--edge-c); border-radius:18px; background:var(--paper); padding:clamp(15px,2vw,24px);}
+  .campus b{display:block; font-family:var(--mono); font-weight:600; font-size:10.5px; letter-spacing:.15em; text-transform:uppercase; color:#247a4d; margin-bottom:8px;}
+  .campus h3{font-family:var(--disp); font-weight:700; font-size:clamp(16px,1.9vw,23px); letter-spacing:-.02em; color:var(--ink); margin-bottom:6px;}
+  .campus p{font-size:clamp(12px,1.25vw,14.5px); line-height:1.5; color:var(--ink-soft);}
+  .rev-row{display:flex; flex-wrap:wrap; gap:8px 10px; margin-top:clamp(18px,3vh,30px);}
+  .rev{padding:9px 16px; border-radius:999px; border:1px solid var(--edge-c); font-family:var(--disp); font-weight:600; font-size:clamp(12px,1.25vw,14.5px); color:var(--ink);}
+  .rev.later{border-style:dashed; color:var(--ink-faint);}
+
+  /* ---- slide 10 · traction ---- */
+  .milestones{margin-top:clamp(20px,3.5vh,36px); display:grid; gap:0; max-width:900px;}
+  .mile{
+    display:grid; grid-template-columns:34px 1fr; gap:clamp(14px,2vw,26px); align-items:baseline;
+    padding:clamp(11px,1.9vh,17px) 0; border-bottom:1px solid var(--edge-d);
+  }
+  .mile i{font-style:normal; font-family:var(--mono); font-weight:600; font-size:12px; color:var(--lime);}
+  .mile p{font-family:var(--disp); font-weight:600; letter-spacing:-.01em; font-size:clamp(15px,1.8vw,23px); color:var(--chalk); line-height:1.3;}
+  .mile p small{display:block; margin-top:3px; font-family:var(--sans); font-weight:400; font-size:clamp(11.5px,1.2vw,14px); color:var(--chalk-faint); letter-spacing:0;}
+  .traction-vow{margin-top:clamp(16px,3vh,28px); font-family:var(--serif); font-style:italic; font-size:clamp(15px,1.7vw,21px); color:var(--chalk-dim);}
+
+  /* ---- slide 11 · vision ---- */
+  .horizons{display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(12px,1.6vw,22px); margin-top:clamp(20px,3.6vh,36px);}
+  .horizon-card{border:1px solid var(--edge-d); border-radius:20px; background:var(--field-2); padding:clamp(16px,2.2vw,28px); display:flex; flex-direction:column; gap:10px;}
+  .horizon-card b{font-family:var(--mono); font-weight:600; font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--stakes-soft);}
+  .horizon-card h3{font-family:var(--serif); font-style:italic; font-weight:600; font-size:clamp(19px,2.2vw,28px); color:var(--chalk); line-height:1.2;}
+  .horizon-card p{font-size:clamp(12px,1.3vw,15px); line-height:1.55; color:var(--chalk-dim);}
+  .stamps{margin-top:clamp(16px,3vh,28px); font-family:var(--serif); font-style:italic; font-size:clamp(13px,1.45vw,17.5px); color:var(--chalk-faint);}
+
+  /* ---- slide 12 · team ---- */
+  .duo{display:grid; grid-template-columns:1fr 1fr; gap:clamp(14px,2vw,26px); margin-top:clamp(20px,3.6vh,36px);}
+  .founder{border:1px solid var(--edge-c); border-radius:22px; background:var(--paper); padding:clamp(18px,2.6vw,34px); box-shadow:0 16px 40px rgba(20,58,46,.07);}
+  .founder b{display:block; font-family:var(--mono); font-weight:600; font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:#247a4d; margin-bottom:10px;}
+  .founder h3{font-family:var(--disp); font-weight:700; font-size:clamp(21px,2.6vw,34px); letter-spacing:-.025em; color:var(--ink);}
+  .founder .role{margin-top:2px; font-family:var(--serif); font-style:italic; font-size:clamp(14px,1.5vw,18px); color:var(--ink-soft);}
+  .founder p{margin-top:12px; font-size:clamp(12.5px,1.35vw,16px); line-height:1.55; color:var(--ink-soft);}
+
+  /* ---- slide 13 · ask ---- */
+  .ask-grid{display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(24px,4vw,64px); align-items:center; margin-top:clamp(18px,3vh,30px);}
+  .asks{display:grid; gap:12px;}
+  .ask-row{
+    display:flex; gap:clamp(14px,1.8vw,22px); align-items:baseline;
+    border:1px solid var(--edge-d); border-radius:16px; background:rgba(245,245,244,.04);
+    padding:clamp(13px,2vh,19px) clamp(15px,1.8vw,24px);
+  }
+  .ask-row i{font-style:normal; font-family:var(--mono); font-weight:600; font-size:13px; color:var(--lime); flex:none;}
+  .ask-row p{font-family:var(--disp); font-weight:600; font-size:clamp(14px,1.7vw,21px); letter-spacing:-.01em; color:var(--chalk); line-height:1.3;}
+  .contact-card{border-radius:24px; background:var(--cream); color:var(--ink); padding:clamp(20px,3vw,38px); box-shadow:0 30px 80px rgba(0,0,0,.4);}
+  .contact-card b{display:block; font-family:var(--mono); font-weight:600; font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:#247a4d; margin-bottom:12px;}
+  .contact-card h3{font-family:var(--disp); font-weight:700; font-size:clamp(21px,2.5vw,32px); letter-spacing:-.02em; margin-bottom:16px;}
+  .contact-line{
+    display:block; margin-top:10px; padding:clamp(13px,1.9vh,18px) clamp(15px,1.6vw,22px); border-radius:14px;
+    background:#e4f7dc; font-family:var(--disp); font-weight:700; font-size:clamp(15px,1.9vw,24px); letter-spacing:-.01em; color:var(--ink);
+  }
+  .contact-card small{display:block; margin-top:14px; font-family:var(--mono); font-weight:500; font-size:11.5px; letter-spacing:.05em; color:var(--ink-faint);}
+
+  /* keyboard-nav hint */
+  .navhint{
+    position:fixed; right:18px; bottom:16px; z-index:50;
+    font-family:var(--mono); font-weight:500; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase;
+    color:rgba(245,245,244,.3); pointer-events:none;
+  }
+
+  @media (max-width:860px){
+    html{scroll-snap-type:none;}
+    .slide{min-height:0; padding:40px 22px;}
+    .trio,.doors,.campus-grid,.horizons,.duo{grid-template-columns:1fr;}
+    .statrow{grid-template-columns:1fr 1fr;}
+    .jesse-grid,.ask-grid{grid-template-columns:1fr;}
+    .ladder-row{grid-template-columns:1fr;}
+    .navhint{display:none;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .disc{animation:none;}
+  }
+  @media print{
+    @page{size:13.333in 7.5in; margin:0;}
+    html{scroll-snap-type:none;}
+    body{background:var(--field);}
+    .slide{
+      width:13.333in; height:7.5in; min-height:0; overflow:hidden;
+      page-break-after:always; break-after:page; break-inside:avoid;
+      padding:.36in .6in;
+    }
+    .slide:last-child{page-break-after:auto; break-after:auto;}
+    /* Slides are designed against a ~900px-tall screen viewport; a print page is
+       ~720px. Chrome (the export path) honors zoom in print, re-laying-out the
+       stage smaller so no slide's content ever clips at the page boundary. */
+    .stage{zoom:.76;}
+    /* Chrome's print viewport can be narrower than the page, which would trip the
+       mobile breakpoints and stack the grids (making slides too tall). Pin the
+       desktop layouts for print. */
+    .trio,.campus-grid,.horizons{grid-template-columns:repeat(3,1fr);}
+    .doors,.statrow{grid-template-columns:repeat(4,1fr);}
+    .duo{grid-template-columns:1fr 1fr;}
+    .jesse-grid{grid-template-columns:1.15fr .85fr; align-items:center;}
+    .ask-grid{grid-template-columns:1.05fr .95fr;}
+    .ladder-row{grid-template-columns:minmax(140px,220px) 1fr;}
+    .navhint{display:none;}
+    .disc{animation:none;}
+    #s1 canvas{display:none;}
+  }
+</style>
+
+<!-- ============ 01 · TITLE ============ -->
+<section class="slide dark" id="s1">
+  <canvas id="constellation" aria-hidden="true"></canvas>
+  <div class="chrome"><span class="wordmark">Mind<i>Craft</i></span><span class="pageno">01 / 13</span></div>
+  <div class="stage">
+    <span class="title-tag"><i>BETA</i> accelerator alum · Twin Cities · fall 2026</span>
+    <h1 class="h-giant">Never work<br>alone.</h1>
+    <p class="serif title-serif">Office hours from your room.</p>
+    <div class="title-founders">
+      <div><b>Akshat Koirala</b><span>Co-founder · product, brand, iOS</span></div>
+      <div><b>Blake Kell</b><span>Co-founder · the engine underneath</span></div>
+    </div>
+  </div>
+  <div class="footline"><span>joinmindcraft.com</span><span>the collaborative workspace for learning</span></div>
+</section>
+
+<!-- ============ 02 · PROBLEM ============ -->
+<section class="slide dark">
+  <div class="chrome"><span class="wordmark">Mind<i>Craft</i></span><span class="pageno">02 / 13</span></div>
+  <div class="stage">
+    <div class="kicker hot">The broken hour</div>
+    <p class="clock">2:14 AM</p>
+    <h2 class="h-big serif" style="font-weight:500;">Question 14.<br>Fifth time through.</h2>
+    <p class="lede">Somewhere there is a person who has done this exact thing before and could tell you in five minutes what is taking you three hours. <strong>You do not have that person's number.</strong> So you Google it. You ask an AI, and it answers a slightly different question than the one you asked. Office hours are two days and one deadline away.</p>
+    <div class="chips">
+      <span class="chip">The paper's due</span>
+      <span class="chip">The code won't run</span>
+      <span class="chip">Quadratics, again</span>
+      <span class="chip hot">Still stuck</span>
+    </div>
+  </div>
+  <div class="footline"><span>every student knows this hour</span><span>problem · 1 of 2</span></div>
+</section>
+
+<!-- ============ 03 · THE VERDICT ============ -->
+<section class="slide dark">
+  <div class="chrome"><span class="wordmark">Mind<i>Craft</i></span><span class="pageno">03 / 13</span></div>
+  <div class="stage">
+    <div class="kicker hot">The part nobody says out loud</div>
+    <p class="verdict-quote serif">&ldquo;Some people are just more verbal.&rdquo;</p>
+    <p class="lede">Somebody, somewhere back, decided you were not the kind of person who is good at this. They described a moment: one worksheet, one test, one class you joined three weeks late. <strong>They described a moment. You heard a verdict.</strong></p>
+    <p class="verdict-turn">You were never bad at the work. You were working alone.</p>
+    <p class="verdict-note">A broken workflow. Not a broken brain.</p>
+  </div>
+  <div class="footline"><span>the verdict is the real competitor</span><span>problem · 2 of 2</span></div>
+</section>
+
+<!-- ============ 04 · WHAT WE ARE ============ -->
+<section class="slide cream">
+  <div class="chrome"><span class="wordmark">Mind<i>Craft</i></span><span class="pageno">04 / 13</span></div>
+  <div class="stage">
+    <div class="kicker">What we are</div>
+    <h2 class="h-mid">Office hours from your room, for whatever you're working on.</h2>
+    <div class="ladder">
+      <div class="ladder-row"><b>Entry point</b><p>Open the workspace, show your actual work, and someone who has done this before is in the room with you.</p></div>
+      <div class="ladder-row"><b>Core product</b><p>A collaborative workspace with on-demand college mentors, calculus today, a pitch deck tomorrow.</p></div>
+      <div class="ladder-row"><b>Difference</b><p>Help attaches to the student's real work, not a fixed tutoring curriculum or a recurring slot.</p></div>
+      <div class="ladder-row"><b>Platform</b><p>Notes, practice, projects, creation, and AI, one desk, one record, owned by the student.</p></div>
+      <div class="ladder-row horizon"><b>Horizon</b><p>The operating system for student work.</p></div>
+    </div>
+  </div>
+  <div class="footline"><span>The Desk by MindCraft</span><span>solution</span></div>
+</section>
+
+<!-- ============ 05 · THE PRODUCT IS REAL ============ -->
+<section class="slide cream">
+  <div class="chrome"><span class="wordmark">Mind<i>Craft</i></span><span class="pageno">05 / 13</span></div>
+  <div class="stage">
+    <div class="kicker">Shipped, not slideware</div>
+    <h2 class="h-mid">The Desk runs on an iPad today.</h2>
+    <div class="product-shot-row">
+      <img class="product-shot" src="../img/marketing/app-screenshot-dashboard.webp" alt="A real screenshot of The Desk's Work dashboard on iPad: Homework Help upload, Knowledge Graph, Binder, and Jesse's Intel panel with a call button.">
+      <div class="product-shot-cap">
+        <p><b>Notes.</b> Session notes, a binder, real email and calendar. One record of everything a student makes, exportable, deletable, theirs.</p>
+        <p><b>Solver.</b> A gap scan charts where the fog actually is, no grades, no verdicts. Practice arrives wrapped in a story with real stakes.</p>
+        <p><b>Map.</b> Knowledge as a living map. Fog where you haven't been, light where it clicked, a mentor who walks in already knowing the route.</p>
+      </div>
+    </div>
+    <div class="statrow">
+      <div class="stat"><b>42</b><span>concepts mapped, with prerequisites, in the live engine</span></div>
+      <div class="stat"><b>179</b><span>atomic ideas ("ingredients") the engine can diagnose</span></div>
+      <div class="stat"><b>1,900+</b><span>real exam questions, tagged and leveled</span></div>
+      <div class="stat"><b>1,700+</b><span>named misconceptions the engine watches for</span></div>
+    </div>
+    <p class="fineprint">Counts pulled from the live engine and question bank, not projections. Screenshot captured live off the running app, not a mockup.</p>
+  </div>
+  <div class="footline"><span>native SwiftUI · live learning engine</span><span>product · 1 of 2</span></div>
+</section>
+
+<!-- ============ 06 · JESSE ============ -->
+<section class="slide cream">
+  <div class="chrome"><span class="wordmark">Mind<i>Craft</i></span><span class="pageno">06 / 13</span></div>
+  <div class="stage">
+    <div class="kicker">The voice at the desk</div>
+    <h2 class="h-mid">Jesse answers when you say it out loud.</h2>
+    <div class="jesse-grid">
+      <div>
+        <div class="jesse-block">
+          <span class="ship-tag live">Shipped</span>
+          <h3>A real voice, in the real app</h3>
+          <p>Tap the disc and talk. Jesse hears you, answers in the context of what's actually on your desk, and stays on the line while you move anywhere in the app. The call survives navigation, like a person would.</p>
+        </div>
+        <div class="jesse-block">
+          <span class="ship-tag test">Built &amp; tested · not yet shipped</span>
+          <h3>Socratic conversations</h3>
+          <p>A new content type where Jesse asks the next question instead of handing over the answer. Built and tested this week. It ships when it clears our quality gate, and not a day before.</p>
+        </div>
+      </div>
+      <div class="jesse-visual">
+        <div class="disc">Press</div>
+        <p class="serif">&ldquo;Jesse, why does the current keep pushing my boat off course?&rdquo;</p>
+      </div>
+    </div>
+  </div>
+  <div class="footline"><span>voice is the youngest student's first interface</span><span>product · 2 of 2</span></div>
+</section>
+
+<!-- ============ 07 · THE GATE ============ -->
+<section class="slide dark">
+  <div class="chrome"><span class="wordmark">Mind<i>Craft</i></span><span class="pageno">07 / 13</span></div>
+  <div class="stage">
+    <div class="kicker">Why we're not a wrapper</div>
+    <h2 class="h-mid" style="max-width:24ch;">AI content is wrong until it proves otherwise.</h2>
+    <p class="lede">Anyone can pipe a chatbot at a student. We built the opposite: a pipeline where every generated lesson has to clear every gate before a student ever sees it. <strong>Most attempts don't make it. That is the system working.</strong></p>
+    <div class="gatechain">
+      <span class="gate">fit check</span><span class="gate-arrow">&rarr;</span>
+      <span class="gate">generate</span><span class="gate-arrow">&rarr;</span>
+      <span class="gate">render</span><span class="gate-arrow">&rarr;</span>
+      <span class="gate">structural rubric</span><span class="gate-arrow">&rarr;</span>
+      <span class="gate">visual + pedagogical gate</span><span class="gate-arrow">&rarr;</span>
+      <span class="gate final">a student sees it</span>
+    </div>
+    <div class="honesty">
+      <b>An honest result from our own lab</b>
+      <p>This week we trained our first model checkpoint. In validation it nailed the format, and got real facts wrong. <strong>So it ships nothing.</strong> That's not a setback; it's the whole point. The moat isn't the model. It's the refusal to show a student anything unverified.</p>
+    </div>
+  </div>
+  <div class="footline"><span>tested before a student ever sees it</span><span>differentiation</span></div>
+</section>
+
+<!-- ============ 08 · THE STUDENTS THE PAGE LOSES ============ -->
+<section class="slide cream">
+  <div class="chrome"><span class="wordmark">Mind<i>Craft</i></span><span class="pageno">08 / 13</span></div>
+  <div class="stage">
+    <div class="kicker">The students the page loses</div>
+    <h2 class="h-mid">Not every brain learns from a paragraph.</h2>
+    <p class="lede">For a lot of students, ADHD, dyslexic, visual-first thinkers, the wall was never the idea. It was the format: one page of static prose, one shape for every brain. The Desk gives the same idea more than one door.</p>
+    <div class="doors">
+      <div class="door">
+        <svg viewBox="0 0 30 30" fill="none" stroke="#247a4d" stroke-width="2" stroke-linecap="round"><circle cx="15" cy="15" r="10"/><path d="M15 8v7l5 3"/></svg>
+        <h3>A simulation</h3><p>Drag the variable. Watch the idea move. Often that motion is the whole click.</p>
+      </div>
+      <div class="door">
+        <svg viewBox="0 0 30 30" fill="none" stroke="#247a4d" stroke-width="2" stroke-linecap="round"><path d="M6 5h13a3 3 0 013 3v17H9a3 3 0 01-3-3V5z"/><path d="M10 10h8M10 14h8"/></svg>
+        <h3>A story</h3><p>A person, a place, a problem with stakes. The math surfaces; it isn't announced.</p>
+      </div>
+      <div class="door">
+        <svg viewBox="0 0 30 30" fill="none" stroke="#247a4d" stroke-width="2" stroke-linecap="round"><path d="M8 12v6M13 8v14M18 11v8M23 13v4"/></svg>
+        <h3>A voice</h3><p>Say it out loud, hear it back. No page at all, if the page is the problem.</p>
+      </div>
+      <div class="door">
+        <svg viewBox="0 0 30 30" fill="none" stroke="#247a4d" stroke-width="2" stroke-linecap="round"><path d="M5 24L13 12l5 6 7-11"/><path d="M5 5v20h20"/></svg>
+        <h3>A picture</h3><p>Diagram, graph, number line, the shapes an idea takes when words are in the way.</p>
+      </div>
+    </div>
+    <p class="engine-line">This isn't a settings toggle. The engine tracks which representation each student actually lands on (diagram, graph, number line, words, symbols) and leads with that one.</p>
+    <p class="care-note">We don't claim to treat anything, and we won't. We just stop demanding that a student learn from the one format that already lost them.</p>
+  </div>
+  <div class="footline"><span>multi-representation is architecture, not a feature flag</span><span>who it's for</span></div>
+</section>
+
+<!-- ============ 09 · MARKET ============ -->
+<section class="slide cream">
+  <div class="chrome"><span class="wordmark">Mind<i>Craft</i></span><span class="pageno">09 / 13</span></div>
+  <div class="stage">
+    <div class="kicker">The market, sized honestly</div>
+    <h2 class="h-mid">One campus at a time. On purpose.</h2>
+    <p class="lede">Both sides of this marketplace live on the same quad: the student stuck at 2am and the mentor who aced that class last spring. That makes each campus a self-contained experiment we can pass or fail. <strong>Falsifiable market math, not a headline TAM.</strong></p>
+    <div class="campus-grid">
+      <div class="campus"><b>Now</b><h3>Macalester</h3><p>Our home campus, ~2,100 undergrads. Where we recruit the first mentors, run the first sessions, and pitch during Twin Cities Startup Week.</p></div>
+      <div class="campus"><b>Next</b><h3>The Twin Cities</h3><p>A dense cluster of colleges within a few miles, Macalester, St. Olaf, St. Thomas and more, plus the ACT-parent channel already paying $40+/hr for tutoring.</p></div>
+      <div class="campus"><b>Then</b><h3>The playbook repeats</h3><p>Every residential campus has the same shape: stuck students, capable upperclassmen, no marketplace between them. We expand campus by measured campus.</p></div>
+    </div>
+    <div class="rev-row">
+      <span class="rev">Family subscription, the parent is the buyer</span>
+      <span class="rev">Mentor marketplace, platform share of paid sessions</span>
+      <span class="rev">Student subscription</span>
+      <span class="rev later">Institutional licensing, later</span>
+    </div>
+    <p class="fineprint">Priced against the real next-best alternative: $40+/hr for in-person tutoring, not a hypothetical competitor. We present the model and the unit we'll measure it by; projections come when the first campus produces real numbers.</p>
+  </div>
+  <div class="footline"><span>the campus is the unit of proof</span><span>market</span></div>
+</section>
+
+<!-- ============ 10 · TRACTION ============ -->
+<section class="slide dark">
+  <div class="chrome"><span class="wordmark">Mind<i>Craft</i></span><span class="pageno">10 / 13</span></div>
+  <div class="stage">
+    <div class="kicker">Where we actually are</div>
+    <h2 class="h-mid">Real milestones. No invented numbers.</h2>
+    <div class="milestones">
+      <div class="mile"><i>01</i><p>Accepted into BETA, the Twin Cities startup accelerator <small>Showcased at their startup event. The deck you're reading grew from that room's feedback.</small></p></div>
+      <div class="mile"><i>02</i><p>Pitching on campus during Twin Cities Startup Week <small>Macalester College, mid-September.</small></p></div>
+      <div class="mile"><i>03</i><p>Native iPad workspace shipped and working <small>Notes, Solver, Map, and Jesse's live voice, built in SwiftUI, running today.</small></p></div>
+      <div class="mile"><i>04</i><p>Learning engine live with real student graphs <small>Gap scan to knowledge map to recommendation, deterministic, auditable, updating from real sessions.</small></p></div>
+      <div class="mile"><i>05</i><p>Quality-gated content pipeline running end to end <small>Generation, rendering, rubric, and visual gate, plus our first trained model checkpoint, honestly still in the lab.</small></p></div>
+      <div class="mile"><i>06</i><p>The Open Learning Archive live on our site <small>113 free, no-login interactive textbooks for any curious student, no product pitch attached.</small></p></div>
+      <div class="mile"><i>07</i><p>Knowledge ontology grown from 42 concepts to 26,600+ <small>100+ real subject graphs merged in, from Dan McCreary's own learning-graph library and our own book-extraction pipeline running against public-domain texts &mdash; Darwin, Euclid, Newton, Adam Smith, and more.</small></p></div>
+      <div class="mile"><i>08</i><p>Students power their own AI with a free key, not ours <small>A guided onboarding gets every student their own free Google AI key in under two minutes &mdash; their account, their usage, their data. No card, no waitlist.</small></p></div>
+    </div>
+    <p class="traction-vow">When a number isn't real yet, it isn't on the slide.</p>
+  </div>
+  <div class="footline"><span>fall 2026</span><span>traction</span></div>
+</section>
+
+<!-- ============ 11 · WHERE IT GOES ============ -->
+<section class="slide dark">
+  <div class="chrome"><span class="wordmark">Mind<i>Craft</i></span><span class="pageno">11 / 13</span></div>
+  <div class="stage">
+    <div class="kicker hot">Roadmap. None of this is shipped. All of it is started.</div>
+    <h2 class="h-mid">Where the desk goes next.</h2>
+    <div class="horizons">
+      <div class="horizon-card"><b>Horizon 2</b><h3>A world you walk through</h3><p>The knowledge map becomes literal terrain: mastered concepts are unlocked regions, gaps are fog, and the Bologna tavern where Cardano gambled is a lit doorway on the map.</p></div>
+      <div class="horizon-card"><b>Horizon 2</b><h3>A book about what you love</h3><p>Name a passion and the engine drafts a book that teaches through it, every page cleared through the same quality gate before a student sees it. In closed testing first.</p></div>
+      <div class="horizon-card"><b>Horizon 3</b><h3>A language for small programmers</h3><p>A coding language for kids that treats a child's curiosity as the syntax. Research underway; we'll show it when it's real.</p></div>
+    </div>
+    <p class="stamps">Thales at Giza, 600 BC &middot; Stevin in Antwerp, 1585 &middot; Pascal in Paris, 1654. Forty-nine story worlds already written and shipping in Solver. The world grows from here.</p>
+  </div>
+  <div class="footline"><span>vision, labeled as vision</span><span>roadmap</span></div>
+</section>
+
+<!-- ============ 12 · TEAM ============ -->
+<section class="slide cream">
+  <div class="chrome"><span class="wordmark">Mind<i>Craft</i></span><span class="pageno">12 / 13</span></div>
+  <div class="stage">
+    <div class="kicker">Why us</div>
+    <h2 class="h-mid">Big picture. Allen wrench.</h2>
+    <div class="duo">
+      <div class="founder">
+        <b>Akshat &middot; big picture</b>
+        <h3>Akshat Koirala</h3>
+        <p class="role">Why the student gave up</p>
+        <p>Eight years at the tutoring table, watching the same scene repeat: a student flinches at a worksheet, then leans all the way in when the problem becomes a person. Holds the whole picture, the student working alone, and builds the product around it. Macalester College.</p>
+      </div>
+      <div class="founder">
+        <b>Blake &middot; Allen wrench</b>
+        <h3>Blake Kell</h3>
+        <p class="role">Why the engine knows</p>
+        <p>Builds the map tutors can trust: the knowledge graph, the mastery model, the recommendation engine. Forty-two concepts, named misconceptions, deterministic diagnosis. The engine finds mechanisms, not vibes.</p>
+      </div>
+    </div>
+    <p class="lede" style="margin-top:clamp(16px,3vh,28px);">That's why we stand up here together: one of us knows exactly where the hour breaks, the other builds the machine that un-breaks it.</p>
+  </div>
+  <div class="footline"><span>a duo, on purpose</span><span>team</span></div>
+</section>
+
+<!-- ============ 13 · THE ASK ============ -->
+<section class="slide dark">
+  <div class="chrome"><span class="wordmark">Mind<i>Craft</i></span><span class="pageno">13 / 13</span></div>
+  <div class="stage">
+    <div class="kicker">The ask</div>
+    <h2 class="h-big">Who should we talk to?</h2>
+    <div class="ask-grid">
+      <div class="asks">
+        <div class="ask-row"><i>01</i><p>A student stuck on real work, any subject</p></div>
+        <div class="ask-row"><i>02</i><p>A college mentor ready to help outside class</p></div>
+        <div class="ask-row"><i>03</i><p>An ACT parent or counselor, one channel among several</p></div>
+      </div>
+      <div class="contact-card">
+        <b>Snap this slide</b>
+        <h3>Reach us this week</h3>
+        <span class="contact-line">founders@joinmindcraft.com</span>
+        <span class="contact-line">joinmindcraft.com</span>
+        <small>Twin Cities &middot; MindCraft, never work alone</small>
+      </div>
+    </div>
+  </div>
+  <div class="footline"><span>happy to take two questions</span><span>thank you</span></div>
+</section>
+
+<div class="navhint">arrows or scroll &middot; print for pdf</div>
+
+<script>
+  // Constellation on the title slide: the knowledge map as an object of beauty.
+  (function(){
+    var cv = document.getElementById('constellation');
+    if(!cv) return;
+    var ctx = cv.getContext('2d');
+    var nodes = [], W = 0, H = 0, raf = null;
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function seed(){
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = cv.clientWidth; H = cv.clientHeight;
+      cv.width = W * dpr; cv.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      nodes = [];
+      var count = Math.max(26, Math.floor(W * H / 34000));
+      for(var i = 0; i < count; i++){
+        nodes.push({
+          x: Math.random() * W, y: Math.random() * H,
+          vx: (Math.random() - .5) * .12, vy: (Math.random() - .5) * .12,
+          r: Math.random() * 1.6 + .8,
+          lit: Math.random() < .16
+        });
+      }
+    }
+    function draw(){
+      ctx.clearRect(0, 0, W, H);
+      for(var i = 0; i < nodes.length; i++){
+        var a = nodes[i];
+        for(var j = i + 1; j < nodes.length; j++){
+          var b = nodes[j], dx = a.x - b.x, dy = a.y - b.y, d = dx*dx + dy*dy;
+          if(d < 26000){
+            ctx.strokeStyle = 'rgba(108,140,255,' + (0.16 * (1 - d / 26000)).toFixed(3) + ')';
+            ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+          }
+        }
+      }
+      for(var k = 0; k < nodes.length; k++){
+        var n = nodes[k];
+        ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, 7);
+        if(n.lit){
+          ctx.fillStyle = 'rgba(196,245,71,.9)';
+          ctx.shadowColor = 'rgba(196,245,71,.8)'; ctx.shadowBlur = 10;
+        } else {
+          ctx.fillStyle = 'rgba(245,245,244,.35)'; ctx.shadowBlur = 0;
+        }
+        ctx.fill(); ctx.shadowBlur = 0;
+        if(!reduced){
+          n.x += n.vx; n.y += n.vy;
+          if(n.x < 0 || n.x > W) n.vx *= -1;
+          if(n.y < 0 || n.y > H) n.vy *= -1;
+        }
+      }
+      if(!reduced) raf = requestAnimationFrame(draw);
+    }
+    seed(); draw();
+    window.addEventListener('resize', function(){
+      if(raf) cancelAnimationFrame(raf);
+      seed(); draw();
+    });
+  })();
+
+  // Arrow-key slide navigation for presenting in a browser.
+  (function(){
+    var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+    function current(){
+      var mid = window.scrollY + window.innerHeight / 2, best = 0, bd = Infinity;
+      slides.forEach(function(s, i){
+        var d = Math.abs(s.offsetTop + s.offsetHeight / 2 - mid);
+        if(d < bd){ bd = d; best = i; }
+      });
+      return best;
+    }
+    function go(i){
+      if(i < 0 || i >= slides.length) return;
+      slides[i].scrollIntoView({behavior:'smooth'});
+    }
+    window.addEventListener('keydown', function(e){
+      if(e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' '){ e.preventDefault(); go(current() + 1); }
+      if(e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.key === 'PageUp'){ e.preventDefault(); go(current() - 1); }
+      if(e.key === 'Home'){ e.preventDefault(); go(0); }
+      if(e.key === 'End'){ e.preventDefault(); go(slides.length - 1); }
+    });
+  })();
+</script>
